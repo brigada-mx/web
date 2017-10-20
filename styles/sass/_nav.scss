@@ -1,0 +1,16 @@
+// _nav.scss
+
+#logo {
+  @include league-gothic;
+  color: $grey-5;
+  font-size: 27px;
+  line-height: 32px;
+}
+
+header li a {
+  color: $white;
+}
+
+header ul {
+  float: right;
+}

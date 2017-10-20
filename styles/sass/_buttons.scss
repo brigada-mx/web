@@ -1,0 +1,17 @@
+// _buttons.scss
+
+button {
+  display: inline-block;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 16px 46px 14px 46px;
+}
+
+.white {
+  border: 1px solid $white;
+}
+
+.green {
+  border: 1px solid $green;
+}

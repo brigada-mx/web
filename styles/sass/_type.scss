@@ -1,0 +1,44 @@
+// _typeworks.scss
+
+body, p {
+  @include nunito-sans-200;
+  font-size: 15px;
+  line-height: 30px;
+  color: $grey-7;
+  opacity: 0.8;
+}
+
+h1 {
+  @include din-bold;
+  font-size: 84px;
+  line-height: 92px;
+  letter-spacing: -1px;
+  color: $grey-7;
+}
+
+h2 {
+  @include din-bold;
+  font-size: 40px;
+  line-height: 48px;
+  color: $grey-7;
+}
+
+a {
+  text-decoration: none;
+}
+
+.tag {
+  @include nunito-sans-600;
+  font-size: 12px;
+  line-height: 15px;
+  opacity: 0.4;
+  color: $grey-8;
+}
+
+button {
+  @include nunito-sans-800;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  text-transform: uppercase;
+}
