@@ -1,7 +1,24 @@
 // _sections.scss
 
+// HERO
+
 #hero-img {
   position: absolute;
   z-index: -1;
   top: 0;
 }
+
+// LOGO WALL
+
+#logo-wall {
+  padding: 42px;
+  background-color: #F3F5F7;
+  position: relative;
+  z-index: -2;
+}
+
+#logo-wrapper {
+  height: 100px;
+}
+
+// FEATURE1

@@ -1065,6 +1065,10 @@ table {
 .slideOutUp {
   animation-name: slideOutUp; }
 
+header {
+  padding-top: 28px;
+  margin-bottom: 102px; }
+
 #logo {
   font-family: 'league-gothic', sans-serif;
   color: #2D2F32;
@@ -1077,16 +1081,19 @@ header li a {
 header ul {
   float: right; }
 
+footer {
+  background-color: #F3F5F7; }
+
 body, p {
   font-family: 'nunito-sans-200', sans-serif;
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 30px;
   color: #141418;
   opacity: 0.8; }
 
 h1 {
   font-family: 'din-bold', sans-serif;
-  font-size: 84px;
+  font-size: 74px;
   line-height: 92px;
   letter-spacing: -1px;
   color: #141418; }
@@ -1123,6 +1130,10 @@ button {
 
 .white {
   border: 1px solid #ffffff; }
+
+.solid-white {
+  background-color: #ffffff;
+  color: #3DC587; }
 
 .green {
   border: 1px solid #3DC587; }
@@ -1210,8 +1221,8 @@ button {
     -moz-box-flex: 0 0 auto;
     /* OLD - Firefox 19- */
     flex: 0 0 auto;
-    padding-right: 0.75%;
-    padding-left: 0.75%; }
+    padding-right: 1.5%;
+    padding-left: 1.5%; }
 
   .col-xs {
     -webkit-flex-grow: 1;
@@ -1462,8 +1473,8 @@ button {
     -moz-box-flex: 0 0 auto;
     /* OLD - Firefox 19- */
     flex: 0 0 auto;
-    padding-right: 0.75%;
-    padding-left: 0.75%; }
+    padding-right: 1.5%;
+    padding-left: 1.5%; }
 
   .col-sm {
     -webkit-flex-grow: 1;
@@ -1719,10 +1730,40 @@ button {
     /* NEW - Chrome */
     order: 1; } }
 @media screen and (min-width: 980px) {
+  header {
+    padding: 28px 5px 0 5px; }
+
   #hero #hero-img {
-    width: 62.2%;
-    height: auto;
-    margin-left: -1.5%; }
+    width: 70.2%;
+    max-width: 831px;
+    height: auto; }
+  #hero p {
+    width: 79%;
+    margin-bottom: 31px; }
+  #hero button {
+    margin-bottom: 100px; }
+
+  #logo-wall {
+    margin-bottom: 100px; }
+
+  #feature1, #feature2 {
+    margin-bottom: 36px; }
+
+  #feature1 h2, #feature2 h2, #feature3 h2 {
+    margin: 121px 0 10px 0;
+    width: 330px; }
+  #feature1 p, #feature2 p, #feature3 p {
+    margin-bottom: 21px; }
+
+  footer {
+    margin-top: 45px;
+    padding-top: 212px; }
+    footer h2 {
+      margin-bottom: 21px; }
+    footer p {
+      margin-bottom: 27px; }
+    footer button {
+      margin-bottom: 156px; }
 
   .md-hidden {
     display: none !important; }
@@ -1737,8 +1778,8 @@ button {
     -moz-box-flex: 0 0 auto;
     /* OLD - Firefox 19- */
     flex: 0 0 auto;
-    padding-right: 0.75%;
-    padding-left: 0.75%; }
+    padding-right: 1.5%;
+    padding-left: 1.5%; }
 
   .col-md {
     -webkit-flex-grow: 1;
@@ -2296,3 +2337,12 @@ button {
   position: absolute;
   z-index: -1;
   top: 0; }
+
+#logo-wall {
+  padding: 42px;
+  background-color: #F3F5F7;
+  position: relative;
+  z-index: -2; }
+
+#logo-wrapper {
+  height: 100px; }

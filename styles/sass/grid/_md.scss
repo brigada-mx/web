@@ -1,12 +1,65 @@
 // _md.scss 
 @media screen and (min-width: 980px) {
 
+// HEADER
+
+header {
+  padding: 28px 5px 0 5px;
+}
+
 // HERO
 
-#hero #hero-img {
-  width: 62.2%;
-  height: auto;
-  margin-left: -1.5%;
+#hero {
+  #hero-img {
+    width: 70.2%;
+    max-width: 831px;
+    height: auto;
+  }
+  p {
+    width: 79%;
+    margin-bottom: 31px;
+  }
+  button {
+    margin-bottom: 100px;
+  }
+}
+
+// LOGO WALL
+
+#logo-wall {
+  margin-bottom: 100px;
+}
+
+// FEATURES
+
+#feature1, #feature2 {
+  margin-bottom: 36px;
+}
+
+#feature1, #feature2, #feature3 {
+  h2 {
+    margin: 121px 0 10px 0;
+    width: 330px;
+  }
+  p {
+    margin-bottom: 21px;
+  }
+}
+
+// FOOTER
+
+footer {
+  margin-top: 45px;
+  padding-top: 212px;
+  h2 {
+    margin-bottom: 21px;
+  }
+  p {
+    margin-bottom: 27px;
+  }
+  button {
+    margin-bottom: 156px; 
+  }
 }
 
 // GENERAL

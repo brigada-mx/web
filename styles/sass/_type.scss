@@ -2,7 +2,7 @@
 
 body, p {
   @include nunito-sans-200;
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 30px;
   color: $grey-7;
   opacity: 0.8;
@@ -10,7 +10,7 @@ body, p {
 
 h1 {
   @include din-bold;
-  font-size: 84px;
+  font-size: 74px;
   line-height: 92px;
   letter-spacing: -1px;
   color: $grey-7;
