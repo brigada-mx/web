@@ -15,10 +15,17 @@ h2 {
 // HERO
 
 header {
+  button.green {
+    padding: 16px 52px 14px 52px;
+  }
+  #logo {
+    text-align: center;
+    display: block;
+  }
   margin-bottom: 128vh;
   padding: 28px 5px 0 5px;
   h1 {
-    margin: 93vh 0 22px 0;
+    margin: 102vh 0 22px 0;
   }
   #hero-img-wrap {
     width: 100%;
@@ -46,6 +53,9 @@ section#logo-wall {
 // FEATURES
 
 #feature1, #feature2, #feature3 {
+  button.green {
+    padding: 12px 39px 10px 39px;
+  }
   text-align: center;
 }
 
@@ -71,12 +81,15 @@ section#logo-wall {
     width: 90%;
     margin: 0 auto 0 auto;
   }
-  margin-bottom: 16px;
+  margin-bottom: -24px;
   #feature2-img {
     background: url(../assets/img/feature2-xs.png) no-repeat center;
     background-size: 395px 593px;
     width: 395px;
     height: 593px;
+  }
+  .tag {
+    margin-top: 50px;
   }
 }
 
@@ -91,9 +104,6 @@ section#logo-wall {
     width: 456px;
     height: 233px;
   }
-  .tag {
-    margin-top: 17px;
-  }
 }
 
 #feature2, #feature3 {
@@ -107,19 +117,20 @@ section#logo-wall {
 footer {
   text-align: center;
   margin-top: 45px;
-  padding: 118px 0 34px 0;
+  padding: 310px 0 34px 0;
   #footer-img {
-    height: 523px;
+    height: 291px;
   }
   #footer-img-wrap {
-    width: 55%;
-    bottom: 82px;
+    width: 100%;
+    bottom: 470px;
   }
   h2 {
     margin-bottom: 21px;
   }
   p {
-    margin-bottom: 27px;
+    margin: 0 auto 27px auto;
+    width: 90%;
   }
   button {
     margin-bottom: 89px; 

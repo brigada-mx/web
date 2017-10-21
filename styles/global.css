@@ -1229,7 +1229,8 @@ button {
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.04); }
 
 .green {
-  border: 1px solid #3DC587; }
+  border: 1px solid #3DC587;
+  color: #3DC587; }
 
 .tag {
   padding: 8px 10px 7px 8px;
@@ -1295,8 +1296,13 @@ button {
   header {
     margin-bottom: 128vh;
     padding: 28px 5px 0 5px; }
+    header button.green {
+      padding: 16px 52px 14px 52px; }
+    header #logo {
+      text-align: center;
+      display: block; }
     header h1 {
-      margin: 93vh 0 22px 0; }
+      margin: 102vh 0 22px 0; }
     header #hero-img-wrap {
       width: 100%;
       top: 16vh; }
@@ -1312,6 +1318,8 @@ button {
     padding: 22px; }
   #feature1, #feature2, #feature3 {
     text-align: center; }
+    #feature1 button.green, #feature2 button.green, #feature3 button.green {
+      padding: 12px 39px 10px 39px; }
   #feature1 {
     margin-bottom: -12px; }
     #feature1 p {
@@ -1325,7 +1333,7 @@ button {
     #feature1 h2 {
       margin: 0 0 10px 0; }
   #feature2 {
-    margin-bottom: 16px; }
+    margin-bottom: -24px; }
     #feature2 p {
       width: 90%;
       margin: 0 auto 0 auto; }
@@ -1334,6 +1342,8 @@ button {
       background-size: 395px 593px;
       width: 395px;
       height: 593px; }
+    #feature2 .tag {
+      margin-top: 50px; }
   #feature3 {
     margin-bottom: 81px; }
     #feature3 p {
@@ -1343,23 +1353,22 @@ button {
       background-size: 456px 233px;
       width: 456px;
       height: 233px; }
-    #feature3 .tag {
-      margin-top: 17px; }
   #feature2 h2, #feature3 h2 {
     margin: 20px 0 10px 0; }
   footer {
     text-align: center;
     margin-top: 45px;
-    padding: 118px 0 34px 0; }
+    padding: 310px 0 34px 0; }
     footer #footer-img {
-      height: 523px; }
+      height: 291px; }
     footer #footer-img-wrap {
-      width: 55%;
-      bottom: 82px; }
+      width: 100%;
+      bottom: 470px; }
     footer h2 {
       margin-bottom: 21px; }
     footer p {
-      margin-bottom: 27px; }
+      margin: 0 auto 27px auto;
+      width: 90%; }
     footer button {
       margin-bottom: 89px; }
   .container {
