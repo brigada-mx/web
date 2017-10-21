@@ -1,38 +1,136 @@
 // _xs.scss
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 799px) and (min-width: 320px) {
 
-// NAVBAR
+// TYPE
 
-a#logo {
-  display: none;
+h1 {
+  font-size: 56px;
+  line-height: 54px;
 }
 
-img#search-icon {
-  left: 0px;
+h2 {
+  font-size: 39px;
 }
 
-arq-search {
-  width: 100%;
-  input {
-    padding: 4px 0 0 6px !important;
+// HERO
+
+header {
+  margin-bottom: 128vh;
+  padding: 28px 5px 0 5px;
+  h1 {
+    margin: 93vh 0 22px 0;
   }
-  #results {
-    left: 0px;
+  #hero-img-wrap {
     width: 100%;
+    top: 16vh;
+  }
+  #hero-img {
+    background-position: center;
+    height: 88vh;
+  }
+  #hero-content {
+    text-align: center;
+    p {
+      margin-bottom: 22px;
+    }
   }
 }
 
-// MAP
+// LOGO WALL
 
-#map arq-breadcrumbs {
-  display: none;
+section#logo-wall {
+  margin-bottom: 95px;
+  padding: 22px;
 }
 
-.mapboxgl-control-container .mapboxgl-ctrl-top-right {
-  display: none;
+// FEATURES
+
+#feature1, #feature2, #feature3 {
+  text-align: center;
+}
+
+#feature1 {
+  p {
+    width: 90%;
+    margin: 0 auto 21px auto;
+  }
+  margin-bottom: -12px;
+  #feature1-img {
+    background: url(../assets/img/feature1-xs.png) no-repeat center;
+    background-size: 385px 410px;
+    width: 385px;
+    height: 410px;
+  }
+  h2 {
+    margin: 0 0 10px 0;
+  }
+}
+
+#feature2 {
+  p {
+    width: 90%;
+    margin: 0 auto 0 auto;
+  }
+  margin-bottom: 16px;
+  #feature2-img {
+    background: url(../assets/img/feature2-xs.png) no-repeat center;
+    background-size: 395px 593px;
+    width: 395px;
+    height: 593px;
+  }
+}
+
+#feature3 {
+  margin-bottom: 81px;
+  p {
+    margin-bottom: 41px;
+  }
+  #feature3-img {
+    background: url(../assets/img/feature3-xs.png) no-repeat center;
+    background-size: 456px 233px;
+    width: 456px;
+    height: 233px;
+  }
+  .tag {
+    margin-top: 17px;
+  }
+}
+
+#feature2, #feature3 {
+  h2 {
+    margin: 20px 0 10px 0;
+  }
+}
+
+// FOOTER
+
+footer {
+  text-align: center;
+  margin-top: 45px;
+  padding: 118px 0 34px 0;
+  #footer-img {
+    height: 523px;
+  }
+  #footer-img-wrap {
+    width: 55%;
+    bottom: 82px;
+  }
+  h2 {
+    margin-bottom: 21px;
+  }
+  p {
+    margin-bottom: 27px;
+  }
+  button {
+    margin-bottom: 89px; 
+  }
 }
 
 // GENERAL
+
+.container {
+  padding: 0px;
+}
 
 .xs-hidden {
   display: none !important;

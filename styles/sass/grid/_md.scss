@@ -1,26 +1,22 @@
 // _md.scss 
-@media screen and (min-width: 980px) {
-
-// HEADER
-
-header {
-  padding: 28px 5px 0 5px;
-}
+@media screen and (max-width: 1399px) and (min-width: 980px) {
 
 // HERO
 
-#hero {
-  #hero-img {
-    width: 70.2%;
-    max-width: 831px;
-    height: auto;
+header {
+  margin-bottom: -50px;
+  padding: 28px 5px 0 5px;
+  h1 {
+    margin-top: 104px;
   }
-  p {
-    width: 79%;
-    margin-bottom: 31px;
+  #hero-img-wrap {
+    width: 55%;
   }
-  button {
-    margin-bottom: 100px;
+  #hero-content {
+    p {
+      width: 84%;
+      margin-bottom: 31px;
+    }
   }
 }
 
@@ -32,13 +28,53 @@ header {
 
 // FEATURES
 
-#feature1, #feature2 {
-  margin-bottom: 36px;
+#feature1, #feature2, #feature3 {
+  p {
+    margin-bottom: 21px;
+  }
 }
 
-#feature1, #feature2, #feature3 {
+#feature1 {
+  margin-bottom: 36px;
+  #feature1-img {
+    background-size: 479px 510px;
+    width: 479px;
+    height: 510px;
+  }
   h2 {
-    margin: 121px 0 10px 0;
+    margin: 127px 0 10px 0;
+    width: 330px;
+  }
+}
+
+#feature2 {
+  margin-bottom: 16px;
+  #feature2-img {
+    background-size: 422px 567px;
+    width: 422px;
+    height: 567px;
+  }
+  .tag {
+    margin-top: 139px;
+  }
+}
+
+#feature3 {
+  #feature3-img {
+    background: url(../assets/img/feature3-md.png) no-repeat;
+    background-size: 503px 326px;
+    width: 503px;
+    height: 326px;
+  }
+  margin-bottom: 161px;
+  .tag {
+    margin-top: 17px;
+  }
+}
+
+#feature2, #feature3 {
+  h2 {
+    margin: 20px 0 10px 0;
     width: 330px;
   }
   p {
@@ -50,15 +86,23 @@ header {
 
 footer {
   margin-top: 45px;
-  padding-top: 212px;
+  padding: 118px 0 34px 0;
+  #footer-img {
+    height: 523px;
+  }
+  #footer-img-wrap {
+    width: 50%;
+    bottom: 62px;
+  }
   h2 {
     margin-bottom: 21px;
   }
   p {
     margin-bottom: 27px;
+    width: 88%;
   }
   button {
-    margin-bottom: 156px; 
+    margin-bottom: 89px; 
   }
 }
 
@@ -161,11 +205,11 @@ footer {
   margin-left: 91.667%;
 }
 .stretch-md {
-    @include align-items(stretch); 
-  }
+  @include align-items(stretch); 
+}
 .flex-md {
-    @include flexbox;
-  }
+  @include flexbox;
+}
 .start-md {
   @include justify-content(flex-start);
   text-align: start;
