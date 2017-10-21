@@ -2,10 +2,22 @@
 
 // HERO
 
-#hero-img {
+header {
+  height: 100vh;
+}
+
+#hero-img-wrap {
   position: absolute;
-  z-index: -1;
   top: 0;
+  right: 0;
+  height: auto;
+  z-index: -1;
+}
+
+#hero-img {
+  background: url(../assets/img/hero.png) no-repeat left;
+  background-size: cover;
+  height: 100vh;
 }
 
 // LOGO WALL
@@ -21,4 +33,46 @@
   height: 100px;
 }
 
-// FEATURE1
+// FEATURES
+
+#feature1-img {
+  background: url(../assets/img/feature1.png) no-repeat;
+  background-size: 586px 624px;
+  width: 586px;
+  height: 624px;
+}
+
+#feature2-img {
+  background: url(../assets/img/feature2.png) no-repeat;
+  background-size: 627px 843px;
+  width: 627px;
+  height: 843px;
+}
+
+#feature3-img {
+  background: url(../assets/img/feature3.png) no-repeat;
+  background-size: 736px 455px;
+  width: 736px;
+  height: 455px;
+}
+
+// FOOTER
+
+footer {
+  #fb, #git {
+    margin-right: 20px;
+  }
+}
+
+#footer-img-wrap {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: auto;
+  z-index: 0;
+}
+
+#footer-img {
+  background: url(../assets/img/footer.png) no-repeat left;
+  background-size: cover;
+}

@@ -15,6 +15,7 @@ button {
 .solid-white {
   background-color: $white;
   color: $green;
+  @include box-shadow(0,10px,20px,0,0,0,0,0.04);
 }
 
 .green {

@@ -1,5 +1,116 @@
 // _sm.scss
-@media screen and (min-width: 600px) {
+@media screen and (max-width: 979px) and (min-width: 780px) {
+
+// HERO
+
+header {
+  margin-bottom: 70vh;
+  padding: 28px 5px 0 5px;
+  h1 {
+    margin: 101vh 0 -46px 0;
+  }
+  #hero-img-wrap {
+    width: 100%;
+    top: 12vh;
+  }
+  #hero-img {
+    height: 88vh;
+  }
+  #hero-content {
+    p {
+      width: 84%;
+      margin-bottom: 19px;
+    }
+  }
+}
+
+// LOGO WALL
+
+section#logo-wall {
+  margin-bottom: 95px;
+  padding: 22px;
+}
+
+// FEATURES
+
+#feature1, #feature2, #feature3 {
+  text-align: center;
+}
+
+#feature1 {
+  p {
+    margin-bottom: 21px;
+  }
+  margin-bottom: -12px;
+  #feature1-img {
+    background: url(../assets/img/feature1-sm.png) no-repeat;
+    background-size: 617px 553px;
+    width: 617px;
+    height: 553px;
+  }
+  h2 {
+    margin: 0 0 10px 0;
+  }
+}
+
+#feature2 {
+  p {
+    margin-bottom: 0;
+  }
+  margin-bottom: 16px;
+  #feature2-img {
+    background: url(../assets/img/feature2-sm.png) no-repeat;
+    background-size: 548px 593px;
+    width: 548px;
+    height: 593px;
+  }
+}
+
+#feature3 {
+  margin-bottom: 81px;
+  p {
+    margin-bottom: 41px;
+  }
+  #feature3-img {
+    background: url(../assets/img/feature3-sm.png) no-repeat;
+    background-size: 743px 306px;
+    width: 743px;
+    height: 306px;
+  }
+  .tag {
+    margin-top: 17px;
+  }
+}
+
+#feature2, #feature3 {
+  h2 {
+    margin: 20px 0 10px 0;
+  }
+}
+
+// FOOTER
+
+footer {
+  text-align: center;
+  margin-top: 45px;
+  padding: 118px 0 34px 0;
+  #footer-img {
+    height: 523px;
+  }
+  #footer-img-wrap {
+    width: 55%;
+    bottom: 82px;
+  }
+  h2 {
+    margin-bottom: 21px;
+  }
+  p {
+    margin-bottom: 27px;
+  }
+  button {
+    margin-bottom: 89px; 
+  }
+}
 
 // GENERAL
 
