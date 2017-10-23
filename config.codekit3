@@ -613,7 +613,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/css\/_animate.css",
+		"oAP": "\/styles\/sass\/_animate.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -626,7 +626,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/css\/_buttons.css",
+		"oAP": "\/styles\/sass\/_buttons.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -639,7 +639,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/css\/_grid.css",
+		"oAP": "\/styles\/sass\/_grid.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -652,7 +652,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/css\/_icons.css",
+		"oAP": "\/styles\/sass\/_icons.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -665,7 +665,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/css\/_mixins.css",
+		"oAP": "\/styles\/sass\/_mixins.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -678,7 +678,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/css\/_nav.css",
+		"oAP": "\/styles\/sass\/_nav.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -691,7 +691,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/css\/_palette.css",
+		"oAP": "\/styles\/sass\/_palette.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -704,7 +704,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/css\/_reset.css",
+		"oAP": "\/styles\/sass\/_reset.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -717,7 +717,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/css\/_sections.css",
+		"oAP": "\/styles\/sass\/_sections.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -730,7 +730,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/css\/_type.css",
+		"oAP": "\/styles\/sass\/_type.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -756,7 +756,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/sass\/css\/_lg.css",
+		"oAP": "\/styles\/sass\/grid\/_lg.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -769,7 +769,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/sass\/css\/_md.css",
+		"oAP": "\/styles\/sass\/grid\/_md.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -782,7 +782,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/sass\/css\/_sm.css",
+		"oAP": "\/styles\/sass\/grid\/_sm.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -795,7 +795,7 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 1,
-		"oAP": "\/styles\/sass\/css\/_xs.css",
+		"oAP": "\/styles\/sass\/grid\/_xs.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
@@ -2613,10 +2613,10 @@
 		"autoOutputPathRelativePath": "\/min",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 2,
+		"autoOutputPathStyle": 0,
 		"createSourceMap": 0,
 		"minifyOutput": 1,
-		"syntaxCheckerStyle": 1,
+		"syntaxCheckerStyle": 3,
 		"transpilerStyle": 0
 		},
 	"languageDefaultsJSON": {
@@ -2633,8 +2633,8 @@
 		"autoOutputAction": 0,
 		"autoOutputPathFilenamePattern": "*.html",
 		"autoOutputPathRelativePath": "",
-		"autoOutputPathReplace1": "",
-		"autoOutputPathReplace2": "",
+		"autoOutputPathReplace1": "kit",
+		"autoOutputPathReplace2": "html",
 		"autoOutputPathStyle": 0
 		},
 	"languageDefaultsLESS": {
@@ -2644,8 +2644,8 @@
 		"autoOutputPathRelativePath": "..\/css",
 		"autoOutputPathReplace1": "less",
 		"autoOutputPathReplace2": "css",
-		"autoOutputPathStyle": 2,
-		"createSourceMap": 0,
+		"autoOutputPathStyle": 0,
+		"createSourceMap": 1,
 		"disableJavascript": 0,
 		"ieCompatibility": 1,
 		"outputStyle": 0,
@@ -2710,7 +2710,7 @@
 		"autoOutputPathRelativePath": "..\/css",
 		"autoOutputPathReplace1": "sass",
 		"autoOutputPathReplace2": "css",
-		"autoOutputPathStyle": 2,
+		"autoOutputPathStyle": 0,
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
@@ -2738,7 +2738,7 @@
 		"autoOutputPathRelativePath": "..\/css",
 		"autoOutputPathReplace1": "stylus",
 		"autoOutputPathReplace2": "css",
-		"autoOutputPathStyle": 2,
+		"autoOutputPathStyle": 0,
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"importCSS": 0,
@@ -2762,13 +2762,13 @@
 		"autoOutputPathRelativePath": "\/js",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 2,
+		"autoOutputPathStyle": 0,
 		"createDeclarationFile": 0,
 		"createSourceMap": 0,
 		"jsxMode": 0,
 		"minifyOutput": 0,
 		"moduleResolutionType": 0,
-		"moduleType": 0,
+		"moduleType": 2,
 		"noImplicitAny": 0,
 		"preserveConstEnums": 0,
 		"removeComments": 0,
@@ -2905,7 +2905,7 @@
 			"flagValue": -1
 			},
 		"screw-ie8": {
-			"active": 0,
+			"active": 1,
 			"flagValue": -1
 			},
 		"semicolons": {
