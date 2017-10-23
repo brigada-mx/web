@@ -60,9 +60,13 @@ header {
 // FOOTER
 
 footer {
-  #fb, #git {
+  #email, #git {
     margin-right: 20px;
     cursor: pointer;
+    @include transition(opacity, .15s, linear);
+    &:hover {
+      opacity: .7;
+    }
   }
 }
 
@@ -77,4 +81,19 @@ footer {
 #footer-img {
   background: url(../assets/img/footer.png) no-repeat left;
   background-size: cover;
+}
+
+// MAP
+
+header#beta {
+  height: 64px;
+  li {
+    margin-top: 13px;
+  }
+}
+
+#map {
+  display: block;
+  width: 100vw;
+  height: 88vh;
 }

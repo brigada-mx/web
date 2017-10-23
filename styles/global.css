@@ -1203,7 +1203,7 @@ a {
   line-height: 15px;
   color: #7D8893; }
 
-button {
+button, header#beta li {
   font-family: 'nunito-sans-800', sans-serif;
   font-size: 11px;
   line-height: 16px;
@@ -1220,17 +1220,41 @@ button {
 .white {
   border: 1px solid #ffffff;
   background-color: rgba(0, 0, 0, 0.15);
-  padding: 13px 42px 11px 42px; }
+  padding: 13px 42px 11px 42px;
+  transition: opacity 0.15s linear;
+  -webkit-transition: opacity 0.15s linear;
+  -moz-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  -ms-transition: opacity 0.15s; }
+  .white:hover {
+    opacity: .8; }
 
 .solid-white {
   background-color: #ffffff;
   color: #3DC587;
   -webkit-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.04);
-  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.04); }
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.15s linear;
+  -webkit-transition: box-shadow 0.15s linear;
+  -moz-transition: box-shadow 0.15s linear;
+  -o-transition: box-shadow 0.15s linear;
+  -ms-transition: box-shadow 0.15s; }
+  .solid-white:hover {
+    -webkit-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1); }
 
 .green {
   border: 1px solid #3DC587;
-  color: #3DC587; }
+  background-color: #ffffff;
+  color: #3DC587;
+  transition: box-shadow 0.15s linear;
+  -webkit-transition: box-shadow 0.15s linear;
+  -moz-transition: box-shadow 0.15s linear;
+  -o-transition: box-shadow 0.15s linear;
+  -ms-transition: box-shadow 0.15s; }
+  .green:hover {
+    -webkit-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.08); }
 
 .tag {
   padding: 8px 10px 7px 8px;
@@ -1377,6 +1401,12 @@ button {
       width: 90%; }
     footer button {
       margin-bottom: 89px; }
+  header#beta {
+    height: 54px;
+    margin-bottom: 0px;
+    padding: 28px 25px 0 25px; }
+    header#beta #logo {
+      text-align: left; }
   .container {
     padding: 0px; }
   .xs-hidden {
@@ -1668,6 +1698,8 @@ button {
       margin-bottom: 27px; }
     footer button {
       margin-bottom: 89px; }
+  header#beta {
+    margin-bottom: 0px; }
   .sm-hidden {
     display: none !important; }
   .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-offset-1, .col-sm-offset-2, .col-sm-offset-3, .col-sm-offset-4, .col-sm-offset-5, .col-sm-offset-6, .col-sm-offset-7, .col-sm-offset-8, .col-sm-offset-9, .col-sm-offset-10, .col-sm-offset-11, .col-sm-offset-12 {
@@ -1962,6 +1994,8 @@ button {
       width: 88%; }
     footer button {
       margin-bottom: 89px; }
+  header#beta {
+    margin-bottom: 0px; }
   .md-hidden {
     display: none !important; }
   .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md-offset-1, .col-md-offset-2, .col-md-offset-3, .col-md-offset-4, .col-md-offset-5, .col-md-offset-6, .col-md-offset-7, .col-md-offset-8, .col-md-offset-9, .col-md-offset-10, .col-md-offset-11, .col-md-offset-12 {
@@ -2246,6 +2280,8 @@ button {
       margin-bottom: 27px; }
     footer button {
       margin-bottom: 156px; }
+  header#beta {
+    margin-bottom: 0px; }
   .lg-hidden {
     display: none;
     visibility: 0; }
@@ -2538,9 +2574,16 @@ header {
   width: 736px;
   height: 455px; }
 
-footer #fb, footer #git {
+footer #email, footer #git {
   margin-right: 20px;
-  cursor: pointer; }
+  cursor: pointer;
+  transition: opacity 0.15s linear;
+  -webkit-transition: opacity 0.15s linear;
+  -moz-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  -ms-transition: opacity 0.15s; }
+  footer #email:hover, footer #git:hover {
+    opacity: .7; }
 
 #footer-img-wrap {
   position: absolute;
@@ -2552,3 +2595,13 @@ footer #fb, footer #git {
 #footer-img {
   background: url(../assets/img/footer.png) no-repeat left;
   background-size: cover; }
+
+header#beta {
+  height: 64px; }
+  header#beta li {
+    margin-top: 13px; }
+
+#map {
+  display: block;
+  width: 100vw;
+  height: 88vh; }
