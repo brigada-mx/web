@@ -74,7 +74,7 @@ section#feature1 {
   }
   margin-bottom: -12px;
   #feature1-img {
-    background: url(../assets/img/feature1-xs.png) no-repeat center;
+    background: url(/assets/img/feature1-xs.png) no-repeat center;
     background-size: 385px 410px;
     width: 385px;
     height: 410px;
@@ -91,7 +91,7 @@ section#feature1 {
   }
   margin-bottom: -24px;
   #feature2-img {
-    background: url(../assets/img/feature2-xs.png) no-repeat center;
+    background: url(/assets/img/feature2-xs.png) no-repeat center;
     background-size: 548px 593px;
     width: 548px;
     height: 593px;
@@ -107,7 +107,7 @@ section#feature1 {
     margin-bottom: 41px;
   }
   #feature3-img {
-    background: url(../assets/img/feature3-xs.png) no-repeat center;
+    background: url(/assets/img/feature3-xs.png) no-repeat center;
     background-size: 456px 233px;
     width: 456px;
     height: 233px;
@@ -140,7 +140,7 @@ footer {
     width: 90%;
   }
   button {
-    margin-bottom: 89px; 
+    margin-bottom: 89px;
   }
 }
 
@@ -271,7 +271,7 @@ header#beta {
 }
 
 .stretch-xs {
-  @include align-items(stretch); 
+  @include align-items(stretch);
 }
 
 .flex-xs {
@@ -286,7 +286,7 @@ header#beta {
 .center-xs {
   @include flexbox;
   @include justify-content(center);
-  // @include align-items(center); 
+  // @include align-items(center);
   text-align: center;
 }
 

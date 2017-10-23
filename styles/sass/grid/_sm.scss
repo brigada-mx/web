@@ -55,7 +55,7 @@ section#logo-wall {
   }
   margin-bottom: -12px;
   #feature1-img {
-    background: url(../assets/img/feature1-sm.png) no-repeat;
+    background: url(/assets/img/feature1-sm.png) no-repeat;
     background-size: 617px 553px;
     width: 617px;
     height: 553px;
@@ -71,7 +71,7 @@ section#logo-wall {
   }
   margin-bottom: 16px;
   #feature2-img {
-    background: url(../assets/img/feature2-sm.png) no-repeat;
+    background: url(/assets/img/feature2-sm.png) no-repeat;
     background-size: 548px 593px;
     width: 548px;
     height: 593px;
@@ -84,7 +84,7 @@ section#logo-wall {
     margin-bottom: 41px;
   }
   #feature3-img {
-    background: url(../assets/img/feature3-sm.png) no-repeat;
+    background: url(/assets/img/feature3-sm.png) no-repeat;
     background-size: 743px 306px;
     width: 743px;
     height: 306px;
@@ -120,7 +120,7 @@ footer {
     margin-bottom: 27px;
   }
   button {
-    margin-bottom: 89px; 
+    margin-bottom: 89px;
   }
 }
 
@@ -228,7 +228,7 @@ header#beta {
   margin-left: 91.667%;
 }
 .stretch-sm {
-  @include align-items(stretch); 
+  @include align-items(stretch);
 }
 .flex-sm {
   @include flexbox;
@@ -240,7 +240,7 @@ header#beta {
 .center-sm {
   @include flexbox;
   @include justify-content(center);
-    // @include align-items(center); 
+    // @include align-items(center);
     text-align: center;
   }
   .end-sm {
@@ -267,7 +267,7 @@ header#beta {
   .first-sm {
     @include order(-1);
   }
-  
+
   .last-sm {
     @include order(1);
   }

@@ -1,4 +1,4 @@
-// _md.scss 
+// _md.scss
 @media screen and (max-width: 1399px) and (min-width: 980px) {
 
 // HERO
@@ -61,7 +61,7 @@ section#feature1 {
 
 #feature3 {
   #feature3-img {
-    background: url(../assets/img/feature3-md.png) no-repeat;
+    background: url(/assets/img/feature3-md.png) no-repeat;
     background-size: 503px 326px;
     width: 503px;
     height: 326px;
@@ -102,7 +102,7 @@ footer {
     width: 88%;
   }
   button {
-    margin-bottom: 89px; 
+    margin-bottom: 89px;
   }
 }
 
@@ -211,7 +211,7 @@ header#beta {
   margin-left: 91.667%;
 }
 .stretch-md {
-  @include align-items(stretch); 
+  @include align-items(stretch);
 }
 .flex-md {
   @include flexbox;
@@ -223,7 +223,7 @@ header#beta {
 .center-md {
   @include flexbox;
   @include justify-content(center);
-  // @include align-items(center); 
+  // @include align-items(center);
   text-align: center;
 }
 .end-md {

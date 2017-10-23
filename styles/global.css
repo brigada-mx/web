@@ -55,67 +55,67 @@ table {
 
 @font-face {
   font-family: "din-bold";
-  src: url("../assets/fonts/din/bold.woff") format("woff"), url("../assets/fonts/din/bold.woff2") format("woff"), url("../assets/fonts/din/bold.ttf") format("truetype"); }
+  src: url("/assets/fonts/din/bold.woff") format("woff"), url("/assets/fonts/din/bold.woff2") format("woff"), url("/assets/fonts/din/bold.ttf") format("truetype"); }
 
 @font-face {
   font-family: "league-gothic";
-  src: url("../assets/fonts/league-gothic/regular.woff") format("woff"), url("../assets/fonts/league-gothic/regular.woff2") format("woff"), url("../assets/fonts/league-gothic/regular.ttf") format("truetype"); }
+  src: url("/assets/fonts/league-gothic/regular.woff") format("woff"), url("/assets/fonts/league-gothic/regular.woff2") format("woff"), url("/assets/fonts/league-gothic/regular.ttf") format("truetype"); }
 
 @font-face {
   font-family: "nunito-sans";
-  src: url("../assets/fonts/nunito-sans/regular.woff") format("woff"), url("../assets/fonts/nunito-sans/regular.woff2") format("woff"), url("../assets/fonts/nunito-sans/regular.ttf") format("truetype"); }
+  src: url("/assets/fonts/nunito-sans/regular.woff") format("woff"), url("/assets/fonts/nunito-sans/regular.woff2") format("woff"), url("/assets/fonts/nunito-sans/regular.ttf") format("truetype"); }
 
 @font-face {
   font-family: "nunito-sans-200";
-  src: url("../assets/fonts/nunito-sans/200.woff") format("woff"), url("../assets/fonts/nunito-sans/200.woff2") format("woff"), url("../assets/fonts/nunito-sans/200.ttf") format("truetype"); }
+  src: url("/assets/fonts/nunito-sans/200.woff") format("woff"), url("/assets/fonts/nunito-sans/200.woff2") format("woff"), url("/assets/fonts/nunito-sans/200.ttf") format("truetype"); }
 
 @font-face {
   font-family: "nunito-sans-300";
-  src: url("../assets/fonts/nunito-sans/300.woff") format("woff"), url("../assets/fonts/nunito-sans/300.woff2") format("woff"), url("../assets/fonts/nunito-sans/300.ttf") format("truetype"); }
+  src: url("/assets/fonts/nunito-sans/300.woff") format("woff"), url("/assets/fonts/nunito-sans/300.woff2") format("woff"), url("/assets/fonts/nunito-sans/300.ttf") format("truetype"); }
 
 @font-face {
   font-family: "nunito-sans-600";
-  src: url("../assets/fonts/nunito-sans/600.woff") format("woff"), url("../assets/fonts/nunito-sans/600.woff2") format("woff"), url("../assets/fonts/nunito-sans/600.ttf") format("truetype"); }
+  src: url("/assets/fonts/nunito-sans/600.woff") format("woff"), url("/assets/fonts/nunito-sans/600.woff2") format("woff"), url("/assets/fonts/nunito-sans/600.ttf") format("truetype"); }
 
 @font-face {
   font-family: "nunito-sans-700";
-  src: url("../assets/fonts/nunito-sans/700.woff") format("woff"), url("../assets/fonts/nunito-sans/700.woff2") format("woff"), url("../assets/fonts/nunito-sans/700.ttf") format("truetype"); }
+  src: url("/assets/fonts/nunito-sans/700.woff") format("woff"), url("/assets/fonts/nunito-sans/700.woff2") format("woff"), url("/assets/fonts/nunito-sans/700.ttf") format("truetype"); }
 
 @font-face {
   font-family: "nunito-sans-800";
-  src: url("../assets/fonts/nunito-sans/800.woff") format("woff"), url("../assets/fonts/nunito-sans/800.woff2") format("woff"), url("../assets/fonts/nunito-sans/800.ttf") format("truetype"); }
+  src: url("/assets/fonts/nunito-sans/800.woff") format("woff"), url("/assets/fonts/nunito-sans/800.woff2") format("woff"), url("/assets/fonts/nunito-sans/800.ttf") format("truetype"); }
 
 @font-face {
   font-family: "nunito-sans-900";
-  src: url("../assets/fonts/nunito-sans/900.woff") format("woff"), url("../assets/fonts/nunito-sans/900.woff2") format("woff"), url("../assets/fonts/nunito-sans/900.ttf") format("truetype"); }
+  src: url("/assets/fonts/nunito-sans/900.woff") format("woff"), url("/assets/fonts/nunito-sans/900.woff2") format("woff"), url("/assets/fonts/nunito-sans/900.ttf") format("truetype"); }
 
 @font-face {
   font-family: "roboto";
-  src: url("../assets/fonts/roboto/regular.woff") format("woff"), url("../assets/fonts/roboto/regular.woff2") format("woff"), url("../assets/fonts/roboto/regular.ttf") format("truetype"); }
+  src: url("/assets/fonts/roboto/regular.woff") format("woff"), url("/assets/fonts/roboto/regular.woff2") format("woff"), url("/assets/fonts/roboto/regular.ttf") format("truetype"); }
 
 @font-face {
   font-family: "roboto-100";
-  src: url("../assets/fonts/roboto/100.woff") format("woff"), url("../assets/fonts/roboto/100.woff2") format("woff"), url("../assets/fonts/roboto/100.ttf") format("truetype"); }
+  src: url("/assets/fonts/roboto/100.woff") format("woff"), url("/assets/fonts/roboto/100.woff2") format("woff"), url("/assets/fonts/roboto/100.ttf") format("truetype"); }
 
 @font-face {
   font-family: "roboto-200";
-  src: url("../assets/fonts/roboto/200.woff") format("woff"), url("../assets/fonts/roboto/200.woff2") format("woff"), url("../assets/fonts/roboto/200.ttf") format("truetype"); }
+  src: url("/assets/fonts/roboto/200.woff") format("woff"), url("/assets/fonts/roboto/200.woff2") format("woff"), url("/assets/fonts/roboto/200.ttf") format("truetype"); }
 
 @font-face {
   font-family: "roboto-300";
-  src: url("../assets/fonts/roboto/300.woff") format("woff"), url("../assets/fonts/roboto/300.woff2") format("woff"), url("../assets/fonts/roboto/300.ttf") format("truetype"); }
+  src: url("/assets/fonts/roboto/300.woff") format("woff"), url("/assets/fonts/roboto/300.woff2") format("woff"), url("/assets/fonts/roboto/300.ttf") format("truetype"); }
 
 @font-face {
   font-family: "roboto-500";
-  src: url("../assets/fonts/roboto/500.woff") format("woff"), url("../assets/fonts/roboto/500.woff2") format("woff"), url("../assets/fonts/roboto/500.ttf") format("truetype"); }
+  src: url("/assets/fonts/roboto/500.woff") format("woff"), url("/assets/fonts/roboto/500.woff2") format("woff"), url("/assets/fonts/roboto/500.ttf") format("truetype"); }
 
 @font-face {
   font-family: "roboto-700";
-  src: url("../assets/fonts/roboto/700.woff") format("woff"), url("../assets/fonts/roboto/700.woff2") format("woff"), url("../assets/fonts/roboto/700.ttf") format("truetype"); }
+  src: url("/assets/fonts/roboto/700.woff") format("woff"), url("/assets/fonts/roboto/700.woff2") format("woff"), url("/assets/fonts/roboto/700.ttf") format("truetype"); }
 
 @font-face {
   font-family: "roboto-900";
-  src: url("../assets/fonts/roboto/900.woff") format("woff"), url("../assets/fonts/roboto/900.woff2") format("woff"), url("../assets/fonts/roboto/900.ttf") format("truetype"); }
+  src: url("/assets/fonts/roboto/900.woff") format("woff"), url("/assets/fonts/roboto/900.woff2") format("woff"), url("/assets/fonts/roboto/900.ttf") format("truetype"); }
 
 /*!
  * animate.css -http://daneden.me/animate
@@ -1364,7 +1364,7 @@ button {
       width: 90%;
       margin: 0 auto 21px auto; }
     section#feature1 #feature1-img {
-      background: url(../assets/img/feature1-xs.png) no-repeat center;
+      background: url(/assets/img/feature1-xs.png) no-repeat center;
       background-size: 385px 410px;
       width: 385px;
       height: 410px; }
@@ -1376,7 +1376,7 @@ button {
       width: 90%;
       margin: 0 auto 0 auto; }
     #feature2 #feature2-img {
-      background: url(../assets/img/feature2-xs.png) no-repeat center;
+      background: url(/assets/img/feature2-xs.png) no-repeat center;
       background-size: 548px 593px;
       width: 548px;
       height: 593px; }
@@ -1387,7 +1387,7 @@ button {
     #feature3 p {
       margin-bottom: 41px; }
     #feature3 #feature3-img {
-      background: url(../assets/img/feature3-xs.png) no-repeat center;
+      background: url(/assets/img/feature3-xs.png) no-repeat center;
       background-size: 456px 233px;
       width: 456px;
       height: 233px; }
@@ -1664,7 +1664,7 @@ button {
     #feature1 p {
       margin-bottom: 21px; }
     #feature1 #feature1-img {
-      background: url(../assets/img/feature1-sm.png) no-repeat;
+      background: url(/assets/img/feature1-sm.png) no-repeat;
       background-size: 617px 553px;
       width: 617px;
       height: 553px; }
@@ -1675,7 +1675,7 @@ button {
     #feature2 p {
       margin-bottom: 0; }
     #feature2 #feature2-img {
-      background: url(../assets/img/feature2-sm.png) no-repeat;
+      background: url(/assets/img/feature2-sm.png) no-repeat;
       background-size: 548px 593px;
       width: 548px;
       height: 593px; }
@@ -1684,7 +1684,7 @@ button {
     #feature3 p {
       margin-bottom: 41px; }
     #feature3 #feature3-img {
-      background: url(../assets/img/feature3-sm.png) no-repeat;
+      background: url(/assets/img/feature3-sm.png) no-repeat;
       background-size: 743px 306px;
       width: 743px;
       height: 306px; }
@@ -1977,7 +1977,7 @@ button {
   #feature3 {
     margin-bottom: 161px; }
     #feature3 #feature3-img {
-      background: url(../assets/img/feature3-md.png) no-repeat;
+      background: url(/assets/img/feature3-md.png) no-repeat;
       background-size: 503px 326px;
       width: 503px;
       height: 326px; }
@@ -2551,7 +2551,7 @@ header {
   z-index: -1; }
 
 #hero-img {
-  background: url(../assets/img/hero.png) no-repeat left;
+  background: url(/assets/img/hero.png) no-repeat left;
   background-size: cover;
   height: 100vh;
   opacity: .75; }
@@ -2566,19 +2566,19 @@ header {
   height: 100px; }
 
 #feature1-img {
-  background: url(../assets/img/feature1.png) no-repeat;
+  background: url(/assets/img/feature1.png) no-repeat;
   background-size: 586px 624px;
   width: 586px;
   height: 624px; }
 
 #feature2-img {
-  background: url(../assets/img/feature2.png) no-repeat;
+  background: url(/assets/img/feature2.png) no-repeat;
   background-size: 627px 843px;
   width: 627px;
   height: 843px; }
 
 #feature3-img {
-  background: url(../assets/img/feature3.png) no-repeat;
+  background: url(/assets/img/feature3.png) no-repeat;
   background-size: 736px 455px;
   width: 736px;
   height: 455px; }
@@ -2602,7 +2602,7 @@ footer #email, footer #git {
   z-index: 0; }
 
 #footer-img {
-  background: url(../assets/img/footer.png) no-repeat left;
+  background: url(/assets/img/footer.png) no-repeat left;
   background-size: cover; }
 
 header#beta {
