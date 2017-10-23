@@ -12,15 +12,28 @@ button {
   border: 1px solid $white;
   background-color: rgba(0,0,0,0.15);
   padding: 13px 42px 11px 42px;
+  @include transition(opacity, .15s, linear);
+  &:hover {
+    opacity: .8;
+  }
 }
 
 .solid-white {
   background-color: $white;
   color: $green;
   @include box-shadow(0,10px,20px,0,0,0,0,0.04);
+  @include transition(box-shadow, .15s, linear);
+  &:hover {
+    @include box-shadow(0,10px,20px,0,0,0,0,0.1);
+  }
 }
 
 .green {
   border: 1px solid $green;
+  background-color: $white;
   color: $green;
+  @include transition(box-shadow, .15s, linear);
+  &:hover {
+    @include box-shadow(0,10px,20px,0,0,0,0,0.08);
+  }
 }

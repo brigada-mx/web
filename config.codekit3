@@ -457,6 +457,12 @@
 		"oAP": "\/html\/index.html",
 		"oF": 0
 		},
+	"\/html\/mapa.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/html\/mapa.html",
+		"oF": 0
+		},
 	"\/README.md": {
 		"cS": 0,
 		"eF": 1,
