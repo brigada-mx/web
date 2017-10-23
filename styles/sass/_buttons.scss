@@ -16,6 +16,12 @@ button {
   &:hover {
     opacity: .8;
   }
+  a {
+    color: $white;
+  }
+  a:active {
+    color: $white;
+  }
 }
 
 .solid-white {
@@ -26,14 +32,23 @@ button {
   &:hover {
     @include box-shadow(0,10px,20px,0,0,0,0,0.1);
   }
+  &:active {
+    color: $green;
+  }
 }
 
 .green {
   border: 1px solid $green;
   background-color: $white;
-  color: $green;
+  
   @include transition(box-shadow, .15s, linear);
   &:hover {
     @include box-shadow(0,10px,20px,0,0,0,0,0.08);
+  }
+  a {
+    color: $green;
+  }
+  a:active {
+    color: $green;
   }
 }
