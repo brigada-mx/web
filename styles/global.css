@@ -1232,7 +1232,6 @@ button {
 
 .solid-white {
   background-color: #ffffff;
-  color: #3DC587;
   -webkit-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.04);
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.04);
   transition: box-shadow 0.15s linear;
@@ -1243,7 +1242,9 @@ button {
   .solid-white:hover {
     -webkit-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1); }
-  .solid-white:active {
+  .solid-white a {
+    color: #3DC587; }
+  .solid-white a:active {
     color: #3DC587; }
 
 .green {
