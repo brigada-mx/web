@@ -1,20 +1,29 @@
 // _sm.scss
-@media screen and (max-width: 979px) and (min-width: 780px) {
+@media screen and (max-width: 979px) and (min-width: 768px) {
 
 // HERO
 
 header {
   margin-bottom: 70vh;
   padding: 28px 5px 0 5px;
+  button.white {
+    border: 1px solid $grey-7;
+    background-color: white;
+    a {
+      color: $grey-7;
+    }
+  }
   h1 {
     margin: 101vh 0 -46px 0;
   }
   #hero-img-wrap {
     width: 100%;
-    top: 12vh;
+    top: 95px;
   }
   #hero-img {
+    background-position: center;
     height: 88vh;
+    opacity: 1;
   }
   #hero-content {
     p {

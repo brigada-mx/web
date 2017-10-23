@@ -1,5 +1,5 @@
 // _xs.scss
-@media screen and (max-width: 799px) and (min-width: 320px) {
+@media screen and (max-width: 767px) and (min-width: 320px) {
 
 // TYPE
 
@@ -14,26 +14,33 @@ h2 {
 
 // HERO
 
-header {
+body header {
+  height: auto;
   button.green {
     padding: 16px 52px 14px 52px;
   }
   #logo {
     text-align: center;
     display: block;
+    padding-top: 3px;
+    img {
+      width: 96px;
+      height: auto;
+    }
   }
-  margin-bottom: 128vh;
+  margin-bottom: 54px;
   padding: 28px 5px 0 5px;
   h1 {
     margin: 102vh 0 22px 0;
   }
   #hero-img-wrap {
     width: 100%;
-    top: 16vh;
+    top: 84px;
   }
   #hero-img {
     background-position: center;
     height: 88vh;
+    opacity: 1;
   }
   #hero-content {
     text-align: center;
@@ -59,7 +66,8 @@ section#logo-wall {
   text-align: center;
 }
 
-#feature1 {
+section#feature1 {
+  margin-top: 0px;
   p {
     width: 90%;
     margin: 0 auto 21px auto;
@@ -84,8 +92,8 @@ section#logo-wall {
   margin-bottom: -24px;
   #feature2-img {
     background: url(../assets/img/feature2-xs.png) no-repeat center;
-    background-size: 395px 593px;
-    width: 395px;
+    background-size: 548px 593px;
+    width: 548px;
     height: 593px;
   }
   .tag {
@@ -116,14 +124,13 @@ section#logo-wall {
 
 footer {
   text-align: center;
-  margin-top: 45px;
-  padding: 310px 0 34px 0;
+  padding: 360px 0 34px 0;
   #footer-img {
     height: 291px;
   }
   #footer-img-wrap {
     width: 100%;
-    bottom: 470px;
+    bottom: 510px;
   }
   h2 {
     margin-bottom: 21px;
@@ -150,8 +157,8 @@ footer {
 .col-xs, .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-offset-1, .col-xs-offset-2, .col-xs-offset-3, .col-xs-offset-4, .col-xs-offset-5, .col-xs-offset-6, .col-xs-offset-7, .col-xs-offset-8, .col-xs-offset-9, .col-xs-offset-10, .col-xs-offset-11, .col-xs-offset-12 {
   box-sizing: border-box;
   @include flex(0, 0, auto);
-  padding-right: $half-gutter-width;
-  padding-left: $half-gutter-width;
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
 .col-xs {
