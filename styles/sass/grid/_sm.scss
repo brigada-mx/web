@@ -12,6 +12,9 @@ header {
     a {
       color: $grey-7;
     }
+    a:active {
+      color: $grey-7;
+    }
   }
   h1 {
     margin: 101vh 0 -46px 0;
