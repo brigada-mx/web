@@ -1,6 +1,6 @@
 // _typeworks.scss
 
-body, p {
+p {
   @include nunito-sans-200;
   font-size: 15.5px;
   line-height: 30px;
@@ -10,9 +10,9 @@ body, p {
 
 h1 {
   @include din-bold;
-  font-size: 74px;
+  font-size: 84px;
   line-height: 92px;
-  letter-spacing: -1px;
+  letter-spacing: -1.2px;
   color: $grey-7;
 }
 

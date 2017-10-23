@@ -6,10 +6,8 @@ header {
 }
 
 #logo {
-  @include league-gothic;
-  color: $grey-5;
-  font-size: 27px;
-  line-height: 32px;
+  padding-top: 6px;
+  display: inline-block;
 }
 
 header li a {

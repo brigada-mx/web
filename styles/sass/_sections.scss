@@ -18,6 +18,7 @@ header {
   background: url(../assets/img/hero.png) no-repeat left;
   background-size: cover;
   height: 100vh;
+  opacity: .75;
 }
 
 // LOGO WALL
@@ -61,6 +62,7 @@ header {
 footer {
   #fb, #git {
     margin-right: 20px;
+    cursor: pointer;
   }
 }
 

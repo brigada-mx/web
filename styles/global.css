@@ -1162,10 +1162,8 @@ header {
   margin-bottom: 102px; }
 
 #logo {
-  font-family: 'league-gothic', sans-serif;
-  color: #2D2F32;
-  font-size: 27px;
-  line-height: 32px; }
+  padding-top: 6px;
+  display: inline-block; }
 
 header li a {
   color: #ffffff; }
@@ -1176,7 +1174,7 @@ header ul {
 footer {
   background-color: #F3F5F7; }
 
-body, p {
+p {
   font-family: 'nunito-sans-200', sans-serif;
   font-size: 15.5px;
   line-height: 30px;
@@ -1185,9 +1183,9 @@ body, p {
 
 h1 {
   font-family: 'din-bold', sans-serif;
-  font-size: 74px;
+  font-size: 84px;
   line-height: 92px;
-  letter-spacing: -1px;
+  letter-spacing: -1.2px;
   color: #141418; }
 
 h2 {
@@ -1220,7 +1218,9 @@ button {
   padding: 16px 46px 14px 46px; }
 
 .white {
-  border: 1px solid #ffffff; }
+  border: 1px solid #ffffff;
+  background-color: rgba(0, 0, 0, 0.15);
+  padding: 13px 42px 11px 42px; }
 
 .solid-white {
   background-color: #ffffff;
@@ -1287,31 +1287,37 @@ button {
   -moz-flex-direction: column-reverse;
   flex-direction: column-reverse; }
 
-@media screen and (max-width: 799px) and (min-width: 320px) {
+@media screen and (max-width: 767px) and (min-width: 320px) {
   h1 {
     font-size: 56px;
     line-height: 54px; }
   h2 {
     font-size: 39px; }
-  header {
-    margin-bottom: 128vh;
+  body header {
+    height: auto;
+    margin-bottom: 54px;
     padding: 28px 5px 0 5px; }
-    header button.green {
+    body header button.green {
       padding: 16px 52px 14px 52px; }
-    header #logo {
+    body header #logo {
       text-align: center;
-      display: block; }
-    header h1 {
+      display: block;
+      padding-top: 3px; }
+      body header #logo img {
+        width: 96px;
+        height: auto; }
+    body header h1 {
       margin: 102vh 0 22px 0; }
-    header #hero-img-wrap {
+    body header #hero-img-wrap {
       width: 100%;
-      top: 16vh; }
-    header #hero-img {
+      top: 84px; }
+    body header #hero-img {
       background-position: center;
-      height: 88vh; }
-    header #hero-content {
+      height: 88vh;
+      opacity: 1; }
+    body header #hero-content {
       text-align: center; }
-      header #hero-content p {
+      body header #hero-content p {
         margin-bottom: 22px; }
   section#logo-wall {
     margin-bottom: 95px;
@@ -1320,17 +1326,18 @@ button {
     text-align: center; }
     #feature1 button.green, #feature2 button.green, #feature3 button.green {
       padding: 12px 39px 10px 39px; }
-  #feature1 {
+  section#feature1 {
+    margin-top: 0px;
     margin-bottom: -12px; }
-    #feature1 p {
+    section#feature1 p {
       width: 90%;
       margin: 0 auto 21px auto; }
-    #feature1 #feature1-img {
+    section#feature1 #feature1-img {
       background: url(../assets/img/feature1-xs.png) no-repeat center;
       background-size: 385px 410px;
       width: 385px;
       height: 410px; }
-    #feature1 h2 {
+    section#feature1 h2 {
       margin: 0 0 10px 0; }
   #feature2 {
     margin-bottom: -24px; }
@@ -1339,8 +1346,8 @@ button {
       margin: 0 auto 0 auto; }
     #feature2 #feature2-img {
       background: url(../assets/img/feature2-xs.png) no-repeat center;
-      background-size: 395px 593px;
-      width: 395px;
+      background-size: 548px 593px;
+      width: 548px;
       height: 593px; }
     #feature2 .tag {
       margin-top: 50px; }
@@ -1357,13 +1364,12 @@ button {
     margin: 20px 0 10px 0; }
   footer {
     text-align: center;
-    margin-top: 45px;
-    padding: 310px 0 34px 0; }
+    padding: 360px 0 34px 0; }
     footer #footer-img {
       height: 291px; }
     footer #footer-img-wrap {
       width: 100%;
-      bottom: 470px; }
+      bottom: 510px; }
     footer h2 {
       margin-bottom: 21px; }
     footer p {
@@ -1385,8 +1391,8 @@ button {
     -moz-box-flex: 0 0 auto;
     /* OLD - Firefox 19- */
     flex: 0 0 auto;
-    padding-right: 1.5%;
-    padding-left: 1.5%; }
+    padding-right: 0px;
+    padding-left: 0px; }
   .col-xs {
     -webkit-flex-grow: 1;
     -ms-flex-grow: 1;
@@ -1588,17 +1594,24 @@ button {
     /* NEW - Chrome */
     order: 1; } }
 
-@media screen and (max-width: 979px) and (min-width: 780px) {
+@media screen and (max-width: 979px) and (min-width: 768px) {
   header {
     margin-bottom: 70vh;
     padding: 28px 5px 0 5px; }
+    header button.white {
+      border: 1px solid #141418;
+      background-color: white; }
+      header button.white a {
+        color: #141418; }
     header h1 {
       margin: 101vh 0 -46px 0; }
     header #hero-img-wrap {
       width: 100%;
-      top: 12vh; }
+      top: 95px; }
     header #hero-img {
-      height: 88vh; }
+      background-position: center;
+      height: 88vh;
+      opacity: 1; }
     header #hero-content p {
       width: 84%;
       margin-bottom: 19px; }
@@ -1893,7 +1906,7 @@ button {
     margin-bottom: -50px;
     padding: 28px 5px 0 5px; }
     header h1 {
-      margin-top: 104px; }
+      margin-top: 134px; }
     header #hero-img-wrap {
       width: 55%; }
     header #hero-content p {
@@ -1903,13 +1916,13 @@ button {
     margin-bottom: 100px; }
   #feature1 p, #feature2 p, #feature3 p {
     margin-bottom: 21px; }
-  #feature1 {
-    margin-bottom: 36px; }
-    #feature1 #feature1-img {
+  section#feature1 {
+    margin: 157px 0 36px 0; }
+    section#feature1 #feature1-img {
       background-size: 479px 510px;
       width: 479px;
       height: 510px; }
-    #feature1 h2 {
+    section#feature1 h2 {
       margin: 127px 0 10px 0;
       width: 330px; }
   #feature2 {
@@ -2193,7 +2206,7 @@ button {
 
 @media screen and (min-width: 1400px) {
   header {
-    margin-bottom: -50px;
+    margin-bottom: 188px;
     padding: 28px 5px 0 5px; }
     header h1 {
       margin: 189px 0 12px 0; }
@@ -2495,7 +2508,8 @@ header {
 #hero-img {
   background: url(../assets/img/hero.png) no-repeat left;
   background-size: cover;
-  height: 100vh; }
+  height: 100vh;
+  opacity: .75; }
 
 #logo-wall {
   padding: 42px;
@@ -2525,7 +2539,8 @@ header {
   height: 455px; }
 
 footer #fb, footer #git {
-  margin-right: 20px; }
+  margin-right: 20px;
+  cursor: pointer; }
 
 #footer-img-wrap {
   position: absolute;
