@@ -1,25 +1,22 @@
-# web
+# Web
 
 
-## restart nginx
+## Set Up NGINX
+Edit `/usr/local/etc/nginx/nginx.conf`, add the following line before the closing curly brace: `include conf.d/*.conf;`.
+
+Copy `919.template.conf` to `919.conf` and sym link it into the newly created `conf.d` directory.
+
+~~~sh
+mkdir /usr/local/etc/nginx/conf.d
+ln -s 919.conf /usr/local/etc/nginx/conf.d/919.conf
+~~~
+
+Edit `subl /etc/hosts`, add this line: `127.0.0.1 919.local.mx`.
+
+Make sure directories containing your site files are readable and executable by all users: `chmod 755 ~`.
+
+
+## Restart NGINX
+~~~sh
 sudo nginx -s stop; sudo nginx
-
-
-
-`subl /etc/hosts`
-
-127.0.0.1 919.local.mx
-
-
-`chmod 755 ~`
-
-
-`ln -s /Users/kylebebak/GoogleDrive/Code/Work/919/web/919.conf /usr/local/etc/nginx/conf.d/919.conf`
-
-
-404 (Not Found)
-logo.svg Failed to load resource: the server responded with a status of 404 (Not Found)
-github.svg Failed to load resource: the server responded with a status of 404 (Not Found)
-email.svg Failed to load resource: the server responded with a status of 404 (Not Found)
-:8080/assets/img/favicon.ico Failed to load resource: the server responded with a status of 404 (Not Found)
-global.css
+~~~
