@@ -20,6 +20,9 @@
     gtag('config', 'UA-108487748-1');
   </script>
 
+  <script src='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.css' rel='stylesheet' />
+
 </head>
 
 <body>
@@ -47,9 +50,46 @@
 
   </header>
 
-  <section id="map">
-    <iframe width="100%" height="100%" frameborder="0" src="https://eduardopi.carto.com/builder/e820cd9a-4e0d-11e6-8e86-0e233c30368f/embed" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-  </section>
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Ynd2d2s0dG4ifQ.W9vKUEkm1KtmR66z_dhixA';
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk',
+  zoom: 7,
+  center: [-97.9642505, 17.4573688]
+});
+map.on('load', function () {
+
+  map.addLayer({
+    'id': 'population',
+    'type': 'circle',
+    'source': {
+      type: 'vector',
+      url: 'mapbox://kylebebak.4nmivsgk'
+    },
+    'source-layer': 'oaxaca-2-5tgore',
+    'paint': {
+      // make circles larger as the user zooms from z12 to z22
+      'circle-radius': {
+        'base': 1.75,
+        'stops': [[12, 2], [22, 180]]
+      },
+      // color circles by ethnicity, using data-driven styles
+      'circle-color': {
+        property: 'ethnicity',
+        type: 'categorical',
+        stops: [
+          ['White', '#fbb03b'],
+          ['Black', '#223b53'],
+          ['Hispanic', '#e55e5e'],
+          ['Asian', '#3bb2d0'],
+          ['Other', '#ccc']]
+      }
+    }
+  });
+});
+</script>
 
 </body>
 

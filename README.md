@@ -8,7 +8,7 @@ Copy `919.template.conf` to `919.conf` and sym link it into the newly created `c
 
 ~~~sh
 mkdir /usr/local/etc/nginx/conf.d
-ln -s 919.conf /usr/local/etc/nginx/conf.d/919.conf
+ln -s /path/to/this/repo/919.conf /usr/local/etc/nginx/conf.d/919.conf
 ~~~
 
 Edit `subl /etc/hosts`, add this line: `127.0.0.1 919.local.mx`.
