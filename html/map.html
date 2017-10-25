@@ -56,36 +56,37 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Y
 var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk',
-  zoom: 7,
-  center: [-97.9642505, 17.4573688]
+  zoom: 7.5,
+  center: [-95.7642505, 16.6073688]
 });
 map.on('load', function () {
 
   map.addLayer({
-    'id': 'population',
-    'type': 'circle',
-    'source': {
+    id: 'population',
+    type: 'circle',
+    source: {
       type: 'vector',
       url: 'mapbox://kylebebak.4nmivsgk'
     },
     'source-layer': 'oaxaca-2-5tgore',
-    'paint': {
-      // make circles larger as the user zooms from z12 to z22
+    paint: {
       'circle-radius': {
-        'base': 1.75,
-        'stops': [[12, 2], [22, 180]]
-      },
-      // color circles by ethnicity, using data-driven styles
-      'circle-color': {
-        property: 'ethnicity',
-        type: 'categorical',
+        property: 'Cont total',
+        type: 'exponential',
         stops: [
-          ['White', '#fbb03b'],
-          ['Black', '#223b53'],
-          ['Hispanic', '#e55e5e'],
-          ['Asian', '#3bb2d0'],
-          ['Other', '#ccc']]
-      }
+          [1, 3],
+          [15000, 30]
+        ]
+      },
+      'circle-color': {
+        property: 'Cont total',
+        type: 'exponential',
+        stops: [
+          [1, '#fbe08b'],
+          [15000, '#f54e4e']
+        ]
+      },
+      'circle-opacity': 0.9,
     }
   });
 });
