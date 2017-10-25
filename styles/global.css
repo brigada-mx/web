@@ -1211,13 +1211,14 @@ button {
   display: inline-block;
   cursor: pointer;
   background: none;
-  border: none;
-  padding: 16px 46px 14px 46px; }
+  border: none; }
+  button a {
+    display: inline-block;
+    padding: 14px 40px 12px 40px; }
 
 .white {
   border: 1px solid #ffffff;
   background-color: rgba(0, 0, 0, 0.15);
-  padding: 13px 42px 11px 42px;
   transition: opacity 0.15s linear;
   -webkit-transition: opacity 0.15s linear;
   -moz-transition: opacity 0.15s linear;
@@ -1226,6 +1227,7 @@ button {
   .white:hover {
     opacity: .8; }
   .white a {
+    padding: 11px 36px 10px 36px;
     color: #ffffff; }
   .white a:active {
     color: #ffffff; }
@@ -1328,8 +1330,8 @@ button {
     height: auto;
     margin-bottom: 54px;
     padding: 28px 5px 0 5px; }
-    body header button.green {
-      padding: 16px 52px 14px 52px; }
+    body header button.green a {
+      padding: 14px 46px 12px 46px; }
     body header #logo {
       text-align: center;
       display: block;
@@ -1355,8 +1357,8 @@ button {
     padding: 22px; }
   #feature1, #feature2, #feature3 {
     text-align: center; }
-    #feature1 button.green, #feature2 button.green, #feature3 button.green {
-      padding: 12px 39px 10px 39px; }
+    #feature1 button.green a, #feature2 button.green a, #feature3 button.green a {
+      padding: 10px 33px 8px 33px; }
   section#feature1 {
     margin-top: 0px;
     margin-bottom: -12px; }

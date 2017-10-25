@@ -5,18 +5,21 @@ button {
   cursor: pointer;
   background: none;
   border: none;
-  padding: 16px 46px 14px 46px;
+  a {
+    display: inline-block;
+    padding: 14px 40px 12px 40px;
+  }
 }
 
 .white {
   border: 1px solid $white;
   background-color: rgba(0,0,0,0.15);
-  padding: 13px 42px 11px 42px;
   @include transition(opacity, .15s, linear);
   &:hover {
     opacity: .8;
   }
   a {
+    padding: 11px 36px 10px 36px;
     color: $white;
   }
   a:active {

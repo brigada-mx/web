@@ -16,8 +16,8 @@ h2 {
 
 body header {
   height: auto;
-  button.green {
-    padding: 16px 52px 14px 52px;
+  button.green a {
+    padding: 14px 46px 12px 46px;
   }
   #logo {
     text-align: center;
@@ -60,8 +60,8 @@ section#logo-wall {
 // FEATURES
 
 #feature1, #feature2, #feature3 {
-  button.green {
-    padding: 12px 39px 10px 39px;
+  button.green a {
+    padding: 10px 33px 8px 33px;
   }
   text-align: center;
 }
