@@ -34,7 +34,7 @@ a {
   color: $grey-3;
 }
 
-button, header#beta li {
+a.button, header#beta li {
   @include nunito-sans-800;
   font-size: 11px;
   line-height: 16px;

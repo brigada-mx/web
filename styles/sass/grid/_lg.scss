@@ -80,8 +80,8 @@ footer {
   p {
     margin-bottom: 27px;
   }
-  button {
-    margin-bottom: 156px; 
+  .button {
+    margin-bottom: 156px;
   }
 }
 
@@ -191,7 +191,7 @@ header#beta {
     margin-left: 91.667%;
   }
   .stretch-lg {
-    @include align-items(stretch); 
+    @include align-items(stretch);
   }
   .flex-lg {
     @include flexbox;

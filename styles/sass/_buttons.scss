@@ -1,59 +1,54 @@
 // _buttons.scss
 
-button {
+.button {
   display: inline-block;
   cursor: pointer;
   background: none;
   border: none;
-  a {
-    display: inline-block;
-    padding: 14px 40px 12px 40px;
-  }
+  padding: 16px 51px 14px 51px;
 }
 
-.white {
+.small {
+  padding: 12px 39px 10px 39px;
+}
+
+a.white {
   border: 1px solid $white;
   background-color: rgba(0,0,0,0.15);
   @include transition(opacity, .15s, linear);
+  padding: 13px 39px 10px 39px;
+  color: $white;
   &:hover {
     opacity: .8;
   }
-  a {
-    padding: 11px 36px 10px 36px;
-    color: $white;
-  }
-  a:active {
+  &:active {
     color: $white;
   }
 }
 
-.solid-white {
+a.solid-white {
+  color: $green;
   background-color: $white;
   @include box-shadow(0,10px,20px,0,0,0,0,0.04);
   @include transition(box-shadow, .15s, linear);
+  padding: 17px 44px 15px 44px;
   &:hover {
     @include box-shadow(0,10px,20px,0,0,0,0,0.1);
   }
-  a {
-    color: $green;
-  }
-  a:active {
+  &:active {
     color: $green;
   }
 }
 
-.green {
+a.green {
+  color: $green;
   border: 1px solid $green;
   background-color: $white;
-
   @include transition(box-shadow, .15s, linear);
   &:hover {
     @include box-shadow(0,10px,20px,0,0,0,0,0.08);
   }
-  a {
-    color: $green;
-  }
-  a:active {
+  &:active {
     color: $green;
   }
 }
