@@ -20,3 +20,11 @@ Make sure directories containing your site files are readable and executable by 
 ~~~sh
 sudo nginx -s stop; sudo nginx
 ~~~
+
+
+## Map Data
+These are the current fields for our map data:
+
+~~~sh
+cvegeo,longitude,latitude,mun_name,loc_name,habit,not_habit,destroyed,total
+~~~
