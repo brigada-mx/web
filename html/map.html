@@ -63,7 +63,7 @@
 
 <script type="text/javascript">
 mapboxgl.accessToken = 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Ynd2d2s0dG4ifQ.W9vKUEkm1KtmR66z_dhixA'
-var map = new mapboxgl.Map({
+const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk',
   zoom: 7.5,
@@ -71,14 +71,15 @@ var map = new mapboxgl.Map({
 })
 
 // creates a popup, but doesn't add it to map yet
-var popup = new mapboxgl.Popup({
+const popup = new mapboxgl.Popup({
   closeButton: false
 })
 
-var locs = [] // holds all locality features for filtering
+let localities = [] // holds all locality features for filtering
+const numList = 500
 
-var filterEl = document.getElementById('feature-filter')
-var listingEl = document.getElementById('feature-listing')
+const filterEl = document.getElementById('feature-filter')
+const listEl = document.getElementById('feature-listing')
 
 function cleanAccentedChars(s) {
   s = s.replace(/[áÁ]/g, 'a')
@@ -101,25 +102,25 @@ const tokenMatch = (h, n) => {
   const needles = toLowerWords(cleanAccentedChars(n))
   const haystack = toLowerWords(cleanAccentedChars(h))
 
+  outer:
   for (let n of needles) {
-    let matched = false
-    for (let h of haystack) {
-      if (h.indexOf(n) >= 0) {
-        matched = true
-        break
+    for (let i = 0, l = haystack.length; i < l; i++) {
+      if (haystack[i].indexOf(n) >= 0) {
+        haystack.splice(i, 1);
+        continue outer
       }
     }
-    if (!matched) return false
+    return false
   }
   return true
 }
 
-function renderListings(features) {
+function renderList(features) {
   // clear any existing listings
-  listingEl.innerHTML = ''
+  listEl.innerHTML = ''
   features.forEach(function(feature) {
-    var prop = feature.properties
-    var item = document.createElement('a')
+    const prop = feature.properties
+    const item = document.createElement('a')
     item.textContent = prop.NOM_LOC
     item.addEventListener('mouseover', function() {
       // highlight corresponding feature on the map
@@ -127,7 +128,10 @@ function renderListings(features) {
         .setText(feature.properties.NOM_LOC)
         .addTo(map)
     })
-    listingEl.appendChild(item)
+    listEl.appendChild(item)
+    $(item).on('click', () => {
+      map.setCenter(feature.geometry.coordinates);
+    })
   })
 
   // show the filter input
@@ -135,11 +139,11 @@ function renderListings(features) {
 }
 
 function deduplicate(features, comparatorProperty) {
-  var existingFeatureKeys = {}
+  const existingFeatureKeys = {}
   // Because features come from tiled vector data, feature geometries may be split
   // or duplicated across tile boundaries and, as a result, features may appear
   // multiple times in query results.
-  var uniqueFeatures = features.filter(function(el) {
+  const uniqueFeatures = features.filter(function(el) {
     if (existingFeatureKeys[el.properties[comparatorProperty]]) {
       return false
     } else {
@@ -165,15 +169,15 @@ map.on('load', function () {
         property: 'Cont total',
         type: 'exponential',
         stops: [
-          [1, 3],
-          [15000, 30]
+          [1, 5],
+          [15000, 35]
         ]
       },
       'circle-color': {
         property: 'Cont total',
         type: 'exponential',
         stops: [
-          [1, '#fbe08b'],
+          [1, '#ebd08b'],
           [15000, '#f54e4e']
         ]
       },
@@ -186,7 +190,7 @@ map.on('load', function () {
     map.getCanvas().style.cursor = 'pointer'
 
     // populate the popup and set its coordinates based on the feature
-    var feature = e.features[0]
+    const feature = e.features[0]
     popup.setLngLat(feature.geometry.coordinates)
       .setText(feature.properties.NOM_LOC)
       .addTo(map)
@@ -199,12 +203,12 @@ map.on('load', function () {
 
   filterEl.addEventListener('keyup', function(e) {
     // filter visible features that don't match the input value
-    var filtered = locs.filter(function(feature) {
+    const filtered = localities.filter(function(feature) {
       return tokenMatch(feature.properties.NOM_LOC, e.target.value)
     })
 
     // populate the sidebar with filtered results
-    renderListings(filtered.slice(0, 500))
+    renderList(filtered.slice(0, numList))
 
     // set the filter to populate features into the layer
     map.setFilter('damage', ['in', 'NOM_LOC'].concat(
@@ -214,15 +218,13 @@ map.on('load', function () {
     ))
   })
 
-  // call this function on initialization
   map.on('data', (data) => {
-    if (locs.length > 0) { return }
+    if (localities.length > 0) { return } // only call this function on initialization
 
     if (data.dataType === 'source' && data.isSourceLoaded) {
-      var features = map.querySourceFeatures('damage', {sourceLayer: 'oaxaca-2-5tgore'})
-      var uniqueFeatures = deduplicate(features, 'NOM_LOC')
-      locs = uniqueFeatures
-      renderListings(uniqueFeatures.slice(0, 500))
+      const features = map.querySourceFeatures('damage', {sourceLayer: 'oaxaca-2-5tgore'})
+      localities = deduplicate(features, 'cvegeo')
+      renderList(localities.slice(0, numList))
     }
   })
 })
