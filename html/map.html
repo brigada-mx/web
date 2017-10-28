@@ -81,7 +81,7 @@ const numList = 500
 const filterEl = document.getElementById('feature-filter')
 const listEl = document.getElementById('feature-listing')
 
-function cleanAccentedChars(s) {
+const cleanAccentedChars = (s) => {
   s = s.replace(/[áÁ]/g, 'a')
   s = s.replace(/[éÉ]/g, 'e')
   s = s.replace(/[íÍ]/g, 'i')
@@ -115,17 +115,17 @@ const tokenMatch = (h, n) => {
   return true
 }
 
-function renderList(features) {
+const renderList = (features) => {
   // clear any existing listings
   listEl.innerHTML = ''
-  features.forEach(function(feature) {
+  features.forEach((feature) => {
     const prop = feature.properties
     const item = document.createElement('a')
-    item.textContent = prop.NOM_LOC
-    item.addEventListener('mouseover', function() {
+    item.textContent = prop.locName
+    item.addEventListener('mouseover', () => {
       // highlight corresponding feature on the map
       popup.setLngLat(feature.geometry.coordinates)
-        .setText(feature.properties.NOM_LOC)
+        .setText(feature.properties.locName)
         .addTo(map)
     })
     listEl.appendChild(item)
@@ -138,12 +138,12 @@ function renderList(features) {
   filterEl.parentNode.style.display = 'block'
 }
 
-function deduplicate(features, comparatorProperty) {
+const deduplicate = (features, comparatorProperty) => {
   const existingFeatureKeys = {}
   // Because features come from tiled vector data, feature geometries may be split
   // or duplicated across tile boundaries and, as a result, features may appear
   // multiple times in query results.
-  const uniqueFeatures = features.filter(function(el) {
+  const uniqueFeatures = features.filter((el) => {
     if (existingFeatureKeys[el.properties[comparatorProperty]]) {
       return false
     } else {
@@ -155,18 +155,18 @@ function deduplicate(features, comparatorProperty) {
   return uniqueFeatures
 }
 
-map.on('load', function () {
+map.on('load', () => {
   map.addLayer({
     id: 'damage',
     type: 'circle',
     source: {
       type: 'vector',
-      url: 'mapbox://kylebebak.4nmivsgk'
+      url: 'mapbox://kylebebak.8ysz50ul'
     },
-    'source-layer': 'oaxaca-2-5tgore',
+    'source-layer': 'oaxaca-26oct-6wh485',
     paint: {
       'circle-radius': {
-        property: 'Cont total',
+        property: 'total',
         type: 'exponential',
         stops: [
           [1, 5],
@@ -174,7 +174,7 @@ map.on('load', function () {
         ]
       },
       'circle-color': {
-        property: 'Cont total',
+        property: 'total',
         type: 'exponential',
         stops: [
           [1, '#ebd08b'],
@@ -185,35 +185,35 @@ map.on('load', function () {
     }
   })
 
-  map.on('mousemove', 'damage', function(e) {
+  map.on('mousemove', 'damage', (e) => {
     // change the cursor style as a ui indicator
     map.getCanvas().style.cursor = 'pointer'
 
     // populate the popup and set its coordinates based on the feature
     const feature = e.features[0]
     popup.setLngLat(feature.geometry.coordinates)
-      .setText(feature.properties.NOM_LOC)
+      .setText(feature.properties.locName)
       .addTo(map)
   })
 
-  map.on('mouseleave', 'damage', function() {
+  map.on('mouseleave', 'damage', () => {
     map.getCanvas().style.cursor = ''
     popup.remove()
   })
 
-  filterEl.addEventListener('keyup', function(e) {
+  filterEl.addEventListener('keyup', (e) => {
     // filter visible features that don't match the input value
-    const filtered = localities.filter(function(feature) {
-      return tokenMatch(feature.properties.NOM_LOC, e.target.value)
+    const filtered = localities.filter((feature) => {
+      return tokenMatch(feature.properties.locName, e.target.value)
     })
 
     // populate the sidebar with filtered results
     renderList(filtered.slice(0, numList))
 
     // set the filter to populate features into the layer
-    map.setFilter('damage', ['in', 'NOM_LOC'].concat(
-      filtered.map(function(feature) {
-        return feature.properties.NOM_LOC
+    map.setFilter('damage', ['in', 'locName'].concat(
+      filtered.map((feature) => {
+        return feature.properties.locName
       })
     ))
   })
@@ -222,8 +222,11 @@ map.on('load', function () {
     if (localities.length > 0) { return } // only call this function on initialization
 
     if (data.dataType === 'source' && data.isSourceLoaded) {
-      const features = map.querySourceFeatures('damage', {sourceLayer: 'oaxaca-2-5tgore'})
+      const features = map.querySourceFeatures('damage', {sourceLayer: 'oaxaca-26oct-6wh485'})
       localities = deduplicate(features, 'cvegeo')
+      localities.sort((a, b) => {
+        return parseFloat(b.properties.total) - parseFloat(a.properties.total)
+      })
       renderList(localities.slice(0, numList))
     }
   })
