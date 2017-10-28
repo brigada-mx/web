@@ -121,7 +121,7 @@ const renderList = (features) => {
   features.forEach((feature) => {
     const prop = feature.properties
     const item = document.createElement('a')
-    item.textContent = prop.locName
+    item.textContent = `${prop.locName}, ${prop.stateName}`
     item.addEventListener('mouseover', () => {
       // highlight corresponding feature on the map
       popup.setLngLat(feature.geometry.coordinates)
@@ -153,6 +153,16 @@ const deduplicate = (features, comparatorProperty) => {
   })
 
   return uniqueFeatures
+}
+
+/**
+ * Comparator for localities `a` and `b`, which assigns greater priority to
+   localities with high "marginación social" and many damaged buildings.
+ */
+const compareLocalities = (a, b) => {
+  const { total: ta } = a.properties;
+  const { total: tb } = b.properties;
+  return parseFloat(tb) - parseFloat(ta)
 }
 
 map.on('load', () => {
@@ -204,16 +214,17 @@ map.on('load', () => {
   filterEl.addEventListener('keyup', (e) => {
     // filter visible features that don't match the input value
     const filtered = localities.filter((feature) => {
-      return tokenMatch(feature.properties.locName, e.target.value)
+      const { locName, stateName } = feature.properties;
+      return tokenMatch(`${locName} ${stateName}`, e.target.value)
     })
 
     // populate the sidebar with filtered results
     renderList(filtered.slice(0, numList))
 
     // set the filter to populate features into the layer
-    map.setFilter('damage', ['in', 'locName'].concat(
+    map.setFilter('damage', ['in', 'cvegeo'].concat(
       filtered.map((feature) => {
-        return feature.properties.locName
+        return feature.properties.cvegeo
       })
     ))
   })
@@ -224,9 +235,7 @@ map.on('load', () => {
     if (data.dataType === 'source' && data.isSourceLoaded) {
       const features = map.querySourceFeatures('damage', {sourceLayer: 'oaxaca-26oct-6wh485'})
       localities = deduplicate(features, 'cvegeo')
-      localities.sort((a, b) => {
-        return parseFloat(b.properties.total) - parseFloat(a.properties.total)
-      })
+      localities.sort(compareLocalities)
       renderList(localities.slice(0, numList))
     }
   })
