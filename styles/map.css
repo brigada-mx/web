@@ -11,10 +11,9 @@
 }
 
 .map-overlay fieldset {
-  display: none;
   background: #ddd;
   border: none;
-  padding: 10px;
+  padding: 8px;
   margin: 0;
 }
 
@@ -23,30 +22,31 @@
   border: none;
   width: 100%;
   border-radius: 2px;
+  height: 20px;
   margin: 0;
 }
 
-.map-overlay .listing {
+.map-overlay .list {
   overflow: auto;
   max-height: 100%;
 }
 
-.map-overlay .listing > * {
+.map-overlay .list > * {
   display: block;
   padding: 5px 10px;
   margin: 0;
 }
 
-.map-overlay .listing a {
+.map-overlay .list a {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   color: #404;
   text-decoration: none;
 }
 
-.map-overlay .listing a:last-child {
+.map-overlay .list a:last-child {
   border: none;
 }
 
-.map-overlay .listing a:hover {
+.map-overlay .list a:hover {
   background: #f0f0f0;
 }

@@ -57,7 +57,7 @@
   <fieldset>
     <input id='feature-filter' type='text' placeholder='Buscar localidades' />
   </fieldset>
-  <div id='feature-listing' class='listing'></div>
+  <div id='feature-list' class='list'></div>
 </div>
 
 
@@ -78,8 +78,21 @@ const popup = new mapboxgl.Popup({
 let localities = [] // holds all locality features for filtering
 const numList = 500
 
-const filterEl = document.getElementById('feature-filter')
-const listEl = document.getElementById('feature-listing')
+const filter = $('#feature-filter')
+const list = $('#feature-list')
+
+const showPopup = (feature) => {
+  popup.setLngLat(feature.geometry.coordinates)
+    .setText(feature.properties.locName)
+    .addTo(map)
+}
+
+const renderListItem = (feature) => {
+  const { properties } = feature
+  const item = $('<div>')
+  item.text(`${properties.locName}, ${properties.stateName}`)
+  return item
+}
 
 const cleanAccentedChars = (s) => {
   s = s.replace(/[áÁ]/g, 'a')
@@ -117,25 +130,22 @@ const tokenMatch = (h, n) => {
 
 const renderList = (features) => {
   // clear any existing listings
-  listEl.innerHTML = ''
-  features.forEach((feature) => {
-    const prop = feature.properties
-    const item = document.createElement('a')
-    item.textContent = `${prop.locName}, ${prop.stateName}`
-    item.addEventListener('mouseover', () => {
-      // highlight corresponding feature on the map
-      popup.setLngLat(feature.geometry.coordinates)
-        .setText(feature.properties.locName)
-        .addTo(map)
-    })
-    listEl.appendChild(item)
-    $(item).on('click', () => {
+  list.html('')
+  for (let feature of features) {
+    const item = renderListItem(feature)
+    item.hover(
+      () => {
+        showPopup(feature)
+      },
+      () => {
+        popup.remove()
+      }
+    )
+    list.append(item)
+    item.on('click', () => {
       map.setCenter(feature.geometry.coordinates);
     })
-  })
-
-  // show the filter input
-  filterEl.parentNode.style.display = 'block'
+  }
 }
 
 const deduplicate = (features, comparatorProperty) => {
@@ -201,9 +211,7 @@ map.on('load', () => {
 
     // populate the popup and set its coordinates based on the feature
     const feature = e.features[0]
-    popup.setLngLat(feature.geometry.coordinates)
-      .setText(feature.properties.locName)
-      .addTo(map)
+    showPopup(feature)
   })
 
   map.on('mouseleave', 'damage', () => {
@@ -211,7 +219,7 @@ map.on('load', () => {
     popup.remove()
   })
 
-  filterEl.addEventListener('keyup', (e) => {
+  filter.on('keyup', (e) => {
     // filter visible features that don't match the input value
     const filtered = localities.filter((feature) => {
       const { locName, stateName } = feature.properties;
