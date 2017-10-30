@@ -21,7 +21,6 @@ header {
   background-color: #fff;
   max-height: 100%;
   overflow: hidden;
-  font-size: 13px;
   font-family: 'nunito-sans', sans-serif;
 }
 
@@ -46,10 +45,29 @@ header {
   max-height: 100%;
 }
 
-.map-overlay .list > * {
-  display: block;
-  padding: 5px 10px;
-  margin: 0;
+.list-item {
+  padding: 12px 16px;
+  margin: 1px 0px;
+  border-left: 3px solid;
+}
+
+.dmg-unknown {
+  border-color: #999;
+}
+.dmg-minimal {
+  border-color: #ff0;
+}
+.dmg-low {
+  border-color: #db0;
+}
+.dmg-medium {
+  border-color: #d80;
+}
+.dmg-high {
+  border-color: #dd4500;
+}
+.dmg-severe {
+  border-color: #e00;
 }
 
 .list-item:hover {
@@ -57,9 +75,26 @@ header {
 }
 
 .list-item-header {
-
+  font-size: 15px;
+  margin-bottom: 7px;
 }
 
 .list-item-metrics {
+  font-size: 12px;
+}
 
+.list-item-metrics div {
+  display: inline-block;
+}
+
+.list-item-metrics div:last-child {
+  float: right;
+}
+
+.list-item-metrics .label {
+  color: #999;
+}
+
+.list-item-metrics .value {
+  font-weight: bold;
 }

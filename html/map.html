@@ -59,6 +59,44 @@ const popup = new mapboxgl.Popup({
 let localities = [] // holds all locality features for filtering
 const numList = 500
 
+const damageGrade = (feature) => {
+  const levels = [
+    [10, 'minimal'],
+    [50, 'low'],
+    [250, 'medium'],
+    [1250, 'high'],
+    [Number.MAX_SAFE_INTEGER, 'severe'],
+  ]
+  const { total } = feature.properties
+  if (total === undefined || total === null || total === '') {
+    return 'unknown'
+  }
+  for (let l of levels) {
+    if (total < l[0]) {
+      return l[1]
+    }
+  }
+  return 'unknown'
+}
+
+const damageGradeMeta = {
+  unknown: {label: 'SIN DATOS', color: '#999'},
+  minimal: {label: 'MÍNIMO', color: '#ff0'},
+  low: {label: 'MENOR', color: '#db0'},
+  medium: {label: 'MEDIO', color: '#d80'},
+  high: {label: 'GRAVE', color: '#dd4500'},
+  severe: {label: 'MUY GRAVE', color: '#e00'},
+}
+
+const damageGradeCount = {
+  unknown: 0,
+  minimal: 0,
+  low: 0,
+  medium: 0,
+  high: 0,
+  severe: 0,
+}
+
 const filter = $('#feature-filter')
 const list = $('#feature-list')
 
@@ -69,14 +107,17 @@ const showPopup = (feature) => {
 }
 
 const renderListItem = (feature) => {
-  const { locName, stateName, margGrade, total } = feature.properties
-  const item = $('<div class="list-item">')
+  const { locName, stateName, margGrade, total = '?', dmgGrade } = feature.properties
+  const item = $(`<div class="list-item dmg-${dmgGrade}">`)
 
   const header = $('<div class="list-item-header">')
   header.text(`${locName}, ${stateName}`)
 
   const metrics = $('<div class="list-item-metrics">')
-  metrics.html(`<span>MARG. SOCIAL: <b>${margGrade || '?'}</b> VIVIENDAS DAÑADAS: <b>${total}</b></span>`)
+  metrics.html(`
+    <div><span class="label">MARG. SOCIAL:</span> <span class="value">${margGrade || '?'}</span></div>
+    <div><span class="label">VIVIENDAS DAÑADAS:</span> <span class="value">${total}</span></div>
+  `)
 
   item.append(header)
   item.append(metrics)
@@ -161,6 +202,8 @@ const deduplicate = (features, comparatorProperty) => {
 const compareLocalities = (a, b) => {
   const { total: ta } = a.properties;
   const { total: tb } = b.properties;
+  if (isNaN(parseFloat(ta))) return 1;
+  if (isNaN(parseFloat(tb))) return -1;
   return parseFloat(tb) - parseFloat(ta)
 }
 
@@ -233,6 +276,11 @@ map.on('load', () => {
       const features = map.querySourceFeatures('damage', {sourceLayer: 'oaxaca-26oct-6wh485'})
       localities = deduplicate(features, 'cvegeo')
       localities.sort(compareLocalities)
+      for (let l of localities) {
+        const dmgGrade = damageGrade(l)
+        damageGradeCount[dmgGrade] += 1
+        l.properties.dmgGrade = dmgGrade
+      }
       renderList(localities.slice(0, numList))
     }
   })
