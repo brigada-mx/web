@@ -1,13 +1,14 @@
 .map-overlay {
   position: absolute;
-  width: 22.5%;
+  width: 25%;
   top: 92px;
   bottom: 0;
   right: 0;
-  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   background-color: #fff;
   max-height: 100%;
   overflow: hidden;
+  font-size: 13px;
+  font-family: 'roboto', sans-serif;
 }
 
 .map-overlay fieldset {
@@ -37,16 +38,14 @@
   margin: 0;
 }
 
-.map-overlay .list a {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  color: #404;
-  text-decoration: none;
-}
-
-.map-overlay .list a:last-child {
-  border: none;
-}
-
-.map-overlay .list a:hover {
+.list-item:hover {
   background: #f0f0f0;
+}
+
+.list-item-header {
+
+}
+
+.list-item-metrics {
+
 }
