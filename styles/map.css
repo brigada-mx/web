@@ -1,14 +1,28 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  height: 40px;
+  padding: 15px;
+}
+
+#map {
+  height: 605px;
+}
+
 .map-overlay {
   position: absolute;
-  width: 25%;
-  top: 92px;
+  width: 27.5%;
+  top: 70px;
   bottom: 0;
   right: 0;
   background-color: #fff;
   max-height: 100%;
   overflow: hidden;
   font-size: 13px;
-  font-family: 'roboto', sans-serif;
+  font-family: 'nunito-sans', sans-serif;
 }
 
 .map-overlay fieldset {
