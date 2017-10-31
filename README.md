@@ -28,3 +28,9 @@ These are the current fields for our map data:
 ~~~sh
 cvegeo,longitude,latitude,mun_name,loc_name,habit,not_habit,destroyed,total
 ~~~
+
+
+## Transpile Code to ES5
+~~~sh
+babel html/map.html --out-file html/map.compiled.html
+~~~
