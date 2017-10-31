@@ -33,27 +33,29 @@
 
   <select class="marginalization-filter">
     <option value="" selected="selected">Marginación social</option>
-    <option value="muy_alto">MUY ALTO</option>
-    <option value="alto">ALTO</option>
-    <option value="medio">MEDIO</option>
-    <option value="bajo">BAJO</option>
+    <option value="muy_alto">Muy alto</option>
+    <option value="alto">Alto</option>
+    <option value="medio">Medio</option>
+    <option value="bajo">Bajo</option>
   </select>
 
   <select class="municipality-filter">
   </select>
 </header>
 
-<div id='map'>
+<div id="map-container">
+  <div id='map'>
+    <div class='legend'>
+      <div class='legend-header'>Localidades por afectación estimada</div>
+      <div class='legend-items-container'></div>
+    </div>
+  </div>
   <div class='features'>
-    <fieldset>
-      <input id='feature-filter' type='text' placeholder='Buscar localidades' />
-    </fieldset>
-    <div id='feature-list' class='list'></div>
-  </div>
-  <div class='legend'>
-    <div class='legend-header'>Localidades por afectación estimada</div>
-    <div class='legend-items-container'></div>
-  </div>
+      <fieldset>
+        <input id='feature-filter' type='text' placeholder='Buscar localidades' />
+      </fieldset>
+      <div id='feature-list' class='list'></div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -128,13 +130,12 @@ const renderPopup = (locality) => {
   const { stateName, munName, locName, habit, notHabit, destroyed, margGrade } = locality.properties
   const total = habit + notHabit + destroyed
   return `
-    <h3>${locName}</h4>
-    <h5>${stateName}, ${munName}</h6>
-    <div><span class="popup-label">TOTAL DAÑADOS</span> <span class="popup-value">${total}</span></div>
-    <div><span class="popup-label">HABITABLES</span> <span class="popup-value">${habit}</span></div>
-    <div><span class="popup-label">NO HABITABLES</span> <span class="popup-value">${notHabit}</span></div>
-    <div><span class="popup-label">DESTROZADOS</span> <span class="popup-value">${destroyed}</span></div>
-    <div><span class="popup-label">GRADO MARGINACIÓN</span> <span class="popup-value">${margGrade}</span></div>
+    <span class="popup-header">${locName}, ${stateName}</span>
+    <div class="popup-item"><span class="popup-label">TOTAL DAÑADOS</span> <span class="popup-value">${total}</span></div>
+    <div class="popup-item"><span class="popup-label">HABITABLES</span> <span class="popup-value">${habit}</span></div>
+    <div class="popup-item"><span class="popup-label">NO HABITABLES</span> <span class="popup-value">${notHabit}</span></div>
+    <div class="popup-item"><span class="popup-label">DESTROZADOS</span> <span class="popup-value">${destroyed}</span></div>
+    <div class="popup-item"><span class="popup-label">GRADO MARGINACIÓN</span> <span class="popup-value">${margGrade}</span></div>
   `
 }
 
