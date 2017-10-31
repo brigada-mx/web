@@ -7,12 +7,33 @@ body {
 
 header {
   height: 64px;
-  padding: 19px;
   box-sizing: border-box;
   display: block;
   position: relative;
   z-index: 2;
   @include box-shadow(-15px,15px,30px,0,37,38,50,0.04);
+  select {
+    position: relative;
+    bottom: 8px;
+    @include nunito-sans-200;
+    font-size: 15px;
+    color: $grey-7;
+    border: none;
+    background: #fff;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(/assets/img/dropdown-arrow.svg) right no-repeat;
+    padding-right: 15px;
+    cursor: pointer;
+  }
+}
+
+a#logo{
+  padding: 19px 28px 14px 19px;
+  display: inline-block;
+  border-right: 1px solid #F3F5F7;
+  margin-right: 24px;
 }
 
 #map-container {
