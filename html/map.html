@@ -102,6 +102,11 @@ const damageGradeMeta = {
 
 const filter = $('#feature-filter')
 const list = $('#feature-list')
+const dropdownFilter = $('.marginalization-filter')
+dropdownFilter.on('change', () => {
+  const option = dropdownFilter.find('option:selected')
+  console.log(option.val())
+})
 
 const showPopup = (feature) => {
   popup.setLngLat(feature.geometry.coordinates)
