@@ -150,7 +150,7 @@ header {
 }
 
 .legend-item {
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .legend .label {
@@ -165,7 +165,7 @@ header {
 .legend .count {
   @include roboto-700;
   font-size: 13px;
-  line-height: 12px;
+  line-height: 20px;
   float: right;
 }
 
@@ -177,12 +177,37 @@ header {
   height: 8px;
 }
 
+div.mapboxgl-popup-content {
+  padding: 15px;
+}
+
+.popup-header {
+  @include nunito-sans-600;
+  color: $grey-7;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.popup-item {
+  margin-bottom: 3px;
+}
+
 .popup-label {
-  color: #999;
+  @include nunito-sans;
+  color: $grey-8;
+  font-size: 12px;
+  line-height: 16px;
+  opacity: .4;
+  text-transform: uppercase;
+  margin-right: 16px;
+  display: inline-block;
 }
 
 .popup-value {
-  font-weight: bold;
+  @include roboto-700;
+  font-size: 13px;
+  line-height: 20px;
   float: right;
-  margin-left: 10px;
 }
