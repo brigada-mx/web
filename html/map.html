@@ -32,11 +32,10 @@
   <a id="logo" href="/"><img src="/assets/img/logo.svg" width="108px" height="auto" alt="Logo" /></a>
   <select class="marginalization-filter">
     <option value="" selected="selected">Marginación social</option>
-    <option value="severe">MUY GRAVE</option>
-    <option value="high">GRAVE</option>
-    <option value="medium">MEDIO</option>
-    <option value="low">MENOR</option>
-    <option value="minimal">MÍNIMO</option>
+    <option value="muy_alto">MUY ALTO</option>
+    <option value="alto">ALTO</option>
+    <option value="medio">MEDIO</option>
+    <option value="bajo">BAJO</option>
   </select>
 </header>
 
@@ -68,7 +67,7 @@ const popup = new mapboxgl.Popup({
 })
 
 let localities = [] // holds all locality features for filtering
-let _localities = [] // filtered localities
+let filters = { search: '', margGrade: '' }
 const numList = 500
 
 const damageGrade = (feature) => {
@@ -105,7 +104,8 @@ const list = $('#feature-list')
 const dropdownFilter = $('.marginalization-filter')
 dropdownFilter.on('change', () => {
   const option = dropdownFilter.find('option:selected')
-  console.log(option.val())
+  filters.margGrade = option.val()
+  render()
 })
 
 const showPopup = (feature) => {
@@ -302,11 +302,8 @@ map.on('load', () => {
 
   filter.on('keyup', (e) => {
     // filter visible features that don't match the input value
-    const filtered = localities.filter((feature) => {
-      const { locName, stateName } = feature.properties
-      return tokenMatch(`${locName} ${stateName}`, e.target.value)
-    })
-    render(filtered)
+    filters.search = e.target.value
+    render()
   })
 
   map.on('data', (data) => {
@@ -320,7 +317,7 @@ map.on('load', () => {
         const dmgGrade = damageGrade(l)
         l.properties.dmgGrade = dmgGrade
       }
-      render(localities)
+      render()
     }
   })
 })
@@ -328,7 +325,15 @@ map.on('load', () => {
 /**
  * Renders list items, legend and features layer every time "state" changes.
  */
-const render = (filtered) => {
+const render = () => {
+  const { search, margGrade: marg } = filters
+
+  const filtered = localities.filter((l) => {
+    const { locName, stateName, margGrade } = l.properties
+    const matchesSearch = tokenMatch(`${locName} ${stateName}`, search)
+    const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
+    return matchesSearch && matchestMarg
+  })
   // populate the sidebar with filtered results
   renderList(filtered.slice(0, numList))
 
@@ -336,8 +341,8 @@ const render = (filtered) => {
 
   // set the filter to populate features into the layer
   map.setFilter('damage', ['in', 'cvegeo'].concat(
-    filtered.map((feature) => {
-      return feature.properties.cvegeo
+    filtered.map((l) => {
+      return l.properties.cvegeo
     })
   ))
 }
