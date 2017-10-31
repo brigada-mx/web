@@ -144,9 +144,15 @@ header {
   margin-bottom: 10px;
 }
 
-.legend-item {
-  margin-bottom: 5px;
+.legend-header {
+  font-weight: bold;
+  margin-bottom: 10px;
 }
+
+.legend-item {
+  margin-bottom: 10px;
+}
+
 .legend .label {
   @include nunito-sans;
   color: $grey-8;
@@ -154,4 +160,26 @@ header {
   line-height: 16px;
   opacity: .4;
   text-transform: uppercase;
+}
+
+.legend .count {
+  font-weight: bold;
+  float: right;
+}
+
+.legend .circle {
+  float: left;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+.popup-label {
+  color: #999;
+}
+
+.popup-value {
+  font-weight: bold;
+  float: right;
+  margin-left: 10px;
 }

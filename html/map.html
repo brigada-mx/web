@@ -30,6 +30,14 @@
 
 <header id="beta">
   <a id="logo" href="/"><img src="/assets/img/logo.svg" width="108px" height="auto" alt="Logo" /></a>
+  <select>
+    <option value="" selected="selected">Marginación social</option>
+    <option value="severe">MUY GRAVE</option>
+    <option value="high">GRAVE</option>
+    <option value="medium">MEDIO</option>
+    <option value="low">MENOR</option>
+    <option value="minimal">MÍNIMO</option>
+  </select>
 </header>
 
 <div id='map'>
@@ -50,7 +58,14 @@
   </div>
 </div>
 
+<<<<<<< HEAD
 
+=======
+<div class='legend'>
+  <div class='legend-header'>Localidades por afectación estimada</div>
+  <div class='legend-items-container'></div>
+</div>
+>>>>>>> 2c625b8e709510f9f1b9830d817de2183ecdb6fc
 
 <script type="text/javascript">
 mapboxgl.accessToken = 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Ynd2d2s0dG4ifQ.W9vKUEkm1KtmR66z_dhixA'
@@ -58,7 +73,7 @@ const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk',
   zoom: 7.5,
-  center: [-95.7642505, 16.6073688]
+  center: [-95.4042505, 16.6073688]
 })
 
 // creates a popup, but doesn't add it to map yet
@@ -67,6 +82,7 @@ const popup = new mapboxgl.Popup({
 })
 
 let localities = [] // holds all locality features for filtering
+let _localities = [] // filtered localities
 const numList = 500
 
 const damageGrade = (feature) => {
@@ -94,17 +110,8 @@ const damageGradeMeta = {
   minimal: {label: 'MÍNIMO', color: '#ff0'},
   low: {label: 'MENOR', color: '#db0'},
   medium: {label: 'MEDIO', color: '#d80'},
-  high: {label: 'GRAVE', color: '#dd4500'},
-  severe: {label: 'MUY GRAVE', color: '#e00'},
-}
-
-const damageGradeCount = {
-  unknown: 0,
-  minimal: 0,
-  low: 0,
-  medium: 0,
-  high: 0,
-  severe: 0,
+  high: {label: 'GRAVE', color: '#d40'},
+  severe: {label: 'MUY GRAVE', color: '#f00'},
 }
 
 const filter = $('#feature-filter')
@@ -112,12 +119,71 @@ const list = $('#feature-list')
 
 const showPopup = (feature) => {
   popup.setLngLat(feature.geometry.coordinates)
-    .setText(feature.properties.locName)
+    .setHTML(renderPopup(feature))
     .addTo(map)
 }
 
-const renderListItem = (feature) => {
-  const { locName, stateName, margGrade, total = '?', dmgGrade } = feature.properties
+const renderPopup = (locality) => {
+  const { stateName, munName, locName, habit, notHabit, destroyed, margGrade } = locality.properties
+  const total = habit + notHabit + destroyed
+  return `
+    <h3>${locName}</h4>
+    <h5>${stateName}, ${munName}</h6>
+    <div><span class="popup-label">TOTAL DAÑADOS</span> <span class="popup-value">${total}</span></div>
+    <div><span class="popup-label">HABITABLES</span> <span class="popup-value">${habit}</span></div>
+    <div><span class="popup-label">NO HABITABLES</span> <span class="popup-value">${notHabit}</span></div>
+    <div><span class="popup-label">DESTROZADOS</span> <span class="popup-value">${destroyed}</span></div>
+    <div><span class="popup-label">GRADO MARGINACIÓN</span> <span class="popup-value">${margGrade}</span></div>
+  `
+}
+
+const renderLegend = (localities) => {
+  const legend = $('.legend-items-container')
+  const counts = {
+    severe: 0,
+    high: 0,
+    medium: 0,
+    low: 0,
+    minimal: 0,
+    unknown: 0,
+  }
+
+  for (let l of localities) {
+    counts[l.properties.dmgGrade] += 1
+  }
+  const items = Object.keys(counts).map(key => {
+    const { label, color } = damageGradeMeta[key]
+    return `<div class='legend-item'>
+      <div class="circle" style="background-color: ${color}"></div>
+      <span class="label">${label}</span>
+      <span class="count">${counts[key]}</span>
+    </div>`
+  })
+  legend.html(items.join('\n'))
+}
+
+const renderList = (localities) => {
+  // clear any existing listings
+  list.html('')
+  for (let l of localities) {
+    const item = renderListItem(l)
+    item.hover(
+      () => {
+        showPopup(l)
+      },
+      () => {
+        popup.remove()
+      }
+    )
+    list.append(item)
+    item.on('click', () => {
+      map.setCenter(l.geometry.coordinates)
+    })
+  }
+}
+
+const renderListItem = (locality) => {
+  const { locName, stateName, margGrade, total = '?', dmgGrade } = locality.properties
   const item = $(`<div class="list-item dmg-${dmgGrade}">`)
 
   const header = $('<div class="list-item-header">')
@@ -159,33 +225,13 @@ const tokenMatch = (h, n) => {
   for (let n of needles) {
     for (let i = 0, l = haystack.length; i < l; i++) {
       if (haystack[i].indexOf(n) >= 0) {
-        haystack.splice(i, 1);
+        haystack.splice(i, 1)
         continue outer
       }
     }
     return false
   }
   return true
-}
-
-const renderList = (features) => {
-  // clear any existing listings
-  list.html('')
-  for (let feature of features) {
-    const item = renderListItem(feature)
-    item.hover(
-      () => {
-        showPopup(feature)
-      },
-      () => {
-        popup.remove()
-      }
-    )
-    list.append(item)
-    item.on('click', () => {
-      map.setCenter(feature.geometry.coordinates);
-    })
-  }
 }
 
 const deduplicate = (features, comparatorProperty) => {
@@ -210,10 +256,10 @@ const deduplicate = (features, comparatorProperty) => {
    localities with high "marginación social" and many damaged buildings.
  */
 const compareLocalities = (a, b) => {
-  const { total: ta } = a.properties;
-  const { total: tb } = b.properties;
-  if (isNaN(parseFloat(ta))) return 1;
-  if (isNaN(parseFloat(tb))) return -1;
+  const { total: ta } = a.properties
+  const { total: tb } = b.properties
+  if (isNaN(parseFloat(ta))) return 1
+  if (isNaN(parseFloat(tb))) return -1
   return parseFloat(tb) - parseFloat(ta)
 }
 
@@ -237,13 +283,15 @@ map.on('load', () => {
       },
       'circle-color': {
         property: 'total',
-        type: 'exponential',
         stops: [
-          [1, '#ebd08b'],
-          [15000, '#f54e4e']
+          [0, '#ff0'],
+          [10, '#db0'],
+          [50, '#d80'],
+          [250, '#d40'],
+          [1250, '#f00'],
         ]
       },
-      'circle-opacity': 0.9,
+      'circle-opacity': 0.75,
     }
   })
 
@@ -264,19 +312,10 @@ map.on('load', () => {
   filter.on('keyup', (e) => {
     // filter visible features that don't match the input value
     const filtered = localities.filter((feature) => {
-      const { locName, stateName } = feature.properties;
+      const { locName, stateName } = feature.properties
       return tokenMatch(`${locName} ${stateName}`, e.target.value)
     })
-
-    // populate the sidebar with filtered results
-    renderList(filtered.slice(0, numList))
-
-    // set the filter to populate features into the layer
-    map.setFilter('damage', ['in', 'cvegeo'].concat(
-      filtered.map((feature) => {
-        return feature.properties.cvegeo
-      })
-    ))
+    render(filtered)
   })
 
   map.on('data', (data) => {
@@ -288,13 +327,29 @@ map.on('load', () => {
       localities.sort(compareLocalities)
       for (let l of localities) {
         const dmgGrade = damageGrade(l)
-        damageGradeCount[dmgGrade] += 1
         l.properties.dmgGrade = dmgGrade
       }
-      renderList(localities.slice(0, numList))
+      render(localities)
     }
   })
 })
+
+/**
+ * Renders list items, legend and features layer every time "state" changes.
+ */
+const render = (filtered) => {
+  // populate the sidebar with filtered results
+  renderList(filtered.slice(0, numList))
+
+  renderLegend(filtered)
+
+  // set the filter to populate features into the layer
+  map.setFilter('damage', ['in', 'cvegeo'].concat(
+    filtered.map((feature) => {
+      return feature.properties.cvegeo
+    })
+  ))
+}
 </script>
 
 </body>

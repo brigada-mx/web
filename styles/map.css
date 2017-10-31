@@ -1389,8 +1389,12 @@ header {
   line-height: 20px;
   margin-bottom: 10px; }
 
+.legend-header {
+  font-weight: bold;
+  margin-bottom: 10px; }
+
 .legend-item {
-  margin-bottom: 5px; }
+  margin-bottom: 10px; }
 
 .legend .label {
   font-family: 'nunito-sans', sans-serif;
@@ -1399,3 +1403,21 @@ header {
   line-height: 16px;
   opacity: .4;
   text-transform: uppercase; }
+
+.legend .count {
+  font-weight: bold;
+  float: right; }
+
+.legend .circle {
+  float: left;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px; }
+
+.popup-label {
+  color: #999; }
+
+.popup-value {
+  font-weight: bold;
+  float: right;
+  margin-left: 10px; }
