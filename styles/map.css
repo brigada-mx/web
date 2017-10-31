@@ -64,10 +64,10 @@ header {
   border-color: #d80;
 }
 .dmg-high {
-  border-color: #dd4500;
+  border-color: #d40;
 }
 .dmg-severe {
-  border-color: #e00;
+  border-color: #f00;
 }
 
 .list-item:hover {
@@ -115,8 +115,21 @@ header {
 }
 
 .legend-item {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
+
 .legend .label {
   color: #999;
+  margin-left: 5px;
+}
+
+.legend .count {
+  font-weight: bold;
+  float: right;
+}
+.legend .circle {
+  float: left;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
 }
