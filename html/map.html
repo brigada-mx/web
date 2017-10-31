@@ -30,12 +30,16 @@
 
 <header id="beta">
   <a id="logo" href="/"><img src="/assets/img/logo.svg" width="108px" height="auto" alt="Logo" /></a>
+
   <select class="marginalization-filter">
     <option value="" selected="selected">Marginación social</option>
     <option value="muy_alto">MUY ALTO</option>
     <option value="alto">ALTO</option>
     <option value="medio">MEDIO</option>
     <option value="bajo">BAJO</option>
+  </select>
+
+  <select class="municipality-filter">
   </select>
 </header>
 
@@ -67,7 +71,7 @@ const popup = new mapboxgl.Popup({
 })
 
 let localities = [] // holds all locality features for filtering
-let filters = { search: '', margGrade: '' }
+let filters = { search: '', margGrade: '', municipality: '' }
 const numList = 500
 
 const damageGrade = (feature) => {
@@ -101,10 +105,16 @@ const damageGradeMeta = {
 
 const filter = $('#feature-filter')
 const list = $('#feature-list')
-const dropdownFilter = $('.marginalization-filter')
-dropdownFilter.on('change', () => {
-  const option = dropdownFilter.find('option:selected')
+const margFilter = $('.marginalization-filter')
+const muniFilter = $('.municipality-filter')
+margFilter.on('change', () => {
+  const option = margFilter.find('option:selected')
   filters.margGrade = option.val()
+  render()
+})
+muniFilter.on('change', () => {
+  const option = muniFilter.find('option:selected')
+  filters.municipality = option.val().substring(0, 5)
   render()
 })
 
@@ -254,6 +264,20 @@ const compareLocalities = (a, b) => {
   return parseFloat(tb) - parseFloat(ta)
 }
 
+const renderMuniFilter = () => {
+  const s = new Set()
+  const items = ['<option value="" selected="selected">Municipio</option>']
+  for (let l of localities) {
+    const { cvegeoS, munName } = l.properties
+    const _cvegeoS = cvegeoS.substring(0, 5)
+    if (s.has(_cvegeoS)) continue
+
+    items.push(`<option value="${_cvegeoS}">${munName}</option>`)
+    s.add(_cvegeoS)
+  }
+  return items.join('\n')
+}
+
 map.on('load', () => {
   map.addLayer({
     id: 'damage',
@@ -316,23 +340,26 @@ map.on('load', () => {
       for (let l of localities) {
         const dmgGrade = damageGrade(l)
         l.properties.dmgGrade = dmgGrade
+        l.properties.cvegeoS = l.properties.cvegeo.toString()
       }
+      muniFilter.html(renderMuniFilter())
       render()
     }
   })
 })
 
-/**
- * Renders list items, legend and features layer every time "state" changes.
+/*
+ * Renders list items, legend and features layer every time filter state changes.
  */
 const render = () => {
-  const { search, margGrade: marg } = filters
+  const { search, margGrade: marg, municipality: muni } = filters
 
   const filtered = localities.filter((l) => {
-    const { locName, stateName, margGrade } = l.properties
+    const { locName, stateName, margGrade, cvegeoS } = l.properties
     const matchesSearch = tokenMatch(`${locName} ${stateName}`, search)
     const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
-    return matchesSearch && matchestMarg
+    const matchesMuni = !muni || muni === cvegeoS.substring(0, 5)
+    return matchesSearch && matchestMarg && matchesMuni
   })
   // populate the sidebar with filtered results
   renderList(filtered.slice(0, numList))
