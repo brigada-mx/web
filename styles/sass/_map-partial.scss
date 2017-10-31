@@ -16,7 +16,11 @@ header {
 }
 
 #map {
-  height: 100%;
+  height: 92%;
+}
+
+.mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right, {
+  z-index: 0;
 }
 
 .features {
@@ -121,12 +125,15 @@ header {
 
 .legend {
   position: absolute;
-  width: 12.5%;
-  left: 3%;
-  bottom: 5%;
+  width: 192px;
+  z-index: 1;
+  left: 20px;
+  bottom: 20px;
   padding: 15px;
-  border-radius: 4px;
+  border-radius: 2px;
   background-color: #fff;
+  @include box-sizing;
+  @include box-shadow(0,40px,100px,0,37,38,50,.10);
 }
 
 .legend-header {
@@ -141,5 +148,10 @@ header {
   margin-bottom: 5px;
 }
 .legend .label {
-  color: #999;
+  @include nunito-sans;
+  color: $grey-8;
+  font-size: 12px;
+  line-height: 16px;
+  opacity: .4;
+  text-transform: uppercase;
 }

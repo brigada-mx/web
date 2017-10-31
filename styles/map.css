@@ -1265,7 +1265,10 @@ header {
   box-shadow: -15px 15px 30px 0 rgba(37, 38, 50, 0.04); }
 
 #map {
-  height: 100%; }
+  height: 92%; }
+
+.mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right {
+  z-index: 0; }
 
 .features {
   position: absolute;
@@ -1363,12 +1366,21 @@ header {
 
 .legend {
   position: absolute;
-  width: 12.5%;
-  left: 3%;
-  bottom: 5%;
+  width: 192px;
+  z-index: 1;
+  left: 20px;
+  bottom: 20px;
   padding: 15px;
-  border-radius: 4px;
-  background-color: #fff; }
+  border-radius: 2px;
+  background-color: #fff;
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+  box-sizing: border-box;
+  /* Opera/IE 8+ */
+  -webkit-box-shadow: 0 40px 100px 0 rgba(37, 38, 50, 0.1);
+  box-shadow: 0 40px 100px 0 rgba(37, 38, 50, 0.1); }
 
 .legend-header {
   font-family: 'nunito-sans-600', sans-serif;
@@ -1381,4 +1393,9 @@ header {
   margin-bottom: 5px; }
 
 .legend .label {
-  color: #999; }
+  font-family: 'nunito-sans', sans-serif;
+  color: #0F0F0F;
+  font-size: 12px;
+  line-height: 16px;
+  opacity: .4;
+  text-transform: uppercase; }
