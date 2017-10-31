@@ -29,11 +29,24 @@ header {
   }
 }
 
+.marginalization-filter {
+  margin-right: 30px;
+}
+
 a#logo{
   padding: 19px 28px 14px 19px;
   display: inline-block;
   border-right: 1px solid #F3F5F7;
   margin-right: 24px;
+}
+
+#beta {
+  padding: 28px 28px 14px 19px;
+  @include nunito-sans-800;
+  font-size: 11px;
+  line-height: 16px;
+  text-transform: uppercase;
+  float: right;
 }
 
 #map-container {
@@ -63,10 +76,8 @@ a#logo{
 }
 
 .features fieldset {
-  background: #ddd;
-  border: none;
-  padding: 8px;
-  margin: 0;
+  border: 3px solid #ddd;
+  padding: 10px;
 }
 
 .features input {
@@ -90,6 +101,7 @@ a#logo{
   border-bottom: 1px solid #F3F5F7;
   height: 71px;
   @include box-sizing;
+  cursor: pointer;
 }
 
 .dmg-unknown {
@@ -154,7 +166,7 @@ a#logo{
 .legend {
   position: absolute;
   width: 192px;
-  z-index: 1;
+  z-index: 3;
   left: 20px;
   bottom: 20px;
   padding: 15px;
