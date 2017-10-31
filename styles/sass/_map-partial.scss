@@ -59,28 +59,28 @@ header {
   padding: 12px 16px;
   margin: 1px 0px;
   border-left: 3px solid;
-  border-bottom: 1px solid #F3F5F7 !important;
+  border-bottom: 1px solid #F3F5F7;
   height: 71px;
   @include box-sizing;
 }
 
 .dmg-unknown {
-  border-color: #999;
+  border-left-color: #999;
 }
 .dmg-minimal {
-  border-color: #ff0;
+  border-left-color: #ff0;
 }
 .dmg-low {
-  border-color: #db0;
+  border-left-color: #db0;
 }
 .dmg-medium {
-  border-color: #d80;
+  border-left-color: #d80;
 }
 .dmg-high {
-  border-color: #dd4500;
+  border-left-color: #dd4500;
 }
 .dmg-severe {
-  border-color: #e00;
+  border-left-color: #e00;
 }
 
 .list-item:hover {
@@ -163,15 +163,18 @@ header {
 }
 
 .legend .count {
-  font-weight: bold;
+  @include roboto-700;
+  font-size: 13px;
+  line-height: 12px;
   float: right;
 }
 
 .legend .circle {
-  float: left;
+  display: inline-block;
+  margin-right: 7px;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 8px;
+  height: 8px;
 }
 
 .popup-label {
