@@ -28,39 +28,57 @@
 
 <body>
 
-<header>
-  <a id="logo" href="/"><img src="/assets/img/logo.svg" width="108px" height="auto" alt="Logo" /></a>
+  <header>
 
-  <select class="marginalization-filter">
-    <option value="" selected="selected">Marginación social</option>
-    <option value="muy_alto">Muy alto</option>
-    <option value="alto">Alto</option>
-    <option value="medio">Medio</option>
-    <option value="bajo">Bajo</option>
-  </select>
+    <div class="container wrap">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-  <select class="municipality-filter">
-    <option value="" selected="selected">Municipio</option>
-  </select>
+          <a id="logo" href="/"><img src="/assets/img/logo.svg" width="108px" height="auto" alt="Logo" /></a>
 
-  <span id="beta">Versión beta</span>
+          <select class="marginalization-filter xs-hidden">
+            <option value="" selected="selected">Marginación social</option>
+            <option value="muy_alto">Muy alto</option>
+            <option value="alto">Alto</option>
+            <option value="medio">Medio</option>
+            <option value="bajo">Bajo</option>
+          </select>
 
-</header>
+          <select class="municipality-filter xs-hidden">
+            <option value="" selected="selected">Municipio</option>
+          </select>
 
-<div id="map-container">
-  <div id='map'>
-    <div class='legend'>
-      <div class='legend-header'>Localidades por afectación estimada</div>
-      <div class='legend-items-container'></div>
+          <span id="beta">Versión beta</span>
+
+        </div>
+      </div>
     </div>
+
+  </header>
+
+<!-- <div class="container wrap">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+
+      <div id="map-container">
+        <div id='map'>
+          <div class='legend'>
+            <div class='legend-header'>Localidades por nivel de daño observado</div>
+            <div class='legend-items-container'></div>
+          </div>
+        </div>
+
+        <div class='features sm-hidden xs-hidden'>
+          <fieldset>
+            <input id='feature-filter' type='text' placeholder='Buscar localidades' />
+          </fieldset>
+          <div id='feature-list' class='list'></div>
+        </div>
+      </div>
+
+<!--     </div>
   </div>
-  <div class='features'>
-      <fieldset>
-        <input id='feature-filter' type='text' placeholder='Buscar localidades' />
-      </fieldset>
-      <div id='feature-list' class='list'></div>
-    </div>
-</div>
+</div> -->
 
 <script type="text/javascript">
 mapboxgl.accessToken = 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Ynd2d2s0dG4ifQ.W9vKUEkm1KtmR66z_dhixA'
