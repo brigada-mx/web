@@ -65,6 +65,7 @@
           <div class='legend'>
             <div class='legend-header'>Localidades por nivel de daño observado</div>
             <div class='legend-items-container'></div>
+            <div class="legend-footer">Tamaño = Población</div>
           </div>
         </div>
 
@@ -157,10 +158,10 @@ const renderPopup = (locality) => {
   const total = habit + notHabit + destroyed
   return `
     <span class="popup-header">${locName}, ${stateName}</span>
-    <div class="popup-item"><span class="popup-label">TOTAL DAÑADOS</span> <span class="popup-value">${fmt(total)}</span></div>
+    <div class="popup-item"><span class="popup-label">VIVIENDAS DAÑADAS</span> <span class="popup-value">${fmt(total)}</span></div>
     <div class="popup-item"><span class="popup-label">HABITABLES</span> <span class="popup-value">${fmt(habit)}</span></div>
     <div class="popup-item"><span class="popup-label">NO HABITABLES</span> <span class="popup-value">${fmt(notHabit)}</span></div>
-    <div class="popup-item"><span class="popup-label">DESTROZADOS</span> <span class="popup-value">${fmt(destroyed)}</span></div>
+    <div class="popup-item"><span class="popup-label">PÉRDIDA TOTAL</span> <span class="popup-value">${fmt(destroyed)}</span></div>
     <div class="popup-item"><span class="popup-label">GRADO MARGINACIÓN</span> <span class="popup-value">${margGrade}</span></div>
   `
 }
