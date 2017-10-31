@@ -15,8 +15,14 @@ header {
   @include box-shadow(-15px,15px,30px,0,37,38,50,0.04);
 }
 
+#map-container {
+  width: 100%;
+  height: 100%;
+}
+
 #map {
   height: 92%;
+  width: 75%;
 }
 
 .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right, {
@@ -26,12 +32,13 @@ header {
 .features {
   position: absolute;
   z-index: 1;
-  width: 360px;
-  top: 0;
+  width: 25%;
+  top: 64px;
   right: 0;
   background-color: #fff;
   max-height: 100%;
   overflow-y: scroll;
+  @include box-shadow(-15px,15px,30px,0,37,38,50,0.04);
 }
 
 .features fieldset {
