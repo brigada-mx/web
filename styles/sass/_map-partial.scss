@@ -1,27 +1,33 @@
+// _map-partial.scss
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'nunito-sans', sans-serif;
+  @include nunito-sans-200;
+  height: 100vh;
 }
 
 header {
-  height: 40px;
-  padding: 15px;
+  height: 64px;
+  padding: 19px;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  z-index: 2;
+  @include box-shadow(-15px,15px,30px,0,37,38,50,0.04);
 }
 
 #map {
-  height: 605px;
+  height: 100%;
 }
 
 .features {
   position: absolute;
-  width: 27.5%;
-  top: 70px;
-  bottom: 0;
+  z-index: 1;
+  width: 360px;
+  top: 0;
   right: 0;
   background-color: #fff;
   max-height: 100%;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .features fieldset {
@@ -49,6 +55,9 @@ header {
   padding: 12px 16px;
   margin: 1px 0px;
   border-left: 3px solid;
+  border-bottom: 1px solid #F3F5F7 !important;
+  height: 71px;
+  @include box-sizing;
 }
 
 .dmg-unknown {
@@ -64,10 +73,10 @@ header {
   border-color: #d80;
 }
 .dmg-high {
-  border-color: #d40;
+  border-color: #dd4500;
 }
 .dmg-severe {
-  border-color: #f00;
+  border-color: #e00;
 }
 
 .list-item:hover {
@@ -75,8 +84,12 @@ header {
 }
 
 .list-item-header {
-  font-size: 15px;
-  margin-bottom: 7px;
+  @include nunito-sans-200;
+  color: $grey-7;
+  font-size: 18px;
+  line-height: 30px;
+  max-width: 320px;
+  @include text-overflow;
 }
 
 .list-item-metrics {
@@ -87,16 +100,23 @@ header {
   display: inline-block;
 }
 
-.list-item-metrics div:last-child {
-  float: right;
+.list-item-metrics div:first-child {
+  margin-right: 10px;
 }
 
 .list-item-metrics .label {
-  color: #999;
+  @include nunito-sans;
+  font-size: 12px;
+  line-height: 16px;
+  color: $grey-8;
+  opacity: .4;
 }
 
 .list-item-metrics .value {
-  font-weight: bold;
+  @include roboto-700;
+  color: $grey-7;
+  font-size: 13px;
+  line-height: 12px;
 }
 
 .legend {
@@ -107,6 +127,14 @@ header {
   padding: 15px;
   border-radius: 4px;
   background-color: #fff;
+}
+
+.legend-header {
+  @include nunito-sans-600;
+  color: $grey-7;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
 }
 
 .legend-header {
