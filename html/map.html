@@ -124,6 +124,10 @@ muniFilter.on('change', () => {
   render()
 })
 
+const fmt = num => {
+  return num.toLocaleString()
+}
+
 const showPopup = (feature) => {
   popup.setLngLat(feature.geometry.coordinates)
     .setHTML(renderPopup(feature))
@@ -135,10 +139,10 @@ const renderPopup = (locality) => {
   const total = habit + notHabit + destroyed
   return `
     <span class="popup-header">${locName}, ${stateName}</span>
-    <div class="popup-item"><span class="popup-label">TOTAL DAÑADOS</span> <span class="popup-value">${total}</span></div>
-    <div class="popup-item"><span class="popup-label">HABITABLES</span> <span class="popup-value">${habit}</span></div>
-    <div class="popup-item"><span class="popup-label">NO HABITABLES</span> <span class="popup-value">${notHabit}</span></div>
-    <div class="popup-item"><span class="popup-label">DESTROZADOS</span> <span class="popup-value">${destroyed}</span></div>
+    <div class="popup-item"><span class="popup-label">TOTAL DAÑADOS</span> <span class="popup-value">${fmt(total)}</span></div>
+    <div class="popup-item"><span class="popup-label">HABITABLES</span> <span class="popup-value">${fmt(habit)}</span></div>
+    <div class="popup-item"><span class="popup-label">NO HABITABLES</span> <span class="popup-value">${fmt(notHabit)}</span></div>
+    <div class="popup-item"><span class="popup-label">DESTROZADOS</span> <span class="popup-value">${fmt(destroyed)}</span></div>
     <div class="popup-item"><span class="popup-label">GRADO MARGINACIÓN</span> <span class="popup-value">${margGrade}</span></div>
   `
 }
@@ -162,7 +166,7 @@ const renderLegend = (localities) => {
     return `<div class='legend-item'>
       <div class="circle" style="background-color: ${color}"></div>
       <span class="label">${label}</span>
-      <span class="count">${counts[key]}</span>
+      <span class="count">${fmt(counts[key])}</span>
     </div>`
   })
   legend.html(items.join('\n'))
@@ -198,7 +202,7 @@ const renderListItem = (locality) => {
   const metrics = $('<div class="list-item-metrics">')
   metrics.html(`
     <div><span class="label">MARG. SOCIAL</span> <span class="value">${margGrade || '?'}</span></div>
-    <div><span class="label">VIVIENDAS DAÑADAS</span> <span class="value">${total}</span></div>
+    <div><span class="label">VIVIENDAS DAÑADAS</span> <span class="value">${fmt(total)}</span></div>
   `)
 
   item.append(header)

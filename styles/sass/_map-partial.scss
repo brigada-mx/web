@@ -65,7 +65,7 @@ a#logo{
 
 div.mapboxgl-ctrl-top-left .mapboxgl-ctrl {
   margin: 20px 0 0 20px;
-  @include box-shadow(-15px,15px,30px,0,37,38,50,0.04);
+  @include box-shadow(0,20px,60px,0,37,38,50,0.15);
 }
 
 .mapboxgl-ctrl > button:last-child {
