@@ -1,0 +1,145 @@
+// _map-partial.scss
+
+body {
+  @include nunito-sans-200;
+  height: 100vh;
+}
+
+header {
+  height: 64px;
+  padding: 19px;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  z-index: 2;
+  @include box-shadow(-15px,15px,30px,0,37,38,50,0.04);
+}
+
+#map {
+  height: 100%;
+}
+
+.features {
+  position: absolute;
+  z-index: 1;
+  width: 360px;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  max-height: 100%;
+  overflow-y: scroll;
+}
+
+.features fieldset {
+  background: #ddd;
+  border: none;
+  padding: 8px;
+  margin: 0;
+}
+
+.features input {
+  display: block;
+  border: none;
+  width: 100%;
+  border-radius: 2px;
+  height: 20px;
+  margin: 0;
+}
+
+.features .list {
+  overflow: auto;
+  max-height: 100%;
+}
+
+.list-item {
+  padding: 12px 16px;
+  margin: 1px 0px;
+  border-left: 3px solid;
+  border-bottom: 1px solid #F3F5F7 !important;
+  height: 71px;
+  @include box-sizing;
+}
+
+.dmg-unknown {
+  border-color: #999;
+}
+.dmg-minimal {
+  border-color: #ff0;
+}
+.dmg-low {
+  border-color: #db0;
+}
+.dmg-medium {
+  border-color: #d80;
+}
+.dmg-high {
+  border-color: #dd4500;
+}
+.dmg-severe {
+  border-color: #e00;
+}
+
+.list-item:hover {
+  background: #f0f0f0;
+}
+
+.list-item-header {
+  @include nunito-sans-200;
+  color: $grey-7;
+  font-size: 18px;
+  line-height: 30px;
+  max-width: 320px;
+  @include text-overflow;
+}
+
+.list-item-metrics {
+  font-size: 12px;
+}
+
+.list-item-metrics div {
+  display: inline-block;
+}
+
+.list-item-metrics div:first-child {
+  margin-right: 10px;
+}
+
+.list-item-metrics .label {
+  @include nunito-sans;
+  font-size: 12px;
+  line-height: 16px;
+  color: $grey-8;
+  opacity: .4;
+}
+
+.list-item-metrics .value {
+  @include roboto-700;
+  color: $grey-7;
+  font-size: 13px;
+  line-height: 12px;
+}
+
+.legend {
+  position: absolute;
+  width: 12.5%;
+  left: 3%;
+  bottom: 5%;
+  padding: 15px;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.legend-header {
+  @include nunito-sans-600;
+  color: $grey-7;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+.legend-item {
+  margin-bottom: 5px;
+}
+.legend .label {
+  color: #999;
+}

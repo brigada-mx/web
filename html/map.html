@@ -32,13 +32,13 @@
   <a id="logo" href="/"><img src="/assets/img/logo.svg" width="108px" height="auto" alt="Logo" /></a>
 </header>
 
-<div id='map'></div>
-
-<div class='features'>
-  <fieldset>
-    <input id='feature-filter' type='text' placeholder='Buscar localidades' />
-  </fieldset>
-  <div id='feature-list' class='list'></div>
+<div id='map'>
+  <div class='features'>
+    <fieldset>
+      <input id='feature-filter' type='text' placeholder='Buscar localidades' />
+    </fieldset>
+    <div id='feature-list' class='list'></div>
+  </div>
 </div>
 
 <div class='legend'>
@@ -124,8 +124,8 @@ const renderListItem = (feature) => {
 
   const metrics = $('<div class="list-item-metrics">')
   metrics.html(`
-    <div><span class="label">MARG. SOCIAL:</span> <span class="value">${margGrade || '?'}</span></div>
-    <div><span class="label">VIVIENDAS DAÑADAS:</span> <span class="value">${total}</span></div>
+    <div><span class="label">MARG. SOCIAL</span> <span class="value">${margGrade || '?'}</span></div>
+    <div><span class="label">VIVIENDAS DAÑADAS</span> <span class="value">${total}</span></div>
   `)
 
   item.append(header)
