@@ -315,6 +315,8 @@ map.on('load', () => {
     }
   })
 
+  map.addControl(new mapboxgl.NavigationControl(), 'top-left')
+
   map.on('mousemove', 'damage', (e) => {
     // change the cursor style as a ui indicator
     map.getCanvas().style.cursor = 'pointer'
