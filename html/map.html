@@ -293,16 +293,29 @@ const compareLocalities = (a, b) => {
 }
 
 const renderMuniFilter = () => {
-  const s = new Set()
-  const items = ['<option value="" selected="selected">Municipio</option>']
+  // returns markup for dropdown options (municipalities)
+  const m = new Map()
   for (let l of localities) {
-    const { cvegeoS, munName } = l.properties
+    const { cvegeoS, munName, stateName, total } = l.properties
     const _cvegeoS = cvegeoS.substring(0, 5)
-    if (s.has(_cvegeoS)) continue
-
-    items.push(`<option value="${_cvegeoS}">${munName}</option>`)
-    s.add(_cvegeoS)
+    if (!m.has(_cvegeoS)) {
+      m.set(_cvegeoS, { count: total || 0, munName, stateName })
+    } else {
+      const { count } = m.get(_cvegeoS)
+      m.set(_cvegeoS, { count: count + (total || 0), munName, stateName })
+    }
   }
+  const items = Array.from(m.keys()).map(k => {
+    const o = m.get(k)
+    o.cvegeoS = k
+    return o
+  }).sort((a, b) => {
+    return b.count - a.count
+  }).map(o => {
+    const { cvegeoS, munName, stateName, count } = o
+    return `<option value="${cvegeoS}">${munName}, ${stateName} (${count})</option>`
+  })
+  items.unshift('<option value="" selected="selected">Municipio</option>')
   return items.join('\n')
 }
 
