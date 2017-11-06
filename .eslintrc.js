@@ -27,7 +27,17 @@ module.exports = {
     ],
     "no-unused-vars": [
       1,
-    ]
+    ],
+    "no-empty": [
+      1,
+    ],
+    "no-console": [
+      1,
+    ],
+    "padded-blocks": [
+      2,
+      "never",
+    ],
   },
   "env": {
     "es6": true,

@@ -1,3 +1,40 @@
+const API_BASE_URL = 'http://919.dev:8000/api'
+let localities = [] // holds all locality features for filtering
+let actions = [] // holds all actions for filtering
+let filters = { search: '', margGrade: '', municipality: '' }
+const numList = 500
+
+const apiFetch = (url='', {method='GET', body={}, headers={}, isRelative=true} = {}) => {
+  headers['Content-Type'] = 'application/json'
+
+  let request = {
+    method: method,
+    body: JSON.stringify(body), // `body` must be a string, not an object
+    headers: new Headers(headers),
+  }
+
+  if (['GET', 'HEAD'].indexOf(method) > -1) { delete request.body }
+
+  if (isRelative) { url = `${API_BASE_URL}${url}` }
+  return fetch(url, request)
+}
+
+const fetchActions = () => {
+  apiFetch('/actions/').then((response) => {
+    if (response.ok) {
+      response.json().then((data) => {
+        actions = data.results
+        render()
+      })
+    } else {}
+  }).catch((error) => {
+    console.log(error)
+    setTimeout(fetchActions, 5000)
+  })
+}
+
+fetchActions()
+
 mapboxgl.accessToken = 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Ynd2d2s0dG4ifQ.W9vKUEkm1KtmR66z_dhixA'
 const map = new mapboxgl.Map({
   container: 'map',
@@ -10,10 +47,6 @@ const map = new mapboxgl.Map({
 const popup = new mapboxgl.Popup({
   closeButton: false,
 })
-
-let localities = [] // holds all locality features for filtering
-let filters = { search: '', margGrade: '', municipality: '' }
-const numList = 500
 
 const damageGrade = (feature) => {
   const levels = [
