@@ -2,7 +2,7 @@ const API_BASE_URL = 'http://919.dev:8000/api'
 let localities = [] // holds all locality features for filtering
 let actions = [] // holds all actions for filtering
 let filters = { actionSearch: '', locSearch: '', margGrade: '', municipality: '' }
-const numList = 500
+const numList = 250
 
 const apiFetch = (url='', {method='GET', body={}, headers={}, isRelative=true} = {}) => {
   headers['Content-Type'] = 'application/json'
@@ -181,8 +181,8 @@ const renderListItem = (locality) => {
   return item
 }
 
-const renderActions = (action) => {
-
+const renderActions = (actions) => {
+  $('.header-actions-title').text(`${actions.length} actos de reconstrucción`)
 }
 
 const cleanAccentedChars = (s) => {
@@ -324,12 +324,12 @@ map.on('load', () => {
   filter.on('keyup', (e) => {
     // filter visible features that don't match the input value
     filters.locSearch = e.target.value
-    render()
+    render(true, false)
   })
 
   actionFilter.on('keyup', (e) => {
     filters.actionSearch = e.target.value
-    render()
+    render(false, true)
   })
 
   map.on('data', (data) => {
@@ -353,37 +353,42 @@ map.on('load', () => {
 /*
  * Renders list items, legend and features layer every time filter state changes.
  */
-const render = () => {
+const render = (includeLocalities=true, includeActions=true) => {
   const { locSearch, actionSearch, margGrade: marg, municipality: muni } = filters
 
-  const filtered = localities.filter((l) => {
-    const { locName, stateName, margGrade, cvegeoS } = l.properties
-    const matchesSearch = tokenMatch(`${locName} ${stateName}`, locSearch)
-    const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
-    const matchesMuni = !muni || muni === cvegeoS.substring(0, 5)
-    return matchesSearch && matchestMarg && matchesMuni
-  })
-
-  const filteredActions = actions.filter((a) => {
-    const { organization, sub_organization, action, locality } = a
-    const { name: locName, municipality_name, state_name, cvegeo } = locality
-    const matchesSearch = tokenMatch(
-      `${sub_organization} ${action} ${locName} ${municipality_name}
-      ${state_name} ${organization.name}`, actionSearch)
-    const matchesMuni = !muni || muni === cvegeo.substring(0, 5)
-    return matchesSearch && matchesMuni
-  })
-  // populate the sidebar with filtered results
-  renderList(filtered.slice(0, numList))
-
-  renderLegend(filtered)
-
-  // set the filter to populate features into the layer
-  map.setFilter('damage', ['in', 'cvegeo'].concat(
-    filtered.map((l) => {
-      return l.properties.cvegeo
+  if (includeLocalities) {
+    const filtered = localities.filter((l) => {
+      const { locName, stateName, margGrade, cvegeoS } = l.properties
+      const matchesSearch = tokenMatch(`${locName} ${stateName}`, locSearch)
+      const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
+      const matchesMuni = !muni || muni === cvegeoS.substring(0, 5)
+      return matchesSearch && matchestMarg && matchesMuni
     })
-  ))
 
-  renderActions(filteredActions)
+    // populate the sidebar with filtered results
+    renderList(filtered.slice(0, numList))
+
+    renderLegend(filtered)
+
+    // set the filter to populate features into the layer
+    map.setFilter('damage', ['in', 'cvegeo'].concat(
+      filtered.map((l) => {
+        return l.properties.cvegeo
+      })
+    ))
+  }
+
+  if (includeActions) {
+    const filteredActions = actions.filter((a) => {
+      const { organization, sub_organization, action, locality } = a
+      const { name: locName, municipality_name, state_name, cvegeo } = locality
+      const matchesSearch = tokenMatch(
+        `${sub_organization} ${action} ${locName} ${municipality_name}
+        ${state_name} ${organization.name}`, actionSearch)
+      const matchesMuni = !muni || muni === cvegeo.substring(0, 5)
+      return matchesSearch && matchesMuni
+    })
+
+    renderActions(filteredActions)
+  }
 }
