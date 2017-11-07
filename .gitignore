@@ -1,3 +1,7 @@
 config.codekit*
 919.conf
-*.compiled.js
+*.bundle.js
+.sass-cache
+node_modules
+*.css
+package-lock.json

@@ -1,7 +1,7 @@
 const API_BASE_URL = 'http://919.dev:8000/api'
 let localities = [] // holds all locality features for filtering
 let actions = [] // holds all actions for filtering
-let filters = { search: '', margGrade: '', municipality: '' }
+let filters = { actionSearch: '', locSearch: '', margGrade: '', municipality: '' }
 const numList = 500
 
 const apiFetch = (url='', {method='GET', body={}, headers={}, isRelative=true} = {}) => {
@@ -26,7 +26,7 @@ const fetchActions = () => {
         actions = data.results
         render()
       })
-    } else {}
+    }
   }).catch((error) => {
     console.log(error)
     setTimeout(fetchActions, 5000)
@@ -42,6 +42,8 @@ const map = new mapboxgl.Map({
   zoom: 7.5,
   center: [-95.4042505, 16.6073688],
 })
+
+map.scrollZoom.disable()
 
 // creates a popup, but doesn't add it to map yet
 const popup = new mapboxgl.Popup({
@@ -77,6 +79,7 @@ const damageGradeMeta = {
   severe: {label: 'MUY GRAVE', color: '#f00'},
 }
 
+const actionFilter = $('#action-filter')
 const filter = $('#feature-filter')
 const list = $('#feature-list')
 const margFilter = $('.marginalization-filter')
@@ -176,6 +179,10 @@ const renderListItem = (locality) => {
   item.append(header)
   item.append(metrics)
   return item
+}
+
+const renderActions = (action) => {
+
 }
 
 const cleanAccentedChars = (s) => {
@@ -316,7 +323,12 @@ map.on('load', () => {
 
   filter.on('keyup', (e) => {
     // filter visible features that don't match the input value
-    filters.search = e.target.value
+    filters.locSearch = e.target.value
+    render()
+  })
+
+  actionFilter.on('keyup', (e) => {
+    filters.actionSearch = e.target.value
     render()
   })
 
@@ -342,14 +354,24 @@ map.on('load', () => {
  * Renders list items, legend and features layer every time filter state changes.
  */
 const render = () => {
-  const { search, margGrade: marg, municipality: muni } = filters
+  const { locSearch, actionSearch, margGrade: marg, municipality: muni } = filters
 
   const filtered = localities.filter((l) => {
     const { locName, stateName, margGrade, cvegeoS } = l.properties
-    const matchesSearch = tokenMatch(`${locName} ${stateName}`, search)
+    const matchesSearch = tokenMatch(`${locName} ${stateName}`, locSearch)
     const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
     const matchesMuni = !muni || muni === cvegeoS.substring(0, 5)
     return matchesSearch && matchestMarg && matchesMuni
+  })
+
+  const filteredActions = actions.filter((a) => {
+    const { organization, sub_organization, action, locality } = a
+    const { name: locName, municipality_name, state_name, cvegeo } = locality
+    const matchesSearch = tokenMatch(
+      `${sub_organization} ${action} ${locName} ${municipality_name}
+      ${state_name} ${organization.name}`, actionSearch)
+    const matchesMuni = !muni || muni === cvegeo.substring(0, 5)
+    return matchesSearch && matchesMuni
   })
   // populate the sidebar with filtered results
   renderList(filtered.slice(0, numList))
@@ -362,4 +384,6 @@ const render = () => {
       return l.properties.cvegeo
     })
   ))
+
+  renderActions(filteredActions)
 }

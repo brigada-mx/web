@@ -30,7 +30,7 @@ cvegeo,longitude,latitude,mun_name,loc_name,habit,not_habit,destroyed,total
 ~~~
 
 
-## Transpile Code to ES5
-~~~sh
-babel js/map.js --out-file js/map.compiled.js
-~~~
+## Build and Deploy
+First transpile JS to ES5 and SASS to CSS.
+
+Check out `build.sh` and `deploy.sh`. Run `npm run build` and `npm run deploy`.
