@@ -183,6 +183,31 @@ const renderListItem = (locality) => {
 
 const renderActions = (actions) => {
   $('.header-actions-title').text(`${actions.length} actos de reconstrucción`)
+  const fields = [
+    'Estado', 'Municipio', 'Localidad', 'Organización responsable', 'Sector', 'Acción',
+    'Descripción', 'Unidad de medida', 'Meta', 'Presupuesto $MXN',
+    'Presupuesto ejercido $MXN', 'Fecha de inicio', 'Fecha final', 'Estatus',
+    'Persona responsable', 'Correo electrónico', 'Teléfono',
+  ]
+  const cleanValue = (v) => {
+    if (v === null || v === undefined || v === '') {
+      return '-'
+    }
+    return v
+  }
+
+  const headRow = `<tr>${fields.map(f => `<th>${f}</th>`).join('\n')}</tr>`
+  const rows = actions.map(a => {
+    const values = [
+      a.locality.state_name, a.locality.municipality_name, a.locality.name,
+      a.organization.name || a.sub_organization, a.action_type, a.desc, a.long_desc,
+      a.unit_of_measurement, a.target, a.budget, a.spent, a.start_date, a.end_date,
+      a.status_name, a.contact.person_responsible, a.contact.email, a.contact.phone,
+    ]
+    return `<tr>${values.map(v => `<td>${cleanValue(v)}</td>`).join('\n')}</tr>`
+  })
+  const table = `<table id='actions-table'>${headRow}${rows.join('\n')}</table>`
+  $('.actions-table-container').html(table)
 }
 
 const cleanAccentedChars = (s) => {
