@@ -295,15 +295,17 @@ div.mapboxgl-popup-content {
   display: flex; /* 2. display flex to the rescue */
   flex-direction: row;
   height: 95px;
-  background-color: #222;
+  background-color: #212126;
   width: 100%;
   align-items: center,
 }
 
 .header-actions-title {
-  color: white;
+  @include nunito-sans-200;
+  font-size: 24px;
+  @include font-smoothing(antialiased);
+  color: #fff;
   padding-left: 60px;
-  font-size: 30px;
 }
 
 #action-filter {
@@ -311,4 +313,15 @@ div.mapboxgl-popup-content {
   width: 150px;
   margin-left: auto;
   margin-right: 20px;
+  background-color: #212126;
+  border: none;
+  color: #fff;
+  opacity: .5;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: .8px;
+  @include nunito-sans-800;
 }
+
+
+
