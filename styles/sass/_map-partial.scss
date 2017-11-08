@@ -329,13 +329,10 @@ div.mapboxgl-popup-content {
 
 #actions-table {
   tbody {
-    padding: 20px 0 0 32px;
+    padding: 20px 0 30px 32px;
     display: block;
-    overflow-x: hidden;
   }
   tr {
-    width: 100%;
-    overflow-x: auto;
     white-space: nowrap;
   }
   th {
