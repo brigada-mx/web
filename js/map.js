@@ -182,7 +182,7 @@ const renderListItem = (locality) => {
 }
 
 const renderActions = (actions) => {
-  $('.header-actions-title').text(`${actions.length} actos de reconstrucción`)
+  $('.header-actions-title').text(`${actions.length} acciones de reconstrucción`)
   const fields = [
     'Estado', 'Municipio', 'Localidad', 'Organización responsable', 'Sector', 'Acción',
     'Descripción', 'Unidad de medida', 'Meta', 'Presupuesto $MXN',

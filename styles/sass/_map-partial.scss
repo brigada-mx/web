@@ -323,5 +323,27 @@ div.mapboxgl-popup-content {
   @include nunito-sans-800;
 }
 
+.actions-table-container {
+  overflow-x: auto;
+}
 
-
+#actions-table {
+  tbody {
+    padding: 20px 0 0 32px;
+    display: block;
+    overflow-x: hidden;
+  }
+  tr {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  th {
+    @include nunito-sans-600;
+    font-size: 14px;
+    color: #141418;
+    text-align: left;
+    margin-right: 76px;
+    display: inline-block;
+  }
+}
