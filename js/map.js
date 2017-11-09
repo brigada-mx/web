@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://919.dev:8000/api'
+const API_BASE_URL = 'https://719s.mx/api'
 let localities = [] // holds all locality features for filtering
 let actions = [] // holds all actions for filtering
 let filters = { actionSearch: '', locSearch: '', margGrade: '', municipality: '' }
