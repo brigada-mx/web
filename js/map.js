@@ -195,14 +195,19 @@ const renderActions = (actions) => {
     }
     return v
   }
+  const toCurrency = (amt) => {
+    if (!amt) return amt
+    return new Intl.NumberFormat('mx-MX', { style: 'currency', currency: 'MXN' }).format(amt)
+  }
 
   const headRow = `<tr>${fields.map(f => `<th>${f}</th>`).join('\n')}</tr>`
   const rows = actions.map(a => {
     const values = [
       a.locality.state_name, a.locality.municipality_name, a.locality.name,
-      a.organization.name || a.sub_organization, a.action_type, a.desc, a.long_desc,
-      a.unit_of_measurement, a.target, a.budget, a.spent, a.start_date, a.end_date,
-      a.status_name, a.contact.person_responsible, a.contact.email, a.contact.phone,
+      a.organization.name || a.sub_organization, a.action_type, a.desc,
+      a.long_desc, a.unit_of_measurement, a.target, toCurrency(a.budget),
+      toCurrency(a.spent), a.start_date, a.end_date, a.status_name,
+      a.contact.person_responsible, a.contact.email, a.contact.phone,
     ]
     return `<tr>${values.map(v => `<td>${cleanValue(v)}</td>`).join('\n')}</tr>`
   })
