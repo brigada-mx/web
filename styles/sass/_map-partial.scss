@@ -355,6 +355,9 @@ div.mapboxgl-popup-content {
     @include nunito-sans;
     border-bottom: 1pt solid #eee;
   }
+  td.link i, td.link a {
+    color: #42C17E;
+  }
   th, td {
     font-size: 14px;
     color: #141418;

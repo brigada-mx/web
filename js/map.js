@@ -184,23 +184,23 @@ const renderListItem = (locality) => {
 const renderActions = (actions) => {
   $('.header-actions-title').text(`${actions.length} acciones de reconstrucción`)
   const fields = [
-    {value: 'Estado', class: ''},
+    {value: 'Estado'},
     {value: 'Municipio', class: 'medium'},
     {value: 'Localidad', class: 'medium'},
-    {value: 'Organización responsable', class: ''},
-    {value: 'Sector', class: ''},
+    {value: 'Organización responsable'},
+    {value: 'Sector'},
     {value: 'Acción', class: 'medium'},
     {value: 'Descripción', class: 'wide'},
-    {value: 'Unidad de medida', class: ''},
-    {value: 'Meta', class: ''},
-    {value: 'Presupuesto $MXN', class: ''},
-    {value: 'Presupuesto ejercido $MXN', class: ''},
-    {value: 'Fecha de inicio', class: ''},
-    {value: 'Fecha final', class: ''},
-    {value: 'Estatus', class: ''},
+    {value: 'Unidad de medida'},
+    {value: 'Meta'},
+    {value: 'Presupuesto $MXN'},
+    {value: 'Presupuesto ejercido $MXN'},
+    {value: 'Fecha de inicio'},
+    {value: 'Fecha final'},
+    {value: 'Estatus'},
     {value: 'Persona responsable', class: 'medium'},
-    {value: 'Correo electrónico', class: ''},
-    {value: 'Teléfono', class: ''},
+    {value: 'Correo electrónico'},
+    {value: 'Teléfono'},
   ]
   const cleanValue = (v) => {
     if (v === null || v === undefined || v === '') {
@@ -216,23 +216,25 @@ const renderActions = (actions) => {
   const headRow = `<tr>${fields.map(f => `<th class='${f.class}'>${f.value}</th>`).join('\n')}</tr>`
   const rows = actions.map(a => {
     const values = [
-      {value: a.locality.state_name, class: ''},
+      {value: a.locality.state_name},
       {value: a.locality.municipality_name, class: 'medium'},
       {value: a.locality.name, class: 'medium'},
-      {value: a.organization.name || a.sub_organization, class: ''},
-      {value: a.action_type, class: ''},
+      {value: a.organization.name || a.sub_organization},
+      {value: a.action_type},
       {value: a.desc, class: 'medium'},
       {value: a.long_desc, class: 'wide'},
-      {value: a.unit_of_measurement, class: ''},
-      {value: a.target, class: ''},
-      {value: toCurrency(a.budget), class: ''},
-      {value: toCurrency(a.spent), class: ''},
-      {value: a.start_date, class: ''},
-      {value: a.end_date, class: ''},
-      {value: a.status_name, class: ''},
+      {value: a.unit_of_measurement},
+      {value: a.target},
+      {value: toCurrency(a.budget)},
+      {value: toCurrency(a.spent)},
+      {value: a.start_date},
+      {value: a.end_date},
+      {value: a.status_name},
       {value: a.contact.person_responsible, class: 'medium'},
-      {value: a.contact.email, class: ''},
-      {value: a.contact.phone, class: ''},
+      {value: `<i class="material-icons">email</i>
+        <a href="mailto:${a.contact.email}">${a.contact.email}</a>`, class: 'link'},
+      {value: `<i class="material-icons">phone</i>
+        <a href="tel:${a.contact.phone}">${a.contact.phone}</a>`, class: 'link'},
     ]
     return `<tr>${values.map(v => `<td class='${v.class}'>${cleanValue(v.value)}</td>`).join('\n')}</tr>`
   })
