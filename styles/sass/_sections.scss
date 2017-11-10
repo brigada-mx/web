@@ -18,20 +18,50 @@ header {
   background: url(/assets/img/hero.jpg) no-repeat left;
   background-size: cover;
   height: 100vh;
-  opacity: .75;
 }
 
 // LOGO WALL
 
 #logo-wall {
-  padding: 42px;
+  padding: 46px;
   background-color: #F3F5F7;
   position: relative;
   z-index: -2;
 }
 
-#logo-wrapper {
-  height: 100px;
+#tanganica {
+  background: url(/assets/img/tanganica.png) no-repeat;
+  background-size: 89px 95px;
+  width: 89px;
+  height: 95px;
+}
+
+#reconstruir {
+  background: url(/assets/img/reconstruir.png) no-repeat;
+  background-size: 191px 36px;
+  width: 191px;
+  height: 36px;
+  margin-top: 8px;
+}
+
+#socialtic {
+  background: url(/assets/img/socialtic.png) no-repeat;
+  background-size: 173px 25px;
+  width: 173px;
+  height: 25px;
+  margin-top: 14px;
+}
+
+#opi {
+  background: url(/assets/img/opi.png) no-repeat;
+  background-size: 168px 29px;
+  width: 168px;
+  height: 29px;
+  margin-top: 19px;
+}
+
+#tanganica, #reconstruir, #socialtic, #opi {
+  display: inline-block;
 }
 
 // FEATURES
@@ -84,13 +114,6 @@ footer {
 }
 
 // MAP
-
-header#beta {
-  height: 64px;
-  li {
-    margin-top: 13px;
-  }
-}
 
 #map {
   display: block;

@@ -40,8 +40,14 @@ header {
 // LOGO WALL
 
 section#logo-wall {
+  .container.wrap {
+    padding: 0px;
+  }
   margin-bottom: 95px;
-  padding: 22px;
+  padding: 46px;
+  #tanganica, #reconstruir, #socialtic, #opi {
+    margin-top: 0px;
+  }
 }
 
 // FEATURES

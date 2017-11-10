@@ -52,7 +52,14 @@ body header {
 
 section#logo-wall {
   margin-bottom: 95px;
-  padding: 22px;
+  padding: 56px 0;
+  #tanganica, #reconstruir, #socialtic, #opi {
+    display: block;
+    margin: 0 auto;
+  }
+  #tanganica, #reconstruir, #socialtic {
+    padding-bottom: 56px;
+  }
 }
 
 // FEATURES

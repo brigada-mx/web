@@ -3,10 +3,9 @@
 // HERO
 
 header {
-  margin-bottom: 188px;
   padding: 28px 5px 0 5px;
   h1 {
-    margin: 189px 0 12px 0;
+    margin: 159px 0 12px 0;
   }
   #hero-img-wrap {
     width: 57.5%;
@@ -22,6 +21,7 @@ header {
 // LOGO WALL
 
 #logo-wall {
+  margin-top: -51px;
   margin-bottom: 88px;
 }
 
@@ -41,21 +41,20 @@ header {
 }
 
 #feature2 {
-  .tag {
-    margin-top: 275px;
+  h2 {
+    margin: 235px 0 10px 0;
   }
 }
 
 #feature3 {
   margin-bottom: 199px;
-  .tag {
-    margin-top: 82px;
+  h2 {
+    margin: 86px 0 10px 0;
   }
 }
 
 #feature2, #feature3 {
   h2 {
-    margin: 20px 0 10px 0;
     width: 330px;
   }
   p {
@@ -83,12 +82,6 @@ footer {
   .button {
     margin-bottom: 156px;
   }
-}
-
-// MAP
-
-header#beta {
-  margin-bottom: 0px;
 }
 
 // GENERAL
@@ -223,9 +216,11 @@ header#beta {
   }
   .around-lg {
     @include justify-content(space-around);
+    @include flexbox;
   }
   .between-lg {
     @include justify-content(space-between);
+    @include flexbox;
   }
   .first-lg {
     @include order(-1);
