@@ -328,6 +328,7 @@ div.mapboxgl-popup-content {
 }
 
 #actions-table {
+  border-collapse: collapse;
   tbody {
     padding: 20px 0 30px 32px;
     display: block;
@@ -335,16 +336,29 @@ div.mapboxgl-popup-content {
   tr {
     white-space: nowrap;
   }
+  th.medium, td.medium {
+    width: 200px;
+    max-width: 200px;
+    min-width: 200px;
+    white-space: normal;
+  }
+  th.wide, td.wide {
+    width: 300px;
+    max-width: 300px;
+    min-width: 300px;
+    white-space: normal;
+  }
   th {
     @include nunito-sans-600;
   }
   td {
     @include nunito-sans;
+    border-bottom: 1pt solid #eee;
   }
   th, td {
     font-size: 14px;
     color: #141418;
     text-align: left;
-    padding: 21px 76px 21px 0;
+    padding: 16px 60px 16px 0;
   }
 }

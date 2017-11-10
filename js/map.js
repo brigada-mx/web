@@ -184,10 +184,23 @@ const renderListItem = (locality) => {
 const renderActions = (actions) => {
   $('.header-actions-title').text(`${actions.length} acciones de reconstrucción`)
   const fields = [
-    'Estado', 'Municipio', 'Localidad', 'Organización responsable', 'Sector', 'Acción',
-    'Descripción', 'Unidad de medida', 'Meta', 'Presupuesto $MXN',
-    'Presupuesto ejercido $MXN', 'Fecha de inicio', 'Fecha final', 'Estatus',
-    'Persona responsable', 'Correo electrónico', 'Teléfono',
+    {value: 'Estado', class: ''},
+    {value: 'Municipio', class: 'medium'},
+    {value: 'Localidad', class: 'medium'},
+    {value: 'Organización responsable', class: ''},
+    {value: 'Sector', class: ''},
+    {value: 'Acción', class: 'medium'},
+    {value: 'Descripción', class: 'wide'},
+    {value: 'Unidad de medida', class: ''},
+    {value: 'Meta', class: ''},
+    {value: 'Presupuesto $MXN', class: ''},
+    {value: 'Presupuesto ejercido $MXN', class: ''},
+    {value: 'Fecha de inicio', class: ''},
+    {value: 'Fecha final', class: ''},
+    {value: 'Estatus', class: ''},
+    {value: 'Persona responsable', class: 'medium'},
+    {value: 'Correo electrónico', class: ''},
+    {value: 'Teléfono', class: ''},
   ]
   const cleanValue = (v) => {
     if (v === null || v === undefined || v === '') {
@@ -197,19 +210,31 @@ const renderActions = (actions) => {
   }
   const toCurrency = (amt) => {
     if (!amt) return amt
-    return new Intl.NumberFormat('mx-MX', { style: 'currency', currency: 'MXN' }).format(amt)
+    return new Intl.NumberFormat('mx-MX', { style: 'currency', currency: 'USD' }).format(amt)
   }
 
-  const headRow = `<tr>${fields.map(f => `<th>${f}</th>`).join('\n')}</tr>`
+  const headRow = `<tr>${fields.map(f => `<th class='${f.class}'>${f.value}</th>`).join('\n')}</tr>`
   const rows = actions.map(a => {
     const values = [
-      a.locality.state_name, a.locality.municipality_name, a.locality.name,
-      a.organization.name || a.sub_organization, a.action_type, a.desc,
-      a.long_desc, a.unit_of_measurement, a.target, toCurrency(a.budget),
-      toCurrency(a.spent), a.start_date, a.end_date, a.status_name,
-      a.contact.person_responsible, a.contact.email, a.contact.phone,
+      {value: a.locality.state_name, class: ''},
+      {value: a.locality.municipality_name, class: 'medium'},
+      {value: a.locality.name, class: 'medium'},
+      {value: a.organization.name || a.sub_organization, class: ''},
+      {value: a.action_type, class: ''},
+      {value: a.desc, class: 'medium'},
+      {value: a.long_desc, class: 'wide'},
+      {value: a.unit_of_measurement, class: ''},
+      {value: a.target, class: ''},
+      {value: toCurrency(a.budget), class: ''},
+      {value: toCurrency(a.spent), class: ''},
+      {value: a.start_date, class: ''},
+      {value: a.end_date, class: ''},
+      {value: a.status_name, class: ''},
+      {value: a.contact.person_responsible, class: 'medium'},
+      {value: a.contact.email, class: ''},
+      {value: a.contact.phone, class: ''},
     ]
-    return `<tr>${values.map(v => `<td>${cleanValue(v)}</td>`).join('\n')}</tr>`
+    return `<tr>${values.map(v => `<td class='${v.class}'>${cleanValue(v.value)}</td>`).join('\n')}</tr>`
   })
   const table = `<table id='actions-table'>${headRow}${rows.join('\n')}</table>`
   $('.actions-table-container').html(table)
