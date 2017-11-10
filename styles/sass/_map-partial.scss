@@ -337,10 +337,14 @@ div.mapboxgl-popup-content {
   }
   th {
     @include nunito-sans-600;
+  }
+  td {
+    @include nunito-sans;
+  }
+  th, td {
     font-size: 14px;
     color: #141418;
     text-align: left;
-    margin-right: 76px;
-    display: inline-block;
+    padding: 21px 76px 21px 0;
   }
 }
