@@ -339,7 +339,8 @@ div.mapboxgl-popup-content {
     @include nunito-sans-600;
   }
   td {
-    @include nunito-sans;
+    @include roboto-300;
+    opacity: .8;
   }
   th, td {
     font-size: 14px;
