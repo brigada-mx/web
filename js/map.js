@@ -185,8 +185,8 @@ const renderActions = (actions) => {
   $('.header-actions-title').text(`${actions.length} acciones de reconstrucción`)
   const fields = [
     {value: 'Estado'},
-    {value: 'Municipio', class: 'medium'},
-    {value: 'Localidad', class: 'medium'},
+    {value: 'Municipio'},
+    {value: 'Localidad'},
     {value: 'Organización responsable'},
     {value: 'Sector'},
     {value: 'Acción', class: 'medium'},
@@ -198,7 +198,7 @@ const renderActions = (actions) => {
     {value: 'Fecha de inicio'},
     {value: 'Fecha final'},
     {value: 'Estatus'},
-    {value: 'Persona responsable', class: 'medium'},
+    {value: 'Persona responsable'},
     {value: 'Correo electrónico'},
     {value: 'Teléfono'},
   ]

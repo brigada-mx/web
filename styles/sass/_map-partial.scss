@@ -287,14 +287,12 @@ div.mapboxgl-popup-content {
   height: 100%;
   top: 100%;
   left: 0;
-  overflow-y: scroll;
-  @include box-shadow(0px,-10px,10px,0px,37,38,50,0.08);
 }
 
 .header-actions {
   display: flex; /* 2. display flex to the rescue */
   flex-direction: row;
-  height: 95px;
+  height: 107px;
   background-color: #212126;
   width: 100%;
   align-items: center,
@@ -305,22 +303,32 @@ div.mapboxgl-popup-content {
   font-size: 24px;
   @include font-smoothing(antialiased);
   color: #fff;
-  padding-left: 60px;
+  padding-left: 32px;
 }
 
 #action-filter {
   height: 25px;
   width: 150px;
-  margin-left: auto;
   margin-right: 20px;
-  background-color: #212126;
+  background-color: transparent;
   border: none;
   color: #fff;
-  opacity: .5;
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: .8px;
   @include nunito-sans-800;
+  &::placeholder {
+    color: #fff;
+    opacity: .5;
+  }
+}
+
+#search-icon {
+  margin: -2px 10px 0 auto;
+  background: url(/assets/img/search.svg) left no-repeat;
+  background-size: 16px 16px;
+  height: 16px;
+  width: 16px;
 }
 
 .actions-table-container {
@@ -330,11 +338,14 @@ div.mapboxgl-popup-content {
 #actions-table {
   border-collapse: collapse;
   tbody {
-    padding: 20px 0 30px 32px;
+    padding: 20px 0 0 0;
     display: block;
   }
   tr {
     white-space: nowrap;
+    &:not(:first-of-type) {
+      border-bottom: 1pt solid #F3F5F7;
+    }
   }
   th.medium, td.medium {
     width: 200px;
@@ -354,7 +365,6 @@ div.mapboxgl-popup-content {
   td {
     @include roboto-300;
     opacity: .8;
-    border-bottom: 1pt solid #eee;
   }
   td.link i, td.link a {
     color: #42C17E;
@@ -363,6 +373,22 @@ div.mapboxgl-popup-content {
     font-size: 14px;
     color: #141418;
     text-align: left;
-    padding: 16px 60px 16px 0;
+    &:first-of-type {
+      padding-left: 32px;
+    }
   }
+  th {
+    padding: 16px 74px 10px 0;
+  }
+  td {
+    padding: 11px 74px 8px 0;
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 21px;
+  }
+}
+
+.material-icons {
+  vertical-align: middle;
+  margin-right: 8px;
 }
