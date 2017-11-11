@@ -336,9 +336,9 @@ map.on('load', () => {
     type: 'circle',
     source: {
       type: 'vector',
-      url: 'mapbox://kylebebak.8ysz50ul',
+      url: 'mapbox://kylebebak.1n5vpi8c',
     },
-    'source-layer': 'oaxaca-26oct-6wh485',
+    'source-layer': 'estados-10nov-96j99y',
     paint: {
       'circle-radius': {
         property: 'total',
@@ -393,7 +393,7 @@ map.on('load', () => {
     if (localities.length > 0) { return } // only call this function on initialization
 
     if (data.dataType === 'source' && data.isSourceLoaded) {
-      const features = map.querySourceFeatures('damage', {sourceLayer: 'oaxaca-26oct-6wh485'})
+      const features = map.querySourceFeatures('damage', {sourceLayer: 'estados-10nov-96j99y'})
       localities = deduplicate(features, 'cvegeo')
       localities.sort(compareLocalities)
       for (let l of localities) {
