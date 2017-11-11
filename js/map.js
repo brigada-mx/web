@@ -71,7 +71,7 @@ const damageGrade = (feature) => {
 }
 
 const damageGradeMeta = {
-  unknown: {label: 'SIN DATOS', color: '#999'},
+  unknown: {label: 'SIN DATOS', color: '#939AA1'},
   minimal: {label: 'MÍNIMO', color: '#ff0'},
   low: {label: 'MENOR', color: '#db0'},
   medium: {label: 'MEDIO', color: '#d80'},
