@@ -1,7 +1,7 @@
 const API_BASE_URL = 'https://719s.mx/api'
 let localities = [] // holds all locality features for filtering
 let actions = [] // holds all actions for filtering
-let filters = { actionSearch: '', locSearch: '', margGrade: '', municipality: '' }
+let filters = { actionSearch: '', locSearch: '', margGrade: '', municipality: '', state: '' }
 const numList = 250
 
 const apiFetch = (url='', {method='GET', body={}, headers={}, isRelative=true} = {}) => {
@@ -84,6 +84,7 @@ const filter = $('#feature-filter')
 const list = $('#feature-list')
 const margFilter = $('.marginalization-filter')
 const muniFilter = $('.municipality-filter')
+const stateFilter = $('.state-filter')
 margFilter.on('change', () => {
   const option = margFilter.find('option:selected')
   filters.margGrade = option.val()
@@ -94,8 +95,14 @@ muniFilter.on('change', () => {
   filters.municipality = option.val().substring(0, 5)
   render()
 })
+stateFilter.on('change', () => {
+  const option = stateFilter.find('option:selected')
+  filters.state = option.val().substring(0, 2)
+  render()
+})
 
 const fmt = num => {
+  if (num === -1) return '-'
   return num.toLocaleString()
 }
 
@@ -310,26 +317,37 @@ const compareLocalities = (a, b) => {
 
 const renderMuniFilter = () => {
   // returns markup for dropdown options (municipalities)
-  const items = []
-  const s = new Set()
-  for (let l of localities) {
-    const { cvegeoS, munName, stateName } = l.properties
-    const _cvegeoS = cvegeoS.substring(0, 5)
-    if (!s.has(_cvegeoS)) {
-      s.add(_cvegeoS)
-      items.push({ cvegeoS: _cvegeoS, munName, stateName })
-    }
-  }
+  const items = _.uniqBy(localities, l => {
+    return l.properties.cvegeoMuni
+  })
 
   const content = items.sort((a, b) => {
-    if(a.munName < b.munName) return -1
-    if(a.munName > b.munName) return 1
+    if(a.properties.munName < b.properties.munName) return -1
+    if(a.properties.munName > b.properties.munName) return 1
     return 0
   }).map(o => {
-    const { cvegeoS, munName, stateName } = o
+    const { cvegeoS, munName, stateName } = o.properties
     return `<option value="${cvegeoS}">${munName}, ${stateName}</option>`
   })
   content.unshift('<option value="" selected="selected">Municipio</option>')
+  return content.join('\n')
+}
+
+const renderStateFilter = () => {
+  // returns markup for dropdown options (municipalities)
+  const items = _.uniqBy(localities, l => {
+    return l.properties.cvegeoState
+  })
+
+  const content = items.sort((a, b) => {
+    if(a.properties.stateName < b.properties.stateName) return -1
+    if(a.properties.stateName > b.properties.stateName) return 1
+    return 0
+  }).map(o => {
+    const { cvegeoS, stateName } = o.properties
+    return `<option value="${cvegeoS}">${stateName}</option>`
+  })
+  content.unshift('<option value="" selected="selected">Estado</option>')
   return content.join('\n')
 }
 
@@ -403,9 +421,16 @@ map.on('load', () => {
       for (let l of localities) {
         const dmgGrade = damageGrade(l)
         l.properties.dmgGrade = dmgGrade
-        l.properties.cvegeoS = l.properties.cvegeo.toString()
+
+        let cvegeoS = l.properties.cvegeo.toString()
+        if (cvegeoS.length === 8) cvegeoS = '0' + cvegeoS
+        l.properties.cvegeoS = cvegeoS
+
+        l.properties.cvegeoMuni = l.properties.cvegeoS.substring(0, 5)
+        l.properties.cvegeoState = l.properties.cvegeoS.substring(0, 2)
       }
       muniFilter.html(renderMuniFilter())
+      stateFilter.html(renderStateFilter())
       render()
     }
   })
@@ -415,7 +440,7 @@ map.on('load', () => {
  * Renders list items, legend and features layer every time filter state changes.
  */
 const render = (includeLocalities=true, includeActions=true) => {
-  const { locSearch, actionSearch, margGrade: marg, municipality: muni } = filters
+  const { locSearch, actionSearch, margGrade: marg, municipality: muni, state } = filters
 
   if (includeLocalities) {
     const filtered = localities.filter((l) => {
@@ -423,7 +448,8 @@ const render = (includeLocalities=true, includeActions=true) => {
       const matchesSearch = tokenMatch(`${locName} ${stateName}`, locSearch)
       const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
       const matchesMuni = !muni || muni === cvegeoS.substring(0, 5)
-      return matchesSearch && matchestMarg && matchesMuni
+      const matchesState = !state || state === cvegeoS.substring(0, 2)
+      return matchesSearch && matchestMarg && matchesMuni && matchesState
     })
 
     // populate the sidebar with filtered results
@@ -447,7 +473,8 @@ const render = (includeLocalities=true, includeActions=true) => {
         `${sub_organization} ${action} ${locName} ${municipality_name}
         ${state_name} ${organization.name}`, actionSearch)
       const matchesMuni = !muni || muni === cvegeo.substring(0, 5)
-      return matchesSearch && matchesMuni
+      const matchesState = !state || state === cvegeo.substring(0, 2)
+      return matchesSearch && matchesMuni && matchesState
     })
 
     renderActions(filteredActions)
