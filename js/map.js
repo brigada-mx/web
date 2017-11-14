@@ -85,6 +85,12 @@ const list = $('#feature-list')
 const margFilter = $('.marginalization-filter')
 const muniFilter = $('.municipality-filter')
 const stateFilter = $('.state-filter')
+
+// fix select widths before other options in select are rendered
+margFilter.css('width', `${margFilter.width() + 20}px`)
+muniFilter.css('width', `${muniFilter.width() + 20}px`)
+stateFilter.css('width', `${stateFilter.width() + 20}px`)
+
 margFilter.on('change', () => {
   const option = margFilter.find('option:selected')
   filters.margGrade = option.val()
