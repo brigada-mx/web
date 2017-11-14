@@ -5,3 +5,4 @@ config.codekit*
 node_modules
 *.css
 package-lock.json
+sandbox/*

@@ -1,5 +1,6 @@
 module.exports = {
   "globals": {
+    "_": true,
     "$": true,
     "google": true,
     "mapboxgl": true,

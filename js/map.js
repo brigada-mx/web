@@ -39,8 +39,8 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Y
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk',
-  zoom: 7.5,
-  center: [-95.4042505, 16.6073688],
+  zoom: 6,
+  center: [-95.9042505, 17.1073688],
 })
 
 map.scrollZoom.disable()
@@ -59,7 +59,7 @@ const damageGrade = (feature) => {
     [Number.MAX_SAFE_INTEGER, 'severe'],
   ]
   const { total } = feature.properties
-  if (total === undefined || total === null || total === '') {
+  if (total === undefined || total === null || total === '' || total === -1) {
     return 'unknown'
   }
   for (let l of levels) {
@@ -300,9 +300,12 @@ const deduplicate = (features, comparatorProperty) => {
 const compareLocalities = (a, b) => {
   const { total: ta } = a.properties
   const { total: tb } = b.properties
-  if (isNaN(parseFloat(ta))) return 1
-  if (isNaN(parseFloat(tb))) return -1
-  return parseFloat(tb) - parseFloat(ta)
+  const [fa, fb] = [parseFloat(ta), parseFloat(tb)]
+  if (isNaN(fa)) {
+    if (isNaN(fb)) return 0
+    return 1
+  } else if (isNaN(fb)) return -1
+  return fb - fa
 }
 
 const renderMuniFilter = () => {
@@ -336,21 +339,22 @@ map.on('load', () => {
     type: 'circle',
     source: {
       type: 'vector',
-      url: 'mapbox://kylebebak.1n5vpi8c',
+      url: 'mapbox://kylebebak.16y48ycb',
     },
-    'source-layer': 'estados-10nov-96j99y',
+    'source-layer': 'estados-13nov-1j6p23',
     paint: {
       'circle-radius': {
         property: 'total',
         type: 'exponential',
         stops: [
-          [1, 5],
-          [15000, 35],
+          [{zoom: 8, value: -1}, 2.5],
+          [{zoom: 8, value: 15000}, 35],
         ],
       },
       'circle-color': {
         property: 'total',
         stops: [
+          [-1, '#939AA1'],
           [0, '#ff0'],
           [10, '#db0'],
           [50, '#d80'],
@@ -378,11 +382,11 @@ map.on('load', () => {
     popup.remove()
   })
 
-  filter.on('keyup', (e) => {
+  filter.on('keyup', _.debounce(e => {
     // filter visible features that don't match the input value
     filters.locSearch = e.target.value
     render(true, false)
-  })
+  }, 200))
 
   actionFilter.on('keyup', (e) => {
     filters.actionSearch = e.target.value
@@ -393,7 +397,7 @@ map.on('load', () => {
     if (localities.length > 0) { return } // only call this function on initialization
 
     if (data.dataType === 'source' && data.isSourceLoaded) {
-      const features = map.querySourceFeatures('damage', {sourceLayer: 'estados-10nov-96j99y'})
+      const features = map.querySourceFeatures('damage', {sourceLayer: 'estados-13nov-1j6p23'})
       localities = deduplicate(features, 'cvegeo')
       localities.sort(compareLocalities)
       for (let l of localities) {
