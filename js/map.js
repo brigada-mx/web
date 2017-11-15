@@ -108,7 +108,7 @@ stateFilter.on('change', () => {
 })
 
 const fmt = num => {
-  if (num === -1) return '-'
+  if (num === -1 || num === undefined || num === null || num === '') return '-'
   return num.toLocaleString()
 }
 
@@ -119,8 +119,7 @@ const showPopup = (feature) => {
 }
 
 const renderPopup = (locality) => {
-  const { stateName, locName, habit, notHabit, destroyed, margGrade } = locality.properties
-  const total = habit + notHabit + destroyed
+  const { stateName, locName, habit, notHabit, destroyed, margGrade, total } = locality.properties
   return `
     <span class="popup-header">${locName}, ${stateName}</span>
     <div class="popup-item"><span class="popup-label">VIVIENDAS DAÑADAS</span> <span class="popup-value">${fmt(total)}</span></div>
@@ -363,9 +362,9 @@ map.on('load', () => {
     type: 'circle',
     source: {
       type: 'vector',
-      url: 'mapbox://kylebebak.16y48ycb',
+      url: 'mapbox://kylebebak.a71mofbc',
     },
-    'source-layer': 'estados-13nov-1j6p23',
+    'source-layer': 'estados-15nov-5qk3g7',
     paint: {
       'circle-radius': {
         property: 'total',
@@ -410,7 +409,7 @@ map.on('load', () => {
     // filter visible features that don't match the input value
     filters.locSearch = e.target.value
     render(true, false)
-  }, 200))
+  }, 150))
 
   actionFilter.on('keyup', (e) => {
     filters.actionSearch = e.target.value
@@ -421,16 +420,14 @@ map.on('load', () => {
     if (localities.length > 0) { return } // only call this function on initialization
 
     if (data.dataType === 'source' && data.isSourceLoaded) {
-      const features = map.querySourceFeatures('damage', {sourceLayer: 'estados-13nov-1j6p23'})
+      const features = map.querySourceFeatures('damage', {sourceLayer: 'estados-15nov-5qk3g7'})
       localities = deduplicate(features, 'cvegeo')
       localities.sort(compareLocalities)
       for (let l of localities) {
         const dmgGrade = damageGrade(l)
         l.properties.dmgGrade = dmgGrade
 
-        let cvegeoS = l.properties.cvegeo.toString()
-        if (cvegeoS.length === 8) cvegeoS = '0' + cvegeoS
-        l.properties.cvegeoS = cvegeoS
+        l.properties.cvegeoS = l.properties.cvegeo.toString()
 
         l.properties.cvegeoMuni = l.properties.cvegeoS.substring(0, 5)
         l.properties.cvegeoState = l.properties.cvegeoS.substring(0, 2)
