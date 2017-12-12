@@ -6,3 +6,4 @@ node_modules
 *.css
 package-lock.json
 sandbox/*
+.DS_Store
