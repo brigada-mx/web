@@ -1,4 +1,6 @@
 var path = require('path')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+
 
 module.exports = {
   entry: './src/index.js',
@@ -6,6 +8,12 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  plugins: [
+    new ExtractTextPlugin({
+      filename: 'app.css',
+      allChunks: true,
+    }),
+  ],
   module: {
     rules: [
       {
@@ -15,7 +23,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"'
+        }),
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
@@ -28,7 +39,10 @@ module.exports = {
   },
   resolve: {
     alias: {
+      src: path.resolve(__dirname, 'src'),
       components: path.resolve(__dirname, 'src/components'),
+      assets: path.resolve(__dirname, 'assets'),
+      styles: path.resolve(__dirname, 'styles'),
     },
   },
 }

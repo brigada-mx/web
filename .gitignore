@@ -3,7 +3,7 @@ config.codekit*
 *.bundle.js
 .sass-cache
 node_modules
-*.css
+styles/*.css
 package-lock.json
 sandbox/*
 .DS_Store
