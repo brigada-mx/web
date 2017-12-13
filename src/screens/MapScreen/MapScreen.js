@@ -10,10 +10,12 @@ class MapScreen extends React.Component {
   }
 
   render() {
-    return <div>
-      <Header />
-      <Map />
-    </div>
+    return (
+      <div>
+        <Header />
+        <Map />
+      </div>
+    )
   }
 }
 

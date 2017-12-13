@@ -1,4 +1,6 @@
 module.exports = {
+  "parser": "babel-eslint",
+  "extends": "airbnb",
   "globals": {
     "_": true,
     "$": true,
@@ -6,6 +8,11 @@ module.exports = {
     "mapboxgl": true,
   },
   "rules": {
+    "import/extensions": 0,
+    "import/no-unresolved": 0,
+    "react/jsx-filename-extension": 0,
+    "import/no-extraneous-dependencies": 0,
+    "arrow-body-style": 0,
     "indent": [
       2,
       2
@@ -26,34 +33,8 @@ module.exports = {
       2,
       "always-multiline",
     ],
-    "no-unused-vars": [
-      1,
-    ],
-    "no-empty": [
-      1,
-    ],
-    "no-console": [
-      1,
-    ],
-    "padded-blocks": [
-      2,
-      "never",
-    ],
+    "no-unused-vars": 1,
+    "no-empty": 1,
+    "no-console": 1,
   },
-  "env": {
-    "es6": true,
-    "browser": true,
-    "node": true
-  },
-  "extends": "eslint:recommended",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    },
-  },
-  "plugins": [
-    "react"
-  ]
 };
