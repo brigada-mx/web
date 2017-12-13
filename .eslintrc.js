@@ -12,27 +12,13 @@ module.exports = {
     "import/no-unresolved": 0,
     "react/jsx-filename-extension": 0,
     "import/no-extraneous-dependencies": 0,
+    "max-len": [2, {"ignoreStrings": true, "ignoreTemplateLiterals": true, "ignoreTrailingComments": true, "tabWidth": 2, "code": 100}],
     "arrow-body-style": 0,
-    "indent": [
-      2,
-      2
-    ],
-    "quotes": [
-      2,
-      "single"
-    ],
-    "linebreak-style": [
-      2,
-      "unix"
-    ],
-    "semi": [
-      2,
-      "never"
-    ],
-    "comma-dangle": [
-      2,
-      "always-multiline",
-    ],
+    "indent": [2, 2],
+    "quotes": [2, "single"],
+    "linebreak-style": [2, "unix"],
+    "semi": [2, "never"],
+    "comma-dangle": [2, "always-multiline"],
     "no-unused-vars": 1,
     "no-empty": 1,
     "no-console": 1,
