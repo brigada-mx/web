@@ -1,53 +1,41 @@
-@value colors: "../../colors.css";
-@value brandOffWhite from colors;
+@value colors: "src/colors.css";
+@value brandOffWhite, grey7, shadow from colors;
 
 .container {
-  padding: 0 20px;
-  box-sizing: border-box;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  padding: 0px 20px;
+  align-items: center;
+  box-shadow: -15px 15px 30px 0px shadow;
 }
 
 .logo {
-  padding: 19px 28px 14px 0px;
-  display: inline-block;
+  padding: 18px 0px;
+  padding-right: 28px;
   border-right: 1px solid brandOffWhite;
   margin-right: 24px;
 }
 
 .beta {
-  padding: 28px 0px 14px 19px;
-  @include nunito-sans-800;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 800;
   font-size: 11px;
   line-height: 16px;
   text-transform: uppercase;
-  float: right;
 }
 
-.row {
-  box-sizing: border-box;
-  @include flexbox;
-  @include flex(0, 1, auto);
-  @include flex-direction(row);
-  @include flex-wrap(wrap);
-  width: 100%;
-  &.reverse {
-    @include flex-direction(row-reverse);
-  }
-  &.magic-center {
-    align-items: center;
-  }
+.filter {
+  font-size: 15px;
+  color: grey7;
+  background: no-repeat right url("assets/img/dropdown-arrow.svg");
+  appearance: none;
+  font-weight: 200;
+  border: 0px;
+  outline: 0px;
+  margin-right: 20px;
+  padding-right: 20px;
 }
-
-.marginalization-filter {
-  margin-right: 30px;
-}
-
-/*$columns: 12;
-$gutter-width: 3%;
-$gutter-compensation: ( $gutter-width / 2 * -1 );
-$half-gutter-width: ( $gutter-width / 2);
-$screen-xs-min: 30em;
-$screen-sm-min: 48em;
-$screen-md-min: 62em;
-$screen-lg-min: 75em;
-$columns : 12;*/

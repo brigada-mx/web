@@ -4,6 +4,7 @@ config.codekit*
 .sass-cache
 node_modules
 styles/*.css
+dist/*.css
 package-lock.json
 sandbox/*
 .DS_Store

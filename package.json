@@ -36,7 +36,6 @@
     "lint": "eslint --ext js --ext json js/map.js",
     "build": "./build.sh",
     "deploy": "./deploy.sh",
-    "dev": "node-sass --watch styles/sass -o styles",
-    "start": "webpack-dev-server --host 919.local.mx"
+    "dev": "node-sass --watch dist -o dist & webpack-dev-server --host 919.local.mx"
   }
 }
