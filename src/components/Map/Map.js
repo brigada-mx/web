@@ -11,6 +11,56 @@ const Mapbox = ReactMapboxGl({
 class Map extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      localities: [],
+      actions: [],
+      filters: { actionSearch: '', locSearch: '', margGrade: '', municipality: '', state: '' },
+    }
+  }
+
+  damageGrade = feature => {
+    const levels = [
+      [10, 'minimal'],
+      [50, 'low'],
+      [250, 'medium'],
+      [1250, 'high'],
+      [Number.MAX_SAFE_INTEGER, 'severe'],
+    ]
+    const { total } = feature.properties
+    if (total === undefined || total === null || total === '' || total === -1) {
+      return 'unknown'
+    }
+    for (const l of levels) {
+      if (total < l[0]) {
+        return l[1]
+      }
+    }
+    return 'unknown'
+  }
+
+  handleData = data => {
+    console.log(data.dataType)
+    console.log(data.isSourceLoaded)
+    const { localities } = this.state
+    if (localities.length > 0) return
+
+    if (data.dataType === 'source' && data.isSourceLoaded) {
+      // const features = map.querySourceFeatures('damage', {sourceLayer: 'estados-15nov-5qk3g7'})
+      // localities = deduplicate(features, 'cvegeo')
+      // localities.sort(compareLocalities)
+      // for (const l of localities) {
+      //   const dmgGrade = this.damageGrade(l)
+      //   l.properties.dmgGrade = dmgGrade
+
+      //   l.properties.cvegeoS = l.properties.cvegeo.toString()
+
+      //   l.properties.cvegeoMuni = l.properties.cvegeoS.substring(0, 5)
+      //   l.properties.cvegeoState = l.properties.cvegeoS.substring(0, 2)
+      // }
+      // muniFilter.html(renderMuniFilter())
+      // stateFilter.html(renderStateFilter())
+      // render()
+    }
   }
 
   render() {
@@ -28,6 +78,7 @@ class Map extends React.Component {
           height: '100vh',
           width: '100vw',
         }}
+        onData={this.handleData}
       >
         <ZoomControl position="top-left" />
         <Source id="damage" geoJsonSource={sourceOptions} />
@@ -74,6 +125,9 @@ class Map extends React.Component {
       </Mapbox>
     )
   }
+}
+
+Map.propTypes = {
 }
 
 export default Map
