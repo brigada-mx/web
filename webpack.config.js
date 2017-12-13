@@ -1,4 +1,3 @@
-var webpack = require('webpack')
 var path = require('path')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -26,7 +25,7 @@ module.exports = {
         use: [
           ...ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: 'css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"'
+            use: 'css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"',
           }),
           {
             loader: 'postcss-loader',
@@ -36,7 +35,7 @@ module.exports = {
               ],
             },
           },
-        ]
+        ],
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
@@ -51,6 +50,7 @@ module.exports = {
     alias: {
       src: path.resolve(__dirname, 'src'),
       components: path.resolve(__dirname, 'src/components'),
+      screens: path.resolve(__dirname, 'src/screens'),
       assets: path.resolve(__dirname, 'assets'),
       styles: path.resolve(__dirname, 'styles'),
     },

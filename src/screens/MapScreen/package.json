@@ -1,0 +1,6 @@
+{
+  "name": "MapScreen",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MapScreen.js"
+}
