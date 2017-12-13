@@ -38,28 +38,54 @@ class Map extends React.Component {
     return 'unknown'
   }
 
-  handleData = data => {
-    console.log(data.dataType)
-    console.log(data.isSourceLoaded)
-    const { localities } = this.state
+  /**
+   * Comparator for localities `a` and `b`, which assigns greater priority to
+   * localities with high "marginación social" and many damaged buildings.
+   */
+  compareLocalities = (a, b) => {
+    const { total: ta } = a.properties
+    const { total: tb } = b.properties
+    const [fa, fb] = [parseFloat(ta), parseFloat(tb)]
+    if (Number.isNaN(fa)) {
+      if (Number.isNaN(fb)) return 0
+      return 1
+    } else if (Number.isNaN(fb)) return -1
+    return fb - fa
+  }
+
+  deduplicate = (features, comparatorProperty) => {
+    const existingFeatureKeys = {}
+    // Because features come from tiled vector data, feature geometries may be split
+    // or duplicated across tile boundaries and, as a result, features may appear
+    // multiple times in query results.
+    const uniqueFeatures = features.filter(el => {
+      if (existingFeatureKeys[el.properties[comparatorProperty]]) {
+        return false
+      }
+      existingFeatureKeys[el.properties[comparatorProperty]] = true
+      return true
+    })
+
+    return uniqueFeatures
+  }
+
+  handleData = (map, e) => {
+    let { localities } = this.state
     if (localities.length > 0) return
 
-    if (data.dataType === 'source' && data.isSourceLoaded) {
-      // const features = map.querySourceFeatures('damage', {sourceLayer: 'estados-15nov-5qk3g7'})
-      // localities = deduplicate(features, 'cvegeo')
-      // localities.sort(compareLocalities)
-      // for (const l of localities) {
-      //   const dmgGrade = this.damageGrade(l)
-      //   l.properties.dmgGrade = dmgGrade
+    if (e.dataType === 'source' && e.isSourceLoaded) {
+      const features = map.querySourceFeatures('damage', { sourceLayer: 'estados-15nov-5qk3g7' })
+      localities = this.deduplicate(features, 'cvegeo')
+      localities.sort(this.compareLocalities)
+      for (const l of localities) {
+        l.properties.dmgGrade = this.damageGrade(l)
 
-      //   l.properties.cvegeoS = l.properties.cvegeo.toString()
+        l.properties.cvegeoS = l.properties.cvegeo.toString()
 
-      //   l.properties.cvegeoMuni = l.properties.cvegeoS.substring(0, 5)
-      //   l.properties.cvegeoState = l.properties.cvegeoS.substring(0, 2)
-      // }
-      // muniFilter.html(renderMuniFilter())
-      // stateFilter.html(renderStateFilter())
-      // render()
+        l.properties.cvegeoMuni = l.properties.cvegeoS.substring(0, 5)
+        l.properties.cvegeoState = l.properties.cvegeoS.substring(0, 2)
+      }
+      this.setState({ localities })
     }
   }
 
