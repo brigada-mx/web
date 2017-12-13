@@ -1,6 +1,6 @@
+var webpack = require('webpack')
 var path = require('path')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-
 
 module.exports = {
   entry: './src/index.js',
@@ -10,7 +10,7 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: 'app.css',
+      filename: 'bundle.css',
       allChunks: true,
     }),
   ],
@@ -23,10 +23,20 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"'
-        }),
+        use: [
+          ...ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: 'css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"'
+          }),
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: (loader) => [
+                require('autoprefixer')({ browsers: ['last 2 versions'] }),
+              ],
+            },
+          },
+        ]
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,

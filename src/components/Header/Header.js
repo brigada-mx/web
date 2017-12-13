@@ -3,8 +3,6 @@ import React from 'react'
 import LogoImg from 'assets/img/logo.png';
 import Styles from './Header.css';
 
-console.log(Styles);
-
 
 const Header = (props) => {
   return <header>
