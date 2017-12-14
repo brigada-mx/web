@@ -1,17 +1,20 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
+import _ from 'lodash'
 
 import Header from 'components/Header'
 import Map from 'components/Map'
-
 import LocalityListItem from 'components/Map/LocalityListItem'
-import { tokenMatch } from 'tools/string'
 import LocalityPopup from 'components/Map/LocalityPopup'
+import LocalityLegend from 'components/Map/LocalityLegend'
+import { tokenMatch } from 'tools/string'
 import Styles from './MapScreen.css'
 
 
-const LocalityList = ({ localities, ...rest }) => {
+const LocalityList = ({ localities, onKeyUp, ...rest }) => {
   const maxItems = 250
-  return localities.slice(0, maxItems).map((l) => {
+  const items = localities.slice(0, maxItems).map((l) => {
     const { cvegeo } = l.properties
     return (
       <LocalityListItem
@@ -21,6 +24,22 @@ const LocalityList = ({ localities, ...rest }) => {
       />
     )
   })
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Buscar localidades"
+        onKeyUp={e => onKeyUp(e.target.value)}
+      />
+      {items}
+    </div>
+  )
+}
+
+LocalityList.propTypes = {
+  localities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onKeyUp: PropTypes.func.isRequired,
 }
 
 class MapScreen extends React.Component {
@@ -35,6 +54,9 @@ class MapScreen extends React.Component {
       marg: '',
       popup: null,
     }
+    this.handleLocalitySearchKeyUp = _.debounce(
+      this.handleLocalitySearchKeyUp, 150
+    )
   }
 
   handleLoad = (localities) => {
@@ -77,6 +99,10 @@ class MapScreen extends React.Component {
     this.setState({ popup: null })
   }
 
+  handleLocalitySearchKeyUp = (locSearch) => {
+    this.setState({ locSearch })
+  }
+
   filterLocalities = () => {
     const { localities, locSearch, marg, muni, state } = this.state
 
@@ -110,8 +136,10 @@ class MapScreen extends React.Component {
           onEnterFeature={this.handleEnterFeature}
           onLeaveFeature={this.handleLeaveFeature}
         />
+        <LocalityLegend localities={localities} />
         <LocalityList
           localities={localities}
+          onKeyUp={this.handleLocalitySearchKeyUp}
           onClick={this.handleListItemClickFeature}
           onMouseEnter={this.handleListItemEnterFeature}
           onMouseLeave={this.handleListItemLeaveFeature}
