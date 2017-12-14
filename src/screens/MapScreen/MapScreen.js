@@ -9,11 +9,17 @@ import LocalityPopup from 'components/Map/LocalityPopup'
 import Styles from './MapScreen.css'
 
 
-const LocalityList = ({ localities }) => {
+const LocalityList = ({ localities, ...rest }) => {
   const maxItems = 250
   return localities.slice(0, maxItems).map((l) => {
     const { cvegeo } = l.properties
-    return <LocalityListItem key={cvegeo} locality={l} />
+    return (
+      <LocalityListItem
+        key={cvegeo}
+        locality={l}
+        {...rest}
+      />
+    )
   })
 }
 
@@ -59,6 +65,18 @@ class MapScreen extends React.Component {
     this.setState({ popup: null })
   }
 
+  handleListItemClickFeature = (feature) => {
+    console.log(feature)
+  }
+
+  handleListItemEnterFeature = (feature) => {
+    this.setState({ popup: feature })
+  }
+
+  handleListItemLeaveFeature = () => {
+    this.setState({ popup: null })
+  }
+
   filterLocalities = () => {
     const { localities, locSearch, marg, muni, state } = this.state
 
@@ -92,7 +110,12 @@ class MapScreen extends React.Component {
           onEnterFeature={this.handleEnterFeature}
           onLeaveFeature={this.handleLeaveFeature}
         />
-        <LocalityList localities={localities} />
+        <LocalityList
+          localities={localities}
+          onClick={this.handleListItemClickFeature}
+          onMouseEnter={this.handleListItemEnterFeature}
+          onMouseLeave={this.handleListItemLeaveFeature}
+        />
       </div>
     )
   }
