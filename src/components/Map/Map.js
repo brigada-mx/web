@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
+import ReactMapboxGl, { Layer, Source, ZoomControl, Popup } from 'react-mapbox-gl'
 
 
 const Mapbox = ReactMapboxGl({
@@ -13,6 +13,9 @@ class Map extends React.Component {
   constructor(props) {
     super(props)
     this.loaded = false
+    this.state = {
+      popupFeature: null,
+    }
   }
 
   damageGrade = (feature) => {
@@ -91,11 +94,28 @@ class Map extends React.Component {
     }
   }
 
+  handleMapLoaded = (map) => {
+    map.on('mouseenter', 'damage', (e) => {
+      // change the cursor style as a ui indicator
+      map.getCanvas().style.cursor = 'pointer' // eslint-disable-line no-param-reassign
+
+      // populate the popup and set its coordinates based on the feature
+      this.setState({ popupFeature: e.features[0] })
+    })
+
+    map.on('mouseleave', 'damage', () => {
+      map.getCanvas().style.cursor = '' // eslint-disable-line no-param-reassign
+      this.setState({ popupFeature: null })
+    })
+  }
+
   render() {
     const sourceOptions = {
       type: 'vector',
       url: 'mapbox://kylebebak.a71mofbc',
     }
+
+    const { popupFeature } = this.state
 
     return (
       <Mapbox
@@ -107,6 +127,7 @@ class Map extends React.Component {
           width: '100vw',
         }}
         onData={this.handleData}
+        onStyleLoad={this.handleMapLoaded}
       >
         <ZoomControl position="top-left" />
         <Source id="damage" geoJsonSource={sourceOptions} />

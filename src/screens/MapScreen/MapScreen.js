@@ -6,6 +6,12 @@ import Map from 'components/Map'
 import { tokenMatch } from 'tools/string'
 
 
+const LocalityList = (localities) => {
+  return localities.map((l) => {
+    return null
+  })
+}
+
 class MapScreen extends React.Component {
   constructor(props) {
     super(props)
