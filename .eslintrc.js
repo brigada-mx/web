@@ -2,7 +2,6 @@ module.exports = {
   "parser": "babel-eslint",
   "extends": "airbnb",
   "globals": {
-    "_": true,
     "$": true,
     "google": true,
     "mapboxgl": true,

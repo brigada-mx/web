@@ -327,8 +327,8 @@ const renderMuniFilter = () => {
   })
 
   const content = items.sort((a, b) => {
-    if(a.properties.munName < b.properties.munName) return -1
-    if(a.properties.munName > b.properties.munName) return 1
+    if (a.properties.munName < b.properties.munName) return -1
+    if (a.properties.munName > b.properties.munName) return 1
     return 0
   }).map(o => {
     const { cvegeoS, munName, stateName } = o.properties
@@ -345,8 +345,8 @@ const renderStateFilter = () => {
   })
 
   const content = items.sort((a, b) => {
-    if(a.properties.stateName < b.properties.stateName) return -1
-    if(a.properties.stateName > b.properties.stateName) return 1
+    if (a.properties.stateName < b.properties.stateName) return -1
+    if (a.properties.stateName > b.properties.stateName) return 1
     return 0
   }).map(o => {
     const { cvegeoS, stateName } = o.properties

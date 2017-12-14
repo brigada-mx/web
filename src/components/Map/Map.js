@@ -66,6 +66,9 @@ class Map extends React.Component {
     return uniqueFeatures
   }
 
+  /**
+   * This is called only once, when data is first loaded from layer.
+   */
   handleData = (map, e) => {
     if (this.props.localities.length > 0) {
       if (this.loaded) return

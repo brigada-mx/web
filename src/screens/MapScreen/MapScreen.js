@@ -24,11 +24,11 @@ class MapScreen extends React.Component {
   }
 
   handleStateChange = (e) => {
-    this.setState({ state: e.target.value })
+    this.setState({ state: e.target.value.substring(0, 2) })
   }
 
   handleMuniChange = (e) => {
-    this.setState({ muni: e.target.value })
+    this.setState({ muni: e.target.value.substring(0, 5) })
   }
 
   handleMargChange = (e) => {
@@ -41,22 +41,24 @@ class MapScreen extends React.Component {
     return localities.filter((l) => {
       const { locName, stateName, margGrade, cvegeoS } = l.properties
       const matchesSearch = tokenMatch(`${locName} ${stateName}`, locSearch)
-      const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
-      const matchesMuni = !muni || muni === cvegeoS.substring(0, 5)
       const matchesState = !state || state === cvegeoS.substring(0, 2)
-      return matchesSearch && matchestMarg && matchesMuni && matchesState
+      const matchesMuni = !muni || muni === cvegeoS.substring(0, 5)
+      const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
+      return matchesSearch && matchesState && matchesMuni && matchestMarg
     })
   }
 
   render() {
+    const localities = this.filterLocalities()
     return (
       <div>
         <Header
+          localities={this.state.localities}
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
           onMargChange={this.handleMargChange}
         />
-        <Map localities={this.filterLocalities()} onLoad={this.handleLoad} />
+        <Map localities={localities} onLoad={this.handleLoad} />
       </div>
     )
   }
