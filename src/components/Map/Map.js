@@ -1,30 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ReactMapboxGl, { Layer, Source, ZoomControl, Popup } from 'react-mapbox-gl'
+import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 
-import { fmtNum } from 'tools/string'
+import LocalityPopup from './LocalityPopup'
 
 
 const Mapbox = ReactMapboxGl({
   accessToken: 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Ynd2d2s0dG4ifQ.W9vKUEkm1KtmR66z_dhixA',
   scrollZoom: false,
 })
-
-const LocalityPopup = ({ feature }) => { // eslint-disable-line react/prop-types
-  const { stateName, locName, habit, notHabit, destroyed, total, margGrade } = feature.properties
-  const { coordinates } = feature.geometry
-  return (
-    <Popup coordinates={coordinates}>
-      <span className="popup-header">{locName}, {stateName}</span>
-      <div className="popup-item"><span className="popup-label">VIVIENDAS DAÑADAS</span> <span className="popup-value">{fmtNum(total)}</span></div>
-      <div className="popup-item"><span className="popup-label">HABITABLES</span> <span className="popup-value">{fmtNum(habit)}</span></div>
-      <div className="popup-item"><span className="popup-label">NO HABITABLES</span> <span className="popup-value">{fmtNum(notHabit)}</span></div>
-      <div className="popup-item"><span className="popup-label">PÉRDIDA TOTAL</span> <span className="popup-value">{fmtNum(destroyed)}</span></div>
-      <div className="popup-item"><span className="popup-label">GRADO MARGINACIÓN</span> <span className="popup-value">{fmtNum(margGrade)}</span></div>
-    </Popup>
-  )
-}
 
 class Map extends React.Component {
   constructor(props) {
