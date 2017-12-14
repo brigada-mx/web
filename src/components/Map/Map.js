@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 
@@ -11,14 +12,10 @@ const Mapbox = ReactMapboxGl({
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      localities: [],
-      actions: [],
-      filters: { actionSearch: '', locSearch: '', margGrade: '', municipality: '', state: '' },
-    }
+    this.loaded = false
   }
 
-  damageGrade = feature => {
+  damageGrade = (feature) => {
     const levels = [
       [10, 'minimal'],
       [50, 'low'],
@@ -58,7 +55,7 @@ class Map extends React.Component {
     // Because features come from tiled vector data, feature geometries may be split
     // or duplicated across tile boundaries and, as a result, features may appear
     // multiple times in query results.
-    const uniqueFeatures = features.filter(el => {
+    const uniqueFeatures = features.filter((el) => {
       if (existingFeatureKeys[el.properties[comparatorProperty]]) {
         return false
       }
@@ -70,12 +67,14 @@ class Map extends React.Component {
   }
 
   handleData = (map, e) => {
-    let { localities } = this.state
-    if (localities.length > 0) return
+    if (this.props.localities.length > 0) {
+      if (this.loaded) return
+      this.loaded = true
+    }
 
     if (e.dataType === 'source' && e.isSourceLoaded) {
       const features = map.querySourceFeatures('damage', { sourceLayer: 'estados-15nov-5qk3g7' })
-      localities = this.deduplicate(features, 'cvegeo')
+      const localities = this.deduplicate(features, 'cvegeo')
       localities.sort(this.compareLocalities)
       for (const l of localities) {
         l.properties.dmgGrade = this.damageGrade(l)
@@ -85,7 +84,7 @@ class Map extends React.Component {
         l.properties.cvegeoMuni = l.properties.cvegeoS.substring(0, 5)
         l.properties.cvegeoState = l.properties.cvegeoS.substring(0, 2)
       }
-      this.setState({ localities })
+      this.props.onLoad(localities)
     }
   }
 
@@ -113,6 +112,11 @@ class Map extends React.Component {
           sourceId="damage"
           type="circle"
           sourceLayer="estados-15nov-5qk3g7"
+          filter={['in', 'cvegeo'].concat(
+            this.props.localities.map((l) => {
+              return l.properties.cvegeo
+            })
+          )}
           paint={{
             'circle-radius': {
               property: 'total',
@@ -154,6 +158,8 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
+  localities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onLoad: PropTypes.func.isRequired,
 }
 
 export default Map
