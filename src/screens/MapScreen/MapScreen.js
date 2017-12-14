@@ -5,11 +5,14 @@ import Map from 'components/Map'
 
 import LocalityListItem from 'components/Map/LocalityListItem'
 import { tokenMatch } from 'tools/string'
+import Styles from './MapScreen.css'
 
 
-const LocalityList = (localities) => {
-  return localities.map((l) => {
-    return null
+const LocalityList = ({ localities }) => {
+  const maxItems = 250
+  return localities.slice(0, maxItems).map((l) => {
+    const { cvegeo } = l.properties
+    return <LocalityListItem key={cvegeo} locality={l} />
   })
 }
 
@@ -66,6 +69,7 @@ class MapScreen extends React.Component {
           onMargChange={this.handleMargChange}
         />
         <Map localities={localities} onLoad={this.handleLoad} />
+        <LocalityList localities={localities} />
       </div>
     )
   }

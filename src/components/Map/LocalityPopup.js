@@ -4,11 +4,12 @@ import PropTypes from 'prop-types'
 import { Popup } from 'react-mapbox-gl'
 
 import { fmtNum } from 'tools/string'
+import Styles from './LocalityPopup.css'
 
 
-const LocalityPopup = ({ feature }) => {
-  const { stateName, locName, habit, notHabit, destroyed, total, margGrade } = feature.properties
-  const { coordinates } = feature.geometry
+const LocalityPopup = ({ locality }) => {
+  const { stateName, locName, habit, notHabit, destroyed, total, margGrade } = locality.properties
+  const { coordinates } = locality.geometry
   return (
     <Popup coordinates={coordinates}>
       <span className="popup-header">{locName}, {stateName}</span>
@@ -22,7 +23,7 @@ const LocalityPopup = ({ feature }) => {
 }
 
 LocalityPopup.propTypes = {
-  feature: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  locality: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 }
 
 export default LocalityPopup

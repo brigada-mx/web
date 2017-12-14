@@ -137,7 +137,7 @@ class Map extends React.Component {
         onData={this.handleData}
         onStyleLoad={this.handleMapLoaded}
       >
-        {popup && <LocalityPopup feature={popup} />}
+        {popup && <LocalityPopup locality={popup} />}
         <ZoomControl position="top-left" />
         <Source id="features" geoJsonSource={sourceOptions} />
         <Layer
