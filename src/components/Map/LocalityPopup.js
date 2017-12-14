@@ -23,7 +23,7 @@ const LocalityPopup = ({ locality }) => {
 }
 
 LocalityPopup.propTypes = {
-  locality: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  locality: PropTypes.object.isRequired,
 }
 
 export default LocalityPopup

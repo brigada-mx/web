@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 
-import LocalityPopup from './LocalityPopup'
-
 
 const Mapbox = ReactMapboxGl({
   accessToken: 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Ynd2d2s0dG4ifQ.W9vKUEkm1KtmR66z_dhixA',
@@ -17,9 +15,6 @@ class Map extends React.Component {
     this.initialZoom = [6]
     this.initialCoordinates = [-95.9042505, 17.1073688]
     this.loaded = false
-    this.state = {
-      popup: null,
-    }
   }
 
   damageGrade = (feature) => {
@@ -99,21 +94,20 @@ class Map extends React.Component {
   }
 
   handleMapLoaded = (map) => {
+    const { onClickFeature, onEnterFeature, onLeaveFeature } = this.props
+    map.on('click', 'features', (e) => {
+      onClickFeature(e.features[0])
+    })
+
     map.on('mousemove', 'features', (e) => {
       // change the cursor style as a ui indicator
       map.getCanvas().style.cursor = 'pointer' // eslint-disable-line no-param-reassign
-
-      // populate the popup and set its coordinates based on the feature
-      this.setState({ popup: e.features[0] })
+      onEnterFeature(e.features[0])
     })
 
     map.on('mouseleave', 'features', () => {
       map.getCanvas().style.cursor = '' // eslint-disable-line no-param-reassign
-      this.setState({ popup: null })
-    })
-
-    map.on('click', 'features', (e) => {
-      this.props.onClickFeature(e.features[0])
+      onLeaveFeature()
     })
   }
 
@@ -123,7 +117,7 @@ class Map extends React.Component {
       url: 'mapbox://kylebebak.a71mofbc',
     }
 
-    const { popup } = this.state
+    const { popup } = this.props
 
     return (
       <Mapbox
@@ -137,7 +131,7 @@ class Map extends React.Component {
         onData={this.handleData}
         onStyleLoad={this.handleMapLoaded}
       >
-        {popup && <LocalityPopup locality={popup} />}
+        {popup}
         <ZoomControl position="top-left" />
         <Source id="features" geoJsonSource={sourceOptions} />
         <Layer
@@ -193,11 +187,16 @@ class Map extends React.Component {
 Map.propTypes = {
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
   onLoad: PropTypes.func.isRequired,
+  popup: PropTypes.any,
   onClickFeature: PropTypes.func,
+  onEnterFeature: PropTypes.func,
+  onLeaveFeature: PropTypes.func,
 }
 
 Map.defaultProps = {
   onClickFeature: () => {},
+  onEnterFeature: () => {},
+  onLeaveFeature: () => {},
 }
 
 export default Map

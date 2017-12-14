@@ -30,7 +30,7 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
 }
 
 LocalityListItem.propTypes = {
-  locality: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  locality: PropTypes.object.isRequired,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,

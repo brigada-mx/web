@@ -5,6 +5,7 @@ import Map from 'components/Map'
 
 import LocalityListItem from 'components/Map/LocalityListItem'
 import { tokenMatch } from 'tools/string'
+import LocalityPopup from 'components/Map/LocalityPopup'
 import Styles from './MapScreen.css'
 
 
@@ -26,6 +27,7 @@ class MapScreen extends React.Component {
       state: '',
       muni: '',
       marg: '',
+      popup: null,
     }
   }
 
@@ -45,6 +47,18 @@ class MapScreen extends React.Component {
     this.setState({ marg: e.target.value })
   }
 
+  handleClickFeature = (feature) => {
+    console.log(feature)
+  }
+
+  handleEnterFeature = (feature) => {
+    this.setState({ popup: feature })
+  }
+
+  handleLeaveFeature = () => {
+    this.setState({ popup: null })
+  }
+
   filterLocalities = () => {
     const { localities, locSearch, marg, muni, state } = this.state
 
@@ -60,6 +74,8 @@ class MapScreen extends React.Component {
 
   render() {
     const localities = this.filterLocalities()
+    const { popup } = this.state
+    const _popup = popup ? <LocalityPopup locality={popup} /> : null
     return (
       <div>
         <Header
@@ -68,7 +84,14 @@ class MapScreen extends React.Component {
           onMuniChange={this.handleMuniChange}
           onMargChange={this.handleMargChange}
         />
-        <Map localities={localities} onLoad={this.handleLoad} />
+        <Map
+          localities={localities}
+          onLoad={this.handleLoad}
+          popup={_popup}
+          onClickFeature={this.handleClickFeature}
+          onEnterFeature={this.handleEnterFeature}
+          onLeaveFeature={this.handleLeaveFeature}
+        />
         <LocalityList localities={localities} />
       </div>
     )
