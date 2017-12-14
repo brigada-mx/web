@@ -14,6 +14,8 @@ const Mapbox = ReactMapboxGl({
 class Map extends React.Component {
   constructor(props) {
     super(props)
+    this.initialZoom = [6]
+    this.initialCoordinates = [-95.9042505, 17.1073688]
     this.loaded = false
     this.state = {
       popup: null,
@@ -81,7 +83,7 @@ class Map extends React.Component {
     }
 
     if (e.dataType === 'source' && e.isSourceLoaded) {
-      const features = map.querySourceFeatures('damage', { sourceLayer: 'estados-15nov-5qk3g7' })
+      const features = map.querySourceFeatures('features', { sourceLayer: 'estados-15nov-5qk3g7' })
       const localities = this.deduplicate(features, 'cvegeo')
       localities.sort(this.compareLocalities)
       for (const l of localities) {
@@ -97,7 +99,7 @@ class Map extends React.Component {
   }
 
   handleMapLoaded = (map) => {
-    map.on('mousemove', 'damage', (e) => {
+    map.on('mousemove', 'features', (e) => {
       // change the cursor style as a ui indicator
       map.getCanvas().style.cursor = 'pointer' // eslint-disable-line no-param-reassign
 
@@ -105,9 +107,13 @@ class Map extends React.Component {
       this.setState({ popup: e.features[0] })
     })
 
-    map.on('mouseleave', 'damage', () => {
+    map.on('mouseleave', 'features', () => {
       map.getCanvas().style.cursor = '' // eslint-disable-line no-param-reassign
       this.setState({ popup: null })
+    })
+
+    map.on('click', 'features', (e) => {
+      this.props.onClickFeature(e.features[0])
     })
   }
 
@@ -122,8 +128,8 @@ class Map extends React.Component {
     return (
       <Mapbox
         style="mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk" // eslint-disable-line react/style-prop-object
-        zoom={[6]}
-        center={[-95.9042505, 17.1073688]}
+        zoom={this.initialZoom}
+        center={this.initialCoordinates}
         containerStyle={{
           height: '100vh',
           width: '100vw',
@@ -133,10 +139,10 @@ class Map extends React.Component {
       >
         {popup && <LocalityPopup feature={popup} />}
         <ZoomControl position="top-left" />
-        <Source id="damage" geoJsonSource={sourceOptions} />
+        <Source id="features" geoJsonSource={sourceOptions} />
         <Layer
-          id="damage"
-          sourceId="damage"
+          id="features"
+          sourceId="features"
           type="circle"
           sourceLayer="estados-15nov-5qk3g7"
           filter={['in', 'cvegeo'].concat(
@@ -187,6 +193,11 @@ class Map extends React.Component {
 Map.propTypes = {
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
   onLoad: PropTypes.func.isRequired,
+  onClickFeature: PropTypes.func,
+}
+
+Map.defaultProps = {
+  onClickFeature: () => {},
 }
 
 export default Map
