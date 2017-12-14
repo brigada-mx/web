@@ -30,3 +30,8 @@ export const tokenMatch = (h, n) => {
   }
   return true
 }
+
+export const fmtNum = (num) => {
+  if (num === -1 || num === undefined || num === null || num === '') return '-'
+  return num.toLocaleString()
+}
