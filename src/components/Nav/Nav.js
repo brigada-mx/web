@@ -2,16 +2,20 @@ import React from 'react'
 
 import { NavLink } from 'react-router-dom'
 
+import Colors from 'src/Colors';
 import Styles from './Nav.css'
 
 
 const Nav = (props) => {
+  const selected = { color: Colors.brandGreen }
   return (
-    <div>
-      <NavLink to="/">COMUNIDADES</NavLink>
-      <NavLink to="/organizaciones">ORGANIZACIONES</NavLink>
-      <NavLink to="/practicas">MEJORES PRÁCTICAS</NavLink>
-      <NavLink to="/nostotros">NOSTOTROS</NavLink>
+    <div className={Styles.container}>
+      <nav className={Styles.nav}>
+        <NavLink activeStyle={selected} exact to="/">COMUNIDADES</NavLink>
+        <NavLink activeStyle={selected} to="/organizaciones">ORGANIZACIONES</NavLink>
+        <NavLink activeStyle={selected} to="/practicas">MEJORES PRÁCTICAS</NavLink>
+        <NavLink activeStyle={selected} to="/nosotros">NOSTOTROS</NavLink>
+      </nav>
     </div>
   )
 }

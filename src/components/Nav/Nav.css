@@ -4,38 +4,22 @@
 .container {
   display: flex;
   flex-direction: row;
-  padding: 0px 20px;
+  height: 60px;
+  border-bottom: 1px solid brandOffWhite;
   align-items: center;
-  box-shadow: -15px 15px 30px 0px shadow;
+  justify-content: flex-end;
 }
 
-.logo {
-  padding: 18px 0px;
-  padding-right: 28px;
-  border-right: 1px solid brandOffWhite;
-  margin-right: 24px;
-}
-
-.beta {
-  flex: 1;
+.nav {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 800;
-  font-size: 11px;
-  line-height: 16px;
   text-transform: uppercase;
+  font-size: 15px;
 }
 
-.filter {
-  font-size: 15px;
-  color: grey7;
-  background: no-repeat right url("assets/img/dropdown-arrow.svg");
-  appearance: none;
-  font-weight: 200;
-  border: 0px;
-  outline: 0px;
-  margin-right: 20px;
-  padding-right: 20px;
+.nav a {
+  margin-right: 30px;
+  text-decoration: none;
 }
