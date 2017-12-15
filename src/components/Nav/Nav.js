@@ -2,7 +2,7 @@ import React from 'react'
 
 import { NavLink } from 'react-router-dom'
 
-import Colors from 'src/Colors';
+import Colors from 'src/Colors'
 import Styles from './Nav.css'
 
 

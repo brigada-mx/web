@@ -1,5 +1,6 @@
-var path = require('path')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+/* eslint-disable global-require */
+const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -7,12 +8,6 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  plugins: [
-    new ExtractTextPlugin({
-      filename: 'bundle.css',
-      allChunks: true,
-    }),
-  ],
   module: {
     rules: [
       {
@@ -30,7 +25,7 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: (loader) => [
+              plugins: loader => [
                 require('autoprefixer')({ browsers: ['last 2 versions'] }),
               ],
             },
@@ -42,10 +37,6 @@ module.exports = {
         loader: 'url-loader?limit=10000',
       },
     ],
-  },
-  devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
-    historyApiFallback: true,
   },
   resolve: {
     alias: {
