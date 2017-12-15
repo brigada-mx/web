@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Nav from 'components/Nav'
 import MapScreen from 'screens/MapScreen'
+import sendToApi from 'api/request'
 
 
 const OrganizationScreen = () => (

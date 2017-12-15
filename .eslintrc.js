@@ -6,6 +6,8 @@ module.exports = {
     "google": true,
     "mapboxgl": true,
     "document": true,
+    "Headers": true,
+    "fetch": true,
   },
   "rules": {
     "function-paren-newline": 0,

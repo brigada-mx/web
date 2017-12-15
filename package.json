@@ -10,7 +10,8 @@
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-mapbox-gl": "^3.4.0"
+    "react-mapbox-gl": "^3.4.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.2",
