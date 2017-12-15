@@ -1,71 +1,41 @@
 import React from 'react'
 
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-const Home = () => (
+import Nav from 'components/Nav'
+import MapScreen from 'screens/MapScreen'
+
+
+const OrganizationScreen = () => (
   <div>
-    <h2>Home</h2>
+    <h2>Organizaciones</h2>
   </div>
 )
 
-const About = () => (
+const BestPracticesScreen = () => (
   <div>
-    <h2>About</h2>
+    <h2>Mejores Prácticas</h2>
   </div>
 )
 
-const Topic = ({ match }) => {
-  console.log(match.params.topicId)
+const AboutScreen = () => (
+  <div>
+    <h2>Nosotros</h2>
+  </div>
+)
+
+const App = () => {
   return (
-    <div>
-      <h3>{match.params.topicId}</h3>
-    </div>
+    <Router>
+      <div>
+        <Nav />
+
+        <Route exact path="/" component={MapScreen} />
+        <Route path="/organizaciones" component={OrganizationScreen} />
+        <Route path="/practicas" component={BestPracticesScreen} />
+        <Route path="/nostotros" component={AboutScreen} />
+      </div>
+    </Router>
   )
 }
-
-const Topics = ({ match }) => (
-  <div>
-    <h2>Topics</h2>
-    <ul>
-      <li>
-        <Link to={`${match.url}/rendering`}>
-          Rendering with React
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/components`}>
-          Components
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/props-v-state`}>
-          Props v. State
-        </Link>
-      </li>
-    </ul>
-
-    <Route path={`${match.url}/:topicId`} component={Topic}/>
-    <Route exact path={match.url} render={() => (
-      <h3>Please select a topic.</h3>
-    )}/>
-  </div>
-)
-
-const BasicExample = () => (
-  <Router>
-    <div>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/topics">Topics</Link></li>
-      </ul>
-
-      <hr/>
-
-      <Route exact path="/" component={Home}/>
-      <Route path="/about" component={About}/>
-      <Route path="/topics" component={Topics}/>
-    </div>
-  </Router>
-)
-export default BasicExample
+export default App
