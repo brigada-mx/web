@@ -1,7 +1,14 @@
 .legendItem {
   border: 1px solid red;
+  font-weight: 800;
 }
 
 .other {
   background-color: blue;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
 }
