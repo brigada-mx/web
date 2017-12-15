@@ -5,6 +5,7 @@ module.exports = {
     "$": true,
     "google": true,
     "mapboxgl": true,
+    "document": true,
   },
   "rules": {
     "function-paren-newline": 0,
