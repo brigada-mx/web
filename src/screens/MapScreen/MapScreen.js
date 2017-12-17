@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 import _ from 'lodash'
 
-import Header from 'components/Header'
+import FilterHeader from 'components/FilterHeader'
+import LocalityListItem from 'components/LocalityListItem'
 import Map from 'components/Map'
-import LocalityListItem from 'components/Map/LocalityListItem'
 import LocalityPopup from 'components/Map/LocalityPopup'
 import LocalityLegend from 'components/Map/LocalityLegend'
 import { tokenMatch } from 'tools/string'
@@ -122,7 +122,7 @@ class MapScreen extends React.Component {
     const _popup = popup ? <LocalityPopup locality={popup} /> : null
     return (
       <div>
-        <Header
+        <FilterHeader
           localities={this.state.localities}
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}

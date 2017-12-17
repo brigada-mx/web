@@ -14,7 +14,7 @@ const Nav = (props) => {
         <NavLink activeStyle={selected} exact to="/">COMUNIDADES</NavLink>
         <NavLink activeStyle={selected} to="/organizaciones">ORGANIZACIONES</NavLink>
         <NavLink activeStyle={selected} to="/practicas">MEJORES PRÁCTICAS</NavLink>
-        <NavLink activeStyle={selected} to="/nosotros">NOSTOTROS</NavLink>
+        <NavLink activeStyle={selected} to="/nosotros">NOSOTROS</NavLink>
       </nav>
     </div>
   )

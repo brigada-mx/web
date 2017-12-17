@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 
 import LogoImg from 'assets/img/logo.png'
-import Styles from './Header.css'
+import Styles from './FilterHeader.css'
 
 
-const Header = (props) => {
+const FilterHeader = (props) => {
   const {
     onStateChange,
     onMuniChange,
@@ -74,11 +74,11 @@ const Header = (props) => {
   )
 }
 
-Header.propTypes = {
+FilterHeader.propTypes = {
   onStateChange: PropTypes.func.isRequired,
   onMuniChange: PropTypes.func.isRequired,
   onMargChange: PropTypes.func.isRequired,
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
-export default Header
+export default FilterHeader
