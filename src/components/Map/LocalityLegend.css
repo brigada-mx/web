@@ -1,6 +1,7 @@
 .legendItem {
   border: 1px solid red;
   font-weight: 800;
+  font-family: 'din-bold', sans-serif;
 }
 
 .other {

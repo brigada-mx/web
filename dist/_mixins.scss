@@ -1,7 +1,7 @@
 // _mixins.scss
 
 @mixin font-face($style-name, $file, $family, $category:'') {
-    $filepath: '/assets/fonts/' + $family + '/' + $file;
+    $filepath: 'assets/fonts/' + $family + '/' + $file;
     @font-face {
         font-family: $style-name;
         src: url($filepath + '.woff') format('woff'),
