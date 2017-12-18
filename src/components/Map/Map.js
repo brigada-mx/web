@@ -125,8 +125,8 @@ class Map extends React.Component {
         zoom={this.initialZoom}
         center={this.initialCoordinates}
         containerStyle={{
-          height: '100vh',
-          width: '100vw',
+          height: '100%',
+          width: '100%',
         }}
         onData={this.handleData}
         onStyleLoad={this.handleMapLoaded}

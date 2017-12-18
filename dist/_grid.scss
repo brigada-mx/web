@@ -9,13 +9,8 @@ $screen-md-min: 62em;
 $screen-lg-min: 75em;
 $columns : 12;
 
-.container {
-  padding: 0 20px;
-}
-
-.wrap {
-  box-sizing: border-box;
-  margin: 0 auto;
+.wrapper {
+  padding: 0 25px;
 }
 
 .row {
