@@ -9,6 +9,7 @@
   padding: 15px;
   border-radius: 2px;
   box-shadow: 0 40px 100px 0 strongShadow;
+  background-color: white;
 }
 
 .legendItem {
@@ -30,6 +31,5 @@
 }
 
 .count {
-  display: inline-block;
-  text-align: right;
+  float: right;
 }

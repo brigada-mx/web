@@ -26,7 +26,7 @@ const LocalityList = ({ localities, onKeyUp, ...rest }) => {
   })
 
   return (
-    <div>
+    <div className={Styles.listContainer}>
       <input
         type="text"
         placeholder="Buscar localidades"
