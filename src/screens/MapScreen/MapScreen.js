@@ -128,6 +128,7 @@ class MapScreen extends React.Component {
           onMuniChange={this.handleMuniChange}
           onMargChange={this.handleMargChange}
         />
+        <div className={Styles.map}>
         <Map
           localities={localities}
           onLoad={this.handleLoad}
@@ -144,6 +145,7 @@ class MapScreen extends React.Component {
           onMouseEnter={this.handleListItemEnterFeature}
           onMouseLeave={this.handleListItemLeaveFeature}
         />
+      </div>
       </div>
     )
   }

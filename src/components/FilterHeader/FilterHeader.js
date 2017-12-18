@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import _ from 'lodash'
 
-import LogoImg from 'assets/img/logo.png'
 import Styles from './FilterHeader.css'
 
 
@@ -42,35 +41,34 @@ const FilterHeader = (props) => {
   }
 
   return (
-    <div className={Styles.container}>
+    <div className={`${Styles.container} wrapper`}>
 
-      <a className={Styles.logo} href="/">
-        <img src={LogoImg} width="74px" height="auto" alt="Logo" />
-      </a>
+      <div class="row">
 
-      <select className={Styles.filter} onChange={onStateChange}>
-        <option value="">Estado</option>
-        {stateOptions()}
-      </select>
+        <div class="col-lg-5 col-md-1 col-sm-2 col-xs-2">
 
-      <select className={Styles.filter} onChange={onMuniChange}>
-        <option value="">Municipio</option>
-        {muniOptions()}
-      </select>
+          <select className={Styles.filter} onChange={onStateChange}>
+            <option value="">Estado</option>
+            {stateOptions()}
+          </select>
 
-      <select className={Styles.filter} onChange={onMargChange}>
-        <option value="">Marginación social</option>
-        <option value="muy_alto">Muy alto</option>
-        <option value="alto">Alto</option>
-        <option value="medio">Medio</option>
-        <option value="bajo">Bajo</option>
-      </select>
+          <select className={Styles.filter} onChange={onMuniChange}>
+            <option value="">Municipio</option>
+            {muniOptions()}
+          </select>
 
-      <div className={Styles.beta}>
-        <span>Versión beta</span>
+          <select className={Styles.filter} onChange={onMargChange}>
+            <option value="">Marginación social</option>
+            <option value="muy_alto">Muy alto</option>
+            <option value="alto">Alto</option>
+            <option value="medio">Medio</option>
+            <option value="bajo">Bajo</option>
+          </select>
+
+        </div>
       </div>
 
-    </div>
+  </div>
   )
 }
 

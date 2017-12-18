@@ -1,4 +1,4 @@
-@value brandOffWhite: #f3f5f7;
+@value brandOffWhite: #F2F2F4;
 @value grey8: #0F0F0F;
 @value grey7: #141418;
 @value grey6: #19191D;
@@ -8,4 +8,5 @@
 @value grey2: #CACCD5;
 @value grey1: #CAD1D8;
 @value brandGreen: #3DC587;
-@value shadow: rgba(37, 38, 50, 0.05);
+@value weakShadow: rgba(37, 38, 50, 0.04);
+@value strongShadow: rgba(37, 38, 50, 0.10);
