@@ -132,7 +132,7 @@ class Map extends React.Component {
         onStyleLoad={this.handleMapLoaded}
       >
         {popup}
-        <ZoomControl position="top-left" />
+        <ZoomControl position="top-right" />
         <Source id="features" geoJsonSource={sourceOptions} />
         <Layer
           id="features"
