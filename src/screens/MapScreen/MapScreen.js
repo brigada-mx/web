@@ -12,7 +12,7 @@ import { tokenMatch } from 'tools/string'
 import Styles from './MapScreen.css'
 
 
-const LocalityList = ({ localities, onKeyUp, ...rest }) => {
+const LocalityList = ({ localities, ...rest }) => {
   const maxItems = 250
   const items = localities.slice(0, maxItems).map((l) => {
     const { cvegeo } = l.properties
@@ -29,7 +29,6 @@ const LocalityList = ({ localities, onKeyUp, ...rest }) => {
 
 LocalityList.propTypes = {
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onKeyUp: PropTypes.func.isRequired,
 }
 
 class MapScreen extends React.Component {
