@@ -129,23 +129,29 @@ class MapScreen extends React.Component {
           onMargChange={this.handleMargChange}
         />
         <div className={Styles.map}>
-        <Map
-          localities={localities}
-          onLoad={this.handleLoad}
-          popup={_popup}
-          onClickFeature={this.handleClickFeature}
-          onEnterFeature={this.handleEnterFeature}
-          onLeaveFeature={this.handleLeaveFeature}
-        />
-        <LocalityLegend localities={localities} />
-        <LocalityList
-          localities={localities}
-          onKeyUp={this.handleLocalitySearchKeyUp}
-          onClick={this.handleListItemClickFeature}
-          onMouseEnter={this.handleListItemEnterFeature}
-          onMouseLeave={this.handleListItemLeaveFeature}
-        />
-      </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-1 col-sm-2 col-xs-2">
+              <LocalityList
+                localities={localities}
+                onKeyUp={this.handleLocalitySearchKeyUp}
+                onClick={this.handleListItemClickFeature}
+                onMouseEnter={this.handleListItemEnterFeature}
+                onMouseLeave={this.handleListItemLeaveFeature}
+              />
+            </div>
+            <div class="col-lg-9 col-md-1 col-sm-2 col-xs-2">
+              <Map
+                localities={localities}
+                onLoad={this.handleLoad}
+                popup={_popup}
+                onClickFeature={this.handleClickFeature}
+                onEnterFeature={this.handleEnterFeature}
+                onLeaveFeature={this.handleLeaveFeature}
+              />
+              <LocalityLegend localities={localities} />
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
