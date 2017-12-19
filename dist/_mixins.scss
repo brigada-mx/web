@@ -98,6 +98,13 @@
     font-family: 'roboto-900', sans-serif;
 }
 
+// WORK SANS
+@include font-face('work-sans-300', '300', 'work-sans', 'sans-serif');
+
+@mixin work-sans-300 {
+    font-family: 'work-sans-300', sans-serif;
+}
+
 // ELSE
 @mixin font-smoothing($value: antialiased) {
     @if $value==antialiased {

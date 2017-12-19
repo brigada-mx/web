@@ -64,15 +64,20 @@ const FilterHeader = (props) => {
           <option value="bajo">Bajo</option>
         </select>
 
+      </div>
+
+      <div className="col-lg-3 col-md-3 col-sm-2 col-xs-2 end-lg end-md">
+
         <input
           type="text"
-          placeholder="Buscar localidades"
+          placeholder="Buscar"
           onKeyUp={e => onKeyUp(e.target.value)}
         />
 
       </div>
 
     </div>
+
   )
 }
 

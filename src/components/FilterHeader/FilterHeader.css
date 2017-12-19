@@ -10,6 +10,8 @@
 
 .filter {
   font-size: 15px;
+  font-family: 'nunito-sans-200', sans-serif;
+  letter-spacing: 0.6px;
   color: grey7;
   background: no-repeat right url("assets/img/dropdown-arrow.svg");
   appearance: none;
@@ -18,4 +20,18 @@
   outline: 0px;
   margin-right: 20px;
   padding: 0 20px 0 0;
+}
+
+input {
+  background-color: #F5F7F9;
+  border: none;
+  padding: 10px 0 10px 10px;
+}
+
+input::placeholder {
+  font-family: 'roboto-500', sans-serif;
+  font-size: 13px;
+  letter-spacing: .52px;
+  line-height: 12px;
+  color: #CDCFD1;
 }

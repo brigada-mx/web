@@ -1,0 +1,65 @@
+@value colors: "src/colors.css";
+@value brandOffWhite from colors;
+
+.listItem {
+  border-left: 4px solid #E11717;
+  border-top: 1px solid brandOffWhite;
+  box-sizing: border-box;
+  padding: 16px 25px 20px 21px;
+}
+
+.listItem:hover {
+  cursor: pointer;
+  border-left: 6px solid #E11717;
+  padding-left: 19px;
+  background-color: #FBFCFD;
+}
+
+.dmg-severe {
+  /*border-left: 4px solid #E11717;*/
+}
+
+.listItemHeader {
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 19px;
+  line-height: 32px;
+  color: #141418;
+  display: flex;
+  flex-direction: row;
+}
+
+.locName {
+  max-width: 230px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.stateName {
+
+}
+
+.listItemMetrics {
+  display: flex;
+  flex-direction: row;
+  margin-top: 13px;
+}
+
+.value {
+  font-family: 'roboto-500', sans-serif;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: .18px;
+  color: #141418;
+}
+
+.label {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: .37px;
+  color: #9F9F9F;
+  text-transform: uppercase;
+  display: flex;
+  margin-top: 4px;
+}
