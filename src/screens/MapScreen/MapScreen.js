@@ -129,8 +129,8 @@ class MapScreen extends React.Component {
           onMargChange={this.handleMargChange}
         />
         <div className={Styles.map}>
-          <div class="row">
-            <div class="col-lg-3 col-md-1 col-sm-2 col-xs-2">
+          <div className="row">
+            <div className="col-lg-3 col-md-1 col-sm-2 col-xs-2">
               <LocalityList
                 localities={localities}
                 onKeyUp={this.handleLocalitySearchKeyUp}
@@ -139,7 +139,7 @@ class MapScreen extends React.Component {
                 onMouseLeave={this.handleListItemLeaveFeature}
               />
             </div>
-            <div class="col-lg-9 col-md-1 col-sm-2 col-xs-2">
+            <div className="col-lg-9 col-md-1 col-sm-2 col-xs-2">
               <Map
                 localities={localities}
                 onLoad={this.handleLoad}

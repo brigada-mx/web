@@ -43,9 +43,9 @@ const FilterHeader = (props) => {
   return (
     <div className={`${Styles.container} wrapper`}>
 
-      <div class="row">
+      <div className="row">
 
-        <div class="col-lg-9 col-md-1 col-sm-2 col-xs-2">
+        <div className="col-lg-9 col-md-1 col-sm-2 col-xs-2">
 
           <select className={Styles.filter} onChange={onStateChange}>
             <option value="">Estado</option>
