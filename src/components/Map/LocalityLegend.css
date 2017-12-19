@@ -4,12 +4,21 @@
 .container {
   display: inline-block;
   position: absolute;
+  width: 152px;
   right: 26px;
   bottom: 26px;
   padding: 15px;
   border-radius: 2px;
   box-shadow: 0 40px 100px 0 strongShadow;
   background-color: white;
+}
+
+.title {
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 1.26px;
+  color: #434346;
 }
 
 .legendItem {
@@ -27,7 +36,6 @@
 
 .label {
   display: inline-block;
-  margin-right: 70px;
   font-size: 12px;
   font-family: 'nunito-sans', sans-serif;
   color: #9F9F9F;

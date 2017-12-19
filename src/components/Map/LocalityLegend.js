@@ -33,7 +33,7 @@ const LocalityLegend = ({ localities }) => {
     const { label, color } = damageGradeMeta[key]
     return (
       <div key={key} className={Styles.legendItem}>
-        <div className={Styles.circle} style={{ backgroundColor: color }} />
+        <span className={Styles.circle} style={{ backgroundColor: color }} />
         <span className={Styles.label}>{label}</span>
         <span className={Styles.count}>{fmtNum(counts[key])}</span>
       </div>
@@ -42,6 +42,7 @@ const LocalityLegend = ({ localities }) => {
 
   return (
     <div className={Styles.container}>
+      <p className={Styles.title}>Comunidades y niveles de daño</p>
       {items}
     </div>
   )
