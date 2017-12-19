@@ -13,9 +13,8 @@
 }
 
 .legendItem {
-  font-size: 12px;
-  font-weight: 800;
-  font-family: 'din-bold', sans-serif;
+  line-height: 16px;
+  margin: 8px 0;
 }
 
 .circle {
@@ -29,8 +28,15 @@
 .label {
   display: inline-block;
   margin-right: 70px;
+  font-size: 12px;
+  font-family: 'nunito-sans', sans-serif;
+  color: #9F9F9F;
 }
 
 .count {
   float: right;
+  font-family: 'roboto-500', sans-serif;
+  font-size: 13px;
+  text-align: right;
+  color: #141418;
 }
