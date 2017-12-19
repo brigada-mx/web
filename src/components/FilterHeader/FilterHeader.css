@@ -2,7 +2,9 @@
 @value brandOffWhite, grey7, weakShadow from colors;
 
 .container {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   height: 65px;
   box-shadow: 15px 15px 30px 0px weakShadow;
   position: relative;
@@ -10,14 +12,13 @@
 }
 
 .filter {
-  display: inline-block;
   font-size: 15px;
   color: grey7;
-  background: no-repeat right 31px url("assets/img/dropdown-arrow.svg");
+  background: no-repeat right url("assets/img/dropdown-arrow.svg");
   appearance: none;
   font-weight: 200;
   border: 0px;
   outline: 0px;
   margin-right: 20px;
-  padding: 24px 20px 0 0;
+  padding: 0 20px 0 0;
 }
