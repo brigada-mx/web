@@ -5,6 +5,8 @@
     "node": "8.8.0"
   },
   "dependencies": {
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
     "lodash": "4.11.2",
     "mapbox-gl": "^0.42.2",
     "prop-types": "^15.6.0",
