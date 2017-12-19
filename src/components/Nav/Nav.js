@@ -17,6 +17,7 @@ const Nav = (props) => {
             <img src={LogoImg} width="74px" height="auto" alt="Logo" />
           </a>
         </div>
+
         <div className="col-lg-11 col-md-10 col-sm-9 col-xs-12 end-lg">
           <div className={Styles.links}>
             <NavLink activeStyle={selected} exact to="/">COMUNIDADES</NavLink>

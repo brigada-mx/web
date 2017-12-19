@@ -1,5 +1,5 @@
 @value colors: "src/colors.css";
-@value brandOffWhite, grey7, shadow from colors;
+@value brandOffWhite, brandGreen, grey7, shadow from colors;
 
 .container {
   display: block;
@@ -14,9 +14,17 @@
 }
 
 .links a {
+  font-family: 'nunito-sans-900', sans-serif;
+  -webkit-font-smoothing: antialiased;
   font-size: 11px;
+  letter-spacing: .8px;
   margin-left: 30px;
   text-decoration: none;
   padding: 30px 0 24px 0;
   display: inline-block;
+  color: #5A5A5D;
+}
+
+.links a:hover {
+  color: brandGreen;
 }
