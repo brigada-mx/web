@@ -24,17 +24,7 @@ const LocalityList = ({ localities, onKeyUp, ...rest }) => {
       />
     )
   })
-
-  return (
-    <div>
-      <input
-        type="text"
-        placeholder="Buscar localidades"
-        onKeyUp={e => onKeyUp(e.target.value)}
-      />
-      {items}
-    </div>
-  )
+  return <div>{items}</div>
 }
 
 LocalityList.propTypes = {
@@ -127,25 +117,25 @@ class MapScreen extends React.Component {
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
           onMargChange={this.handleMargChange}
+          onKeyUp={this.handleLocalitySearchKeyUp}
         />
         <div className={Styles.map}>
-        <Map
-          localities={localities}
-          onLoad={this.handleLoad}
-          popup={_popup}
-          onClickFeature={this.handleClickFeature}
-          onEnterFeature={this.handleEnterFeature}
-          onLeaveFeature={this.handleLeaveFeature}
-        />
-        <LocalityLegend localities={localities} />
-        <LocalityList
-          localities={localities}
-          onKeyUp={this.handleLocalitySearchKeyUp}
-          onClick={this.handleListItemClickFeature}
-          onMouseEnter={this.handleListItemEnterFeature}
-          onMouseLeave={this.handleListItemLeaveFeature}
-        />
-      </div>
+          <Map
+            localities={localities}
+            onLoad={this.handleLoad}
+            popup={_popup}
+            onClickFeature={this.handleClickFeature}
+            onEnterFeature={this.handleEnterFeature}
+            onLeaveFeature={this.handleLeaveFeature}
+          />
+          <LocalityLegend localities={localities} />
+          <LocalityList
+            localities={localities}
+            onClick={this.handleListItemClickFeature}
+            onMouseEnter={this.handleListItemEnterFeature}
+            onMouseLeave={this.handleListItemLeaveFeature}
+          />
+        </div>
       </div>
     )
   }

@@ -11,6 +11,7 @@ const FilterHeader = (props) => {
     onStateChange,
     onMuniChange,
     onMargChange,
+    onKeyUp,
     localities,
   } = props
 
@@ -43,32 +44,31 @@ const FilterHeader = (props) => {
   return (
     <div className={`${Styles.container} wrapper`}>
 
-      <div class="row">
+      <select className={Styles.filter} onChange={onStateChange}>
+        <option value="">Estado</option>
+        {stateOptions()}
+      </select>
 
-        <div class="col-lg-5 col-md-1 col-sm-2 col-xs-2">
+      <select className={Styles.filter} onChange={onMuniChange}>
+        <option value="">Municipio</option>
+        {muniOptions()}
+      </select>
 
-          <select className={Styles.filter} onChange={onStateChange}>
-            <option value="">Estado</option>
-            {stateOptions()}
-          </select>
+      <select className={Styles.filter} onChange={onMargChange}>
+        <option value="">Marginación social</option>
+        <option value="muy_alto">Muy alto</option>
+        <option value="alto">Alto</option>
+        <option value="medio">Medio</option>
+        <option value="bajo">Bajo</option>
+      </select>
 
-          <select className={Styles.filter} onChange={onMuniChange}>
-            <option value="">Municipio</option>
-            {muniOptions()}
-          </select>
+      <input
+        type="text"
+        placeholder="Buscar localidades"
+        onKeyUp={e => onKeyUp(e.target.value)}
+      />
 
-          <select className={Styles.filter} onChange={onMargChange}>
-            <option value="">Marginación social</option>
-            <option value="muy_alto">Muy alto</option>
-            <option value="alto">Alto</option>
-            <option value="medio">Medio</option>
-            <option value="bajo">Bajo</option>
-          </select>
-
-        </div>
-      </div>
-
-  </div>
+    </div>
   )
 }
 
@@ -76,6 +76,7 @@ FilterHeader.propTypes = {
   onStateChange: PropTypes.func.isRequired,
   onMuniChange: PropTypes.func.isRequired,
   onMargChange: PropTypes.func.isRequired,
+  onKeyUp: PropTypes.func.isRequired,
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
