@@ -32,6 +32,11 @@ $columns : 12;
   @include flex-direction(column-reverse);
 }
 
+.middle {
+  @include align-items(center);
+  @include flexbox;
+}
+
 @import 'grid/xs';
 @import 'grid/sm';
 @import 'grid/md';

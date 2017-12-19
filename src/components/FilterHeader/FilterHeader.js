@@ -42,31 +42,35 @@ const FilterHeader = (props) => {
   }
 
   return (
-    <div className={`${Styles.container} wrapper`}>
+    <div className={`${Styles.container} wrapper row middle`}>
 
-      <select className={Styles.filter} onChange={onStateChange}>
-        <option value="">Estado</option>
-        {stateOptions()}
-      </select>
+      <div className="col-lg-9 col-md-9 col-sm-2 col-xs-2">
 
-      <select className={Styles.filter} onChange={onMuniChange}>
-        <option value="">Municipio</option>
-        {muniOptions()}
-      </select>
+        <select className={Styles.filter} onChange={onStateChange}>
+          <option value="">Estado</option>
+          {stateOptions()}
+        </select>
 
-      <select className={Styles.filter} onChange={onMargChange}>
-        <option value="">Marginación social</option>
-        <option value="muy_alto">Muy alto</option>
-        <option value="alto">Alto</option>
-        <option value="medio">Medio</option>
-        <option value="bajo">Bajo</option>
-      </select>
+        <select className={Styles.filter} onChange={onMuniChange}>
+          <option value="">Municipio</option>
+          {muniOptions()}
+        </select>
 
-      <input
-        type="text"
-        placeholder="Buscar localidades"
-        onKeyUp={e => onKeyUp(e.target.value)}
-      />
+        <select className={Styles.filter} onChange={onMargChange}>
+          <option value="">Marginación social</option>
+          <option value="muy_alto">Muy alto</option>
+          <option value="alto">Alto</option>
+          <option value="medio">Medio</option>
+          <option value="bajo">Bajo</option>
+        </select>
+
+        <input
+          type="text"
+          placeholder="Buscar localidades"
+          onKeyUp={e => onKeyUp(e.target.value)}
+        />
+
+      </div>
 
     </div>
   )

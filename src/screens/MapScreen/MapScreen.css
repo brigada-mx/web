@@ -1,3 +1,6 @@
+@value colors: "src/colors.css";
+@value weakShadow from colors;
+
 .map {
   width: 100vw;
   height: calc(100vh - 130px);
@@ -5,7 +8,7 @@
 }
 
 .listContainer{
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 2;

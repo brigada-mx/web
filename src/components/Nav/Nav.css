@@ -2,15 +2,10 @@
 @value brandOffWhite, brandGreen, grey7, shadow from colors;
 
 .container {
-  display: block;
+  /*display: flex;*/
   height: 65px;
   box-sizing: border-box;
   border-bottom: 1px solid brandOffWhite;
-}
-
-.logo {
-  display: block;
-  padding: 17px 0 20px 0;
 }
 
 .links a {
