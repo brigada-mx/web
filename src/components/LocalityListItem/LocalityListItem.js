@@ -8,39 +8,48 @@ import Styles from './LocalityListItem.css'
 
 
 const stateAbbreviation = {
-  'aguascalientes': 'Ags.',
-  'baja california': 'B.C.',
-  'baja california sur': 'B.C.S.',
-  'campeche': 'Camp.',
-  'chiapas': 'Chis.',
-  'chihuahua': 'Chih.',
-  'coahuila': 'Coah.',
-  'colima': 'Col.',
-  'ciudad de méxico': 'CDMX',
-  'durango': 'Dgo.',
-  'guanajuato': 'Gto.',
-  'guerrero': 'Gro.',
-  'hidalgo': 'Hgo.',
-  'jalisco': 'Jal.',
-  'méxico': 'Edomex.',
-  'estado de méxico': 'Edomex.',
-  'michoacán': 'Mich.',
-  'morelos': 'Mor.',
-  'nayarit': 'Nay.',
-  'nuevo león': 'N.L.',
-  'oaxaca': 'Oax.',
-  'puebla': 'Pue.',
-  'querétaro': 'Qro.',
-  'quintana roo': 'Q. Roo',
-  'san luis potosí': 'S.L.P.',
-  'sinaloa': 'Sin.',
-  'sonora': 'Son.',
-  'tabasco': 'Tab.',
-  'tamaulipas': 'Tamps.',
-  'tlaxcala': 'Tlax.',
-  'veracruz': 'Ver.',
-  'yucatán': 'Yuc.',
-  'zacatecas': 'Zac.',
+  'aguascalientes': 'AG',
+  'baja california': 'BC',
+  'baja california sur': 'BS',
+  'campeche': 'CM',
+  'chiapas': 'CS',
+  'chihuahua': 'CH',
+  'coahuila': 'CO',
+  'colima': 'CL',
+  'ciudad de méxico': 'DF',
+  'durango': 'DG',
+  'guanajuato': 'GT',
+  'guerrero': 'GR',
+  'hidalgo': 'HG',
+  'jalisco': 'JA',
+  'estado de méxico': 'EM',
+  'méxico': 'EM',
+  'michoacán': 'MI',
+  'morelos': 'MO',
+  'nayarit': 'NA',
+  'nuevo león': 'NL',
+  'oaxaca': 'OA',
+  'puebla': 'PU',
+  'querétaro': 'QT',
+  'quintana roo': 'QR',
+  'san luis potosí': 'SL',
+  'sinaloa': 'SI',
+  'sonora': 'SO',
+  'tabasco': 'TB',
+  'tamaulipas': 'TM',
+  'tlaxcala': 'TL',
+  'veracruz': 'VE',
+  'yucatán': 'YU',
+  'zacatecas': 'ZA',
+}
+
+const dmgGradeColor = {
+  severe: Colors.severe,
+  high: Colors.high,
+  medium: Colors.medium,
+  low: Colors.low,
+  minimal: Colors.minimal,
+  unknown: Colors.unknown,
 }
 
 const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => {
@@ -49,15 +58,6 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
   const handleClick = () => { onClick(locality) }
   const handleMouseEnter = () => { onMouseEnter(locality) }
   const handleMouseLeave = () => { onMouseLeave(locality) }
-
-  const dmgGradeColor = {
-    severe: Colors.severe,
-    high: Colors.high,
-    medium: Colors.medium,
-    low: Colors.low,
-    minimal: Colors.minimal,
-    unknown: Colors.unknown,
-  }
 
   return (
     <div
