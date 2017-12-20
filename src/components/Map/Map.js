@@ -10,6 +10,12 @@ const Mapbox = ReactMapboxGl({
   scrollZoom: false,
 })
 
+const zoomStyle = {
+  position: 'absolute',
+  top: 0,
+  right: 0,
+}
+
 class Map extends React.Component {
   constructor(props) {
     super(props)
@@ -133,7 +139,7 @@ class Map extends React.Component {
         onStyleLoad={this.handleMapLoaded}
       >
         {popup}
-        <ZoomControl className={Styles.zoom} />
+        <ZoomControl style={zoomStyle} />
         <Source id="features" geoJsonSource={sourceOptions} />
         <Layer
           id="features"
