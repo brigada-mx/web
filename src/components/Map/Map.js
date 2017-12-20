@@ -15,6 +15,7 @@ const zoomStyle = {
   top: 26,
   right: 26,
   border: 'none',
+  borderRadius: 2,
 }
 
 class Map extends React.Component {
