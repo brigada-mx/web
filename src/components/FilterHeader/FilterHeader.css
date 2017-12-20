@@ -22,13 +22,13 @@
   padding: 0 20px 0 0;
 }
 
-input {
+.search {
   background-color: #F5F7F9;
   border: none;
   padding: 10px 0 10px 10px;
 }
 
-input::placeholder {
+.search::placeholder {
   font-family: 'roboto-500', sans-serif;
   font-size: 13px;
   letter-spacing: .52px;
