@@ -3,6 +3,10 @@
 
 .listItem {
   border-left: 4px solid #E11717;
+  box-sizing: border-box;
+}
+
+.listItemWrapper {
   border-top: 1px solid brandOffWhite;
   box-sizing: border-box;
   padding: 16px 25px 20px 21px;
@@ -11,8 +15,11 @@
 .listItem:hover {
   cursor: pointer;
   border-left: 6px solid #E11717;
-  padding-left: 19px;
   background-color: #FBFCFD;
+}
+
+.listItem:hover .listItemWrapper {
+  padding-left: 19px;
 }
 
 .dmg-severe {
@@ -33,10 +40,6 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.stateName {
-
 }
 
 .listItemMetrics {
