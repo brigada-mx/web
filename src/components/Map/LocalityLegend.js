@@ -42,7 +42,7 @@ const LocalityLegend = ({ localities }) => {
 
   return (
     <div className={Styles.container}>
-      <p className={Styles.title}>Comunidades y niveles de daño</p>
+      <p className={Styles.title}>Nivel de daño</p>
       {items}
     </div>
   )
