@@ -17,13 +17,18 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`list-item dmg-${dmgGrade}`}
+      className={`${Styles.listItem} Styles.dmg-${dmgGrade}`}
       style={{}}
     >
-      <div className="list-item-header">{locName}, {stateName}</div>
-      <div className="list-item-metrics">
-        <div><span className="label">MARG. SOCIAL</span> <span className="value">{margGrade || '?'}</span></div>
-        <div><span className="label">VIVIENDAS DAÑADAS</span> <span className="value">{fmtNum(total)}</span></div>
+      <div className={Styles.listItemWrapper}>
+        <div className={`${Styles.listItemHeader}`}>
+          <div className={Styles.locName}>{locName}, </div>
+          <div className={Styles.stateName}>{stateName}</div>
+        </div>
+        <div className={`${Styles.listItemMetrics} row`}>
+          <div className="col-lg-4 col-md-4"><span className={Styles.value}>{margGrade || '?'}</span><span className={Styles.label}>Marginación social</span></div>
+          <div className="col-lg-4 col-md-4"><span className={Styles.value}>{fmtNum(total)}</span><span className={Styles.label}>Viviendas dañadas</span></div>
+        </div>
       </div>
     </div>
   )

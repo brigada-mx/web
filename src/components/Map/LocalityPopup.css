@@ -1,0 +1,30 @@
+.header{
+  font-family: 'roboto-500', sans-serif;
+  font-size: 13px;
+  letter-spacing: .52px;
+  color: #141418;
+  display: flex;
+  margin-bottom: 12px;
+  padding: 11px 11px 0 11px;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width: 180px;
+  font-family: 'nunito-sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: .4px;
+  color: #9F9F9F;
+  padding: 0 11px;
+}
+
+.item:last-of-type {
+  padding-bottom: 5px;
+}
+
+
+
