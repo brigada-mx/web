@@ -22,8 +22,8 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
     >
       <div className={Styles.listItemWrapper}>
         <div className={`${Styles.listItemHeader}`}>
-          <div className={Styles.locName}>{locName}, </div>
-          <div className={Styles.stateName}>{stateName}</div>
+          <div className={Styles.locName}>{locName},</div>
+          <div className={Styles.stateName}>{'\u00A0'}{stateName}</div>
         </div>
         <div className={`${Styles.listItemMetrics} row`}>
           <div className="col-lg-4 col-md-4"><span className={Styles.value}>{margGrade || '?'}</span><span className={Styles.label}>Marginación social</span></div>
