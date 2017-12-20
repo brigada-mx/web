@@ -12,12 +12,12 @@ const LocalityPopup = ({ locality }) => {
   const { coordinates } = locality.geometry
   return (
     <Popup coordinates={coordinates}>
-      <span className="popup-header">{locName}, {stateName}</span>
-      <div className="popup-item"><span className="popup-label">VIVIENDAS DAÑADAS</span> <span className="popup-value">{fmtNum(total)}</span></div>
-      <div className="popup-item"><span className="popup-label">HABITABLES</span> <span className="popup-value">{fmtNum(habit)}</span></div>
-      <div className="popup-item"><span className="popup-label">NO HABITABLES</span> <span className="popup-value">{fmtNum(notHabit)}</span></div>
-      <div className="popup-item"><span className="popup-label">PÉRDIDA TOTAL</span> <span className="popup-value">{fmtNum(destroyed)}</span></div>
-      <div className="popup-item"><span className="popup-label">GRADO MARGINACIÓN</span> <span className="popup-value">{fmtNum(margGrade)}</span></div>
+      <span className={Styles.header}>{locName}, {stateName}</span>
+      <div className={Styles.item}><span className={Styles.label}>Viviendas dañadas</span> <span className={Styles.value}>{fmtNum(total)}</span></div>
+      <div className={Styles.item}><span className={Styles.label}>Habitables</span> <span className={Styles.value}>{fmtNum(habit)}</span></div>
+      <div className={Styles.item}><span className={Styles.label}>No habitables</span> <span className={Styles.value}>{fmtNum(notHabit)}</span></div>
+      <div className={Styles.item}><span className={Styles.label}>Pérdida total</span> <span className={Styles.value}>{fmtNum(destroyed)}</span></div>
+      <div className={Styles.item}><span className={Styles.label}>Marginación social</span> <span className={Styles.value}>{fmtNum(margGrade)}</span></div>
     </Popup>
   )
 }
