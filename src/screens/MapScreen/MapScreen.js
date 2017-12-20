@@ -116,12 +116,12 @@ class MapScreen extends React.Component {
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
           onMargChange={this.handleMargChange}
+          onKeyUp={this.handleLocalitySearchKeyUp}
         />
         <div className={`${Styles.map} row`}>
           <div className="col-lg-3 col-md-3 col-sm-2 col-xs-2">
             <LocalityList
               localities={localities}
-              onKeyUp={this.handleLocalitySearchKeyUp}
               onClick={this.handleListItemClickFeature}
               onMouseEnter={this.handleListItemEnterFeature}
               onMouseLeave={this.handleListItemLeaveFeature}

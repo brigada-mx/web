@@ -68,7 +68,8 @@ const FilterHeader = (props) => {
 
       <div className="col-lg-3 col-md-3 col-sm-2 col-xs-2 end-lg end-md">
 
-        <input className={Styles.search}
+        <input
+          className={Styles.search}
           type="text"
           placeholder="Buscar"
           onKeyUp={e => onKeyUp(e.target.value)}
