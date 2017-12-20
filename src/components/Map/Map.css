@@ -1,0 +1,2 @@
+@value colors: "src/colors.css";
+@value weakShadow from colors;

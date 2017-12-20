@@ -23,8 +23,12 @@
 }
 
 .numResults {
-  font-family: 'nunito-sans-200', sans-serif;
-  margin-right: 15px;
+  font-family: 'roboto-500', sans-serif;
+  font-size: 13px;
+  letter-spacing: .52px;
+  line-height: 12px;
+  margin-right: 29px;
+  color: #CDCFD1;
 }
 
 .search {
