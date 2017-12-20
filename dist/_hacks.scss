@@ -1,3 +1,23 @@
-// .mapboxgl-map button {
-//   background-color: red !important;
-// }
+.mapboxgl-map button {
+  background-color: white !important;
+  opacity: 1.0 !important;
+  transition: none !important;
+  height: 32px !important;
+  width: 36px !important;
+}
+
+.mapboxgl-map button:hover {
+  background-color: white !important;
+  opacity: 1.0 !important;
+  transition: none !important;
+}
+
+.mapboxgl-map button:first-of-type {
+  background-image: url('assets/img/zoom-in.svg') !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+.mapboxgl-map button:nth-of-type(2) {
+  background-image: url('assets/img/zoom-out.svg') !important;
+}

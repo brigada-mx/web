@@ -13,7 +13,7 @@
   font-family: 'nunito-sans-200', sans-serif;
   letter-spacing: 0.6px;
   color: grey7;
-  background: no-repeat right url("assets/img/dropdown-arrow.svg");
+  background: no-repeat right url('assets/img/dropdown-arrow.svg');
   appearance: none;
   font-weight: 200;
   border: 0px;
@@ -31,10 +31,16 @@
   color: #CDCFD1;
 }
 
+.searchWrapper {
+  background: url('assets/img/search.svg') #F5F7F9 no-repeat left center;
+  background-position: 9px 9px;
+  display: inline-flex;
+}
+
 .search {
-  background-color: #F5F7F9;
+  background-color: transparent;
   border: none;
-  padding: 10px 0 10px 10px;
+  padding: 9px 13px 8px 31px;
 }
 
 .search::placeholder {
