@@ -69,7 +69,7 @@ const FilterHeader = (props) => {
 
       <div className="col-lg-3 col-md-3 col-sm-2 col-xs-2 end-lg end-md">
 
-        <span className={Styles.numResults}>{numResults} resultados</span>
+        <span className={Styles.numResults}>{numResults.toLocaleString()} resultados</span>
         <input
           className={Styles.search}
           type="text"
