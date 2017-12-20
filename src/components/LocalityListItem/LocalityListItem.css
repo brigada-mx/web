@@ -2,7 +2,7 @@
 @value brandOffWhite from colors;
 
 .listItem {
-  border-left: 4px solid #E11717;
+  border-left: 4px solid #939aa1;
   box-sizing: border-box;
 }
 
@@ -20,10 +20,6 @@
 
 .listItem:hover .listItemWrapper {
   padding-left: 19px;
-}
-
-.dmg-severe {
-  /*border-left: 4px solid #E11717;*/
 }
 
 .listItemHeader {

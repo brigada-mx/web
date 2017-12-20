@@ -10,4 +10,10 @@ export default {
   grey1: '#CAD1D8',
   brandGreen: '#3DC587',
   shadow: 'rgba(37, 38, 50, 0.05)',
+  severe: '#ff0000',
+  high: '#dd4400',
+  medium: '#dd8800',
+  low: '#ddbb00',
+  minimal: '#ffff00',
+  unknown: '#939aa1',
 }

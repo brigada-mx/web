@@ -59,10 +59,10 @@ const FilterHeader = (props) => {
 
         <select className={Styles.filter} onChange={onMargChange}>
           <option value="">Marginación social</option>
-          <option value="muy_alto">Muy alto</option>
-          <option value="alto">Alto</option>
-          <option value="medio">Medio</option>
-          <option value="bajo">Bajo</option>
+          <option value="muy_alto">Muy alta</option>
+          <option value="alto">Alta</option>
+          <option value="medio">Media</option>
+          <option value="bajo">Baja</option>
         </select>
 
       </div>
