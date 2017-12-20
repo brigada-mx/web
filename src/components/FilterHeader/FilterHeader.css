@@ -22,6 +22,11 @@
   padding: 0 20px 0 0;
 }
 
+.numResults {
+  font-family: 'nunito-sans-200', sans-serif;
+  margin-right: 15px;
+}
+
 .search {
   background-color: #F5F7F9;
   border: none;

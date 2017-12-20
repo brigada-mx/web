@@ -13,6 +13,7 @@ const FilterHeader = (props) => {
     onMargChange,
     onKeyUp,
     localities,
+    numResults,
   } = props
 
   const stateOptions = () => {
@@ -68,6 +69,7 @@ const FilterHeader = (props) => {
 
       <div className="col-lg-3 col-md-3 col-sm-2 col-xs-2 end-lg end-md">
 
+        <span className={Styles.numResults}>{numResults} resultados</span>
         <input
           className={Styles.search}
           type="text"
@@ -87,6 +89,7 @@ FilterHeader.propTypes = {
   onMuniChange: PropTypes.func.isRequired,
   onMargChange: PropTypes.func.isRequired,
   onKeyUp: PropTypes.func.isRequired,
+  numResults: PropTypes.number.isRequired,
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 

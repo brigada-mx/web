@@ -113,6 +113,7 @@ class MapScreen extends React.Component {
       <div>
         <FilterHeader
           localities={this.state.localities}
+          numResults={localities.length}
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
           onMargChange={this.handleMargChange}
