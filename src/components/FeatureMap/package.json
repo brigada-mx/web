@@ -1,0 +1,6 @@
+{
+  "name": "FeatureMap",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FeatureMap.js"
+}

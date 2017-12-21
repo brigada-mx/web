@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
+
 import Styles from './Map.css'
 
 

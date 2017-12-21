@@ -1,0 +1,6 @@
+@value colors: "src/colors.css";
+@value weakShadow from colors;
+
+.zoomControlContainer {
+  box-shadow: 0px 20px 60px 0px rgba(37, 38, 50, 0.15) !important;
+}

@@ -41,8 +41,8 @@ const App = () => {
         <Route path="/practicas" component={BestPracticesScreen} />
         <Route path="/nosotros" component={AboutScreen} />
 
-        <Route path="/comunidades/:id" component={LocalityScreenWrapper} />
-        <Route path="/comunidades/c/:cvegeo" component={LocalityScreenWrapper} />
+        <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
+        <Route exact path="/comunidades/c/:cvegeo" component={LocalityScreenWrapper} />
       </div>
     </Router>
   )
