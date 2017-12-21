@@ -141,7 +141,7 @@ class Map extends React.Component {
         onStyleLoad={this.handleMapLoaded}
       >
         {popup}
-        <ZoomControl style={zoomStyle} className="zoomControlContainer" />
+        <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
         <Source id="features" geoJsonSource={sourceOptions} />
         <Layer
           id="features"
