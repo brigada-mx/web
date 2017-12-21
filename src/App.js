@@ -9,7 +9,7 @@ import LocalityScreen from 'screens/LocalityScreen'
 
 
 const LocalityScreenWrapper = ({ match }) => {
-  return <LocalityScreen cvegeo={match.params.cvegeo} />
+  return <LocalityScreen cvegeo={match.params.cvegeo} id={match.params.id} />
 }
 
 const OrganizationScreen = () => (
@@ -41,7 +41,8 @@ const App = () => {
         <Route path="/practicas" component={BestPracticesScreen} />
         <Route path="/nosotros" component={AboutScreen} />
 
-        <Route path="/comunidades/:cvegeo" component={LocalityScreenWrapper} />
+        <Route path="/comunidades/:id" component={LocalityScreenWrapper} />
+        <Route path="/comunidades/c/:cvegeo" component={LocalityScreenWrapper} />
       </div>
     </Router>
   )

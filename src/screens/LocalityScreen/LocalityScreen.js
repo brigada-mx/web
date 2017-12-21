@@ -28,4 +28,17 @@ LocalityScreen.propTypes = {
   cvegeo: PropTypes.string.isRequired,
 }
 
+LocalityScreen.propTypes = {
+  cvegeo: PropTypes.string,
+  id: (props, propName) => {
+    if (props.cvegeo === undefined && props[propName] === undefined) {
+      return new Error('exactly one of `cvegeo` and `id` must be passed')
+    }
+    if (props.cvegeo !== undefined && props[propName] !== undefined) {
+      return new Error('exactly one of `cvegeo` and `id` must be passed')
+    }
+    return null
+  },
+}
+
 export default LocalityScreen

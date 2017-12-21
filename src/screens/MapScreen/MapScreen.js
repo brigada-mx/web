@@ -68,7 +68,7 @@ class MapScreen extends React.Component {
   }
 
   handleClickFeature = (feature) => {
-    this.props.history.push(`/comunidades/${feature.properties.cvegeo}`)
+    this.props.history.push(`/comunidades/c/${feature.properties.cvegeo}`)
   }
 
   handleEnterFeature = (feature) => {
@@ -80,7 +80,7 @@ class MapScreen extends React.Component {
   }
 
   handleListItemClickFeature = (feature) => {
-    this.props.history.push(`/comunidades/${feature.properties.cvegeo}`)
+    this.props.history.push(`/comunidades/c/${feature.properties.cvegeo}`)
   }
 
   handleListItemEnterFeature = (feature) => {
