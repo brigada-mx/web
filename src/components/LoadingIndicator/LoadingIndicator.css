@@ -1,0 +1,41 @@
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #333;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  margin-right: 3px;
+
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.rect2 {
+  animation-delay: -1.1s !important;
+}
+
+.rect3 {
+  animation-delay: -1.0s !important;
+}
+
+.rect4 {
+  animation-delay: -0.9s !important;
+}
+
+.rect5 {
+  animation-delay: -0.8s !important;
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+  }  20% {
+    transform: scaleY(1.0);
+  }
+}

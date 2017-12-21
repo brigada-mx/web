@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
 import FilterHeader from 'components/FilterHeader'
@@ -8,6 +9,7 @@ import LocalityListItem from 'components/LocalityListItem'
 import Map from 'components/Map'
 import LocalityPopup from 'components/Map/LocalityPopup'
 import LocalityLegend from 'components/Map/LocalityLegend'
+import LoadingIndicator from 'components/LoadingIndicator'
 import { tokenMatch } from 'tools/string'
 import Styles from './MapScreen.css'
 
@@ -24,6 +26,7 @@ const LocalityList = ({ localities, ...rest }) => {
       />
     )
   })
+  if (items.length === 0) return <LoadingIndicator />
   return <div className={Styles.listContainer}>{items}</div>
 }
 
@@ -65,7 +68,7 @@ class MapScreen extends React.Component {
   }
 
   handleClickFeature = (feature) => {
-    console.log(feature)
+    this.props.history.push(`/comunidades/${feature.properties.cvegeo}`)
   }
 
   handleEnterFeature = (feature) => {
@@ -77,7 +80,7 @@ class MapScreen extends React.Component {
   }
 
   handleListItemClickFeature = (feature) => {
-    console.log(feature)
+    this.props.history.push(`/comunidades/${feature.properties.cvegeo}`)
   }
 
   handleListItemEnterFeature = (feature) => {
@@ -145,4 +148,8 @@ class MapScreen extends React.Component {
   }
 }
 
-export default MapScreen
+MapScreen.propTypes = {
+  history: PropTypes.object.isRequired,
+}
+
+export default withRouter(MapScreen)

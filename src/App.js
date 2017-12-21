@@ -1,11 +1,16 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Nav from 'components/Nav'
 import MapScreen from 'screens/MapScreen'
-import sendToApi from 'api/request'
+import LocalityScreen from 'screens/LocalityScreen'
 
+
+const LocalityScreenWrapper = ({ match }) => {
+  return <LocalityScreen cvegeo={match.params.cvegeo} />
+}
 
 const OrganizationScreen = () => (
   <div>
@@ -35,6 +40,8 @@ const App = () => {
         <Route path="/organizaciones" component={OrganizationScreen} />
         <Route path="/practicas" component={BestPracticesScreen} />
         <Route path="/nosotros" component={AboutScreen} />
+
+        <Route path="/comunidades/:cvegeo" component={LocalityScreenWrapper} />
       </div>
     </Router>
   )
