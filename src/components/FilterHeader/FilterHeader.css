@@ -41,6 +41,11 @@
   background-color: transparent;
   border: none;
   padding: 9px 13px 8px 31px;
+  font-family: 'roboto-500', sans-serif;
+  font-size: 13px;
+  letter-spacing: .52px;
+  line-height: 12px;
+  color: #CDCFD1;
 }
 
 .search::placeholder {
