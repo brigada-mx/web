@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import _ from 'lodash'
 
+import LogoImg from 'assets/img/logo.png'
 import Styles from './FilterHeader.css'
 
 
@@ -45,7 +46,13 @@ const FilterHeader = (props) => {
   return (
     <div className={`${Styles.container} wrapper row middle`}>
 
-      <div className="col-lg-9 col-md-9 col-sm-2 col-xs-2">
+      <div className="lg-hidden md-hidden col-sm-1 col-xs-2">
+        <a className={Styles.logo} href="/">
+          <img src={LogoImg} width="74px" height="auto" alt="Logo" />
+        </a>
+      </div>
+
+      <div className="col-lg-9 col-md-9 sm-hidden xs-hidden">
 
         <select className={Styles.filter} onChange={onStateChange}>
           <option value="">Estado</option>
@@ -67,7 +74,7 @@ const FilterHeader = (props) => {
 
       </div>
 
-      <div className="col-lg-3 col-md-3 col-sm-2 col-xs-2 end-lg end-md">
+      <div className="col-lg-3 col-md-3 col-sm-4 col-sm-offset-3 col-xs-2 end-lg end-md end-sm">
 
         <span className={Styles.numResults}>{numResults.toLocaleString()} resultados</span>
         <div className={Styles.searchWrapper}>

@@ -1,6 +1,10 @@
 @media screen and (min-width: 1440px) {
 
-// GENERAL
+  // GENERAL
+
+  .wrapper {
+    padding: 0 25px;
+  }
 
   .lg-hidden {
     display: none;
@@ -140,4 +144,5 @@
   .last-lg {
     @include order(1);
   }
+
 }
