@@ -9,25 +9,24 @@ const _stringify = (params) => {
 }
 
 const service = {
-  getLocalityActions: (locality_id, page_size = 250) => {
+  getLocalityActions: async (locality_id, page_size = 250) => {
     const params = { locality_id, page_size }
     return sendToApi(`actions/${_stringify(params)}`)
   },
 
-  getLocalityEstablishments: (locality_id, page_size = 250) => {
+  getLocalityEstablishments: async (locality_id, page_size = 250) => {
     const params = { locality_id, page_size, is_categorized: true }
     return sendToApi(`establishments/${_stringify(params)}`)
   },
 
-  getLocality: (id) => {
+  getLocality: async (id) => {
     return sendToApi(`localities/${id}/`)
   },
 
-  getLocalityByCvegeo: (cvegeo) => {
+  getLocalityByCvegeo: async (cvegeo) => {
     const params = { cvegeo }
     return sendToApi(`localities/${_stringify(params)}`)
   },
-
 }
 
 export default service

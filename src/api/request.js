@@ -4,12 +4,11 @@ import env from 'src/env'
 
 
 const replaceProtocol = (url, protocol) => {
-  // `protocol` must be passed with trailing '//', so not exactly a protocol
-  const parts = url.split('//')
-  return protocol + parts[1]
+  const parts = url.split('://')
+  return `${protocol}://${parts[1]}`
 }
 
-const sendToApi = (_url = '', { method = 'GET', body = {}, _headers = {}, isRelative = true } = {}) => {
+const _sendToApi = async (_url = '', { method = 'GET', body = {}, _headers = {}, isRelative = true } = {}) => {
   let url = _url
   const headers = {
     ..._headers,
@@ -30,6 +29,22 @@ const sendToApi = (_url = '', { method = 'GET', body = {}, _headers = {}, isRela
     url = replaceProtocol(url, env.urlProtocol)
   }
   return fetch(url, request)
+}
+
+/**
+ * Guarantees that object returned has exactly one of `data`, `error`, and
+ * `exception` keys.
+ */
+const sendToApi = async (...args) => {
+  try {
+    const r = await _sendToApi(...args)
+    if (r.status >= 400) return { error: r }
+
+    const data = await r.json()
+    return { data }
+  } catch (exception) {
+    return { exception }
+  }
 }
 
 export default sendToApi

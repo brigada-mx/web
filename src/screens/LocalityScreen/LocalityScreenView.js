@@ -24,6 +24,7 @@ class LocalityScreenView extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <FeatureMap
         onClickFeature={this.handleClickFeature}
