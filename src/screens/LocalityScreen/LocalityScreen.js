@@ -1,60 +1,58 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import FeatureMap from 'components/FeatureMap'
-import LoadingIndicator from 'components/LoadingIndicator'
-import Styles from './LocalityScreen.css'
+import service from 'api/service'
+import LocalityScreenView from './LocalityScreenView'
 
 
 class LocalityScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      establishments: [],
-    }
-  }
+  state = {
+    locality: {
+      loading: true,
+    },
+    actions: {
+      loading: true,
+    },
+    establishments: {
+      loading: true,
+    },
+  };
 
-  handleClickFeature = (f) => {
-    console.log(f)
-  }
+  componentDidMount() {
+    const { id = 209735 } = this.props
+    service.getLocality(id)
+      .then(r => r.json())
+      .then(
+        data => this.setState({ locality: { loading: false, data, error: undefined } }),
+        error => this.setState({ locality: { loading: false, error } }),
+      )
 
-  handleEnterFeature = (f) => {
-    console.log(f)
-  }
+    service.getLocalityActions(id)
+      .then(r => r.json())
+      .then(
+        data => this.setState(
+          { actions: { loading: false, data: data.results, error: undefined } }
+        ),
+        error => this.setState({ actions: { loading: false, error } }),
+      )
 
-  handleLeaveFeature = (f) => {
-    console.log(f)
+    service.getLocalityEstablishments(id, 2000)
+      .then(r => r.json())
+      .then(
+        data => this.setState(
+          { establishments: { loading: false, data: data.results, error: undefined } }
+        ),
+        error => this.setState({ establishments: { loading: false, error } }),
+      )
   }
 
   render() {
-    const { cvegeo } = this.props
-    const { establishments } = this.state
-    if (establishments.length === 0) return <LoadingIndicator />
-    return (
-      <FeatureMap
-        onClickFeature={this.handleClickFeature}
-        onEnterFeature={this.handleEnterFeature}
-        onLeaveFeature={this.handleLeaveFeature}
-      />
-    )
+    return <LocalityScreenView {...this.state} />
   }
 }
 
 LocalityScreen.propTypes = {
-  cvegeo: PropTypes.string.isRequired,
-}
-
-LocalityScreen.propTypes = {
-  cvegeo: PropTypes.string,
-  id: (props, propName) => {
-    if (props.cvegeo === undefined && props[propName] === undefined) {
-      return new Error('exactly one of `cvegeo` and `id` must be passed')
-    }
-    if (props.cvegeo !== undefined && props[propName] !== undefined) {
-      return new Error('exactly one of `cvegeo` and `id` must be passed')
-    }
-    return null
-  },
+  id: PropTypes.number.isRequired,
 }
 
 export default LocalityScreen

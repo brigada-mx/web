@@ -26,7 +26,7 @@ const LocalityList = ({ localities, ...rest }) => {
       />
     )
   })
-  if (items.length === 0) return <div className={Styles.loader}><LoadingIndicatorCircle /></div>
+  if (items.length === 0) return <LoadingIndicatorCircle classNameCustom={Styles.loader} />
   return <div className={Styles.listContainer}>{items}</div>
 }
 
