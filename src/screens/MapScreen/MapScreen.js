@@ -9,7 +9,7 @@ import LocalityListItem from 'components/LocalityListItem'
 import Map from 'components/Map'
 import LocalityPopup from 'components/Map/LocalityPopup'
 import LocalityLegend from 'components/Map/LocalityLegend'
-import LoadingIndicator from 'components/LoadingIndicator'
+import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
 import Styles from './MapScreen.css'
 
@@ -26,7 +26,7 @@ const LocalityList = ({ localities, ...rest }) => {
       />
     )
   })
-  if (items.length === 0) return <LoadingIndicator />
+  if (items.length === 0) return <div className={Styles.loader}><LoadingIndicatorCircle /></div>
   return <div className={Styles.listContainer}>{items}</div>
 }
 
