@@ -6,44 +6,51 @@ import LocalityScreenView from './LocalityScreenView'
 
 
 class LocalityScreen extends React.Component {
-  state = {
-    locality: {
-      loading: true,
-    },
-    actions: {
-      loading: true,
-    },
-    establishments: {
-      loading: true,
-    },
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      locality: {
+        loading: true,
+      },
+      actions: {
+        loading: true,
+      },
+      establishments: {
+        loading: true,
+      },
+    }
+  }
 
   componentDidMount() {
-    const { id = 209735 } = this.props
-    service.getLocality(id)
-      .then(r => r.json())
-      .then(
-        data => this.setState({ locality: { loading: false, data, error: undefined } }),
-        error => this.setState({ locality: { loading: false, error } }),
-      )
+    this._mounted = true
+    this.getLocality()
+    this.getLocalityActions()
+    this.getLocalityEstablishments()
+  }
 
-    service.getLocalityActions(id)
-      .then(r => r.json())
-      .then(
-        data => this.setState(
-          { actions: { loading: false, data: data.results, error: undefined } }
-        ),
-        error => this.setState({ actions: { loading: false, error } }),
-      )
+  componentWillUnmount() {
+    this._mounted = false
+  }
 
-    service.getLocalityEstablishments(id, 2000)
-      .then(r => r.json())
-      .then(
-        data => this.setState(
-          { establishments: { loading: false, data: data.results, error: undefined } }
-        ),
-        error => this.setState({ establishments: { loading: false, error } }),
-      )
+  getLocality = async () => {
+    const { data, error, exception } = await service.getLocality(this.props.id)
+    if (data) this.setState({ locality: { loading: false, data, error: undefined } })
+    if (error) this.setState({ locality: { loading: false, error } })
+    if (exception && this._mounted) setTimeout(this.getLocality, 10000)
+  }
+
+  getLocalityActions = async () => {
+    const { data, error, exception } = await service.getLocalityActions(this.props.id)
+    if (data) this.setState({ actions: { loading: false, data, error: undefined } })
+    if (error) this.setState({ actions: { loading: false, error } })
+    if (exception && this._mounted) setTimeout(this.getLocalityActions, 10000)
+  }
+
+  getLocalityEstablishments = async () => {
+    const { data, error, exception } = await service.getLocalityEstablishments(this.props.id, 2000)
+    if (data) this.setState({ establishments: { loading: false, data, error: undefined } })
+    if (error) this.setState({ establishments: { loading: false, error } })
+    if (exception && this._mounted) setTimeout(this.getLocalityEstablishments, 10000)
   }
 
   render() {
