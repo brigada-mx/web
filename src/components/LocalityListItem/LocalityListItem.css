@@ -66,18 +66,35 @@
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .listItem {
     width: 486px;
+    height: 162px;
+    margin: 13px 6px 11px 6px;
     border-left: unset;
     border-bottom: 4px solid #939aa1;
     box-sizing: border-box;
   }
-  .listItemWrapper {
-    border: 1px solid brandOffWhite;
-  }
   .listItem:hover {
     border-left: unset;
     background-color: #FBFCFD;
+    border-bottom-width: 6px;
   }
   .listItem:hover .listItemWrapper {
-    padding-left: 21px;
+    padding-left: 23px;
+  }
+  .listItemWrapper {
+    border-top: 1px solid brandOffWhite;
+    border-right: 1px solid brandOffWhite;
+    border-left: 1px solid brandOffWhite;
+    height: 100%;
+    width: 432px;
+    padding: 24px 43px 34px 23px;
+  }
+  .listItemMetrics {
+    justify-content: space-between;
+  }
+  .locName {
+    max-width: 333px;
+  }
+  .label {
+    width: 83px;
   }
 }

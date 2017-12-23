@@ -86,6 +86,8 @@ const FilterHeader = (props) => {
           />
         </div>
 
+        <div className={`${Styles.hamburger} lg-hidden md-hidden`} />
+
       </div>
 
     </div>

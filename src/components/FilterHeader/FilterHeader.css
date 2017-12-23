@@ -4,6 +4,7 @@
 .container {
   height: 65px;
   box-shadow: 15px 15px 30px 0px weakShadow;
+  background-color: white;
   position: relative;
   z-index: 2;
 }
@@ -63,5 +64,19 @@
   }
   .numResults {
     margin-right: 21px;
+  }
+  .hamburger {
+    background: no-repeat url('assets/img/hamburger.svg');
+    width: 17px;
+    height: 9px;
+    display: inline-flex;
+    margin-left: 23px;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .container {
+    box-shadow: unset;
   }
 }

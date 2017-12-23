@@ -1,5 +1,5 @@
 @value colors: "src/colors.css";
-@value strongShadow, brandOffWhite from colors;
+@value strongShadow, weakShadow, brandOffWhite from colors;
 
 .container {
   position: absolute;
@@ -65,8 +65,8 @@
     right: unset;
     bottom: unset;
     width: 100%;
-    z-index: 5;
     border-top: 1px solid brandOffWhite;
+    box-shadow: 0 15px 30px 0 weakShadow;
     padding: 15px 20px 14px 20px;
   }
   .title {

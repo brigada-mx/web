@@ -1,5 +1,5 @@
 @value colors: "src/colors.css";
-@value weakShadow from colors;
+@value weakShadow, strongShadow from colors;
 
 .map {
   width: 100vw;
@@ -33,5 +33,6 @@
     display: flex;
     flex-direction: row;
     height: 186px;
+    box-shadow: 0 25px 100px 0 strongShadow;
   }
 }
