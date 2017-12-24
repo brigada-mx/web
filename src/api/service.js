@@ -29,13 +29,25 @@ const service = {
   },
 }
 
-export const getBackoff = async (self, stateKey, getter, ...args) => {
-  const { data, error, exception } = await getter(...args)
-  if (data) self.setState({ [stateKey]: { loading: false, data, error: undefined } })
-  if (error) self.setState({ [stateKey]: { loading: false, error } })
-  if (exception && self._mounted) {
-    setTimeout(() => getBackoff(self, stateKey, getter, ...args), 10000)
+/**
+ * Function that can be called by smart components to fetch data, and back off
+ * exponentially if fetch throws an exception. Accepts a `self` argument, which
+ * must be the component's `this`.
+ */
+export const getBackoff = async (...args) => {
+  let count = 0
+  let delay = 1000
+  const inner = async (self, stateKey, getter, ...getterArgs) => {
+    const { data, error, exception } = await getter(...getterArgs)
+    if (data) self.setState({ [stateKey]: { loading: false, data, error: undefined } })
+    if (error) self.setState({ [stateKey]: { loading: false, error } })
+    if (exception && self._mounted) {
+      setTimeout(() => inner(self, stateKey, getter, ...getterArgs), delay)
+      if (count < 4) delay *= 2
+      count += 1
+    }
   }
+  inner(...args)
 }
 
 export default service
