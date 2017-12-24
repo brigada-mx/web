@@ -29,4 +29,13 @@ const service = {
   },
 }
 
+export const getBackoff = async (self, stateKey, getter, ...args) => {
+  const { data, error, exception } = await getter(...args)
+  if (data) self.setState({ [stateKey]: { loading: false, data, error: undefined } })
+  if (error) self.setState({ [stateKey]: { loading: false, error } })
+  if (exception && self._mounted) {
+    setTimeout(() => getBackoff(self, stateKey, getter, ...args), 10000)
+  }
+}
+
 export default service
