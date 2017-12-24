@@ -1,11 +1,8 @@
-config.codekit*
 919.conf
 *.bundle.js
 .sass-cache
 node_modules
-styles/*.css
 dist/*.css
-package-lock.json
 sandbox/*
 .DS_Store
 requester.pyr

@@ -39,7 +39,6 @@ class MapScreen extends React.Component {
     super(props)
     this.state = {
       localities: [],
-      actionSearch: '',
       locSearch: '',
       state: '',
       muni: '',

@@ -27,7 +27,7 @@ module.exports = {
     "no-empty": 1,
     "no-console": 1,
     "react/forbid-prop-types": 1,
-    "react/require-default-props": 1,
+    "react/require-default-props": 0,
     "react/jsx-filename-extension": 0,
     "import/no-extraneous-dependencies": 0,
     "import/extensions": 0,
