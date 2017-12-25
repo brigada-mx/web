@@ -1,34 +1,43 @@
 import 'whatwg-fetch'
 
 import env from 'src/env'
+import { stringify } from './queryString'
 
+
+const toQueryString = (params) => {
+  const s = stringify(params)
+  return s ? `?${s}` : ''
+}
 
 const replaceProtocol = (url, protocol) => {
   const parts = url.split('://')
   return `${protocol}://${parts[1]}`
 }
 
-const _sendToApi = async (_url = '', { method = 'GET', body = {}, _headers = {}, isRelative = true } = {}) => {
+const _sendToApi = async (
+  _url = '', { method = 'GET', body = {}, params = {}, _headers = {}, isRelative = true } = {}
+) => {
   let url = _url
   const headers = {
     ..._headers,
     'Content-Type': 'application/json',
   }
 
-  const request = {
+  const options = {
     method,
     body: JSON.stringify(body), // `body` must be a string, not an object
     headers: new Headers(headers),
   }
 
-  if (['GET', 'HEAD'].indexOf(method) > -1) { delete request.body }
+  if (['GET', 'HEAD'].indexOf(method) > -1) { delete options.body }
 
   if (isRelative) {
     url = `${env.apiUrl}${url}`
   } else {
     url = replaceProtocol(url, env.urlProtocol)
   }
-  return fetch(url, request)
+
+  return fetch(`${url}${toQueryString(params)}`, options)
 }
 
 /**

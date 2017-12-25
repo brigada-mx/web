@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
+import service, { getBackoff } from 'api/service'
 import FilterHeader from 'components/FilterHeader'
 import LocalityListItem from 'components/LocalityListItem'
 import Map from 'components/Map'
@@ -56,6 +57,7 @@ class MapScreen extends React.Component {
       pathname: '/',
       state: {},
     })
+    getBackoff(this, 'apiLocalities', service.getLocalities)
   }
 
   handleLoad = (localities) => {
@@ -115,7 +117,6 @@ class MapScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.location.replace)
     const localities = this.filterLocalities()
     const { popup } = this.state
     const _popup = popup ? <LocalityPopup locality={popup} /> : null
