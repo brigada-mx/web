@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
 import FeatureMap from 'components/FeatureMap'
+import Bar from 'components/Bar'
 import LoadingIndicator from 'components/LoadingIndicator'
 import Styles from './LocalityScreenView.css'
 
@@ -44,17 +45,31 @@ class LocalityScreenView extends React.Component {
   render() {
     const { locality, actions, establishments } = this.props
     const { loading: locLoading, data: locData, error: locError } = locality
+
+    let locSection = null
     if (locData) {
       const { name, municipality_name, state_name, cvegeo } = locData
-      return LocalityBreadcrumb({ cvegeo, munName: municipality_name, stateName: state_name, name })
+      locSection = (
+        <div>
+          {LocalityBreadcrumb({ cvegeo, munName: municipality_name, stateName: state_name, name })}
+          <Bar
+            value={25}
+            max={100}
+          />
+        </div>
+      )
     }
 
     return (
-      <FeatureMap
-        onClickFeature={this.handleClickFeature}
-        onEnterFeature={this.handleEnterFeature}
-        onLeaveFeature={this.handleLeaveFeature}
-      />
+      <div>
+        {locSection}
+
+        <FeatureMap
+          onClickFeature={this.handleClickFeature}
+          onEnterFeature={this.handleEnterFeature}
+          onLeaveFeature={this.handleLeaveFeature}
+        />
+      </div>
     )
   }
 }

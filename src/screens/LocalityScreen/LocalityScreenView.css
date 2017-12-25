@@ -1,5 +1,4 @@
 @value colors: "src/colors.css";
-@value weakShadow from colors;
 
 .map {
   width: 100vw;

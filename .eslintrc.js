@@ -23,6 +23,7 @@ module.exports = {
     "no-underscore-dangle": 0,
     "no-labels": 0,
     "no-continue": 0,
+    "no-mixed-operators": 0,
     "no-unused-vars": 1,
     "no-empty": 1,
     "no-console": 1,

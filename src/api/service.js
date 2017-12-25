@@ -32,7 +32,7 @@ const service = {
 /**
  * Function that can be called by smart components to fetch data, and back off
  * exponentially if fetch throws an exception. Accepts a `self` argument, which
- * must be the component's `this`.
+ * must be component's `this`.
  */
 export const getBackoff = async (...args) => {
   let count = 0

@@ -1,0 +1,33 @@
+@value colors: "src/colors.css";
+@value brandMetricGreen from colors;
+@value brandMetricGrey from colors;
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: row;
+  position: relative;
+  height: 3px;
+  width: 20%;
+  border-radius: 1px;
+  justify-content: center;
+  padding: 3px;
+  background-clip: content-box;
+}
+
+.green {
+  background-color: brandMetricGreen;
+}
+
+.grey {
+  background-color: brandMetricGrey;
+}
+
+.modal {
+  z-index: 2;
+  position: absolute;
+  top: -50px;
+  color: black;
+  background-color: brandMetricGrey;
+  text-align: center;
+}
