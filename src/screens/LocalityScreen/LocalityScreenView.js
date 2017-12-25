@@ -10,10 +10,18 @@ import Styles from './LocalityScreenView.css'
 
 
 const LocalityBreadcrumb = ({ cvegeo, stateName, munName, name }) => (
-  <div className={Styles.links}>
+  <div className={Styles.breadcrumbLinks}>
     <NavLink to="/">Comunidades</NavLink>
-    <NavLink to={`/${cvegeo.substring(0, 2)}`}>{stateName}</NavLink>
-    <NavLink to={`/${cvegeo.substring(0, 5)}`}>{munName}</NavLink>
+    <NavLink
+      to={{ pathname: '/', state: { cvegeo: cvegeo.substring(0, 2) } }}
+    >
+      {stateName}
+    </NavLink>
+    <NavLink
+      to={{ pathname: '/', state: { cvegeo: cvegeo.substring(0, 5) } }}
+    >
+      {munName}
+    </NavLink>
     <NavLink to="#">{name}</NavLink>
   </div>
 )

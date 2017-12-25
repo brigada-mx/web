@@ -37,11 +37,12 @@ LocalityList.propTypes = {
 class MapScreen extends React.Component {
   constructor(props) {
     super(props)
+
+    const { location } = props
     this.state = {
       localities: [],
       locSearch: '',
-      state: '',
-      muni: '',
+      cvegeo: location.state ? location.state.cvegeo : '',
       marg: '',
       popup: null,
     }
@@ -50,16 +51,23 @@ class MapScreen extends React.Component {
     )
   }
 
+  componentDidMount() {
+    this.props.history.replace({
+      pathname: '/',
+      state: {},
+    })
+  }
+
   handleLoad = (localities) => {
     this.setState({ localities })
   }
 
   handleStateChange = (e) => {
-    this.setState({ state: e.target.value.substring(0, 2) })
+    this.setState({ cvegeo: e.target.value.substring(0, 2) })
   }
 
   handleMuniChange = (e) => {
-    this.setState({ muni: e.target.value.substring(0, 5) })
+    this.setState({ cvegeo: e.target.value.substring(0, 5) })
   }
 
   handleMargChange = (e) => {
@@ -95,19 +103,19 @@ class MapScreen extends React.Component {
   }
 
   filterLocalities = () => {
-    const { localities, locSearch, marg, muni, state } = this.state
+    const { localities, locSearch, cvegeo, marg } = this.state
 
     return localities.filter((l) => {
       const { locName, stateName, margGrade, cvegeoS } = l.properties
       const matchesSearch = tokenMatch(`${locName} ${stateName}`, locSearch)
-      const matchesState = !state || state === cvegeoS.substring(0, 2)
-      const matchesMuni = !muni || muni === cvegeoS.substring(0, 5)
+      const matchesCvegeo = !cvegeo || cvegeoS.startsWith(cvegeo)
       const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
-      return matchesSearch && matchesState && matchesMuni && matchestMarg
+      return matchesSearch && matchesCvegeo && matchestMarg
     })
   }
 
   render() {
+    console.log(this.props.location.replace)
     const localities = this.filterLocalities()
     const { popup } = this.state
     const _popup = popup ? <LocalityPopup locality={popup} /> : null
@@ -149,6 +157,7 @@ class MapScreen extends React.Component {
 
 MapScreen.propTypes = {
   history: PropTypes.object.isRequired,
+  location: PropTypes.object,
 }
 
 export default withRouter(MapScreen)

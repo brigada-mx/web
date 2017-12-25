@@ -2,7 +2,6 @@
 @value brandOffWhite, brandGreen, grey7, shadow from colors;
 
 .container {
-  /*display: flex;*/
   height: 65px;
   box-sizing: border-box;
   border-bottom: 1px solid brandOffWhite;
