@@ -1,5 +1,8 @@
 @value colors: "src/colors.css";
-@value weakShadow from colors;
+
+.breadcrumbLinks a {
+  margin-right: 15px;
+}
 
 .map {
   width: 100vw;

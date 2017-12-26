@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
+import service, { getBackoff } from 'api/service'
 import FilterHeader from 'components/FilterHeader'
 import LocalityListItem from 'components/LocalityListItem'
 import Map from 'components/Map'
@@ -37,12 +38,12 @@ LocalityList.propTypes = {
 class MapScreen extends React.Component {
   constructor(props) {
     super(props)
+
+    const { location } = props
     this.state = {
       localities: [],
-      actionSearch: '',
       locSearch: '',
-      state: '',
-      muni: '',
+      cvegeo: location.state ? location.state.cvegeo : '',
       marg: '',
       popup: null,
     }
@@ -51,16 +52,24 @@ class MapScreen extends React.Component {
     )
   }
 
+  componentDidMount() {
+    this.props.history.replace({
+      pathname: '/',
+      state: {},
+    })
+    getBackoff(this, 'apiLocalities', service.getLocalities)
+  }
+
   handleLoad = (localities) => {
     this.setState({ localities })
   }
 
   handleStateChange = (e) => {
-    this.setState({ state: e.target.value.substring(0, 2) })
+    this.setState({ cvegeo: e.target.value.substring(0, 2) })
   }
 
   handleMuniChange = (e) => {
-    this.setState({ muni: e.target.value.substring(0, 5) })
+    this.setState({ cvegeo: e.target.value.substring(0, 5) })
   }
 
   handleMargChange = (e) => {
@@ -96,15 +105,14 @@ class MapScreen extends React.Component {
   }
 
   filterLocalities = () => {
-    const { localities, locSearch, marg, muni, state } = this.state
+    const { localities, locSearch, cvegeo, marg } = this.state
 
     return localities.filter((l) => {
       const { locName, stateName, margGrade, cvegeoS } = l.properties
       const matchesSearch = tokenMatch(`${locName} ${stateName}`, locSearch)
-      const matchesState = !state || state === cvegeoS.substring(0, 2)
-      const matchesMuni = !muni || muni === cvegeoS.substring(0, 5)
+      const matchesCvegeo = !cvegeo || cvegeoS.startsWith(cvegeo)
       const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
-      return matchesSearch && matchesState && matchesMuni && matchestMarg
+      return matchesSearch && matchesCvegeo && matchestMarg
     })
   }
 
@@ -150,6 +158,7 @@ class MapScreen extends React.Component {
 
 MapScreen.propTypes = {
   history: PropTypes.object.isRequired,
+  location: PropTypes.object,
 }
 
 export default withRouter(MapScreen)
