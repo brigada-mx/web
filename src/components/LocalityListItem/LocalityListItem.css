@@ -38,10 +38,14 @@
   text-overflow: ellipsis;
 }
 
-.listItemMetrics {
+.listItemMetricsContainer {
   display: flex;
   flex-direction: row;
   margin-top: 13px;
+}
+
+.listItemMetrics {
+  flex: 1;
 }
 
 .value {

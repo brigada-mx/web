@@ -54,7 +54,7 @@ const dmgGradeColor = {
 
 const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => {
   const {
-    locality_name: locName, state_name: stateName, meta: { margGrade, total }, dmgGrade,
+    name, state_name: stateName, meta: { margGrade, total }, action_count: actions, dmgGrade,
   } = locality
 
   const handleClick = () => { onClick(locality) }
@@ -71,19 +71,25 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
     >
       <div className={Styles.listItemWrapper}>
         <div className={`${Styles.listItemHeader}`}>
-          <div className={Styles.locName}>{locName},</div>
+          <div className={Styles.name}>{name},</div>
           <div className={Styles.stateName}>{'\u00A0'}
             {stateAbbreviation[stateName.toLowerCase()] || stateName}
           </div>
         </div>
-        <div className={`${Styles.listItemMetrics} row`}>
-          <div className="col-lg-4 col-md-4">
+        <div className={Styles.listItemMetricsContainer}>
+          <div className={Styles.listItemMetrics}>
             <span className={Styles.value}>{margGrade || '?'}</span>
             <span className={Styles.label}>Marginación social</span>
           </div>
-          <div className="col-lg-4 col-md-4">
+
+          <div className={Styles.listItemMetrics}>
             <span className={Styles.value}>{fmtNum(total)}</span>
             <span className={Styles.label}>Viviendas dañadas</span>
+          </div>
+
+          <div className={Styles.listItemMetrics}>
+            <span className={Styles.value}>{actions}</span>
+            <span className={Styles.label}>Acciones totales</span>
           </div>
         </div>
       </div>

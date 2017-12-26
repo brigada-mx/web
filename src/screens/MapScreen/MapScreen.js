@@ -15,9 +15,19 @@ import { tokenMatch } from 'tools/string'
 import Styles from './MapScreen.css'
 
 
+const compareLocalities = (a, b) => {
+  const { total: ta } = a.meta
+  const { total: tb } = b.meta
+  if (Number.isNaN(ta)) {
+    if (Number.isNaN(tb)) return 0
+    return 1
+  } else if (Number.isNaN(tb)) return -1
+  return tb - ta
+}
+
 const LocalityList = ({ localities, ...rest }) => {
   const maxItems = 250
-  const items = localities.slice(0, maxItems).map((l) => {
+  const items = localities.sort(compareLocalities).slice(0, maxItems).map((l) => {
     const { cvegeo } = l
     return (
       <LocalityListItem
@@ -59,8 +69,7 @@ class MapScreen extends React.Component {
       pathname: '/',
       state: {},
     })
-    getBackoff(this, 'localities', service.getLocalities)
-    getBackoff(this, 'localitiesStatic', service.getLocalitiesStatic)
+    getBackoff(this, 'localities', service.getLocalitiesStatic)
   }
 
   handleStateChange = (e) => {
