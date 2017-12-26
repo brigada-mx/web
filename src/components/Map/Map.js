@@ -27,41 +27,6 @@ class Map extends React.Component {
     this.loaded = false
   }
 
-  damageGrade = (feature) => {
-    const levels = [
-      [10, 'minimal'],
-      [50, 'low'],
-      [250, 'medium'],
-      [1250, 'high'],
-      [Number.MAX_SAFE_INTEGER, 'severe'],
-    ]
-    const { total } = feature.properties
-    if (total === undefined || total === null || total === '' || total === -1) {
-      return 'unknown'
-    }
-    for (const l of levels) {
-      if (total < l[0]) {
-        return l[1]
-      }
-    }
-    return 'unknown'
-  }
-
-  /**
-   * Comparator for localities `a` and `b`, which assigns greater priority to
-   * localities with high "marginación social" and many damaged buildings.
-   */
-  compareLocalities = (a, b) => {
-    const { total: ta } = a.properties
-    const { total: tb } = b.properties
-    const [fa, fb] = [parseFloat(ta), parseFloat(tb)]
-    if (Number.isNaN(fa)) {
-      if (Number.isNaN(fb)) return 0
-      return 1
-    } else if (Number.isNaN(fb)) return -1
-    return fb - fa
-  }
-
   deduplicate = (features, comparatorProperty) => {
     const existingFeatureKeys = {}
     // Because features come from tiled vector data, feature geometries may be split
@@ -79,27 +44,15 @@ class Map extends React.Component {
   }
 
   /**
-   * This is called only once, when data is first loaded from layer.
+   * This is called only once, when data is first loaded.
    */
   handleData = (map, e) => {
-    if (this.props.localities.length > 0) {
+    const { onLoad } = this.props
+    if (e.dataType === 'source' && e.isSourceLoaded && onLoad) {
+      const features = map.querySourceFeatures('features', { sourceLayer: 'estados-15nov-5qk3g7' })
       if (this.loaded) return
       this.loaded = true
-    }
-
-    if (e.dataType === 'source' && e.isSourceLoaded) {
-      const features = map.querySourceFeatures('features', { sourceLayer: 'estados-15nov-5qk3g7' })
-      const localities = this.deduplicate(features, 'cvegeo')
-      localities.sort(this.compareLocalities)
-      for (const l of localities) {
-        l.properties.dmgGrade = this.damageGrade(l)
-
-        l.properties.cvegeoS = l.properties.cvegeo.toString()
-
-        l.properties.cvegeoMuni = l.properties.cvegeoS.substring(0, 5)
-        l.properties.cvegeoState = l.properties.cvegeoS.substring(0, 2)
-      }
-      this.props.onLoad(localities)
+      onLoad(this.deduplicate(features, 'cvegeo'))
     }
   }
 
@@ -127,7 +80,8 @@ class Map extends React.Component {
       url: 'mapbox://kylebebak.a71mofbc',
     }
 
-    const { popup } = this.props
+    const { popup, cvegeoFilter } = this.props
+    const filter = cvegeoFilter ? ['in', 'cvegeo'].concat(cvegeoFilter) : undefined
 
     return (
       <Mapbox
@@ -149,11 +103,7 @@ class Map extends React.Component {
           sourceId="features"
           type="circle"
           sourceLayer="estados-15nov-5qk3g7"
-          filter={['in', 'cvegeo'].concat(
-            this.props.localities.map((l) => {
-              return l.properties.cvegeo
-            })
-          )}
+          filter={filter}
           paint={{
             'circle-radius': {
               property: 'total',
@@ -195,15 +145,16 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
-  localities: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onLoad: PropTypes.func.isRequired,
+  cvegeoFilter: PropTypes.arrayOf(PropTypes.string), // for filtering localities
   popup: PropTypes.any,
+  onLoad: PropTypes.func,
   onClickFeature: PropTypes.func,
   onEnterFeature: PropTypes.func,
   onLeaveFeature: PropTypes.func,
 }
 
 Map.defaultProps = {
+  onLoad: () => {},
   onClickFeature: () => {},
   onEnterFeature: () => {},
   onLeaveFeature: () => {},

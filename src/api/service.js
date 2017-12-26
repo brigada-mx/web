@@ -17,9 +17,15 @@ const service = {
     return sendToApi(`localities/${id}/`)
   },
 
-  getLocalities: async () => {
-    const params = { has_data: true }
+  getLocalities: async (page_size = 250) => {
+    const params = { has_data: true, page_size }
     return sendToApi('localities/', { params })
+  },
+
+  getLocalitiesStatic: async () => {
+    return sendToApi(
+      'https://s3-us-west-2.amazonaws.com/719s/data/localities.json', { isRelative: false }
+    )
   },
 
   getLocalityByCvegeo: async (cvegeo) => {

@@ -45,8 +45,7 @@ module.exports = {
       screens: path.resolve(__dirname, 'src/screens'),
       tools: path.resolve(__dirname, 'src/tools'),
       api: path.resolve(__dirname, 'src/api'),
-      assets: path.resolve(__dirname, 'assets'),
-      styles: path.resolve(__dirname, 'styles'),
+      assets: path.resolve(__dirname, 'dist/assets'),
     },
   },
 }

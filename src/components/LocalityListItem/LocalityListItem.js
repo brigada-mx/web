@@ -53,7 +53,9 @@ const dmgGradeColor = {
 }
 
 const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => {
-  const { locName, stateName, margGrade, total = '?', dmgGrade } = locality.properties
+  const {
+    locality_name: locName, state_name: stateName, meta: { margGrade, total }, dmgGrade,
+  } = locality
 
   const handleClick = () => { onClick(locality) }
   const handleMouseEnter = () => { onMouseEnter(locality) }

@@ -17,28 +17,32 @@ const FilterHeader = (props) => {
   } = props
 
   const stateOptions = () => {
-    const items = _.uniqBy(localities, l => l.properties.cvegeoState)
+    const items = _.uniqBy(localities, l => l.cvegeo_state)
 
     return items.sort((a, b) => {
-      if (a.properties.stateName < b.properties.stateName) return -1
-      if (a.properties.stateName > b.properties.stateName) return 1
+      if (a.state_name < b.state_name) return -1
+      if (a.state_name > b.state_name) return 1
       return 0
     }).map((i) => {
-      const { cvegeoS, stateName } = i.properties
-      return <option key={i.properties.cvegeoState} value={cvegeoS}>{stateName}</option>
+      const { cvegeo, state_name: stateName } = i
+      return <option key={i.cvegeo_state} value={cvegeo}>{stateName}</option>
     })
   }
 
   const muniOptions = () => {
-    const items = _.uniqBy(localities, l => l.properties.cvegeoMuni)
+    const items = _.uniqBy(localities, l => l.cvegeo_municipality)
 
     return items.sort((a, b) => {
-      if (a.properties.munName < b.properties.munName) return -1
-      if (a.properties.munName > b.properties.munName) return 1
+      if (a.municipality_name < b.municipality_name) return -1
+      if (a.municipality_name > b.municipality_name) return 1
       return 0
     }).map((i) => {
-      const { cvegeoS, munName, stateName } = i.properties
-      return <option key={i.properties.cvegeoMuni} value={cvegeoS}>{munName}, {stateName}</option>
+      const { cvegeo, municipality_name: munName, state_name: stateName } = i
+      return (
+        <option key={i.cvegeo_municipality} value={cvegeo}>
+          {munName}, {stateName}
+        </option>
+      )
     })
   }
 
