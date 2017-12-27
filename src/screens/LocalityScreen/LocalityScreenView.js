@@ -6,6 +6,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
+import StackedMetricsBar from 'components/StackedMetricsBar'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DirectionsButton from 'components/DirectionsButton'
 import { dmgGrade, metaByDmgGrade } from 'tools/other'
@@ -83,16 +84,14 @@ class LocalityScreenView extends React.Component {
     console.log(f)
   }
 
-  render() {
-    const { locality, actions, establishments } = this.props
-    const { loading: locLoading, data: locData, error: locError } = locality
+  renderLocalitySection = () => {
+    const { locality: { loading, data, error } } = this.props
 
-    let locSection = null
-    if (locLoading) locSection = <LoadingIndicatorCircle />
-    if (locData) {
+    if (loading) return <LoadingIndicatorCircle />
+    if (data) {
       const {
         name, municipality_name: munName, state_name: stateName, cvegeo, location, meta,
-      } = locData
+      } = data
       const {
         analfabet,
         noPrimary,
@@ -109,7 +108,7 @@ class LocalityScreenView extends React.Component {
         total,
       } = meta
       const { lat, lng } = location
-      const dmgMeta = metaByDmgGrade(dmgGrade(locData))
+      const dmgMeta = metaByDmgGrade(dmgGrade(data))
 
       const barLabels = [
         'Analfabestismo',
@@ -127,7 +126,7 @@ class LocalityScreenView extends React.Component {
         return <div key={i}><span>{barLabels[i]}</span><MetricsBar value={v} max={100} /></div>
       })
 
-      locSection = (
+      return (
         <div>
           <LocalityBreadcrumb
             cvegeo={cvegeo}
@@ -148,16 +147,61 @@ class LocalityScreenView extends React.Component {
         </div>
       )
     }
+    return <LoadingIndicatorCircle />
+  }
 
+  renderEstablishmentsSection = () => {
+    const { establishments: { loading, data, error } } = this.props
+    return null
+    return (
+      <FeatureMap
+        onClickFeature={this.handleClickFeature}
+        onEnterFeature={this.handleEnterFeature}
+        onLeaveFeature={this.handleLeaveFeature}
+      />
+    )
+  }
+
+  renderActionsSection = () => {
+    const { actions: { loading, data, error } } = this.props
+    if (loading) return <LoadingIndicatorCircle />
+
+    const fmtBudget = (b) => { // round to 2 decimal places
+      const millions = Math.round(b / 10000) / 100
+      return `$${millions}M`
+    }
+
+    if (data) {
+      const { results: actions } = data
+      let budget = 0
+      const orgs = {}
+      const status = {}
+      for (const a of actions) {
+        budget += (a.budget || 0)
+        orgs[a.organization_id] = true
+      }
+
+      const labels = ['Por iniciar', 'En progreso', 'Completado']
+
+      return (
+        <div>
+          <div>ACCIONES DE RECONSTRUCCIÓN {actions.length}</div>
+          <div>ORGANIZACIONES COMPROMETIDAS {Object.keys(orgs).length}</div>
+          <div>INVERSIÓN ESTIMADA {fmtBudget(budget)}</div>
+          <StackedMetricsBar labels={labels} values={[1, 0, 3]} />
+        </div>
+      )
+    }
+
+    return <LoadingIndicatorCircle />
+  }
+
+  render() {
     return (
       <div>
-        {locSection}
-
-        <FeatureMap
-          onClickFeature={this.handleClickFeature}
-          onEnterFeature={this.handleEnterFeature}
-          onLeaveFeature={this.handleLeaveFeature}
-        />
+        {this.renderLocalitySection()}
+        {this.renderEstablishmentsSection()}
+        {this.renderActionsSection()}
       </div>
     )
   }

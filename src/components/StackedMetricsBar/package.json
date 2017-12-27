@@ -1,0 +1,6 @@
+{
+  "name": "StackedMetricsBar",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./StackedMetricsBar.js"
+}

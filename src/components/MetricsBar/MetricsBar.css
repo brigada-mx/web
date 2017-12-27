@@ -1,5 +1,5 @@
 @value colors: "src/colors.css";
-@value brandMetricGreen from colors;
+@value brandGreen from colors;
 @value brandMetricGrey from colors;
 
 .container {
@@ -16,7 +16,7 @@
 }
 
 .green {
-  background-color: brandMetricGreen;
+  background-color: brandGreen;
 }
 
 .grey {

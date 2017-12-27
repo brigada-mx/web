@@ -1,0 +1,24 @@
+@value colors: "src/colors.css";
+@value brandGreen from colors;
+
+.barsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: row;
+  height: 4px;
+  width: 60%;
+  border-radius: 1px;
+  justify-content: center;
+  padding: 8px 4px;
+  background-clip: content-box;
+}
+
+.bar {
+  background-color: brandGreen;
+  margin: 0 1px;
+  border-radius: 2px;
+}
+
+.label {
+  color: brandGreen;
+}
