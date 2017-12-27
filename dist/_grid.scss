@@ -1,5 +1,5 @@
 // _grid.scss
-$columns: 12;
+// $columns: 12;
 $gutter-width: 3%;
 $gutter-compensation: ( $gutter-width / 2 * -1 );
 $half-gutter-width: ( $gutter-width / 2);
@@ -7,11 +7,6 @@ $screen-xs-min: 30em;
 $screen-sm-min: 48em;
 $screen-md-min: 62em;
 $screen-lg-min: 75em;
-$columns : 12;
-
-.wrapper {
-  padding: 0 25px;
-}
 
 .row {
   box-sizing: border-box;
@@ -37,11 +32,6 @@ $columns : 12;
   @include flexbox;
 }
 
-@import 'grid/xs';
-@import 'grid/sm';
-@import 'grid/md';
-@import 'grid/lg';
-
 .alpha {
   padding-left: 0;
 }
@@ -49,3 +39,8 @@ $columns : 12;
 .omega {
   padding-right: 0;
 }
+
+@import 'grid/xs';
+@import 'grid/sm';
+@import 'grid/md';
+@import 'grid/lg';

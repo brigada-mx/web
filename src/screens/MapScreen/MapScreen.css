@@ -24,3 +24,14 @@
   left: 50vw;
   top: 20vh;
 }
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .map {
+    height: calc(100vh - 251px);
+  }
+  .listContainer {
+    display: flex;
+    flex-direction: row;
+    height: 186px;
+  }
+}

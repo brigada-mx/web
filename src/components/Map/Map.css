@@ -4,3 +4,10 @@
 .zoomControlContainer {
   box-shadow: 0px 20px 60px 0px rgba(37, 38, 50, 0.15) !important;
 }
+
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .zoomControlContainer {
+    display: none !important;
+  }
+}

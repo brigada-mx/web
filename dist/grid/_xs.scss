@@ -1,37 +1,6 @@
 // _xs.scss
 @media screen and (max-width: 767px) and (min-width: 320px) {
 
-// HEADER
-
-div a#logo {
-  border-right: none;
-}
-
-// MAP
-
-div#map {
-  width: 100%;
-}
-
-div.mapboxgl-ctrl-top-left .mapboxgl-ctrl {
-  display: none;
-}
-
-div.legend {
-  width: 100%;
-  left: 0px;
-  bottom: 0px;
-  @include box-shadow(-15px,-15px,30px,0,37,38,50,0.04);
-}
-
-div.legend-header {
-  margin-bottom: 6px;
-}
-
-div.legend-item {
-  margin-bottom: 3px;
-}
-
 // GENERAL
 
 .container {

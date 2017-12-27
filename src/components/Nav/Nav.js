@@ -10,15 +10,13 @@ import Styles from './Nav.css'
 const Nav = (props) => {
   const selected = { color: Colors.brandGreen }
   return (
-    <nav className={`${Styles.container} wrapper row middle`}>
+    <nav className={`${Styles.container} wrapper row middle sm-hidden xs-hidden`}>
 
-      <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2">
-        <a className={Styles.logo} href="/">
-          <img src={LogoImg} width="74px" height="auto" alt="Logo" />
-        </a>
+      <div className="col-lg-1 col-md-1">
+        <a href="/"><img src={LogoImg} width="74px" height="auto" alt="Logo" /></a>
       </div>
 
-      <div className="col-lg-11 col-md-11 col-sm-9 col-xs-12 end-lg end-md">
+      <div className="col-lg-11 col-md-11 end-lg end-md">
         <div className={Styles.links}>
           <NavLink activeStyle={selected} exact to="/">COMUNIDADES</NavLink>
           <NavLink activeStyle={selected} to="/organizaciones">ORGANIZACIONES</NavLink>

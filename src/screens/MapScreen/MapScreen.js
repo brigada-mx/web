@@ -141,7 +141,7 @@ class MapScreen extends React.Component {
           onKeyUp={this.handleLocalitySearchKeyUp}
         />
         <div className={`${Styles.map} row`}>
-          <div className="col-lg-3 col-md-3 col-sm-2 col-xs-2">
+          <div className="col-lg-3 col-md-3 col-sm-8 last-sm col-xs-8">
             <LocalityList
               localities={localities}
               onClick={this.handleListItemClickFeature}
@@ -149,7 +149,7 @@ class MapScreen extends React.Component {
               onMouseLeave={this.handleListItemLeaveFeature}
             />
           </div>
-          <div className="col-lg-9 col-md-9 col-sm-2 col-xs-2">
+          <div className="col-lg-9 col-md-9 col-sm-8 col-xs-8">
             <Map
               cvegeoFilter={data.results && localities.map(l => l.cvegeo)}
               popup={_popup}

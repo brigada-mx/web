@@ -1,12 +1,14 @@
 @value colors: "src/colors.css";
-@value strongShadow from colors;
+@value strongShadow, brandOffWhite from colors;
 
 .container {
-  display: inline-block;
   position: absolute;
-  width: 152px;
+  display: flex;
+  box-sizing: border-box;
   right: 26px;
   bottom: 26px;
+  flex-direction: column;
+  width: 152px;
   padding: 15px 15px 9px 15px;
   border-radius: 2px;
   box-shadow: 0 40px 100px 0 strongShadow;
@@ -19,6 +21,7 @@
   line-height: 20px;
   letter-spacing: 1.26px;
   color: #434346;
+  margin-bottom: 7px;
 }
 
 .legendItem {
@@ -26,7 +29,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 11px 0;
+  margin: 6px 0;
 }
 
 .legendItem div {
@@ -53,3 +56,32 @@
   font-size: 13px;
   color: #141418;
 }
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    justify-content: flex-end;
+    top: 0;
+    right: unset;
+    bottom: unset;
+    width: 100%;
+    z-index: 5;
+    border-top: 1px solid brandOffWhite;
+    padding: 15px 20px 14px 20px;
+  }
+  .title {
+    display: inline-flex;
+    margin: 0;
+    line-height: 25px;
+  }
+  .legendItem {
+    display: inline-flex;
+  }
+  .circle {
+    margin: 0 6px 2px 15px;
+  }
+  .label {
+    margin-right: 4px;
+  }
+}
+
