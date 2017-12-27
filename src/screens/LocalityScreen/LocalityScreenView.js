@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom'
 import FeatureMap from 'components/FeatureMap'
 import Bar from 'components/Bar'
 import LoadingIndicator from 'components/LoadingIndicator'
+import DirectionsButton from 'components/DirectionsButton'
 import Styles from './LocalityScreenView.css'
 
 
@@ -56,14 +57,21 @@ class LocalityScreenView extends React.Component {
 
     let locSection = null
     if (locData) {
-      const { name, municipality_name, state_name, cvegeo } = locData
+      const { name, municipality_name: munName, state_name: stateName, cvegeo, location } = locData
+      const { lat, lng } = location
       locSection = (
         <div>
-          {LocalityBreadcrumb({ cvegeo, munName: municipality_name, stateName: state_name, name })}
+          <LocalityBreadcrumb
+            cvegeo={cvegeo}
+            munName={munName}
+            stateName={stateName}
+            name={name}
+          />
           <Bar
             value={25}
             max={100}
           />
+          <DirectionsButton lat={lat} lng={lng} />
         </div>
       )
     }

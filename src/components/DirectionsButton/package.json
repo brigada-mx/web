@@ -1,0 +1,6 @@
+{
+  "name": "DirectionsButton",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./DirectionsButton.js"
+}

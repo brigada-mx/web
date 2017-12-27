@@ -1,0 +1,9 @@
+@value colors: "src/colors.css";
+@value brandGreen from colors;
+
+.button {
+  display: block;
+  width: 5vh;
+  height: 5vh;
+  background-color: brandGreen;
+}
