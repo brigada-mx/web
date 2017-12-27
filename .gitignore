@@ -6,3 +6,4 @@ dist/*.css
 sandbox/*
 .DS_Store
 requester.pyr
+src/data/*

@@ -15,10 +15,20 @@ import { tokenMatch } from 'tools/string'
 import Styles from './MapScreen.css'
 
 
+const compareLocalities = (a, b) => {
+  const { total: ta } = a.meta
+  const { total: tb } = b.meta
+  if (Number.isNaN(ta)) {
+    if (Number.isNaN(tb)) return 0
+    return 1
+  } else if (Number.isNaN(tb)) return -1
+  return tb - ta
+}
+
 const LocalityList = ({ localities, ...rest }) => {
   const maxItems = 250
-  const items = localities.slice(0, maxItems).map((l) => {
-    const { cvegeo } = l.properties
+  const items = localities.sort(compareLocalities).slice(0, maxItems).map((l) => {
+    const { cvegeo } = l
     return (
       <LocalityListItem
         key={cvegeo}
@@ -41,9 +51,11 @@ class MapScreen extends React.Component {
 
     const { location } = props
     this.state = {
-      localities: [],
+      localities: {
+        loading: true,
+      },
       locSearch: '',
-      cvegeo: location.state ? location.state.cvegeo : '',
+      cvegeo: location.state ? location.state.cvegeo || '' : '',
       marg: '',
       popup: null,
     }
@@ -57,11 +69,7 @@ class MapScreen extends React.Component {
       pathname: '/',
       state: {},
     })
-    getBackoff(this, 'apiLocalities', service.getLocalities)
-  }
-
-  handleLoad = (localities) => {
-    this.setState({ localities })
+    getBackoff(this, 'localities', service.getLocalitiesStatic)
   }
 
   handleStateChange = (e) => {
@@ -104,26 +112,28 @@ class MapScreen extends React.Component {
     this.setState({ locSearch })
   }
 
-  filterLocalities = () => {
-    const { localities, locSearch, cvegeo, marg } = this.state
+  filterLocalities = (results) => {
+    if (!results) return []
+    const { locSearch, cvegeo: cvegeoSearch, marg } = this.state
 
-    return localities.filter((l) => {
-      const { locName, stateName, margGrade, cvegeoS } = l.properties
-      const matchesSearch = tokenMatch(`${locName} ${stateName}`, locSearch)
-      const matchesCvegeo = !cvegeo || cvegeoS.startsWith(cvegeo)
+    return results.filter((l) => {
+      const { name, state_name: stateName, cvegeo, meta: { margGrade } } = l
+      const matchesSearch = tokenMatch(`${name} ${stateName}`, locSearch)
+      const matchesCvegeo = !cvegeo || cvegeo.startsWith(cvegeoSearch)
       const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
       return matchesSearch && matchesCvegeo && matchestMarg
     })
   }
 
   render() {
-    const localities = this.filterLocalities()
-    const { popup } = this.state
+    const { popup, localities: { data = {}, loading, error } } = this.state
+
     const _popup = popup ? <LocalityPopup locality={popup} /> : null
+    const localities = this.filterLocalities(data.results)
     return (
       <div>
         <FilterHeader
-          localities={this.state.localities}
+          localities={data.results || []}
           numResults={localities.length}
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
@@ -141,14 +151,13 @@ class MapScreen extends React.Component {
           </div>
           <div className="col-lg-9 col-md-9 col-sm-8 col-xs-8">
             <Map
-              localities={localities}
-              onLoad={this.handleLoad}
+              cvegeoFilter={data.results && localities.map(l => l.cvegeo)}
               popup={_popup}
               onClickFeature={this.handleClickFeature}
               onEnterFeature={this.handleEnterFeature}
               onLeaveFeature={this.handleLeaveFeature}
             />
-            <LocalityLegend localities={localities} />
+            {/* <LocalityLegend localities={localities} /> */}
           </div>
         </div>
       </div>
