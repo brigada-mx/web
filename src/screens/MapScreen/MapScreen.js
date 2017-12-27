@@ -54,6 +54,7 @@ class MapScreen extends React.Component {
       localities: {
         loading: true,
       },
+      localitiesByCvegeo: {},
       locSearch: '',
       cvegeo: location.state ? location.state.cvegeo || '' : '',
       marg: '',
@@ -69,7 +70,37 @@ class MapScreen extends React.Component {
       pathname: '/',
       state: {},
     })
-    getBackoff(this, 'localities', service.getLocalitiesStatic)
+
+    const dmgGrade = (locality) => {
+      const levels = [
+        [10, 'minimal'],
+        [50, 'low'],
+        [250, 'medium'],
+        [1250, 'high'],
+        [Number.MAX_SAFE_INTEGER, 'severe'],
+      ]
+      const { total } = locality.meta
+      if (total === undefined || total === null || total === '' || total === -1) {
+        return 'unknown'
+      }
+      for (const l of levels) {
+        if (total < l[0]) {
+          return l[1]
+        }
+      }
+      return 'unknown'
+    }
+
+    getBackoff(this, 'localities', service.getLocalitiesStatic, {
+      onData: (data) => {
+        const localitiesByCvegeo = {}
+        data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
+          localitiesByCvegeo[r.cvegeo] = r
+          return { ...r, dmgGrade: dmgGrade(r) }
+        })
+        this.setState({ localitiesByCvegeo })
+      },
+    })
   }
 
   handleStateChange = (e) => {
@@ -89,7 +120,8 @@ class MapScreen extends React.Component {
   }
 
   handleEnterFeature = (feature) => {
-    this.setState({ popup: feature })
+    const { localitiesByCvegeo } = this.state
+    this.setState({ popup: localitiesByCvegeo[feature.properties.cvegeo] })
   }
 
   handleLeaveFeature = () => {

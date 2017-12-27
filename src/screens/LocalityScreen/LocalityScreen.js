@@ -24,9 +24,9 @@ class LocalityScreen extends React.Component {
   componentDidMount() {
     this._mounted = true
     const { id } = this.props
-    getBackoff(this, 'locality', service.getLocality, id)
-    getBackoff(this, 'actions', service.getLocalityActions, id)
-    getBackoff(this, 'establishments', service.getLocalityEstablishments, id, 2000)
+    getBackoff(this, 'locality', () => service.getLocality(id))
+    getBackoff(this, 'actions', () => service.getLocalityActions(id))
+    getBackoff(this, 'establishments', () => service.getLocalityEstablishments(id, 2000))
   }
 
   componentWillUnmount() {

@@ -42,12 +42,19 @@ const service = {
 export const getBackoff = async (...args) => {
   let count = 0
   let delay = 1000
-  const inner = async (self, stateKey, getter, ...getterArgs) => {
-    const { data, error, exception } = await getter(...getterArgs)
-    if (data) self.setState({ [stateKey]: { loading: false, data, error: undefined } })
-    if (error) self.setState({ [stateKey]: { loading: false, error } })
+  const inner = async (self, stateKey, getter, { onData, onError, onException } = {}) => {
+    const { data, error, exception } = await getter()
+    if (data) {
+      if (onData) onData(data)
+      self.setState({ [stateKey]: { loading: false, data, error: undefined } })
+    }
+    if (error) {
+      if (onError) onError(error)
+      self.setState({ [stateKey]: { loading: false, error } })
+    }
     if (exception && self._mounted) {
-      setTimeout(() => inner(self, stateKey, getter, ...getterArgs), delay)
+      if (onException) onException(exception)
+      setTimeout(() => inner(self, stateKey, getter, { onData, onError, onException }), delay)
       if (count < 4) delay *= 2
       count += 1
     }
