@@ -12,6 +12,7 @@ import LocalityPopup from 'components/Map/LocalityPopup'
 import LocalityLegend from 'components/Map/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
+import { dmgGrade } from 'tools/other'
 import Styles from './MapScreen.css'
 
 
@@ -70,26 +71,6 @@ class MapScreen extends React.Component {
       pathname: '/',
       state: {},
     })
-
-    const dmgGrade = (locality) => {
-      const levels = [
-        [10, 'minimal'],
-        [50, 'low'],
-        [250, 'medium'],
-        [1250, 'high'],
-        [Number.MAX_SAFE_INTEGER, 'severe'],
-      ]
-      const { total } = locality.meta
-      if (total === undefined || total === null || total === '' || total === -1) {
-        return 'unknown'
-      }
-      for (const l of levels) {
-        if (total < l[0]) {
-          return l[1]
-        }
-      }
-      return 'unknown'
-    }
 
     getBackoff(this, 'localities', service.getLocalitiesStatic, {
       onData: (data) => {

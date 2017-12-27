@@ -2,11 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
 
 import FeatureMap from 'components/FeatureMap'
-import Bar from 'components/Bar'
+import MetricsBar from 'components/MetricsBar'
 import LoadingIndicator from 'components/LoadingIndicator'
 import DirectionsButton from 'components/DirectionsButton'
+import { dmgGrade, metaByDmgGrade } from 'tools/other'
+import Colors from 'src/colors'
 import Styles from './LocalityScreenView.css'
 
 
@@ -34,6 +37,35 @@ LocalityBreadcrumb.propTypes = {
   name: PropTypes.string.isRequired,
 }
 
+const DmgBarChart = ({ destroyed, habit, notHabit }) => {
+  const data = [
+    { name: 'PÉRDIDA TOTAL', num: destroyed },
+    { name: 'HABITABLE', num: habit },
+    { name: 'INHABITABLE', num: notHabit },
+  ]
+
+  return (
+    <BarChart
+      width={600}
+      height={300}
+      data={data}
+      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+    >
+      <XAxis dataKey="name" />
+      <YAxis />
+      <CartesianGrid strokeDasharray="3 3" />
+      <Tooltip />
+      <Bar dataKey="num" fill={Colors.brandGreen} />
+    </BarChart>
+  )
+}
+
+DmgBarChart.propTypes = {
+  destroyed: PropTypes.number.isRequired,
+  habit: PropTypes.number.isRequired,
+  notHabit: PropTypes.number.isRequired,
+}
+
 class LocalityScreenView extends React.Component {
   constructor(props) {
     super(props)
@@ -57,8 +89,43 @@ class LocalityScreenView extends React.Component {
 
     let locSection = null
     if (locData) {
-      const { name, municipality_name: munName, state_name: stateName, cvegeo, location } = locData
+      const {
+        name, municipality_name: munName, state_name: stateName, cvegeo, location, meta,
+      } = locData
+      const {
+        analfabet,
+        noPrimary,
+        noToilet,
+        noElec,
+        noPlumb,
+        noFridge,
+        dirtFloor,
+        roomOccup,
+        margGrade,
+        destroyed,
+        habit,
+        notHabit,
+        total,
+      } = meta
       const { lat, lng } = location
+      const dmgMeta = metaByDmgGrade[dmgGrade(locData)]
+
+      const barLabels = [
+        'Analfabestismo',
+        'Primaria incompleta',
+        'Falta excusado',
+        'Falta electricidad',
+        'Falta agua entubada',
+        'Falta refrigerador',
+        'Piso de tierra',
+        'Ocupantes por cuarto',
+      ]
+      const bars = [
+        analfabet, noPrimary, noToilet, noElec, noPlumb, noFridge, dirtFloor, roomOccup,
+      ].map((v, i) => {
+        return <div key={i}><span>{barLabels[i]}</span><MetricsBar value={v} max={100} /></div>
+      })
+
       locSection = (
         <div>
           <LocalityBreadcrumb
@@ -67,11 +134,16 @@ class LocalityScreenView extends React.Component {
             stateName={stateName}
             name={name}
           />
-          <Bar
-            value={25}
-            max={100}
-          />
+          <span style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
+          <div>{name}, {munName}, {stateName}</div>
           <DirectionsButton lat={lat} lng={lng} />
+
+          <div>VIVIENDAS DAÑADAS {total}</div>
+          <div>MARGINACIÓN SOCIAL {margGrade}</div>
+
+          <DmgBarChart {...{ destroyed, habit, notHabit }} />
+          <div className={Styles.metricsContainer}>{bars}</div>
+
         </div>
       )
     }

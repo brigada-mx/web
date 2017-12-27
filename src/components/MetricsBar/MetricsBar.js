@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Styles from './Bar.css'
+import Styles from './MetricsBar.css'
 
 
-class Bar extends React.Component {
+class MetricsBar extends React.Component {
   state = {
     modalVisible: false,
   }
@@ -60,10 +60,10 @@ class Bar extends React.Component {
   }
 }
 
-Bar.propTypes = {
+MetricsBar.propTypes = {
   value: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   style: PropTypes.object,
 }
 
-export default Bar
+export default MetricsBar

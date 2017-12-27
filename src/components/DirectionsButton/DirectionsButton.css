@@ -2,8 +2,11 @@
 @value brandGreen from colors;
 
 .button {
-  display: block;
-  width: 5vh;
-  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 8vh;
+  height: 8vh;
   background-color: brandGreen;
+  color: white;
 }

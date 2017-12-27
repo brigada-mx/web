@@ -13,6 +13,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-mapbox-gl": "^3.4.0",
+    "recharts": "^1.0.0-beta.7",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
