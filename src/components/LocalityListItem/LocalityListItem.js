@@ -7,7 +7,7 @@ import Colors from 'src/colors'
 import Styles from './LocalityListItem.css'
 
 
-const stateAbbreviation = {
+const abbreviationByStateName = {
   'aguascalientes': 'AG',
   'baja california': 'BC',
   'baja california sur': 'BS',
@@ -43,7 +43,7 @@ const stateAbbreviation = {
   'zacatecas': 'ZA',
 }
 
-const dmgGradeColor = {
+const colorByDmgGrade = {
   severe: Colors.severe,
   high: Colors.high,
   medium: Colors.medium,
@@ -67,13 +67,13 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={Styles.listItem}
-      style={{ borderColor: dmgGradeColor[dmgGrade] || Colors.unknown }}
+      style={{ borderColor: colorByDmgGrade[dmgGrade] || Colors.unknown }}
     >
       <div className={Styles.listItemWrapper}>
         <div className={`${Styles.listItemHeader}`}>
           <div className={Styles.name}>{name},</div>
           <div className={Styles.stateName}>{'\u00A0'}
-            {stateAbbreviation[stateName.toLowerCase()] || stateName}
+            {abbreviationByStateName[stateName.toLowerCase()] || stateName}
           </div>
         </div>
         <div className={Styles.listItemMetricsContainer}>

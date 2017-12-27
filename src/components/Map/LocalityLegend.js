@@ -7,7 +7,7 @@ import { fmtNum } from 'tools/string'
 import Styles from './LocalityLegend.css'
 
 
-const damageGradeMeta = {
+const metaByDmgGrade = {
   unknown: { label: 'SIN DATOS', color: '#939AA1' },
   minimal: { label: 'MÍNIMO', color: '#ff0' },
   low: { label: 'MENOR', color: '#db0' },
@@ -30,7 +30,7 @@ const LocalityLegend = ({ localities }) => {
     counts[l.properties.dmgGrade] += 1
   }
   const items = Object.keys(counts).map((key) => {
-    const { label, color } = damageGradeMeta[key]
+    const { label, color } = metaByDmgGrade[key]
     return (
       <div key={key} className={Styles.legendItem}>
         <div>

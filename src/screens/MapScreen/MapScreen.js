@@ -54,7 +54,7 @@ class MapScreen extends React.Component {
       localities: {
         loading: true,
       },
-      localitiesByCvegeo: {},
+      localityByCvegeo: {},
       locSearch: '',
       cvegeo: location.state ? location.state.cvegeo || '' : '',
       marg: '',
@@ -93,12 +93,12 @@ class MapScreen extends React.Component {
 
     getBackoff(this, 'localities', service.getLocalitiesStatic, {
       onData: (data) => {
-        const localitiesByCvegeo = {}
+        const localityByCvegeo = {}
         data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
-          localitiesByCvegeo[r.cvegeo] = r
+          localityByCvegeo[r.cvegeo] = r
           return { ...r, dmgGrade: dmgGrade(r) }
         })
-        this.setState({ localitiesByCvegeo })
+        this.setState({ localityByCvegeo })
       },
     })
   }
@@ -116,12 +116,14 @@ class MapScreen extends React.Component {
   }
 
   handleClickFeature = (feature) => {
-    this.props.history.push(`/comunidades/c/${feature.properties.cvegeo}`)
+    const locality = this.state.localityByCvegeo[feature.properties.cvegeo]
+    if (!locality) return
+    this.props.history.push(`/comunidades/${locality.id}`)
   }
 
   handleEnterFeature = (feature) => {
-    const { localitiesByCvegeo } = this.state
-    this.setState({ popup: localitiesByCvegeo[feature.properties.cvegeo] })
+    const { localityByCvegeo } = this.state
+    this.setState({ popup: localityByCvegeo[feature.properties.cvegeo] })
   }
 
   handleLeaveFeature = () => {
@@ -129,7 +131,7 @@ class MapScreen extends React.Component {
   }
 
   handleListItemClickFeature = (feature) => {
-    this.props.history.push(`/comunidades/c/${feature.properties.cvegeo}`)
+    this.props.history.push(`/comunidades/${feature.id}`)
   }
 
   handleListItemEnterFeature = (feature) => {
