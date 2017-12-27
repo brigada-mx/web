@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
+import moment from 'moment'
 
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
@@ -152,7 +153,6 @@ class LocalityScreenView extends React.Component {
 
   renderEstablishmentsSection = () => {
     const { establishments: { loading, data, error } } = this.props
-    return null
     return (
       <FeatureMap
         onClickFeature={this.handleClickFeature}
@@ -175,8 +175,14 @@ class LocalityScreenView extends React.Component {
       const { results: actions } = data
       let budget = 0
       const orgs = {}
-      const status = {}
+      const status = [0, 0, 0]
+
+      const date = moment().format('YYYY-MM-DD')
       for (const a of actions) {
+        const { start_date: startDate, end_date: endDate } = a
+        if (startDate || startDate < date) status[0] += 1
+        else if (!endDate || endDate <= date) status[1] += 1
+        else status[2] += 1
         budget += (a.budget || 0)
         orgs[a.organization_id] = true
       }
@@ -188,7 +194,7 @@ class LocalityScreenView extends React.Component {
           <div>ACCIONES DE RECONSTRUCCIÓN {actions.length}</div>
           <div>ORGANIZACIONES COMPROMETIDAS {Object.keys(orgs).length}</div>
           <div>INVERSIÓN ESTIMADA {fmtBudget(budget)}</div>
-          <StackedMetricsBar labels={labels} values={[1, 0, 3]} />
+          <StackedMetricsBar labels={labels} values={status} />
         </div>
       )
     }
