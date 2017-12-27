@@ -38,7 +38,6 @@ const LocalityList = ({ localities, ...rest }) => {
       />
     )
   })
-  if (items.length === 0) return <LoadingIndicatorCircle classNameCustom={Styles.loader} />
   return <div className={Styles.listContainer}>{items}</div>
 }
 
@@ -157,12 +156,15 @@ class MapScreen extends React.Component {
         />
         <div className={`${Styles.map} row`}>
           <div className="col-lg-3 col-md-3 col-sm-8 last-sm col-xs-8">
-            <LocalityList
-              localities={localities}
-              onClick={this.handleListItemClickFeature}
-              onMouseEnter={this.handleListItemEnterFeature}
-              onMouseLeave={this.handleListItemLeaveFeature}
-            />
+            {loading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
+            {!loading &&
+              <LocalityList
+                localities={localities}
+                onClick={this.handleListItemClickFeature}
+                onMouseEnter={this.handleListItemEnterFeature}
+                onMouseLeave={this.handleListItemLeaveFeature}
+              />
+            }
           </div>
           <div className="col-lg-9 col-md-9 col-sm-8 col-xs-8">
             <Map
@@ -172,7 +174,7 @@ class MapScreen extends React.Component {
               onEnterFeature={this.handleEnterFeature}
               onLeaveFeature={this.handleLeaveFeature}
             />
-            {/* <LocalityLegend localities={localities} /> */}
+            <LocalityLegend localities={localities} />
           </div>
         </div>
       </div>

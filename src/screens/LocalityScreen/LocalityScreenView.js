@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
-import LoadingIndicator from 'components/LoadingIndicator'
+import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DirectionsButton from 'components/DirectionsButton'
 import { dmgGrade, metaByDmgGrade } from 'tools/other'
 import Colors from 'src/colors'
@@ -40,14 +40,14 @@ LocalityBreadcrumb.propTypes = {
 const DmgBarChart = ({ destroyed, habit, notHabit }) => {
   const data = [
     { name: 'PÉRDIDA TOTAL', num: destroyed },
-    { name: 'HABITABLE', num: habit },
-    { name: 'INHABITABLE', num: notHabit },
+    { name: 'PARCIAL (HABITABLE)', num: habit },
+    { name: 'PARCIAL (INHABITABLE)', num: notHabit },
   ]
 
   return (
     <BarChart
-      width={600}
-      height={300}
+      width={400}
+      height={200}
       data={data}
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
     >
@@ -88,6 +88,7 @@ class LocalityScreenView extends React.Component {
     const { loading: locLoading, data: locData, error: locError } = locality
 
     let locSection = null
+    if (locLoading) locSection = <LoadingIndicatorCircle />
     if (locData) {
       const {
         name, municipality_name: munName, state_name: stateName, cvegeo, location, meta,
@@ -108,7 +109,7 @@ class LocalityScreenView extends React.Component {
         total,
       } = meta
       const { lat, lng } = location
-      const dmgMeta = metaByDmgGrade[dmgGrade(locData)]
+      const dmgMeta = metaByDmgGrade(dmgGrade(locData))
 
       const barLabels = [
         'Analfabestismo',

@@ -18,11 +18,14 @@ export const dmgGrade = (locality) => {
   return 'unknown'
 }
 
-export const metaByDmgGrade = {
-  unknown: { label: 'SIN DATOS', labelFem: 'SIN DATOS', color: '#939AA1' },
-  minimal: { label: 'MÍNIMO', labelFem: 'MÍNIMA', color: '#ff0' },
-  low: { label: 'MENOR', labelFem: 'MENOR', color: '#db0' },
-  medium: { label: 'MEDIO', labelFem: 'MEDIA', color: '#d80' },
-  high: { label: 'GRAVE', labelFem: 'GRAVE', color: '#d40' },
-  severe: { label: 'MUY GRAVE', labelFem: 'MUY GRAVE', color: '#f00' },
+export const metaByDmgGrade = (grade) => {
+  const lookup = {
+    unknown: { label: 'SIN DATOS', labelFem: 'SIN DATOS', color: '#939AA1' },
+    minimal: { label: 'MÍNIMO', labelFem: 'MÍNIMA', color: '#ff0' },
+    low: { label: 'MENOR', labelFem: 'MENOR', color: '#db0' },
+    medium: { label: 'MEDIO', labelFem: 'MEDIA', color: '#d80' },
+    high: { label: 'GRAVE', labelFem: 'GRAVE', color: '#d40' },
+    severe: { label: 'MUY GRAVE', labelFem: 'MUY GRAVE', color: '#f00' },
+  }
+  return lookup[grade] || lookup.unknown
 }

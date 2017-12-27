@@ -17,10 +17,10 @@ const LocalityLegend = ({ localities }) => {
   }
 
   for (const l of localities) {
-    counts[l.properties.dmgGrade] += 1
+    counts[l.dmgGrade] += 1
   }
   const items = Object.keys(counts).map((key) => {
-    const { label, color } = metaByDmgGrade[key]
+    const { label, color } = metaByDmgGrade(key)
     return (
       <div key={key} className={Styles.legendItem}>
         <div>
