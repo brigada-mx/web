@@ -49,7 +49,7 @@ class Map extends React.Component {
   handleData = (map, e) => {
     const { onLoad } = this.props
     if (e.dataType === 'source' && e.isSourceLoaded && onLoad) {
-      const features = map.querySourceFeatures('features', { sourceLayer: 'estados-15nov-5qk3g7' })
+      const features = map.querySourceFeatures('features', { sourceLayer: 'tileset-2017-12-26-6oh1br' })
       if (this.loaded) return
       this.loaded = true
       onLoad(this.deduplicate(features, 'cvegeo'))
@@ -77,11 +77,17 @@ class Map extends React.Component {
   render() {
     const sourceOptions = {
       type: 'vector',
-      url: 'mapbox://kylebebak.a71mofbc',
+      url: 'mapbox://kylebebak.3gkltrqb',
     }
 
     const { popup, cvegeoFilter } = this.props
-    const filter = cvegeoFilter ? ['in', 'cvegeo'].concat(cvegeoFilter) : undefined
+    let filter
+    if (cvegeoFilter) { // this is necessary because mapbox casts any valid string to an int
+      filter = ['in', 'cvegeo'].concat(cvegeoFilter.map((v) => {
+        if (v.startsWith('0')) return v
+        return Number.parseInt(v, 10)
+      }))
+    }
 
     return (
       <Mapbox
@@ -102,7 +108,7 @@ class Map extends React.Component {
           id="features"
           sourceId="features"
           type="circle"
-          sourceLayer="estados-15nov-5qk3g7"
+          sourceLayer="tileset-2017-12-26-6oh1br"
           filter={filter}
           paint={{
             'circle-radius': {
