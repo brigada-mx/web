@@ -4,16 +4,28 @@ import sendToApi from './request'
 
 const service = {
   getLocalityActions: async (locality_id, page_size = 250) => {
+    // DELETE THIS
+    return sendToApi(
+      'https://s3-us-west-2.amazonaws.com/719s/test-data/actions.json', { isRelative: false }
+    )
     const params = { locality_id, page_size }
     return sendToApi('actions/', { params })
   },
 
   getLocalityEstablishments: async (locality_id, page_size = 250) => {
+    // DELETE THIS
+    return sendToApi(
+      'https://s3-us-west-2.amazonaws.com/719s/test-data/establishments.json', { isRelative: false }
+    )
     const params = { locality_id, page_size, is_categorized: true }
     return sendToApi('establishments/', { params })
   },
 
   getLocality: async (id) => {
+    // DELETE THIS
+    return sendToApi(
+      'https://s3-us-west-2.amazonaws.com/719s/test-data/locality.json', { isRelative: false }
+    )
     return sendToApi(`localities/${id}/`)
   },
 
