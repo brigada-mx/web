@@ -77,19 +77,19 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
           </div>
         </div>
         <div className={Styles.listItemMetricsContainer}>
-          <div className={Styles.listItemMetrics}>
+          <div className={`${Styles.listItemMetrics} ${Styles.marg}`}>
             <span className={Styles.value}>{margGrade || '?'}</span>
             <span className={Styles.label}>Marginación social</span>
           </div>
 
-          <div className={Styles.listItemMetrics}>
+          <div className={`${Styles.listItemMetrics} ${Styles.dmg}`}>
             <span className={Styles.value}>{fmtNum(total)}</span>
             <span className={Styles.label}>Viviendas dañadas</span>
           </div>
 
-          <div className={Styles.listItemMetrics}>
+          <div className={`${Styles.listItemMetrics} ${Styles.act}`}>
             <span className={Styles.value}>{actions}</span>
-            <span className={Styles.label}>Acciones totales</span>
+            <span className={Styles.label}>Acciones registradas</span>
           </div>
         </div>
       </div>
