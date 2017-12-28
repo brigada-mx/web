@@ -35,7 +35,7 @@ class FeatureMap extends React.Component {
       coordinates,
     } = this.props
 
-    const markers = features.map((f) => {
+    const markers = features.map((f, i) => {
       const { location: { lat, lng } } = f
       return (
         <Feature
@@ -44,14 +44,16 @@ class FeatureMap extends React.Component {
           onClick={() => onClickFeature(f)}
           onMouseEnter={() => onEnterFeature(f)}
           onMouseLeave={() => onLeaveFeature(f)}
-          properties={{}}
+          properties={{
+            image: i % 2 === 0 ? 'airfield-red' : 'buy',
+          }}
         />
       )
     })
 
     return (
       <Mapbox
-        style="mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk" // eslint-disable-line react/style-prop-object
+        style="mapbox://styles/kylebebak/cjbr1wz8o7blj2rpbidkjujq2" // eslint-disable-line react/style-prop-object
         zoom={this.initialZoom}
         center={coordinates}
         containerStyle={{
@@ -64,9 +66,8 @@ class FeatureMap extends React.Component {
           type="symbol"
           id="marker"
           layout={{
-            'icon-image': 'marker-15',
             'icon-allow-overlap': true,
-            'icon-size': 1.5,
+            'icon-image': '{image}',
           }}
         >
           {markers}
