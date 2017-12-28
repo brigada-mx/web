@@ -24,7 +24,7 @@
   background-color: brandMetricGrey;
 }
 
-.modal {
+.tooltip {
   z-index: 2;
   position: absolute;
   top: -36px;
@@ -37,7 +37,7 @@
   line-height: 12px;
 }
 
-.modal:after {
+.tooltip:after {
   content: "";
   position: absolute;
   top: 100%;

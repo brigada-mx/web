@@ -55,7 +55,7 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
     >
       <XAxis dataKey="name" axisLine={false} tickLine={false} />
-      <CartesianGrid horizontal={false} vertical={false} />
+      <CartesianGrid vertical={false} />
       <Tooltip />
       <Bar dataKey="num" fill={Colors.brandGreen} />
     </BarChart>
