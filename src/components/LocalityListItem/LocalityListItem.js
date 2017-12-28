@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { fmtNum } from 'tools/string'
-import Colors from 'src/colors'
+import { metaByDmgGrade } from 'tools/other'
 import Styles from './LocalityListItem.css'
 
 
@@ -43,15 +43,6 @@ const abbreviationByStateName = {
   'zacatecas': 'ZA',
 }
 
-const colorByDmgGrade = {
-  severe: Colors.severe,
-  high: Colors.high,
-  medium: Colors.medium,
-  low: Colors.low,
-  minimal: Colors.minimal,
-  unknown: Colors.unknown,
-}
-
 const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => {
   const {
     name, state_name: stateName, meta: { margGrade, total }, action_count: actions, dmgGrade,
@@ -67,7 +58,7 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={Styles.listItem}
-      style={{ borderColor: colorByDmgGrade[dmgGrade] || Colors.unknown }}
+      style={{ borderColor: metaByDmgGrade(dmgGrade).color }}
     >
       <div className={Styles.listItemWrapper}>
         <div className={`${Styles.listItemHeader}`}>

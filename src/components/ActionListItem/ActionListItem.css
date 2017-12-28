@@ -1,0 +1,23 @@
+@value colors: "src/colors.css";
+@value brandOffWhite from colors;
+@value brandGreen from colors;
+@value grey6 from colors;
+@value grey2 from colors;
+
+.listItem {
+  border-left: 4px solid #939aa1;
+  box-sizing: border-box;
+}
+
+.orgName {
+  color: brandGreen;
+}
+
+.header {
+  color: grey6;
+  font-size: 18px;
+}
+
+.light {
+  color: grey2;
+}
