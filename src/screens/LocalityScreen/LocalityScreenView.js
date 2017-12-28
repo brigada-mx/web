@@ -159,7 +159,10 @@ class LocalityScreenView extends React.Component {
             <div className="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3">
               <span className={Styles.vizLabel}>MARGINACIÓN SOCIAL</span>
               <span className={Styles.vizCount}>{margGrade}</span>
-              <div className={Styles.bar}>{bars}</div>
+              <div className={Styles.barColumnContainer}>
+                <div style={{ marginRight: 20 }}>{bars.slice(0, 4)}</div>
+                <div>{bars.slice(4, 8)}</div>
+              </div>
             </div>
           </div>
         </div>

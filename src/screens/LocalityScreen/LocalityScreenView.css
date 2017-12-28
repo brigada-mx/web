@@ -68,6 +68,11 @@
   width: 326px;
 }
 
+.barColumnContainer {
+  display: flex;
+  flex-direction: row;
+}
+
 .chartLabel {
   color: red;
 }
