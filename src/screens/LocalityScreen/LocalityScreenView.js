@@ -142,21 +142,21 @@ class LocalityScreenView extends React.Component {
           />
 
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-7">
+            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7">
               <span className={Styles.dmgLabel} style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
               <div className={Styles.placeName}>{name}, {munName}, {stateName}</div>
             </div>
-            <div className="col-lg-3 end-lg">
+            <div className="col-lg-3 col-md-3 end-lg end-md">
               <DirectionsButton lat={lat} lng={lng} />
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-3 lg-gutter">
+            <div className="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3 lg-gutter md-gutter">
               <span className={Styles.vizLabel}>VIVIENDAS DAÑADAS</span>
               <span className={Styles.vizCount}>{total}</span>
               <DmgBarChart {...{ destroyed, habit, notHabit }} />
             </div>
-            <div className="col-lg-offset-1 col-lg-3">
+            <div className="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3">
               <span className={Styles.vizLabel}>MARGINACIÓN SOCIAL</span>
               <span className={Styles.vizCount}>{margGrade}</span>
               <div className={Styles.bar}>{bars}</div>
