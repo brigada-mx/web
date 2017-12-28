@@ -128,16 +128,22 @@ class LocalityScreenView extends React.Component {
       })
 
       return (
-        <div>
+        <div className="wrapper">
           <LocalityBreadcrumb
             cvegeo={cvegeo}
             munName={munName}
             stateName={stateName}
             name={name}
           />
-          <span style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
-          <div>{name}, {munName}, {stateName}</div>
-          <DirectionsButton lat={lat} lng={lng} />
+          <div className="row">
+            <div className="col-lg-offset-1 col-lg-7">
+              <span style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
+              <div>{name}, {munName}, {stateName}</div>
+            </div>
+            <div className="col-lg-3 end-lg">
+              <div><DirectionsButton lat={lat} lng={lng} /></div>
+            </div>
+          </div>
 
           <div>VIVIENDAS DAÑADAS {total}</div>
           <div>MARGINACIÓN SOCIAL {margGrade}</div>

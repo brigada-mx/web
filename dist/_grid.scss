@@ -1,8 +1,9 @@
 // _grid.scss
+
 // $columns: 12;
-$gutter-width: 3%;
-$gutter-compensation: ( $gutter-width / 2 * -1 );
-$half-gutter-width: ( $gutter-width / 2);
+$gutter-width: 1rem;
+$gutter-compensation: (($gutter-width / 2) * -1);
+$half-gutter-width: ($gutter-width / 2);
 $screen-xs-min: 30em;
 $screen-sm-min: 48em;
 $screen-md-min: 62em;
@@ -14,13 +15,13 @@ $screen-lg-min: 75em;
   @include flex(0, 1, auto);
   @include flex-direction(row);
   @include flex-wrap(wrap);
-  width: 100%;
   &.reverse {
     @include flex-direction(row-reverse);
   }
-  &.magic-center {
-    align-items: center;
-  }
+}
+
+.row > div:last-child {
+  padding-right: 0;
 }
 
 .col.reverse {
@@ -30,14 +31,6 @@ $screen-lg-min: 75em;
 .middle {
   @include align-items(center);
   @include flexbox;
-}
-
-.alpha {
-  padding-left: 0;
-}
-
-.omega {
-  padding-right: 0;
 }
 
 @import 'grid/xs';
