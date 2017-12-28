@@ -78,7 +78,7 @@ const FilterHeader = (props) => {
 
       </div>
 
-      <div className="col-lg-3 col-md-3 col-sm-4 col-sm-offset-3 col-xs-2 end-lg end-md end-sm">
+      <div className="col-lg-3 col-md-3 col-sm-4 col-sm-offset-3 col-xs-2 end-lg end-md end-sm end-xs">
 
         <span className={Styles.numResults}>{numResults.toLocaleString()} resultados</span>
         <div className={Styles.searchWrapper}>
@@ -89,6 +89,8 @@ const FilterHeader = (props) => {
             onKeyUp={e => onKeyUp(e.target.value)}
           />
         </div>
+
+        <div className={`${Styles.hamburger} lg-hidden md-hidden`} />
 
       </div>
 

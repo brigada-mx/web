@@ -1,5 +1,5 @@
 @value colors: "src/colors.css";
-@value strongShadow, brandOffWhite from colors;
+@value strongShadow, weakShadow, brandOffWhite from colors;
 
 .container {
   position: absolute;
@@ -65,8 +65,8 @@
     right: unset;
     bottom: unset;
     width: 100%;
-    z-index: 5;
     border-top: 1px solid brandOffWhite;
+    box-shadow: 0 15px 30px 0 weakShadow;
     padding: 15px 20px 14px 20px;
   }
   .title {
@@ -82,6 +82,37 @@
   }
   .label {
     margin-right: 4px;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 320px) {
+  .container {
+    flex-direction: row;
+    justify-content: flex-start;
+    top: 0;
+    right: unset;
+    bottom: unset;
+    width: 100%;
+    border-top: 1px solid brandOffWhite;
+    box-shadow: 0 15px 30px 0 weakShadow;
+    padding: 15px 16px 14px 16px;
+    overflow-x: scroll;
+  }
+  .title {
+    display: none;
+  }
+  .legendItem {
+    display: inline-flex;
+  }
+  .circle {
+    margin: 0 6px 2px 0px;
+  }
+  .label {
+    margin-right: 12px;
+    white-space: nowrap;
+  }
+  .count {
+    display: none;
   }
 }
 

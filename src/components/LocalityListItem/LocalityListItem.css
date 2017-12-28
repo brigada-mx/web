@@ -70,18 +70,76 @@
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .listItem {
     width: 486px;
+    height: 162px;
+    margin: 13px 6px 11px 6px;
     border-left: unset;
     border-bottom: 4px solid #939aa1;
     box-sizing: border-box;
   }
+  .listItem:hover {
+    border-left: unset;
+    background-color: #FBFCFD;
+    border-bottom-width: 6px;
+  }
+  .listItem:hover .listItemWrapper {
+    padding-left: 23px;
+  }
   .listItemWrapper {
-    border: 1px solid brandOffWhite;
+    border-top: 1px solid brandOffWhite;
+    border-right: 1px solid brandOffWhite;
+    border-left: 1px solid brandOffWhite;
+    height: 100%;
+    width: 432px;
+    padding: 24px 43px 34px 23px;
+  }
+  .listItemMetrics {
+    justify-content: space-between;
+  }
+  .locName {
+    max-width: 333px;
+  }
+  .label {
+    width: 83px;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 320px) {
+  .listItem {
+    width: 332px;
+    height: 126px;
+    margin: 13px 0px 0px 12px;
+    border-left: unset;
+    border-bottom: 4px solid #939aa1;
+    box-sizing: border-box;
   }
   .listItem:hover {
     border-left: unset;
     background-color: #FBFCFD;
+    border-bottom-width: 6px;
   }
   .listItem:hover .listItemWrapper {
-    padding-left: 21px;
+    padding-left: 20px;
+  }
+  .listItemWrapper {
+    border-top: 1px solid brandOffWhite;
+    border-right: 1px solid brandOffWhite;
+    border-left: 1px solid brandOffWhite;
+    height: 100%;
+    width: 332px;
+    padding: 12px 25px 13px 20px;
+  }
+  .listItemMetrics {
+    justify-content: space-between;
+    margin-top: 3px;
+  }
+  .listItemHeader {
+    font-size: 16px;
+    line-height: 32px;
+  }
+  .locName {
+    max-width: 259px;
+  }
+  .label {
+    width: 83px;
   }
 }
