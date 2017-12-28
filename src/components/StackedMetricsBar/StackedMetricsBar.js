@@ -17,7 +17,6 @@ const StackedMetricsBar = ({ values, labels, style }) => {
 
   const barLabels = labels.map((l, i) => {
     const labelStyle = { opacity: (i + 1) / labels.length }
-    if (values[i] === 0) return null
     return <span style={labelStyle} key={i} className={Styles.label}>{l}</span>
   })
 

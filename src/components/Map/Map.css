@@ -11,3 +11,9 @@
     display: none !important;
   }
 }
+
+@media screen and (max-width: 767px) and (min-width: 320px) {
+    .zoomControlContainer {
+    display: none !important;
+  }
+}
