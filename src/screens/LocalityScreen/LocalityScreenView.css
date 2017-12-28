@@ -1,7 +1,85 @@
 @value colors: "src/colors.css";
 
+.breadcrumbLinks {
+  margin: 13px 0 65px 0;
+}
+
 .breadcrumbLinks a {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  text-decoration: none;
+  color: #3DC59F;
   margin-right: 15px;
+}
+
+.dmgLabel {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  display: flex;
+  margin-bottom: 19px;
+}
+
+/*.dmgLabel:before {
+  content: "";
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  margin: 0 11px 2px 0;
+}*/
+
+.placeName {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 48px;
+  color: #141418;
+  letter-spacing: -0.1px;
+  line-height: 62px;
+  display: flex;
+  margin-bottom: 29px;
+}
+
+.vizLabel {
+  opacity: 0.4;
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #9F9F9F;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  width: 96px;
+  display: inline-flex;
+}
+
+.vizCount {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 48px;
+  color: #141418;
+  letter-spacing: -0.1px;
+  line-height: 62px;
+}
+
+.barContainer {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 326px;
+}
+
+.chartLabel {
+  color: red;
+}
+
+.barLabel {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 14px;
+  color: #19191D;
+  letter-spacing: 0.56px;
+  line-height: 30px;
+  width: 143px;
+  /*display: inline-flex;*/
 }
 
 .map {

@@ -3,16 +3,17 @@
 @value brandMetricGrey from colors;
 
 .container {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   justify-content: row;
   position: relative;
-  height: 3px;
-  width: 20%;
+  height: 2px;
+  width: 166px;
   border-radius: 1px;
   justify-content: center;
   padding: 8px 3px;
   background-clip: content-box;
+  cursor: pointer;
 }
 
 .green {
@@ -26,8 +27,23 @@
 .modal {
   z-index: 2;
   position: absolute;
-  top: -50px;
-  color: black;
-  background-color: brandMetricGrey;
+  top: -36px;
+  background-color: #EDF1F5;
   text-align: center;
+  font-family: 'roboto-700', sans-serif;
+  font-size: 13px;
+  color: #141418;
+  letter-spacing: 0.52px;
+  line-height: 12px;
+}
+
+.modal:after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #EDF1F5 transparent transparent transparent;
 }

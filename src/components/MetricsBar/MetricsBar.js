@@ -30,7 +30,7 @@ class MetricsBar extends React.Component {
     const green = { flex: value / max }
     const grey = { flex: (max - value) / max }
     const percent = Math.round(100 * value / max)
-    const modalWidth = 40
+    const modalWidth = 28
     const modalPadding = 10
 
     return (
