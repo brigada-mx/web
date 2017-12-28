@@ -8,6 +8,7 @@ import moment from 'moment'
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
 import StackedMetricsBar from 'components/StackedMetricsBar'
+import ActionListItem from 'components/ActionListItem'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DirectionsButton from 'components/DirectionsButton'
 import { dmgGrade, metaByDmgGrade } from 'tools/other'
@@ -181,6 +182,7 @@ class LocalityScreenView extends React.Component {
       const { results: actions } = data
       let budget = 0
       const orgs = {}
+      const labels = ['Por iniciar', 'En progreso', 'Completado']
       const status = [0, 0, 0]
 
       const date = moment().format('YYYY-MM-DD')
@@ -193,7 +195,9 @@ class LocalityScreenView extends React.Component {
         orgs[a.organization_id] = true
       }
 
-      const labels = ['Por iniciar', 'En progreso', 'Completado']
+      const actionList = actions.map((a) => {
+        return <ActionListItem action={a} />
+      })
 
       return (
         <div>
@@ -201,6 +205,9 @@ class LocalityScreenView extends React.Component {
           <div>ORGANIZACIONES COMPROMETIDAS {Object.keys(orgs).length}</div>
           <div>INVERSIÓN ESTIMADA {fmtBudget(budget)}</div>
           <StackedMetricsBar labels={labels} values={status} />
+          <div>
+            {actionList}
+          </div>
         </div>
       )
     }

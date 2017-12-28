@@ -58,13 +58,13 @@
 }
 
 .hamburger {
-    background: no-repeat url('assets/img/hamburger.svg');
-    width: 17px;
-    height: 9px;
-    display: inline-flex;
-    margin-left: 23px;
-    cursor: pointer;
-  }
+  background: no-repeat url('assets/img/hamburger.svg');
+  width: 17px;
+  height: 9px;
+  display: inline-flex;
+  margin-left: 23px;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .container {
