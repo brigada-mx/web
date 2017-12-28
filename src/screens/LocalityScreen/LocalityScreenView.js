@@ -154,13 +154,22 @@ class LocalityScreenView extends React.Component {
 
   renderEstablishmentsSection = () => {
     const { establishments: { loading, data, error } } = this.props
-    return (
-      <FeatureMap
-        onClickFeature={this.handleClickFeature}
-        onEnterFeature={this.handleEnterFeature}
-        onLeaveFeature={this.handleLeaveFeature}
-      />
-    )
+    const { locality: { data: locData } } = this.props
+    if (loading || !locData) return <LoadingIndicatorCircle />
+
+    const { location: { lat, lng } } = locData
+    if (data) {
+      return (
+        <FeatureMap
+          onClickFeature={this.handleClickFeature}
+          onEnterFeature={this.handleEnterFeature}
+          onLeaveFeature={this.handleLeaveFeature}
+          features={data.results}
+          coordinates={[lng, lat]}
+        />
+      )
+    }
+    return <LoadingIndicatorCircle />
   }
 
   renderActionsSection = () => {
@@ -190,7 +199,7 @@ class LocalityScreenView extends React.Component {
       }
 
       const actionList = actions.map((a) => {
-        return <ActionListItem action={a} />
+        return <ActionListItem key={a.id} action={a} />
       })
 
       return (

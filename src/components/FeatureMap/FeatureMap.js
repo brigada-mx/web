@@ -22,18 +22,38 @@ const zoomStyle = {
 class FeatureMap extends React.Component {
   constructor(props) {
     super(props)
-    this.initialZoom = [9]
-    this.initialCoordinates = [-95.9042505, 17.1073688]
+    this.initialZoom = [13]
   }
 
   render() {
-    const { popup, features, onClickFeature, onEnterFeature, onLeaveFeature } = this.props
+    const {
+      popup,
+      features = [],
+      onClickFeature,
+      onEnterFeature,
+      onLeaveFeature,
+      coordinates,
+    } = this.props
+
+    const markers = features.map((f) => {
+      const { location: { lat, lng } } = f
+      return (
+        <Feature
+          key={f.denue_id}
+          coordinates={[lng, lat]}
+          onClick={() => onClickFeature(f)}
+          onMouseEnter={() => onEnterFeature(f)}
+          onMouseLeave={() => onLeaveFeature(f)}
+          properties={{}}
+        />
+      )
+    })
 
     return (
       <Mapbox
         style="mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk" // eslint-disable-line react/style-prop-object
         zoom={this.initialZoom}
-        center={this.initialCoordinates}
+        center={coordinates}
         containerStyle={{
           height: '100%',
           width: '100%',
@@ -43,20 +63,13 @@ class FeatureMap extends React.Component {
         <Layer
           type="symbol"
           id="marker"
-          layout={{ 'icon-image': 'marker-15' }}
+          layout={{
+            'icon-image': 'marker-15',
+            'icon-allow-overlap': true,
+            'icon-size': 1.5,
+          }}
         >
-          <Feature
-            coordinates={[-95.9042505, 17.1073688]}
-            onClick={onClickFeature}
-            onMouseEnter={onEnterFeature}
-            onMouseLeave={onLeaveFeature}
-          />
-          <Feature
-            coordinates={[-95.9042505, 17.1573688]}
-            onClick={onClickFeature}
-            onMouseEnter={onEnterFeature}
-            onMouseLeave={onLeaveFeature}
-          />
+          {markers}
         </Layer>
         <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
       </Mapbox>
@@ -65,6 +78,7 @@ class FeatureMap extends React.Component {
 }
 
 FeatureMap.propTypes = {
+  coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
   features: PropTypes.arrayOf(PropTypes.object).isRequired,
   popup: PropTypes.any,
   onClickFeature: PropTypes.func,
