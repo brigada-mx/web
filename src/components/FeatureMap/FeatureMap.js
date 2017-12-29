@@ -35,8 +35,21 @@ class FeatureMap extends React.Component {
       coordinates,
     } = this.props
 
-    const markers = features.map((f, i) => {
-      const { location: { lat, lng } } = f
+    const iconByScianGroup = {
+      1: 'doctor-15',
+      2: 'dog-park-15',
+      3: 'drinking-water-15',
+      4: 'embassy-15',
+      5: 'entrance-15',
+      6: 'fast-food-15',
+      7: 'ferry-15',
+      8: 'fire-station-15',
+      9: 'fuel-15',
+      10: 'garden-15',
+    }
+
+    const markers = features.map((f) => {
+      const { scian_group: group, location: { lat, lng } } = f
       return (
         <Feature
           key={f.denue_id}
@@ -44,9 +57,7 @@ class FeatureMap extends React.Component {
           onClick={() => onClickFeature(f)}
           onMouseEnter={() => onEnterFeature(f)}
           onMouseLeave={() => onLeaveFeature(f)}
-          properties={{
-            image: i % 2 === 0 ? 'airfield-red' : 'buy',
-          }}
+          properties={{ image: iconByScianGroup[group] || iconByScianGroup[1] }}
         />
       )
     })

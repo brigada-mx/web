@@ -11,6 +11,7 @@ import StackedMetricsBar from 'components/StackedMetricsBar'
 import ActionListItem from 'components/ActionListItem'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DirectionsButton from 'components/DirectionsButton'
+import EstablishmentPopup from 'components/FeatureMap/EstablishmentPopup'
 import { dmgGrade, metaByDmgGrade } from 'tools/other'
 import Colors from 'src/colors'
 import Styles from './LocalityScreenView.css'
@@ -72,18 +73,21 @@ DmgBarChart.propTypes = {
 class LocalityScreenView extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      popup: null,
+    }
   }
 
   handleClickFeature = (f) => {
-    console.log(f)
+    this.setState({ popup: f })
   }
 
   handleEnterFeature = (f) => {
-    console.log(f)
+    // this.setState({ popup: f })
   }
 
   handleLeaveFeature = (f) => {
-    console.log(f)
+    // this.setState({ popup: null })
   }
 
   renderLocalitySection = () => {
@@ -157,6 +161,8 @@ class LocalityScreenView extends React.Component {
     const { locality: { data: locData } } = this.props
     if (loading || !locData) return <LoadingIndicatorCircle />
 
+    const { popup } = this.state
+
     const { location: { lat, lng } } = locData
     if (data) {
       return (
@@ -166,6 +172,7 @@ class LocalityScreenView extends React.Component {
           onLeaveFeature={this.handleLeaveFeature}
           features={data.results}
           coordinates={[lng, lat]}
+          popup={popup ? <EstablishmentPopup establishment={popup} /> : null}
         />
       )
     }
