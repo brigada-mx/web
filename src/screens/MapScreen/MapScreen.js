@@ -142,7 +142,6 @@ class MapScreen extends React.Component {
   render() {
     const { popup, localities: { data = {}, loading, error } } = this.state
 
-    const _popup = popup ? <LocalityPopup locality={popup} /> : null
     const localities = this.filterLocalities(data.results)
     return (
       <div>
@@ -169,7 +168,7 @@ class MapScreen extends React.Component {
           <div className="col-lg-9 col-md-9 col-sm-8 col-xs-4">
             <Map
               cvegeoFilter={data.results && localities.map(l => l.cvegeo)}
-              popup={_popup}
+              popup={popup ? <LocalityPopup locality={popup} /> : null}
               onClickFeature={this.handleClickFeature}
               onEnterFeature={this.handleEnterFeature}
               onLeaveFeature={this.handleLeaveFeature}
