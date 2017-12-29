@@ -5,8 +5,10 @@
 @value grey2 from colors;
 
 .listItem {
-  border-left: 4px solid #939aa1;
   box-sizing: border-box;
+  background-color: white;
+  margin-bottom: 16px;
+  padding: 27px;
 }
 
 .orgName {

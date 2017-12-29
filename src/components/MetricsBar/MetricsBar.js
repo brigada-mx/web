@@ -37,7 +37,7 @@ class MetricsBar extends React.Component {
       <div
         ref={(node) => { this._container = node }}
         style={style}
-        className={Styles.container}
+        className={Styles.bar}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
