@@ -25,13 +25,28 @@ class FeatureMap extends React.Component {
     this.initialZoom = [13]
   }
 
+  handleMapLoaded = (map) => {
+    const { onClickFeature, onEnterFeature, onLeaveFeature } = this.props
+    map.on('click', 'features', (e) => {
+      onClickFeature(JSON.parse(e.features[0].properties.f))
+    })
+
+    map.on('mousemove', 'features', (e) => {
+      // change the cursor style as a ui indicator
+      map.getCanvas().style.cursor = 'pointer' // eslint-disable-line no-param-reassign
+      onEnterFeature(JSON.parse(e.features[0].properties.f))
+    })
+
+    map.on('mouseleave', 'features', () => {
+      map.getCanvas().style.cursor = '' // eslint-disable-line no-param-reassign
+      onLeaveFeature()
+    })
+  }
+
   render() {
     const {
       popup,
       features = [],
-      onClickFeature,
-      onEnterFeature,
-      onLeaveFeature,
       coordinates,
     } = this.props
 
@@ -54,10 +69,7 @@ class FeatureMap extends React.Component {
         <Feature
           key={f.denue_id}
           coordinates={[lng, lat]}
-          onClick={() => onClickFeature(f)}
-          onMouseEnter={() => onEnterFeature(f)}
-          onMouseLeave={() => onLeaveFeature(f)}
-          properties={{ image: iconByScianGroup[group] || iconByScianGroup[1] }}
+          properties={{ image: iconByScianGroup[group] || iconByScianGroup[1], f }}
         />
       )
     })
@@ -71,11 +83,12 @@ class FeatureMap extends React.Component {
           height: '100%',
           width: '100%',
         }}
+        onStyleLoad={this.handleMapLoaded}
       >
         {popup}
         <Layer
+          id="features"
           type="symbol"
-          id="marker"
           layout={{
             'icon-allow-overlap': true,
             'icon-image': '{image}',

@@ -79,7 +79,6 @@ class LocalityScreenView extends React.Component {
   }
 
   handleClickFeature = (f) => {
-    this.setState({ popup: f })
   }
 
   handleEnterFeature = (f) => {
