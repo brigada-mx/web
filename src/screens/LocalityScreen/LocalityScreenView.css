@@ -1,22 +1,127 @@
 @value colors: "src/colors.css";
+@value brandGreen from colors;
+
+.breadcrumbLinks {
+  margin: 13px 0 65px 0;
+}
 
 .breadcrumbLinks a {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  text-decoration: none;
+  color: #3DC59F;
   margin-right: 15px;
 }
 
-.map {
-  width: 100vw;
-  height: calc(100vh - 130px);
-  position: relative;
+.dmgLabel {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  display: flex;
+  margin-bottom: 19px;
 }
 
-.listContainer{
-  position: relative;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  box-shadow: 15px 15px 30px 0px weakShadow;
-  background-color: white;
-  height: 100%;
-  overflow-y: scroll;
+/*.dmgLabel:before {
+  content: "";
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  margin: 0 11px 2px 0;
+}*/
+
+.placeName {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 48px;
+  color: #141418;
+  letter-spacing: -0.1px;
+  line-height: 62px;
+  display: flex;
+  margin-bottom: 47px;
+}
+
+.vizHeader {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.vizLabel {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #9F9F9F;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  display: inline-flex;
+  margin-right: 16px;
+}
+
+.vizCount {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 48px;
+  color: #141418;
+  letter-spacing: -0.1px;
+  line-height: 62px;
+}
+
+.dmgChartContainer {
+  margin-top: 12px;
+}
+
+.barContainer {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 326px;
+}
+
+.margMetricsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.margMetricsColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.chartLabel {
+  color: red;
+}
+
+.barLabel {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 14px;
+  color: #19191D;
+  letter-spacing: 0.56px;
+  line-height: 30px;
+  width: 143px;
+  /*display: inline-flex;*/
+}
+
+.map {
+  height: 688px;
+  margin-top: 100px;
+}
+
+.actionMetricsContainer {
+  padding: 65px 0 69px 0;
+}
+
+.actionMetricsContainer .vizCount {
+  color: brandGreen;
+}
+
+.actionProgress {
+  margin-top: 31px;
+}
+
+.actionCardsContainer {
+  background-color: #F6F8FA;
+  padding: 21px 25px 5px 25px;
 }

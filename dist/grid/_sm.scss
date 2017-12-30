@@ -7,12 +7,17 @@
     padding: 0 20px;
   }
 
+  .sm-gutter {
+    padding-right: 0 !important;
+  }
+
   .sm-hidden {
     display: none !important;
   }
   .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8 {
     box-sizing: border-box;
     @include flex(0, 0, auto);
+    padding-right: $gutter-width;
   }
   .col-sm {
     @include flex-grow(1);

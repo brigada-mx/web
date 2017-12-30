@@ -6,7 +6,7 @@ import Styles from './MetricsBar.css'
 
 class MetricsBar extends React.Component {
   state = {
-    modalVisible: false,
+    tooltipVisible: false,
   }
 
   componentDidMount() {
@@ -18,11 +18,11 @@ class MetricsBar extends React.Component {
   }
 
   handleMouseEnter = () => {
-    this.setState({ modalVisible: true })
+    this.setState({ tooltipVisible: true })
   }
 
   handleMouseLeave = () => {
-    this.setState({ modalVisible: false })
+    this.setState({ tooltipVisible: false })
   }
 
   render() {
@@ -30,25 +30,25 @@ class MetricsBar extends React.Component {
     const green = { flex: value / max }
     const grey = { flex: (max - value) / max }
     const percent = Math.round(100 * value / max)
-    const modalWidth = 40
-    const modalPadding = 10
+    const tooltipWidth = 28
+    const tooltipPadding = 10
 
     return (
       <div
         ref={(node) => { this._container = node }}
         style={style}
-        className={Styles.container}
+        className={Styles.bar}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        {this.state.modalVisible &&
+        {this.state.tooltipVisible &&
           <div
             style={{
-              padding: modalPadding,
-              width: modalWidth,
-              left: ((this._width || 100) - modalWidth - modalPadding) / 2,
+              padding: tooltipPadding,
+              width: tooltipWidth,
+              left: ((this._width || 100) - tooltipWidth - tooltipPadding) / 2,
             }}
-            className={Styles.modal}
+            className={Styles.tooltip}
           >
             {`${percent}%`}
           </div>

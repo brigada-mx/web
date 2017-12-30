@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, Label, CartesianGrid, Tooltip } from 'recharts'
 import moment from 'moment'
 
 import FeatureMap from 'components/FeatureMap'
@@ -51,13 +51,12 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
   return (
     <BarChart
       width={400}
-      height={200}
+      height={133}
       data={data}
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
     >
-      <XAxis dataKey="name" />
-      <YAxis />
-      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" axisLine={false} tickLine={false} />
+      <CartesianGrid vertical={false} />
       <Tooltip />
       <Bar dataKey="num" fill={Colors.brandGreen} />
     </BarChart>
@@ -131,27 +130,53 @@ class LocalityScreenView extends React.Component {
       const bars = [
         analfabet, noPrimary, noToilet, noElec, noPlumb, noFridge, dirtFloor, roomOccup,
       ].map((v, i) => {
-        return <div key={i}><span>{barLabels[i]}</span><MetricsBar value={v} max={100} /></div>
+        return (
+          <div key={i} className={Styles.barContainer}>
+            <span className={Styles.barLabel}>{barLabels[i]}</span>
+            <MetricsBar value={v} max={100} />
+          </div>
+        )
       })
 
       return (
-        <div>
+        <div className="wrapper">
           <LocalityBreadcrumb
             cvegeo={cvegeo}
             munName={munName}
             stateName={stateName}
             name={name}
           />
-          <span style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
-          <div>{name}, {munName}, {stateName}</div>
-          <DirectionsButton lat={lat} lng={lng} />
 
-          <div>VIVIENDAS DAÑADAS {total}</div>
-          <div>MARGINACIÓN SOCIAL {margGrade}</div>
-
-          <DmgBarChart {...{ destroyed, habit, notHabit }} />
-          <div className={Styles.metricsContainer}>{bars}</div>
-
+          <div className="row">
+            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7">
+              <span className={Styles.dmgLabel} style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
+              <div className={Styles.placeName}>{name}, {munName}, {stateName}</div>
+            </div>
+            <div className="col-lg-3 col-md-3 end-lg end-md">
+              <DirectionsButton lat={lat} lng={lng} />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3 lg-gutter md-gutter">
+              <div className={Styles.vizHeader}>
+                <span className={Styles.vizLabel}>VIVIENDAS<br />DAÑADAS</span>
+                <span className={Styles.vizCount}>{total}</span>
+              </div>
+              <div className={Styles.dmgChartContainer}>
+                <DmgBarChart {...{ destroyed, habit, notHabit }} />
+              </div>
+            </div>
+            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6">
+              <div className={Styles.vizHeader}>
+                <span className={Styles.vizLabel}>MARGINACIÓN<br />SOCIAL</span>
+                <span className={Styles.vizCount}>{margGrade}</span>
+              </div>
+              <div className={Styles.margMetricsContainer}>
+                <div className={Styles.margMetricsColumn}>{bars.slice(0, 4)}</div>
+                <div className={Styles.margMetricsColumn}>{bars.slice(4, 8)}</div>
+              </div>
+            </div>
+          </div>
         </div>
       )
     }
@@ -168,14 +193,16 @@ class LocalityScreenView extends React.Component {
     const { location: { lat, lng } } = locData
     if (data) {
       return (
-        <FeatureMap
-          onClickFeature={this.handleClickFeature}
-          onEnterFeature={this.handleEnterFeature}
-          onLeaveFeature={this.handleLeaveFeature}
-          features={data.results}
-          coordinates={[lng, lat]}
-          popup={popup ? <EstablishmentPopup establishment={popup} /> : null}
-        />
+        <div className={`${Styles.map} row`}>
+          <FeatureMap
+            onClickFeature={this.handleClickFeature}
+            onEnterFeature={this.handleEnterFeature}
+            onLeaveFeature={this.handleLeaveFeature}
+            features={data.results}
+            coordinates={[lng, lat]}
+            popup={popup ? <EstablishmentPopup establishment={popup} /> : null}
+          />
+        </div>
       )
     }
     return <LoadingIndicatorCircle />
@@ -213,11 +240,31 @@ class LocalityScreenView extends React.Component {
 
       return (
         <div>
-          <div>ACCIONES DE RECONSTRUCCIÓN {actions.length}</div>
-          <div>ORGANIZACIONES COMPROMETIDAS {Object.keys(orgs).length}</div>
-          <div>INVERSIÓN ESTIMADA {fmtBudget(budget)}</div>
-          <StackedMetricsBar labels={labels} values={status} />
-          <div>
+          <div className={Styles.actionMetricsContainer}>
+            <div className="row">
+              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 flex-lg between-lg">
+                <div className={Styles.vizHeader}>
+                  <span className={Styles.vizLabel}>ACCIONES DE<br />RECONSTRUCCIÓN</span>
+                  <span className={Styles.vizCount}>{actions.length}</span>
+                </div>
+                <div className={Styles.vizHeader}>
+                  <span className={Styles.vizLabel}>ORGANIZACIONES<br />COMPROMETIDAS</span>
+                  <span className={Styles.vizCount}>{Object.keys(orgs).length}</span>
+                </div>
+                <div className={Styles.vizHeader}>
+                  <span className={Styles.vizLabel}>INVERSIÓN<br />ESTIMADA</span>
+                  <span className={Styles.vizCount}>{fmtBudget(budget)}</span>
+                </div>
+              </div>
+            </div>
+            <div className={`${Styles.actionProgress} row`}>
+              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
+                <span className={Styles.vizLabel}>AVANCE</span>
+                <StackedMetricsBar labels={labels} values={status} />
+              </div>
+            </div>
+          </div>
+          <div className={Styles.actionCardsContainer}>
             {actionList}
           </div>
         </div>

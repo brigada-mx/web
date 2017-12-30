@@ -2,7 +2,7 @@
 @value brandGreen from colors;
 
 .button {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   width: 8vh;

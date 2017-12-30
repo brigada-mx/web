@@ -154,7 +154,7 @@ class MapScreen extends React.Component {
           onKeyUp={this.handleLocalitySearchKeyUp}
         />
         <div className={`${Styles.map} row`}>
-          <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 last-sm last-xs">
+          <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 lg-gutter md-gutter sm-gutter xs-gutter last-sm last-xs">
             {loading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
             {!loading &&
               <LocalityList
