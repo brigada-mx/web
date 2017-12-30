@@ -58,6 +58,7 @@ class MapScreen extends React.Component {
       locSearch: '',
       cvegeo: location.state ? location.state.cvegeo || '' : '',
       marg: '',
+      numActions: [null, null],
       popup: null,
     }
     this.handleLocalitySearchKeyUp = _.debounce(
@@ -95,6 +96,16 @@ class MapScreen extends React.Component {
     this.setState({ marg: e.target.value })
   }
 
+  handleNumActionsChange = (e) => {
+    const rangeByValue = {
+      0: [0, 9],
+      1: [10, 49],
+      2: [50, 249],
+      3: [250, null],
+    }
+    this.setState({ numActions: rangeByValue[e.target.value] || [null, null] })
+  }
+
   handleClickFeature = (feature) => {
     const locality = this.state.localityByCvegeo[feature.properties.cvegeo]
     if (!locality) return
@@ -128,14 +139,16 @@ class MapScreen extends React.Component {
 
   filterLocalities = (results) => {
     if (!results) return []
-    const { locSearch, cvegeo: cvegeoSearch, marg } = this.state
-
+    const { locSearch, cvegeo: cvegeoSearch, marg, numActions } = this.state
+    const [minActions, maxActions] = numActions
     return results.filter((l) => {
-      const { name, state_name: stateName, cvegeo, meta: { margGrade } } = l
+      const { name, state_name: stateName, cvegeo, action_count: actions, meta: { margGrade } } = l
       const matchesSearch = tokenMatch(`${name} ${stateName}`, locSearch)
       const matchesCvegeo = !cvegeo || cvegeo.startsWith(cvegeoSearch)
       const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
-      return matchesSearch && matchesCvegeo && matchestMarg
+      const matchesActions = (minActions === null || actions >= minActions) &&
+        (maxActions === null || actions <= maxActions)
+      return matchesSearch && matchesCvegeo && matchestMarg && matchesActions
     })
   }
 
@@ -151,6 +164,7 @@ class MapScreen extends React.Component {
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
           onMargChange={this.handleMargChange}
+          onNumActionsChange={this.handleNumActionsChange}
           onKeyUp={this.handleLocalitySearchKeyUp}
         />
         <div className={`${Styles.map} row`}>
