@@ -2,17 +2,14 @@
 @value brandGreen from colors;
 @value brandMetricGrey from colors;
 
-.container {
+.bar {
   display: inline-flex;
   flex-direction: row;
-  justify-content: row;
   position: relative;
   height: 2px;
   width: 166px;
   border-radius: 1px;
-  justify-content: center;
-  padding: 8px 3px;
-  background-clip: content-box;
+  padding: 8px 0;
   cursor: pointer;
 }
 
@@ -21,10 +18,10 @@
 }
 
 .grey {
-  background-color: brandMetricGrey;
+  background-color: #CAD1D8;
 }
 
-.modal {
+.tooltip {
   z-index: 2;
   position: absolute;
   top: -36px;
@@ -37,7 +34,7 @@
   line-height: 12px;
 }
 
-.modal:after {
+.tooltip:after {
   content: "";
   position: absolute;
   top: 100%;

@@ -24,23 +24,32 @@ const ActionListItem = ({ action }) => {
     if (!target) return null
     return (
       <div>
-        <span className={Styles.light}>{progress} {type || unit} DE {target}</span>
+        <span className={Styles.light}>{progress} DE {target}</span>
         <MetricsBar value={progress} max={target} />
       </div>
     )
   }
 
   const dates = () => {
-    return <span>FECHAS: {startDate.replace(/-/g, '.')} - {endDate.replace(/-/g, '.')}</span>
+    return (
+      <div>
+        <span className={Styles.label}>FECHAS: </span>
+        <span className={Styles.dates}>{startDate.replace(/-/g, '.')} - {endDate.replace(/-/g, '.')}</span>
+      </div>
+    )
   }
 
   return (
     <div className={Styles.listItem}>
-      <div className={Styles.header}>{`Construcción de ${type}`}</div>
       <div className={Styles.orgName}>{name || key}</div>
-      {budget && <div>PRESUPUESTO: ${fmtNum(budget)}</div>}
+      <div className={Styles.header}>{`Construcción de ${type.toLowerCase()}`}</div>
+      {budget &&
+        <div>
+          <span className={Styles.label}>PRESUPUESTO: </span>
+          <span className={Styles.budget}>${fmtNum(budget)}</span>
+        </div>}
       {metrics()}
-      {desc && <div className={Styles.desc}>{desc}</div>}
+      {desc && <div className={Styles.description}>{desc}</div>}
       {dates()}
     </div>
   )
