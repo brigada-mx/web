@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
-import { BarChart, Bar, XAxis, YAxis, Label, CartesianGrid, Tooltip } from 'recharts'
+import { BarChart, Bar, XAxis, CartesianGrid, Tooltip } from 'recharts'
 import moment from 'moment'
 
 import FeatureMap from 'components/FeatureMap'

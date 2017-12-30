@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl'
+import _ from 'lodash'
 
 import EstablishmentLegend, { metaByScianGroup } from './EstablishmentLegend'
 import Styles from './FeatureMap.css'
@@ -26,17 +27,24 @@ class FeatureMap extends React.Component {
     this.initialZoom = [13]
     this.initialCoordinates = props.coordinates
     this.state = {
-      scianGroups: new Set(),
+      map: null,
     }
+    this._scianGroups = new Set()
+    this._loaded = false
   }
 
-  handleMapLoaded = (map) => {
-    const { onClickFeature, onEnterFeature, onLeaveFeature, features = [] } = this.props
+  componentWillUpdate(nextProps, nextState) {
+    const { map } = nextState
+    if (!map) return
 
-    const scianGroups = new Set()
+    const { features = [] } = nextProps
+    if (this._loaded && _.isEqual(features, this.props.features)) return
+    this._loaded = true
+
+    this._scianGroups = new Set()
     const markers = features.map((f) => {
       const { scian_group: group, location: { lat, lng } } = f
-      scianGroups.add(group)
+      this._scianGroups.add(group)
       return {
         type: 'Feature',
         properties: {
@@ -48,18 +56,28 @@ class FeatureMap extends React.Component {
         },
       }
     })
-    this.setState({ scianGroups })
+
+    map.getSource('features').setData({
+      type: 'FeatureCollection',
+      features: markers,
+    })
+  }
+
+  handleMapLoaded = (map) => {
+    const { onClickFeature, onEnterFeature, onLeaveFeature } = this.props
+
+    map.addSource('features', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: [],
+      },
+    })
 
     map.addLayer({
       id: 'features',
       type: 'symbol',
-      source: {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: markers,
-        },
-      },
+      source: 'features',
       layout: {
         'icon-image': '{icon}',
         'icon-allow-overlap': true,
@@ -80,11 +98,12 @@ class FeatureMap extends React.Component {
       map.getCanvas().style.cursor = '' // eslint-disable-line no-param-reassign
       onLeaveFeature()
     })
+
+    this.setState({ map })
   }
 
   render() {
     const { popup } = this.props
-    const { scianGroups } = this.state
 
     return (
       <Mapbox
@@ -99,7 +118,7 @@ class FeatureMap extends React.Component {
         onStyleLoad={this.handleMapLoaded}
       >
         {popup}
-        <EstablishmentLegend groups={Array.from(scianGroups)} />
+        <EstablishmentLegend groups={Array.from(this._scianGroups)} />
         <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
       </Mapbox>
     )
