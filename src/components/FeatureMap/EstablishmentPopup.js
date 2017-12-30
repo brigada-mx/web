@@ -9,7 +9,6 @@ import Styles from './EstablishmentPopup.css'
 const EstablishmentPopup = ({ establishment }) => {
   if (!establishment) return null
 
-
   const {
     nom_estab: name,
     telefono: phone,
@@ -26,7 +25,7 @@ const EstablishmentPopup = ({ establishment }) => {
     <Popup coordinates={[lng, lat]}>
       <div className={Styles.container}>
         <p className={Styles.header}>{name}</p>
-        <p className={Styles.address}>{street} {number}</p>
+        <p className={Styles.address}>{street} {number === '0' ? '' : number}</p>
         <p className={Styles.address}>{areaType} {area}</p>
         <p className={Styles.address}>{postalCode} {muni}</p>
         <p className={Styles.contact}>{phone}</p>

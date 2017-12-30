@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ReactMapboxGl, { Layer, Feature, ZoomControl } from 'react-mapbox-gl'
+import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl'
 
+import EstablishmentLegend, { metaByScianGroup } from './EstablishmentLegend'
 import Styles from './FeatureMap.css'
 
 
@@ -23,10 +24,48 @@ class FeatureMap extends React.Component {
   constructor(props) {
     super(props)
     this.initialZoom = [13]
+    this.initialCoordinates = props.coordinates
+    this.state = {
+      scianGroups: new Set(),
+    }
   }
 
   handleMapLoaded = (map) => {
-    const { onClickFeature, onEnterFeature, onLeaveFeature } = this.props
+    const { onClickFeature, onEnterFeature, onLeaveFeature, features = [] } = this.props
+
+    const scianGroups = new Set()
+    const markers = features.map((f) => {
+      const { scian_group: group, location: { lat, lng } } = f
+      scianGroups.add(group)
+      return {
+        type: 'Feature',
+        properties: {
+          icon: metaByScianGroup[group].icon || metaByScianGroup[1].icon, f,
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [lng, lat],
+        },
+      }
+    })
+    this.setState({ scianGroups })
+
+    map.addLayer({
+      id: 'features',
+      type: 'symbol',
+      source: {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: markers,
+        },
+      },
+      layout: {
+        'icon-image': '{icon}',
+        'icon-allow-overlap': true,
+      },
+    })
+
     map.on('click', 'features', (e) => {
       onClickFeature(JSON.parse(e.features[0].properties.f))
     })
@@ -44,58 +83,23 @@ class FeatureMap extends React.Component {
   }
 
   render() {
-    const {
-      popup,
-      features = [],
-      coordinates,
-    } = this.props
-
-    const iconByScianGroup = {
-      1: 'doctor-15',
-      2: 'dog-park-15',
-      3: 'drinking-water-15',
-      4: 'embassy-15',
-      5: 'entrance-15',
-      6: 'fast-food-15',
-      7: 'ferry-15',
-      8: 'fire-station-15',
-      9: 'fuel-15',
-      10: 'garden-15',
-    }
-
-    const markers = features.map((f) => {
-      const { scian_group: group, location: { lat, lng } } = f
-      return (
-        <Feature
-          key={f.denue_id}
-          coordinates={[lng, lat]}
-          properties={{ image: iconByScianGroup[group] || iconByScianGroup[1], f }}
-        />
-      )
-    })
+    const { popup } = this.props
+    const { scianGroups } = this.state
 
     return (
       <Mapbox
         style="mapbox://styles/kylebebak/cjbr1wz8o7blj2rpbidkjujq2" // eslint-disable-line react/style-prop-object
         zoom={this.initialZoom}
-        center={coordinates}
+        center={this.initialCoordinates}
         containerStyle={{
           height: '100%',
           width: '100%',
+          position: 'relative',
         }}
         onStyleLoad={this.handleMapLoaded}
       >
         {popup}
-        <Layer
-          id="features"
-          type="symbol"
-          layout={{
-            'icon-allow-overlap': true,
-            'icon-image': '{image}',
-          }}
-        >
-          {markers}
-        </Layer>
+        <EstablishmentLegend groups={Array.from(scianGroups)} />
         <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
       </Mapbox>
     )

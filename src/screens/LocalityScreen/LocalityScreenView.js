@@ -82,11 +82,14 @@ class LocalityScreenView extends React.Component {
   }
 
   handleEnterFeature = (f) => {
+    clearTimeout(this._timer)
     this.setState({ popup: f })
   }
 
   handleLeaveFeature = (f) => {
-    this.setState({ popup: null })
+    this._timer = setTimeout(() => {
+      this.setState({ popup: null })
+    }, 200)
   }
 
   renderLocalitySection = () => {

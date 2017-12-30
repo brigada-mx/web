@@ -24,7 +24,7 @@ const ActionListItem = ({ action }) => {
     if (!target) return null
     return (
       <div>
-        <span className={Styles.light}>{progress} {type || unit} DE {target}</span>
+        <span className={Styles.light}>{progress} DE {target}</span>
         <MetricsBar value={progress} max={target} />
       </div>
     )
@@ -36,8 +36,8 @@ const ActionListItem = ({ action }) => {
 
   return (
     <div className={Styles.listItem}>
-      <div className={Styles.header}>{`Construcción de ${type}`}</div>
       <div className={Styles.orgName}>{name || key}</div>
+      <div className={Styles.header}>{`Construcción de ${type.toLowerCase()}`}</div>
       {budget && <div>PRESUPUESTO: ${fmtNum(budget)}</div>}
       {metrics()}
       {desc && <div className={Styles.desc}>{desc}</div>}
