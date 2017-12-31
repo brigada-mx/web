@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import _ from 'lodash'
+import Select from 'react-select'
+import '!style-loader!css-loader!react-select/dist/react-select.css'
 
 import LogoImg from 'assets/img/logo.png'
 import Styles from './FilterHeader.css'
@@ -16,6 +18,10 @@ const FilterHeader = (props) => {
     onKeyUp,
     localities,
     numResults,
+    valState,
+    valMuni,
+    valMarg,
+    valNumActions,
   } = props
 
   const stateOptions = () => {
@@ -27,7 +33,7 @@ const FilterHeader = (props) => {
       return 0
     }).map((i) => {
       const { cvegeo, state_name: stateName } = i
-      return <option key={i.cvegeo_state} value={cvegeo}>{stateName}</option>
+      return { value: cvegeo, label: stateName }
     })
   }
 
@@ -40,11 +46,7 @@ const FilterHeader = (props) => {
       return 0
     }).map((i) => {
       const { cvegeo, municipality_name: munName, state_name: stateName } = i
-      return (
-        <option key={i.cvegeo_municipality} value={cvegeo}>
-          {munName}, {stateName}
-        </option>
-      )
+      return { value: cvegeo, label: `${munName}, ${stateName}` }
     })
   }
 
@@ -57,37 +59,57 @@ const FilterHeader = (props) => {
         </a>
       </div>
 
-      <div className="col-lg-9 col-md-9 sm-hidden xs-hidden">
+      <div className={`${Styles.filterContainer} sm-hidden xs-hidden`}>
 
-        <select className={Styles.filter} onChange={onStateChange}>
-          <option value="">Estado</option>
-          {stateOptions()}
-        </select>
+        <Select
+          multi
+          className={Styles.filter}
+          value={valState}
+          placeholder="Estado"
+          onChange={onStateChange}
+          options={stateOptions()}
+        />
 
-        <select className={Styles.filter} onChange={onMuniChange}>
-          <option value="">Municipio</option>
-          {muniOptions()}
-        </select>
+        <Select
+          multi
+          className={Styles.filter}
+          value={valMuni}
+          placeholder="Municipio"
+          onChange={onMuniChange}
+          options={muniOptions()}
+        />
 
-        <select className={Styles.filter} onChange={onMargChange}>
-          <option value="">Marginación social</option>
-          <option value="muy_alto">Muy alta</option>
-          <option value="alto">Alta</option>
-          <option value="medio">Media</option>
-          <option value="bajo">Baja</option>
-        </select>
+        <Select
+          multi
+          className={Styles.filter}
+          value={valMarg}
+          placeholder="Marginación social"
+          onChange={onMargChange}
+          options={[
+            { value: 'muy_alto', label: 'Muy alta' },
+            { value: 'alto', label: 'Alta' },
+            { value: 'medio', label: 'Media' },
+            { value: 'bajo', label: 'Baja' },
+          ]}
+        />
 
-        <select className={Styles.filter} onChange={onNumActionsChange}>
-          <option value=""># de Acciones</option>
-          <option value="0">0-9</option>
-          <option value="1">10-49</option>
-          <option value="2">50-249</option>
-          <option value="3">250+</option>
-        </select>
+        <Select
+          multi
+          className={Styles.filter}
+          value={valNumActions}
+          placeholder="# de acciones"
+          onChange={onNumActionsChange}
+          options={[
+            { value: '0', label: '0-9' },
+            { value: '1', label: '10-49' },
+            { value: '2', label: '50-249' },
+            { value: '3', label: '250+' },
+          ]}
+        />
 
       </div>
 
-      <div className="col-lg-3 col-md-3 col-sm-4 col-sm-offset-3 col-xs-2 end-lg end-md end-sm end-xs">
+      <div className="col-sm-4 col-sm-offset-3 col-xs-2 end-lg end-md end-sm end-xs">
 
         <span className={Styles.numResults}>{numResults.toLocaleString()} resultados</span>
         <div className={Styles.searchWrapper}>
@@ -116,6 +138,10 @@ FilterHeader.propTypes = {
   onKeyUp: PropTypes.func.isRequired,
   numResults: PropTypes.number.isRequired,
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  valState: PropTypes.arrayOf(PropTypes.any),
+  valMuni: PropTypes.arrayOf(PropTypes.any),
+  valMarg: PropTypes.arrayOf(PropTypes.any),
+  valNumActions: PropTypes.arrayOf(PropTypes.any),
 }
 
 export default FilterHeader
