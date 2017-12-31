@@ -9,6 +9,12 @@ import Styles from './Nav.css'
 
 const Nav = (props) => {
   const selected = { color: Colors.brandGreen }
+
+  const locIsActive = (match, location) => {
+    const { pathname } = location
+    return (pathname === '/' || pathname.startsWith('/comunidades'))
+  }
+
   return (
     <nav className={`${Styles.container} wrapper row middle sm-hidden xs-hidden`}>
 
@@ -18,7 +24,7 @@ const Nav = (props) => {
 
       <div className="col-lg-11 col-md-11 end-lg end-md">
         <div className={Styles.links}>
-          <NavLink activeStyle={selected} exact to="/">COMUNIDADES</NavLink>
+          <NavLink isActive={locIsActive} activeStyle={selected} exact to="/">COMUNIDADES</NavLink>
           <NavLink activeStyle={selected} to="/organizaciones">ORGANIZACIONES</NavLink>
           <NavLink activeStyle={selected} to="/practicas">MEJORES PRÁCTICAS</NavLink>
           <NavLink activeStyle={selected} to="/nosotros">NOSOTROS</NavLink>

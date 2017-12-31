@@ -12,6 +12,7 @@ const FilterHeader = (props) => {
     onStateChange,
     onMuniChange,
     onMargChange,
+    onNumActionsChange,
     onKeyUp,
     localities,
     numResults,
@@ -76,6 +77,14 @@ const FilterHeader = (props) => {
           <option value="bajo">Baja</option>
         </select>
 
+        <select className={Styles.filter} onChange={onNumActionsChange}>
+          <option value=""># de Acciones</option>
+          <option value="0">0-9</option>
+          <option value="1">10-49</option>
+          <option value="2">50-249</option>
+          <option value="3">250+</option>
+        </select>
+
       </div>
 
       <div className="col-lg-3 col-md-3 col-sm-4 col-sm-offset-3 col-xs-2 end-lg end-md end-sm end-xs">
@@ -103,6 +112,7 @@ FilterHeader.propTypes = {
   onStateChange: PropTypes.func.isRequired,
   onMuniChange: PropTypes.func.isRequired,
   onMargChange: PropTypes.func.isRequired,
+  onNumActionsChange: PropTypes.func.isRequired,
   onKeyUp: PropTypes.func.isRequired,
   numResults: PropTypes.number.isRequired,
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
