@@ -48,7 +48,6 @@
     display: flex;
     flex-direction: row;
     height: 186px;
-    box-shadow: 0 25px 100px 0 strongShadow;
   }
 }
 
@@ -60,6 +59,5 @@
     display: flex;
     flex-direction: row;
     height: 152px;
-    box-shadow: 0 25px 100px 0 strongShadow;
   }
 }
