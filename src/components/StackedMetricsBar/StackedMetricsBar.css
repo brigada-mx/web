@@ -20,10 +20,24 @@
   border-bottom-right-radius: 0px;
 }
 
+.legendContainer {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 39px;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  margin: 0 6px 1px 0;
+  background-color: brandGreen;
+}
+
 .label {
-  color: brandGreen;
+  color: #9F9F9F;
   font-family: 'roboto-200', sans-serif;
   font-size: 14px;
   letter-spacing: 0.56px;
-  margin-right: 39px;
 }

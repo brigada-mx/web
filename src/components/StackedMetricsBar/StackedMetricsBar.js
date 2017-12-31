@@ -17,7 +17,12 @@ const StackedMetricsBar = ({ values, labels, style }) => {
 
   const barLabels = labels.map((l, i) => {
     const labelStyle = { opacity: (i + 1) / labels.length }
-    return <span style={labelStyle} key={i} className={Styles.label}>{l}</span>
+    return (
+      <div className={Styles.legendContainer}>
+        <span style={labelStyle} key={i} className={Styles.circle} />
+        <span className={Styles.label}>{l}</span>
+      </div>
+    )
   })
 
   return (
