@@ -149,7 +149,10 @@ class LocalityScreenView extends React.Component {
 
           <div className="row">
             <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7">
-              <span className={Styles.dmgLabel} style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
+              <div className={Styles.dmgLevel}>
+                <span className={Styles.circle} style={{ backgroundColor: dmgMeta.color }} />
+                <span className={Styles.label} style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
+              </div>
               <div className={Styles.placeName}>{name}, {munName}, {stateName}</div>
             </div>
             <div className="col-lg-3 col-md-3 end-lg end-md">
