@@ -55,11 +55,12 @@ class MapScreen extends React.Component {
         loading: true,
       },
       localityByCvegeo: {},
-      locSearch: '',
-      cvegeo: location.state ? location.state.cvegeo || '' : '',
-      marg: '',
-      numActions: [null, null],
       popup: null,
+      locSearch: '',
+      valState: [],
+      valMuni: [],
+      valMarg: [],
+      valNumActions: [],
     }
     this.handleLocalitySearchKeyUp = _.debounce(
       this.handleLocalitySearchKeyUp, 150
@@ -84,26 +85,20 @@ class MapScreen extends React.Component {
     })
   }
 
-  handleStateChange = (e) => {
-    this.setState({ cvegeo: e.target.value.substring(0, 2) })
+  handleStateChange = (v) => {
+    this.setState({ valState: v })
   }
 
-  handleMuniChange = (e) => {
-    this.setState({ cvegeo: e.target.value.substring(0, 5) })
+  handleMuniChange = (v) => {
+    this.setState({ valMuni: v })
   }
 
-  handleMargChange = (e) => {
-    this.setState({ marg: e.target.value })
+  handleMargChange = (v) => {
+    this.setState({ valMarg: v })
   }
 
-  handleNumActionsChange = (e) => {
-    const rangeByValue = {
-      0: [0, 9],
-      1: [10, 49],
-      2: [50, 249],
-      3: [250, null],
-    }
-    this.setState({ numActions: rangeByValue[e.target.value] || [null, null] })
+  handleNumActionsChange = (v) => {
+    this.setState({ valNumActions: v })
   }
 
   handleClickFeature = (feature) => {
@@ -139,16 +134,30 @@ class MapScreen extends React.Component {
 
   filterLocalities = (results) => {
     if (!results) return []
-    const { locSearch, cvegeo: cvegeoSearch, marg, numActions } = this.state
-    const [minActions, maxActions] = numActions
+    const { locSearch, valState, valMuni, valMarg, valNumActions } = this.state
+
+    const rangeByValNumActions = {
+      0: [0, 9],
+      1: [10, 49],
+      2: [50, 249],
+      3: [250, null],
+    }
+
     return results.filter((l) => {
       const { name, state_name: stateName, cvegeo, action_count: actions, meta: { margGrade } } = l
       const matchesSearch = tokenMatch(`${name} ${stateName}`, locSearch)
-      const matchesCvegeo = !cvegeo || cvegeo.startsWith(cvegeoSearch)
-      const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
-      const matchesActions = (minActions === null || actions >= minActions) &&
-        (maxActions === null || actions <= maxActions)
-      return matchesSearch && matchesCvegeo && matchestMarg && matchesActions
+
+      const cvegeos = valState.map(
+        v => v.value.substring(0, 2)
+      ).concat(
+        valMuni.map(v => v.value.substring(0, 5))
+      )
+      const matchesCvegeo = !cvegeo || cvegeos.length === 0 ||
+        cvegeos.some(v => cvegeo.startsWith(v))
+      // const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
+      // const matchesActions = (minActions === null || actions >= minActions) &&
+        // (maxActions === null || actions <= maxActions)
+      return matchesSearch && matchesCvegeo
     })
   }
 
@@ -156,6 +165,7 @@ class MapScreen extends React.Component {
     const { popup, localities: { data = {}, loading, error } } = this.state
 
     const localities = this.filterLocalities(data.results)
+    const { valState, valMuni, valMarg, valNumActions } = this.state
     return (
       <div>
         <FilterHeader
@@ -166,6 +176,10 @@ class MapScreen extends React.Component {
           onMargChange={this.handleMargChange}
           onNumActionsChange={this.handleNumActionsChange}
           onKeyUp={this.handleLocalitySearchKeyUp}
+          valState={valState}
+          valMuni={valMuni}
+          valMarg={valMarg}
+          valNumActions={valNumActions}
         />
         <div className={`${Styles.map} row`}>
           <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 lg-gutter md-gutter sm-gutter xs-gutter last-sm last-xs">
