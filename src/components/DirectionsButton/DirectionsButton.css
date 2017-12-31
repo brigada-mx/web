@@ -1,12 +1,26 @@
-@value colors: "src/colors.css";
-@value brandGreen from colors;
-
 .button {
+  background: no-repeat url('assets/img/directions.svg');
+  background-position: 29px 26px;
   display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 8vh;
-  height: 8vh;
-  background-color: brandGreen;
-  color: white;
+  width: 80px;
+  height: 80px;
+  background-color: #3DC59F;
+}
+
+.button:hover {
+  background-color: #13A68C;
+}
+
+.button:hover:after {
+  content: "CÓMO LLEGAR";
+  font-family: 'nunito-sans-800', sans-serif;
+  font-size: 11px;
+  color: #3DC587;
+  letter-spacing: 0.8px;
+  line-height: 16px;
+  text-decoration: none;
+  position: absolute;
+  text-align: center;
+  width: 48px;
+  margin: 88px 0 0 15px;
 }
