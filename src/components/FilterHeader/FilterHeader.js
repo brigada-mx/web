@@ -97,7 +97,7 @@ const FilterHeader = (props) => {
           multi
           className={Styles.filter}
           value={valNumActions}
-          placeholder="# de acciones"
+          placeholder="Acciones"
           onChange={onNumActionsChange}
           options={[
             { value: '0', label: '0-9' },

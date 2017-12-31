@@ -199,7 +199,7 @@ class MapScreen extends React.Component {
           valMarg={valMarg}
           valNumActions={valNumActions}
         />
-        <div className={`${Styles.map} row`}>
+        <div className={`${Styles.container} row`}>
           <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 lg-gutter md-gutter sm-gutter xs-gutter last-sm last-xs">
             {loading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
             {!loading &&
@@ -212,14 +212,16 @@ class MapScreen extends React.Component {
             }
           </div>
           <div className="col-lg-9 col-md-9 col-sm-8 col-xs-4">
-            <Map
-              cvegeoFilter={data.results && localities.map(l => l.cvegeo)}
-              popup={popup ? <LocalityPopup locality={popup} /> : null}
-              onClickFeature={this.handleClickFeature}
-              onEnterFeature={this.handleEnterFeature}
-              onLeaveFeature={this.handleLeaveFeature}
-            />
-            <LocalityLegend localities={localities} />
+            <div className={Styles.mapContainer}>
+              <Map
+                cvegeoFilter={data.results && localities.map(l => l.cvegeo)}
+                popup={popup ? <LocalityPopup locality={popup} /> : null}
+                onClickFeature={this.handleClickFeature}
+                onEnterFeature={this.handleEnterFeature}
+                onLeaveFeature={this.handleLeaveFeature}
+              />
+              <LocalityLegend localities={localities} />
+            </div>
           </div>
         </div>
       </div>

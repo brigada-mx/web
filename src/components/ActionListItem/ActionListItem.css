@@ -39,6 +39,15 @@
   text-transform: uppercase;
 }
 
+.goalProgress {
+  display: flex;
+  align-items: center;
+}
+
+.goalProgress .label {
+  margin-right: 11px;
+}
+
 .budget {
   font-family: 'nunito-sans-200', sans-serif;
   font-size: 15px;
