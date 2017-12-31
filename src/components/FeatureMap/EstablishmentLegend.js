@@ -5,16 +5,16 @@ import Styles from './EstablishmentLegend.css'
 
 
 export const metaByScianGroup = {
-  1: { icon: 'doctor-15', name: 'escuela' },
-  2: { icon: 'dog-park-15', name: 'iglesia' },
-  3: { icon: 'drinking-water-15', name: 'parque' },
-  4: { icon: 'embassy-15', name: 'mercado' },
-  5: { icon: 'entrance-15', name: 'hospital' },
-  6: { icon: 'fast-food-15', name: 'restaurante' },
-  7: { icon: 'ferry-15', name: 'ferretería' },
-  8: { icon: 'fire-station-15', name: 'changarro' },
-  9: { icon: 'fuel-15', name: 'antro' },
-  10: { icon: 'garden-15', name: 'mezcalería' },
+  1: { icon: 'doctor-15', name: 'Sin categorizar' },
+  2: { icon: 'dog-park-15', name: 'Administración pública' },
+  3: { icon: 'drinking-water-15', name: 'Almacenamiento' },
+  4: { icon: 'embassy-15', name: 'Asociaciones y organizaciones' },
+  5: { icon: 'entrance-15', name: 'Atención médica y psicológica' },
+  6: { icon: 'fast-food-15', name: 'Construcción y material' },
+  7: { icon: 'ferry-15', name: 'Educación' },
+  8: { icon: 'fire-station-15', name: 'Espacio público' },
+  9: { icon: 'fuel-15', name: 'Servicios de emergencia' },
+  10: { icon: 'garden-15', name: 'Transporte' },
 }
 
 const EstablishmentLegend = ({ groups }) => {
