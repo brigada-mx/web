@@ -21,12 +21,12 @@ const LocalityBreadcrumb = ({ cvegeo, stateName, munName, name }) => (
   <div className={Styles.breadcrumbLinks}>
     <NavLink to="/">Comunidades</NavLink>
     <NavLink
-      to={{ pathname: '/', state: { cvegeo: cvegeo.substring(0, 2) } }}
+      to={{ pathname: '/', state: { valState: [{ value: cvegeo, label: stateName }] } }}
     >
       {stateName}
     </NavLink>
     <NavLink
-      to={{ pathname: '/', state: { cvegeo: cvegeo.substring(0, 5) } }}
+      to={{ pathname: '/', state: { valMuni: [{ value: cvegeo, label: munName }] } }}
     >
       {munName}
     </NavLink>

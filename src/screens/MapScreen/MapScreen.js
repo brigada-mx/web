@@ -50,6 +50,12 @@ class MapScreen extends React.Component {
     super(props)
 
     const { location } = props
+    let valState = []
+    let valMuni = []
+    if (location.state) {
+      ({ valState = [], valMuni = [] } = location.state)
+    }
+
     this.state = {
       localities: {
         loading: true,
@@ -57,8 +63,8 @@ class MapScreen extends React.Component {
       localityByCvegeo: {},
       popup: null,
       locSearch: '',
-      valState: [],
-      valMuni: [],
+      valState,
+      valMuni,
       valMarg: [],
       valNumActions: [],
     }
@@ -144,7 +150,10 @@ class MapScreen extends React.Component {
     }
 
     return results.filter((l) => {
-      const { name, state_name: stateName, cvegeo, action_count: actions, meta: { margGrade } } = l
+      const {
+        name, state_name: stateName, cvegeo = '', action_count: actions, meta: { margGrade = '' },
+      } = l
+
       const matchesSearch = tokenMatch(`${name} ${stateName}`, locSearch)
 
       const cvegeos = valState.map(
@@ -152,12 +161,21 @@ class MapScreen extends React.Component {
       ).concat(
         valMuni.map(v => v.value.substring(0, 5))
       )
-      const matchesCvegeo = !cvegeo || cvegeos.length === 0 ||
-        cvegeos.some(v => cvegeo.startsWith(v))
-      // const matchestMarg = !marg || marg === margGrade.replace(/ /g, '_').toLowerCase()
-      // const matchesActions = (minActions === null || actions >= minActions) &&
-        // (maxActions === null || actions <= maxActions)
-      return matchesSearch && matchesCvegeo
+      const matchesCvegeo = cvegeos.length === 0 || cvegeos.some(v => cvegeo.startsWith(v))
+
+      const margs = valMarg.map(v => v.value)
+      const matchestMarg = margs.length === 0 ||
+        margs.some(v => v === margGrade.replace(/ /g, '_').toLowerCase())
+
+      const numActions = valNumActions.map(v => rangeByValNumActions[v.value])
+      const matchesActions = numActions.length === 0 ||
+        numActions.some((range) => {
+          const [minActions, maxActions] = range
+          return (minActions === null || actions >= minActions) &&
+            (maxActions === null || actions <= maxActions)
+        })
+
+      return matchesSearch && matchesCvegeo && matchestMarg && matchesActions
     })
   }
 
