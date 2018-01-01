@@ -26,19 +26,22 @@ const compareLocalities = (a, b) => {
   return tb - ta
 }
 
-const LocalityList = ({ localities, ...rest }) => {
-  const maxItems = 250
-  const items = localities.sort(compareLocalities).slice(0, maxItems).map((l) => {
-    const { cvegeo } = l
-    return (
-      <LocalityListItem
-        key={cvegeo}
-        locality={l}
-        {...rest}
-      />
-    )
-  })
-  return <div className={Styles.listContainer}>{items}</div>
+class LocalityList extends React.PureComponent {
+  render() {
+    const { localities, ...rest } = this.props
+    const maxItems = 250
+    const items = localities.sort(compareLocalities).slice(0, maxItems).map((l) => {
+      const { cvegeo } = l
+      return (
+        <LocalityListItem
+          key={cvegeo}
+          locality={l}
+          {...rest}
+        />
+      )
+    })
+    return <div className={Styles.listContainer}>{items}</div>
+  }
 }
 
 LocalityList.propTypes = {
@@ -61,6 +64,8 @@ class MapScreen extends React.Component {
         loading: true,
       },
       localityByCvegeo: {},
+      filtered: [],
+      layerFilter: null,
       popup: null,
       locSearch: '',
       valState,
@@ -91,6 +96,23 @@ class MapScreen extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const keys = ['localities', 'locSearch', 'valState', 'valMuni', 'valMarg', 'valNumActions']
+    if (keys.some(k => prevState[k] !== this.state[k])) {
+      const { localities: { data = {} } } = this.state
+      if (!data.results) return
+
+      const filtered = this.filterLocalities(data.results)
+      const layerFilter = ['in', 'cvegeo'].concat(filtered.map((l) => {
+        const { cvegeo } = l
+        if (cvegeo.startsWith('0')) return cvegeo
+        return Number.parseInt(cvegeo, 10)
+      }))
+
+      this.setState({ filtered, layerFilter })
+    }
+  }
+
   handleStateChange = (v) => {
     this.setState({ valState: v })
   }
@@ -105,6 +127,10 @@ class MapScreen extends React.Component {
 
   handleNumActionsChange = (v) => {
     this.setState({ valNumActions: v })
+  }
+
+  handleLocalitySearchKeyUp = (locSearch) => {
+    this.setState({ locSearch })
   }
 
   handleClickFeature = (feature) => {
@@ -132,10 +158,6 @@ class MapScreen extends React.Component {
 
   handleListItemLeaveFeature = () => {
     this.setState({ popup: null })
-  }
-
-  handleLocalitySearchKeyUp = (locSearch) => {
-    this.setState({ locSearch })
   }
 
   filterLocalities = (results) => {
@@ -176,15 +198,14 @@ class MapScreen extends React.Component {
   }
 
   render() {
-    const { popup, localities: { data = {}, loading, error } } = this.state
+    const { popup, localities: { data = {}, loading, error }, filtered, layerFilter } = this.state
 
-    const localities = this.filterLocalities(data.results)
     const { valState, valMuni, valMarg, valNumActions } = this.state
     return (
       <div>
         <FilterHeader
           localities={data.results || []}
-          numResults={localities.length}
+          numResults={filtered.length}
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
           onMargChange={this.handleMargChange}
@@ -200,7 +221,7 @@ class MapScreen extends React.Component {
             {loading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
             {!loading &&
               <LocalityList
-                localities={localities}
+                localities={filtered}
                 onClick={this.handleListItemClickFeature}
                 onMouseEnter={this.handleListItemEnterFeature}
                 onMouseLeave={this.handleListItemLeaveFeature}
@@ -210,13 +231,13 @@ class MapScreen extends React.Component {
           <div className="col-lg-9 col-md-9 col-sm-8 col-xs-4">
             <div className={Styles.mapContainer}>
               <Map
-                cvegeoFilter={data.results && localities.map(l => l.cvegeo)}
+                filter={layerFilter}
                 popup={popup ? <LocalityPopup locality={popup} /> : null}
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
               />
-              <LocalityLegend localities={localities} />
+              <LocalityLegend localities={filtered} />
             </div>
           </div>
         </div>

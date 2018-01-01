@@ -79,15 +79,7 @@ class Map extends React.Component {
       type: 'vector',
       url: 'mapbox://kylebebak.3gkltrqb',
     }
-
-    const { popup, cvegeoFilter } = this.props
-    let filter
-    if (cvegeoFilter) { // this is necessary because mapbox casts any valid string to an int
-      filter = ['in', 'cvegeo'].concat(cvegeoFilter.map((v) => {
-        if (v.startsWith('0')) return v
-        return Number.parseInt(v, 10)
-      }))
-    }
+    const { popup, filter } = this.props
 
     return (
       <Mapbox
@@ -151,7 +143,7 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
-  cvegeoFilter: PropTypes.arrayOf(PropTypes.string), // for filtering localities
+  filter: PropTypes.arrayOf(PropTypes.any),
   popup: PropTypes.any,
   onLoad: PropTypes.func,
   onClickFeature: PropTypes.func,

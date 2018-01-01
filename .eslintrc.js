@@ -28,6 +28,7 @@ module.exports = {
     "no-unused-vars": 1,
     "no-empty": 1,
     "no-console": 1,
+    "react/no-multi-comp": 1,
     "react/forbid-prop-types": 1,
     "react/require-default-props": 0,
     "react/jsx-filename-extension": 0,
