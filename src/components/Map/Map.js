@@ -22,9 +22,9 @@ const zoomStyle = {
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.initialZoom = [6]
-    this.initialCoordinates = [-95.9042505, 17.1073688]
-    this.loaded = false
+    this._initialZoom = [6]
+    this._initialCoordinates = [-95.9042505, 17.1073688]
+    this._loaded = false
   }
 
   deduplicate = (features, comparatorProperty) => {
@@ -50,8 +50,8 @@ class Map extends React.Component {
     const { onLoad } = this.props
     if (e.dataType === 'source' && e.isSourceLoaded && onLoad) {
       const features = map.querySourceFeatures('features', { sourceLayer: 'tileset-2017-12-26-6oh1br' })
-      if (this.loaded) return
-      this.loaded = true
+      if (this._loaded) return
+      this._loaded = true
       onLoad(this.deduplicate(features, 'cvegeo'))
     }
   }
@@ -92,8 +92,8 @@ class Map extends React.Component {
     return (
       <Mapbox
         style="mapbox://styles/kylebebak/cjbr1wz8o7blj2rpbidkjujq2" // eslint-disable-line react/style-prop-object
-        zoom={this.initialZoom}
-        center={this.initialCoordinates}
+        zoom={this._initialZoom}
+        center={this._initialCoordinates}
         containerStyle={{
           height: '100%',
           width: '100%',

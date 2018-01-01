@@ -24,13 +24,12 @@ const zoomStyle = {
 class FeatureMap extends React.Component {
   constructor(props) {
     super(props)
-    this.initialZoom = [13]
-    this.initialCoordinates = props.coordinates
+    this._initialZoom = [13]
+    this._initialCoordinates = props.coordinates
+    this._loaded = false
     this.state = {
       map: null,
     }
-    this._scianGroups = new Set()
-    this._loaded = false
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -41,10 +40,8 @@ class FeatureMap extends React.Component {
     if (this._loaded && _.isEqual(features, this.props.features)) return
     this._loaded = true
 
-    this._scianGroups = new Set()
     const markers = features.map((f) => {
       const { scian_group: group, location: { lat, lng } } = f
-      this._scianGroups.add(group)
       return {
         type: 'Feature',
         properties: {
@@ -103,13 +100,13 @@ class FeatureMap extends React.Component {
   }
 
   render() {
-    const { popup } = this.props
+    const { popup, features } = this.props
 
     return (
       <Mapbox
         style="mapbox://styles/kylebebak/cjbr1wz8o7blj2rpbidkjujq2" // eslint-disable-line react/style-prop-object
-        zoom={this.initialZoom}
-        center={this.initialCoordinates}
+        zoom={this._initialZoom}
+        center={this._initialCoordinates}
         containerStyle={{
           height: '100%',
           width: '100%',
@@ -118,7 +115,7 @@ class FeatureMap extends React.Component {
         onStyleLoad={this.handleMapLoaded}
       >
         {popup}
-        <EstablishmentLegend groups={Array.from(this._scianGroups)} />
+        <EstablishmentLegend establishments={features} />
         <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
       </Mapbox>
     )

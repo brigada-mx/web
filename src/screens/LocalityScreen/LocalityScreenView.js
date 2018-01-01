@@ -120,7 +120,7 @@ class LocalityScreenView extends React.Component {
       const dmgMeta = metaByDmgGrade(dmgGrade(data))
 
       const barLabels = [
-        'Analfabestismo',
+        'Analfabetismo',
         'Primaria incompleta',
         'Falta excusado',
         'Falta electricidad',

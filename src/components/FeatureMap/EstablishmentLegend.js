@@ -17,10 +17,20 @@ export const metaByScianGroup = {
   10: { icon: 'garden-15', name: 'Transporte' },
 }
 
-const EstablishmentLegend = ({ groups }) => {
-  const items = groups.sort((a, b) => a - b).map((g) => {
+const EstablishmentLegend = ({ establishments }) => {
+  const counts = {}
+  for (const e of establishments) {
+    const { scian_group: group } = e
+    if (group in counts) {
+      counts[group] += 1
+    } else {
+      counts[group] = 1
+    }
+  }
+
+  const items = Object.keys(counts).sort((a, b) => a - b).map((g) => {
     const { icon, name } = metaByScianGroup[g]
-    return <div key={g} className={Styles.legendItem}>{icon}, {name}</div>
+    return <div key={g} className={Styles.legendItem}>{icon}, {name} {counts[g]}</div>
   })
 
   return (
@@ -32,7 +42,7 @@ const EstablishmentLegend = ({ groups }) => {
 }
 
 EstablishmentLegend.propTypes = {
-  groups: PropTypes.arrayOf(PropTypes.number).isRequired,
+  establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default EstablishmentLegend
