@@ -32,8 +32,7 @@ const FilterHeader = (props) => {
       if (a.state_name > b.state_name) return 1
       return 0
     }).map((i) => {
-      const { cvegeo, state_name: stateName } = i
-      return { value: cvegeo, label: stateName }
+      return { value: i.cvegeo_state, label: i.state_name }
     })
   }
 
@@ -45,8 +44,7 @@ const FilterHeader = (props) => {
       if (a.municipality_name > b.municipality_name) return 1
       return 0
     }).map((i) => {
-      const { cvegeo, municipality_name: munName, state_name: stateName } = i
-      return { value: cvegeo, label: `${munName}, ${stateName}` }
+      return { value: i.cvegeo_municipality, label: `${i.municipality_name}, ${i.state_name}` }
     })
   }
 

@@ -156,11 +156,7 @@ class MapScreen extends React.Component {
 
       const matchesSearch = tokenMatch(`${name} ${stateName}`, locSearch)
 
-      const cvegeos = valState.map(
-        v => v.value.substring(0, 2)
-      ).concat(
-        valMuni.map(v => v.value.substring(0, 5))
-      )
+      const cvegeos = valState.map(v => v.value).concat(valMuni.map(v => v.value))
       const matchesCvegeo = cvegeos.length === 0 || cvegeos.some(v => cvegeo.startsWith(v))
 
       const margs = valMarg.map(v => v.value)
