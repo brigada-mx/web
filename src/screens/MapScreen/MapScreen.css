@@ -1,9 +1,26 @@
 @value colors: "src/colors.css";
 @value weakShadow, strongShadow from colors;
 
-.map {
+.container {
   height: calc(100vh - 130px);
   position: relative;
+}
+
+.mapContainer {
+  position: relative;
+}
+
+.mapContainer:before {
+    content: '';
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow: inset 15px 15px 30px 0px weakShadow;
 }
 
 .listContainer{
@@ -11,7 +28,6 @@
   top: 0;
   left: 0;
   z-index: 2;
-  box-shadow: 15px 15px 30px 0px weakShadow;
   background-color: white;
   height: 100%;
   overflow-y: scroll;
@@ -25,25 +41,23 @@
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
-  .map {
+  .container {
     height: calc(100vh - 251px);
   }
   .listContainer {
     display: flex;
     flex-direction: row;
     height: 186px;
-    box-shadow: 0 25px 100px 0 strongShadow;
   }
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px) {
-  .map {
+  .container {
     height: calc(100vh - 225px);
   }
   .listContainer {
     display: flex;
     flex-direction: row;
     height: 152px;
-    box-shadow: 0 25px 100px 0 strongShadow;
   }
 }

@@ -5,10 +5,10 @@
   position: absolute;
   display: flex;
   box-sizing: border-box;
-  right: 26px;
+  left: 26px;
   bottom: 26px;
   flex-direction: column;
-  width: 152px;
+  width: 182px;
   padding: 15px 15px 9px 15px;
   border-radius: 2px;
   box-shadow: 0 40px 100px 0 strongShadow;

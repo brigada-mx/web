@@ -1,3 +1,5 @@
+// MAPS
+
 .mapboxgl-map button {
   background-color: white !important;
   background-repeat: no-repeat !important;
@@ -38,4 +40,56 @@
 
 .mapboxgl-popup-tip {
   border-width: 5px !important;
+}
+
+// FILTERS
+
+.Select .Select-control {
+  border: none;
+  cursor: pointer;
+}
+
+div .Select .Select-control:hover {
+  box-shadow: none;
+}
+
+.Select-control .Select-placeholder {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 15px;
+  color: #141418;
+  letter-spacing: 0.6px;
+}
+
+.Select-arrow-zone .Select-arrow {
+  border: none;
+  background: no-repeat url('assets/img/dropdown-arrow.svg');
+  width: 8px;
+  height: 5px;
+}
+
+.Select .Select-menu-outer {
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-top: 1px solid #F2F2F4;
+  box-shadow: 0 40px 100px 0px rgba(37, 38, 50, 0.1);
+  margin-top: 14px;
+}
+
+.Select .Select-menu {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 14px;
+  color: #19191D;
+  letter-spacing: 0.56px;
+  line-height: 30px;
+}
+
+.Select-control div.Select-value {
+  background-color: #3DC59F;
+  border: none;
+  color: white;
+  border-radius: 0px;
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.6px;
 }
