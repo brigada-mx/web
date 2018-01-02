@@ -66,6 +66,7 @@ const FilterHeader = (props) => {
 
         <Select
           multi
+          removeSelected={false}
           className={Styles.filter}
           value={valState}
           placeholder="Estado"
@@ -75,6 +76,7 @@ const FilterHeader = (props) => {
 
         <Select
           multi
+          removeSelected={false}
           className={Styles.filter}
           value={valMuni}
           placeholder="Municipio"
@@ -84,6 +86,7 @@ const FilterHeader = (props) => {
 
         {valMarg && <Select
           multi
+          removeSelected={false}
           className={Styles.filter}
           value={valMarg}
           placeholder="Marginación social"
@@ -98,6 +101,7 @@ const FilterHeader = (props) => {
 
         {valNumActions && <Select
           multi
+          removeSelected={false}
           className={Styles.filter}
           value={valNumActions}
           placeholder="Total de Proyectos"
