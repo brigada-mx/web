@@ -11,10 +11,6 @@
   padding: 27px;
 }
 
-.orgName {
-  color: brandGreen;
-}
-
 .header {
   font-family: 'nunito-sans-200', sans-serif;
   font-size: 24px;
@@ -28,6 +24,16 @@
   color: #3DC59F;
   letter-spacing: 0.4px;
   line-height: 16px;
+  margin-bottom: 2px;
+}
+
+.summaryContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 531px;
+  margin-bottom: 32px;
 }
 
 .label {
@@ -62,6 +68,7 @@
   color: #141418;
   letter-spacing: 0.6px;
   line-height: 30px;
+  margin-bottom: 23px;
 }
 
 .dates {
@@ -70,4 +77,19 @@
   color: #141418;
   letter-spacing: 0.4px;
   line-height: 16px;
+}
+
+@media screen and (max-width: 767px) and (min-width: 320px) {
+  .header {
+    margin-bottom: 17px;
+  }
+  .summaryContainer {
+    flex-direction: column;
+    align-items: left;
+    height: 73px;
+  }
+  .goalProgress {
+    flex-direction: column;
+    align-items: left;
+  }
 }

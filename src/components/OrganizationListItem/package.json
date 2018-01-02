@@ -1,6 +1,6 @@
 {
-  "name": "LocalityListItem",
+  "name": "OrganizationListItem",
   "version": "0.0.0",
   "private": true,
-  "main": "./LocalityListItem.js"
+  "main": "./OrganizationListItem.js"
 }

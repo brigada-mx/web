@@ -20,17 +20,15 @@ const OrganizationListItem = ({ organization, onClick, onMouseEnter, onMouseLeav
       onMouseLeave={handleMouseLeave}
       className={Styles.listItem}
     >
-      <div className={Styles.listItemWrapper}>
-        <div className={`${Styles.listItemHeader}`}>
-          <div className={Styles.name}>{name},</div>
-          <div className={Styles.stateName}>
-        </div>
+      <div className={Styles.listItemHeader}>
+        <div className={Styles.name}>{name}</div>
+        <div className={Styles.stateName}></div>
+      </div>
 
-        <div className={Styles.listItemMetricsContainer}>
-          <div className={`${Styles.listItemMetrics} ${Styles.act}`}>
-            <span className={Styles.value}>{actions}</span>
-            <span className={Styles.label}>Acciones registradas</span>
-          </div>
+      <div className={Styles.listItemMetricsContainer}>
+        <div className={`${Styles.listItemMetrics} ${Styles.act}`}>
+          <span className={Styles.value}>{actions}</span>
+          <span className={Styles.label}>Acciones registradas</span>
         </div>
       </div>
     </div>
