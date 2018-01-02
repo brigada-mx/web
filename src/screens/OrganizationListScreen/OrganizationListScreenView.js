@@ -28,9 +28,9 @@ const compareOrganizations = (a, b) => {
 
 class OrganizationList extends React.PureComponent {
   render() {
-    const { localities, ...rest } = this.props
+    const { organizations, ...rest } = this.props
     const maxItems = 250
-    const items = localities.sort(compareOrganizations).slice(0, maxItems).map((l) => {
+    const items = organizations.sort(compareOrganizations).slice(0, maxItems).map((l) => {
       const { cvegeo } = l
       return (
         <OrganizationListItem
@@ -45,7 +45,7 @@ class OrganizationList extends React.PureComponent {
 }
 
 OrganizationList.propTypes = {
-  localities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  organizations: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 class OrganizationListScreenView extends React.Component {
@@ -60,12 +60,12 @@ class OrganizationListScreenView extends React.Component {
     }
 
     this.state = {
+      organizations: {
+        loading: true,
+      },
       localities: {
         loading: true,
       },
-      localityByCvegeo: {},
-      filtered: [],
-      layerFilter: null,
       popup: null,
       focused: null,
       organizationSearch: '',
@@ -73,8 +73,8 @@ class OrganizationListScreenView extends React.Component {
       valMuni,
       valNumActions: [],
     }
-    this.handleLocalitySearchKeyUp = _.debounce(
-      this.handleLocalitySearchKeyUp, 150
+    this.handleOrganizationSearchKeyUp = _.debounce(
+      this.handleOrganizationSearchKeyUp, 150
     )
   }
 
@@ -118,7 +118,7 @@ class OrganizationListScreenView extends React.Component {
     this.setState({ valNumActions: v })
   }
 
-  handleLocalitySearchKeyUp = (organizationSearch) => {
+  handleOrganizationSearchKeyUp = (organizationSearch) => {
     this.setState({ organizationSearch })
   }
 
@@ -197,9 +197,8 @@ class OrganizationListScreenView extends React.Component {
           numResults={filtered.length}
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
-          onMargChange={this.handleMargChange}
           onNumActionsChange={this.handleNumActionsChange}
-          onKeyUp={this.handleLocalitySearchKeyUp}
+          onKeyUp={this.handleOrganizationSearchKeyUp}
           valState={valState}
           valMuni={valMuni}
           valMarg={valMarg}

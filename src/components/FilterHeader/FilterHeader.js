@@ -82,7 +82,7 @@ const FilterHeader = (props) => {
           options={muniOptions()}
         />
 
-        <Select
+        {valMarg && <Select
           multi
           className={Styles.filter}
           value={valMarg}
@@ -94,9 +94,9 @@ const FilterHeader = (props) => {
             { value: 'medio', label: 'Media' },
             { value: 'bajo', label: 'Baja' },
           ]}
-        />
+        />}
 
-        <Select
+        {valNumActions && <Select
           multi
           className={Styles.filter}
           value={valNumActions}
@@ -108,7 +108,7 @@ const FilterHeader = (props) => {
             { value: '2', label: '50-249' },
             { value: '3', label: '250+' },
           ]}
-        />
+        />}
 
       </div>
 
@@ -136,8 +136,8 @@ const FilterHeader = (props) => {
 FilterHeader.propTypes = {
   onStateChange: PropTypes.func.isRequired,
   onMuniChange: PropTypes.func.isRequired,
-  onMargChange: PropTypes.func.isRequired,
-  onNumActionsChange: PropTypes.func.isRequired,
+  onMargChange: PropTypes.func,
+  onNumActionsChange: PropTypes.func,
   onKeyUp: PropTypes.func.isRequired,
   numResults: PropTypes.number.isRequired,
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,

@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Nav from 'components/Nav'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
-// import OrganizationListScreen from 'screens/OrganizationListScreen'
+import OrganizationListScreen from 'screens/OrganizationListScreen'
 // import OrganizationScreen from 'screens/OrganizationScreen'
 
 
@@ -39,7 +39,7 @@ const App = () => {
         <Route exact path="/" component={MapScreen} />
         <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
 
-        {/* <Route path="/organizaciones" component={OrganizationListScreen} /> */}
+        <Route path="/organizaciones" component={OrganizationListScreen} />
         {/* <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} /> */}
 
         <Route path="/practicas" component={BestPracticesScreen} />

@@ -103,4 +103,3 @@ LocalityListItem.defaultProps = {
 }
 
 export default LocalityListItem
-
