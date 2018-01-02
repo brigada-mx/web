@@ -93,6 +93,7 @@ div .Select .Select-control:hover {
   font-size: 15px;
   letter-spacing: 0.6px;
   max-width: 80%;
+  -webkit-font-smoothing: antialiased;
 }
 
 .Select .Select-multi-value-wrapper {
@@ -103,11 +104,12 @@ div .Select .Select-control:hover {
   display: none;
 }
 
-.Select .Select-value-label {
+.Select .Select-value .Select-value-label {
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  padding: 5px 7px 4px 7px;
 }
 
 .Select .Select-option.is-selected {
