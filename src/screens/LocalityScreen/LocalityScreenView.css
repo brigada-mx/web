@@ -126,7 +126,7 @@
 }
 
 .actionMetricsContainer {
-  padding: 65px 0 69px 0;
+  padding: 65px 25px 69px 25px;
 }
 
 .actionMetricsContainer .vizCount {
@@ -134,10 +134,95 @@
 }
 
 .actionProgress {
-  margin-top: 31px;
+  margin-top: 27px;
 }
 
 .actionCardsContainer {
   background-color: #F6F8FA;
   padding: 21px 25px 5px 25px;
+}
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .breadcrumbLinks {
+    margin-bottom: 73px;
+  }
+  .dmgChartContainer {
+    margin-bottom: 32px;
+  }
+  .map {
+    margin-top: 67px;
+  }
+  .actionCardsContainer {
+    background-color: #F6F8FA;
+    padding: 21px 20px 5px 20px;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 320px) {
+  .breadcrumbLinks {
+    margin-bottom: 73px;
+  }
+  .placeName {
+    font-size: 38px;
+    letter-spacing: -0.08px;
+    line-height: 52px;
+  }
+  .dmgChartContainer {
+    margin-bottom: 32px;
+  }
+  .margMetricsContainer {
+    flex-direction: column;
+  }
+  .map {
+    margin-top: 67px;
+    border-bottom: 5px solid #F6F8FA;
+  }
+  .actionMetricsContainer {
+    padding: 42px 0 50px 0;
+  }
+  .actionMetricsContainer .vizHeader {
+    flex-direction: column;
+    align-items: center;
+  }
+  .actionMetricsContainer .vizHeader .vizLabel {
+    order: 2;
+    text-align: center;
+    margin-right: 0;
+  }
+  .actionMetricsContainer .vizHeader:nth-of-type(1) .vizCount {
+    font-size: 24px;
+    color: #9F9F9F;
+    letter-spacing: 0;
+    line-height: 46px;
+  }
+  .actionMetricsContainer .vizHeader:nth-of-type(1) .vizLabel {
+    color: #CFCFCF;
+  }
+  .actionMetricsContainer .vizHeader:nth-of-type(2) {
+    order: 3;
+  }
+  .actionMetricsContainer .vizHeader:nth-of-type(2) .vizCount {
+    font-size: 24px;
+    color: #9F9F9F;
+    letter-spacing: 0;
+    line-height: 46px;
+  }
+  .actionMetricsContainer .vizHeader:nth-of-type(2) .vizLabel {
+    color: #CFCFCF;
+  }
+  .actionProgress {
+    border-top: 1px solid #F6F8FA;
+    margin-top: 44px;
+    padding: 38px 16px 0 16px;
+  }
+  .actionProgress .vizLabel {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    margin-right: 0px;
+  }
+  .actionCardsContainer {
+    background-color: #F6F8FA;
+    padding: 21px 20px 5px 20px;
+  }
 }

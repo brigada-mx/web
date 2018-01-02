@@ -81,7 +81,7 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
 
           <div className={`${Styles.listItemMetrics} ${Styles.act}`}>
             <span className={Styles.value}>{actions}</span>
-            <span className={Styles.label}>Acciones registradas</span>
+            <span className={Styles.label}>Proyectos registrados</span>
           </div>
         </div>
       </div>

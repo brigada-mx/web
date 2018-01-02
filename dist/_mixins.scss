@@ -64,7 +64,6 @@
 // Roboto
 @include font-face('roboto', 'regular', 'roboto', 'sans-serif');
 @include font-face('roboto-100', '100', 'roboto', 'sans-serif');
-@include font-face('roboto-200', '200', 'roboto', 'sans-serif');
 @include font-face('roboto-300', '300', 'roboto', 'sans-serif');
 @include font-face('roboto-500', '500', 'roboto', 'sans-serif');
 @include font-face('roboto-700', '700', 'roboto', 'sans-serif');
@@ -76,10 +75,6 @@
 
 @mixin roboto-100 {
     font-family: 'roboto-100', sans-serif;
-}
-
-@mixin roboto-200 {
-    font-family: 'roboto-200', sans-serif;
 }
 
 @mixin roboto-300 {

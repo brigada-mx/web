@@ -100,7 +100,7 @@ const FilterHeader = (props) => {
           multi
           className={Styles.filter}
           value={valNumActions}
-          placeholder="Acciones"
+          placeholder="Total de Proyectos"
           onChange={onNumActionsChange}
           options={[
             { value: '0', label: '0-9' },

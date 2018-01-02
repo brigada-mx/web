@@ -150,19 +150,19 @@ class LocalityScreenView extends React.Component {
           />
 
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7">
+            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-8 col-sm-8 col-xs-4">
               <div className={Styles.dmgLevel}>
                 <span className={Styles.circle} style={{ backgroundColor: dmgMeta.color }} />
                 <span className={Styles.label} style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
               </div>
               <div className={Styles.placeName}>{name}, {munName}, {stateName}</div>
             </div>
-            <div className="col-lg-3 col-md-3 end-lg end-md">
+            <div className="col-lg-3 col-md-3 end-lg end-md sm-hidden xs-hidden">
               <DirectionsButton lat={lat} lng={lng} />
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3 lg-gutter md-gutter">
+            <div className="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3 col-sm-8 col-xs-4 lg-gutter md-gutter">
               <div className={Styles.vizHeader}>
                 <span className={Styles.vizLabel}>VIVIENDAS<br />DAÑADAS</span>
                 <span className={Styles.vizCount}>{total}</span>
@@ -171,7 +171,7 @@ class LocalityScreenView extends React.Component {
                 <DmgBarChart {...{ destroyed, habit, notHabit }} />
               </div>
             </div>
-            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6">
+            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
               <div className={Styles.vizHeader}>
                 <span className={Styles.vizLabel}>MARGINACIÓN<br />SOCIAL</span>
                 <span className={Styles.vizCount}>{margGrade}</span>
@@ -226,7 +226,7 @@ class LocalityScreenView extends React.Component {
       const { results: actions } = data
       let budget = 0
       const orgs = {}
-      const labels = ['Por iniciar', 'En progreso', 'Completado']
+      const labels = ['Por iniciar', 'En progreso', 'Completados']
       const status = [0, 0, 0]
 
       const date = moment().format('YYYY-MM-DD')
@@ -247,9 +247,9 @@ class LocalityScreenView extends React.Component {
         <div>
           <div className={Styles.actionMetricsContainer}>
             <div className="row">
-              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 flex-lg between-lg">
+              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between bottom-xs">
                 <div className={Styles.vizHeader}>
-                  <span className={Styles.vizLabel}>ACCIONES DE<br />RECONSTRUCCIÓN</span>
+                  <span className={Styles.vizLabel}>PROYECTOS DE<br />RECONSTRUCCIÓN</span>
                   <span className={Styles.vizCount}>{actions.length}</span>
                 </div>
                 <div className={Styles.vizHeader}>
@@ -263,7 +263,7 @@ class LocalityScreenView extends React.Component {
               </div>
             </div>
             <div className={`${Styles.actionProgress} row`}>
-              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
+              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4">
                 <span className={Styles.vizLabel}>AVANCE</span>
                 <StackedMetricsBar labels={labels} values={status} />
               </div>

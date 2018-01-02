@@ -43,12 +43,14 @@ const ActionListItem = ({ action }) => {
     <div className={Styles.listItem}>
       <div className={Styles.orgName}>{name || key}</div>
       <div className={Styles.header}>{`Construcción de ${type.toLowerCase()}`}</div>
-      {budget &&
-        <div>
-          <span className={Styles.label}>PRESUPUESTO: </span>
-          <span className={Styles.budget}>${fmtNum(budget)}</span>
-        </div>}
-      {metrics()}
+      <div className={Styles.summaryContainer}>
+        {budget &&
+          <div>
+            <span className={Styles.label}>PRESUPUESTO: </span>
+            <span className={Styles.budget}>${fmtNum(budget)}</span>
+          </div>}
+        {metrics()}
+      </div>
       {desc && <div className={Styles.description}>{desc}</div>}
       {dates()}
     </div>

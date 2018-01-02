@@ -28,6 +28,14 @@ $screen-lg-min: 75em;
   @include flex-direction(column-reverse);
 }
 
+.flex {
+  @include flexbox;
+}
+
+.between {
+  @include justify-content(space-between);
+}
+
 .middle {
   @include align-items(center);
   @include flexbox;
