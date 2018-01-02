@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 
+import Colors from 'src/Colors'
 import Styles from './Map.css'
 
 
@@ -24,36 +25,6 @@ class Map extends React.Component {
     super(props)
     this._initialZoom = [6]
     this._initialCoordinates = [-95.9042505, 17.1073688]
-    this._loaded = false
-  }
-
-  deduplicate = (features, comparatorProperty) => {
-    const existingFeatureKeys = {}
-    // Because features come from tiled vector data, feature geometries may be split
-    // or duplicated across tile boundaries and, as a result, features may appear
-    // multiple times in query results.
-    const uniqueFeatures = features.filter((el) => {
-      if (existingFeatureKeys[el.properties[comparatorProperty]]) {
-        return false
-      }
-      existingFeatureKeys[el.properties[comparatorProperty]] = true
-      return true
-    })
-
-    return uniqueFeatures
-  }
-
-  /**
-   * This is called only once, when data is first loaded.
-   */
-  handleData = (map, e) => {
-    const { onLoad } = this.props
-    if (e.dataType === 'source' && e.isSourceLoaded && onLoad) {
-      const features = map.querySourceFeatures('features', { sourceLayer: 'tileset-2017-12-26-6oh1br' })
-      if (this._loaded) return
-      this._loaded = true
-      onLoad(this.deduplicate(features, 'cvegeo'))
-    }
   }
 
   handleMapLoaded = (map) => {
@@ -90,7 +61,6 @@ class Map extends React.Component {
           height: '100%',
           width: '100%',
         }}
-        onData={this.handleData}
         onStyleLoad={this.handleMapLoaded}
       >
         {popup}
@@ -126,12 +96,12 @@ class Map extends React.Component {
             'circle-color': {
               property: 'total',
               stops: [
-                [-1, '#939AA1'],
-                [0, '#ff0'],
-                [10, '#db0'],
-                [50, '#d80'],
-                [250, '#d40'],
-                [1250, '#f00'],
+                [-1, Colors.unknown],
+                [0, Colors.minimal],
+                [10, Colors.low],
+                [50, Colors.medium],
+                [250, Colors.high],
+                [1250, Colors.severe],
               ],
             },
             'circle-opacity': 0.75,
@@ -145,14 +115,12 @@ class Map extends React.Component {
 Map.propTypes = {
   filter: PropTypes.arrayOf(PropTypes.any),
   popup: PropTypes.any,
-  onLoad: PropTypes.func,
   onClickFeature: PropTypes.func,
   onEnterFeature: PropTypes.func,
   onLeaveFeature: PropTypes.func,
 }
 
 Map.defaultProps = {
-  onLoad: () => {},
   onClickFeature: () => {},
   onEnterFeature: () => {},
   onLeaveFeature: () => {},
