@@ -3,12 +3,14 @@ import PropTypes from 'prop-types'
 
 import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 
+import env from 'src/env'
 import Colors from 'src/Colors'
 import Styles from './Map.css'
 
 
+const { mapbox: { accessToken } } = env
 const Mapbox = ReactMapboxGl({
-  accessToken: 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Ynd2d2s0dG4ifQ.W9vKUEkm1KtmR66z_dhixA',
+  accessToken,
   scrollZoom: false,
 })
 
@@ -46,11 +48,14 @@ class Map extends React.Component {
   }
 
   render() {
-    const sourceOptions = {
-      type: 'vector',
-      url: 'mapbox://kylebebak.3gkltrqb',
+    const { popup, filter, features, sourceLayer, sourceOptions } = this.props
+    const featureSourceOptions = {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features,
+      },
     }
-    const { popup, filter } = this.props
 
     return (
       <Mapbox
@@ -65,12 +70,15 @@ class Map extends React.Component {
       >
         {popup}
         <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
-        <Source id="features" geoJsonSource={sourceOptions} />
+        <Source
+          id="features"
+          geoJsonSource={features ? featureSourceOptions : sourceOptions}
+        />
         <Layer
           id="features"
           sourceId="features"
           type="circle"
-          sourceLayer="tileset-2017-12-26-6oh1br"
+          sourceLayer={sourceLayer}
           filter={filter}
           paint={{
             'circle-radius': {
@@ -113,6 +121,9 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
+  features: PropTypes.arrayOf(PropTypes.object),
+  sourceLayer: PropTypes.string,
+  sourceOptions: PropTypes.object,
   filter: PropTypes.arrayOf(PropTypes.any),
   popup: PropTypes.any,
   onClickFeature: PropTypes.func,

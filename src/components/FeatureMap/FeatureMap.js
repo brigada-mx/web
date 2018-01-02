@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl'
 import _ from 'lodash'
 
+import env from 'src/env'
 import EstablishmentLegend, { metaByScianGroup } from './EstablishmentLegend'
 import Styles from './FeatureMap.css'
 
 
+const { mapbox: { accessToken } } = env
 const Mapbox = ReactMapboxGl({
-  accessToken: 'pk.eyJ1Ijoia3lsZWJlYmFrIiwiYSI6ImNqOTV2emYzdjIxbXEyd3A2Ynd2d2s0dG4ifQ.W9vKUEkm1KtmR66z_dhixA',
+  accessToken,
   scrollZoom: false,
 })
 

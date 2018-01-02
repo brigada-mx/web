@@ -13,8 +13,11 @@ import LocalityLegend from 'components/Map/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
 import { dmgGrade } from 'tools/other'
+import env from 'src/env'
 import Styles from './MapScreen.css'
 
+
+const { mapbox: { sourceOptions, sourceLayer } } = env
 
 const compareLocalities = (a, b) => {
   const { total: ta } = a.meta
@@ -233,6 +236,8 @@ class MapScreen extends React.Component {
               <Map
                 filter={layerFilter}
                 popup={popup ? <LocalityPopup locality={popup} /> : null}
+                sourceOptions={sourceOptions}
+                sourceLayer={sourceLayer}
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
