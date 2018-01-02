@@ -66,6 +66,7 @@ const FilterHeader = (props) => {
 
         <Select
           multi
+          closeOnSelect={false}
           removeSelected={false}
           className={Styles.filter}
           value={valState}
@@ -76,6 +77,7 @@ const FilterHeader = (props) => {
 
         <Select
           multi
+          closeOnSelect={false}
           removeSelected={false}
           className={Styles.filter}
           value={valMuni}
@@ -86,6 +88,7 @@ const FilterHeader = (props) => {
 
         {valMarg && <Select
           multi
+          closeOnSelect={false}
           removeSelected={false}
           className={Styles.filter}
           value={valMarg}
@@ -101,6 +104,7 @@ const FilterHeader = (props) => {
 
         {valNumActions && <Select
           multi
+          closeOnSelect={false}
           removeSelected={false}
           className={Styles.filter}
           value={valNumActions}

@@ -3,6 +3,8 @@ import React from 'react'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
+import env from 'src/env'
+import TestScreen from 'screens/TestScreen'
 import Nav from 'components/Nav'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
@@ -35,6 +37,8 @@ const App = () => {
     <Router>
       <div>
         <Nav />
+
+        {env.env === 'dev' && <Route exact path="/test" component={TestScreen} />}
 
         <Route exact path="/" component={MapScreen} />
         <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
