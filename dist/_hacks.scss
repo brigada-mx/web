@@ -109,3 +109,29 @@ div .Select .Select-control:hover {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.Select .Select-option.is-selected {
+  background-color: transparent;
+}
+
+.Select .Select-option.is-focused {
+  background-color: #F6F8FA;
+}
+
+// .Select .Select-option.is-focused:before {
+//   border: 2px solid #3DC59F;
+// }
+
+.Select .Select-option:before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #3DC59F;
+  margin: 0 13px -3px 0;
+  box-sizing: border-box;
+}
+
+.Select .Select-option.is-selected:before {
+  background-color: #3DC59F;
+}
