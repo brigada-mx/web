@@ -73,7 +73,10 @@ div .Select .Select-control:hover {
   border-bottom: none;
   border-top: 1px solid #F2F2F4;
   box-shadow: 0 40px 100px 0px rgba(37, 38, 50, 0.1);
-  margin-top: 14px;
+  width: 260px;
+  margin-top: 15px;
+  left: -14px;
+  padding-top: 18px;
 }
 
 .Select .Select-menu {
@@ -112,12 +115,18 @@ div .Select .Select-control:hover {
   padding: 5px 7px 4px 7px;
 }
 
+.Select .Select-option {
+  padding: 1px 25px 1px 54px;
+  text-indent: -29px;
+}
+
 .Select .Select-option.is-selected {
   background-color: transparent;
 }
 
 .Select .Select-option.is-focused {
-  background-color: #F6F8FA;
+  font-family: 'nunito-sans-600', sans-serif;
+  background-color: white;
 }
 
 // .Select .Select-option.is-focused:before {
@@ -136,4 +145,8 @@ div .Select .Select-control:hover {
 
 .Select .Select-option.is-selected:before {
   background-color: #3DC59F;
+}
+
+.Select.is-open > .Select-control .Select-arrow {
+  background: no-repeat url('assets/img/dropdown-arrow-accent.svg');
 }

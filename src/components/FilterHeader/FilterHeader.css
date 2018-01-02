@@ -69,6 +69,7 @@
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .container {
     box-shadow: unset;
+    height: 65px;
   }
   .search {
     padding: 9px 0px 8px 31px;
