@@ -92,4 +92,20 @@ div .Select .Select-control:hover {
   font-family: 'nunito-sans', sans-serif;
   font-size: 15px;
   letter-spacing: 0.6px;
+  max-width: 80%;
+}
+
+.Select .Select-multi-value-wrapper {
+  width: 100%;
+}
+
+.Select .Select-value .Select-value-icon {
+  display: none;
+}
+
+.Select .Select-value-label {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

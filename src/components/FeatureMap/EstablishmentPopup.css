@@ -4,10 +4,15 @@
 
 .header {
   font-family: 'roboto-500', sans-serif;
-  font-size: 15px;
+  font-size: 13px;
   color: #141418;
   display: flex;
   margin-bottom: 15px;
+  text-transform: capitalize;
+}
+
+p {
+  text-transform: lowercase;
 }
 
 .address {
