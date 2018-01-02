@@ -76,7 +76,6 @@ div .Select .Select-control:hover {
   width: 260px;
   margin-top: 15px;
   left: -14px;
-  padding-top: 18px;
 }
 
 .Select .Select-menu {
@@ -118,6 +117,10 @@ div .Select .Select-control:hover {
 .Select .Select-option {
   padding: 1px 25px 1px 54px;
   text-indent: -29px;
+}
+
+.Select .Select-option:first-of-type {
+  padding-top: 18px;
 }
 
 .Select .Select-option.is-selected {
