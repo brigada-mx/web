@@ -15,6 +15,11 @@ const Nav = (props) => {
     return (pathname === '/' || pathname.startsWith('/comunidades'))
   }
 
+  const orgIsActive = (match, location) => {
+    const { pathname } = location
+    return pathname.startsWith('/organizaciones')
+  }
+
   return (
     <nav className={`${Styles.container} wrapper row middle sm-hidden xs-hidden`}>
 
@@ -25,7 +30,7 @@ const Nav = (props) => {
       <div className="col-lg-11 col-md-11 end-lg end-md">
         <div className={Styles.links}>
           <NavLink isActive={locIsActive} activeStyle={selected} exact to="/">COMUNIDADES</NavLink>
-          <NavLink activeStyle={selected} to="/organizaciones">ORGANIZACIONES</NavLink>
+          <NavLink isActive={orgIsActive} activeStyle={selected} to="/organizaciones">ORGANIZACIONES</NavLink>
           <NavLink activeStyle={selected} to="/practicas">MEJORES PRÁCTICAS</NavLink>
           <NavLink activeStyle={selected} to="/nosotros">NOSOTROS</NavLink>
         </div>

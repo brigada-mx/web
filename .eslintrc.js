@@ -33,6 +33,7 @@ module.exports = {
     "react/require-default-props": 0,
     "react/jsx-filename-extension": 0,
     "react/no-array-index-key": 1,
+    "react/no-did-update-set-state": 1,
     "import/no-extraneous-dependencies": 0,
     "import/extensions": 0,
     "import/no-unresolved": 0,

@@ -44,6 +44,15 @@ const service = {
     const params = { cvegeo }
     return sendToApi('localities/', { params })
   },
+
+  getOrganizations: async (page_size = 250) => {
+    const params = { page_size }
+    return sendToApi('organizations/', { params })
+  },
+
+  getOrganization: async (id) => {
+    return sendToApi(`organization/${id}/`)
+  },
 }
 
 /**

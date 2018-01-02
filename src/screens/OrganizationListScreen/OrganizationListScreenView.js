@@ -6,17 +6,17 @@ import _ from 'lodash'
 
 import service, { getBackoff } from 'api/service'
 import FilterHeader from 'components/FilterHeader'
-import LocalityListItem from 'components/LocalityListItem'
+import OrganizationListItem from 'components/OrganizationListItem'
 import Map from 'components/Map'
 import LocalityPopup from 'components/Map/LocalityPopup'
 import LocalityLegend from 'components/Map/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
 import { dmgGrade } from 'tools/other'
-import Styles from './MapScreen.css'
+import Styles from './OrganizationListScreenView.css'
 
 
-const compareLocalities = (a, b) => {
+const compareOrganizations = (a, b) => {
   const { total: ta } = a.meta
   const { total: tb } = b.meta
   if (Number.isNaN(ta)) {
@@ -26,14 +26,14 @@ const compareLocalities = (a, b) => {
   return tb - ta
 }
 
-class LocalityList extends React.PureComponent {
+class OrganizationList extends React.PureComponent {
   render() {
     const { localities, ...rest } = this.props
     const maxItems = 250
-    const items = localities.sort(compareLocalities).slice(0, maxItems).map((l) => {
+    const items = localities.sort(compareOrganizations).slice(0, maxItems).map((l) => {
       const { cvegeo } = l
       return (
-        <LocalityListItem
+        <OrganizationListItem
           key={cvegeo}
           locality={l}
           {...rest}
@@ -44,11 +44,11 @@ class LocalityList extends React.PureComponent {
   }
 }
 
-LocalityList.propTypes = {
+OrganizationList.propTypes = {
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
-class MapScreen extends React.Component {
+class OrganizationListScreenView extends React.Component {
   constructor(props) {
     super(props)
 
@@ -67,10 +67,10 @@ class MapScreen extends React.Component {
       filtered: [],
       layerFilter: null,
       popup: null,
-      locSearch: '',
+      focused: null,
+      organizationSearch: '',
       valState,
       valMuni,
-      valMarg: [],
       valNumActions: [],
     }
     this.handleLocalitySearchKeyUp = _.debounce(
@@ -80,24 +80,13 @@ class MapScreen extends React.Component {
 
   componentDidMount() {
     this.props.history.replace({
-      pathname: '/',
+      pathname: '/organizations',
       state: {},
-    })
-
-    getBackoff(this, 'localities', service.getLocalitiesStatic, {
-      onData: (data) => {
-        const localityByCvegeo = {}
-        data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
-          localityByCvegeo[r.cvegeo] = r
-          return { ...r, dmgGrade: dmgGrade(r) }
-        })
-        this.setState({ localityByCvegeo })
-      },
     })
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const keys = ['localities', 'locSearch', 'valState', 'valMuni', 'valMarg', 'valNumActions']
+    const keys = ['localities', 'organizationSearch', 'valState', 'valMuni', 'valMarg', 'valNumActions']
     if (keys.some(k => prevState[k] !== this.state[k])) {
       const { localities: { data = {} } } = this.state
       if (!data.results) return
@@ -129,8 +118,8 @@ class MapScreen extends React.Component {
     this.setState({ valNumActions: v })
   }
 
-  handleLocalitySearchKeyUp = (locSearch) => {
-    this.setState({ locSearch })
+  handleLocalitySearchKeyUp = (organizationSearch) => {
+    this.setState({ organizationSearch })
   }
 
   handleClickFeature = (feature) => {
@@ -149,11 +138,11 @@ class MapScreen extends React.Component {
   }
 
   handleListItemClick = (item) => {
-    this.props.history.push(`/comunidades/${item.id}`)
+    this.props.history.push(`/organizaciones/${item.id}`)
   }
 
   handleListItemEnter = (item) => {
-    this.setState({ popup: item })
+    this.setState({ focused: item })
   }
 
   handleListItemLeave = () => {
@@ -162,7 +151,7 @@ class MapScreen extends React.Component {
 
   filterLocalities = (results) => {
     if (!results) return []
-    const { locSearch, valState, valMuni, valMarg, valNumActions } = this.state
+    const { organizationSearch, valState, valMuni, valMarg, valNumActions } = this.state
 
     const rangeByValNumActions = {
       0: [0, 9],
@@ -176,7 +165,7 @@ class MapScreen extends React.Component {
         name, state_name: stateName, cvegeo = '', action_count: actions, meta: { margGrade = '' },
       } = l
 
-      const matchesSearch = tokenMatch(`${name} ${stateName}`, locSearch)
+      const matchesSearch = tokenMatch(`${name} ${stateName}`, organizationSearch)
 
       const cvegeos = valState.map(v => v.value).concat(valMuni.map(v => v.value))
       const matchesCvegeo = cvegeos.length === 0 || cvegeos.some(v => cvegeo.startsWith(v))
@@ -220,7 +209,7 @@ class MapScreen extends React.Component {
           <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 lg-gutter md-gutter sm-gutter xs-gutter last-sm last-xs">
             {loading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
             {!loading &&
-              <LocalityList
+              <OrganizationList
                 localities={filtered}
                 onClick={this.handleListItemClick}
                 onMouseEnter={this.handleListItemEnter}
@@ -246,9 +235,9 @@ class MapScreen extends React.Component {
   }
 }
 
-MapScreen.propTypes = {
+OrganizationListScreenView.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object,
 }
 
-export default withRouter(MapScreen)
+export default withRouter(OrganizationListScreenView)

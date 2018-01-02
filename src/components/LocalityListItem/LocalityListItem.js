@@ -39,6 +39,7 @@ const abbreviationByStateName = {
   'tamaulipas': 'TM',
   'tlaxcala': 'TL',
   'veracruz': 'VE',
+  'veracruz de ignacio de la llave': 'VE',
   'yucatán': 'YU',
   'zacatecas': 'ZA',
 }

@@ -6,17 +6,17 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Nav from 'components/Nav'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
+// import OrganizationListScreen from 'screens/OrganizationListScreen'
+// import OrganizationScreen from 'screens/OrganizationScreen'
 
 
 const LocalityScreenWrapper = ({ match }) => {
   return <LocalityScreen id={Number.parseInt(match.params.id, 10)} />
 }
 
-const OrganizationScreen = () => (
-  <div>
-    <h2>Organizaciones</h2>
-  </div>
-)
+// const OrganizationScreenWrapper = ({ match }) => {
+//   return <OrganizationScreen id={Number.parseInt(match.params.id, 10)} />
+// }
 
 const BestPracticesScreen = () => (
   <div>
@@ -37,11 +37,15 @@ const App = () => {
         <Nav />
 
         <Route exact path="/" component={MapScreen} />
-        <Route path="/organizaciones" component={OrganizationScreen} />
+        <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
+
+        {/* <Route path="/organizaciones" component={OrganizationListScreen} /> */}
+        {/* <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} /> */}
+
         <Route path="/practicas" component={BestPracticesScreen} />
+
         <Route path="/nosotros" component={AboutScreen} />
 
-        <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
       </div>
     </Router>
   )

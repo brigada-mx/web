@@ -24,6 +24,11 @@ const FilterHeader = (props) => {
     valNumActions,
   } = props
 
+  const shortenState = (name) => {
+    if (name.toLowerCase() === 'veracruz de ignacio de la llave') return 'Veracruz'
+    return name
+  }
+
   const stateOptions = () => {
     const items = _.uniqBy(localities, l => l.cvegeo_state)
 
@@ -32,7 +37,7 @@ const FilterHeader = (props) => {
       if (a.state_name > b.state_name) return 1
       return 0
     }).map((i) => {
-      return { value: i.cvegeo_state, label: i.state_name }
+      return { value: i.cvegeo_state, label: shortenState(i.state_name) }
     })
   }
 
