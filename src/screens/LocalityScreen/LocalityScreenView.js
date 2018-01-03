@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
-import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, Tooltip } from 'recharts'
+import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, Tooltip, LabelList } from 'recharts'
 import moment from 'moment'
+import { fmtNum } from 'tools/string'
 
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
@@ -57,11 +58,11 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
   ]
 
   return (
-    <ResponsiveContainer width="100%" height={133}>
+    <ResponsiveContainer width="100%" height={134}>
       <BarChart
         data={data}
         margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-        barCategoryGap="2%"
+        barCategoryGap="1%"
         unit="viviendas"
       >
         <XAxis
@@ -78,9 +79,17 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
               width: 74 }
           }
         />
-        <CartesianGrid vertical={false} stroke="#E4E7EB" />
-        <Tooltip />
-        <Bar dataKey="num" fill={Colors.blueGreen} />
+        <CartesianGrid vertical={false} stroke="#E4E7EB" horizontalPoints={[0, 26, 52, 78, 104]} />
+        <Bar dataKey="num" fill={Colors.blueGreen} isAnimationActive={false} >
+          <LabelList
+            dataKey="num"
+            position="insideTop"
+            fontSize="10"
+            fontFamily="nunito-sans"
+            fill="#C5EDE2"
+            offset="11"
+          />
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
   )
@@ -186,7 +195,7 @@ class LocalityScreenView extends React.Component {
             <div className="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3 col-sm-8 col-xs-4 lg-gutter md-gutter">
               <div className={Styles.vizHeader}>
                 <span className={Styles.vizLabel}>VIVIENDAS<br />DAÑADAS</span>
-                <span className={Styles.vizCount}>{total}</span>
+                <span className={Styles.vizCount}>{fmtNum(total)}</span>
               </div>
               <div className={Styles.dmgChartContainer}>
                 <DmgBarChart {...{ destroyed, habit, notHabit }} />
