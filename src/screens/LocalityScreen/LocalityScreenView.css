@@ -12,18 +12,30 @@
   line-height: 16px;
   text-decoration: none;
   color: #3DC59F;
-  margin-right: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  display: inline-block;
 }
 
-.breadcrumbLinks a:not(:last-of-type):after {
+.breadcrumbLinks span {
+  display: inline-block;
+}
+
+.breadcrumbLinks span:not(:first-of-type) {
+  margin-left: 20px;
+}
+
+.breadcrumbLinks span:not(:first-of-type) a:before {
   content: "";
   background: no-repeat url('assets/img/dropdown-arrow.svg');
   width: 5px;
   height: 5px;
   transform: rotate(-90deg);
   position: absolute;
-  padding-left: 3px;
-  margin: 7px 0 0 6px;
+  padding-right: 3px;
+  margin: 7px 0 0 -14px;
 }
 
 .dmgLevel {
@@ -161,6 +173,20 @@
 @media screen and (max-width: 767px) and (min-width: 320px) {
   .breadcrumbLinks {
     margin-bottom: 73px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .breadcrumbLinks .communities {
+    max-width: 25%;
+  }
+  .breadcrumbLinks .state {
+    max-width: 23%;
+  }
+  .breadcrumbLinks .muni {
+    max-width: 23%;
+  }
+  .breadcrumbLinks .loc {
+    max-width: 23%;
   }
   .placeName {
     font-size: 38px;
