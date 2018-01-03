@@ -96,6 +96,7 @@ div .Select .Select-control:hover {
   letter-spacing: 0.6px;
   max-width: 80%;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .Select .Select-multi-value-wrapper {
