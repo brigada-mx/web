@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
-import { BarChart, Bar, XAxis, CartesianGrid, Tooltip } from 'recharts'
+import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, Tooltip } from 'recharts'
 import moment from 'moment'
 
 import FeatureMap from 'components/FeatureMap'
@@ -57,17 +57,19 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
   ]
 
   return (
-    <BarChart
-      width={400}
-      height={133}
-      data={data}
-      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-    >
-      <XAxis dataKey="name" axisLine={false} tickLine={false} />
-      <CartesianGrid vertical={false} />
-      <Tooltip />
-      <Bar dataKey="num" fill={Colors.brandGreen} />
-    </BarChart>
+    <ResponsiveContainer width="100%" height={133}>
+      <BarChart
+        data={data}
+        margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+        barCategoryGap="2%"
+        unit="viviendas"
+      >
+        <XAxis dataKey="name" axisLine={false} tickLine={false} />
+        <CartesianGrid vertical={false} />
+        <Tooltip />
+        <Bar dataKey="num" fill={Colors.blueGreen} />
+      </BarChart>
+    </ResponsiveContainer>
   )
 }
 
@@ -139,9 +141,9 @@ class LocalityScreenView extends React.Component {
         analfabet, noPrimary, noToilet, noElec, noPlumb, noFridge, dirtFloor, roomOccup,
       ].map((v, i) => {
         return (
-          <div key={i} className={Styles.barContainer}>
-            <span className={Styles.barLabel}>{barLabels[i]}</span>
-            <MetricsBar value={v} max={100} />
+          <div key={i} className={Styles.margMetrics}>
+            <span className={Styles.margLabel}>{barLabels[i]}</span>
+            <span className={Styles.margBar}><MetricsBar value={v} max={100} /></span>
           </div>
         )
       })
@@ -156,7 +158,7 @@ class LocalityScreenView extends React.Component {
           />
 
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-8 col-sm-8 col-xs-4">
+            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7 col-sm-8 col-xs-4">
               <div className={Styles.dmgLevel}>
                 <span className={Styles.circle} style={{ backgroundColor: dmgMeta.color }} />
                 <span className={Styles.label} style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
@@ -182,9 +184,9 @@ class LocalityScreenView extends React.Component {
                 <span className={Styles.vizLabel}>MARGINACIÓN<br />SOCIAL</span>
                 <span className={Styles.vizCount}>{margGrade}</span>
               </div>
-              <div className={Styles.margMetricsContainer}>
-                <div className={Styles.margMetricsColumn}>{bars.slice(0, 4)}</div>
-                <div className={Styles.margMetricsColumn}>{bars.slice(4, 8)}</div>
+              <div className={Styles.margContainer}>
+                <div className={Styles.margColumn}>{bars.slice(0, 4)}</div>
+                <div className={Styles.margColumn}>{bars.slice(4, 8)}</div>
               </div>
             </div>
           </div>
@@ -253,7 +255,7 @@ class LocalityScreenView extends React.Component {
         <div>
           <div className={Styles.actionMetricsContainer}>
             <div className="row">
-              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between bottom-xs">
+              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between gutter bottom-xs">
                 <div className={Styles.vizHeader}>
                   <span className={Styles.vizLabel}>PROYECTOS DE<br />RECONSTRUCCIÓN</span>
                   <span className={Styles.vizCount}>{actions.length}</span>

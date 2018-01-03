@@ -7,7 +7,7 @@
   flex-direction: row;
   position: relative;
   height: 2px;
-  width: 166px;
+  width: 100%;
   border-radius: 1px;
   padding: 8px 0;
   cursor: pointer;

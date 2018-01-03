@@ -25,7 +25,7 @@ const ActionListItem = ({ action }) => {
     return (
       <div className={Styles.goalProgress}>
         <span className={Styles.label}>{progress} DE {target}</span>
-        <MetricsBar value={progress} max={target} />
+        <span className={Styles.bar}><MetricsBar value={progress} max={target} /></span>
       </div>
     )
   }

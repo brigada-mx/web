@@ -69,7 +69,6 @@
   margin-bottom: 47px;
 }
 
-
 .vizHeader {
   display: inline-flex;
   flex-direction: row;
@@ -98,38 +97,46 @@
   margin-top: 12px;
 }
 
-.barContainer {
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 326px;
-}
-
-.margMetricsContainer {
+.margContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 4px;
+  width: 100%;
 }
 
-.margMetricsColumn {
+.margColumn {
   display: flex;
   flex-direction: column;
+  width: 46%;
+}
+
+.margMetrics {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .chartLabel {
   color: red;
 }
 
-.barLabel {
+.margLabel {
   font-family: 'nunito-sans-200', sans-serif;
   font-size: 14px;
   color: #19191D;
   letter-spacing: 0.56px;
   line-height: 30px;
-  width: 143px;
-  /*display: inline-flex;*/
+  width: 45%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.margBar {
+  width: 52%;
 }
 
 .map {
@@ -154,6 +161,24 @@
   padding: 21px 25px 5px 25px;
 }
 
+@media screen and (min-width: 1440px) {
+  .actionCardsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .actionCardsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .breadcrumbLinks {
     margin-bottom: 73px;
@@ -167,6 +192,9 @@
   .actionCardsContainer {
     background-color: #F6F8FA;
     padding: 21px 20px 5px 20px;
+  }
+  .margContainer {
+    justify-content: space-between;
   }
 }
 
@@ -196,7 +224,7 @@
   .dmgChartContainer {
     margin-bottom: 32px;
   }
-  .margMetricsContainer {
+  .margContainer {
     flex-direction: column;
   }
   .map {
@@ -250,5 +278,8 @@
   .actionCardsContainer {
     background-color: #F6F8FA;
     padding: 21px 20px 5px 20px;
+  }
+  .margColumn {
+    width: 100%;
   }
 }
