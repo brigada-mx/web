@@ -229,6 +229,9 @@ class LocalityScreenView extends React.Component {
     if (data) {
       return (
         <div className={`${Styles.map} row`}>
+          <div className={`${Styles.directions} lg-hidden md-hidden`}>
+            <DirectionsButton lat={lat} lng={lng} />
+          </div>
           <FeatureMap
             onClickFeature={this.handleClickFeature}
             onEnterFeature={this.handleEnterFeature}

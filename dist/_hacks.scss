@@ -103,12 +103,8 @@ div .Select .Select-control:hover {
   width: 100%;
 }
 
-.Select .Select-value .Select-value-icon {
-  display: none;
-}
-
 .Select .Select-value .Select-value-label {
-  max-width: 100%;
+  max-width: 80%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -122,6 +118,10 @@ div .Select .Select-control:hover {
 
 .Select .Select-option:first-of-type {
   padding-top: 18px;
+}
+
+.Select .Select-option:last-of-type {
+  padding-bottom: 18px;
 }
 
 .Select .Select-option.is-selected {
