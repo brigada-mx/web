@@ -64,8 +64,21 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
         barCategoryGap="2%"
         unit="viviendas"
       >
-        <XAxis dataKey="name" axisLine={false} tickLine={false} />
-        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="name"
+          axisLine={false}
+          tickLine={false}
+          interval={0}
+          tick={
+            { fontSize: 10,
+              fontFamily: 'nunito-sans',
+              letterSpacing: 0.16,
+              lineHeight: 20,
+              fill: '#9F9F9F',
+              width: 74 }
+          }
+        />
+        <CartesianGrid vertical={false} stroke="#E4E7EB" />
         <Tooltip />
         <Bar dataKey="num" fill={Colors.blueGreen} />
       </BarChart>
