@@ -10,7 +10,7 @@ import Styles from './DirectionsButton.css'
  */
 const DirectionsButton = ({ lat, lng, classNameCustom = '' }) => {
   const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
-  return <a target="_blank" className={`${Styles.button} ${classNameCustom}`} href={url}></a>
+  return <a target="_blank" className={`${Styles.button} ${classNameCustom}`} href={url} />
 }
 
 DirectionsButton.propTypes = {

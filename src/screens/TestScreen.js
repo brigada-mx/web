@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
 
+import { fmtNum, fmtBudget } from 'tools/string'
 import Styles from './TestScreen.css'
 
 
@@ -32,11 +33,12 @@ const TestScreen = () => {
 
   const organization = {
     name: 'Reconstruyendo Comunidades Integrales',
-    website: 'Civil',
-    sector: 'Vivienda',
-    established: 'Planeación urbana',
+    website: 'construyendo.org',
+    websiteURL: 'http://construyendo.org',
+    sector: 'Civil',
+    established: '1995',
     mission: 'Buscamos impulsar la solidaridad en los voluntarios, mediante proyectos de construcción enfocados a elevar la calidad de vida de las familias mexicanas más…',
-    investment: 72000,
+    investment: '72K',
     projects: 11,
     photos: 72,
     phone: '55-1292-9190',
@@ -74,7 +76,72 @@ const TestScreen = () => {
       <OrgBreadcrumb breadcrumb={breadcrumb} />
       <div className="row">
         <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7 col-sm-8 col-xs-4">
-          <div className={Styles.placeName}>{name}</div>
+          <div className={Styles.name}>{name}</div>
+        </div>
+        <div className="col-lg-3 col-md-3 end-lg end-md sm-hidden xs-hidden">
+          <div className={Styles.buttonsContainer}>
+            <a target="_blank" className={`${Styles.button} ${Styles.website}`} href={website} />
+            <a target="_blank" className={`${Styles.button} ${Styles.phone}`} href={phone} />
+            <a target="_blank" className={`${Styles.button} ${Styles.email}`} href={email} />
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-offset-1 col-lg-4 col-md-offset-1 col-md-4 col-sm-8 col-xs-4">
+          <div className={Styles.summaryContainer}>
+            <div className={Styles.fieldContainer}>
+              <span className={Styles.fieldLabel}>WEB</span>
+              <span className={Styles.fieldValue}><a href="{websiteURL}">{website}</a></span>
+            </div>
+            <div className={Styles.fieldContainer}>
+              <span className={Styles.fieldLabel}>SECTOR</span>
+              <span className={Styles.fieldValue}>{sector}</span>
+            </div>
+            <div className={Styles.fieldContainer}>
+              <span className={Styles.fieldLabel}>ESTABLECIDA</span>
+              <span className={Styles.fieldValue}>{established}</span>
+            </div>
+          </div>
+        </div>
+        <div className="col-lg-2 col-lg-offset-4 col-md-3 col-md-offset-3 end-lg end-md sm-hidden xs-hidden">
+          <div className={Styles.placeContainer}>
+            <p className={Styles.subtitle}>¿Dónde estamos?</p>
+            <ul className={Styles.addressFields}>
+              <li>{street}</li>
+              <li>{locality}</li>
+              <li>{city}</li>
+              <li>{state}, {zip}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
+          <span className={Styles.mission}>{mission}</span>
+        </div>
+        <div className="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 end-lg end-md sm-hidden xs-hidden">
+          <div className={`${Styles.placeContainer} ${Styles.ops}`}>
+            <p className={Styles.subtitle}>¿Dónde operamos?</p>
+            <div className={Styles.opsMap} />
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-offset-1 col-lg-5 col-md-offset-1 col-md-5 col-sm-8 col-xs-4">
+          <div className={Styles.metricsContainer}>
+            <div className={Styles.metric}>
+              <span className={Styles.metricLabel}>Inversión<br />estimada</span>
+              <span className={Styles.metricValue}>{investment}</span>
+            </div>
+            <div className={Styles.metric}>
+              <span className={Styles.metricLabel}>Proyectos<br />registrados</span>
+              <span className={Styles.metricValue}>{projects}</span>
+            </div>
+            <div className={Styles.metric}>
+              <span className={Styles.metricLabel}>Fotos<br />capturadas</span>
+              <span className={Styles.metricValue}>{photos}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

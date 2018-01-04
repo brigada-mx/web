@@ -1,3 +1,183 @@
+.breadcrumbLinks {
+  margin: 13px 0 65px 0;
+}
+
+.breadcrumbLinks a {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  text-decoration: none;
+  color: #3DC59F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  display: inline-block;
+}
+
+.breadcrumbLinks span {
+  display: inline-block;
+}
+
+.breadcrumbLinks span:not(:first-of-type) {
+  margin-left: 20px;
+}
+
+.breadcrumbLinks span:not(:first-of-type) a:before {
+  content: "";
+  background: no-repeat url('assets/img/dropdown-arrow.svg');
+  width: 5px;
+  height: 5px;
+  transform: rotate(-90deg);
+  position: absolute;
+  padding-right: 3px;
+  margin: 7px 0 0 -14px;
+}
+
+.name {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 48px;
+  color: #141418;
+  letter-spacing: -0.1px;
+  line-height: 62px;
+  margin-bottom: 31px;
+}
+
+.summaryContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.fieldContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldLabel {
+  font-family: 'nunito-sans-800', sans-serif;
+  font-size: 11px;
+  color: #9F9F9F;
+  letter-spacing: 0.8px;
+  line-height: 16px;
+}
+
+.fieldValue {
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 18px;
+  color: #141418;
+  line-height: 32px;
+}
+
+.fieldValue a {
+  color: #3DC587;
+  text-decoration: none;
+}
+
+.button {
+  display: inline-flex;
+  width: 80px;
+  height: 80px;
+  background-color: #3DC59F;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.buttonsContainer {
+  margin-top: -13px;
+}
+
+.website {
+  background-image: url('assets/img/website.svg');
+  margin-right: 6px;
+}
+
+.phone {
+  background-image: url('assets/img/phone.svg');
+  margin-right: 6px;
+}
+
+.email {
+  background-image: url('assets/img/email.svg');
+}
+
+.button:hover {
+  background-color: #13A68C;
+}
+
+.placeContainer {
+  margin-left: -8.333%;
+  text-align: left;
+}
+
+.ops {
+  margin-top: 27px;
+}
+
+.opsMap {
+  width: 250px;
+  height: 250px;
+  background-color: #EFEFEF;
+  border-color: 1px solid #EFEFEF;
+  box-sizing: border-box;
+  margin-top: 18px;
+}
+
+.subtitle {
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 14px;
+  color: #434346;
+  letter-spacing: 1.26px;
+  line-height: 20px;
+}
+
+.addressFields {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 15px;
+  color: #6F6F6F;
+  letter-spacing: 0.6px;
+  line-height: 30px;
+}
+
+.mission {
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 18px;
+  color: #141418;
+  line-height: 32px;
+  display: flex;
+  margin-top: -68px;
+}
+
+.metricsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: -248px;
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+}
+
+.metricLabel {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #9F9F9F;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  text-transform: uppercase;
+  margin: 6px 16px 0 0;
+}
+
+.metricValue {
+  font-family: 'nunito-sans-200';
+  font-size: 48px;
+  color: #3DC587;
+  letter-spacing: -0.1px;
+  line-height: 62px;
+}
 
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
@@ -5,5 +185,18 @@
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px) {
-
+  .breadcrumbLinks {
+    margin-bottom: 73px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .breadcrumbLinks .orgList {
+    max-width: 25%;
+  }
+  .breadcrumbLinks .sector {
+    max-width: 25%;
+  }
+  .breadcrumbLinks .orgDetail {
+    max-width: 50%;
+  }
 }

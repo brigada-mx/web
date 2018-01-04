@@ -94,22 +94,50 @@
 }
 
 // WORK SANS
+@include font-face('work-sans', 'regular', 'work-sans', 'sans-serif');
+@include font-face('work-sans-100', '100', 'work-sans', 'sans-serif');
+@include font-face('work-sans-200', '200', 'work-sans', 'sans-serif');
 @include font-face('work-sans-300', '300', 'work-sans', 'sans-serif');
+@include font-face('work-sans-500', '500', 'work-sans', 'sans-serif');
+@include font-face('work-sans-600', '600', 'work-sans', 'sans-serif');
+@include font-face('work-sans-700', '700', 'work-sans', 'sans-serif');
+@include font-face('work-sans-800', '800', 'work-sans', 'sans-serif');
+@include font-face('work-sans-900', '900', 'work-sans', 'sans-serif');
+
+@mixin work-sans {
+    font-family: 'work-sans', sans-serif;
+}
+
+@mixin work-sans-100 {
+    font-family: 'work-sans-100', sans-serif;
+}
+
+@mixin work-sans-200 {
+    font-family: 'work-sans-200', sans-serif;
+}
 
 @mixin work-sans-300 {
     font-family: 'work-sans-300', sans-serif;
 }
 
-// ELSE
-@mixin font-smoothing($value: antialiased) {
-    @if $value==antialiased {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-    @else {
-        -webkit-font-smoothing: subpixel-antialiased;
-        -moz-osx-font-smoothing: auto;
-    }
+@mixin work-sans-500 {
+    font-family: 'work-sans-500', sans-serif;
+}
+
+@mixin work-sans-600 {
+    font-family: 'work-sans-600', sans-serif;
+}
+
+@mixin work-sans-700 {
+    font-family: 'work-sans-700', sans-serif;
+}
+
+@mixin work-sans-800 {
+    font-family: 'work-sans-800', sans-serif;
+}
+
+@mixin work-sans-900 {
+    font-family: 'work-sans-900', sans-serif;
 }
 
 @mixin tabular {
