@@ -191,22 +191,18 @@ class OrganizationListScreenView extends React.Component {
           valNumActions={valNumActions}
         />
         <div className={`${Styles.container} row`}>
-          <div className={Styles.temporary}>
-            <div className="wrapper-lg wrapper-md">
-              <div className="col-lg-6 col-md-6 col-sm-8 col-xs-4">
-                {orgLoading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
-                {!orgLoading &&
-                  <OrganizationList
-                    organizations={organizations}
-                    onClick={this.handleListItemClick}
-                    onMouseEnter={this.handleListItemEnter}
-                    onMouseLeave={this.handleListItemLeave}
-                  />
-                }
-              </div>
-            </div>
+          <div className="col-lg-6 col-md-6 col-sm-8 col-xs-4 lg-gutter md-gutter">
+            {orgLoading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
+            {!orgLoading &&
+              <OrganizationList
+                organizations={organizations}
+                onClick={this.handleListItemClick}
+                onMouseEnter={this.handleListItemEnter}
+                onMouseLeave={this.handleListItemLeave}
+              />
+            }
           </div>
-          <div className="col-lg-9 col-md-9 col-sm-8 col-xs-4">
+          <div className="col-lg-6 col-md-6 col-sm-8 col-xs-4">
             <div className={Styles.mapContainer}>
               <Map
                 features={features}
