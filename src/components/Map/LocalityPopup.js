@@ -55,7 +55,7 @@ const LocalityPopup = ({ locality, organization, screen }) => {
 }
 
 LocalityPopup.propTypes = {
-  locality: PropTypes.object.isRequired,
+  locality: PropTypes.object,
   organization: PropTypes.object,
   screen: PropTypes.oneOf(['org', 'loc']).isRequired,
 }

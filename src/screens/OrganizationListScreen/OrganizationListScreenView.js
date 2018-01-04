@@ -26,6 +26,7 @@ class OrganizationList extends React.PureComponent {
       return (
         <OrganizationListItem
           key={id}
+          onScroll={e => console.log('SCROLL!!', e)}
           organization={o}
           {...rest}
         />

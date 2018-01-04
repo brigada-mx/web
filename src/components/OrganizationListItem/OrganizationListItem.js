@@ -18,7 +18,7 @@ const OrganizationListItem = ({ organization, onClick, onMouseEnter, onMouseLeav
     }
     if (action.budget) budget += action.budget
   }
-  const countAndTags = Object.keys(countByTags).map((k) => {
+  const count = Object.keys(countByTags).map((k) => {
     return { tag: k, count: countByTags[k] }
   }).sort((a, b) => a.count - b.count)
 
@@ -36,7 +36,7 @@ const OrganizationListItem = ({ organization, onClick, onMouseEnter, onMouseLeav
       <div className={Styles.descriptionContainer}>
         <span className={Styles.name}>{name}</span>
         <div className={Styles.tagContainer}>
-          {countAndTags.slice(0, 3).map(t => <span className={Styles.tag}>{t.tag}</span>)}
+          {count.slice(0, 3).map((t, i) => <span key={i} className={Styles.tag}>{t.tag}</span>)}
         </div>
         <span className={Styles.desc}>{desc}</span>
       </div>
