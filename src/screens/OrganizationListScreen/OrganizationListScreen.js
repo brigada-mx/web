@@ -1,6 +1,7 @@
 import React from 'react'
 
 import service, { getBackoff } from 'api/service'
+import { dmgGrade } from 'tools/other'
 import OrganizationListScreenView from './OrganizationListScreenView'
 
 
@@ -25,6 +26,7 @@ class OrganizationListScreen extends React.Component {
       onData: (data) => {
         const localityById = {}
         for (const result of data.results) {
+          result.dmgGrade = dmgGrade(result)
           localityById[result.id] = result
         }
         this.setState({ localityById })

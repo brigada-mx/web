@@ -51,7 +51,7 @@ class OrganizationListScreenView extends React.Component {
     }
 
     this.state = {
-      popup: null,
+      popup: {},
       focused: null,
       organizationSearch: '',
       valState,
@@ -91,12 +91,12 @@ class OrganizationListScreenView extends React.Component {
   }
 
   handleEnterFeature = (feature) => {
-    const { localityById } = this.props
-    this.setState({ popup: localityById[feature.id] })
+    const locality = this.props.localityById[feature.properties.id]
+    this.setState({ popup: { locality, organization: this.state.focused } })
   }
 
   handleLeaveFeature = () => {
-    this.setState({ popup: null })
+    this.setState({ popup: {} })
   }
 
   handleListItemClick = (item) => {
@@ -208,7 +208,11 @@ class OrganizationListScreenView extends React.Component {
             <div className={Styles.mapContainer}>
               <Map
                 features={features}
-                popup={popup ? <LocalityPopup locality={popup} type="org" /> : null}
+                popup={popup ? <LocalityPopup
+                  locality={popup.locality}
+                  organization={popup.organization}
+                  type="org"
+                /> : null}
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
