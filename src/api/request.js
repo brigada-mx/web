@@ -15,18 +15,18 @@ const replaceProtocol = (url, protocol) => {
 }
 
 const _sendToApi = async (
-  _url = '', { method = 'GET', body = {}, params = {}, _headers = {}, isRelative = true } = {}
+  _url = '', { method = 'GET', body = {}, params = {}, headers = {}, isRelative = true } = {}
 ) => {
   let url = _url
-  const headers = {
-    ..._headers,
+  const _headers = {
+    ...headers,
     'Content-Type': 'application/json',
   }
 
   const options = {
     method,
     body: JSON.stringify(body), // `body` must be a string, not an object
-    headers: new Headers(headers),
+    headers: new Headers(_headers),
   }
 
   if (['GET', 'HEAD'].indexOf(method) > -1) { delete options.body }

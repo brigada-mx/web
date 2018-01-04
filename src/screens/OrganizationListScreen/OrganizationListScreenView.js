@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
-import service, { getBackoff } from 'api/service'
 import FilterHeader from 'components/FilterHeader'
 import OrganizationListItem from 'components/OrganizationListItem'
 import Map from 'components/Map'
@@ -12,30 +11,22 @@ import LocalityPopup from 'components/Map/LocalityPopup'
 import LocalityLegend from 'components/Map/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
-import { dmgGrade } from 'tools/other'
 import Styles from './OrganizationListScreenView.css'
 
 
 const compareOrganizations = (a, b) => {
-  const { total: ta } = a.meta
-  const { total: tb } = b.meta
-  if (Number.isNaN(ta)) {
-    if (Number.isNaN(tb)) return 0
-    return 1
-  } else if (Number.isNaN(tb)) return -1
-  return tb - ta
+  return b.action_count - a.action_count
 }
 
 class OrganizationList extends React.PureComponent {
   render() {
     const { organizations, ...rest } = this.props
-    const maxItems = 250
-    const items = organizations.sort(compareOrganizations).slice(0, maxItems).map((l) => {
-      const { cvegeo } = l
+    const items = organizations.sort(compareOrganizations).map((o) => {
+      const { id } = o
       return (
         <OrganizationListItem
-          key={cvegeo}
-          locality={l}
+          key={id}
+          organization={o}
           {...rest}
         />
       )
@@ -60,12 +51,6 @@ class OrganizationListScreenView extends React.Component {
     }
 
     this.state = {
-      organizations: {
-        loading: true,
-      },
-      localities: {
-        loading: true,
-      },
       popup: null,
       focused: null,
       organizationSearch: '',
@@ -80,26 +65,9 @@ class OrganizationListScreenView extends React.Component {
 
   componentDidMount() {
     this.props.history.replace({
-      pathname: '/organizations',
+      pathname: '/organizaciones',
       state: {},
     })
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const keys = ['localities', 'organizationSearch', 'valState', 'valMuni', 'valMarg', 'valNumActions']
-    if (keys.some(k => prevState[k] !== this.state[k])) {
-      const { localities: { data = {} } } = this.state
-      if (!data.results) return
-
-      const filtered = this.filterLocalities(data.results)
-      const layerFilter = ['in', 'cvegeo'].concat(filtered.map((l) => {
-        const { cvegeo } = l
-        if (cvegeo.startsWith('0')) return cvegeo
-        return Number.parseInt(cvegeo, 10)
-      }))
-
-      this.setState({ filtered, layerFilter })
-    }
   }
 
   handleStateChange = (v) => {
@@ -108,10 +76,6 @@ class OrganizationListScreenView extends React.Component {
 
   handleMuniChange = (v) => {
     this.setState({ valMuni: v })
-  }
-
-  handleMargChange = (v) => {
-    this.setState({ valMarg: v })
   }
 
   handleNumActionsChange = (v) => {
@@ -123,14 +87,12 @@ class OrganizationListScreenView extends React.Component {
   }
 
   handleClickFeature = (feature) => {
-    const locality = this.state.localityByCvegeo[feature.properties.cvegeo]
-    if (!locality) return
-    this.props.history.push(`/comunidades/${locality.id}`)
+    this.props.history.push(`/comunidades/${feature.id}`)
   }
 
   handleEnterFeature = (feature) => {
-    const { localityByCvegeo } = this.state
-    this.setState({ popup: localityByCvegeo[feature.properties.cvegeo] })
+    const { localityById } = this.props
+    this.setState({ popup: localityById[feature.id] })
   }
 
   handleLeaveFeature = () => {
@@ -145,13 +107,9 @@ class OrganizationListScreenView extends React.Component {
     this.setState({ focused: item })
   }
 
-  handleListItemLeave = () => {
-    this.setState({ popup: null })
-  }
-
-  filterLocalities = (results) => {
+  filterOrganizations = (results) => {
     if (!results) return []
-    const { organizationSearch, valState, valMuni, valMarg, valNumActions } = this.state
+    const { organizationSearch, valState, valMuni, valNumActions } = this.state
 
     const rangeByValNumActions = {
       0: [0, 9],
@@ -160,19 +118,14 @@ class OrganizationListScreenView extends React.Component {
       3: [250, null],
     }
 
-    return results.filter((l) => {
-      const {
-        name, state_name: stateName, cvegeo = '', action_count: actions, meta: { margGrade = '' },
-      } = l
+    return results.filter((o) => {
+      const { name, desc, action_count: actions } = o
+      const actionCvegeos = o.actions.map(a => a.locality.cvegeo)
 
-      const matchesSearch = tokenMatch(`${name} ${stateName}`, organizationSearch)
+      const matchesSearch = tokenMatch(`${name} ${desc}`, organizationSearch)
 
       const cvegeos = valState.map(v => v.value).concat(valMuni.map(v => v.value))
       const matchesCvegeo = cvegeos.length === 0 || cvegeos.some(v => cvegeo.startsWith(v))
-
-      const margs = valMarg.map(v => v.value)
-      const matchestMarg = margs.length === 0 ||
-        margs.some(v => v === margGrade.replace(/ /g, '_').toLowerCase())
 
       const numActions = valNumActions.map(v => rangeByValNumActions[v.value])
       const matchesActions = numActions.length === 0 ||
@@ -186,30 +139,65 @@ class OrganizationListScreenView extends React.Component {
     })
   }
 
-  render() {
-    const { popup, localities: { data = {}, loading, error }, filtered, layerFilter } = this.state
 
-    const { valState, valMuni, valMarg, valNumActions } = this.state
+  render() {
+    const {
+      localityById,
+      localities: { data: locData, loading: locLoading, error: locError },
+      organizations: { data: orgData, loading: orgLoading, error: orgError },
+    } = this.props
+    const { popup, focused, organizationSearch, valState, valMuni, valNumActions } = this.state
+
+    let features = []
+    const localities = []
+    if (focused) {
+      features = (focused.actions).map((action) => {
+        const { location: { lat, lng }, cvegeo, id } = action.locality
+        const locality = this.props.localityById[id]
+        let total = -1
+
+        if (locality) {
+          ({ total } = locality.meta)
+          localities.push(locality)
+        }
+
+        return {
+          type: 'Feature',
+          properties: {
+            cvegeo,
+            id,
+            total,
+            locality,
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [lng, lat],
+          },
+        }
+      })
+    }
+
+    const organizations = orgData ? orgData.results : []
+
     return (
       <div>
         <FilterHeader
-          localities={data.results || []}
-          numResults={filtered.length}
+          localities={locData ? locData.results : []}
+          numResults={organizations.length}
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
           onNumActionsChange={this.handleNumActionsChange}
           onKeyUp={this.handleOrganizationSearchKeyUp}
           valState={valState}
           valMuni={valMuni}
-          valMarg={valMarg}
           valNumActions={valNumActions}
         />
         <div className={`${Styles.container} row`}>
           <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 lg-gutter md-gutter sm-gutter xs-gutter last-sm last-xs">
-            {loading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
-            {!loading &&
+            {orgLoading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
+            {!orgLoading &&
               <OrganizationList
-                localities={filtered}
+                organizations={organizations}
                 onClick={this.handleListItemClick}
                 onMouseEnter={this.handleListItemEnter}
                 onMouseLeave={this.handleListItemLeave}
@@ -219,13 +207,13 @@ class OrganizationListScreenView extends React.Component {
           <div className="col-lg-9 col-md-9 col-sm-8 col-xs-4">
             <div className={Styles.mapContainer}>
               <Map
-                filter={layerFilter}
-                popup={popup ? <LocalityPopup locality={popup} /> : null}
+                features={features}
+                popup={popup ? <LocalityPopup locality={popup} type="org" /> : null}
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
               />
-              <LocalityLegend localities={filtered} />
+              <LocalityLegend localities={localities} />
             </div>
           </div>
         </div>
@@ -237,6 +225,9 @@ class OrganizationListScreenView extends React.Component {
 OrganizationListScreenView.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object,
+  localityById: PropTypes.object.isRequired,
+  localities: PropTypes.object.isRequired,
+  organizations: PropTypes.object.isRequired,
 }
 
 export default withRouter(OrganizationListScreenView)

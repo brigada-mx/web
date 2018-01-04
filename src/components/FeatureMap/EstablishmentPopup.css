@@ -11,10 +11,6 @@
   text-transform: capitalize;
 }
 
-p {
-  text-transform: lowercase;
-}
-
 .address {
   min-width: 180px;
   font-family: 'nunito-sans', sans-serif;

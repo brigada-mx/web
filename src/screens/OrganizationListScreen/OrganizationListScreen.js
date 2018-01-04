@@ -8,6 +8,10 @@ class OrganizationListScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      localityById: {},
+      localities: {
+        loading: true,
+      },
       organizations: {
         loading: true,
       },
@@ -16,7 +20,16 @@ class OrganizationListScreen extends React.Component {
 
   componentDidMount() {
     this._mounted = true
-    getBackoff(this, 'organizations', () => service.getOrganizations)
+    getBackoff(this, 'organizations', service.getOrganizations)
+    getBackoff(this, 'localities', service.getLocalitiesStatic, {
+      onData: (data) => {
+        const localityById = {}
+        for (const result of data.results) {
+          localityById[result.id] = result
+        }
+        this.setState({ localityById })
+      },
+    })
   }
 
   componentWillUnmount() {
