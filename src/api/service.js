@@ -46,6 +46,10 @@ const service = {
   },
 
   getOrganizations: async (page_size = 50) => {
+    // DELETE THIS
+    return sendToApi(
+      'https://s3-us-west-2.amazonaws.com/719s/test-data/organizations.json', { isRelative: false }
+    )
     const params = { page_size }
     return sendToApi('organizations/', { params })
   },
