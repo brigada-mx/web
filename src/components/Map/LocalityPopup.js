@@ -57,11 +57,7 @@ const LocalityPopup = ({ locality, organization, type }) => {
 LocalityPopup.propTypes = {
   locality: PropTypes.object.isRequired,
   organization: PropTypes.object,
-  type: PropTypes.oneOf(['org', 'loc']),
-}
-
-LocalityPopup.defaultProps = {
-  type: 'loc',
+  type: PropTypes.oneOf(['org', 'loc']).isRequired,
 }
 
 export default LocalityPopup

@@ -108,7 +108,6 @@ class OrganizationListScreenView extends React.Component {
   }
 
   filterOrganizations = (results) => {
-    if (!results) return []
     const { organizationSearch, valState, valMuni, valNumActions } = this.state
 
     const rangeByValNumActions = {
@@ -119,13 +118,12 @@ class OrganizationListScreenView extends React.Component {
     }
 
     return results.filter((o) => {
-      const { name, desc, action_count: actions } = o
-      const actionCvegeos = o.actions.map(a => a.locality.cvegeo)
+      const { name, desc, action_count: actions, actionCvegeos } = o
 
       const matchesSearch = tokenMatch(`${name} ${desc}`, organizationSearch)
 
       const cvegeos = valState.map(v => v.value).concat(valMuni.map(v => v.value))
-      const matchesCvegeo = cvegeos.length === 0 || cvegeos.some(v => cvegeo.startsWith(v))
+      const matchesCvegeo = cvegeos.length === 0 || cvegeos.some(v => actionCvegeos.has(v))
 
       const numActions = valNumActions.map(v => rangeByValNumActions[v.value])
       const matchesActions = numActions.length === 0 ||
@@ -135,7 +133,7 @@ class OrganizationListScreenView extends React.Component {
             (maxActions === null || actions <= maxActions)
         })
 
-      return matchesSearch && matchesCvegeo && matchestMarg && matchesActions
+      return matchesSearch && matchesCvegeo && matchesActions
     })
   }
 
@@ -146,7 +144,7 @@ class OrganizationListScreenView extends React.Component {
       localities: { data: locData, loading: locLoading, error: locError },
       organizations: { data: orgData, loading: orgLoading, error: orgError },
     } = this.props
-    const { popup, focused, organizationSearch, valState, valMuni, valNumActions } = this.state
+    const { popup, focused, valState, valMuni, valNumActions } = this.state
 
     let features = []
     const localities = []
@@ -177,7 +175,7 @@ class OrganizationListScreenView extends React.Component {
       })
     }
 
-    const organizations = orgData ? orgData.results : []
+    const organizations = this.filterOrganizations(orgData ? orgData.results : [])
 
     return (
       <div>

@@ -164,7 +164,6 @@ class MapScreen extends React.Component {
   }
 
   filterLocalities = (results) => {
-    if (!results) return []
     const { locSearch, valState, valMuni, valMarg, valNumActions } = this.state
 
     const rangeByValNumActions = {
@@ -235,7 +234,7 @@ class MapScreen extends React.Component {
             <div className={Styles.mapContainer}>
               <Map
                 filter={layerFilter}
-                popup={popup ? <LocalityPopup locality={popup} /> : null}
+                popup={popup ? <LocalityPopup locality={popup} type="loc" /> : null}
                 sourceOptions={sourceOptions}
                 sourceLayer={sourceLayer}
                 onClickFeature={this.handleClickFeature}
