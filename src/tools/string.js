@@ -35,3 +35,8 @@ export const fmtNum = (num) => {
   if (num === -1 || num === undefined || num === null || num === '') return '-'
   return num.toLocaleString()
 }
+
+export const fmtBudget = (b) => { // round to 2 decimal places
+  const millions = Math.round(b / 10000) / 100
+  return `$${millions}M`
+}

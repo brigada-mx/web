@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, Tooltip, LabelList } from 'recharts'
 import moment from 'moment'
-import { fmtNum } from 'tools/string'
+import { fmtNum, fmtBudget } from 'tools/string'
 
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
@@ -249,11 +249,6 @@ class LocalityScreenView extends React.Component {
   renderActionsSection = () => {
     const { actions: { loading, data, error } } = this.props
     if (loading) return <LoadingIndicatorCircle />
-
-    const fmtBudget = (b) => { // round to 2 decimal places
-      const millions = Math.round(b / 10000) / 100
-      return `$${millions}M`
-    }
 
     if (data) {
       const { results: actions } = data

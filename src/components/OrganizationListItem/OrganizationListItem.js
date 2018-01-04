@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { fmtNum, fmtBudget } from 'tools/string'
 import Styles from './OrganizationListItem.css'
 
 
 const OrganizationListItem = ({ organization, onClick, onMouseEnter, onMouseLeave }) => {
   const {
-    name, state_name: stateName, action_count: actions,
+    name, tag1, tag2, tag3, mission, investment, projects, photos,
   } = organization
 
   const handleClick = () => { onClick(organization) }
@@ -18,17 +19,29 @@ const OrganizationListItem = ({ organization, onClick, onMouseEnter, onMouseLeav
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={Styles.listItem}
+      className={Styles.orgCard}
     >
-      <div className={Styles.listItemHeader}>
-        <div className={Styles.name}>{name}</div>
-        <div className={Styles.stateName}></div>
+      <div className={Styles.descriptionContainer}>
+        <span className={Styles.name}>{name}</span>
+        <div className={Styles.tagContainer}>
+          <span className={Styles.tag}>{tag1}</span>
+          <span className={Styles.tag}>{tag2}</span>
+          <span className={Styles.tag}>{tag3}</span>
+        </div>
+        <span className={Styles.mission}>{mission}</span>
       </div>
-
-      <div className={Styles.listItemMetricsContainer}>
-        <div className={`${Styles.listItemMetrics} ${Styles.act}`}>
-          <span className={Styles.value}>{actions}</span>
-          <span className={Styles.label}>Acciones registradas</span>
+      <div className={Styles.metricsContainer}>
+        <div className={Styles.metric}>
+          <span className={Styles.label}>Inversión<br />estimada</span>
+          <span className={Styles.value}>{fmtBudget(investment)}</span>
+        </div>
+        <div className={Styles.metric}>
+          <span className={Styles.label}>Proyectos<br />registrados</span>
+          <span className={Styles.value}>{projects}</span>
+        </div>
+        <div className={Styles.metric}>
+          <span className={Styles.label}>Fotos<br />capturados</span>
+          <span className={Styles.value}>{photos}</span>
         </div>
       </div>
     </div>
