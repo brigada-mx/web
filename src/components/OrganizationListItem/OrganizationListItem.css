@@ -62,13 +62,16 @@
   padding: 22px 32px 27px 32px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   border-top: 1px solid #F2F2F4;
 }
 
 .metric {
   display: flex;
   align-items: center;
+}
+
+.metric:first-of-type {
+  margin-right: 64px;
 }
 
 .label {
