@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import service, { getBackoff } from 'api/service'
-import LocalityScreenView from './LocalityScreenView'
+import OrganizationScreenView from './OrganizationScreenView'
 
 
-class LocalityScreen extends React.Component {
+class OrganizationScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -34,12 +34,12 @@ class LocalityScreen extends React.Component {
   }
 
   render() {
-    return <LocalityScreenView {...this.state} />
+    return <OrganizationScreenView {...this.state} />
   }
 }
 
-LocalityScreen.propTypes = {
+OrganizationScreen.propTypes = {
   id: PropTypes.number.isRequired,
 }
 
-export default LocalityScreen
+export default OrganizationScreen

@@ -37,6 +37,7 @@ export const fmtNum = (num) => {
 }
 
 export const fmtBudget = (b) => { // round to 2 decimal places
+  if (!b) return '$'
   const millions = Math.round(b / 10000) / 100
   return `$${millions}M`
 }

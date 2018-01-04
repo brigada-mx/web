@@ -31,7 +31,7 @@ class OrganizationList extends React.PureComponent {
         />
       )
     })
-    return <div className={Styles.listContainer}>{items}</div>
+    return <div className={Styles.orgsContainer}>{items}</div>
   }
 }
 
@@ -191,16 +191,20 @@ class OrganizationListScreenView extends React.Component {
           valNumActions={valNumActions}
         />
         <div className={`${Styles.container} row`}>
-          <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 lg-gutter md-gutter sm-gutter xs-gutter last-sm last-xs">
-            {orgLoading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
-            {!orgLoading &&
-              <OrganizationList
-                organizations={organizations}
-                onClick={this.handleListItemClick}
-                onMouseEnter={this.handleListItemEnter}
-                onMouseLeave={this.handleListItemLeave}
-              />
-            }
+          <div className={Styles.temporary}>
+            <div className="wrapper-lg wrapper-md">
+              <div className="col-lg-6 col-md-6 col-sm-8 col-xs-4">
+                {orgLoading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
+                {!orgLoading &&
+                  <OrganizationList
+                    organizations={organizations}
+                    onClick={this.handleListItemClick}
+                    onMouseEnter={this.handleListItemEnter}
+                    onMouseLeave={this.handleListItemLeave}
+                  />
+                }
+              </div>
+            </div>
           </div>
           <div className="col-lg-9 col-md-9 col-sm-8 col-xs-4">
             <div className={Styles.mapContainer}>
@@ -209,7 +213,7 @@ class OrganizationListScreenView extends React.Component {
                 popup={popup ? <LocalityPopup
                   locality={popup.locality}
                   organization={popup.organization}
-                  type="org"
+                  screen="org"
                 /> : null}
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}

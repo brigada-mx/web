@@ -234,7 +234,7 @@ class MapScreen extends React.Component {
             <div className={Styles.mapContainer}>
               <Map
                 filter={layerFilter}
-                popup={popup ? <LocalityPopup locality={popup} type="loc" /> : null}
+                popup={popup ? <LocalityPopup locality={popup} screen="loc" /> : null}
                 sourceOptions={sourceOptions}
                 sourceLayer={sourceLayer}
                 onClickFeature={this.handleClickFeature}

@@ -268,7 +268,7 @@ class LocalityScreenView extends React.Component {
       }
 
       const actionList = actions.map((a) => {
-        return <ActionListItem key={a.id} action={a} />
+        return <ActionListItem key={a.id} action={a} screen="loc" />
       })
 
       return (

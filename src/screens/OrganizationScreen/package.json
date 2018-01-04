@@ -1,6 +1,6 @@
 {
-  "name": "LocalityScreen",
+  "name": "OrganizationScreen",
   "version": "0.0.0",
   "private": true,
-  "main": "./LocalityScreen.js"
+  "main": "./OrganizationScreen.js"
 }

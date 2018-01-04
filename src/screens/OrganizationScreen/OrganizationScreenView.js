@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
-import { BarChart, Bar, XAxis, CartesianGrid, Tooltip } from 'recharts'
 import moment from 'moment'
 
 import FeatureMap from 'components/FeatureMap'
@@ -14,10 +13,10 @@ import DirectionsButton from 'components/DirectionsButton'
 import EstablishmentPopup from 'components/FeatureMap/EstablishmentPopup'
 import { dmgGrade, metaByDmgGrade } from 'tools/other'
 import Colors from 'src/colors'
-import Styles from './LocalityScreenView.css'
+import Styles from './OrganizationScreenView.css'
 
 
-const LocalityBreadcrumb = ({ cvegeo, stateName, munName, name }) => (
+const OrganizationBreadcrumb = ({ cvegeo, stateName, munName, name }) => (
   <div className={Styles.breadcrumbLinks}>
     <NavLink to="/">Comunidades</NavLink>
     <NavLink
@@ -36,42 +35,14 @@ const LocalityBreadcrumb = ({ cvegeo, stateName, munName, name }) => (
   </div>
 )
 
-LocalityBreadcrumb.propTypes = {
+OrganizationBreadcrumb.propTypes = {
   cvegeo: PropTypes.string.isRequired,
   stateName: PropTypes.string.isRequired,
   munName: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 }
 
-const DmgBarChart = ({ destroyed, habit, notHabit }) => {
-  const data = [
-    { name: 'PÉRDIDA TOTAL', num: destroyed },
-    { name: 'PARCIAL (HABITABLE)', num: habit },
-    { name: 'PARCIAL (INHABITABLE)', num: notHabit },
-  ]
-
-  return (
-    <BarChart
-      width={400}
-      height={133}
-      data={data}
-      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-    >
-      <XAxis dataKey="name" axisLine={false} tickLine={false} />
-      <CartesianGrid vertical={false} />
-      <Tooltip />
-      <Bar dataKey="num" fill={Colors.brandGreen} />
-    </BarChart>
-  )
-}
-
-DmgBarChart.propTypes = {
-  destroyed: PropTypes.number.isRequired,
-  habit: PropTypes.number.isRequired,
-  notHabit: PropTypes.number.isRequired,
-}
-
-class LocalityScreenView extends React.Component {
+class OrganizationScreenView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -142,7 +113,7 @@ class LocalityScreenView extends React.Component {
 
       return (
         <div className="wrapper">
-          <LocalityBreadcrumb
+          <OrganizationBreadcrumb
             cvegeo={cvegeo}
             munName={munName}
             stateName={stateName}
@@ -240,7 +211,7 @@ class LocalityScreenView extends React.Component {
       }
 
       const actionList = actions.map((a) => {
-        return <ActionListItem key={a.id} action={a} />
+        return <ActionListItem key={a.id} action={a} screen="org" />
       })
 
       return (
@@ -290,10 +261,10 @@ class LocalityScreenView extends React.Component {
   }
 }
 
-LocalityScreenView.propTypes = {
+OrganizationScreenView.propTypes = {
   locality: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   establishments: PropTypes.object.isRequired,
 }
 
-export default LocalityScreenView
+export default OrganizationScreenView

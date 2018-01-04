@@ -7,9 +7,9 @@ import MetricsBar from 'components/MetricsBar'
 import Styles from './ActionListItem.css'
 
 
-const ActionListItem = ({ action }) => {
+const ActionListItem = ({ action, screen }) => {
   const {
-    action_type: type,
+    action_type: actionType,
     desc,
     unit_of_measurement: unit,
     target,
@@ -18,6 +18,7 @@ const ActionListItem = ({ action }) => {
     start_date: startDate = '?',
     end_date: endDate = '?',
     organization: { name, key },
+    locality: { name: locName, state_name: stateName },
   } = action
 
   const metrics = () => {
@@ -41,9 +42,10 @@ const ActionListItem = ({ action }) => {
 
   return (
     <div className={Styles.listItem}>
-      <div className={Styles.orgName}>{name || key}</div>
-      <div className={Styles.header}>{`Construcción de ${type.toLowerCase()}`}</div>
+      {screen === 'loc' && <div className={Styles.orgName}>{name || key}</div>}
+      <div className={Styles.header}>{`Construcción de ${actionType.toLowerCase()}`}</div>
       <div className={Styles.summaryContainer}>
+        {screen === 'org' && <div className={Styles.locName}>{locName}, {stateName}</div>}
         {budget &&
           <div>
             <span className={Styles.label}>PRESUPUESTO: </span>
@@ -59,6 +61,7 @@ const ActionListItem = ({ action }) => {
 
 ActionListItem.propTypes = {
   action: PropTypes.object.isRequired,
+  screen: PropTypes.oneOf(['org', 'loc']).isRequired,
 }
 
 export default ActionListItem

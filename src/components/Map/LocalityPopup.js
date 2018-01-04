@@ -7,12 +7,12 @@ import { fmtNum } from 'tools/string'
 import Styles from './LocalityPopup.css'
 
 
-const LocalityPopup = ({ locality, organization, type }) => {
+const LocalityPopup = ({ locality, organization, screen }) => {
   if (!locality) return null
   const { state_name: stateName, name, location: { lat, lng } } = locality
   const { habit, notHabit, destroyed, total, margGrade } = locality.meta
 
-  if (type === 'loc') {
+  if (screen === 'loc') {
     return (
       <Popup coordinates={[lng, lat]}>
         <span className={Styles.header}>{name}, {stateName}</span>
@@ -40,7 +40,7 @@ const LocalityPopup = ({ locality, organization, type }) => {
     )
   }
 
-  if (type === 'org') {
+  if (screen === 'org') {
     return (
       <Popup coordinates={[lng, lat]}>
         <span className={Styles.header}>{name}, {stateName}</span>
@@ -57,7 +57,7 @@ const LocalityPopup = ({ locality, organization, type }) => {
 LocalityPopup.propTypes = {
   locality: PropTypes.object.isRequired,
   organization: PropTypes.object,
-  type: PropTypes.oneOf(['org', 'loc']).isRequired,
+  screen: PropTypes.oneOf(['org', 'loc']).isRequired,
 }
 
 export default LocalityPopup

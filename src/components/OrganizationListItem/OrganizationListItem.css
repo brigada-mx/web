@@ -1,6 +1,10 @@
 @value colors: "src/colors.css";
 @value brandOffWhite, strongShadow from colors;
 
+.emptyMetric {
+  border: 1px solid red;
+}
+
 .orgCard {
   background-color: white;
   margin-bottom: 18px;
@@ -46,7 +50,7 @@
   margin-right: 6px;
 }
 
-.mission {
+.desc {
   font-family: 'nunito-sans-200', sans-serif;
   font-size: 15px;
   color: #141418;
