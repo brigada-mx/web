@@ -66,6 +66,8 @@ const FilterHeader = (props) => {
 
         <Select
           multi
+          noResultsText="Cero resultados"
+          clearable={false}
           closeOnSelect={false}
           removeSelected={false}
           className={Styles.filter}
@@ -73,10 +75,13 @@ const FilterHeader = (props) => {
           placeholder="Estado"
           onChange={onStateChange}
           options={stateOptions()}
+          joinValues={true}
         />
 
         <Select
           multi
+          noResultsText="Cero resultados"
+          clearable={false}
           closeOnSelect={false}
           removeSelected={false}
           className={Styles.filter}
@@ -88,6 +93,8 @@ const FilterHeader = (props) => {
 
         {valMarg && <Select
           multi
+          noResultsText="Cero resultados"
+          clearable={false}
           closeOnSelect={false}
           removeSelected={false}
           className={Styles.filter}
@@ -104,6 +111,8 @@ const FilterHeader = (props) => {
 
         {valNumActions && <Select
           multi
+          noResultsText="Cero resultados"
+          clearable={false}
           closeOnSelect={false}
           removeSelected={false}
           className={Styles.filter}

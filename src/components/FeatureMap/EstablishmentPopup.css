@@ -15,6 +15,7 @@
   min-width: 180px;
   font-family: 'nunito-sans', sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-size: 12px;
   line-height: 20px;
   letter-spacing: .4px;

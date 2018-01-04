@@ -41,6 +41,7 @@
   font-size: 14px;
   letter-spacing: 0.56px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px) {

@@ -12,18 +12,30 @@
   line-height: 16px;
   text-decoration: none;
   color: #3DC59F;
-  margin-right: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  display: inline-block;
 }
 
-.breadcrumbLinks a:not(:last-of-type):after {
+.breadcrumbLinks span {
+  display: inline-block;
+}
+
+.breadcrumbLinks span:not(:first-of-type) {
+  margin-left: 20px;
+}
+
+.breadcrumbLinks span:not(:first-of-type) a:before {
   content: "";
   background: no-repeat url('assets/img/dropdown-arrow.svg');
   width: 5px;
   height: 5px;
   transform: rotate(-90deg);
   position: absolute;
-  padding-left: 3px;
-  margin: 7px 0 0 6px;
+  padding-right: 3px;
+  margin: 7px 0 0 -14px;
 }
 
 .dmgLevel {
@@ -57,7 +69,6 @@
   margin-bottom: 47px;
 }
 
-
 .vizHeader {
   display: inline-flex;
   flex-direction: row;
@@ -86,43 +97,59 @@
   margin-top: 12px;
 }
 
-.barContainer {
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 326px;
-}
-
-.margMetricsContainer {
+.margContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 4px;
+  width: 100%;
 }
 
-.margMetricsColumn {
+.margColumn {
   display: flex;
   flex-direction: column;
+  width: 46%;
+}
+
+.margMetrics {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .chartLabel {
   color: red;
 }
 
-.barLabel {
+.margLabel {
   font-family: 'nunito-sans-200', sans-serif;
   font-size: 14px;
   color: #19191D;
   letter-spacing: 0.56px;
   line-height: 30px;
-  width: 143px;
-  /*display: inline-flex;*/
+  width: 45%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.margBar {
+  width: 52%;
 }
 
 .map {
   height: 688px;
   margin-top: 100px;
+}
+
+.map .directions {
+  position: absolute;
+  right: 26px;
+  margin-top: 26px;
+  z-index: 2;
+  box-shadow: 0px 20px 60px 0px rgba(37, 38, 50, 0.15);
 }
 
 .actionMetricsContainer {
@@ -142,6 +169,24 @@
   padding: 21px 25px 5px 25px;
 }
 
+@media screen and (min-width: 1440px) {
+  .actionCardsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .actionCardsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .breadcrumbLinks {
     margin-bottom: 73px;
@@ -156,11 +201,28 @@
     background-color: #F6F8FA;
     padding: 21px 20px 5px 20px;
   }
+  .margContainer {
+    justify-content: space-between;
+  }
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px) {
   .breadcrumbLinks {
     margin-bottom: 73px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .breadcrumbLinks .communities {
+    max-width: 25%;
+  }
+  .breadcrumbLinks .state {
+    max-width: 23%;
+  }
+  .breadcrumbLinks .muni {
+    max-width: 23%;
+  }
+  .breadcrumbLinks .loc {
+    max-width: 23%;
   }
   .placeName {
     font-size: 38px;
@@ -170,7 +232,7 @@
   .dmgChartContainer {
     margin-bottom: 32px;
   }
-  .margMetricsContainer {
+  .margContainer {
     flex-direction: column;
   }
   .map {
@@ -224,5 +286,8 @@
   .actionCardsContainer {
     background-color: #F6F8FA;
     padding: 21px 20px 5px 20px;
+  }
+  .margColumn {
+    width: 100%;
   }
 }

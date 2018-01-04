@@ -24,8 +24,8 @@ const ActionListItem = ({ action }) => {
     if (!target) return null
     return (
       <div className={Styles.goalProgress}>
-        <span className={Styles.label}>{progress} DE {target}</span>
-        <MetricsBar value={progress} max={target} />
+        <span className={Styles.label}>{fmtNum(progress)} DE {fmtNum(target)}</span>
+        <span className={Styles.bar}><MetricsBar value={progress} max={target} /></span>
       </div>
     )
   }

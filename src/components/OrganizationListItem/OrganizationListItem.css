@@ -1,155 +1,189 @@
 @value colors: "src/colors.css";
-@value brandOffWhite from colors;
+@value brandOffWhite, strongShadow from colors;
 
-.listItem {
-  border-left: 4px solid #939aa1;
-  box-sizing: border-box;
+.orgCard {
+  background-color: white;
+  margin-bottom: 18px;
 }
 
-.listItemWrapper {
-  border-top: 1px solid brandOffWhite;
-  box-sizing: border-box;
-  padding: 16px 25px 20px 21px;
+.orgCard:first-of-type {
+  background-color: white;
+  margin-top: 18px;
 }
 
-.listItem:hover {
+.orgCard:hover {
   cursor: pointer;
-  border-left: 6px solid #E11717;
-  background-color: #FBFCFD;
+  box-shadow: 0px 40px 100px 0px strongShadow;
 }
 
-.listItem:hover .listItemWrapper {
-  padding-left: 19px;
-}
-
-.listItemHeader {
-  font-family: 'work-sans-300', sans-serif;
-  font-size: 19px;
-  line-height: 32px;
-  color: #141418;
-  display: flex;
-  flex-direction: row;
+.descriptionContainer {
+  padding: 32px 32px 27px 32px;
 }
 
 .name {
-  max-width: 279px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 28px;
+  color: #141418;
+  letter-spacing: 0;
+  line-height: 30px;
 }
 
-.listItemMetricsContainer {
+.tagContainer {
+  margin: 15px 0 12px 0;
+}
+
+.tag {
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 11px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #808286;
+  letter-spacing: 0.84px;
+  line-height: 15px;
+  background-color: #EDF1F5;
+  padding: 3px 10px 2px 10px;
+  border-radius: 2px;
+  margin-right: 6px;
+}
+
+.mission {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 15px;
+  color: #141418;
+  letter-spacing: 0.6px;
+  line-height: 30px;
+}
+
+.metricsContainer {
+  padding: 22px 32px 27px 32px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 13px;
-  padding-right: 25px;
+  border-top: 1px solid #F2F2F4;
 }
 
-.marg {
-  width: 86px;
-}
-
-.dmg {
-  width: 65px
-}
-
-.act {
-  width: 84px;
-}
-
-.value {
-  font-family: 'roboto-500', sans-serif;
-  font-size: 15px;
-  line-height: 18px;
-  letter-spacing: .18px;
-  color: #141418;
+.metric {
+  display: flex;
+  align-items: center;
 }
 
 .label {
   font-family: 'nunito-sans', sans-serif;
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: .37px;
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   color: #9F9F9F;
+  letter-spacing: 0.4px;
+  line-height: 16px;
   text-transform: uppercase;
-  display: flex;
-  margin-top: 4px;
+  margin: 6px 16px 0 0;
+}
+
+.value {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 48px;
+  color: #3DC587;
+  letter-spacing: -0.1px;
+  line-height: 62px;
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
-  .listItem {
-    width: 486px;
-    height: 162px;
-    margin: 13px 6px 11px 6px;
-    border-left: unset;
-    border-bottom: 4px solid #939aa1;
+  .orgCard {
+    height: 188px;
+    min-width: 432px;
     box-sizing: border-box;
+    margin: 0 8px;
+    padding: 22px;
+    border: 1px solid #E8E8E8;
   }
-  .listItem:hover {
-    border-left: unset;
-    background-color: #FBFCFD;
-    border-bottom-width: 6px;
+  .orgCard:first-of-type {
+    margin-top: 0px;
   }
-  .listItem:hover .listItemWrapper {
-    padding-left: 23px;
+  .orgCard:hover {
+    box-shadow: unset;
   }
-  .listItemWrapper {
-    border-top: 1px solid brandOffWhite;
-    border-right: 1px solid brandOffWhite;
-    border-left: 1px solid brandOffWhite;
-    height: 100%;
-    width: 432px;
-    padding: 24px 43px 34px 23px;
-  }
-  .listItemMetrics {
-    justify-content: space-between;
+  .descriptionContainer {
+    padding: unset;
   }
   .name {
-    max-width: 333px;
+    font-size: 19px;
+    line-height: 32px;
+  }
+  .tagContainer {
+    margin: 11px 0 16px 0;
+  }
+  .mission {
+    display: none;
+  }
+  .metricsContainer {
+    padding: unset;
+    border-top: none;
+  }
+  .metric {
+    flex-direction: column;
+    align-items: start;
   }
   .label {
-    width: 83px;
+    margin: 6px 0 0 0;
+    order: 2;
+  }
+  .value {
+    font-family: 'roboto-500', sans-serif;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.18px;
+    line-height: 18px;
   }
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px) {
-  .listItem {
-    width: 332px;
-    height: 126px;
-    margin: 13px 0px 0px 12px;
-    border-left: unset;
-    border-bottom: 4px solid #939aa1;
+  .orgCard {
+    height: 120px;
+    min-width: 332px;
     box-sizing: border-box;
+    margin: 0 6px;
+    padding: 13px 18px 17px 20px;
+    border: 1px solid #E8E8E8;
   }
-  .listItem:hover {
-    border-left: unset;
-    background-color: #FBFCFD;
-    border-bottom-width: 6px;
+  .orgCard:first-of-type {
+    margin-top: 0px;
   }
-  .listItem:hover .listItemWrapper {
-    padding-left: 20px;
+  .orgCard:hover {
+    box-shadow: unset;
   }
-  .listItemWrapper {
-    border-top: 1px solid brandOffWhite;
-    border-right: 1px solid brandOffWhite;
-    border-left: 1px solid brandOffWhite;
-    height: 100%;
-    width: 332px;
-    padding: 12px 25px 13px 20px;
+  .descriptionContainer {
+    padding: unset;
   }
-  .listItemMetrics {
-    justify-content: space-between;
-    margin-top: 3px;
-  }
-  .listItemHeader {
+  .name {
     font-size: 16px;
     line-height: 32px;
   }
-  .name {
-    max-width: 259px;
+  .tagContainer {
+    display: none;
+  }
+  .mission {
+    display: none;
+  }
+  .metricsContainer {
+    padding: 5px 0 0 0;
+    border-top: none;
+  }
+  .metric {
+    flex-direction: column;
+    align-items: start;
   }
   .label {
-    width: 83px;
+    margin: 3px 0 0 0;
+    order: 2;
+    font-size: 11px;
+  }
+  .value {
+    font-family: 'roboto-500', sans-serif;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.18px;
+    line-height: 18px;
   }
 }

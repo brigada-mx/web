@@ -73,7 +73,9 @@ div .Select .Select-control:hover {
   border-bottom: none;
   border-top: 1px solid #F2F2F4;
   box-shadow: 0 40px 100px 0px rgba(37, 38, 50, 0.1);
-  margin-top: 14px;
+  width: 260px;
+  margin-top: 15px;
+  left: -14px;
 }
 
 .Select .Select-menu {
@@ -93,21 +95,33 @@ div .Select .Select-control:hover {
   font-size: 15px;
   letter-spacing: 0.6px;
   max-width: 80%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .Select .Select-multi-value-wrapper {
   width: 100%;
 }
 
-.Select .Select-value .Select-value-icon {
-  display: none;
-}
-
-.Select .Select-value-label {
-  max-width: 100%;
+.Select .Select-value .Select-value-label {
+  max-width: 80%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  padding: 5px 7px 4px 7px;
+}
+
+.Select .Select-option {
+  padding: 1px 25px 1px 54px;
+  text-indent: -29px;
+}
+
+.Select .Select-option:first-of-type {
+  padding-top: 18px;
+}
+
+.Select .Select-option:last-of-type {
+  padding-bottom: 18px;
 }
 
 .Select .Select-option.is-selected {
@@ -115,7 +129,8 @@ div .Select .Select-control:hover {
 }
 
 .Select .Select-option.is-focused {
-  background-color: #F6F8FA;
+  font-family: 'nunito-sans-300', sans-serif;
+  background-color: white;
 }
 
 // .Select .Select-option.is-focused:before {
@@ -134,4 +149,8 @@ div .Select .Select-control:hover {
 
 .Select .Select-option.is-selected:before {
   background-color: #3DC59F;
+}
+
+.Select.is-open > .Select-control .Select-arrow {
+  background: no-repeat url('assets/img/dropdown-arrow-accent.svg');
 }

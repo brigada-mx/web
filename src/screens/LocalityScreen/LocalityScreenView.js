@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
-import { BarChart, Bar, XAxis, CartesianGrid, Tooltip } from 'recharts'
+import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, Tooltip, LabelList } from 'recharts'
 import moment from 'moment'
+import { fmtNum, fmtBudget } from 'tools/string'
 
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
@@ -19,20 +20,26 @@ import Styles from './LocalityScreenView.css'
 
 const LocalityBreadcrumb = ({ cvegeo, stateName, munName, name }) => (
   <div className={Styles.breadcrumbLinks}>
-    <NavLink to="/">Comunidades</NavLink>
-    <NavLink
-      to={{ pathname: '/',
-        state: { valState: [{ value: cvegeo.substring(0, 2), label: stateName }] } }}
-    >
-      {stateName}
-    </NavLink>
-    <NavLink
-      to={{ pathname: '/',
-        state: { valMuni: [{ value: cvegeo.substring(0, 5), label: munName }] } }}
-    >
-      {munName}
-    </NavLink>
-    <NavLink to="#">{name}</NavLink>
+    <span className={Styles.communities}><NavLink to="/">Comunidades</NavLink></span>
+    <span className={Styles.state}>
+      <NavLink
+        to={{ pathname: '/',
+          state: { valState: [{ value: cvegeo.substring(0, 2), label: stateName }] } }}
+      >
+        {stateName}
+      </NavLink>
+    </span>
+    <span className={Styles.muni}>
+      <NavLink
+        to={{ pathname: '/',
+          state: { valMuni: [{ value: cvegeo.substring(0, 5), label: munName }] } }}
+      >
+        {munName}
+      </NavLink>
+    </span>
+    <span className={Styles.loc}>
+      <NavLink to="#">{name}</NavLink>
+    </span>
   </div>
 )
 
@@ -51,17 +58,40 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
   ]
 
   return (
-    <BarChart
-      width={400}
-      height={133}
-      data={data}
-      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-    >
-      <XAxis dataKey="name" axisLine={false} tickLine={false} />
-      <CartesianGrid vertical={false} />
-      <Tooltip />
-      <Bar dataKey="num" fill={Colors.brandGreen} />
-    </BarChart>
+    <ResponsiveContainer width="100%" height={134}>
+      <BarChart
+        data={data}
+        margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+        barCategoryGap="1%"
+        unit="viviendas"
+      >
+        <XAxis
+          dataKey="name"
+          axisLine={false}
+          tickLine={false}
+          interval={0}
+          tick={
+            { fontSize: 10,
+              fontFamily: 'nunito-sans',
+              letterSpacing: 0.16,
+              lineHeight: 20,
+              fill: '#9F9F9F',
+              width: 74 }
+          }
+        />
+        <CartesianGrid vertical={false} stroke="#E4E7EB" horizontalPoints={[0, 26, 52, 78, 104]} />
+        <Bar dataKey="num" fill={Colors.blueGreen} isAnimationActive={false} >
+          <LabelList
+            dataKey="num"
+            position="insideTop"
+            fontSize="10"
+            fontFamily="nunito-sans"
+            fill="#C5EDE2"
+            offset="11"
+          />
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
   )
 }
 
@@ -133,9 +163,9 @@ class LocalityScreenView extends React.Component {
         analfabet, noPrimary, noToilet, noElec, noPlumb, noFridge, dirtFloor, roomOccup,
       ].map((v, i) => {
         return (
-          <div key={i} className={Styles.barContainer}>
-            <span className={Styles.barLabel}>{barLabels[i]}</span>
-            <MetricsBar value={v} max={100} />
+          <div key={i} className={Styles.margMetrics}>
+            <span className={Styles.margLabel}>{barLabels[i]}</span>
+            <span className={Styles.margBar}><MetricsBar value={v} max={100} /></span>
           </div>
         )
       })
@@ -150,7 +180,7 @@ class LocalityScreenView extends React.Component {
           />
 
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-8 col-sm-8 col-xs-4">
+            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7 col-sm-8 col-xs-4">
               <div className={Styles.dmgLevel}>
                 <span className={Styles.circle} style={{ backgroundColor: dmgMeta.color }} />
                 <span className={Styles.label} style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
@@ -165,7 +195,7 @@ class LocalityScreenView extends React.Component {
             <div className="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3 col-sm-8 col-xs-4 lg-gutter md-gutter">
               <div className={Styles.vizHeader}>
                 <span className={Styles.vizLabel}>VIVIENDAS<br />DAÑADAS</span>
-                <span className={Styles.vizCount}>{total}</span>
+                <span className={Styles.vizCount}>{fmtNum(total)}</span>
               </div>
               <div className={Styles.dmgChartContainer}>
                 <DmgBarChart {...{ destroyed, habit, notHabit }} />
@@ -176,9 +206,9 @@ class LocalityScreenView extends React.Component {
                 <span className={Styles.vizLabel}>MARGINACIÓN<br />SOCIAL</span>
                 <span className={Styles.vizCount}>{margGrade}</span>
               </div>
-              <div className={Styles.margMetricsContainer}>
-                <div className={Styles.margMetricsColumn}>{bars.slice(0, 4)}</div>
-                <div className={Styles.margMetricsColumn}>{bars.slice(4, 8)}</div>
+              <div className={Styles.margContainer}>
+                <div className={Styles.margColumn}>{bars.slice(0, 4)}</div>
+                <div className={Styles.margColumn}>{bars.slice(4, 8)}</div>
               </div>
             </div>
           </div>
@@ -199,6 +229,9 @@ class LocalityScreenView extends React.Component {
     if (data) {
       return (
         <div className={`${Styles.map} row`}>
+          <div className={`${Styles.directions} lg-hidden md-hidden`}>
+            <DirectionsButton lat={lat} lng={lng} />
+          </div>
           <FeatureMap
             onClickFeature={this.handleClickFeature}
             onEnterFeature={this.handleEnterFeature}
@@ -216,11 +249,6 @@ class LocalityScreenView extends React.Component {
   renderActionsSection = () => {
     const { actions: { loading, data, error } } = this.props
     if (loading) return <LoadingIndicatorCircle />
-
-    const fmtBudget = (b) => { // round to 2 decimal places
-      const millions = Math.round(b / 10000) / 100
-      return `$${millions}M`
-    }
 
     if (data) {
       const { results: actions } = data
@@ -247,7 +275,7 @@ class LocalityScreenView extends React.Component {
         <div>
           <div className={Styles.actionMetricsContainer}>
             <div className="row">
-              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between bottom-xs">
+              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between gutter bottom-xs">
                 <div className={Styles.vizHeader}>
                   <span className={Styles.vizLabel}>PROYECTOS DE<br />RECONSTRUCCIÓN</span>
                   <span className={Styles.vizCount}>{actions.length}</span>

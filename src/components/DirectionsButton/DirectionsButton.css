@@ -24,3 +24,11 @@
   width: 48px;
   margin: 88px 0 0 15px;
 }
+
+@media screen and (max-width: 767px) and (min-width: 320px) {
+  .button {
+    background-position: 21px 20px;
+    width: 64px;
+    height: 64px;
+  }
+}

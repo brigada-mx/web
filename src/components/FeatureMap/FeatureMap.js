@@ -18,7 +18,7 @@ const Mapbox = ReactMapboxGl({
 const zoomStyle = {
   position: 'absolute',
   top: 26,
-  right: 26,
+  left: 26,
   border: 'none',
   borderRadius: 2,
 }
