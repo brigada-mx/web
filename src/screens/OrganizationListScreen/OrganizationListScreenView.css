@@ -3,7 +3,7 @@
 
 .filterShadow {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   box-shadow: 15px 15px 30px 0px weakShadow;
 }
 
@@ -14,6 +14,8 @@
   overflow: scroll;
   padding: 0 25px;
   height: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 .container {
@@ -44,6 +46,7 @@
     align-items: center;
     height: 218px;
     padding: 0px;
+    box-shadow: 0 0 100px 0 weakShadow;
   }
 }
 
@@ -58,5 +61,6 @@
     align-items: center;
     height: 152px;
     padding: 0px;
+    box-shadow: 0 0 100px 0 weakShadow;
   }
 }
