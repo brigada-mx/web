@@ -7,40 +7,57 @@ import { fmtNum } from 'tools/string'
 import Styles from './LocalityPopup.css'
 
 
-const LocalityPopup = ({ locality }) => {
+const LocalityPopup = ({ locality, organization, type }) => {
   if (!locality) return null
   const { state_name: stateName, name, location: { lat, lng } } = locality
   const { habit, notHabit, destroyed, total, margGrade } = locality.meta
 
-  return (
-    <Popup coordinates={[lng, lat]}>
-      <span className={Styles.header}>{name}, {stateName}</span>
-      <div className={Styles.item}>
-        <span className={Styles.label}>Viviendas dañadas</span>
-        <span className={Styles.value}>{fmtNum(total)}</span>
-      </div>
-      <div className={Styles.item}>
-        <span className={Styles.label}>Habitables</span>
-        <span className={Styles.value}>{fmtNum(habit)}</span>
-      </div>
-      <div className={Styles.item}>
-        <span className={Styles.label}>No habitables</span>
-        <span className={Styles.value}>{fmtNum(notHabit)}</span>
-      </div>
-      <div className={Styles.item}>
-        <span className={Styles.label}>Pérdida total</span>
-        <span className={Styles.value}>{fmtNum(destroyed)}</span>
-      </div>
-      <div className={Styles.item}>
-        <span className={Styles.label}>Marginación social</span>
-        <span className={Styles.value}>{fmtNum(margGrade)}</span>
-      </div>
-    </Popup>
-  )
+  if (type === 'loc') {
+    return (
+      <Popup coordinates={[lng, lat]}>
+        <span className={Styles.header}>{name}, {stateName}</span>
+        <div className={Styles.item}>
+          <span className={Styles.label}>Viviendas dañadas</span>
+          <span className={Styles.value}>{fmtNum(total)}</span>
+        </div>
+        <div className={Styles.item}>
+          <span className={Styles.label}>Habitables</span>
+          <span className={Styles.value}>{fmtNum(habit)}</span>
+        </div>
+        <div className={Styles.item}>
+          <span className={Styles.label}>No habitables</span>
+          <span className={Styles.value}>{fmtNum(notHabit)}</span>
+        </div>
+        <div className={Styles.item}>
+          <span className={Styles.label}>Pérdida total</span>
+          <span className={Styles.value}>{fmtNum(destroyed)}</span>
+        </div>
+        <div className={Styles.item}>
+          <span className={Styles.label}>Marginación social</span>
+          <span className={Styles.value}>{fmtNum(margGrade)}</span>
+        </div>
+      </Popup>
+    )
+  }
+
+  if (type === 'org') {
+    return (
+      <Popup coordinates={[lng, lat]}>
+        <span className={Styles.header}>{name}, {stateName}</span>
+        <div className={Styles.item}>
+          <span className={Styles.label}>Marginación social</span>
+          <span className={Styles.value}>{fmtNum(margGrade)}</span>
+        </div>
+      </Popup>
+    )
+  }
+  return null
 }
 
 LocalityPopup.propTypes = {
   locality: PropTypes.object.isRequired,
+  organization: PropTypes.object,
+  type: PropTypes.oneOf(['org', 'loc']).isRequired,
 }
 
 export default LocalityPopup

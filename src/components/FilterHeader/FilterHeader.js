@@ -66,6 +66,7 @@ const FilterHeader = (props) => {
 
         <Select
           multi
+          joinValues
           noResultsText="Cero resultados"
           clearable={false}
           closeOnSelect={false}
@@ -75,7 +76,6 @@ const FilterHeader = (props) => {
           placeholder="Estado"
           onChange={onStateChange}
           options={stateOptions()}
-          joinValues={true}
         />
 
         <Select
@@ -117,7 +117,7 @@ const FilterHeader = (props) => {
           removeSelected={false}
           className={Styles.filter}
           value={valNumActions}
-          placeholder="Total de Proyectos"
+          placeholder="Total de proyectos"
           onChange={onNumActionsChange}
           options={[
             { value: '0', label: '0-9' },
@@ -146,7 +146,6 @@ const FilterHeader = (props) => {
       </div>
 
     </div>
-
   )
 }
 
