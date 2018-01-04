@@ -1,29 +1,9 @@
-.temporary {
-  background-color: #F6F8FA;
-}
 
-.orgsContainer {
-  background-color: #F6F8FA;
-  display: flex;
-  flex-direction: column;
-}
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
-  .orgsContainer {
-    background-color: white;
-    overflow: scroll;
-    flex-direction: row;
-    align-items: center;
-    height: 218px;
-  }
+
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px) {
-  .orgsContainer {
-    background-color: white;
-    overflow: scroll;
-    flex-direction: row;
-    align-items: center;
-    height: 152px;
-  }
+
 }
