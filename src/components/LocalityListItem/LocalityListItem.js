@@ -44,7 +44,7 @@ const abbreviationByStateName = {
   'zacatecas': 'ZA',
 }
 
-const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => {
+const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave, focused }) => {
   const {
     name, state_name: stateName, meta: { margGrade, total }, action_count: actions, dmgGrade,
   } = locality
@@ -53,12 +53,15 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
   const handleMouseEnter = () => { onMouseEnter(locality) }
   const handleMouseLeave = () => { onMouseLeave(locality) }
 
+  let className = Styles.listItem
+  if (focused) className = `${Styles.listItem} ${Styles.listItemFocused}`
+
   return (
     <div
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={Styles.listItem}
+      className={className}
       style={{ borderColor: metaByDmgGrade(dmgGrade).color }}
     >
       <div className={Styles.listItemWrapper}>
@@ -91,6 +94,7 @@ const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave }) => 
 
 LocalityListItem.propTypes = {
   locality: PropTypes.object.isRequired,
+  focused: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
