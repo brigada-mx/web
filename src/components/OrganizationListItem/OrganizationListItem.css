@@ -114,12 +114,16 @@
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .orgCard {
-    height: 188px;
+    height: 172px;
     min-width: 432px;
     box-sizing: border-box;
     margin: 0 8px;
     padding: 22px;
     border: 1px solid #E8E8E8;
+  }
+  .orgCardFocused {
+    height: 188px;
+    box-shadow: unset;
   }
   .orgCard:first-of-type {
     margin-top: 0px;
@@ -170,6 +174,10 @@
     margin: 0 6px;
     padding: 13px 18px 17px 20px;
     border: 1px solid #E8E8E8;
+  }
+  .orgCardFocused {
+    height: 120px;
+    box-shadow: unset;
   }
   .orgCard:first-of-type {
     margin-top: 0px;
