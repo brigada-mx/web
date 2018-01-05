@@ -27,9 +27,12 @@ class Map extends React.Component {
     super(props)
     this._initialZoom = [6]
     this._initialCoordinates = [-95.9042505, 17.1073688]
+    this._fitBoundsOptions = { padding: 20 }
+    this._map = null
   }
 
   handleMapLoaded = (map) => {
+    this._map = map
     const { onClickFeature, onEnterFeature, onLeaveFeature } = this.props
     map.on('click', 'features', (e) => {
       onClickFeature(e.features[0])
@@ -48,7 +51,7 @@ class Map extends React.Component {
   }
 
   render() {
-    const { popup, filter, features, sourceLayer, sourceOptions } = this.props
+    const { popup, filter, features, sourceLayer, sourceOptions, fitBounds } = this.props
     const featureSourceOptions = {
       type: 'geojson',
       data: {
@@ -67,6 +70,8 @@ class Map extends React.Component {
           width: '100%',
         }}
         onStyleLoad={this.handleMapLoaded}
+        fitBounds={fitBounds}
+        fitBoundsOptions={this._fitBoundsOptions}
       >
         {popup}
         <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
@@ -125,6 +130,7 @@ Map.propTypes = {
   sourceLayer: PropTypes.string,
   sourceOptions: PropTypes.object,
   filter: PropTypes.arrayOf(PropTypes.any),
+  fitBounds: PropTypes.arrayOf(PropTypes.object),
   popup: PropTypes.any,
   onClickFeature: PropTypes.func,
   onEnterFeature: PropTypes.func,

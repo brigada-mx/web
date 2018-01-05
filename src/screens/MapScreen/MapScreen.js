@@ -76,6 +76,7 @@ class MapScreen extends React.Component {
       },
       localityByCvegeo: {},
       filtered: [],
+      fitBounds: [],
       layerFilter: null,
       popup: null,
       locSearch: '',
@@ -98,11 +99,14 @@ class MapScreen extends React.Component {
     getBackoff(this, 'localities', service.getLocalitiesStatic, {
       onData: (data) => {
         const localityByCvegeo = {}
+        const fitBounds = []
         data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
+          const { lng, lat } = r.location
+          fitBounds.push([lng, lat])
           localityByCvegeo[r.cvegeo] = r
           return { ...r, dmgGrade: dmgGrade(r) }
         })
-        this.setState({ localityByCvegeo })
+        this.setState({ localityByCvegeo, fitBounds })
       },
     })
   }
@@ -218,7 +222,13 @@ class MapScreen extends React.Component {
   }
 
   render() {
-    const { popup, localities: { data = {}, loading, error }, filtered, layerFilter } = this.state
+    const {
+      popup,
+      localities: { data = {}, loading, error },
+      filtered,
+      layerFilter,
+      fitBounds,
+    } = this.state
 
     const { valState, valMuni, valMarg, valNumActions } = this.state
     return (
@@ -260,6 +270,7 @@ class MapScreen extends React.Component {
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
+                fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
               />
               <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />
             </div>
