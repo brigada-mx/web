@@ -30,6 +30,10 @@ const compareLocalities = (a, b) => {
 }
 
 class LocalityList extends React.PureComponent {
+  handleScroll = (e) => {
+    this.props.onScroll(e, this.props.localities)
+  }
+
   render() {
     const { localities, ...rest } = this.props
     const maxItems = 250
@@ -43,12 +47,13 @@ class LocalityList extends React.PureComponent {
         />
       )
     })
-    return <div className={Styles.listContainer}>{items}</div>
+    return <div onScroll={this.handleScroll} className={Styles.listContainer}>{items}</div>
   }
 }
 
 LocalityList.propTypes = {
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onScroll: PropTypes.func.isRequired,
 }
 
 class MapScreen extends React.Component {
@@ -199,6 +204,16 @@ class MapScreen extends React.Component {
     })
   }
 
+  handleScroll = (e, localities) => {
+    if (window.innerWidth >= 980) return
+    const { scrollLeft, scrollWidth } = e.nativeEvent.srcElement
+    const width = scrollWidth / localities.length
+    const index = Math.min(Math.max(
+      Math.floor(scrollLeft / width + 0.5), 0),
+    localities.length - 1)
+    this.setState({ popup: localities[index] })
+  }
+
   render() {
     const { popup, localities: { data = {}, loading, error }, filtered, layerFilter } = this.state
 
@@ -224,6 +239,7 @@ class MapScreen extends React.Component {
             {!loading &&
               <LocalityList
                 localities={filtered}
+                onScroll={this.handleScroll}
                 onClick={this.handleListItemClick}
                 onMouseEnter={this.handleListItemEnter}
                 onMouseLeave={this.handleListItemLeave}
