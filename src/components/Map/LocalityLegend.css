@@ -89,7 +89,7 @@
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .container {
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: flex-start;
     top: 0;
     right: unset;
     bottom: unset;
@@ -100,7 +100,9 @@
     overflow-x: scroll;
   }
   .title {
-    display: none;
+    line-height: 23px;
+    margin: 0 16px 0 0;
+    white-space: nowrap;
   }
   .legendItem {
     display: inline-flex;

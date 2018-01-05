@@ -26,3 +26,21 @@
 .item:last-of-type {
   padding-bottom: 1px;
 }
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .loc {
+    max-width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+  .loc {
+    max-width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -15,7 +15,9 @@ const LocalityPopup = ({ locality, organization, screen }) => {
   if (screen === 'loc') {
     return (
       <Popup coordinates={[lng, lat]}>
-        <span className={Styles.header}>{name}, {stateName}</span>
+        <span className={Styles.header}>
+          <span className={Styles.loc}>{name},</span><span className={Styles.state}>{'\u00A0'}{stateName}</span>
+        </span>
         <div className={Styles.item}>
           <span className={Styles.label}>Viviendas dañadas</span>
           <span className={Styles.value}>{fmtNum(total)}</span>

@@ -6,10 +6,6 @@
   box-sizing: border-box;
 }
 
-.listItemFocused {
-  border: 1px solid red;
-}
-
 .listItemWrapper {
   border-top: 1px solid brandOffWhite;
   box-sizing: border-box;
@@ -79,24 +75,38 @@
   text-transform: uppercase;
   display: flex;
   margin-top: 4px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .listItem {
     width: 486px;
-    height: 162px;
-    margin: 13px 6px 11px 6px;
+    height: 146px;
+    margin: 0px 6px 0px 6px;
     border-left: unset;
-    border-bottom: 4px solid #939aa1;
+    border-bottom: 2px solid #939aa1;
     box-sizing: border-box;
+    /*transition: .3s ease-out;*/
+  }
+  .listItem:first-of-type {
+    margin: 0px 6px 0px 14px;
+  }
+  .listItemFocused {
+    height: 162px;
+    border-bottom: 4px solid #939aa1;
   }
   .listItem:hover {
     border-left: unset;
-    background-color: #FBFCFD;
-    border-bottom-width: 6px;
+    background-color: white;
   }
   .listItem:hover .listItemWrapper {
-    padding-left: 23px;
+    height: 162px;
+    padding: 24px 43px 34px 24px;
+  }
+  .listItemFocused .listItemWrapper {
+    height: 162px;
+    padding: 24px 43px 34px 24px;
   }
   .listItemWrapper {
     border-top: 1px solid brandOffWhite;
@@ -104,7 +114,8 @@
     border-left: 1px solid brandOffWhite;
     height: 100%;
     width: 432px;
-    padding: 24px 43px 34px 23px;
+    padding: 16px 43px 28px 24px;
+    /*transition: .3s ease-out;*/
   }
   .listItemMetrics {
     justify-content: space-between;
@@ -121,15 +132,22 @@
   .listItem {
     width: 332px;
     height: 126px;
-    margin: 13px 0px 0px 12px;
+    margin: 0px 0px 0px 12px;
     border-left: unset;
-    border-bottom: 4px solid #939aa1;
+    border-bottom: 3px solid #939aa1;
     box-sizing: border-box;
+    /*transition: .3s ease-out;*/
+  }
+  .listItem:first-of-type {
+    margin: 0px 0px 0px 14px;
+  }
+  .listItemFocused {
+    border-bottom-width: 4px;
   }
   .listItem:hover {
     border-left: unset;
-    background-color: #FBFCFD;
-    border-bottom-width: 6px;
+    border-bottom-width: 4px;
+    background-color: white;
   }
   .listItem:hover .listItemWrapper {
     padding-left: 20px;
@@ -141,6 +159,9 @@
     height: 100%;
     width: 332px;
     padding: 12px 25px 13px 20px;
+  }
+  .listItemMetricsContainer {
+    margin-top: 5px;
   }
   .listItemMetrics {
     justify-content: space-between;
