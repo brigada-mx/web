@@ -29,6 +29,8 @@ const compareLocalities = (a, b) => {
   return tb - ta
 }
 
+const maxLocalityListItems = 250
+
 class LocalityList extends React.PureComponent {
   handleScroll = (e) => {
     this.props.onScroll(e, this.props.localities)
@@ -36,8 +38,7 @@ class LocalityList extends React.PureComponent {
 
   render() {
     const { localities, ...rest } = this.props
-    const maxItems = 250
-    const items = localities.sort(compareLocalities).slice(0, maxItems).map((l) => {
+    const items = localities.sort(compareLocalities).slice(0, maxLocalityListItems).map((l) => {
       const { cvegeo } = l
       return (
         <LocalityListItem
@@ -207,7 +208,7 @@ class MapScreen extends React.Component {
   handleScroll = (e, localities) => {
     if (window.innerWidth >= 980) return
     const { scrollLeft, scrollWidth } = e.nativeEvent.srcElement
-    const width = scrollWidth / localities.length
+    const width = scrollWidth / Math.min(maxLocalityListItems, localities.length)
     const index = Math.min(Math.max(
       Math.floor(scrollLeft / width + 0.5), 0),
     localities.length - 1)

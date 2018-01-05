@@ -46,6 +46,10 @@ const LocalityPopup = ({ locality, organization, screen }) => {
         <Popup coordinates={[lng, lat]}>
           <span className={Styles.header}>{name}, {stateName}</span>
           <div className={Styles.item}>
+            <span className={Styles.label}>Viviendas dañadas</span>
+            <span className={Styles.value}>{fmtNum(total)}</span>
+          </div>
+          <div className={Styles.item}>
             <span className={Styles.label}>Marginación social</span>
             <span className={Styles.value}>{fmtNum(margGrade)}</span>
           </div>
@@ -57,6 +61,10 @@ const LocalityPopup = ({ locality, organization, screen }) => {
     return (
       <Popup coordinates={[lng, lat]}>
         <span className={Styles.header}>{name}, {stateName}</span>
+        <div className={Styles.item}>
+          <span className={Styles.label}>Viviendas dañadas</span>
+          <span className={Styles.value}>{fmtNum(total)}</span>
+        </div>
         <div className={Styles.item}>
           <span className={Styles.label}>Marginación social</span>
           <span className={Styles.value}>{fmtNum(margGrade)}</span>
