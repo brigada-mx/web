@@ -74,6 +74,15 @@ class OrganizationListScreenView extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.state.focused) return
+    const { data } = this.props.organizations
+    if (!data) return
+    const organizations = this.filterOrganizations(data.results)
+    const [focused] = organizations
+    if (focused) this.setState({ focused })
+  }
+
   handleStateChange = (v) => {
     this.setState({ valState: v })
   }
