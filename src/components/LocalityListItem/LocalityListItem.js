@@ -44,52 +44,55 @@ const abbreviationByStateName = {
   'zacatecas': 'ZA',
 }
 
-const LocalityListItem = ({ locality, onClick, onMouseEnter, onMouseLeave, focused }) => {
-  const {
-    name, state_name: stateName, meta: { margGrade, total }, action_count: actions, dmgGrade,
-  } = locality
+class LocalityListItem extends React.PureComponent {
+  render() {
+    const { locality, onClick, onMouseEnter, onMouseLeave, focused } = this.props
+    const {
+      name, state_name: stateName, meta: { margGrade, total }, action_count: actions, dmgGrade,
+    } = locality
 
-  const handleClick = () => { onClick(locality) }
-  const handleMouseEnter = () => { onMouseEnter(locality) }
-  const handleMouseLeave = () => { onMouseLeave(locality) }
+    const handleClick = () => { onClick(locality) }
+    const handleMouseEnter = () => { onMouseEnter(locality) }
+    const handleMouseLeave = () => { onMouseLeave(locality) }
 
-  let className = Styles.listItem
-  if (focused) className = `${Styles.listItem} ${Styles.listItemFocused}`
+    let className = Styles.listItem
+    if (focused) className = `${Styles.listItem} ${Styles.listItemFocused}`
 
-  return (
-    <div
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className={className}
-      style={{ borderColor: metaByDmgGrade(dmgGrade).color }}
-    >
-      <div className={Styles.listItemWrapper}>
-        <div className={`${Styles.listItemHeader}`}>
-          <div className={Styles.name}>{name},</div>
-          <div className={Styles.stateName}>{'\u00A0'}
-            {abbreviationByStateName[stateName.toLowerCase()] || stateName}
+    return (
+      <div
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className={className}
+        style={{ borderColor: metaByDmgGrade(dmgGrade).color }}
+      >
+        <div className={Styles.listItemWrapper}>
+          <div className={`${Styles.listItemHeader}`}>
+            <div className={Styles.name}>{name},</div>
+            <div className={Styles.stateName}>{'\u00A0'}
+              {abbreviationByStateName[stateName.toLowerCase()] || stateName}
+            </div>
           </div>
-        </div>
-        <div className={Styles.listItemMetricsContainer}>
-          <div className={`${Styles.listItemMetrics} ${Styles.marg}`}>
-            <span className={Styles.value}>{margGrade || '?'}</span>
-            <span className={Styles.label}>Marginación social</span>
-          </div>
+          <div className={Styles.listItemMetricsContainer}>
+            <div className={`${Styles.listItemMetrics} ${Styles.marg}`}>
+              <span className={Styles.value}>{margGrade || '?'}</span>
+              <span className={Styles.label}>Marginación social</span>
+            </div>
 
-          <div className={`${Styles.listItemMetrics} ${Styles.dmg}`}>
-            <span className={Styles.value}>{fmtNum(total)}</span>
-            <span className={Styles.label}>Viviendas dañadas</span>
-          </div>
+            <div className={`${Styles.listItemMetrics} ${Styles.dmg}`}>
+              <span className={Styles.value}>{fmtNum(total)}</span>
+              <span className={Styles.label}>Viviendas dañadas</span>
+            </div>
 
-          <div className={`${Styles.listItemMetrics} ${Styles.act}`}>
-            <span className={Styles.value}>{actions}</span>
-            <span className={Styles.label}>Proyectos registrados</span>
+            <div className={`${Styles.listItemMetrics} ${Styles.act}`}>
+              <span className={Styles.value}>{actions}</span>
+              <span className={Styles.label}>Proyectos registrados</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 LocalityListItem.propTypes = {

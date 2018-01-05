@@ -38,7 +38,7 @@ class LocalityList extends React.PureComponent {
 
   render() {
     const { localities, focusedId, ...rest } = this.props
-    const items = localities.sort(compareLocalities).slice(0, maxLocalityListItems).map((l) => {
+    const items = localities.slice(0, maxLocalityListItems).map((l) => {
       const { cvegeo } = l
       return (
         <LocalityListItem
@@ -117,7 +117,7 @@ class MapScreen extends React.Component {
       const { localities: { data = {} } } = this.state
       if (!data.results) return
 
-      const filtered = this.filterLocalities(data.results)
+      const filtered = this.filterLocalities(data.results).sort(compareLocalities)
       const layerFilter = ['in', 'cvegeo'].concat(filtered.map((l) => {
         const { cvegeo } = l
         if (cvegeo.startsWith('0')) return cvegeo
