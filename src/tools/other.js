@@ -32,3 +32,24 @@ export const metaByDmgGrade = (grade) => {
   }
   return lookup[grade] || lookup.unknown
 }
+
+export const fitBoundsFromCoords = (coords) => {
+  if (coords.length === 0) return []
+
+  let minLat, maxLat, minLng, maxLng
+  for (const c of coords) {
+    const { lat, lng } = c
+    if (minLat === undefined) {
+      minLat = lat
+      maxLat = lat
+      minLng = lng
+      maxLng = lng
+    } else {
+      minLat = Math.min(minLat, lat)
+      maxLat = Math.max(maxLat, lat)
+      minLng = Math.min(minLng, lng)
+      maxLng = Math.max(maxLng, lng)
+    }
+  }
+  return [[minLng, minLat], [maxLng, maxLat]]
+}

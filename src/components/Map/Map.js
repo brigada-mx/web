@@ -27,7 +27,7 @@ class Map extends React.Component {
     super(props)
     this._initialZoom = [6]
     this._initialCoordinates = [-95.9042505, 17.1073688]
-    this._fitBoundsOptions = { padding: 20 }
+    this._fitBoundsOptions = { padding: 20, maxZoom: 10 }
     this._map = null
   }
 
@@ -130,7 +130,7 @@ Map.propTypes = {
   sourceLayer: PropTypes.string,
   sourceOptions: PropTypes.object,
   filter: PropTypes.arrayOf(PropTypes.any),
-  fitBounds: PropTypes.arrayOf(PropTypes.object),
+  fitBounds: PropTypes.arrayOf(PropTypes.array),
   popup: PropTypes.any,
   onClickFeature: PropTypes.func,
   onEnterFeature: PropTypes.func,

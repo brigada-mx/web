@@ -11,6 +11,8 @@ module.exports = {
     "window": true,
   },
   "rules": {
+    "one-var": 1,
+    "one-var-declaration-per-line": 1,
     "camelcase": 1,
     "function-paren-newline": 0,
     "object-curly-newline": [2, { "consistent": true }],

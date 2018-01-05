@@ -12,7 +12,7 @@ import LocalityPopup from 'components/Map/LocalityPopup'
 import LocalityLegend from 'components/Map/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
-import { dmgGrade } from 'tools/other'
+import { dmgGrade, fitBoundsFromCoords } from 'tools/other'
 import env from 'src/env'
 import Styles from './MapScreen.css'
 
@@ -101,12 +101,11 @@ class MapScreen extends React.Component {
         const localityByCvegeo = {}
         const fitBounds = []
         data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
-          const { lng, lat } = r.location
-          fitBounds.push([lng, lat])
+          fitBounds.push(r.location)
           localityByCvegeo[r.cvegeo] = r
           return { ...r, dmgGrade: dmgGrade(r) }
         })
-        this.setState({ localityByCvegeo, fitBounds })
+        this.setState({ localityByCvegeo, fitBounds: fitBoundsFromCoords(fitBounds) })
       },
     })
   }
