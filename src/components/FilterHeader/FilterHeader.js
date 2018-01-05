@@ -15,13 +15,18 @@ const FilterHeader = (props) => {
     onMuniChange,
     onMargChange,
     onNumActionsChange,
+    onSectorChange,
+    onActionTypeChange,
     onKeyUp,
     localities,
+    actions,
     numResults,
     valState,
     valMuni,
     valMarg,
     valNumActions,
+    valSector,
+    valActionType,
   } = props
 
   const shortenState = (name) => {
@@ -50,6 +55,18 @@ const FilterHeader = (props) => {
       return 0
     }).map((i) => {
       return { value: i.cvegeo_municipality, label: `${i.municipality_name}, ${i.state_name}` }
+    })
+  }
+
+  const actionTypeOptions = () => {
+    const items = _.uniqBy(actions, a => a.action_type)
+
+    return items.sort((a, b) => {
+      if (a.action_type < b.action_type) return -1
+      if (a.action_type > b.action_type) return 1
+      return 0
+    }).map((i) => {
+      return { value: i.action_type, label: i.action_type }
     })
   }
 
@@ -127,6 +144,37 @@ const FilterHeader = (props) => {
           ]}
         />}
 
+        {valSector && <Select
+          multi
+          noResultsText="Cero resultados"
+          clearable={false}
+          closeOnSelect={false}
+          removeSelected={false}
+          className={Styles.filter}
+          value={valSector}
+          placeholder="Sector"
+          onChange={onSectorChange}
+          options={[
+            { value: 'civil', label: 'Civil' },
+            { value: 'public', label: 'Público' },
+            { value: 'private', label: 'Privado' },
+            { value: 'religious', label: 'Religioso' },
+          ]}
+        />}
+
+        {(valActionType && actions) && <Select
+          multi
+          noResultsText="Cero resultados"
+          clearable={false}
+          closeOnSelect={false}
+          removeSelected={false}
+          className={Styles.filter}
+          value={valActionType}
+          placeholder="Tipo de proyecto"
+          onChange={onActionTypeChange}
+          options={actionTypeOptions()}
+        />}
+
       </div>
 
       <div className="col-sm-4 col-sm-offset-3 col-xs-2 end-lg end-md end-sm end-xs">
@@ -154,13 +202,18 @@ FilterHeader.propTypes = {
   onMuniChange: PropTypes.func.isRequired,
   onMargChange: PropTypes.func,
   onNumActionsChange: PropTypes.func,
+  onSectorChange: PropTypes.func,
+  onActionTypeChange: PropTypes.func,
   onKeyUp: PropTypes.func.isRequired,
   numResults: PropTypes.number.isRequired,
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  actions: PropTypes.arrayOf(PropTypes.object),
   valState: PropTypes.arrayOf(PropTypes.any),
   valMuni: PropTypes.arrayOf(PropTypes.any),
   valMarg: PropTypes.arrayOf(PropTypes.any),
   valNumActions: PropTypes.arrayOf(PropTypes.any),
+  valSector: PropTypes.arrayOf(PropTypes.any),
+  valActionType: PropTypes.arrayOf(PropTypes.any),
 }
 
 export default FilterHeader
