@@ -19,6 +19,10 @@ const compareOrganizations = (a, b) => {
 }
 
 class OrganizationList extends React.PureComponent {
+  handleScroll = (e) => {
+    const { scrollTop, scrollLeft, scrollWidth, scrollHeight } = e.nativeEvent.srcElement
+  }
+
   render() {
     const { organizations, ...rest } = this.props
     const items = organizations.sort(compareOrganizations).map((o) => {
@@ -26,13 +30,12 @@ class OrganizationList extends React.PureComponent {
       return (
         <OrganizationListItem
           key={id}
-          onScroll={e => console.log('SCROLL!!', e)}
           organization={o}
           {...rest}
         />
       )
     })
-    return <div className={Styles.orgsContainer}>{items}</div>
+    return <div onScroll={this.handleScroll} className={Styles.orgsContainer}>{items}</div>
   }
 }
 
