@@ -80,7 +80,7 @@
   }
 }
 
-@media screen and (max-width: 767px) and (min-width: 320px) {
+@media screen and (max-width: 767px) and (min-width: 0px) {
   .container {
     height: 73px;
     box-shadow: unset;

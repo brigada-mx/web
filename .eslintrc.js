@@ -8,6 +8,7 @@ module.exports = {
     "document": true,
     "Headers": true,
     "fetch": true,
+    "window": true,
   },
   "rules": {
     "camelcase": 1,
