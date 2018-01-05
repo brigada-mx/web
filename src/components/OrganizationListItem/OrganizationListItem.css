@@ -71,7 +71,7 @@
 }
 
 .metric:first-of-type {
-  margin-right: 64px;
+  margin-right: 48px;
 }
 
 .label {
@@ -92,6 +92,16 @@
   color: #3DC587;
   letter-spacing: -0.1px;
   line-height: 62px;
+}
+
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .metric {
+    flex-direction: column;
+    align-items: start;
+  }
+  .label {
+    order: 2;
+  }
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
@@ -119,7 +129,7 @@
   .tagContainer {
     margin: 11px 0 16px 0;
   }
-  .mission {
+  .desc {
     display: none;
   }
   .metricsContainer {
@@ -169,7 +179,7 @@
   .tagContainer {
     display: none;
   }
-  .mission {
+  .desc {
     display: none;
   }
   .metricsContainer {

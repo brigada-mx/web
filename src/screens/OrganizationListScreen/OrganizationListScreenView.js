@@ -180,19 +180,21 @@ class OrganizationListScreenView extends React.Component {
 
     return (
       <div>
-        <FilterHeader
-          localities={locData ? locData.results : []}
-          numResults={organizations.length}
-          onStateChange={this.handleStateChange}
-          onMuniChange={this.handleMuniChange}
-          onNumActionsChange={this.handleNumActionsChange}
-          onKeyUp={this.handleOrganizationSearchKeyUp}
-          valState={valState}
-          valMuni={valMuni}
-          valNumActions={valNumActions}
-        />
+        <div className={Styles.filterShadow}>
+          <FilterHeader
+            localities={locData ? locData.results : []}
+            numResults={organizations.length}
+            onStateChange={this.handleStateChange}
+            onMuniChange={this.handleMuniChange}
+            onNumActionsChange={this.handleNumActionsChange}
+            onKeyUp={this.handleOrganizationSearchKeyUp}
+            valState={valState}
+            valMuni={valMuni}
+            valNumActions={valNumActions}
+          />
+        </div>
         <div className={`${Styles.container} row`}>
-          <div className="col-lg-6 col-md-6 col-sm-8 col-xs-4 lg-gutter md-gutter">
+          <div className="col-lg-6 col-md-6 col-sm-8 col-xs-4 lg-gutter md-gutter last-sm last-xs">
             {orgLoading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
             {!orgLoading &&
               <OrganizationList
