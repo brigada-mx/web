@@ -6,7 +6,7 @@ import { metaByDmgGrade } from 'tools/other'
 import Styles from './LocalityLegend.css'
 
 
-const LocalityLegend = ({ localities }) => {
+const LocalityLegend = ({ localities, legendTitle }) => {
   const counts = {
     severe: 0,
     high: 0,
@@ -34,7 +34,7 @@ const LocalityLegend = ({ localities }) => {
 
   return (
     <div className={Styles.container}>
-      <p className={Styles.title}>Nivel de daño</p>
+      <p className={Styles.title}>{legendTitle}</p>
       {items}
     </div>
   )
@@ -42,6 +42,7 @@ const LocalityLegend = ({ localities }) => {
 
 LocalityLegend.propTypes = {
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  legendTitle: PropTypes.string.isRequired,
 }
 
 export default LocalityLegend

@@ -258,7 +258,7 @@ class MapScreen extends React.Component {
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
               />
-              <LocalityLegend localities={filtered} />
+              <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />
             </div>
           </div>
         </div>

@@ -250,7 +250,7 @@ class OrganizationListScreenView extends React.Component {
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
               />
-              <LocalityLegend localities={localities} />
+              <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
             </div>
           </div>
         </div>
