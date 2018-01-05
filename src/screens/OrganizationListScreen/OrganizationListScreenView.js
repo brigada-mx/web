@@ -15,6 +15,10 @@ import Styles from './OrganizationListScreenView.css'
 
 
 class OrganizationList extends React.PureComponent {
+  handleScroll = (e) => {
+    this.props.onScroll(e, this.props.organizations)
+  }
+
   render() {
     const { organizations, onScroll, focusedId, ...rest } = this.props
     const items = organizations.map((o) => {
@@ -29,7 +33,7 @@ class OrganizationList extends React.PureComponent {
         />
       )
     })
-    return <div onScroll={this.onScroll} className={Styles.orgsContainer}>{items}</div>
+    return <div onScroll={this.handleScroll} className={Styles.orgsContainer}>{items}</div>
   }
 }
 
@@ -170,8 +174,14 @@ class OrganizationListScreenView extends React.Component {
     return { localities, features }
   }
 
-  handleScroll = (e) => {
-    const { scrollTop, scrollLeft, scrollWidth, scrollHeight } = e.nativeEvent.srcElement
+  handleScroll = (e, organizations) => {
+    if (window.innerWidth >= 980) return
+    const { scrollLeft, scrollWidth } = e.nativeEvent.srcElement
+    const width = scrollWidth / organizations.length
+    const index = Math.min(Math.max(
+      Math.floor(scrollLeft / width + 0.5), 0),
+    organizations.length - 1)
+    this.setState({ focused: organizations[index] })
   }
 
   render() {
