@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
 import { fmtNum, fmtBudget } from 'tools/string'
+import ActionListItem from 'components/ActionListItem'
 import Styles from './TestScreen.css'
 
 
@@ -30,7 +31,6 @@ OrgBreadcrumb.propTypes = {
 }
 
 const TestScreen = () => {
-
   const organization = {
     name: 'Reconstruyendo Comunidades Integrales',
     website: 'construyendo.org',
@@ -65,6 +65,13 @@ const TestScreen = () => {
     actDesc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dignissim vehicula mauris, at rhoncus metus imperdiet nec. Nam non ligula neque. Donec hendrerit justo sed elit pharetra, mollis pellentesque risus imperdiet. Vestibulum ultrices, turpis ut pellentesque ornare, lacus tellus bibendum nisl.',
     actStartDate: '12.11.17',
     actEndDate: '17.12.17',
+  }
+  const actionListItemProps = {
+    action_type: 'Viviendas',
+    desc: 'doing something',
+    unit_of_measurement: 'doodads',
+    target: 20,
+    locality: { name: 'juchitan', state_name: 'oaxaca' },
   }
 
   const {
@@ -143,6 +150,11 @@ const TestScreen = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="actionCardsContainer">
+        <ActionListItem {...actionListItemProps} />
+        <ActionListItem {...actionListItemProps} />
+        <ActionListItem {...actionListItemProps} />
       </div>
     </div>
   )
