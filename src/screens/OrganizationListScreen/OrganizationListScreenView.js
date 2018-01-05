@@ -50,8 +50,10 @@ class OrganizationListScreenView extends React.Component {
     const { location } = props
     let valState = []
     let valMuni = []
+    let valSector = []
+    let valActionType = []
     if (location.state) {
-      ({ valState = [], valMuni = [] } = location.state)
+      ({ valState = [], valMuni = [], valSector = [], valActionType = [] } = location.state)
     }
 
     this.state = {
@@ -60,6 +62,8 @@ class OrganizationListScreenView extends React.Component {
       organizationSearch: '',
       valState,
       valMuni,
+      valSector,
+      valActionType,
     }
     this.handleOrganizationSearchKeyUp = _.debounce(
       this.handleOrganizationSearchKeyUp, 150
@@ -90,6 +94,14 @@ class OrganizationListScreenView extends React.Component {
     this.setState({ valMuni: v })
   }
 
+  handleSectorChange = (v) => {
+    this.setState({ valSector: v })
+  }
+
+  handleActionTypeChange = (v) => {
+    this.setState({ valActionType: v })
+  }
+
   handleOrganizationSearchKeyUp = (organizationSearch) => {
     this.setState({ organizationSearch })
   }
@@ -116,7 +128,7 @@ class OrganizationListScreenView extends React.Component {
   }
 
   filterOrganizations = (results) => {
-    const { organizationSearch, valState, valMuni } = this.state
+    const { organizationSearch, valState, valMuni, valSector, valActionType } = this.state
 
     const compareOrganizations = (a, b) => {
       return b.action_count - a.action_count
@@ -130,7 +142,19 @@ class OrganizationListScreenView extends React.Component {
       const cvegeos = valState.map(v => v.value).concat(valMuni.map(v => v.value))
       const matchesCvegeo = cvegeos.length === 0 || cvegeos.some(v => actionCvegeos.has(v))
 
-      return matchesSearch && matchesCvegeo
+      const sectors = valSector.map(v => v.value)
+      const matchesSector = sectors.length === 0 || sectors.some(v => o.sector === v)
+
+      const actionTypes = valActionType.map(v => v.value)
+      let matchesActionType = actionTypes.length === 0
+      for (const action of o.actions) {
+        if (actionTypes.some(v => action.action_type === v)) {
+          matchesActionType = true
+          break
+        }
+      }
+
+      return matchesSearch && matchesCvegeo && matchesSector && matchesActionType
     }).sort(compareOrganizations)
   }
 
@@ -178,7 +202,7 @@ class OrganizationListScreenView extends React.Component {
       localities: { data: locData, loading: locLoading, error: locError },
       organizations: { data: orgData, loading: orgLoading, error: orgError },
     } = this.props
-    const { popup, focused, valState, valMuni } = this.state
+    const { popup, focused, valState, valMuni, valSector, valActionType } = this.state
 
     const organizations = this.filterOrganizations(orgData ? orgData.results : [])
     let [_focused] = organizations
@@ -193,12 +217,17 @@ class OrganizationListScreenView extends React.Component {
         <div className={Styles.filterShadow}>
           <FilterHeader
             localities={locData ? locData.results : []}
+            actions={orgData ? [].concat(...orgData.results.map(o => o.actions)) : []}
             numResults={organizations.length}
             onStateChange={this.handleStateChange}
             onMuniChange={this.handleMuniChange}
+            onSectorChange={this.handleSectorChange}
+            onActionTypeChange={this.handleActionTypeChange}
             onKeyUp={this.handleOrganizationSearchKeyUp}
             valState={valState}
             valMuni={valMuni}
+            valSector={valSector}
+            valActionType={valActionType}
           />
         </div>
         <div className={`${Styles.container} row`}>
