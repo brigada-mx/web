@@ -32,6 +32,10 @@ $screen-lg-min: 75em;
   @include flexbox;
 }
 
+.gutter {
+  padding-right: 0 !important;
+}
+
 .between {
   @include justify-content(space-between);
 }
