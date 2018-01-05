@@ -184,7 +184,7 @@
 
 }
 
-@media screen and (max-width: 767px) and (min-width: 320px) {
+@media screen and (max-width: 767px) and (min-width: 0px) {
   .breadcrumbLinks {
     margin-bottom: 73px;
     overflow: hidden;

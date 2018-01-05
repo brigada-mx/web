@@ -32,7 +32,7 @@
   margin: 2px 0;
 }
 
-@media screen and (max-width: 767px) and (min-width: 320px) {
+@media screen and (max-width: 767px) and (min-width: 0px) {
   .container {
     width: 100%;
     bottom: 0;
