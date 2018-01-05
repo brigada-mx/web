@@ -5,7 +5,7 @@ import { fmtBudget } from 'tools/string'
 import Styles from './OrganizationListItem.css'
 
 
-const OrganizationListItem = ({ organization, onClick, onMouseEnter, onMouseLeave }) => {
+const OrganizationListItem = ({ organization, onClick, focused, onMouseEnter, onMouseLeave }) => {
   const { name, actions, desc } = organization
   let budget = 0
   const countByTags = {}
@@ -26,12 +26,15 @@ const OrganizationListItem = ({ organization, onClick, onMouseEnter, onMouseLeav
   const handleMouseEnter = () => { onMouseEnter(organization) }
   const handleMouseLeave = () => { onMouseLeave(organization) }
 
+  let className = Styles.orgCard
+  if (focused) className = `${Styles.orgCard} ${Styles.orgCardFocused}`
+
   return (
     <div
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={Styles.orgCard}
+      className={className}
     >
       <div className={Styles.descriptionContainer}>
         <span className={Styles.name}>{name}</span>
@@ -56,6 +59,7 @@ const OrganizationListItem = ({ organization, onClick, onMouseEnter, onMouseLeav
 
 OrganizationListItem.propTypes = {
   organization: PropTypes.object.isRequired,
+  focused: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,

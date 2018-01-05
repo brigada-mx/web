@@ -15,7 +15,7 @@
   margin-top: 18px;
 }
 
-.orgCard:hover {
+.orgCardFocused {
   cursor: pointer;
   box-shadow: 0px 40px 100px 0px strongShadow;
 }

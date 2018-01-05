@@ -14,33 +14,29 @@ import { tokenMatch } from 'tools/string'
 import Styles from './OrganizationListScreenView.css'
 
 
-const compareOrganizations = (a, b) => {
-  return b.action_count - a.action_count
-}
-
 class OrganizationList extends React.PureComponent {
-  handleScroll = (e) => {
-    const { scrollTop, scrollLeft, scrollWidth, scrollHeight } = e.nativeEvent.srcElement
-  }
-
   render() {
-    const { organizations, ...rest } = this.props
-    const items = organizations.sort(compareOrganizations).map((o) => {
+    const { organizations, onScroll, focusedId, ...rest } = this.props
+    const items = organizations.map((o) => {
       const { id } = o
+
       return (
         <OrganizationListItem
           key={id}
           organization={o}
+          focused={id === focusedId}
           {...rest}
         />
       )
     })
-    return <div onScroll={this.handleScroll} className={Styles.orgsContainer}>{items}</div>
+    return <div onScroll={this.onScroll} className={Styles.orgsContainer}>{items}</div>
   }
 }
 
 OrganizationList.propTypes = {
   organizations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onScroll: PropTypes.func.isRequired,
+  focusedId: PropTypes.number,
 }
 
 class OrganizationListScreenView extends React.Component {
@@ -121,6 +117,10 @@ class OrganizationListScreenView extends React.Component {
       3: [250, null],
     }
 
+    const compareOrganizations = (a, b) => {
+      return b.action_count - a.action_count
+    }
+
     return results.filter((o) => {
       const { name, desc, action_count: actions, actionCvegeos } = o
 
@@ -138,48 +138,56 @@ class OrganizationListScreenView extends React.Component {
         })
 
       return matchesSearch && matchesCvegeo && matchesActions
-    })
+    }).sort(compareOrganizations)
   }
 
+  getLocalityFeatures = (organization) => {
+    const localities = []
+    const features = organization.actions.map((action) => {
+      const { location: { lat, lng }, cvegeo, id } = action.locality
+      const locality = this.props.localityById[id]
+      let total = -1
+
+      if (locality) {
+        ({ total } = locality.meta)
+        localities.push(locality)
+      }
+
+      return {
+        type: 'Feature',
+        properties: {
+          cvegeo,
+          id,
+          total,
+          locality,
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [lng, lat],
+        },
+      }
+    })
+    return { localities, features }
+  }
+
+  handleScroll = (e) => {
+    const { scrollTop, scrollLeft, scrollWidth, scrollHeight } = e.nativeEvent.srcElement
+  }
 
   render() {
     const {
-      localityById,
       localities: { data: locData, loading: locLoading, error: locError },
       organizations: { data: orgData, loading: orgLoading, error: orgError },
     } = this.props
     const { popup, focused, valState, valMuni, valNumActions } = this.state
 
-    let features = []
-    const localities = []
-    if (focused) {
-      features = (focused.actions).map((action) => {
-        const { location: { lat, lng }, cvegeo, id } = action.locality
-        const locality = this.props.localityById[id]
-        let total = -1
-
-        if (locality) {
-          ({ total } = locality.meta)
-          localities.push(locality)
-        }
-
-        return {
-          type: 'Feature',
-          properties: {
-            cvegeo,
-            id,
-            total,
-            locality,
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: [lng, lat],
-          },
-        }
-      })
-    }
-
     const organizations = this.filterOrganizations(orgData ? orgData.results : [])
+    let [_focused] = organizations
+    if (focused && organizations.some(o => focused.id === o.id)) _focused = focused
+
+    let localities = []
+    let features = []
+    if (_focused) ({ localities, features } = this.getLocalityFeatures(_focused))
 
     return (
       <div>
@@ -202,6 +210,8 @@ class OrganizationListScreenView extends React.Component {
             {!orgLoading &&
               <OrganizationList
                 organizations={organizations}
+                onScroll={this.handleScroll}
+                focusedId={_focused && _focused.id}
                 onClick={this.handleListItemClick}
                 onMouseEnter={this.handleListItemEnter}
                 onMouseLeave={this.handleListItemLeave}
