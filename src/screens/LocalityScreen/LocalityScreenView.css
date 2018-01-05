@@ -167,24 +167,10 @@
 .actionCardsContainer {
   background-color: #F6F8FA;
   padding: 21px 25px 5px 25px;
-}
-
-@media screen and (min-width: 1440px) {
-  .actionCardsContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-}
-
-@media screen and (max-width: 1439px) and (min-width: 980px) {
-  .actionCardsContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
@@ -200,6 +186,10 @@
   .actionCardsContainer {
     background-color: #F6F8FA;
     padding: 21px 20px 5px 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: unset;
+    justify-content: unset;
   }
   .margContainer {
     justify-content: space-between;
@@ -286,6 +276,10 @@
   .actionCardsContainer {
     background-color: #F6F8FA;
     padding: 21px 20px 5px 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: unset;
+    justify-content: unset;
   }
   .margColumn {
     width: 100%;

@@ -42,14 +42,12 @@ const ActionListItem = ({ action, screen }) => {
 
   return (
     <div className={Styles.listItem}>
-      {screen === 'loc' && <div className={Styles.orgName}>{name || key}</div>}
       <div className={Styles.header}>{`Construcción de ${actionType.toLowerCase()}`}</div>
       <div className={Styles.summaryContainer}>
-        {screen === 'org' && <div className={Styles.locName}>{locName}, {stateName}</div>}
         {budget &&
           <div>
             <span className={Styles.label}>PRESUPUESTO: </span>
-            <span className={Styles.budget}>${fmtNum(budget)}</span>
+            <span className={Styles.value}>${fmtNum(budget)}</span>
           </div>}
         {metrics()}
       </div>

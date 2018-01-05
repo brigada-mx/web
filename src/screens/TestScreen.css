@@ -179,6 +179,16 @@
   line-height: 62px;
 }
 
+.cardsContainer {
+  background-color: #F6F8FA;
+  margin-top: 55px;
+  padding-top: 21px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
 
