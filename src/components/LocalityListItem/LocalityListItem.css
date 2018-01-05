@@ -14,7 +14,6 @@
 
 .listItem:hover {
   cursor: pointer;
-  border-left: 6px solid #E11717;
   background-color: #FBFCFD;
 }
 
@@ -79,6 +78,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media screen and (min-width: 980px)  {
+  .listItemFocused {
+    border-left-width: 6px;
+  }
+}
+
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .listItem {
     width: 486px;
@@ -87,7 +92,6 @@
     border-left: unset;
     border-bottom: 2px solid #939aa1;
     box-sizing: border-box;
-    /*transition: .3s ease-out;*/
   }
   .listItem:first-of-type {
     margin: 0px 6px 0px 14px;
@@ -115,7 +119,6 @@
     height: 100%;
     width: 432px;
     padding: 16px 43px 28px 24px;
-    /*transition: .3s ease-out;*/
   }
   .listItemMetrics {
     justify-content: space-between;
@@ -134,9 +137,8 @@
     height: 126px;
     margin: 0px 0px 0px 12px;
     border-left: unset;
-    border-bottom: 3px solid #939aa1;
+    border-bottom: 2px solid #939aa1;
     box-sizing: border-box;
-    /*transition: .3s ease-out;*/
   }
   .listItem:first-of-type {
     margin: 0px 0px 0px 14px;
