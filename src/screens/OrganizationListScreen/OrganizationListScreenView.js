@@ -60,7 +60,6 @@ class OrganizationListScreenView extends React.Component {
       organizationSearch: '',
       valState,
       valMuni,
-      valNumActions: [],
     }
     this.handleOrganizationSearchKeyUp = _.debounce(
       this.handleOrganizationSearchKeyUp, 150
@@ -91,10 +90,6 @@ class OrganizationListScreenView extends React.Component {
     this.setState({ valMuni: v })
   }
 
-  handleNumActionsChange = (v) => {
-    this.setState({ valNumActions: v })
-  }
-
   handleOrganizationSearchKeyUp = (organizationSearch) => {
     this.setState({ organizationSearch })
   }
@@ -121,36 +116,21 @@ class OrganizationListScreenView extends React.Component {
   }
 
   filterOrganizations = (results) => {
-    const { organizationSearch, valState, valMuni, valNumActions } = this.state
-
-    const rangeByValNumActions = {
-      0: [0, 9],
-      1: [10, 49],
-      2: [50, 249],
-      3: [250, null],
-    }
+    const { organizationSearch, valState, valMuni } = this.state
 
     const compareOrganizations = (a, b) => {
       return b.action_count - a.action_count
     }
 
     return results.filter((o) => {
-      const { name, desc, action_count: actions, actionCvegeos } = o
+      const { name, desc, actionCvegeos } = o
 
       const matchesSearch = tokenMatch(`${name} ${desc}`, organizationSearch)
 
       const cvegeos = valState.map(v => v.value).concat(valMuni.map(v => v.value))
       const matchesCvegeo = cvegeos.length === 0 || cvegeos.some(v => actionCvegeos.has(v))
 
-      const numActions = valNumActions.map(v => rangeByValNumActions[v.value])
-      const matchesActions = numActions.length === 0 ||
-        numActions.some((range) => {
-          const [minActions, maxActions] = range
-          return (minActions === null || actions >= minActions) &&
-            (maxActions === null || actions <= maxActions)
-        })
-
-      return matchesSearch && matchesCvegeo && matchesActions
+      return matchesSearch && matchesCvegeo
     }).sort(compareOrganizations)
   }
 
@@ -198,7 +178,7 @@ class OrganizationListScreenView extends React.Component {
       localities: { data: locData, loading: locLoading, error: locError },
       organizations: { data: orgData, loading: orgLoading, error: orgError },
     } = this.props
-    const { popup, focused, valState, valMuni, valNumActions } = this.state
+    const { popup, focused, valState, valMuni } = this.state
 
     const organizations = this.filterOrganizations(orgData ? orgData.results : [])
     let [_focused] = organizations
@@ -216,11 +196,9 @@ class OrganizationListScreenView extends React.Component {
             numResults={organizations.length}
             onStateChange={this.handleStateChange}
             onMuniChange={this.handleMuniChange}
-            onNumActionsChange={this.handleNumActionsChange}
             onKeyUp={this.handleOrganizationSearchKeyUp}
             valState={valState}
             valMuni={valMuni}
-            valNumActions={valNumActions}
           />
         </div>
         <div className={`${Styles.container} row`}>

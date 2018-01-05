@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+.listItemFocused {
+  border: 1px solid red;
+}
+
 .listItemWrapper {
   border-top: 1px solid brandOffWhite;
   box-sizing: border-box;

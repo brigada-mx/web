@@ -37,7 +37,7 @@ class LocalityList extends React.PureComponent {
   }
 
   render() {
-    const { localities, ...rest } = this.props
+    const { localities, focusedId, ...rest } = this.props
     const items = localities.sort(compareLocalities).slice(0, maxLocalityListItems).map((l) => {
       const { cvegeo } = l
       return (
@@ -45,6 +45,7 @@ class LocalityList extends React.PureComponent {
           key={cvegeo}
           locality={l}
           {...rest}
+          focused={focusedId === l.id && l.id !== undefined}
         />
       )
     })
@@ -55,6 +56,7 @@ class LocalityList extends React.PureComponent {
 LocalityList.propTypes = {
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
   onScroll: PropTypes.func.isRequired,
+  focusedId: PropTypes.number,
 }
 
 class MapScreen extends React.Component {
@@ -244,6 +246,7 @@ class MapScreen extends React.Component {
                 onClick={this.handleListItemClick}
                 onMouseEnter={this.handleListItemEnter}
                 onMouseLeave={this.handleListItemLeave}
+                focusedId={popup ? popup.id : null}
               />
             }
           </div>

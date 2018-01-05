@@ -9,16 +9,16 @@ import Nav from 'components/Nav'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
-// import OrganizationScreen from 'screens/OrganizationScreen'
+import OrganizationScreen from 'screens/OrganizationScreen'
 
 
 const LocalityScreenWrapper = ({ match }) => {
   return <LocalityScreen id={Number.parseInt(match.params.id, 10)} />
 }
 
-// const OrganizationScreenWrapper = ({ match }) => {
-//   return <OrganizationScreen id={Number.parseInt(match.params.id, 10)} />
-// }
+const OrganizationScreenWrapper = ({ match }) => {
+  return <OrganizationScreen id={Number.parseInt(match.params.id, 10)} />
+}
 
 const BestPracticesScreen = () => (
   <div>
@@ -44,7 +44,7 @@ const App = () => {
         <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
 
         <Route path="/organizaciones" component={OrganizationListScreen} />
-        {/* <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} /> */}
+        <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
 
         <Route path="/practicas" component={BestPracticesScreen} />
 
