@@ -51,7 +51,15 @@ class LocalityDamageMap extends React.Component {
   }
 
   render() {
-    const { popup, filter, features, sourceLayer, sourceOptions, fitBounds } = this.props
+    const {
+      popup,
+      filter,
+      features,
+      sourceLayer,
+      sourceOptions,
+      fitBounds,
+      zoomControl,
+    } = this.props
     const featureSourceOptions = {
       type: 'geojson',
       data: {
@@ -74,7 +82,7 @@ class LocalityDamageMap extends React.Component {
         fitBoundsOptions={this._fitBoundsOptions}
       >
         {popup}
-        <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
+        {zoomControl && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
         <Source
           id="features"
           geoJsonSource={features ? featureSourceOptions : sourceOptions}
@@ -135,12 +143,14 @@ LocalityDamageMap.propTypes = {
   onClickFeature: PropTypes.func,
   onEnterFeature: PropTypes.func,
   onLeaveFeature: PropTypes.func,
+  zoomControl: PropTypes.bool,
 }
 
 LocalityDamageMap.defaultProps = {
   onClickFeature: () => {},
   onEnterFeature: () => {},
   onLeaveFeature: () => {},
+  zoomControl: true,
 }
 
 export default LocalityDamageMap

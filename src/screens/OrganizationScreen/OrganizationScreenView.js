@@ -7,6 +7,7 @@ import LocalityDamageMap from 'components/LocalityDamageMap'
 import ActionListItem from 'components/ActionListItem'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { addProtocol, phoneLink, emailLink, fmtBudget } from 'tools/string'
+import { fitBoundsFromCoords } from 'tools/other'
 import Styles from './OrganizationScreenView.css'
 
 
@@ -95,6 +96,47 @@ class OrganizationScreenView extends React.Component {
     )
   }
 
+  renderMap = (actions) => {
+    const coords = []
+    const features = actions.map((action) => {
+      const {
+        location: { lat, lng },
+        meta: { total },
+        cvegeo,
+        id,
+        state_name: stateName,
+        municipality_name: muniName,
+        name,
+      } = action.locality
+      coords.push(action.locality.location)
+
+      return {
+        type: 'Feature',
+        properties: {
+          cvegeo,
+          id,
+          total,
+          fullName: `${stateName}, ${muniName}, ${name}`,
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [lng, lat],
+        },
+      }
+    })
+
+    const fitBounds = fitBoundsFromCoords(coords)
+    return (
+      <div className={Styles.opsMap}>
+        <LocalityDamageMap
+          zoomControl={false}
+          features={features}
+          fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
+        />
+      </div>
+    )
+  }
+
   render() {
     const { organization: { loading, data, error } } = this.props
     if (loading || !data) return <LoadingIndicatorCircle />
@@ -180,7 +222,7 @@ class OrganizationScreenView extends React.Component {
             <div className="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 end-lg end-md sm-hidden xs-hidden">
               <div className={`${Styles.placeContainer} ${Styles.ops}`}>
                 <p className={Styles.subtitle}>¿Dónde operamos?</p>
-                <div className={Styles.opsMap} />
+                {this.renderMap(actions)}
               </div>
             </div>
           </div>
