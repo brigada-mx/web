@@ -156,10 +156,10 @@ class OrganizationScreenView extends React.Component {
           <OrganizationBreadcrumb name={name} sector={sector} />
 
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7 col-sm-8 col-xs-4">
+            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
               <div className={Styles.name}>{name}</div>
             </div>
-            <div className="col-lg-3 col-lg-offset-1 col-md-3 col-md-offset-1 sm-hidden xs-hidden">
+            <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 sm-hidden xs-hidden">
               <div className={Styles.buttonsContainer}>
                 {website &&
                   <a
@@ -207,17 +207,17 @@ class OrganizationScreenView extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-lg-offset-4 col-md-3 col-md-offset-4 sm-hidden xs-hidden">
+            <div className="col-lg-2 col-lg-offset-4 col-md-2 col-md-offset-4 sm-hidden xs-hidden">
               <p className={Styles.subtitle}>¿Dónde estamos?</p>
               {this.renderAddress(address)}
             </div>
           </div>
 
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
+            <div className="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-8 col-xs-4">
               <span className={Styles.mission}>{desc}</span>
             </div>
-            <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 sm-hidden xs-hidden">
+            <div className="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 sm-hidden xs-hidden">
               <div className={Styles.ops}>
                 <p className={Styles.subtitle}>¿Dónde operamos?</p>
                 {this.renderMap(actions)}
