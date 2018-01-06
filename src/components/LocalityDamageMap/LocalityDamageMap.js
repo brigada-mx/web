@@ -5,7 +5,7 @@ import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 
 import env from 'src/env'
 import Colors from 'src/Colors'
-import Styles from './Map.css'
+import Styles from './LocalityDamageMap.css'
 
 
 const { mapbox: { accessToken } } = env
@@ -22,7 +22,7 @@ const zoomStyle = {
   borderRadius: 2,
 }
 
-class Map extends React.Component {
+class LocalityDamageMap extends React.Component {
   constructor(props) {
     super(props)
     this._initialZoom = [6]
@@ -125,7 +125,7 @@ class Map extends React.Component {
   }
 }
 
-Map.propTypes = {
+LocalityDamageMap.propTypes = {
   features: PropTypes.arrayOf(PropTypes.object),
   sourceLayer: PropTypes.string,
   sourceOptions: PropTypes.object,
@@ -137,10 +137,10 @@ Map.propTypes = {
   onLeaveFeature: PropTypes.func,
 }
 
-Map.defaultProps = {
+LocalityDamageMap.defaultProps = {
   onClickFeature: () => {},
   onEnterFeature: () => {},
   onLeaveFeature: () => {},
 }
 
-export default Map
+export default LocalityDamageMap

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
 
-import FeatureMap from 'components/FeatureMap'
+import LocalityDamageMap from 'components/LocalityDamageMap'
 import ActionListItem from 'components/ActionListItem'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { addProtocol, phoneLink, emailLink, fmtBudget } from 'tools/string'

@@ -1,0 +1,6 @@
+{
+  "name": "LocalityDamageMap",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LocalityDamageMap.js"
+}
