@@ -79,10 +79,10 @@ const TestScreen = () => {
       <div className="wrapper">
         <OrgBreadcrumb breadcrumb={breadcrumb} />
         <div className="row">
-          <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7 col-sm-8 col-xs-4">
+          <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
             <div className={Styles.name}>{name}</div>
           </div>
-          <div className="col-lg-3 col-md-3 end-lg end-md sm-hidden xs-hidden">
+          <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 sm-hidden xs-hidden">
             <div className={Styles.buttonsContainer}>
               <a target="_blank" className={`${Styles.button} ${Styles.website}`} href={website} />
               <a target="_blank" className={`${Styles.button} ${Styles.phone}`} href={phone} />
@@ -107,24 +107,22 @@ const TestScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-2 col-lg-offset-4 col-md-2 col-md-offset-4 end-lg end-md sm-hidden xs-hidden">
-            <div className={Styles.placeContainer}>
-              <p className={Styles.subtitle}>¿Dónde estamos?</p>
-              <ul className={Styles.addressFields}>
-                <li>{street}</li>
-                <li>{locality}</li>
-                <li>{city}</li>
-                <li>{state}, {zip}</li>
-              </ul>
-            </div>
+          <div className="col-lg-2 col-lg-offset-4 col-md-2 col-md-offset-4 sm-hidden xs-hidden">
+            <p className={Styles.subtitle}>¿Dónde estamos?</p>
+            <ul className={Styles.addressFields}>
+              <li>{street}</li>
+              <li>{locality}</li>
+              <li>{city}</li>
+              <li>{state}, {zip}</li>
+            </ul>
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
+          <div className="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-8 col-xs-4">
             <span className={Styles.mission}>{mission}</span>
           </div>
-          <div className="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 end-lg end-md sm-hidden xs-hidden">
-            <div className={`${Styles.placeContainer} ${Styles.ops}`}>
+          <div className="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 sm-hidden xs-hidden">
+            <div className={Styles.ops}>
               <p className={Styles.subtitle}>¿Dónde operamos?</p>
               <div className={Styles.opsMap} />
             </div>
