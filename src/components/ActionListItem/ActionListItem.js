@@ -86,11 +86,14 @@ class ActionListItem extends React.PureComponent {
 ActionListItem.propTypes = {
   action: PropTypes.object.isRequired,
   screen: PropTypes.oneOf(['org', 'loc']).isRequired,
-  focused: PropTypes.bool.isRequired,
+  focused: PropTypes.bool,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
 }
 
-export default ActionListItem
+ActionListItem.defaultProps = {
+  focused: false,
+}
 
+export default ActionListItem

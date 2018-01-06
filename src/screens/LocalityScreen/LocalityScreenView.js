@@ -87,7 +87,7 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
             fontSize="10"
             fontFamily="nunito-sans"
             fill="#C5EDE2"
-            offset="11"
+            offset={11}
           />
         </Bar>
       </BarChart>
