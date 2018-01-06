@@ -31,6 +31,7 @@ module.exports = {
     "no-unused-vars": 1,
     "no-empty": 1,
     "no-console": 1,
+    "react/sort-comp": 0,
     "react/no-multi-comp": 1,
     "react/forbid-prop-types": 1,
     "react/require-default-props": 0,
@@ -43,5 +44,6 @@ module.exports = {
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/anchor-has-content": 1,
   },
 };

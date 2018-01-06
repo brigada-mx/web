@@ -107,7 +107,7 @@ const TestScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-2 col-lg-offset-4 col-md-3 col-md-offset-3 end-lg end-md sm-hidden xs-hidden">
+          <div className="col-lg-2 col-lg-offset-4 col-md-2 col-md-offset-4 end-lg end-md sm-hidden xs-hidden">
             <div className={Styles.placeContainer}>
               <p className={Styles.subtitle}>¿Dónde estamos?</p>
               <ul className={Styles.addressFields}>

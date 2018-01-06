@@ -55,7 +55,7 @@ const service = {
   },
 
   getOrganization: async (id) => {
-    return sendToApi(`organization/${id}/`)
+    return sendToApi(`organizations/${id}/`)
   },
 }
 

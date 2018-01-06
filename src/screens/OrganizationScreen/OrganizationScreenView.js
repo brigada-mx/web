@@ -2,269 +2,215 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
-import moment from 'moment'
 
 import FeatureMap from 'components/FeatureMap'
-import MetricsBar from 'components/MetricsBar'
-import StackedMetricsBar from 'components/StackedMetricsBar'
 import ActionListItem from 'components/ActionListItem'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import DirectionsButton from 'components/DirectionsButton'
-import EstablishmentPopup from 'components/FeatureMap/EstablishmentPopup'
-import { dmgGrade, metaByDmgGrade } from 'tools/other'
-import Colors from 'src/colors'
+import { addProtocol, phoneLink, emailLink, fmtBudget } from 'tools/string'
 import Styles from './OrganizationScreenView.css'
 
 
-const OrganizationBreadcrumb = ({ cvegeo, stateName, munName, name }) => (
-  <div className={Styles.breadcrumbLinks}>
-    <NavLink to="/">Comunidades</NavLink>
-    <NavLink
-      to={{ pathname: '/',
-        state: { valState: [{ value: cvegeo.substring(0, 2), label: stateName }] } }}
-    >
-      {stateName}
-    </NavLink>
-    <NavLink
-      to={{ pathname: '/',
-        state: { valMuni: [{ value: cvegeo.substring(0, 5), label: munName }] } }}
-    >
-      {munName}
-    </NavLink>
-    <NavLink to="#">{name}</NavLink>
-  </div>
-)
+const OrganizationBreadcrumb = ({ name, sector }) => {
+  const labelBySector = {
+    civil: 'Civil',
+    public: 'Público',
+    private: 'Privado',
+    religious: 'Religioso',
+  }
+
+  return (
+    <div className={Styles.breadcrumbLinks}>
+      <span className={Styles.orgList}><NavLink to="/organizaciones">Organizaciones</NavLink></span>
+      <span className={Styles.sector}>
+        <NavLink
+          to={{ pathname: '/organizaciones',
+            state: { valSector: [{ value: sector, label: labelBySector[sector] }] } }}
+        >
+          {labelBySector[sector]}
+        </NavLink>
+      </span>
+      <span className={Styles.orgDetail}>
+        <NavLink to="#">{name}</NavLink>
+      </span>
+    </div>
+  )
+}
 
 OrganizationBreadcrumb.propTypes = {
-  cvegeo: PropTypes.string.isRequired,
-  stateName: PropTypes.string.isRequired,
-  munName: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  sector: PropTypes.string.isRequired,
+}
+
+class ActionList extends React.PureComponent {
+  render() {
+    const { actions, focusedId, ...rest } = this.props
+    const items = actions.map((a) => {
+      return (
+        <ActionListItem
+          screen="org"
+          key={a.id}
+          action={a}
+          {...rest}
+          focused={focusedId === a.id && a.id !== undefined}
+        />
+      )
+    })
+    return <div className={`${Styles.cardsContainer} wrapper`}>{items}</div>
+  }
+}
+
+ActionList.propTypes = {
+  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  focusedId: PropTypes.number,
 }
 
 class OrganizationScreenView extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      popup: null,
-    }
   }
 
-  handleClickFeature = (f) => {
+  handleClickListItem = (f) => {
   }
 
-  handleEnterFeature = (f) => {
-    clearTimeout(this._timer)
-    this.setState({ popup: f })
+  handleEnterListItem = (i) => {
   }
 
-  handleLeaveFeature = (f) => {
-    this._timer = setTimeout(() => {
-      this.setState({ popup: null })
-    }, 200)
+  handleLeaveListItem = (i) => {
   }
 
-  renderLocalitySection = () => {
-    const { locality: { loading, data, error } } = this.props
+  renderAddress = (address) => {
+    const { street, locality, city, state, zip } = address
+    let stateZip = null
+    if (state && zip) stateZip = <li>{state}, {zip}</li>
+    else if (state) stateZip = <li>{state}</li>
+    else if (zip) stateZip = <li>{zip}</li>
 
-    if (loading) return <LoadingIndicatorCircle />
-    if (data) {
-      const {
-        name, municipality_name: munName, state_name: stateName, cvegeo, location, meta,
-      } = data
-      const {
-        analfabet,
-        noPrimary,
-        noToilet,
-        noElec,
-        noPlumb,
-        noFridge,
-        dirtFloor,
-        roomOccup,
-        margGrade,
-        destroyed,
-        habit,
-        notHabit,
-        total,
-      } = meta
-      const { lat, lng } = location
-      const dmgMeta = metaByDmgGrade(dmgGrade(data))
-
-      const barLabels = [
-        'Analfabetismo',
-        'Primaria incompleta',
-        'Falta excusado',
-        'Falta electricidad',
-        'Falta agua entubada',
-        'Falta refrigerador',
-        'Piso de tierra',
-        'Ocupantes por cuarto',
-      ]
-      const bars = [
-        analfabet, noPrimary, noToilet, noElec, noPlumb, noFridge, dirtFloor, roomOccup,
-      ].map((v, i) => {
-        return (
-          <div key={i} className={Styles.barContainer}>
-            <span className={Styles.barLabel}>{barLabels[i]}</span>
-            <MetricsBar value={v} max={100} />
-          </div>
-        )
-      })
-
-      return (
-        <div className="wrapper">
-          <OrganizationBreadcrumb
-            cvegeo={cvegeo}
-            munName={munName}
-            stateName={stateName}
-            name={name}
-          />
-
-          <div className="row">
-            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7">
-              <div className={Styles.dmgLevel}>
-                <span className={Styles.circle} style={{ backgroundColor: dmgMeta.color }} />
-                <span className={Styles.label} style={{ color: dmgMeta.color }}>{`DAÑO ${dmgMeta.label}`}</span>
-              </div>
-              <div className={Styles.placeName}>{name}, {munName}, {stateName}</div>
-            </div>
-            <div className="col-lg-3 col-md-3 end-lg end-md">
-              <DirectionsButton lat={lat} lng={lng} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3 lg-gutter md-gutter">
-              <div className={Styles.vizHeader}>
-                <span className={Styles.vizLabel}>VIVIENDAS<br />DAÑADAS</span>
-                <span className={Styles.vizCount}>{total}</span>
-              </div>
-              <div className={Styles.dmgChartContainer}>
-                <DmgBarChart {...{ destroyed, habit, notHabit }} />
-              </div>
-            </div>
-            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6">
-              <div className={Styles.vizHeader}>
-                <span className={Styles.vizLabel}>MARGINACIÓN<br />SOCIAL</span>
-                <span className={Styles.vizCount}>{margGrade}</span>
-              </div>
-              <div className={Styles.margMetricsContainer}>
-                <div className={Styles.margMetricsColumn}>{bars.slice(0, 4)}</div>
-                <div className={Styles.margMetricsColumn}>{bars.slice(4, 8)}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    }
-    return <LoadingIndicatorCircle />
-  }
-
-  renderEstablishmentsSection = () => {
-    const { establishments: { loading, data, error } } = this.props
-    const { locality: { data: locData } } = this.props
-    if (loading || !locData) return <LoadingIndicatorCircle />
-
-    const { popup } = this.state
-
-    const { location: { lat, lng } } = locData
-    if (data) {
-      return (
-        <div className={`${Styles.map} row`}>
-          <FeatureMap
-            onClickFeature={this.handleClickFeature}
-            onEnterFeature={this.handleEnterFeature}
-            onLeaveFeature={this.handleLeaveFeature}
-            features={data.results}
-            coordinates={[lng, lat]}
-            popup={popup ? <EstablishmentPopup establishment={popup} /> : null}
-          />
-        </div>
-      )
-    }
-    return <LoadingIndicatorCircle />
-  }
-
-  renderActionsSection = () => {
-    const { actions: { loading, data, error } } = this.props
-    if (loading) return <LoadingIndicatorCircle />
-
-    const fmtBudget = (b) => { // round to 2 decimal places
-      const millions = Math.round(b / 10000) / 100
-      return `$${millions}M`
-    }
-
-    if (data) {
-      const { results: actions } = data
-      let budget = 0
-      const orgs = {}
-      const labels = ['Por iniciar', 'En progreso', 'Completado']
-      const status = [0, 0, 0]
-
-      const date = moment().format('YYYY-MM-DD')
-      for (const a of actions) {
-        const { start_date: startDate, end_date: endDate } = a
-        if (startDate || startDate < date) status[0] += 1
-        else if (!endDate || endDate <= date) status[1] += 1
-        else status[2] += 1
-        budget += (a.budget || 0)
-        orgs[a.organization_id] = true
-      }
-
-      const actionList = actions.map((a) => {
-        return <ActionListItem key={a.id} action={a} screen="org" />
-      })
-
-      return (
-        <div>
-          <div className={Styles.actionMetricsContainer}>
-            <div className="row">
-              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 flex-lg between-lg">
-                <div className={Styles.vizHeader}>
-                  <span className={Styles.vizLabel}>ACCIONES DE<br />RECONSTRUCCIÓN</span>
-                  <span className={Styles.vizCount}>{actions.length}</span>
-                </div>
-                <div className={Styles.vizHeader}>
-                  <span className={Styles.vizLabel}>ORGANIZACIONES<br />COMPROMETIDAS</span>
-                  <span className={Styles.vizCount}>{Object.keys(orgs).length}</span>
-                </div>
-                <div className={Styles.vizHeader}>
-                  <span className={Styles.vizLabel}>INVERSIÓN<br />ESTIMADA</span>
-                  <span className={Styles.vizCount}>{fmtBudget(budget)}</span>
-                </div>
-              </div>
-            </div>
-            <div className={`${Styles.actionProgress} row`}>
-              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
-                <span className={Styles.vizLabel}>AVANCE</span>
-                <StackedMetricsBar labels={labels} values={status} />
-              </div>
-            </div>
-          </div>
-          <div className={Styles.actionCardsContainer}>
-            {actionList}
-          </div>
-        </div>
-      )
-    }
-
-    return <LoadingIndicatorCircle />
+    return (
+      <ul className={Styles.addressFields}>
+        {street && <li>{street}</li>}
+        {locality && <li>{locality}</li>}
+        {city && <li>{city}</li>}
+        {stateZip}
+      </ul>
+    )
   }
 
   render() {
+    const { organization: { loading, data, error } } = this.props
+    if (loading || !data) return <LoadingIndicatorCircle />
+
+    const {
+      actions,
+      contact: { email, phone, website, address },
+      desc,
+      name,
+      sector,
+      year_established: established,
+    } = data
+
     return (
       <div>
-        {this.renderLocalitySection()}
-        {this.renderEstablishmentsSection()}
-        {this.renderActionsSection()}
+        <div className="wrapper">
+          <OrganizationBreadcrumb name={name} sector={sector} />
+
+          <div className="row">
+            <div className="col-lg-offset-1 col-lg-7 col-md-offset-1 col-md-7 col-sm-8 col-xs-4">
+              <div className={Styles.name}>{name}</div>
+            </div>
+            <div className="col-lg-3 col-md-3 end-lg end-md sm-hidden xs-hidden">
+              <div className={Styles.buttonsContainer}>
+                {website &&
+                  <a
+                    target="_blank"
+                    className={`${Styles.button} ${Styles.website}`}
+                    href={addProtocol(website)}
+                  />
+                }
+                {phone &&
+                  <a
+                    target="_blank"
+                    className={`${Styles.button} ${Styles.phone}`}
+                    href={phoneLink(phone)}
+                  />
+                }
+                {email &&
+                  <a
+                    target="_blank"
+                    className={`${Styles.button} ${Styles.email}`}
+                    href={emailLink(email)}
+                  />
+                }
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-lg-offset-1 col-lg-4 col-md-offset-1 col-md-4 col-sm-8 col-xs-4">
+              <div className={Styles.summaryContainer}>
+                <div className={Styles.fieldContainer}>
+                  <span className={Styles.fieldLabel}>WEB</span>
+                  {website &&
+                    <span className={Styles.fieldValue}>
+                      <a href={addProtocol(website)}>{website}</a>
+                    </span>
+                  }
+                </div>
+                <div className={Styles.fieldContainer}>
+                  <span className={Styles.fieldLabel}>SECTOR</span>
+                  <span className={Styles.fieldValue}>{sector}</span>
+                </div>
+                <div className={Styles.fieldContainer}>
+                  <span className={Styles.fieldLabel}>ESTABLECIDA</span>
+                  <span className={Styles.fieldValue}>{established}</span>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-2 col-lg-offset-4 col-md-2 col-md-offset-4 end-lg end-md sm-hidden xs-hidden">
+              <div className={Styles.placeContainer}>
+                <p className={Styles.subtitle}>¿Dónde estamos?</p>
+                {this.renderAddress(address)}
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
+              <span className={Styles.mission}>{desc}</span>
+            </div>
+            <div className="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 end-lg end-md sm-hidden xs-hidden">
+              <div className={`${Styles.placeContainer} ${Styles.ops}`}>
+                <p className={Styles.subtitle}>¿Dónde operamos?</p>
+                <div className={Styles.opsMap} />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-lg-offset-1 col-lg-5 col-md-offset-1 col-md-5 col-sm-8 col-xs-4">
+              <div className={Styles.metricsContainer}>
+                <div className={Styles.metric}>
+                  <span className={Styles.metricLabel}>Inversión<br />estimada</span>
+                  <span className={Styles.metricValue}>
+                    {fmtBudget(actions.reduce((sum, action) => sum + (action.budget || 0), 0))}
+                  </span>
+                </div>
+                <div className={Styles.metric}>
+                  <span className={Styles.metricLabel}>Proyectos<br />registrados</span>
+                  <span className={Styles.metricValue}>{actions.length}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ActionList actions={actions} />
       </div>
     )
   }
 }
 
 OrganizationScreenView.propTypes = {
-  locality: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
-  establishments: PropTypes.object.isRequired,
+  organization: PropTypes.object.isRequired,
 }
 
 export default OrganizationScreenView

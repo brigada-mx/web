@@ -43,7 +43,7 @@ const App = () => {
         <Route exact path="/" component={MapScreen} />
         <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
 
-        <Route path="/organizaciones" component={OrganizationListScreen} />
+        <Route exact path="/organizaciones" component={OrganizationListScreen} />
         <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
 
         <Route path="/practicas" component={BestPracticesScreen} />

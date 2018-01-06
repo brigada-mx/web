@@ -41,3 +41,16 @@ export const fmtBudget = (b) => { // round to 2 decimal places
   const millions = Math.round(b / 10000) / 100
   return `$${millions}M`
 }
+
+export const addProtocol = (url, protocol = 'http') => {
+  if (url.startsWith('http://') || url.startsWith('http://')) return url
+  return `${protocol}://${url}`
+}
+
+export const phoneLink = (phone) => {
+  return `tel:${phone.replace(/\s/g, '')}`
+}
+
+export const emailLink = (email) => {
+  return `mailto:${email}`
+}
