@@ -11,6 +11,7 @@ import LocalityPopup from 'components/Map/LocalityPopup'
 import LocalityLegend from 'components/Map/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
+import { localStorage } from 'tools/storage'
 import Styles from './OrganizationListScreenView.css'
 
 
@@ -68,6 +69,7 @@ class OrganizationListScreenView extends React.Component {
     this.handleOrganizationSearchKeyUp = _.debounce(
       this.handleOrganizationSearchKeyUp, 150
     )
+    this._fitBounds = JSON.parse(localStorage.getItem('719s:fitBounds')) || []
   }
 
   componentDidMount() {
@@ -75,6 +77,7 @@ class OrganizationListScreenView extends React.Component {
       pathname: '/organizaciones',
       state: {},
     })
+    this._fitBounds = JSON.parse(localStorage.getItem('719s:fitBounds')) || []
   }
 
   componentDidUpdate(prevProps) {
@@ -256,6 +259,7 @@ class OrganizationListScreenView extends React.Component {
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
+                fitBounds={this._fitBounds.length > 0 ? this._fitBounds : undefined}
               />
               <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
             </div>

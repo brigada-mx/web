@@ -13,6 +13,7 @@ import LocalityLegend from 'components/Map/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
 import { dmgGrade, fitBoundsFromCoords } from 'tools/other'
+import { localStorage } from 'tools/storage'
 import env from 'src/env'
 import Styles from './MapScreen.css'
 
@@ -99,13 +100,15 @@ class MapScreen extends React.Component {
     getBackoff(this, 'localities', service.getLocalitiesStatic, {
       onData: (data) => {
         const localityByCvegeo = {}
-        const fitBounds = []
+        const coords = []
         data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
-          fitBounds.push(r.location)
+          coords.push(r.location)
           localityByCvegeo[r.cvegeo] = r
           return { ...r, dmgGrade: dmgGrade(r) }
         })
-        this.setState({ localityByCvegeo, fitBounds: fitBoundsFromCoords(fitBounds) })
+        const fitBounds = fitBoundsFromCoords(coords)
+        localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
+        this.setState({ localityByCvegeo, fitBounds })
       },
     })
   }
