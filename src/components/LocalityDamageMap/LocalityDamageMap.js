@@ -5,7 +5,7 @@ import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 
 import env from 'src/env'
 import Colors from 'src/Colors'
-import Styles from './Map.css'
+import Styles from './LocalityDamageMap.css'
 
 
 const { mapbox: { accessToken } } = env
@@ -22,7 +22,7 @@ const zoomStyle = {
   borderRadius: 2,
 }
 
-class Map extends React.Component {
+class LocalityDamageMap extends React.Component {
   constructor(props) {
     super(props)
     this._initialZoom = [6]
@@ -51,7 +51,15 @@ class Map extends React.Component {
   }
 
   render() {
-    const { popup, filter, features, sourceLayer, sourceOptions, fitBounds } = this.props
+    const {
+      popup,
+      filter,
+      features,
+      sourceLayer,
+      sourceOptions,
+      fitBounds,
+      zoomControl,
+    } = this.props
     const featureSourceOptions = {
       type: 'geojson',
       data: {
@@ -74,7 +82,7 @@ class Map extends React.Component {
         fitBoundsOptions={this._fitBoundsOptions}
       >
         {popup}
-        <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
+        {zoomControl && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
         <Source
           id="features"
           geoJsonSource={features ? featureSourceOptions : sourceOptions}
@@ -125,7 +133,7 @@ class Map extends React.Component {
   }
 }
 
-Map.propTypes = {
+LocalityDamageMap.propTypes = {
   features: PropTypes.arrayOf(PropTypes.object),
   sourceLayer: PropTypes.string,
   sourceOptions: PropTypes.object,
@@ -135,12 +143,14 @@ Map.propTypes = {
   onClickFeature: PropTypes.func,
   onEnterFeature: PropTypes.func,
   onLeaveFeature: PropTypes.func,
+  zoomControl: PropTypes.bool,
 }
 
-Map.defaultProps = {
+LocalityDamageMap.defaultProps = {
   onClickFeature: () => {},
   onEnterFeature: () => {},
   onLeaveFeature: () => {},
+  zoomControl: true,
 }
 
-export default Map
+export default LocalityDamageMap

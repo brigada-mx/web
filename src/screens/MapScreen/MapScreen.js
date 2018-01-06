@@ -7,9 +7,9 @@ import _ from 'lodash'
 import service, { getBackoff } from 'api/service'
 import FilterHeader from 'components/FilterHeader'
 import LocalityListItem from 'components/LocalityListItem'
-import Map from 'components/Map'
-import LocalityPopup from 'components/Map/LocalityPopup'
-import LocalityLegend from 'components/Map/LocalityLegend'
+import LocalityDamageMap from 'components/LocalityDamageMap'
+import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
+import LocalityLegend from 'components/LocalityDamageMap/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
 import { dmgGrade, fitBoundsFromCoords } from 'tools/other'
@@ -264,7 +264,7 @@ class MapScreen extends React.Component {
           </div>
           <div className="col-lg-9 col-md-9 col-sm-8 col-xs-4">
             <div className={Styles.mapContainer}>
-              <Map
+              <LocalityDamageMap
                 filter={layerFilter}
                 popup={popup ? <LocalityPopup locality={popup} screen="loc" /> : null}
                 sourceOptions={sourceOptions}
