@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 
 import LocalityDamageMap from 'components/LocalityDamageMap'
+import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import ActionListItem from 'components/ActionListItem'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { addProtocol, phoneLink, emailLink, fmtBudget } from 'tools/string'
@@ -68,6 +69,24 @@ ActionList.propTypes = {
 class OrganizationScreenView extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      popup: {},
+    }
+  }
+
+  handleClickFeature = (feature) => {
+    this.props.history.push(`/comunidades/${feature.id}`)
+  }
+
+  handleEnterFeature = (feature) => {
+    const { data } = this.props.organization
+    if (!data) return
+    const locality = JSON.parse(feature.properties.locality)
+    this.setState({ popup: { locality, organization: data } })
+  }
+
+  handleLeaveFeature = () => {
+    this.setState({ popup: {} })
   }
 
   handleClickListItem = (f) => {
@@ -117,6 +136,7 @@ class OrganizationScreenView extends React.Component {
           id,
           total,
           fullName: `${stateName}, ${muniName}, ${name}`,
+          locality: action.locality,
         },
         geometry: {
           type: 'Point',
@@ -126,11 +146,20 @@ class OrganizationScreenView extends React.Component {
     })
 
     const fitBounds = fitBoundsFromCoords(coords)
+    const { popup } = this.state
     return (
       <div className={Styles.opsMap}>
         <LocalityDamageMap
           zoomControl={false}
           features={features}
+          popup={popup ? <LocalityPopup
+            locality={popup.locality}
+            organization={popup.organization}
+            screen="org"
+          /> : null}
+          onClickFeature={this.handleClickFeature}
+          onEnterFeature={this.handleEnterFeature}
+          onLeaveFeature={this.handleLeaveFeature}
           fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
         />
       </div>
@@ -253,6 +282,7 @@ class OrganizationScreenView extends React.Component {
 
 OrganizationScreenView.propTypes = {
   organization: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
-export default OrganizationScreenView
+export default withRouter(OrganizationScreenView)
