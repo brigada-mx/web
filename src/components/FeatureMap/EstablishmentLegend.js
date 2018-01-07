@@ -44,7 +44,8 @@ const EstablishmentLegend = ({ establishments }) => {
   return (
     <div className={Styles.container}>
       <p className={Styles.title}>Infraestructura local</p>
-      {items}
+      {establishments.length > 0 && items}
+      {establishments.length === 0 && <p>INEGI no tiene datos para esta localidad</p>}
     </div>
   )
 }
