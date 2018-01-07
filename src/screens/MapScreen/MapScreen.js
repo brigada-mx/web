@@ -108,13 +108,14 @@ class MapScreen extends React.Component {
         })
         const fitBounds = fitBoundsFromCoords(coords)
         localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
-        this.setState({ localityByCvegeo, fitBounds })
+        this.setState({ localityByCvegeo })
       },
     })
   }
 
   componentDidUpdate(prevProps, prevState) {
     const keys = ['localities', 'locSearch', 'valState', 'valMuni', 'valMarg', 'valNumActions']
+    const locKeys = ['valState', 'valMuni']
     if (keys.some(k => prevState[k] !== this.state[k])) {
       const { localities: { data = {} } } = this.state
       if (!data.results) return
@@ -126,7 +127,12 @@ class MapScreen extends React.Component {
         return Number.parseInt(cvegeo, 10)
       }))
 
-      this.setState({ filtered, layerFilter })
+      if (locKeys.some(k => prevState[k] !== this.state[k]) || this.state.fitBounds.length === 0) {
+        const fitBounds = fitBoundsFromCoords(filtered.map(l => l.location))
+        this.setState({ filtered, layerFilter, fitBounds })
+      } else {
+        this.setState({ filtered, layerFilter })
+      }
     }
   }
 
