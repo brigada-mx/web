@@ -4,6 +4,43 @@ import PropTypes from 'prop-types'
 import Styles from './StackedMetricsBar.css'
 
 
+class MetricsBar extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      active: false,
+    }
+  }
+
+  handleMouseEnter = () => {
+    this.setState({ active: true })
+  }
+
+  handleMouseLeave = () => {
+    this.setState({ active: false })
+  }
+
+  render() {
+    const { barStyle, value, label } = this.props
+    return (
+      <div
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+        style={barStyle}
+        className={Styles.bar}
+      >
+        {this.state.active && <span className={Styles.barLabel}>{label}: {value}</span>}
+      </div>
+    )
+  }
+}
+
+MetricsBar.propTypes = {
+  value: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired,
+  barStyle: PropTypes.object.isRequired,
+}
+
 const StackedMetricsBar = ({ values, labels, style }) => {
   if (values.length !== labels.length) return null
 
@@ -12,7 +49,7 @@ const StackedMetricsBar = ({ values, labels, style }) => {
     if (v === 0) {
       barStyle.margin = 0
     }
-    return <div key={i} style={barStyle} className={Styles.bar} />
+    return <MetricsBar key={i} value={v} label={labels[i]} barStyle={barStyle} />
   })
 
   const barLabels = labels.map((l, i) => {

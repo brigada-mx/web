@@ -266,8 +266,8 @@ class LocalityScreenView extends React.Component {
       const date = moment().format('YYYY-MM-DD')
       for (const a of actions) {
         const { start_date: startDate, end_date: endDate } = a
-        if (startDate || startDate < date) status[0] += 1
-        else if (!endDate || endDate <= date) status[1] += 1
+        if (startDate && date < startDate) status[0] += 1
+        else if (!endDate || date <= endDate) status[1] += 1
         else status[2] += 1
         budget += (a.budget || 0)
         orgs[a.organization_id] = true
