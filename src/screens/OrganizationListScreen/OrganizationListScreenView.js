@@ -110,7 +110,7 @@ class OrganizationListScreenView extends React.Component {
   }
 
   handleClickFeature = (feature) => {
-    this.props.history.push(`/comunidades/${feature.id}`)
+    this.props.history.push(`/comunidades/${feature.properties.id}`)
   }
 
   handleEnterFeature = (feature) => {
