@@ -51,6 +51,8 @@ LocalityBreadcrumb.propTypes = {
 }
 
 const DmgBarChart = ({ destroyed, habit, notHabit }) => {
+  if (destroyed === 0 && habit === 0 && notHabit === 0) return null
+
   const data = [
     { name: 'PÉRDIDA TOTAL', num: destroyed },
     { name: 'PARCIAL (HABITABLE)', num: habit },
@@ -198,7 +200,11 @@ class LocalityScreenView extends React.Component {
                 <span className={Styles.vizCount}>{fmtNum(total)}</span>
               </div>
               <div className={Styles.dmgChartContainer}>
-                <DmgBarChart {...{ destroyed, habit, notHabit }} />
+                <DmgBarChart
+                  destroyed={destroyed || 0}
+                  habit={habit || 0}
+                  notHabit={notHabit || 0}
+                />
               </div>
             </div>
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
