@@ -116,23 +116,23 @@ class MapScreen extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const keys = ['localities', 'locSearch', 'valState', 'valMuni', 'valMarg', 'valNumActions']
     const locKeys = ['valState', 'valMuni']
-    if (keys.some(k => prevState[k] !== this.state[k])) {
-      const { localities: { data = {} } } = this.state
-      if (!data.results) return
+    if (!keys.some(k => prevState[k] !== this.state[k])) return
 
-      const filtered = this.filterLocalities(data.results).sort(compareLocalities)
-      const layerFilter = ['in', 'cvegeo'].concat(filtered.map((l) => {
-        const { cvegeo } = l
-        if (cvegeo.startsWith('0')) return cvegeo
-        return Number.parseInt(cvegeo, 10)
-      }))
+    const { localities: { data = {} } } = this.state
+    if (!data.results) return
 
-      if (locKeys.some(k => prevState[k] !== this.state[k]) || this.state.fitBounds.length === 0) {
-        const fitBounds = fitBoundsFromCoords(filtered.map(l => l.location))
-        this.setState({ filtered, layerFilter, fitBounds })
-      } else {
-        this.setState({ filtered, layerFilter })
-      }
+    const filtered = this.filterLocalities(data.results).sort(compareLocalities)
+    const layerFilter = ['in', 'cvegeo'].concat(filtered.map((l) => {
+      const { cvegeo } = l
+      if (cvegeo.startsWith('0')) return cvegeo
+      return Number.parseInt(cvegeo, 10)
+    }))
+
+    if (locKeys.some(k => prevState[k] !== this.state[k]) || this.state.fitBounds.length === 0) {
+      const fitBounds = fitBoundsFromCoords(filtered.map(l => l.location))
+      this.setState({ filtered, layerFilter, fitBounds })
+    } else {
+      this.setState({ filtered, layerFilter })
     }
   }
 

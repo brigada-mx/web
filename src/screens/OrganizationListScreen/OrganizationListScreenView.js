@@ -12,6 +12,7 @@ import LocalityLegend from 'components/LocalityDamageMap/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
 import { localStorage } from 'tools/storage'
+import { fitBoundsFromCoords } from 'tools/other'
 import Styles from './OrganizationListScreenView.css'
 
 
@@ -61,6 +62,7 @@ class OrganizationListScreenView extends React.Component {
       popup: {},
       focused: null,
       organizationSearch: '',
+      fitBounds: this.defaultFitBounds(),
       valState,
       valMuni,
       valSector,
@@ -69,7 +71,11 @@ class OrganizationListScreenView extends React.Component {
     this.handleOrganizationSearchKeyUp = _.debounce(
       this.handleOrganizationSearchKeyUp, 150
     )
-    this._fitBounds = JSON.parse(localStorage.getItem('719s:fitBounds')) || []
+    this._fitBounds = this.defaultFitBounds()
+  }
+
+  defaultFitBounds = () => {
+    return JSON.parse(localStorage.getItem('719s:fitBounds')) || []
   }
 
   componentDidMount() {
@@ -77,16 +83,34 @@ class OrganizationListScreenView extends React.Component {
       pathname: '/organizaciones',
       state: {},
     })
-    this._fitBounds = JSON.parse(localStorage.getItem('719s:fitBounds')) || []
+    this._fitBounds = this.defaultFitBounds()
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.state.focused) return
+  componentDidUpdate(prevProps, prevState) {
+    const locKeys = ['valState', 'valMuni']
+    if (!locKeys.some(k => prevState[k] !== this.state[k]) && this.state.focused) return
+
     const { data } = this.props.organizations
     if (!data) return
     const organizations = this.filterOrganizations(data.results)
     const [focused] = organizations
-    if (focused) this.setState({ focused })
+
+    const state = {}
+
+    if (locKeys.some(k => prevState[k] !== this.state[k])) {
+      const { valState, valMuni } = this.state
+      if (valState.length === 0 && valMuni.length === 0) {
+        state.fitBounds = this._fitBounds
+      } else {
+        const coords = [].concat(...organizations.map((o) => {
+          return o.actions.map(a => a.locality.location)
+        }))
+        state.fitBounds = fitBoundsFromCoords(coords)
+      }
+    }
+
+    if (focused && !this.state.focused) state.focused = focused
+    this.setState(state)
   }
 
   handleStateChange = (v) => {
@@ -259,7 +283,7 @@ class OrganizationListScreenView extends React.Component {
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
-                fitBounds={this._fitBounds.length > 0 ? this._fitBounds : undefined}
+                fitBounds={this.state.fitBounds.length > 0 ? this.state.fitBounds : undefined}
               />
               <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
             </div>
