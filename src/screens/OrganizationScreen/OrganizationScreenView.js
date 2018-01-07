@@ -245,17 +245,6 @@ class OrganizationScreenView extends React.Component {
           <div className="row">
             <div className="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-8 col-xs-4">
               <span className={Styles.mission}>{desc}</span>
-            </div>
-            <div className="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 sm-hidden xs-hidden">
-              <div className={Styles.ops}>
-                <p className={Styles.subtitle}>¿Dónde operamos?</p>
-                {this.renderMap(actions)}
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-lg-offset-1 col-lg-5 col-md-offset-1 col-md-5 col-sm-8 col-xs-4">
               <div className={Styles.metricsContainer}>
                 <div className={Styles.metric}>
                   <span className={Styles.metricLabel}>Inversión<br />estimada</span>
@@ -267,6 +256,12 @@ class OrganizationScreenView extends React.Component {
                   <span className={Styles.metricLabel}>Proyectos<br />registrados</span>
                   <span className={Styles.metricValue}>{actions.length}</span>
                 </div>
+              </div>
+            </div>
+            <div className="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 sm-hidden xs-hidden">
+              <div className={Styles.ops}>
+                <p className={Styles.subtitle}>¿Dónde operamos?</p>
+                {this.renderMap(actions)}
               </div>
             </div>
           </div>
