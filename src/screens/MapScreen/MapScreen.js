@@ -92,6 +92,7 @@ class MapScreen extends React.Component {
   }
 
   componentDidMount() {
+    this._mounted = true
     this.props.history.replace({
       pathname: '/',
       state: {},
@@ -111,6 +112,10 @@ class MapScreen extends React.Component {
         this.setState({ localityByCvegeo })
       },
     })
+  }
+
+  componentWillUnmount() {
+    this._mounted = false
   }
 
   componentDidUpdate(prevProps, prevState) {

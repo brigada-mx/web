@@ -27,7 +27,7 @@ class LocalityDamageMap extends React.Component {
     super(props)
     this._initialZoom = [6]
     this._initialCoordinates = [-95.9042505, 17.1073688]
-    this._fitBoundsOptions = { padding: 20, maxZoom: 10 }
+    this._fitBoundsOptions = props.fitBoundsOptions || { padding: 20, maxZoom: 10 }
     this._map = null
   }
 
@@ -139,6 +139,7 @@ LocalityDamageMap.propTypes = {
   sourceOptions: PropTypes.object,
   filter: PropTypes.arrayOf(PropTypes.any),
   fitBounds: PropTypes.arrayOf(PropTypes.array),
+  fitBoundsOptions: PropTypes.object,
   popup: PropTypes.any,
   onClickFeature: PropTypes.func,
   onEnterFeature: PropTypes.func,
