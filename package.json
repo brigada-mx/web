@@ -50,6 +50,7 @@
     "lint": "eslint --ext js --ext json js/map.js",
     "build": "./build.sh",
     "deploy": "./deploy.sh",
-    "dev": "node-sass --watch dist -o dist & webpack-dev-server --config webpack.dev.js --host 919.local.mx"
+    "dev": "node-sass --watch dist -o dist & webpack-dev-server --config webpack.dev.js --host 919.local.mx",
+    "dev_fake_api": "node-sass --watch dist -o dist & webpack-dev-server --env.FAKE_API=true --config webpack.dev.js --host 919.local.mx"
   }
 }

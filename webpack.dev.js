@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const common = require('./webpack.common.js')
 
-module.exports = merge(common, {
+module.exports = env => merge(common, {
   devtool: 'inline-source-map',
   plugins: [
     new ExtractTextPlugin({
@@ -14,6 +14,7 @@ module.exports = merge(common, {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('dev'),
+      'process.env.FAKE_API': env ? JSON.stringify(env.FAKE_API) : undefined,
     }),
   ],
   devServer: {

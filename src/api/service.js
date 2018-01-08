@@ -1,62 +1,58 @@
 /* eslint-disable camelcase */
+import env from 'src/env'
 import sendToApi from './request'
 
 
-const service = {
-  getLocalityActions: async (locality_id, page_size = 250) => {
-    // DELETE THIS
-    return sendToApi(
-      'https://s3-us-west-2.amazonaws.com/719s/test-data/actions.json', { isRelative: false }
-    )
+const apiUrlFake = 'https://s3-us-west-2.amazonaws.com/719s/test-data/'
+
+class Service {
+  constructor({ fake = false } = {}) {
+    this.fake = process.env.FAKE_API === 'true' || (env.env === 'dev' && fake)
+  }
+
+  getLocalityActions = async (locality_id, page_size = 250) => {
+    if (this.fake) return sendToApi(`${apiUrlFake}actions.json`, { isRelative: false })
+
     const params = { locality_id, page_size }
     return sendToApi('actions/', { params })
-  },
+  }
 
-  getLocalityEstablishments: async (locality_id, page_size = 250) => {
-    // DELETE THIS
-    return sendToApi(
-      'https://s3-us-west-2.amazonaws.com/719s/test-data/establishments.json', { isRelative: false }
-    )
+  getLocalityEstablishments = async (locality_id, page_size = 250) => {
+    if (this.fake) return sendToApi(`${apiUrlFake}establishments.json`, { isRelative: false })
+
     const params = { locality_id, page_size, is_categorized: true }
     return sendToApi('establishments/', { params })
-  },
+  }
 
-  getLocality: async (id) => {
-    // DELETE THIS
-    return sendToApi(
-      'https://s3-us-west-2.amazonaws.com/719s/test-data/locality.json', { isRelative: false }
-    )
+  getLocality = async (id) => {
+    if (this.fake) return sendToApi(`${apiUrlFake}locality.json`, { isRelative: false })
+
     return sendToApi(`localities/${id}/`)
-  },
+  }
 
-  getLocalities: async (page_size = 250) => {
+  getLocalities = async (page_size = 250) => {
     const params = { has_data: true, page_size }
     return sendToApi('localities/', { params })
-  },
+  }
 
-  getLocalitiesStatic: async () => {
+  getLocalitiesStatic = async () => {
     return sendToApi(
       'https://s3-us-west-2.amazonaws.com/719s/data/localities.json', { isRelative: false }
     )
-  },
+  }
 
-  getLocalityByCvegeo: async (cvegeo) => {
-    const params = { cvegeo }
-    return sendToApi('localities/', { params })
-  },
+  getOrganizations = async (page_size = 50) => {
+    if (this.fake) return sendToApi(`${apiUrlFake}organizations.json`, { isRelative: false })
 
-  getOrganizations: async (page_size = 50) => {
-    // DELETE THIS
-    return sendToApi(
-      'https://s3-us-west-2.amazonaws.com/719s/test-data/organizations.json', { isRelative: false }
-    )
     const params = { page_size }
     return sendToApi('organizations/', { params })
-  },
+  }
 
-  getOrganization: async (id) => {
+  getOrganization = async (id) => {
+    if (this.fake) return sendToApi(`${apiUrlFake}organization.json`, { isRelative: false })
+
     return sendToApi(`organizations/${id}/`)
-  },
+  }
 }
 
 /**
@@ -87,4 +83,5 @@ export const getBackoff = async (...args) => {
   inner(...args)
 }
 
-export default service
+export default new Service()
+export { Service }
