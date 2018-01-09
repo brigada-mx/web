@@ -1,0 +1,26 @@
+@value colors: "src/colors.css";
+@value grey6 from colors;
+
+.hamburger {
+  background: no-repeat url('assets/img/hamburger.svg');
+  width: 17px;
+  height: 9px;
+  display: inline-flex;
+  margin-left: 23px;
+  cursor: pointer;
+}
+
+.drawer {
+  position: absolute;
+  width: 300px;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  z-index: 10000;
+  opacity: 0.925;
+  background-color: grey6;
+}
+
+.hide {
+  color: red;
+}

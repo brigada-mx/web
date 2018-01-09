@@ -5,6 +5,8 @@ import _ from 'lodash'
 import Select from 'react-select'
 import '!style-loader!css-loader!react-select/dist/react-select.css'
 
+import Drawer from 'components/Drawer'
+import { NavLinks } from 'components/Nav'
 import LogoImg from 'assets/img/logo.png'
 import Styles from './FilterHeader.css'
 
@@ -70,17 +72,9 @@ const FilterHeader = (props) => {
     })
   }
 
-  return (
-    <div className={`${Styles.container} wrapper row middle`}>
-
-      <div className="lg-hidden md-hidden col-sm-1 col-xs-2">
-        <a className={Styles.logo} href="/">
-          <img src={LogoImg} width="74px" height="auto" alt="Logo" />
-        </a>
-      </div>
-
-      <div className={`${Styles.filterContainer} sm-hidden xs-hidden`}>
-
+  const selects = (className) => {
+    return (
+      <React.Fragment>
         <Select
           multi
           joinValues
@@ -88,7 +82,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={Styles.filter}
+          className={className}
           value={valState}
           placeholder="Estado"
           onChange={onStateChange}
@@ -101,7 +95,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={Styles.filter}
+          className={className}
           value={valMuni}
           placeholder="Municipio"
           onChange={onMuniChange}
@@ -114,7 +108,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={Styles.filter}
+          className={className}
           value={valMarg}
           placeholder="Marginación social"
           onChange={onMargChange}
@@ -132,7 +126,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={Styles.filter}
+          className={className}
           value={valNumActions}
           placeholder="Total de proyectos"
           onChange={onNumActionsChange}
@@ -150,7 +144,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={Styles.filter}
+          className={className}
           value={valSector}
           placeholder="Sector"
           onChange={onSectorChange}
@@ -168,13 +162,27 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={Styles.filter}
+          className={className}
           value={valActionType}
           placeholder="Tipo de proyecto"
           onChange={onActionTypeChange}
           options={actionTypeOptions()}
         />}
+      </React.Fragment>
+    )
+  }
 
+  return (
+    <div className={`${Styles.container} wrapper row middle`}>
+
+      <div className="lg-hidden md-hidden col-sm-1 col-xs-2">
+        <a className={Styles.logo} href="/">
+          <img src={LogoImg} width="74px" height="auto" alt="Logo" />
+        </a>
+      </div>
+
+      <div className={`${Styles.filterContainer} sm-hidden xs-hidden`}>
+        {selects(Styles.filter)}
       </div>
 
       <div className="col-sm-4 col-sm-offset-3 col-xs-2 end-lg end-md end-sm end-xs">
@@ -189,7 +197,10 @@ const FilterHeader = (props) => {
           />
         </div>
 
-        <div className={`${Styles.hamburger} lg-hidden md-hidden`} />
+        <Drawer classNameWrapper="lg-hidden md-hidden">
+          <NavLinks classNameCustom={Styles.burgerNavLinks} />
+          {selects(Styles.burgerFilter)}
+        </Drawer>
 
       </div>
 

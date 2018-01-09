@@ -1,6 +1,14 @@
 @value colors: "src/colors.css";
 @value brandOffWhite, grey7, grey4, weakShadow from colors;
 
+.burgerNavLinks {
+  display: block;
+}
+
+.burgerFilter {
+  display: block;
+}
+
 .container {
   display: flex;
   flex-direction: row;
@@ -57,15 +65,6 @@
   color: #CDCFD1;
 }
 
-.hamburger {
-  background: no-repeat url('assets/img/hamburger.svg');
-  width: 17px;
-  height: 9px;
-  display: inline-flex;
-  margin-left: 23px;
-  cursor: pointer;
-}
-
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .container {
     box-shadow: unset;
@@ -90,8 +89,5 @@
   }
   .numResults {
     display: none;
-  }
-  .hamburger {
-    margin-left: 16px;
   }
 }
