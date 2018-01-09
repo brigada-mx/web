@@ -118,9 +118,8 @@ class LocalityDamageMap extends React.Component {
               property: 'total',
               stops: [
                 [-1, Colors.unknown],
-                [0, Colors.minimal],
-                [10, Colors.low],
-                [50, Colors.medium],
+                [0, Colors.low],
+                [40, Colors.medium],
                 [250, Colors.high],
                 [1250, Colors.severe],
               ],

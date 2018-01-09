@@ -12,9 +12,8 @@ export default {
   blueGreen: '#3DC59F',
   shadow: 'rgba(37, 38, 50, 0.05)',
   severe: '#ff0000',
-  high: '#dd4400',
-  medium: '#dd8800',
-  low: '#ddbb00',
-  minimal: '#ffff00',
+  high: '#dd6600',
+  medium: '#ddaa00',
+  low: '#eedd00',
   unknown: '#939aa1',
 }

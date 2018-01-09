@@ -3,8 +3,7 @@ import Colors from 'src/colors'
 
 export const dmgGrade = (locality) => {
   const levels = [
-    [10, 'minimal'],
-    [50, 'low'],
+    [40, 'low'],
     [250, 'medium'],
     [1250, 'high'],
     [Number.MAX_SAFE_INTEGER, 'severe'],
@@ -27,7 +26,6 @@ export const metaByDmgGrade = (grade) => {
     high: { label: 'GRAVE', labelFem: 'GRAVE', color: Colors.high },
     medium: { label: 'MEDIO', labelFem: 'MEDIA', color: Colors.medium },
     low: { label: 'MENOR', labelFem: 'MENOR', color: Colors.low },
-    minimal: { label: 'MÍNIMO', labelFem: 'MÍNIMA', color: Colors.minimal },
     unknown: { label: 'SIN DATOS', labelFem: 'SIN DATOS', color: Colors.unknown },
   }
   return lookup[grade] || lookup.unknown
