@@ -2,6 +2,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { projectStatus, labelByProjectStatus } from 'tools/other'
+import { Link } from 'react-router-dom'
+
 import { fmtNum } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
 import Styles from './ActionListItem.css'
@@ -19,8 +22,8 @@ class ActionListItem extends React.PureComponent {
       budget,
       start_date: startDate = '?',
       end_date: endDate = '?',
-      organization: { name, key },
-      locality: { name: locName, state_name: stateName },
+      organization: { id: orgId, name: orgName },
+      locality: { id: locId, name: locName, municipality_name: muniName, state_name: stateName },
     } = action
 
     const metrics = () => {
@@ -37,18 +40,28 @@ class ActionListItem extends React.PureComponent {
       return (
         <div>
           <span className={Styles.label}>FECHAS: </span>
-          <span className={Styles.dates}>{startDate.replace(/-/g, '.')} - {endDate.replace(/-/g, '.')}</span>
+          <span className={Styles.dates}>{startDate.replace(/-/g, '.')} - {endDate.replace(/-/g, '.')} </span>
+          <span className={Styles.label}>
+            ({labelByProjectStatus(projectStatus(startDate, endDate))})
+          </span>
         </div>
       )
     }
 
-    const locality = () => {
-      const { locality: { state_name: stateName, municipality_name: muniName, name } } = action
+    const organizationLink = () => {
       return (
-        <div>
+        <Link to={{ pathname: `/organizaciones/${orgId}` }}>
+          <span className={Styles.label}>{orgName}</span>
+        </Link>
+      )
+    }
+
+    const localityLink = () => {
+      return (
+        <Link to={{ pathname: `/comunidades/${locId}` }}>
           <span className={Styles.label}>COMUNIDAD: </span>
-          <span className={Styles.dates}>{stateName}, {muniName}, {name}</span>
-        </div>
+          <span className={Styles.dates}>{stateName}, {muniName}, {locName}</span>
+        </Link>
       )
     }
 
@@ -67,6 +80,7 @@ class ActionListItem extends React.PureComponent {
         onMouseLeave={handleMouseLeave}
       >
         <div className={Styles.header}>{`Construcción de ${actionType.toLowerCase()}`}</div>
+        {screen === 'loc' && organizationLink()}
         <div className={Styles.summaryContainer}>
           {budget &&
             <div>
@@ -76,7 +90,7 @@ class ActionListItem extends React.PureComponent {
           {metrics()}
         </div>
         {desc && <div className={Styles.description}>{desc}</div>}
-        {screen === 'org' && locality()}
+        {screen === 'org' && localityLink()}
         {dates()}
       </div>
     )

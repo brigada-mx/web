@@ -192,10 +192,10 @@ class MapScreen extends React.Component {
     const { locSearch, valState, valMuni, valMarg, valNumActions } = this.state
 
     const rangeByValNumActions = {
-      0: [0, 9],
-      1: [10, 49],
-      2: [50, 249],
-      3: [250, null],
+      0: [null, 0],
+      1: [1, 9],
+      2: [10, 49],
+      3: [50, null],
     }
 
     return results.filter((l) => {

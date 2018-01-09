@@ -1,5 +1,5 @@
 @value colors: "src/colors.css";
-@value brandOffWhite, grey7, weakShadow from colors;
+@value brandOffWhite, grey7, grey4, weakShadow from colors;
 
 .container {
   display: flex;
@@ -25,11 +25,11 @@
 
 .numResults {
   font-family: 'roboto-500', sans-serif;
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: .52px;
   line-height: 12px;
   margin-right: 29px;
-  color: #CDCFD1;
+  color: grey4;
 }
 
 .searchWrapper {

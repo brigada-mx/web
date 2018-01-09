@@ -2,9 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
-import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, Tooltip, LabelList } from 'recharts'
-import moment from 'moment'
-import { fmtNum, fmtBudget } from 'tools/string'
+import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, LabelList } from 'recharts'
 
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
@@ -13,7 +11,8 @@ import ActionListItem from 'components/ActionListItem'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DirectionsButton from 'components/DirectionsButton'
 import EstablishmentPopup from 'components/FeatureMap/EstablishmentPopup'
-import { dmgGrade, metaByDmgGrade } from 'tools/other'
+import { dmgGrade, metaByDmgGrade, projectStatus } from 'tools/other'
+import { fmtNum, fmtBudget } from 'tools/string'
 import Colors from 'src/colors'
 import Styles from './LocalityScreenView.css'
 
@@ -263,12 +262,8 @@ class LocalityScreenView extends React.Component {
       const labels = ['Por iniciar', 'En progreso', 'Completados']
       const status = [0, 0, 0]
 
-      const date = moment().format('YYYY-MM-DD')
       for (const a of actions) {
-        const { start_date: startDate, end_date: endDate } = a
-        if (startDate && date < startDate) status[0] += 1
-        else if (!endDate || date <= endDate) status[1] += 1
-        else status[2] += 1
+        status[projectStatus(a.start_date, a.end_date)] += 1
         budget += (a.budget || 0)
         orgs[a.organization_id] = true
       }

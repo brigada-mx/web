@@ -1,5 +1,18 @@
+import moment from 'moment'
+
 import Colors from 'src/colors'
 
+
+export const projectStatus = (startDate, endDate) => {
+  const date = moment().format('YYYY-MM-DD')
+  if (startDate && date < startDate) return 0
+  else if (!endDate || date <= endDate) return 1
+  return 2
+}
+
+export const labelByProjectStatus = (status) => {
+  return ['Por iniciar', 'En progreso', 'Completado'][status] || 'Desconocido'
+}
 
 export const dmgGrade = (locality) => {
   const levels = [

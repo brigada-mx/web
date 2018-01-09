@@ -137,10 +137,10 @@ const FilterHeader = (props) => {
           placeholder="Total de proyectos"
           onChange={onNumActionsChange}
           options={[
-            { value: '0', label: '0-9' },
-            { value: '1', label: '10-49' },
-            { value: '2', label: '50-249' },
-            { value: '3', label: '250+' },
+            { value: '0', label: '0' },
+            { value: '1', label: '1-9' },
+            { value: '2', label: '10-49' },
+            { value: '3', label: '50+' },
           ]}
         />}
 
