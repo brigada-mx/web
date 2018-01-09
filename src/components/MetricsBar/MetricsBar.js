@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import Colors from 'src/Colors'
 import Styles from './MetricsBar.css'
 
 
@@ -26,12 +27,25 @@ class MetricsBar extends React.Component {
   }
 
   render() {
-    const { value, max, style } = this.props
-    const green = { flex: value / max }
-    const grey = { flex: (max - value) / max }
+    const { value, max, style, severity } = this.props
+    const doneFlex = value / max
+    let doneColor = Colors.brandGreen
+    if (severity) {
+      const multiplier = doneFlex ** 0.75
+      const r = { start: 255, end: 255 }
+      const g = { start: 255, end: 0 }
+      const _r = r.start + multiplier * (r.end - r.start)
+      const _g = g.start + multiplier * (g.end - g.start)
+
+      doneColor = `rgb(${Math.round(_r)}, ${Math.round(_g)}, 0)`
+    }
+    const done = { flex: doneFlex, backgroundColor: doneColor }
+    const notDone = { flex: 1 - doneFlex }
+
     const percent = Math.round(100 * value / max)
     const tooltipWidth = 28
     const tooltipPadding = 10
+
 
     return (
       <div
@@ -53,8 +67,8 @@ class MetricsBar extends React.Component {
             {`${percent}%`}
           </div>
         }
-        <div style={green} className={Styles.green} />
-        <div style={grey} className={Styles.grey} />
+        <div style={done} />
+        <div style={notDone} className={Styles.notDone} />
       </div>
     )
   }
@@ -64,6 +78,7 @@ MetricsBar.propTypes = {
   value: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   style: PropTypes.object,
+  severity: PropTypes.bool,
 }
 
 export default MetricsBar

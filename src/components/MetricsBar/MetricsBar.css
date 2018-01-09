@@ -1,5 +1,4 @@
 @value colors: "src/colors.css";
-@value brandGreen from colors;
 @value brandMetricGrey from colors;
 
 .bar {
@@ -13,11 +12,7 @@
   cursor: pointer;
 }
 
-.green {
-  background-color: brandGreen;
-}
-
-.grey {
+.notDone {
   background-color: #CAD1D8;
 }
 
