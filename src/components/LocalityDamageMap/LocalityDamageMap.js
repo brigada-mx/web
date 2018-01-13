@@ -22,10 +22,56 @@ const zoomStyle = {
   borderRadius: 2,
 }
 
+const generateSizeStops = (baseStops, baseZoom, minZoom = 3, maxZoom = 15) => {
+  const stops = []
+  for (let zoom = minZoom; zoom <= maxZoom; zoom += 1) {
+    stops.push(baseStops.map((stop) => {
+      const [value, size] = stop
+      return [{ zoom, value }, size * (zoom / baseZoom) ** 1.25]
+    }))
+  }
+  return [].concat(...stops)
+}
+
+const baseZoom = 6
+const layerPaint = {
+  'circle-radius': {
+    property: 'total',
+    stops: generateSizeStops([
+      [-1, 2],
+      [1, 3],
+      [3, 3.5],
+      [10, 4],
+      [30, 4.5],
+      [100, 5.5],
+      [300, 7],
+      [600, 10],
+      [1000, 13],
+      [2000, 16],
+      [3000, 20],
+      [4000, 25],
+      [7000, 30],
+      [10000, 35],
+      [15000, 40],
+    ], baseZoom),
+  },
+  'circle-color': {
+    property: 'total',
+    stops: [
+      [-1, Colors.unknown],
+      [0, Colors.low],
+      [40, Colors.medium],
+      [250, Colors.high],
+      [1250, Colors.severe],
+    ],
+  },
+  'circle-opacity': 0.75,
+}
+
 class LocalityDamageMap extends React.Component {
   constructor(props) {
     super(props)
-    this._initialZoom = [6]
+    this._initialZoom = [baseZoom]
     this._initialCoordinates = [-95.9042505, 17.1073688]
     this._fitBoundsOptions = props.fitBoundsOptions || { padding: 20, maxZoom: 10 }
     this._map = null
@@ -93,39 +139,7 @@ class LocalityDamageMap extends React.Component {
           type="circle"
           sourceLayer={sourceLayer}
           filter={filter}
-          paint={{
-            'circle-radius': {
-              property: 'total',
-              stops: [
-                [-1, 2],
-                [1, 3],
-                [3, 3.5],
-                [10, 4],
-                [30, 4.5],
-                [100, 5.5],
-                [300, 7],
-                [600, 10],
-                [1000, 13],
-                [2000, 16],
-                [3000, 20],
-                [4000, 25],
-                [7000, 30],
-                [10000, 35],
-                [15000, 40],
-              ],
-            },
-            'circle-color': {
-              property: 'total',
-              stops: [
-                [-1, Colors.unknown],
-                [0, Colors.low],
-                [40, Colors.medium],
-                [250, Colors.high],
-                [1250, Colors.severe],
-              ],
-            },
-            'circle-opacity': 0.75,
-          }}
+          paint={layerPaint}
         />
       </Mapbox>
     )

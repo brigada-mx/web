@@ -222,7 +222,7 @@ class OrganizationScreenView extends React.Component {
                   <span className={Styles.fieldLabel}>WEB</span>
                   {website &&
                     <span className={Styles.fieldValue}>
-                      <a href={addProtocol(website)}>{website}</a>
+                      <a target="_blank" href={addProtocol(website)}>{website}</a>
                     </span>
                   }
                 </div>
