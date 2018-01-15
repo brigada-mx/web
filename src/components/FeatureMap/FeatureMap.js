@@ -28,6 +28,8 @@ class FeatureMap extends React.Component {
     super(props)
     this._initialZoom = [13]
     this._initialCoordinates = props.coordinates
+    this._fitBounds = props.fitBounds
+    this._fitBoundsOptions = props.fitBoundsOptions || { padding: 20 }
     this._loaded = false
     this.state = {
       map: null,
@@ -44,10 +46,11 @@ class FeatureMap extends React.Component {
 
     const markers = features.map((f) => {
       const { scian_group: group, location: { lat, lng } } = f
+      const meta = metaByScianGroup[group]
       return {
         type: 'Feature',
         properties: {
-          group, icon: metaByScianGroup[group].icon || metaByScianGroup[1].icon, f,
+          group, icon: meta ? meta.icon : metaByScianGroup[1].icon, f,
         },
         geometry: {
           type: 'Point',
@@ -123,7 +126,8 @@ class FeatureMap extends React.Component {
   }
 
   render() {
-    const { popup, features } = this.props
+    const { popup, features, fitBounds } = this.props
+    if (!_.isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
 
     return (
       <Mapbox
@@ -136,6 +140,8 @@ class FeatureMap extends React.Component {
           position: 'relative',
         }}
         onStyleLoad={this.handleMapLoaded}
+        fitBounds={this._fitBounds}
+        fitBoundsOptions={this._fitBoundsOptions}
       >
         {popup}
         <EstablishmentLegend establishments={features} />
@@ -148,6 +154,8 @@ class FeatureMap extends React.Component {
 FeatureMap.propTypes = {
   coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
   features: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fitBounds: PropTypes.arrayOf(PropTypes.array),
+  fitBoundsOptions: PropTypes.object,
   popup: PropTypes.any,
   onClickFeature: PropTypes.func,
   onEnterFeature: PropTypes.func,
