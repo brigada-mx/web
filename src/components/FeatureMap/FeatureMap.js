@@ -5,7 +5,7 @@ import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl'
 import _ from 'lodash'
 
 import env from 'src/env'
-import EstablishmentLegend, { metaByScianGroup } from './EstablishmentLegend'
+import { metaByScianGroup } from './EstablishmentLegend'
 import Styles from './FeatureMap.css'
 
 
@@ -126,7 +126,7 @@ class FeatureMap extends React.Component {
   }
 
   render() {
-    const { popup, features, fitBounds } = this.props
+    const { popup, legend, fitBounds } = this.props
     if (!_.isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
 
     return (
@@ -144,7 +144,7 @@ class FeatureMap extends React.Component {
         fitBoundsOptions={this._fitBoundsOptions}
       >
         {popup}
-        <EstablishmentLegend establishments={features} />
+        {legend}
         <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
       </Mapbox>
     )
@@ -157,6 +157,7 @@ FeatureMap.propTypes = {
   fitBounds: PropTypes.arrayOf(PropTypes.array),
   fitBoundsOptions: PropTypes.object,
   popup: PropTypes.any,
+  legend: PropTypes.any,
   onClickFeature: PropTypes.func,
   onEnterFeature: PropTypes.func,
   onLeaveFeature: PropTypes.func,

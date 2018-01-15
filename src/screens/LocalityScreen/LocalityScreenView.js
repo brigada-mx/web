@@ -11,6 +11,7 @@ import ActionListItem from 'components/ActionListItem'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DirectionsButton from 'components/DirectionsButton'
 import EstablishmentPopup from 'components/FeatureMap/EstablishmentPopup'
+import EstablishmentLegend from 'components/FeatureMap/EstablishmentLegend'
 import { dmgGrade, metaByDmgGrade, projectStatus } from 'tools/other'
 import { fmtNum, fmtBudget } from 'tools/string'
 import Colors from 'src/colors'
@@ -244,6 +245,7 @@ class LocalityScreenView extends React.Component {
             features={data.results}
             coordinates={[lng, lat]}
             popup={popup ? <EstablishmentPopup establishment={popup} /> : null}
+            legend={<EstablishmentLegend establishments={data.results} />}
           />
         </div>
       )
