@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import _ from 'lodash'
 import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 
 import env from 'src/env'
@@ -73,6 +74,7 @@ class LocalityDamageMap extends React.Component {
     super(props)
     this._initialZoom = [baseZoom]
     this._initialCoordinates = [-95.9042505, 17.1073688]
+    this._fitBounds = props.fitBounds
     this._fitBoundsOptions = props.fitBoundsOptions || { padding: 20, maxZoom: 10 }
     this._map = null
   }
@@ -114,6 +116,8 @@ class LocalityDamageMap extends React.Component {
       },
     }
 
+    if (!_.isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
+
     return (
       <Mapbox
         style="mapbox://styles/kylebebak/cjbr1wz8o7blj2rpbidkjujq2" // eslint-disable-line react/style-prop-object
@@ -124,7 +128,7 @@ class LocalityDamageMap extends React.Component {
           width: '100%',
         }}
         onStyleLoad={this.handleMapLoaded}
-        fitBounds={fitBounds}
+        fitBounds={this._fitBounds}
         fitBoundsOptions={this._fitBoundsOptions}
       >
         {popup}
