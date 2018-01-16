@@ -50,7 +50,7 @@ class ActionListItem extends React.PureComponent {
 
     const organizationLink = () => {
       return (
-        <Link to={{ pathname: `/organizaciones/${orgId}` }}>
+        <Link onClick={e => e.stopPropagation()} to={{ pathname: `/organizaciones/${orgId}` }}>
           <span className={Styles.label}>{orgName}</span>
         </Link>
       )
@@ -58,7 +58,7 @@ class ActionListItem extends React.PureComponent {
 
     const localityLink = () => {
       return (
-        <Link to={{ pathname: `/comunidades/${locId}` }}>
+        <Link onClick={e => e.stopPropagation()} to={{ pathname: `/comunidades/${locId}` }}>
           <span className={Styles.label}>COMUNIDAD: </span>
           <span className={Styles.dates}>{stateName}, {muniName}, {locName}</span>
         </Link>
