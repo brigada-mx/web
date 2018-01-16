@@ -11,7 +11,8 @@ import ActionListItem from 'components/ActionListItem'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DirectionsButton from 'components/DirectionsButton'
 import EstablishmentPopup from 'components/FeatureMap/EstablishmentPopup'
-import EstablishmentLegend from 'components/FeatureMap/EstablishmentLegend'
+import ActionMap from 'components/FeatureMap/ActionMap'
+import EstablishmentLegend, { metaByScianGroup } from 'components/FeatureMap/EstablishmentLegend'
 import { dmgGrade, metaByDmgGrade, projectStatus } from 'tools/other'
 import { fmtNum, fmtBudget } from 'tools/string'
 import Colors from 'src/colors'
@@ -82,7 +83,7 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
           }
         />
         <CartesianGrid vertical={false} stroke="#E4E7EB" horizontalPoints={[0, 26, 52, 78, 104]} />
-        <Bar dataKey="num" fill={Colors.blueGreen} isAnimationActive={false} >
+        <Bar dataKey="num" fill={Colors.brandGreen} isAnimationActive={false} >
           <LabelList
             dataKey="num"
             position="insideTop"
@@ -103,6 +104,37 @@ DmgBarChart.propTypes = {
   notHabit: PropTypes.number.isRequired,
 }
 
+const establishmentMapLayer = {
+  id: 'features',
+  // type: 'symbol',
+  type: 'circle',
+  source: 'features',
+  // layout: {
+  //   'icon-image': '{icon}',
+  //   'icon-allow-overlap': true,
+  // },
+  paint: {
+    'circle-color': {
+      property: 'group',
+      type: 'categorical',
+      stops: [
+        [1, '#2965CC'],
+        [2, '#29A634'],
+        [3, '#D99E0B'],
+        [4, '#D13913'],
+        [5, '#8F398F'],
+        [6, '#00B3A4'],
+        [7, '#DB2C6F'],
+        [8, '#9BBF30'],
+        [9, '#96622D'],
+        [10, '#7157D9'],
+      ],
+    },
+    'circle-opacity': 0.85,
+    'circle-radius': 4,
+  },
+}
+
 class LocalityScreenView extends React.Component {
   constructor(props) {
     super(props)
@@ -111,15 +143,15 @@ class LocalityScreenView extends React.Component {
     }
   }
 
-  handleClickFeature = (f) => {
+  handleClickFeature = (feature) => {
   }
 
-  handleEnterFeature = (f) => {
+  handleEnterFeature = (feature) => {
     clearTimeout(this._timer)
-    this.setState({ popup: f })
+    this.setState({ popup: JSON.parse(feature.properties.f) })
   }
 
-  handleLeaveFeature = (f) => {
+  handleLeaveFeature = (feature) => {
     this._timer = setTimeout(() => {
       this.setState({ popup: null })
     }, 200)
@@ -227,30 +259,42 @@ class LocalityScreenView extends React.Component {
   renderEstablishmentsSection = () => {
     const { establishments: { loading, data, error } } = this.props
     const { locality: { data: locData } } = this.props
-    if (loading || !locData) return <LoadingIndicatorCircle />
+    if (loading || !locData || !data) return <LoadingIndicatorCircle />
 
+    const features = data.results.map((f) => {
+      const { scian_group: group, location: { lat, lng } } = f
+      const meta = metaByScianGroup[group]
+      return {
+        type: 'Feature',
+        properties: {
+          group, icon: meta ? meta.icon : metaByScianGroup[1].icon, f,
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [lng, lat],
+        },
+      }
+    })
     const { popup } = this.state
-
     const { location: { lat, lng } } = locData
-    if (data) {
-      return (
-        <div className={`${Styles.map} row`}>
-          <div className={`${Styles.directions} lg-hidden md-hidden`}>
-            <DirectionsButton lat={lat} lng={lng} />
-          </div>
-          <FeatureMap
-            onClickFeature={this.handleClickFeature}
-            onEnterFeature={this.handleEnterFeature}
-            onLeaveFeature={this.handleLeaveFeature}
-            features={data.results}
-            coordinates={[lng, lat]}
-            popup={popup ? <EstablishmentPopup establishment={popup} /> : null}
-            legend={<EstablishmentLegend establishments={data.results} />}
-          />
+
+    return (
+      <div className={`${Styles.map} row`}>
+        <div className={`${Styles.directions} lg-hidden md-hidden`}>
+          <DirectionsButton lat={lat} lng={lng} />
         </div>
-      )
-    }
-    return <LoadingIndicatorCircle />
+        <FeatureMap
+          features={features}
+          layer={establishmentMapLayer}
+          coordinates={[lng, lat]}
+          onClickFeature={this.handleClickFeature}
+          onEnterFeature={this.handleEnterFeature}
+          onLeaveFeature={this.handleLeaveFeature}
+          popup={popup ? <EstablishmentPopup establishment={popup} /> : null}
+          legend={<EstablishmentLegend establishments={data.results} />}
+        />
+      </div>
+    )
   }
 
   renderActionsSection = () => {
@@ -273,6 +317,7 @@ class LocalityScreenView extends React.Component {
       const actionList = actions.map((a) => {
         return <ActionListItem key={a.id} action={a} screen="loc" />
       })
+      const actionMap = <ActionMap actions={actions} />
 
       return (
         <div>
@@ -303,6 +348,11 @@ class LocalityScreenView extends React.Component {
           <div className={Styles.actionCardsContainer}>
             {actionList}
           </div>
+          {actionMap &&
+            <div className={Styles.actionMapContainer}>
+              {actionMap}
+            </div>
+          }
         </div>
       )
     }
