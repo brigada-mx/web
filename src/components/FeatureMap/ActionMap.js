@@ -18,7 +18,7 @@ const layer = {
       type: 'categorical',
       stops: [
         [true, 1],
-        [false, 0.75],
+        [false, 0.65],
       ],
     },
     'circle-radius': {
@@ -47,7 +47,7 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
       const { lat, lng } = s.location
       features.push({
         type: 'Feature',
-        properties: { actionId: a.id, selected: a.id === selectedId, s },
+        properties: { action: a, selected: a.id === selectedId },
         geometry: {
           type: 'Point',
           coordinates: [lng, lat],

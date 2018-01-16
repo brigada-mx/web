@@ -172,11 +172,11 @@ class LocalityScreenView extends React.Component {
   }
 
   handleClickActionFeature = (feature) => {
-    this.props.history.push(`/acciones/${JSON.parse(feature.properties.actionId)}`)
+    this.props.history.push(`/acciones/${JSON.parse(feature.properties.action).id}`)
   }
 
   handleEnterActionFeature = (feature) => {
-    // this.setState({ focused: item })
+    this.setState({ focused: JSON.parse(feature.properties.action) })
   }
 
   renderLocalitySection = () => {
@@ -381,7 +381,6 @@ class LocalityScreenView extends React.Component {
           focusedId={focused && focused.id}
           onClick={this.handleClickListItem}
           onMouseEnter={this.handleEnterListItem}
-          onMouseLeave={this.handleLeaveListItem}
         />
         {actionMap &&
           <div className={Styles.actionMapContainer}>
