@@ -1,8 +1,6 @@
 @value colors: "src/colors.css";
-@value brandOffWhite from colors;
-@value brandGreen from colors;
-@value grey6 from colors;
-@value grey2 from colors;
+@value brandOffWhite, brandGreen, grey6, grey2 from colors;
+
 
 .listItem {
   box-sizing: border-box;
@@ -90,6 +88,30 @@
   color: #141418;
   letter-spacing: 0.4px;
   line-height: 16px;
+}
+
+.emptyThumbnailContainer {
+  width: 120px;
+  height: 120px;
+  background-color: grey2;
+}
+
+.thumbnailContainer {
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+
+.thumbnailCount {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 2px solid white;
+  bottom: 0;
+  right: 0;
+  font-size: 15px;
+  color: white;
+  background-color: transparent;
 }
 
 @media screen and (min-width: 1440px) {

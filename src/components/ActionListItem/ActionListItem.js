@@ -65,6 +65,22 @@ class ActionListItem extends React.PureComponent {
       )
     }
 
+    const thumbnails = () => {
+      const thumbs = [].concat(...action.submissions.map(s => s.thumbnails_small))
+      const l = thumbs.length
+      if (l === 0) return <div className={Styles.emptyThumbnailContainer} />
+
+      const count = l > 1 ? <div className={Styles.thumbnailCount}>+{l - 1}</div> : null
+      return (
+        <div
+          className={Styles.thumbnailContainer}
+          style={{ backgroundImage: `url(${thumbs[0]})` }}
+        >
+          {count}
+        </div>
+      )
+    }
+
     const handleClick = () => { onClick(action) }
     const handleMouseEnter = () => { onMouseEnter(action) }
     const handleMouseLeave = () => { onMouseLeave(action) }
@@ -86,8 +102,10 @@ class ActionListItem extends React.PureComponent {
             <div>
               <span className={Styles.label}>PRESUPUESTO: </span>
               <span className={Styles.value}>${fmtNum(budget)}</span>
-            </div>}
+            </div>
+          }
           {metrics()}
+          {thumbnails()}
         </div>
         {(desc && focused) && <div className={Styles.description}>{desc}</div>}
         {screen === 'org' && localityLink()}
@@ -108,6 +126,9 @@ ActionListItem.propTypes = {
 
 ActionListItem.defaultProps = {
   focused: false,
+  onClick: () => {},
+  onMouseEnter: () => {},
+  onMouseLeave: () => {},
 }
 
 export default ActionListItem
