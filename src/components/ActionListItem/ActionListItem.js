@@ -89,7 +89,7 @@ class ActionListItem extends React.PureComponent {
             </div>}
           {metrics()}
         </div>
-        {desc && <div className={Styles.description}>{desc}</div>}
+        {(desc && focused) && <div className={Styles.description}>{desc}</div>}
         {screen === 'org' && localityLink()}
         {dates()}
       </div>

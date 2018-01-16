@@ -5,10 +5,11 @@ import { NavLink, withRouter } from 'react-router-dom'
 
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
-import ActionListItem from 'components/ActionListItem'
+import ActionList from 'components/ActionList'
+import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { addProtocol, phoneLink, emailLink, fmtBudget } from 'tools/string'
-import { fitBoundsFromCoords } from 'tools/other'
+import { fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
 import Styles from './OrganizationScreenView.css'
 
 
@@ -43,34 +44,12 @@ OrganizationBreadcrumb.propTypes = {
   sector: PropTypes.string.isRequired,
 }
 
-class ActionList extends React.PureComponent {
-  render() {
-    const { actions, focusedId, ...rest } = this.props
-    const items = actions.map((a) => {
-      return (
-        <ActionListItem
-          screen="org"
-          key={a.id}
-          action={a}
-          {...rest}
-          focused={focusedId === a.id && a.id !== undefined}
-        />
-      )
-    })
-    return <div className={`${Styles.cardsContainer} wrapper`}>{items}</div>
-  }
-}
-
-ActionList.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  focusedId: PropTypes.number,
-}
-
 class OrganizationScreenView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       popup: {},
+      focused: null,
     }
   }
 
@@ -89,13 +68,25 @@ class OrganizationScreenView extends React.Component {
     this.setState({ popup: {} })
   }
 
-  handleClickListItem = (f) => {
+  handleClickListItem = (item) => {
+    this.props.history.push(`/acciones/${item.id}`)
   }
 
-  handleEnterListItem = (i) => {
+  handleEnterListItem = (item) => {
+    this.setState({ focused: item })
   }
 
-  handleLeaveListItem = (i) => {
+  handleScroll = (e, actions) => {
+    if (window.innerWidth >= 980) return
+    this.setState({ focused: itemFromScrollEvent(e, actions) })
+  }
+
+  handleClickActionFeature = (feature) => {
+    this.props.history.push(`/acciones/${JSON.parse(feature.properties.actionId)}`)
+  }
+
+  handleEnterActionFeature = (feature) => {
+    // this.setState({ focused: item })
   }
 
   renderAddress = (address) => {
@@ -178,6 +169,16 @@ class OrganizationScreenView extends React.Component {
       sector,
       year_established: established,
     } = data
+    const { focused } = this.state
+
+    const actionMap = (
+      <ActionMap
+        actions={actions}
+        selectedId={focused && focused.id}
+        onClickFeature={this.handleClickActionFeature}
+        onEnterFeature={this.handleEnterActionFeature}
+      />
+    )
 
     return (
       <div>
@@ -267,7 +268,21 @@ class OrganizationScreenView extends React.Component {
           </div>
         </div>
 
-        <ActionList actions={actions} />
+        <ActionList
+          screen="org"
+          containerStyle={Styles.cardsContainer}
+          actions={actions}
+          onScroll={this.handleScroll}
+          focusedId={focused && focused.id}
+          onClick={this.handleClickListItem}
+          onMouseEnter={this.handleEnterListItem}
+          onMouseLeave={this.handleLeaveListItem}
+        />
+        {actionMap &&
+          <div className={Styles.actionMapContainer}>
+            {actionMap}
+          </div>
+        }
       </div>
     )
   }

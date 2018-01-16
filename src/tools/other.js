@@ -3,6 +3,15 @@ import moment from 'moment'
 import Colors from 'src/colors'
 
 
+export const itemFromScrollEvent = (e, items) => {
+  const { scrollLeft, scrollWidth } = e.nativeEvent.srcElement
+  const width = scrollWidth / items.length
+  const index = Math.min(Math.max(
+    Math.floor(scrollLeft / width + 0.5), 0),
+  items.length - 1)
+  return items[index]
+}
+
 export const projectStatus = (startDate, endDate) => {
   const date = moment().format('YYYY-MM-DD')
   if (startDate && date < startDate) return 0

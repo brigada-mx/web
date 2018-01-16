@@ -38,18 +38,16 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
   const features = []
   const locations = []
 
-  outer:
   for (const a of selected.concat(notSelected)) {
     for (const s of a.submissions) {
-      if (features.length >= maxFeatures) break outer
-
       if (!s.location) continue
-      locations.push(s.location)
-      const { lat, lng } = s.location
+      locations.push(s.location) // fitBounds from all locations, but limit number of features
+      if (features.length >= maxFeatures) continue
 
+      const { lat, lng } = s.location
       features.push({
         type: 'Feature',
-        properties: { selected: a.id === selectedId, ...s },
+        properties: { actionId: a.id, selected: a.id === selectedId, s },
         geometry: {
           type: 'Point',
           coordinates: [lng, lat],

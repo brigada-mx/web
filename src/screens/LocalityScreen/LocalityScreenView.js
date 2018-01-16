@@ -1,19 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, LabelList } from 'recharts'
 
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
 import StackedMetricsBar from 'components/StackedMetricsBar'
-import ActionListItem from 'components/ActionListItem'
+import ActionList from 'components/ActionList'
+import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DirectionsButton from 'components/DirectionsButton'
 import EstablishmentPopup from 'components/FeatureMap/EstablishmentPopup'
-import ActionMap from 'components/FeatureMap/ActionMap'
 import EstablishmentLegend, { metaByScianGroup } from 'components/FeatureMap/EstablishmentLegend'
-import { dmgGrade, metaByDmgGrade, projectStatus } from 'tools/other'
+import { dmgGrade, metaByDmgGrade, projectStatus, itemFromScrollEvent } from 'tools/other'
 import { fmtNum, fmtBudget } from 'tools/string'
 import Colors from 'src/colors'
 import Styles from './LocalityScreenView.css'
@@ -140,6 +140,7 @@ class LocalityScreenView extends React.Component {
     super(props)
     this.state = {
       popup: null,
+      focused: null,
     }
   }
 
@@ -155,6 +156,27 @@ class LocalityScreenView extends React.Component {
     this._timer = setTimeout(() => {
       this.setState({ popup: null })
     }, 200)
+  }
+
+  handleClickListItem = (item) => {
+    this.props.history.push(`/acciones/${item.id}`)
+  }
+
+  handleEnterListItem = (item) => {
+    this.setState({ focused: item })
+  }
+
+  handleScroll = (e, actions) => {
+    if (window.innerWidth >= 980) return
+    this.setState({ focused: itemFromScrollEvent(e, actions) })
+  }
+
+  handleClickActionFeature = (feature) => {
+    this.props.history.push(`/acciones/${JSON.parse(feature.properties.actionId)}`)
+  }
+
+  handleEnterActionFeature = (feature) => {
+    // this.setState({ focused: item })
   }
 
   renderLocalitySection = () => {
@@ -299,65 +321,75 @@ class LocalityScreenView extends React.Component {
 
   renderActionsSection = () => {
     const { actions: { loading, data, error } } = this.props
-    if (loading) return <LoadingIndicatorCircle />
+    if (loading || !data) return <LoadingIndicatorCircle />
 
-    if (data) {
-      const { results: actions } = data
-      let budget = 0
-      const orgs = {}
-      const labels = ['Por iniciar', 'En progreso', 'Completados']
-      const status = [0, 0, 0]
+    const { results: actions } = data
+    const { focused } = this.state
 
-      for (const a of actions) {
-        status[projectStatus(a.start_date, a.end_date)] += 1
-        budget += (a.budget || 0)
-        orgs[a.organization_id] = true
-      }
+    let budget = 0
+    const orgs = {}
+    const labels = ['Por iniciar', 'En progreso', 'Completados']
+    const status = [0, 0, 0]
 
-      const actionList = actions.map((a) => {
-        return <ActionListItem key={a.id} action={a} screen="loc" />
-      })
-      const actionMap = <ActionMap actions={actions} />
-
-      return (
-        <div>
-          <div className={Styles.actionMetricsContainer}>
-            <div className="row">
-              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between gutter bottom-xs">
-                <div className={Styles.vizHeader}>
-                  <span className={Styles.vizLabel}>PROYECTOS DE<br />RECONSTRUCCIÓN</span>
-                  <span className={Styles.vizCount}>{actions.length}</span>
-                </div>
-                <div className={Styles.vizHeader}>
-                  <span className={Styles.vizLabel}>ORGANIZACIONES<br />COMPROMETIDAS</span>
-                  <span className={Styles.vizCount}>{Object.keys(orgs).length}</span>
-                </div>
-                <div className={Styles.vizHeader}>
-                  <span className={Styles.vizLabel}>INVERSIÓN<br />ESTIMADA</span>
-                  <span className={Styles.vizCount}>{fmtBudget(budget)}</span>
-                </div>
-              </div>
-            </div>
-            <div className={`${Styles.actionProgress} row`}>
-              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4">
-                <span className={Styles.vizLabel}>AVANCE</span>
-                <StackedMetricsBar labels={labels} values={status} />
-              </div>
-            </div>
-          </div>
-          <div className={Styles.actionCardsContainer}>
-            {actionList}
-          </div>
-          {actionMap &&
-            <div className={Styles.actionMapContainer}>
-              {actionMap}
-            </div>
-          }
-        </div>
-      )
+    for (const a of actions) {
+      status[projectStatus(a.start_date, a.end_date)] += 1
+      budget += (a.budget || 0)
+      orgs[a.organization_id] = true
     }
 
-    return <LoadingIndicatorCircle />
+    const actionMap = (
+      <ActionMap
+        actions={actions}
+        selectedId={focused && focused.id}
+        onClickFeature={this.handleClickActionFeature}
+        onEnterFeature={this.handleEnterActionFeature}
+      />
+    )
+
+    return (
+      <div>
+        <div className={Styles.actionMetricsContainer}>
+          <div className="row">
+            <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between gutter bottom-xs">
+              <div className={Styles.vizHeader}>
+                <span className={Styles.vizLabel}>PROYECTOS DE<br />RECONSTRUCCIÓN</span>
+                <span className={Styles.vizCount}>{actions.length}</span>
+              </div>
+              <div className={Styles.vizHeader}>
+                <span className={Styles.vizLabel}>ORGANIZACIONES<br />COMPROMETIDAS</span>
+                <span className={Styles.vizCount}>{Object.keys(orgs).length}</span>
+              </div>
+              <div className={Styles.vizHeader}>
+                <span className={Styles.vizLabel}>INVERSIÓN<br />ESTIMADA</span>
+                <span className={Styles.vizCount}>{fmtBudget(budget)}</span>
+              </div>
+            </div>
+          </div>
+          <div className={`${Styles.actionProgress} row`}>
+            <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4">
+              <span className={Styles.vizLabel}>AVANCE</span>
+              <StackedMetricsBar labels={labels} values={status} />
+            </div>
+          </div>
+        </div>
+
+        <ActionList
+          screen="loc"
+          containerStyle={Styles.actionCardsContainer}
+          actions={actions}
+          onScroll={this.handleScroll}
+          focusedId={focused && focused.id}
+          onClick={this.handleClickListItem}
+          onMouseEnter={this.handleEnterListItem}
+          onMouseLeave={this.handleLeaveListItem}
+        />
+        {actionMap &&
+          <div className={Styles.actionMapContainer}>
+            {actionMap}
+          </div>
+        }
+      </div>
+    )
   }
 
   render() {
@@ -375,6 +407,7 @@ LocalityScreenView.propTypes = {
   locality: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   establishments: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
-export default LocalityScreenView
+export default withRouter(LocalityScreenView)
