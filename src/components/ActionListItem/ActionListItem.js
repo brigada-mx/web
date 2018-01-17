@@ -50,17 +50,16 @@ class ActionListItem extends React.PureComponent {
 
     const organizationLink = () => {
       return (
-        <Link onClick={e => e.stopPropagation()} to={{ pathname: `/organizaciones/${orgId}` }}>
-          <span className={Styles.label}>{orgName}</span>
+        <Link className={Styles.link} onClick={e => e.stopPropagation()} to={{ pathname: `/organizaciones/${orgId}` }}>
+          {orgName}
         </Link>
       )
     }
 
     const localityLink = () => {
       return (
-        <Link onClick={e => e.stopPropagation()} to={{ pathname: `/comunidades/${locId}` }}>
-          <span className={Styles.label}>COMUNIDAD: </span>
-          <span className={Styles.dates}>{stateName}, {muniName}, {locName}</span>
+        <Link className={Styles.link} onClick={e => e.stopPropagation()} to={{ pathname: `/comunidades/${locId}` }}>
+          {stateName}, {muniName}, {locName}
         </Link>
       )
     }
@@ -95,8 +94,9 @@ class ActionListItem extends React.PureComponent {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className={Styles.header}>{`Construcción de ${actionType.toLowerCase()}`}</div>
         {screen === 'loc' && organizationLink()}
+        {screen === 'org' && localityLink()}
+        <div className={Styles.header}>{`Construcción de ${actionType.toLowerCase()}`}</div>
         <div className={Styles.summaryContainer}>
           {budget &&
             <div>
@@ -107,9 +107,12 @@ class ActionListItem extends React.PureComponent {
           {metrics()}
           {thumbnails()}
         </div>
-        {(desc && focused) && <div className={Styles.description}>{desc}</div>}
-        {screen === 'org' && localityLink()}
-        {dates()}
+        {(desc && focused) &&
+          <React.Fragment>
+            <div className={Styles.description}>{desc}</div>
+            {dates()}
+          </React.Fragment>
+        }
       </div>
     )
   }
