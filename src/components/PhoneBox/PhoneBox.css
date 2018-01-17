@@ -1,0 +1,39 @@
+.box {
+  display: inline-flex;
+  width: 80px;
+  height: 80px;
+  background-color: #3DC59F;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('assets/img/phone.svg');
+  margin-right: 6px;
+  position: relative;
+}
+
+.box:hover {
+  background-color: #13A68C;
+}
+
+.tooltip {
+  z-index: 2;
+  position: absolute;
+  top: -36px;
+  background-color: #EDF1F5;
+  text-align: center;
+  font-family: 'roboto-700', sans-serif;
+  font-size: 13px;
+  color: #141418;
+  letter-spacing: 0.52px;
+  line-height: 12px;
+}
+
+.tooltip:after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #EDF1F5 transparent transparent transparent;
+}

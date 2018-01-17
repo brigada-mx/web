@@ -6,9 +6,10 @@ import { NavLink, withRouter } from 'react-router-dom'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import ActionList from 'components/ActionList'
+import PhoneBox from 'components/PhoneBox'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import { addProtocol, phoneLink, emailLink, fmtBudget } from 'tools/string'
+import { addProtocol, emailLink, fmtBudget } from 'tools/string'
 import { fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
 import Styles from './OrganizationScreenView.css'
 
@@ -198,13 +199,7 @@ class OrganizationScreenView extends React.Component {
                     href={addProtocol(website)}
                   />
                 }
-                {phone &&
-                  <a
-                    target="_blank"
-                    className={`${Styles.button} ${Styles.phone}`}
-                    href={phoneLink(phone)}
-                  />
-                }
+                {phone && <PhoneBox phone={phone} />}
                 {email &&
                   <a
                     target="_blank"

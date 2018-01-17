@@ -9,7 +9,6 @@ import Styles from './Nav.css'
 
 
 const NavLinks = ({ classNameCustom }) => {
-  console.log(classNameCustom)
   const selected = { color: Colors.brandGreen }
 
   const locIsActive = (match, location) => {

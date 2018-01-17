@@ -187,10 +187,6 @@
 
 }
 
-@media screen and (max-width: 979px) and (min-width: 768px) {
-
-}
-
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .breadcrumbLinks {
     margin-bottom: 73px;
