@@ -3,7 +3,7 @@
 
 .filterShadow {
   position: relative;
-  z-index: 3;
+  z-index: 5;
   box-shadow: 15px 15px 30px 0px weakShadow;
 }
 
@@ -48,6 +48,9 @@
     padding: 0px;
     box-shadow: 0 0 100px 0 weakShadow;
   }
+  .filterShadow {
+    box-shadow: unset;
+  }
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
@@ -62,5 +65,8 @@
     height: 152px;
     padding: 0px;
     box-shadow: 0 0 100px 0 weakShadow;
+  }
+  .filterShadow {
+    box-shadow: unset;
   }
 }

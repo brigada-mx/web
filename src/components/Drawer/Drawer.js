@@ -23,12 +23,12 @@ class Drawer extends React.Component {
   render() {
     const { classNameIcon, classNameDrawer, classNameWrapper } = this.props
     const { visible } = this.state
-    const burger = <div onClick={this.show} className={`${Styles.hamburger} ${classNameIcon} ${classNameWrapper}`} />
+    const hamburger = <div onClick={this.show} className={`${Styles.hamburger} ${classNameIcon} ${classNameWrapper}`} />
 
-    if (!visible) return burger
+    if (!visible) return hamburger
     return (
       <React.Fragment>
-        {burger}
+        {hamburger}
         <div className={`${Styles.drawer} ${classNameDrawer} ${classNameWrapper}`}>
           <span onClick={this.hide} className={Styles.hide}>X</span>
           {this.props.children}

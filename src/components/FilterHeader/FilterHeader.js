@@ -199,7 +199,6 @@ const FilterHeader = (props) => {
 
         <Drawer classNameWrapper="lg-hidden md-hidden">
           <NavLinks classNameCustom={Styles.burgerNavLinks} />
-          {selects(Styles.burgerFilter)}
         </Drawer>
 
       </div>

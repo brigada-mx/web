@@ -8,7 +8,7 @@ import Styles from './OrganizationListItem.css'
 class OrganizationListItem extends React.PureComponent {
   render() {
     const { organization, onClick, focused, onMouseEnter, onMouseLeave } = this.props
-    const { name, actions, desc } = organization
+    const { name, actions } = organization
     let budget = 0
     const countByTags = {}
     for (const action of actions) {
@@ -43,7 +43,6 @@ class OrganizationListItem extends React.PureComponent {
           <div className={Styles.tagContainer}>
             {count.slice(0, 3).map((t, i) => <span key={i} className={Styles.tag}>{t.tag}</span>)}
           </div>
-          <span className={Styles.desc}>{desc}</span>
         </div>
         <div className={Styles.metricsContainer}>
           <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
