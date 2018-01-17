@@ -50,7 +50,7 @@ class ActionListItem extends React.PureComponent {
 
     const organizationLink = () => {
       return (
-        <Link to={{ pathname: `/organizaciones/${orgId}` }}>
+        <Link onClick={e => e.stopPropagation()} to={{ pathname: `/organizaciones/${orgId}` }}>
           <span className={Styles.label}>{orgName}</span>
         </Link>
       )
@@ -58,10 +58,26 @@ class ActionListItem extends React.PureComponent {
 
     const localityLink = () => {
       return (
-        <Link to={{ pathname: `/comunidades/${locId}` }}>
+        <Link onClick={e => e.stopPropagation()} to={{ pathname: `/comunidades/${locId}` }}>
           <span className={Styles.label}>COMUNIDAD: </span>
           <span className={Styles.dates}>{stateName}, {muniName}, {locName}</span>
         </Link>
+      )
+    }
+
+    const thumbnails = () => {
+      const thumbs = [].concat(...action.submissions.map(s => s.thumbnails_small))
+      const l = thumbs.length
+      if (l === 0) return <div className={Styles.emptyThumbnailContainer} />
+
+      const count = l > 1 ? <div className={Styles.thumbnailCount}>+{l - 1}</div> : null
+      return (
+        <div
+          className={Styles.thumbnailContainer}
+          style={{ backgroundImage: `url(${thumbs[0]})` }}
+        >
+          {count}
+        </div>
       )
     }
 
@@ -86,10 +102,12 @@ class ActionListItem extends React.PureComponent {
             <div>
               <span className={Styles.label}>PRESUPUESTO: </span>
               <span className={Styles.value}>${fmtNum(budget)}</span>
-            </div>}
+            </div>
+          }
           {metrics()}
+          {thumbnails()}
         </div>
-        {desc && <div className={Styles.description}>{desc}</div>}
+        {(desc && focused) && <div className={Styles.description}>{desc}</div>}
         {screen === 'org' && localityLink()}
         {dates()}
       </div>
@@ -108,6 +126,9 @@ ActionListItem.propTypes = {
 
 ActionListItem.defaultProps = {
   focused: false,
+  onClick: () => {},
+  onMouseEnter: () => {},
+  onMouseLeave: () => {},
 }
 
 export default ActionListItem

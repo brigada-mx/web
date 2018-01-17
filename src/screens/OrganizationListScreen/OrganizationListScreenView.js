@@ -12,7 +12,7 @@ import LocalityLegend from 'components/LocalityDamageMap/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
 import { localStorage } from 'tools/storage'
-import { fitBoundsFromCoords } from 'tools/other'
+import { fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
 import Styles from './OrganizationListScreenView.css'
 
 
@@ -146,11 +146,11 @@ class OrganizationListScreenView extends React.Component {
     this.setState({ popup: {} })
   }
 
-  handleListItemClick = (item) => {
+  handleClickListItem = (item) => {
     this.props.history.push(`/organizaciones/${item.id}`)
   }
 
-  handleListItemEnter = (item) => {
+  handleEnterListItem = (item) => {
     this.setState({ focused: item })
   }
 
@@ -216,12 +216,7 @@ class OrganizationListScreenView extends React.Component {
 
   handleScroll = (e, organizations) => {
     if (window.innerWidth >= 980) return
-    const { scrollLeft, scrollWidth } = e.nativeEvent.srcElement
-    const width = scrollWidth / organizations.length
-    const index = Math.min(Math.max(
-      Math.floor(scrollLeft / width + 0.5), 0),
-    organizations.length - 1)
-    this.setState({ focused: organizations[index] })
+    this.setState({ focused: itemFromScrollEvent(e, organizations) })
   }
 
   render() {
@@ -265,9 +260,9 @@ class OrganizationListScreenView extends React.Component {
                 organizations={organizations}
                 onScroll={this.handleScroll}
                 focusedId={_focused && _focused.id}
-                onClick={this.handleListItemClick}
-                onMouseEnter={this.handleListItemEnter}
-                onMouseLeave={this.handleListItemLeave}
+                onClick={this.handleClickListItem}
+                onMouseEnter={this.handleEnterListItem}
+                onMouseLeave={this.handleLeaveListItem}
               />
             }
           </div>

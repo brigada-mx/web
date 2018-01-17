@@ -1,17 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, LabelList } from 'recharts'
 
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
 import StackedMetricsBar from 'components/StackedMetricsBar'
-import ActionListItem from 'components/ActionListItem'
+import ActionList from 'components/ActionList'
+import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DirectionsButton from 'components/DirectionsButton'
 import EstablishmentPopup from 'components/FeatureMap/EstablishmentPopup'
-import { dmgGrade, metaByDmgGrade, projectStatus } from 'tools/other'
+import EstablishmentLegend, { metaByScianGroup } from 'components/FeatureMap/EstablishmentLegend'
+import { dmgGrade, metaByDmgGrade, projectStatus, itemFromScrollEvent } from 'tools/other'
 import { fmtNum, fmtBudget } from 'tools/string'
 import Colors from 'src/colors'
 import Styles from './LocalityScreenView.css'
@@ -81,7 +83,7 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
           }
         />
         <CartesianGrid vertical={false} stroke="#E4E7EB" horizontalPoints={[0, 26, 52, 78, 104]} />
-        <Bar dataKey="num" fill={Colors.blueGreen} isAnimationActive={false} >
+        <Bar dataKey="num" fill={Colors.brandGreen} isAnimationActive={false} >
           <LabelList
             dataKey="num"
             position="insideTop"
@@ -102,26 +104,79 @@ DmgBarChart.propTypes = {
   notHabit: PropTypes.number.isRequired,
 }
 
+const establishmentMapLayer = {
+  id: 'features',
+  // type: 'symbol',
+  type: 'circle',
+  source: 'features',
+  // layout: {
+  //   'icon-image': '{icon}',
+  //   'icon-allow-overlap': true,
+  // },
+  paint: {
+    'circle-color': {
+      property: 'group',
+      type: 'categorical',
+      stops: [
+        [1, '#2965CC'],
+        [2, '#29A634'],
+        [3, '#D99E0B'],
+        [4, '#D13913'],
+        [5, '#8F398F'],
+        [6, '#00B3A4'],
+        [7, '#DB2C6F'],
+        [8, '#9BBF30'],
+        [9, '#96622D'],
+        [10, '#7157D9'],
+      ],
+    },
+    'circle-opacity': 0.85,
+    'circle-radius': 4,
+  },
+}
+
 class LocalityScreenView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       popup: null,
+      focused: null,
     }
   }
 
-  handleClickFeature = (f) => {
+  handleClickFeature = (feature) => {
   }
 
-  handleEnterFeature = (f) => {
+  handleEnterFeature = (feature) => {
     clearTimeout(this._timer)
-    this.setState({ popup: f })
+    this.setState({ popup: JSON.parse(feature.properties.f) })
   }
 
-  handleLeaveFeature = (f) => {
+  handleLeaveFeature = (feature) => {
     this._timer = setTimeout(() => {
       this.setState({ popup: null })
     }, 200)
+  }
+
+  handleClickListItem = (item) => {
+    this.props.history.push(`/acciones/${item.id}`)
+  }
+
+  handleEnterListItem = (item) => {
+    this.setState({ focused: item })
+  }
+
+  handleScroll = (e, actions) => {
+    if (window.innerWidth >= 980) return
+    this.setState({ focused: itemFromScrollEvent(e, actions) })
+  }
+
+  handleClickActionFeature = (feature) => {
+    this.props.history.push(`/acciones/${JSON.parse(feature.properties.action).id}`)
+  }
+
+  handleEnterActionFeature = (feature) => {
+    this.setState({ focused: JSON.parse(feature.properties.action) })
   }
 
   renderLocalitySection = () => {
@@ -226,86 +281,114 @@ class LocalityScreenView extends React.Component {
   renderEstablishmentsSection = () => {
     const { establishments: { loading, data, error } } = this.props
     const { locality: { data: locData } } = this.props
-    if (loading || !locData) return <LoadingIndicatorCircle />
+    if (loading || !locData || !data) return <LoadingIndicatorCircle />
 
+    const features = data.results.map((f) => {
+      const { scian_group: group, location: { lat, lng } } = f
+      const meta = metaByScianGroup[group]
+      return {
+        type: 'Feature',
+        properties: {
+          group, icon: meta ? meta.icon : metaByScianGroup[1].icon, f,
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [lng, lat],
+        },
+      }
+    })
     const { popup } = this.state
-
     const { location: { lat, lng } } = locData
-    if (data) {
-      return (
-        <div className={`${Styles.map} row`}>
-          <div className={`${Styles.directions} lg-hidden md-hidden`}>
-            <DirectionsButton lat={lat} lng={lng} />
-          </div>
-          <FeatureMap
-            onClickFeature={this.handleClickFeature}
-            onEnterFeature={this.handleEnterFeature}
-            onLeaveFeature={this.handleLeaveFeature}
-            features={data.results}
-            coordinates={[lng, lat]}
-            popup={popup ? <EstablishmentPopup establishment={popup} /> : null}
-          />
+
+    return (
+      <div className={`${Styles.map} row`}>
+        <div className={`${Styles.directions} lg-hidden md-hidden`}>
+          <DirectionsButton lat={lat} lng={lng} />
         </div>
-      )
-    }
-    return <LoadingIndicatorCircle />
+        <FeatureMap
+          features={features}
+          layer={establishmentMapLayer}
+          coordinates={[lng, lat]}
+          onClickFeature={this.handleClickFeature}
+          onEnterFeature={this.handleEnterFeature}
+          onLeaveFeature={this.handleLeaveFeature}
+          popup={popup ? <EstablishmentPopup establishment={popup} /> : null}
+          legend={<EstablishmentLegend establishments={data.results} />}
+        />
+      </div>
+    )
   }
 
   renderActionsSection = () => {
     const { actions: { loading, data, error } } = this.props
-    if (loading) return <LoadingIndicatorCircle />
+    if (loading || !data) return <LoadingIndicatorCircle />
 
-    if (data) {
-      const { results: actions } = data
-      let budget = 0
-      const orgs = {}
-      const labels = ['Por iniciar', 'En progreso', 'Completados']
-      const status = [0, 0, 0]
+    const { results: actions } = data
+    const { focused } = this.state
 
-      for (const a of actions) {
-        status[projectStatus(a.start_date, a.end_date)] += 1
-        budget += (a.budget || 0)
-        orgs[a.organization_id] = true
-      }
+    let budget = 0
+    const orgs = {}
+    const labels = ['Por iniciar', 'En progreso', 'Completados']
+    const status = [0, 0, 0]
 
-      const actionList = actions.map((a) => {
-        return <ActionListItem key={a.id} action={a} screen="loc" />
-      })
-
-      return (
-        <div>
-          <div className={Styles.actionMetricsContainer}>
-            <div className="row">
-              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between gutter bottom-xs">
-                <div className={Styles.vizHeader}>
-                  <span className={Styles.vizLabel}>PROYECTOS DE<br />RECONSTRUCCIÓN</span>
-                  <span className={Styles.vizCount}>{actions.length}</span>
-                </div>
-                <div className={Styles.vizHeader}>
-                  <span className={Styles.vizLabel}>ORGANIZACIONES<br />COMPROMETIDAS</span>
-                  <span className={Styles.vizCount}>{Object.keys(orgs).length}</span>
-                </div>
-                <div className={Styles.vizHeader}>
-                  <span className={Styles.vizLabel}>INVERSIÓN<br />ESTIMADA</span>
-                  <span className={Styles.vizCount}>{fmtBudget(budget)}</span>
-                </div>
-              </div>
-            </div>
-            <div className={`${Styles.actionProgress} row`}>
-              <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4">
-                <span className={Styles.vizLabel}>AVANCE</span>
-                <StackedMetricsBar labels={labels} values={status} />
-              </div>
-            </div>
-          </div>
-          <div className={Styles.actionCardsContainer}>
-            {actionList}
-          </div>
-        </div>
-      )
+    for (const a of actions) {
+      status[projectStatus(a.start_date, a.end_date)] += 1
+      budget += (a.budget || 0)
+      orgs[a.organization_id] = true
     }
 
-    return <LoadingIndicatorCircle />
+    const actionMap = (
+      <ActionMap
+        actions={actions}
+        selectedId={focused && focused.id}
+        onClickFeature={this.handleClickActionFeature}
+        onEnterFeature={this.handleEnterActionFeature}
+      />
+    )
+
+    return (
+      <div>
+        <div className={Styles.actionMetricsContainer}>
+          <div className="row">
+            <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between gutter bottom-xs">
+              <div className={Styles.vizHeader}>
+                <span className={Styles.vizLabel}>PROYECTOS DE<br />RECONSTRUCCIÓN</span>
+                <span className={Styles.vizCount}>{actions.length}</span>
+              </div>
+              <div className={Styles.vizHeader}>
+                <span className={Styles.vizLabel}>ORGANIZACIONES<br />COMPROMETIDAS</span>
+                <span className={Styles.vizCount}>{Object.keys(orgs).length}</span>
+              </div>
+              <div className={Styles.vizHeader}>
+                <span className={Styles.vizLabel}>INVERSIÓN<br />ESTIMADA</span>
+                <span className={Styles.vizCount}>{fmtBudget(budget)}</span>
+              </div>
+            </div>
+          </div>
+          <div className={`${Styles.actionProgress} row`}>
+            <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4">
+              <span className={Styles.vizLabel}>AVANCE</span>
+              <StackedMetricsBar labels={labels} values={status} />
+            </div>
+          </div>
+        </div>
+
+        <ActionList
+          screen="loc"
+          containerStyle={Styles.actionCardsContainer}
+          actions={actions}
+          onScroll={this.handleScroll}
+          focusedId={focused && focused.id}
+          onClick={this.handleClickListItem}
+          onMouseEnter={this.handleEnterListItem}
+        />
+        {actionMap &&
+          <div className={Styles.actionMapContainer}>
+            {actionMap}
+          </div>
+        }
+      </div>
+    )
   }
 
   render() {
@@ -323,6 +406,7 @@ LocalityScreenView.propTypes = {
   locality: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   establishments: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
-export default LocalityScreenView
+export default withRouter(LocalityScreenView)

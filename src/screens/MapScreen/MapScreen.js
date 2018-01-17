@@ -12,7 +12,7 @@ import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import LocalityLegend from 'components/LocalityDamageMap/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
-import { dmgGrade, fitBoundsFromCoords } from 'tools/other'
+import { dmgGrade, fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
 import { localStorage } from 'tools/storage'
 import env from 'src/env'
 import Styles from './MapScreen.css'
@@ -34,7 +34,7 @@ const maxLocalityListItems = 250
 
 class LocalityList extends React.PureComponent {
   handleScroll = (e) => {
-    this.props.onScroll(e, this.props.localities)
+    this.props.onScroll(e, this.props.localities.slice(0, maxLocalityListItems))
   }
 
   render() {
@@ -176,15 +176,15 @@ class MapScreen extends React.Component {
     this.setState({ popup: null })
   }
 
-  handleListItemClick = (item) => {
+  handleClickListItem = (item) => {
     this.props.history.push(`/comunidades/${item.id}`)
   }
 
-  handleListItemEnter = (item) => {
+  handleEnterListItem = (item) => {
     this.setState({ popup: item })
   }
 
-  handleListItemLeave = () => {
+  handleLeaveListItem = () => {
     this.setState({ popup: null })
   }
 
@@ -226,12 +226,7 @@ class MapScreen extends React.Component {
 
   handleScroll = (e, localities) => {
     if (window.innerWidth >= 980) return
-    const { scrollLeft, scrollWidth } = e.nativeEvent.srcElement
-    const width = scrollWidth / Math.min(maxLocalityListItems, localities.length)
-    const index = Math.min(Math.max(
-      Math.floor(scrollLeft / width + 0.5), 0),
-    localities.length - 1)
-    this.setState({ popup: localities[index] })
+    this.setState({ popup: itemFromScrollEvent(e, localities) })
   }
 
   render() {
@@ -266,9 +261,9 @@ class MapScreen extends React.Component {
               <LocalityList
                 localities={filtered}
                 onScroll={this.handleScroll}
-                onClick={this.handleListItemClick}
-                onMouseEnter={this.handleListItemEnter}
-                onMouseLeave={this.handleListItemLeave}
+                onClick={this.handleClickListItem}
+                onMouseEnter={this.handleEnterListItem}
+                onMouseLeave={this.handleLeaveListItem}
                 focusedId={popup ? popup.id : null}
               />
             }

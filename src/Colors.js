@@ -9,7 +9,6 @@ export default {
   grey2: '#CACCD5',
   grey1: '#CAD1D8',
   brandGreen: '#3DC587',
-  blueGreen: '#3DC59F',
   shadow: 'rgba(37, 38, 50, 0.05)',
   severe: '#ff0000',
   high: '#dd6600',
