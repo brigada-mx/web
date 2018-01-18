@@ -173,17 +173,19 @@
   line-height: 62px;
 }
 
-.cardsContainer {
-  background-color: #F6F8FA;
+.actionsContainer {
   margin-top: 55px;
-  padding-top: 21px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  background-color: #F6F8FA;
 }
 
-.actionMapContainer {
+.cardsContainer {
+  background-color: #F6F8FA;
+  padding: 21px 0px 5px 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mapContainer {
 
 }
 

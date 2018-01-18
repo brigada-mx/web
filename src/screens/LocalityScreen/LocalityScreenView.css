@@ -164,17 +164,17 @@
   margin-top: 27px;
 }
 
-.actionContainer {
+.actionsContainer {
   background-color: #F6F8FA;
 }
 
-.actionCardsContainer {
+.cardsContainer {
   padding: 21px 0px 5px 25px;
   display: flex;
   flex-direction: column;
 }
 
-.actionMapContainer {
+.mapContainer {
 
 }
 
