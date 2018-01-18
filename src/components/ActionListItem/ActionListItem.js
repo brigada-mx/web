@@ -2,7 +2,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { projectStatus, labelByProjectStatus } from 'tools/other'
 import { Link } from 'react-router-dom'
 
 import { fmtNum } from 'tools/string'
@@ -41,9 +40,6 @@ class ActionListItem extends React.PureComponent {
         <div>
           <span className={Styles.label}>FECHAS: </span>
           <span className={Styles.dates}>{startDate.replace(/-/g, '.')} - {endDate.replace(/-/g, '.')} </span>
-          <span className={Styles.label}>
-            ({labelByProjectStatus(projectStatus(startDate, endDate))})
-          </span>
         </div>
       )
     }
@@ -67,12 +63,18 @@ class ActionListItem extends React.PureComponent {
     const thumbnails = () => {
       const thumbs = [].concat(...action.submissions.map(s => s.thumbnails_small))
       const l = thumbs.length
-      if (l === 0) return <div className={Styles.emptyThumbnailContainer} />
+      if (l === 0) return <div className={Styles.emptyThumbnail} />
 
-      const count = l > 1 ? <div className={Styles.thumbnailCount}>+{l - 1}</div> : null
+      const count = l > 1 ? (
+        <div
+          className={Styles.thumbnailCount}
+          style={{ backgroundImage: `url(${thumbs[1]})` }}
+        >
+          +{l - 1}
+        </div>) : null
       return (
         <div
-          className={Styles.thumbnailContainer}
+          className={Styles.thumbnail}
           style={{ backgroundImage: `url(${thumbs[0]})` }}
         >
           {count}
@@ -94,18 +96,22 @@ class ActionListItem extends React.PureComponent {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {screen === 'loc' && organizationLink()}
-        {screen === 'org' && localityLink()}
-        <div className={Styles.header}>{`Construcción de ${actionType.toLowerCase()}`}</div>
         <div className={Styles.summaryContainer}>
-          {budget &&
-            <div>
-              <span className={Styles.label}>PRESUPUESTO: </span>
-              <span className={Styles.value}>${fmtNum(budget)}</span>
+          <div className={Styles.textContainer}>
+            {screen === 'loc' && organizationLink()}
+            {screen === 'org' && localityLink()}
+            <div className={Styles.header}>{`Construcción de ${actionType.toLowerCase()}`}</div>
+            <div className={Styles.fieldsContainer}>
+              <div className={Styles.budgetContainer}>
+                <span className={Styles.label}>PRESUPUESTO: </span>
+                <span className={Styles.value}>{budget ? `$${fmtNum(budget)}` : 'No disponible'}</span>
+              </div>
+              {metrics()}
             </div>
-          }
-          {metrics()}
-          {thumbnails()}
+          </div>
+          <div className={Styles.thumbnailContainer}>
+            {thumbnails()}
+          </div>
         </div>
         {(desc && focused) &&
           <React.Fragment>

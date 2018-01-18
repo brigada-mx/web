@@ -114,7 +114,7 @@
   width: 250px;
   height: 250px;
   background-color: #EFEFEF;
-  border-color: 1px solid #EFEFEF;
+  border: 1px solid #EFEFEF;
   box-sizing: border-box;
   margin-top: 18px;
 }
@@ -141,7 +141,7 @@
   color: #141418;
   line-height: 32px;
   display: flex;
-  margin-top: -68px;
+  margin: -46px 0 39px 0;
 }
 
 .metricsContainer {
@@ -173,17 +173,19 @@
   line-height: 62px;
 }
 
-.cardsContainer {
-  background-color: #F6F8FA;
+.actionsContainer {
   margin-top: 55px;
-  padding-top: 21px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  background-color: #F6F8FA;
 }
 
-.actionMapContainer {
+.cardsContainer {
+  background-color: #F6F8FA;
+  padding: 21px 0px 5px 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mapContainer {
 
 }
 

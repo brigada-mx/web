@@ -373,20 +373,26 @@ class LocalityScreenView extends React.Component {
           </div>
         </div>
 
-        <ActionList
-          screen="loc"
-          containerStyle={Styles.actionCardsContainer}
-          actions={actions}
-          onScroll={this.handleScroll}
-          focusedId={focused && focused.id}
-          onClick={this.handleClickListItem}
-          onMouseEnter={this.handleEnterListItem}
-        />
-        {actionMap &&
-          <div className={Styles.actionMapContainer}>
-            {actionMap}
+        <div className={`${Styles.actionsContainer} row`}>
+          <div className="col-lg-7 col-md-12 col-sm-4 col-xs-4">
+            <ActionList
+              screen="loc"
+              containerStyle={Styles.cardsContainer}
+              actions={actions}
+              onScroll={this.handleScroll}
+              focusedId={focused && focused.id}
+              onClick={this.handleClickListItem}
+              onMouseEnter={this.handleEnterListItem}
+            />
           </div>
-        }
+          <div className="col-lg-5 md-hidden sm-hidden xs-hidden">
+            {actionMap &&
+              <div className={Styles.mapContainer}>
+                {actionMap}
+              </div>
+            }
+          </div>
+        </div>
       </div>
     )
   }

@@ -1,5 +1,5 @@
 @value colors: "src/colors.css";
-@value brandOffWhite, brandGreen, grey6, grey2 from colors;
+@value brandOffWhite, brandGreen, grey6, grey2, strongShadow from colors;
 
 
 .listItem {
@@ -7,6 +7,10 @@
   background-color: white;
   margin-bottom: 16px;
   padding: 27px;
+}
+
+.listItemFocused {
+  box-shadow: 0 40px 100px 0 strongShadow;
 }
 
 .header {
@@ -27,6 +31,25 @@
 }
 
 .summaryContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  width: 68%;
+}
+
+.thumbnailContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 32%;
+}
+
+.fieldsContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -52,14 +75,18 @@
   width: 52%;
 }
 
-.goalProgressContainer {
+.goalfieldsContainer {
   width: 100%;
+}
+
+.budgetContainer {
+  width: 40%;
 }
 
 .goalProgress {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 60%;
 }
 
 .goalProgress .label {
@@ -80,7 +107,7 @@
   color: #141418;
   letter-spacing: 0.6px;
   line-height: 30px;
-  margin: 32px 0 23px 0;
+  margin: 18px 0 23px 0;
 }
 
 .dates {
@@ -91,40 +118,54 @@
   line-height: 16px;
 }
 
-.emptyThumbnailContainer {
+.emptyThumbnail {
   width: 120px;
   height: 120px;
-  background-color: grey2;
+  background: no-repeat url("assets/img/empty-thumbnail.png");
+  background-size: 120px 120px;
 }
 
-.thumbnailContainer {
+.thumbnail {
   width: 120px;
   height: 120px;
+  box-sizing: border-box;
+  border: 1px solid #EFEFEF;
   position: relative;
+  background-size: cover;
 }
 
 .thumbnailCount {
+  font-family: 'roboto-500', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.22px;
+  line-height: 18px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: white;
+  display: flex;
   position: absolute;
-  width: 60px;
-  height: 60px;
-  border: 2px solid white;
+  background-size: cover;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  width: 63px;
+  height: 63px;
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+  padding: 2px 4px 0 0;
   bottom: 0;
   right: 0;
-  font-size: 15px;
-  color: white;
-  background-color: transparent;
+  background-color: rgba(0,0,0,.3);
 }
 
 @media screen and (min-width: 1440px) {
-  .listItem {
-    width: 49.5%;
+  .header {
+    margin: 2px 0 14px 0;
   }
 }
 
 @media screen and (max-width: 1439px) and (min-width: 980px) {
-  .listItem {
-    width: 49.5%;
-  }
+
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
