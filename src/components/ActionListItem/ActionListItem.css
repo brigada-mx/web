@@ -135,6 +135,18 @@
 }
 
 .thumbnailCount {
+  position: absolute;
+  background-size: cover;
+  box-sizing: border-box;
+  width: 63px;
+  height: 63px;
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+  bottom: 0;
+  right: 0;
+}
+
+.thumbnailCountOverlay {
   font-family: 'roboto-500', sans-serif;
   font-size: 18px;
   letter-spacing: 0.22px;
@@ -143,19 +155,16 @@
   -moz-osx-font-smoothing: grayscale;
   color: white;
   display: flex;
-  position: absolute;
-  background-size: cover;
-  box-sizing: border-box;
   justify-content: center;
   align-items: center;
-  width: 63px;
-  height: 63px;
-  border-top: 3px solid white;
-  border-left: 3px solid white;
+  width: 100%;
+  height: 100%;
   padding: 2px 4px 0 0;
+  box-sizing: border-box;
+  position: absolute;
   bottom: 0;
-  right: 0;
-  background-color: rgba(0,0,0,.3);
+  left: 0;
+  background-color: rgba(0,0,0,.25);
 }
 
 @media screen and (min-width: 1440px) {

@@ -70,7 +70,7 @@ class ActionListItem extends React.PureComponent {
           className={Styles.thumbnailCount}
           style={{ backgroundImage: `url(${thumbs[1]})` }}
         >
-          +{l - 1}
+          <span className={Styles.thumbnailCountOverlay}>+{l - 1}</span>
         </div>) : null
       return (
         <div
