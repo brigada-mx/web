@@ -33,11 +33,11 @@
 
 .numResults {
   font-family: 'roboto-500', sans-serif;
-  font-size: 15px;
+  font-size: 13px;
   letter-spacing: .52px;
   line-height: 12px;
   margin-right: 29px;
-  color: grey4;
+  color: #B8B8B9;
 }
 
 .searchWrapper {

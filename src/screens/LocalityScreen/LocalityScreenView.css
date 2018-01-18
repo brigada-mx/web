@@ -164,13 +164,14 @@
   margin-top: 27px;
 }
 
-.actionCardsContainer {
+.actionContainer {
   background-color: #F6F8FA;
-  padding: 21px 25px 5px 25px;
+}
+
+.actionCardsContainer {
+  padding: 21px 0px 5px 25px;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 .actionMapContainer {
@@ -278,12 +279,7 @@
     margin-right: 0px;
   }
   .actionCardsContainer {
-    background-color: #F6F8FA;
-    padding: 21px 20px 5px 20px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: unset;
-    justify-content: unset;
+    padding: 21px 5px 20px;
   }
   .margColumn {
     width: 100%;

@@ -21,7 +21,7 @@ class ActionList extends React.PureComponent {
         />
       )
     })
-    return <div className={`${containerStyle} wrapper`}>{items}</div>
+    return <div className={containerStyle}>{items}</div>
   }
 }
 
