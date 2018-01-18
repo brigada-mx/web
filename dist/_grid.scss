@@ -45,6 +45,11 @@ $screen-lg-min: 75em;
   @include flexbox;
 }
 
+.end {
+  @include justify-content(flex-end);
+  text-align: end;
+}
+
 @import 'grid/xs';
 @import 'grid/sm';
 @import 'grid/md';
