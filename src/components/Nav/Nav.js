@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
 
+import Drawer from 'components/Drawer'
 import LogoImg from 'assets/img/logo.png'
 import Colors from 'src/Colors'
 import Styles from './Nav.css'
@@ -37,19 +38,24 @@ NavLinks.propTypes = {
 
 const Nav = () => {
   return (
-    <nav className={`${Styles.container} wrapper row middle sm-hidden xs-hidden`}>
+    <React.Fragment>
+      <nav className={`${Styles.container} wrapper row middle sm-hidden xs-hidden`}>
 
-      <div className="col-lg-1 col-md-1">
-        <a href="/"><img src={LogoImg} width="74px" height="auto" alt="Logo" /></a>
-      </div>
-
-      <div className="col-lg-11 col-md-11 end-lg end-md">
-        <div className={Styles.links}>
-          <NavLinks />
+        <div className="col-lg-1 col-md-1">
+          <a href="/"><img src={LogoImg} width="74px" height="auto" alt="Logo" /></a>
         </div>
-      </div>
 
-    </nav>
+        <div className="col-lg-11 col-md-11 end-lg end-md">
+          <div className={Styles.links}>
+            <NavLinks />
+          </div>
+        </div>
+
+      </nav>
+      <Drawer classNameWrapper="lg-hidden md-hidden">
+        <NavLinks classNameCustom={Styles.burgerNavLinks} />
+      </Drawer>
+    </React.Fragment>
   )
 }
 

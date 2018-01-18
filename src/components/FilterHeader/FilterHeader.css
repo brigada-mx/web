@@ -1,29 +1,16 @@
 @value colors: "src/colors.css";
 @value brandOffWhite, grey7, grey4, weakShadow from colors;
 
-.burgerNavLinks {
-  display: block;
-}
-
-.burgerFilter {
-  display: block;
-}
-
 .container {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   background-color: white;
   position: relative;
-  z-index: 3;
-}
-
-.filterContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  max-width: 60%;
+  max-width: 60vw;
   padding: 14px 0 15px 0;
+  z-index: 3;
 }
 
 .filter {
@@ -31,51 +18,10 @@
   margin-right: 32px;
 }
 
-.numResults {
-  font-family: 'roboto-500', sans-serif;
-  font-size: 15px;
-  letter-spacing: .52px;
-  line-height: 12px;
-  margin-right: 29px;
-  color: grey4;
-}
-
-.searchWrapper {
-  background: url('assets/img/search.svg') #F5F7F9 no-repeat left center;
-  background-position: 9px 9px;
-  display: inline-flex;
-}
-
-.search {
-  background-color: transparent;
-  border: none;
-  padding: 9px 13px 8px 31px;
-  font-family: 'roboto-500', sans-serif;
-  font-size: 13px;
-  letter-spacing: .52px;
-  line-height: 12px;
-  color: #CDCFD1;
-}
-
-.search::placeholder {
-  font-family: 'roboto-500', sans-serif;
-  font-size: 13px;
-  letter-spacing: .52px;
-  line-height: 12px;
-  color: #CDCFD1;
-}
-
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .container {
     box-shadow: unset;
     height: 65px;
-  }
-  .search {
-    padding: 9px 0px 8px 31px;
-    width: 102px;
-  }
-  .numResults {
-    margin-right: 21px;
   }
 }
 
@@ -83,11 +29,5 @@
   .container {
     height: 73px;
     box-shadow: unset;
-  }
-  .search {
-    width: 90px;
-  }
-  .numResults {
-    display: none;
   }
 }
