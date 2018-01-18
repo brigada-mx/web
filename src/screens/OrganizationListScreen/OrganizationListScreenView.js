@@ -155,6 +155,11 @@ class OrganizationListScreenView extends React.Component {
     this.setState({ focused: item })
   }
 
+  handleScroll = (e, organizations) => {
+    if (window.innerWidth >= 980) return
+    this.setState({ focused: itemFromScrollEvent(e, organizations) })
+  }
+
   filterOrganizations = (results) => {
     const { organizationSearch, valState, valMuni, valSector, valActionType } = this.state
 
@@ -215,11 +220,6 @@ class OrganizationListScreenView extends React.Component {
     return { localities, features }
   }
 
-  handleScroll = (e, organizations) => {
-    if (window.innerWidth >= 980) return
-    this.setState({ focused: itemFromScrollEvent(e, organizations) })
-  }
-
   render() {
     const {
       localities: { data: locData, loading: locLoading, error: locError },
@@ -267,7 +267,7 @@ class OrganizationListScreenView extends React.Component {
 
         <div className={`${Styles.container} row`}>
           <div className="col-lg-6 col-md-6 col-sm-8 col-xs-4 gutter last-sm last-xs">
-            {orgLoading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
+            {orgLoading && <LoadingIndicatorCircle className={Styles.loader} />}
             {!orgLoading &&
               <OrganizationList
                 organizations={organizations}

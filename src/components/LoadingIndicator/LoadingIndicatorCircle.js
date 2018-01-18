@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import Styles from './LoadingIndicatorCircle.css'
 
 
-const LoadingIndicatorCircle = ({ classNameCustom = '' }) => {
+const LoadingIndicatorCircle = ({ className = '' }) => {
   return (
-    <div className={`${Styles.spinner} ${classNameCustom}`}>
+    <div className={`${Styles.spinner} ${className}`}>
       <div className={Styles.doubleBounce1} />
       <div className={Styles.doubleBounce2} />
     </div>
@@ -14,7 +14,7 @@ const LoadingIndicatorCircle = ({ classNameCustom = '' }) => {
 }
 
 LoadingIndicatorCircle.propTypes = {
-  classNameCustom: PropTypes.string,
+  className: PropTypes.string,
 }
 
 export default LoadingIndicatorCircle

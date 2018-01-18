@@ -1,6 +1,24 @@
 @value colors: "src/colors.css";
 @value weakShadow, strongShadow from colors;
 
+@media screen and (max-width: 979px) {
+  .legend {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    top: 0;
+    width: 100%;
+    right: unset;
+    bottom: unset;
+    border-top: 1px solid brandOffWhite;
+    box-shadow: 0 15px 30px 0 weakShadow;
+    overflow-x: scroll;
+    z-index: 4;
+  }
+}
+
 .search {
   position: absolute;
   top: 17px;
@@ -17,16 +35,16 @@
 }
 
 .mapContainer:before {
-    content: '';
-    position: absolute;
-    top:0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: block;
-    z-index: 2;
-    pointer-events: none;
-    box-shadow: inset 15px 15px 30px 0px weakShadow;
+  content: '';
+  position: absolute;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: inset 15px 15px 30px 0px weakShadow;
 }
 
 .listContainer {
