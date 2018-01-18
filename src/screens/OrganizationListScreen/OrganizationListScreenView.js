@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
 import FilterHeader from 'components/FilterHeader'
+import SearchInput from 'components/SearchInput'
 import OrganizationListItem from 'components/OrganizationListItem'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
@@ -235,23 +236,35 @@ class OrganizationListScreenView extends React.Component {
     if (_focused) ({ localities, features } = this.getLocalityFeatures(_focused))
 
     return (
-      <div>
+      <React.Fragment>
         <div className={Styles.filterShadow}>
-          <FilterHeader
-            localities={locData ? locData.results : []}
-            actions={orgData ? [].concat(...orgData.results.map(o => o.actions)) : []}
+          <div className="row middle between wrapper sm-hidden xs-hidden">
+            <FilterHeader
+              localities={locData ? locData.results : []}
+              actions={orgData ? [].concat(...orgData.results.map(o => o.actions)) : []}
+              onStateChange={this.handleStateChange}
+              onMuniChange={this.handleMuniChange}
+              onSectorChange={this.handleSectorChange}
+              onActionTypeChange={this.handleActionTypeChange}
+              valState={valState}
+              valMuni={valMuni}
+              valSector={valSector}
+              valActionType={valActionType}
+            />
+            <SearchInput
+              numResults={organizations.length}
+              onKeyUp={this.handleOrganizationSearchKeyUp}
+            />
+          </div>
+        </div>
+
+        <div className={`${Styles.search} md-hidden lg-hidden`}>
+          <SearchInput
             numResults={organizations.length}
-            onStateChange={this.handleStateChange}
-            onMuniChange={this.handleMuniChange}
-            onSectorChange={this.handleSectorChange}
-            onActionTypeChange={this.handleActionTypeChange}
-            onKeyUp={this.handleOrganizationSearchKeyUp}
-            valState={valState}
-            valMuni={valMuni}
-            valSector={valSector}
-            valActionType={valActionType}
+            onKeyUp={this.handleLocalitySearchKeyUp}
           />
         </div>
+
         <div className={`${Styles.container} row`}>
           <div className="col-lg-6 col-md-6 col-sm-8 col-xs-4 gutter last-sm last-xs">
             {orgLoading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
@@ -284,7 +297,7 @@ class OrganizationListScreenView extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }

@@ -6,7 +6,7 @@ import Styles from './SearchInput.css'
 
 const SearchInput = ({ onKeyUp, numResults }) => {
   return (
-    <div className="wrapper">
+    <div>
       <span className={Styles.numResults}>{numResults.toLocaleString()} resultados</span>
       <div className={Styles.searchWrapper}>
         <input

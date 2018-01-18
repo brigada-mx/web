@@ -241,19 +241,25 @@ class MapScreen extends React.Component {
 
     const { valState, valMuni, valMarg, valNumActions } = this.state
     return (
-      <div>
-        <FilterHeader
-          localities={data.results || []}
-          onStateChange={this.handleStateChange}
-          onMuniChange={this.handleMuniChange}
-          onMargChange={this.handleMargChange}
-          onNumActionsChange={this.handleNumActionsChange}
-          valState={valState}
-          valMuni={valMuni}
-          valMarg={valMarg}
-          valNumActions={valNumActions}
-        />
-        <SearchInput numResults={filtered.length} onKeyUp={this.handleLocalitySearchKeyUp} />
+      <React.Fragment>
+        <div className="row middle between wrapper sm-hidden xs-hidden">
+          <FilterHeader
+            localities={data.results || []}
+            onStateChange={this.handleStateChange}
+            onMuniChange={this.handleMuniChange}
+            onMargChange={this.handleMargChange}
+            onNumActionsChange={this.handleNumActionsChange}
+            valState={valState}
+            valMuni={valMuni}
+            valMarg={valMarg}
+            valNumActions={valNumActions}
+          />
+          <SearchInput numResults={filtered.length} onKeyUp={this.handleLocalitySearchKeyUp} />
+        </div>
+
+        <div className={`${Styles.search} md-hidden lg-hidden`}>
+          <SearchInput numResults={filtered.length} onKeyUp={this.handleLocalitySearchKeyUp} />
+        </div>
 
         <div className={`${Styles.container} row`}>
           <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 gutter last-sm last-xs">
@@ -285,7 +291,7 @@ class MapScreen extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }

@@ -1,6 +1,12 @@
 @value colors: "src/colors.css";
 @value weakShadow, strongShadow from colors;
 
+.search {
+  position: absolute;
+  top: 17px;
+  right: 12.5%;
+}
+
 .container {
   height: calc(100vh - 130px);
   position: relative;
