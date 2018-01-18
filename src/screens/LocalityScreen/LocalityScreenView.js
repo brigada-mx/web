@@ -374,7 +374,7 @@ class LocalityScreenView extends React.Component {
         </div>
 
         <div className={`${Styles.actionsContainer} row`}>
-          <div className="col-lg-7 col-md-12 col-sm-4 col-xs-4">
+          <div className="col-lg-7 col-md-7 col-sm-4 col-xs-4">
             <ActionList
               screen="loc"
               containerStyle={Styles.cardsContainer}
@@ -385,7 +385,7 @@ class LocalityScreenView extends React.Component {
               onMouseEnter={this.handleEnterListItem}
             />
           </div>
-          <div className="col-lg-5 md-hidden sm-hidden xs-hidden">
+          <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
             {actionMap &&
               <div className={Styles.mapContainer}>
                 {actionMap}
