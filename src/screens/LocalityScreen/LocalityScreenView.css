@@ -165,6 +165,8 @@
 }
 
 .actionsContainer {
+  height: 847px;
+  overflow-y: scroll;
   background-color: #F6F8FA;
 }
 
