@@ -58,24 +58,26 @@
   color: #141418;
 }
 
-@media screen and (max-width: 979px) {
+@media screen and (max-width: 979px) and (min-width: 768px) {
   .container {
-    display: flex;
-    flex-direction: column;
+    height: 55px;
     position: unset;
+    flex-direction: row;
+    position: relative;
+    box-shadow: unset;
+    width: unset;
+    background: unset;
     right: unset;
     bottom: unset;
   }
-}
-
-@media screen and (max-width: 979px) and (min-width: 768px) {
   .title {
     display: inline-flex;
     margin: 0;
-    line-height: 25px;
+    line-height: 30px;
   }
   .legendItem {
     display: inline-flex;
+    margin: 0 0 2px 0;
   }
   .circle {
     margin: 0 6px 2px 15px;
@@ -86,20 +88,35 @@
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
+  .container {
+    height: 55px;
+    width: 80%;
+    position: unset;
+    flex-direction: row;
+    position: relative;
+    box-shadow: unset;
+    width: unset;
+    background: unset;
+    right: unset;
+    bottom: unset;
+    padding: unset;
+  }
   .title {
-    line-height: 23px;
-    margin: 0 16px 0 0;
-    white-space: nowrap;
+    display: none;
   }
   .legendItem {
     display: inline-flex;
+    margin: 0 0 2px 0;
   }
   .circle {
     margin: 0 6px 2px 0px;
   }
   .label {
     margin-right: 12px;
+    max-width: 20%;
+    overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
   .count {
     display: none;

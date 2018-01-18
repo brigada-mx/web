@@ -1,28 +1,21 @@
 @value colors: "src/colors.css";
 @value weakShadow, strongShadow from colors;
 
-@media screen and (max-width: 979px) {
-  .legend {
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    top: 0;
-    width: 100%;
-    right: unset;
-    bottom: unset;
-    border-top: 1px solid brandOffWhite;
-    box-shadow: 0 15px 30px 0 weakShadow;
-    overflow-x: scroll;
-    z-index: 4;
-  }
-}
-
 .search {
   position: absolute;
   top: 17px;
   right: 12.5%;
+}
+
+.filterLink {
+  font-family: 'nunito-sans-800', sans-serif;
+  font-size: 11px;
+  color: #3DC587;
+  letter-spacing: 0.8px;
+  line-height: 16px;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .container {

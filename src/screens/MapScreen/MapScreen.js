@@ -266,8 +266,8 @@ class MapScreen extends React.Component {
           <SearchInput numResults={filtered.length} onKeyUp={this.handleLocalitySearchKeyUp} />
         </div>
 
-        <div className={`${Styles.legend} row middle between wrapper md-hidden lg-hidden`}>
-          <span onClick={this.handleToggleFilters} className="md-hidden lg-hidden">FILTROS</span>
+        <div className="row baseline between wrapper lg-hidden md-hidden">
+          <a className={Styles.filterLink} onClick={this.handleToggleFilters} href="#">FILTROS</a>
           <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />
         </div>
 
@@ -297,7 +297,7 @@ class MapScreen extends React.Component {
                 onLeaveFeature={this.handleLeaveFeature}
                 fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
               />
-              {window.innerWidth >= 980 && <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />}
+              <LocalityLegend className="sm-hidden xs-hidden" localities={filtered} legendTitle="Nivel de daño" />
             </div>
           </div>
         </div>

@@ -45,6 +45,11 @@ $screen-lg-min: 75em;
   @include flexbox;
 }
 
+.baseline {
+  @include align-items(baseline);
+  @include flexbox;
+}
+
 .end {
   @include justify-content(flex-end);
   text-align: end;
