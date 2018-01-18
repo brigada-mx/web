@@ -1,6 +1,12 @@
 @value colors: "src/colors.css";
 @value weakShadow, strongShadow from colors;
 
+.search {
+  position: absolute;
+  top: 17px;
+  right: 12.5%;
+}
+
 .filterShadow {
   position: relative;
   z-index: 5;

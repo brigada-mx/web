@@ -168,7 +168,7 @@ const FilterHeader = (props) => {
   }
 
   return (
-    <div className={`${Styles.container} wrapper`}>
+    <div className={Styles.container}>
       {selects(Styles.filter)}
     </div>
   )

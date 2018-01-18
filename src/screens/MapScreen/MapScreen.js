@@ -86,6 +86,7 @@ class MapScreen extends React.Component {
       valMuni,
       valMarg: [],
       valNumActions: [],
+      filtersVisible: false,
     }
     this.handleLocalitySearchKeyUp = _.debounce(
       this.handleLocalitySearchKeyUp, 150
@@ -189,6 +190,15 @@ class MapScreen extends React.Component {
     this.setState({ popup: null })
   }
 
+  handleScroll = (e, localities) => {
+    if (window.innerWidth >= 980) return
+    this.setState({ popup: itemFromScrollEvent(e, localities) })
+  }
+
+  handleToggleFilters = () => {
+    this.setState({ filtersVisible: !this.state.filtersVisible })
+  }
+
   filterLocalities = (results) => {
     const { locSearch, valState, valMuni, valMarg, valNumActions } = this.state
 
@@ -225,11 +235,6 @@ class MapScreen extends React.Component {
     })
   }
 
-  handleScroll = (e, localities) => {
-    if (window.innerWidth >= 980) return
-    this.setState({ popup: itemFromScrollEvent(e, localities) })
-  }
-
   render() {
     const {
       popup,
@@ -241,23 +246,34 @@ class MapScreen extends React.Component {
 
     const { valState, valMuni, valMarg, valNumActions } = this.state
     return (
-      <div>
-        <FilterHeader
-          localities={data.results || []}
-          onStateChange={this.handleStateChange}
-          onMuniChange={this.handleMuniChange}
-          onMargChange={this.handleMargChange}
-          onNumActionsChange={this.handleNumActionsChange}
-          valState={valState}
-          valMuni={valMuni}
-          valMarg={valMarg}
-          valNumActions={valNumActions}
-        />
-        <SearchInput numResults={filtered.length} onKeyUp={this.handleLocalitySearchKeyUp} />
+      <React.Fragment>
+        <div className="row middle between wrapper sm-hidden xs-hidden">
+          <FilterHeader
+            localities={data.results || []}
+            onStateChange={this.handleStateChange}
+            onMuniChange={this.handleMuniChange}
+            onMargChange={this.handleMargChange}
+            onNumActionsChange={this.handleNumActionsChange}
+            valState={valState}
+            valMuni={valMuni}
+            valMarg={valMarg}
+            valNumActions={valNumActions}
+          />
+          <SearchInput numResults={filtered.length} onKeyUp={this.handleLocalitySearchKeyUp} />
+        </div>
+
+        <div className={`${Styles.search} md-hidden lg-hidden`}>
+          <SearchInput numResults={filtered.length} onKeyUp={this.handleLocalitySearchKeyUp} />
+        </div>
+
+        <div className={`${Styles.legend} row middle between wrapper md-hidden lg-hidden`}>
+          <span onClick={this.handleToggleFilters} className="md-hidden lg-hidden">FILTROS</span>
+          <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />
+        </div>
 
         <div className={`${Styles.container} row`}>
           <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 gutter last-sm last-xs">
-            {loading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
+            {loading && <LoadingIndicatorCircle className={Styles.loader} />}
             {!loading &&
               <LocalityList
                 localities={filtered}
@@ -281,11 +297,11 @@ class MapScreen extends React.Component {
                 onLeaveFeature={this.handleLeaveFeature}
                 fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
               />
-              <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />
+              {window.innerWidth >= 980 && <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />}
             </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }

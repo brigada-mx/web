@@ -182,7 +182,7 @@ class OrganizationScreenView extends React.Component {
     )
 
     return (
-      <div>
+      <React.Fragment>
         <div className="wrapper">
           <OrganizationBreadcrumb name={name} sector={sector} />
 
@@ -283,7 +283,7 @@ class OrganizationScreenView extends React.Component {
             }
           </div>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }
