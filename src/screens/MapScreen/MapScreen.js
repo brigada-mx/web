@@ -6,6 +6,7 @@ import _ from 'lodash'
 
 import service, { getBackoff } from 'api/service'
 import FilterHeader from 'components/FilterHeader'
+import SearchInput from 'components/SearchInput'
 import LocalityListItem from 'components/LocalityListItem'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
@@ -243,17 +244,17 @@ class MapScreen extends React.Component {
       <div>
         <FilterHeader
           localities={data.results || []}
-          numResults={filtered.length}
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
           onMargChange={this.handleMargChange}
           onNumActionsChange={this.handleNumActionsChange}
-          onKeyUp={this.handleLocalitySearchKeyUp}
           valState={valState}
           valMuni={valMuni}
           valMarg={valMarg}
           valNumActions={valNumActions}
         />
+        <SearchInput numResults={filtered.length} onKeyUp={this.handleLocalitySearchKeyUp} />
+
         <div className={`${Styles.container} row`}>
           <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 gutter last-sm last-xs">
             {loading && <LoadingIndicatorCircle classNameCustom={Styles.loader} />}
