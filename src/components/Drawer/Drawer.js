@@ -1,51 +1,64 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { connect } from 'react-redux'
+
+import * as Actions from 'src/actions'
 import Styles from './Drawer.css'
 
 
-class Drawer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      visible: false,
-    }
+const Drawer = (props) => {
+  const {
+    classNameIcon,
+    classNameDrawer,
+    classNameWrapper,
+    onToggleVisible,
+    visible,
+    children,
+  } = props
+
+  const show = () => {
+    onToggleVisible(true)
   }
 
-  show = () => {
-    this.setState({ visible: true })
+  const hide = () => {
+    onToggleVisible(false)
   }
 
-  hide = () => {
-    this.setState({ visible: false })
-  }
+  const hamburger = <div onClick={show} className={`${Styles.hamburger} ${classNameIcon} ${classNameWrapper}`} />
 
-  render() {
-    const { classNameIcon, classNameDrawer, classNameWrapper } = this.props
-    const { visible } = this.state
-    const hamburger = <div onClick={this.show} className={`${Styles.hamburger} ${classNameIcon} ${classNameWrapper}`} />
-
-    if (!visible) return hamburger
-    return (
-      <React.Fragment>
-        {hamburger}
-        <div className={`${Styles.drawer} ${classNameDrawer} ${classNameWrapper}`}>
-          <span onClick={this.hide} className={Styles.hide} />
-          <div className={Styles.children}>
-            {React.cloneElement(this.props.children, { onClick: this.hide })}
-          </div>
+  if (!visible) return hamburger
+  return (
+    <React.Fragment>
+      {hamburger}
+      <div className={`${Styles.drawer} ${classNameDrawer} ${classNameWrapper}`}>
+        <span onClick={hide} className={Styles.hide} />
+        <div className={Styles.children}>
+          {children}
         </div>
-        <div className={Styles.drawerOverlay} onClick={this.hide} />
-      </React.Fragment>
-    )
-  }
+      </div>
+      <div className={Styles.drawerOverlay} onClick={hide} />
+    </React.Fragment>
+  )
 }
 
 Drawer.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  onToggleVisible: PropTypes.func.isRequired,
   classNameDrawer: PropTypes.string,
   classNameIcon: PropTypes.string,
   classNameWrapper: PropTypes.string,
   children: PropTypes.any,
 }
 
-export default Drawer
+const mapStateToProps = (state) => {
+  return { visible: state.drawer.visible }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onToggleVisible: visible => Actions.drawerToggle(dispatch, { visible }),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Drawer)

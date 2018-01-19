@@ -1,15 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
+import * as Actions from 'src/actions'
 import Drawer from 'components/Drawer'
 import LogoImg from 'assets/img/logo.png'
 import Colors from 'src/Colors'
 import Styles from './Nav.css'
 
 
-const NavLinks = ({ classNameCustom, activeStyle = {}, onClick = () => {} }) => {
+const NavLinks = ({ classNameLink, activeStyle = {}, onHideDrawer }) => {
   const selected = { color: Colors.brandGreen }
 
   const locIsActive = (match, location) => {
@@ -24,19 +26,27 @@ const NavLinks = ({ classNameCustom, activeStyle = {}, onClick = () => {} }) => 
 
   return (
     <React.Fragment>
-      <NavLink onClick={onClick} className={classNameCustom} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">COMUNIDADES</NavLink>
-      <NavLink onClick={onClick} className={classNameCustom} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/organizaciones">ORGANIZACIONES</NavLink>
-      <NavLink onClick={onClick} className={classNameCustom} activeStyle={{ ...selected, ...activeStyle }} to="/practicas">MEJORES PRÁCTICAS</NavLink>
-      <NavLink onClick={onClick} className={classNameCustom} activeStyle={{ ...selected, ...activeStyle }} to="/nosotros">NOSOTROS</NavLink>
+      <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">COMUNIDADES</NavLink>
+      <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/organizaciones">ORGANIZACIONES</NavLink>
+      <NavLink onClick={onHideDrawer} className={classNameLink} activeStyle={{ ...selected, ...activeStyle }} to="/practicas">MEJORES PRÁCTICAS</NavLink>
+      <NavLink onClick={onHideDrawer} className={classNameLink} activeStyle={{ ...selected, ...activeStyle }} to="/nosotros">NOSOTROS</NavLink>
     </React.Fragment>
   )
 }
 
 NavLinks.propTypes = {
-  classNameCustom: PropTypes.string,
+  onHideDrawer: PropTypes.func.isRequired,
+  classNameLink: PropTypes.string,
   activeStyle: PropTypes.object,
-  onClick: PropTypes.func,
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onHideDrawer: () => Actions.drawerToggle(dispatch, { visible: false }),
+  }
+}
+
+const ReduxNavLinks = withRouter(connect(null, mapDispatchToProps)(NavLinks))
 
 const Nav = () => {
   return (
@@ -47,10 +57,10 @@ const Nav = () => {
 
         <div className="end">
           <div className={`${Styles.links} sm-hidden xs-hidden`}>
-            <NavLinks />
+            <ReduxNavLinks />
           </div>
           <Drawer classNameWrapper="lg-hidden md-hidden">
-            <NavLinks activeStyle={{ borderRight: '2px solid #3DC59F' }} classNameCustom={Styles.burgerNavLinks} />
+            <ReduxNavLinks activeStyle={{ borderRight: '2px solid #3DC59F' }} classNameLink={Styles.burgerNavLinks} />
           </Drawer>
         </div>
 
@@ -61,4 +71,4 @@ const Nav = () => {
 }
 
 export default Nav
-export { NavLinks }
+export { ReduxNavLinks as NavLinks }

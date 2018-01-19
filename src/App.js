@@ -2,8 +2,11 @@
 import React from 'react'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { createStore, combineReducers } from 'redux'
 
 import env from 'src/env'
+import reducers from 'src/reducers/index'
 import TestScreen from 'screens/TestScreen'
 import Nav from 'components/Nav'
 import MapScreen from 'screens/MapScreen'
@@ -32,26 +35,35 @@ const AboutScreen = () => (
   </div>
 )
 
+const initialStore = {}
+const allReducers = combineReducers({
+  ...reducers,
+})
+
+const store = createStore(allReducers, initialStore)
+
 const App = () => {
   return (
-    <Router>
-      <div>
-        <Nav />
+    <Provider store={store}>
+      <Router>
+        <div>
+          <Nav />
 
-        {env.env === 'dev' && <Route exact path="/test" component={TestScreen} />}
+          {env.env === 'dev' && <Route exact path="/test" component={TestScreen} />}
 
-        <Route exact path="/" component={MapScreen} />
-        <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
+          <Route exact path="/" component={MapScreen} />
+          <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
 
-        <Route exact path="/organizaciones" component={OrganizationListScreen} />
-        <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
+          <Route exact path="/organizaciones" component={OrganizationListScreen} />
+          <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
 
-        <Route path="/practicas" component={BestPracticesScreen} />
+          <Route path="/practicas" component={BestPracticesScreen} />
 
-        <Route path="/nosotros" component={AboutScreen} />
+          <Route path="/nosotros" component={AboutScreen} />
 
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </Provider>
   )
 }
 export default App
