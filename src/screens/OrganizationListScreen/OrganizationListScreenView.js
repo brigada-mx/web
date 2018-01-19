@@ -62,8 +62,9 @@ class OrganizationListScreenView extends React.Component {
     this.state = {
       popup: {},
       focused: null,
-      organizationSearch: '',
       fitBounds: this.defaultFitBounds(),
+      organizationSearch: '',
+      filtersVisible: false,
       valState,
       valMuni,
       valSector,
@@ -160,6 +161,10 @@ class OrganizationListScreenView extends React.Component {
     this.setState({ focused: itemFromScrollEvent(e, organizations) })
   }
 
+  handleToggleFilters = () => {
+    this.setState({ filtersVisible: !this.state.filtersVisible })
+  }
+
   filterOrganizations = (results) => {
     const { organizationSearch, valState, valMuni, valSector, valActionType } = this.state
 
@@ -225,7 +230,15 @@ class OrganizationListScreenView extends React.Component {
       localities: { data: locData, loading: locLoading, error: locError },
       organizations: { data: orgData, loading: orgLoading, error: orgError },
     } = this.props
-    const { popup, focused, valState, valMuni, valSector, valActionType } = this.state
+    const {
+      popup,
+      focused,
+      valState,
+      valMuni,
+      valSector,
+      valActionType,
+      filtersVisible,
+    } = this.state
 
     const organizations = this.filterOrganizations(orgData ? orgData.results : [])
     let [_focused] = organizations
@@ -235,22 +248,26 @@ class OrganizationListScreenView extends React.Component {
     let features = []
     if (_focused) ({ localities, features } = this.getLocalityFeatures(_focused))
 
+    const filter = (
+      <FilterHeader
+        localities={locData ? locData.results : []}
+        actions={orgData ? [].concat(...orgData.results.map(o => o.actions)) : []}
+        onStateChange={this.handleStateChange}
+        onMuniChange={this.handleMuniChange}
+        onSectorChange={this.handleSectorChange}
+        onActionTypeChange={this.handleActionTypeChange}
+        valState={valState}
+        valMuni={valMuni}
+        valSector={valSector}
+        valActionType={valActionType}
+      />
+    )
+
     return (
       <React.Fragment>
         <div className={Styles.filterShadow}>
           <div className="row middle between wrapper sm-hidden xs-hidden">
-            <FilterHeader
-              localities={locData ? locData.results : []}
-              actions={orgData ? [].concat(...orgData.results.map(o => o.actions)) : []}
-              onStateChange={this.handleStateChange}
-              onMuniChange={this.handleMuniChange}
-              onSectorChange={this.handleSectorChange}
-              onActionTypeChange={this.handleActionTypeChange}
-              valState={valState}
-              valMuni={valMuni}
-              valSector={valSector}
-              valActionType={valActionType}
-            />
+            {filter}
             <SearchInput
               numResults={organizations.length}
               onKeyUp={this.handleOrganizationSearchKeyUp}
@@ -264,6 +281,15 @@ class OrganizationListScreenView extends React.Component {
             onKeyUp={this.handleLocalitySearchKeyUp}
           />
         </div>
+
+        <div className="row baseline between wrapper lg-hidden md-hidden">
+          <span className={Styles.filterButton} onClick={this.handleToggleFilters}>FILTROS</span>
+          <LocalityLegend localities={localities} legendTitle="Nivel de daño" />
+        </div>
+
+        {filtersVisible &&
+          <div className={`${Styles.filtersSmallScreen} lg-hidden md-hidden`}>{filter}</div>
+        }
 
         <div className={`${Styles.container} row`}>
           <div className="col-lg-6 col-md-6 col-sm-8 col-xs-4 gutter last-sm last-xs">
@@ -293,7 +319,7 @@ class OrganizationListScreenView extends React.Component {
                 onLeaveFeature={this.handleLeaveFeature}
                 fitBounds={this.state.fitBounds.length > 0 ? this.state.fitBounds : undefined}
               />
-              <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
+              <LocalityLegend className="sm-hidden xs-hidden" localities={localities} legendTitle="¿Dónde opera?" />
             </div>
           </div>
         </div>

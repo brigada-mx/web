@@ -82,11 +82,11 @@ class MapScreen extends React.Component {
       layerFilter: null,
       popup: null,
       locSearch: '',
+      filtersVisible: false,
       valState,
       valMuni,
       valMarg: [],
       valNumActions: [],
-      filtersVisible: false,
     }
     this.handleLocalitySearchKeyUp = _.debounce(
       this.handleLocalitySearchKeyUp, 150
@@ -242,23 +242,31 @@ class MapScreen extends React.Component {
       filtered,
       layerFilter,
       fitBounds,
+      valState,
+      valMuni,
+      valMarg,
+      valNumActions,
+      filtersVisible,
     } = this.state
 
-    const { valState, valMuni, valMarg, valNumActions } = this.state
+    const filter = (
+      <FilterHeader
+        localities={data.results || []}
+        onStateChange={this.handleStateChange}
+        onMuniChange={this.handleMuniChange}
+        onMargChange={this.handleMargChange}
+        onNumActionsChange={this.handleNumActionsChange}
+        valState={valState}
+        valMuni={valMuni}
+        valMarg={valMarg}
+        valNumActions={valNumActions}
+      />
+    )
+
     return (
       <React.Fragment>
         <div className="row middle between wrapper sm-hidden xs-hidden">
-          <FilterHeader
-            localities={data.results || []}
-            onStateChange={this.handleStateChange}
-            onMuniChange={this.handleMuniChange}
-            onMargChange={this.handleMargChange}
-            onNumActionsChange={this.handleNumActionsChange}
-            valState={valState}
-            valMuni={valMuni}
-            valMarg={valMarg}
-            valNumActions={valNumActions}
-          />
+          {filter}
           <SearchInput numResults={filtered.length} onKeyUp={this.handleLocalitySearchKeyUp} />
         </div>
 
@@ -267,9 +275,13 @@ class MapScreen extends React.Component {
         </div>
 
         <div className="row baseline between wrapper lg-hidden md-hidden">
-          <a className={Styles.filterLink} onClick={this.handleToggleFilters} href="#">FILTROS</a>
+          <span className={Styles.filterButton} onClick={this.handleToggleFilters}>FILTROS</span>
           <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />
         </div>
+
+        {filtersVisible &&
+          <div className={`${Styles.filtersSmallScreen} lg-hidden md-hidden`}>{filter}</div>
+        }
 
         <div className={`${Styles.container} row`}>
           <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 gutter last-sm last-xs">

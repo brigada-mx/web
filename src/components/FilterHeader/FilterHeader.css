@@ -18,16 +18,8 @@
   margin-right: 32px;
 }
 
-@media screen and (max-width: 979px) and (min-width: 768px) {
+@media screen and (max-width: 979px) {
   .container {
-    box-shadow: unset;
-    height: 65px;
-  }
-}
-
-@media screen and (max-width: 767px) and (min-width: 0px) {
-  .container {
-    height: 73px;
     box-shadow: unset;
   }
 }
