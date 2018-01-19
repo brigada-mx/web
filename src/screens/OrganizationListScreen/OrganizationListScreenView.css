@@ -7,6 +7,24 @@
   right: 12.5%;
 }
 
+.filtersSmallScreen {
+  position: absolute;
+  max-height: 40px;
+  width: 100vw;
+  background-color: white;
+}
+
+.filterButton {
+  cursor: pointer;
+  font-family: 'nunito-sans-800', sans-serif;
+  font-size: 11px;
+  color: #3DC587;
+  letter-spacing: 0.8px;
+  line-height: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .filterShadow {
   position: relative;
   z-index: 5;
