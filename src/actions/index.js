@@ -4,3 +4,10 @@ export async function drawerToggle(dispatch, { visible }) {
     payload: { visible },
   })
 }
+
+export async function actionData(dispatch, { id, data }) {
+  dispatch({
+    type: 'ACTION_DATA',
+    payload: { id, data },
+  })
+}
