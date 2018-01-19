@@ -248,26 +248,29 @@ class OrganizationListScreenView extends React.Component {
     let features = []
     if (_focused) ({ localities, features } = this.getLocalityFeatures(_focused))
 
-    const filter = (
-      <FilterHeader
-        localities={locData ? locData.results : []}
-        actions={orgData ? [].concat(...orgData.results.map(o => o.actions)) : []}
-        onStateChange={this.handleStateChange}
-        onMuniChange={this.handleMuniChange}
-        onSectorChange={this.handleSectorChange}
-        onActionTypeChange={this.handleActionTypeChange}
-        valState={valState}
-        valMuni={valMuni}
-        valSector={valSector}
-        valActionType={valActionType}
-      />
-    )
+    const filter = (style = {}) => {
+      return (
+        <FilterHeader
+          style={style}
+          localities={locData ? locData.results : []}
+          actions={orgData ? [].concat(...orgData.results.map(o => o.actions)) : []}
+          onStateChange={this.handleStateChange}
+          onMuniChange={this.handleMuniChange}
+          onSectorChange={this.handleSectorChange}
+          onActionTypeChange={this.handleActionTypeChange}
+          valState={valState}
+          valMuni={valMuni}
+          valSector={valSector}
+          valActionType={valActionType}
+        />
+      )
+    }
 
     return (
       <React.Fragment>
         <div className={Styles.filterShadow}>
           <div className="row middle between wrapper sm-hidden xs-hidden">
-            {filter}
+            {filter()}
             <SearchInput
               numResults={organizations.length}
               onKeyUp={this.handleOrganizationSearchKeyUp}
@@ -288,7 +291,7 @@ class OrganizationListScreenView extends React.Component {
         </div>
 
         {filtersVisible &&
-          <div className={`${Styles.filtersSmallScreen} lg-hidden md-hidden`}>{filter}</div>
+          <div className={`${Styles.filtersSmallScreen} lg-hidden md-hidden`}>{filter({ maxWidth: '100vw' })}</div>
         }
 
         <div className={`${Styles.container} row`}>

@@ -24,6 +24,7 @@ const FilterHeader = (props) => {
     valNumActions,
     valSector,
     valActionType,
+    style = {},
   } = props
 
   const shortenState = (name) => {
@@ -168,7 +169,7 @@ const FilterHeader = (props) => {
   }
 
   return (
-    <div className={Styles.container}>
+    <div style={style} className={Styles.container}>
       {selects(Styles.filter)}
     </div>
   )
@@ -189,6 +190,7 @@ FilterHeader.propTypes = {
   valNumActions: PropTypes.arrayOf(PropTypes.any),
   valSector: PropTypes.arrayOf(PropTypes.any),
   valActionType: PropTypes.arrayOf(PropTypes.any),
+  style: PropTypes.object,
 }
 
 export default FilterHeader

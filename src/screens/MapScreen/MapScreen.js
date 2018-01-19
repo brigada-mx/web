@@ -249,24 +249,27 @@ class MapScreen extends React.Component {
       filtersVisible,
     } = this.state
 
-    const filter = (
-      <FilterHeader
-        localities={data.results || []}
-        onStateChange={this.handleStateChange}
-        onMuniChange={this.handleMuniChange}
-        onMargChange={this.handleMargChange}
-        onNumActionsChange={this.handleNumActionsChange}
-        valState={valState}
-        valMuni={valMuni}
-        valMarg={valMarg}
-        valNumActions={valNumActions}
-      />
-    )
+    const filter = (style = {}) => {
+      return (
+        <FilterHeader
+          style={style}
+          localities={data.results || []}
+          onStateChange={this.handleStateChange}
+          onMuniChange={this.handleMuniChange}
+          onMargChange={this.handleMargChange}
+          onNumActionsChange={this.handleNumActionsChange}
+          valState={valState}
+          valMuni={valMuni}
+          valMarg={valMarg}
+          valNumActions={valNumActions}
+        />
+      )
+    }
 
     return (
       <React.Fragment>
         <div className="row middle between wrapper sm-hidden xs-hidden">
-          {filter}
+          {filter()}
           <SearchInput numResults={filtered.length} onKeyUp={this.handleLocalitySearchKeyUp} />
         </div>
 
@@ -280,7 +283,7 @@ class MapScreen extends React.Component {
         </div>
 
         {filtersVisible &&
-          <div className={`${Styles.filtersSmallScreen} lg-hidden md-hidden`}>{filter}</div>
+          <div className={`${Styles.filtersSmallScreen} lg-hidden md-hidden`}>{filter({ maxWidth: '100vw' })}</div>
         }
 
         <div className={`${Styles.container} row`}>
