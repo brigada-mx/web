@@ -35,6 +35,7 @@ class Drawer extends React.Component {
             {React.cloneElement(this.props.children, { onClick: this.hide })}
           </div>
         </div>
+        <div className={Styles.drawerOverlay} onClick={this.hide} />
       </React.Fragment>
     )
   }

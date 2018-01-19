@@ -60,16 +60,21 @@
   cursor: pointer;
 }
 
+.drawerOverlay {
+  display: none;
+}
+
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .drawer {
     width: 50vw;
   }
-  .drawer:before {
-    content: '';
+  .drawerOverlay {
     position: absolute;
     width: 50vw;
     height: 100vh;
-    margin-left: -100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
     opacity: 0.56;
     background-color: #1D1D1F;
     display: block;
