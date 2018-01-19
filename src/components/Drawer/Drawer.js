@@ -32,7 +32,7 @@ class Drawer extends React.Component {
         <div className={`${Styles.drawer} ${classNameDrawer} ${classNameWrapper}`}>
           <span onClick={this.hide} className={Styles.hide} />
           <div className={Styles.children}>
-            {this.props.children}
+            {React.cloneElement(this.props.children, { onClick: this.hide })}
           </div>
         </div>
       </React.Fragment>

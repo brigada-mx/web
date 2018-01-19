@@ -278,7 +278,7 @@ class OrganizationListScreenView extends React.Component {
         <div className={`${Styles.search} md-hidden lg-hidden`}>
           <SearchInput
             numResults={organizations.length}
-            onKeyUp={this.handleLocalitySearchKeyUp}
+            onKeyUp={this.handleOrganizationSearchKeyUp}
           />
         </div>
 
