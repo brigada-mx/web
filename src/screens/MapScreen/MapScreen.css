@@ -4,7 +4,6 @@
 .search {
   position: absolute;
   top: 17px;
-  right: 12.5%;
 }
 
 .filtersSmallScreen {
@@ -65,6 +64,9 @@
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
+  .search {
+    right: 6.5%;
+  }
   .container {
     height: calc(100vh - 251px);
   }
@@ -77,6 +79,9 @@
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
+  .search {
+    right: 12.5%;
+  }
   .container {
     height: calc(100vh - 225px);
   }
