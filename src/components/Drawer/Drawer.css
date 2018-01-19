@@ -44,10 +44,6 @@
   color: #3DC587;
 }
 
-.children a.active {
-  border-right: 2px solid #3DC59F;
-}
-
 .children a:not(:last-of-type) {
   margin-bottom: 34px;
 }

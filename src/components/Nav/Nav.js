@@ -9,7 +9,7 @@ import Colors from 'src/Colors'
 import Styles from './Nav.css'
 
 
-const NavLinks = ({ classNameCustom }) => {
+const NavLinks = ({ classNameCustom, activeStyle = {}, onClick = () => {} }) => {
   const selected = { color: Colors.brandGreen }
 
   const locIsActive = (match, location) => {
@@ -24,16 +24,18 @@ const NavLinks = ({ classNameCustom }) => {
 
   return (
     <React.Fragment>
-      <NavLink className={classNameCustom} isActive={locIsActive} activeStyle={selected} exact to="/">COMUNIDADES</NavLink>
-      <NavLink className={classNameCustom} isActive={orgIsActive} activeStyle={selected} to="/organizaciones">ORGANIZACIONES</NavLink>
-      <NavLink className={classNameCustom} activeStyle={selected} to="/practicas">MEJORES PRÁCTICAS</NavLink>
-      <NavLink className={classNameCustom} activeStyle={selected} to="/nosotros">NOSOTROS</NavLink>
+      <NavLink onClick={onClick} className={classNameCustom} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">COMUNIDADES</NavLink>
+      <NavLink onClick={onClick} className={classNameCustom} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/organizaciones">ORGANIZACIONES</NavLink>
+      <NavLink onClick={onClick} className={classNameCustom} activeStyle={{ ...selected, ...activeStyle }} to="/practicas">MEJORES PRÁCTICAS</NavLink>
+      <NavLink onClick={onClick} className={classNameCustom} activeStyle={{ ...selected, ...activeStyle }} to="/nosotros">NOSOTROS</NavLink>
     </React.Fragment>
   )
 }
 
 NavLinks.propTypes = {
   classNameCustom: PropTypes.string,
+  activeStyle: PropTypes.object,
+  onClick: PropTypes.func,
 }
 
 const Nav = () => {
@@ -48,7 +50,7 @@ const Nav = () => {
             <NavLinks />
           </div>
           <Drawer classNameWrapper="lg-hidden md-hidden">
-            <NavLinks classNameCustom={Styles.burgerNavLinks} />
+            <NavLinks activeStyle={{ borderRight: '2px solid #3DC59F' }} classNameCustom={Styles.burgerNavLinks} />
           </Drawer>
         </div>
 
