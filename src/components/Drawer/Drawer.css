@@ -1,5 +1,5 @@
 @value colors: "src/colors.css";
-@value grey6 from colors;
+@value grey6, brandOffWhite from colors;
 
 .hamburger {
   background: no-repeat url('assets/img/hamburger.svg');
@@ -12,15 +12,67 @@
 
 .drawer {
   position: absolute;
-  width: 300px;
   height: 100vh;
   top: 0;
   right: 0;
-  z-index: 10000;
-  opacity: 0.925;
-  background-color: grey6;
+  z-index: 10;
+  background-color: white;
+}
+
+.children {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  height: 100%;
+  padding-left: 40px;
+  margin-right: 58px;
+  border-right: 1px solid brandOffWhite;
+}
+
+.children a {
+  text-decoration: none;
+  color: #141418;
+  width: 100%;
+  text-align: left;
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.children a:hover {
+  color: #3DC587;
+}
+
+.children a.active {
+  border-right: 2px solid #3DC59F;
+}
+
+.children a:not(:last-of-type) {
+  margin-bottom: 34px;
 }
 
 .hide {
-  color: red;
+  background: no-repeat url("assets/img/close.svg");
+  background-size: 14px 14px;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 30px;
+  right: 21px;
+  color: black;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .drawer {
+    width: 50vw;
+  }
+}
+
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+  .drawer {
+    width: 100vw;
+  }
 }

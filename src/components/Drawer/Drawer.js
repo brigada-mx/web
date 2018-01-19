@@ -30,8 +30,10 @@ class Drawer extends React.Component {
       <React.Fragment>
         {hamburger}
         <div className={`${Styles.drawer} ${classNameDrawer} ${classNameWrapper}`}>
-          <span onClick={this.hide} className={Styles.hide}>X</span>
-          {this.props.children}
+          <span onClick={this.hide} className={Styles.hide} />
+          <div className={Styles.children}>
+            {this.props.children}
+          </div>
         </div>
       </React.Fragment>
     )
