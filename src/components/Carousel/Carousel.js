@@ -83,7 +83,17 @@ class CarouselView extends React.Component {
     this.state = {
       index: 0,
     }
+    this.swiperParams = {
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      spaceBetween: 50,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    }
   }
+
   setSwiperRef = (ref) => {
     if (!ref) return
     this.swiper = ref.swiper
@@ -94,14 +104,6 @@ class CarouselView extends React.Component {
     if (this.props.photos !== nextProps.photos) this.setState({ index: 0 })
   }
 
-  prev = () => {
-    this.swiper.slidePrev()
-  }
-
-  next = () => {
-    this.swiper.slideNext()
-  }
-
   render() {
     const { photos, onClose } = this.props
     const panes = photos.map((p) => {
@@ -109,17 +111,14 @@ class CarouselView extends React.Component {
     })
     return (
       <div className={Styles.container}>
-        <span>{this.state.index + 1} / {panes.length}</span>
+        <span className={Styles.progress}>{this.state.index + 1} / {panes.length}</span>
+        <span className={Styles.closeButton} onClick={onClose}>X</span>
         <Swiper
+          {...this.swiperParams}
           ref={this.setSwiperRef}
         >
           {panes}
         </Swiper>
-
-        <div>
-          <button type="button" onClick={this.prev}>Prev</button>
-          <button type="button" onClick={this.next}>Next</button>
-        </div>
       </div>
     )
   }

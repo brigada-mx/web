@@ -18,7 +18,7 @@ const Photo = (props) => {
   } = props
 
   return (
-    <div style={{ backgroundImage: `url(${urlMedium})` }} className={Styles.photo}>
+    <div style={{ background: `url(${urlMedium}) no-repeat` }} className={Styles.photo}>
       <span>{description}</span>
       <span>{submitted}</span>
     </div>
