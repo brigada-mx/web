@@ -53,6 +53,12 @@ class Service {
 
     return sendToApi(`organizations/${id}/`)
   }
+
+  getAction = async (id) => {
+    if (this.fake) return sendToApi(`${apiUrlFake}action.json`, { isRelative: false })
+
+    return sendToApi(`actions/${id}/`)
+  }
 }
 
 /**
@@ -76,6 +82,22 @@ export const getBackoff = async (...args) => {
     if (exception && self._mounted) {
       if (onException) onException(exception)
       setTimeout(() => inner(self, stateKey, getter, { onData, onError, onException }), delay)
+      if (count < 4) delay *= 2
+      count += 1
+    }
+  }
+  inner(...args)
+}
+
+export const getBackoffStateless = async (...args) => {
+  let count = 0
+  let delay = 1000
+  const inner = async (getter, onResponse) => {
+    const { data, error, exception } = await getter()
+    onResponse({ data, error, exception })
+
+    if (exception) {
+      setTimeout(() => inner(getter, onResponse), delay)
       if (count < 4) delay *= 2
       count += 1
     }

@@ -1,3 +1,8 @@
+.carouselContainer {
+  height: 90vh;
+  width: 90vw;
+}
+
 .breadcrumbLinks {
   margin: 13px 0 65px 0;
 }

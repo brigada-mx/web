@@ -5,6 +5,7 @@ import { NavLink, withRouter } from 'react-router-dom'
 
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
+import Carousel from 'components/Carousel'
 import ActionList from 'components/ActionList'
 import PhoneBox from 'components/PhoneBox'
 import ActionMap from 'components/FeatureMap/ActionMap'
@@ -51,6 +52,7 @@ class OrganizationScreenView extends React.Component {
     this.state = {
       popup: {},
       focused: null,
+      actionId: null,
     }
   }
 
@@ -70,7 +72,7 @@ class OrganizationScreenView extends React.Component {
   }
 
   handleClickListItem = (item) => {
-    this.props.history.push(`/acciones/${item.id}`)
+    this.setState({ actionId: item.id })
   }
 
   handleEnterListItem = (item) => {
@@ -88,6 +90,21 @@ class OrganizationScreenView extends React.Component {
 
   handleEnterActionFeature = (feature) => {
     this.setState({ focused: JSON.parse(feature.properties.action) })
+  }
+
+  handleCarouselClose = () => {
+    this.setState({ actionId: null })
+  }
+
+  renderCarousel = () => {
+    const { actionId } = this.state
+    if (actionId === null) return null
+
+    return (
+      <div className={Styles.carouselContainer} onClick={this.handleCarouselClose}>
+        <Carousel actionId={actionId} />
+      </div>
+    )
   }
 
   renderAddress = (address) => {
@@ -283,6 +300,8 @@ class OrganizationScreenView extends React.Component {
             }
           </div>
         </div>
+
+        {this.renderCarousel()}
       </React.Fragment>
     )
   }
