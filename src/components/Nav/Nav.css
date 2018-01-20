@@ -2,7 +2,6 @@
 @value brandOffWhite, brandGreen, grey7, shadow from colors;
 
 .container {
-  height: 65px;
   box-sizing: border-box;
   border-bottom: 1px solid brandOffWhite;
 }
@@ -22,4 +21,22 @@
 
 .links a:hover {
   color: brandGreen;
+}
+
+@media screen and (min-width: 980px) {
+  .container {
+    height: 65px;
+  }
+}
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .container {
+    height: 73px;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+  .container {
+    height: 73px;
+  }
 }

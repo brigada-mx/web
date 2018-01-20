@@ -283,7 +283,10 @@ class MapScreen extends React.Component {
         </div>
 
         {filtersVisible &&
-          <div className={`${Styles.filtersSmallScreen} lg-hidden md-hidden`}>{filter({ maxWidth: '100vw' })}</div>
+          <React.Fragment>
+            <div className={`${Styles.filtersSmallScreen} lg-hidden md-hidden`}>{filter({ maxWidth: '100vw' })}</div>
+            <span className={Styles.updateButton} onClick={this.handleToggleFilters}>Actualizar resultados</span>
+          </React.Fragment>
         }
 
         <div className={`${Styles.container} row`}>

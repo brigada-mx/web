@@ -2,16 +2,9 @@
 @value strongShadow, weakShadow, brandOffWhite from colors;
 
 .container {
-  position: absolute;
   display: flex;
   box-sizing: border-box;
-  right: 26px;
-  bottom: 26px;
-  flex-direction: column;
   width: 152px;
-  padding: 15px 15px 9px 15px;
-  border-radius: 2px;
-  box-shadow: 0 40px 100px 0 strongShadow;
   background-color: white;
   z-index: 4;
 }
@@ -19,10 +12,8 @@
 .title {
   font-family: 'nunito-sans-600', sans-serif;
   font-size: 14px;
-  line-height: 20px;
   letter-spacing: 1.26px;
   color: #434346;
-  margin-bottom: 7px;
 }
 
 .legendItem {
@@ -30,12 +21,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 6px 0;
 }
 
 .legendItem div {
   display: flex;
-  flex-direction: row;
   align-items: center;
 }
 
@@ -43,7 +32,6 @@
   border-radius: 50%;
   width: 8px;
   height: 8px;
-  margin: 0 11px 2px 0;
 }
 
 .label {
@@ -58,52 +46,65 @@
   color: #141418;
 }
 
+@media screen and (min-width: 980px) {
+  .container {
+    position: absolute;
+    flex-direction: column;
+    right: 26px;
+    bottom: 26px;
+    width: 152px;
+    padding: 15px 15px 9px 15px;
+    border-radius: 2px;
+    box-shadow: 0 40px 100px 0 strongShadow;
+  }
+  .title {
+      line-height: 20px;
+      margin-bottom: 7px;
+    }
+  .legendItem {
+    margin: 6px 0;
+  }
+  .circle {
+    margin: 0 11px 2px 0;
+  }
+}
+
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .container {
-    height: 55px;
-    position: unset;
+    justify-content: flex-end;
     flex-direction: row;
+    height: 58px;
+    width: 90%;
     position: relative;
-    box-shadow: unset;
-    width: unset;
-    background: unset;
-    right: unset;
-    bottom: unset;
+    line-height: 30px;
+    align-items: center;
   }
   .title {
     display: inline-flex;
-    margin: 0;
-    line-height: 30px;
   }
-  .legendItem {
-    display: inline-flex;
-    margin: 0 0 2px 0;
+  .legendItem div {
+    margin-right: 4px;
   }
   .circle {
     margin: 0 6px 2px 15px;
-  }
-  .label {
-    margin-right: 4px;
   }
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .container {
-    height: 55px;
+    height: 58px;
     width: 80%;
     flex-direction: row;
     justify-content: flex-end;
     position: relative;
-    box-shadow: unset;
-    background: unset;
     right: 0;
     bottom: 0;
+    align-items: center;
   }
   .title {
     display: none;
   }
   .legendItem {
-    margin: 0 0 2px 0;
     max-width: 20%;
   }
   .legendItem div {

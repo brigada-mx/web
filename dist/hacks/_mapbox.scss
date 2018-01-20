@@ -1,0 +1,43 @@
+// MAPHACKS
+
+.mapboxgl-map button {
+  background-color: white !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  opacity: 1.0 !important;
+  transition: none !important;
+  height: 36px !important;
+  width: 31px !important;
+}
+
+.mapboxgl-map button:hover {
+  background-color: white !important;
+  opacity: 1.0 !important;
+  transition: none !important;
+}
+
+.mapboxgl-map button:first-of-type {
+  background-image: url('assets/img/zoom-in.svg') !important;
+  background-size: 10px 10px !important;
+  border-bottom-color: #EDF1F5 !important;
+  border-top-left-radius: 2px !important;
+  border-top-right-radius: 2px !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+.mapboxgl-map button:nth-of-type(2) {
+  background-image: url('assets/img/zoom-out.svg') !important;
+  background-size: 10px 2px !important;
+  border-bottom-left-radius: 2px !important;
+  border-bottom-right-radius: 2px !important;
+}
+
+.mapboxgl-popup-content {
+  border-radius: 2px !important;
+  box-shadow: 0px 40px 100px 0px rgba(37, 38, 50, 0.1) !important;
+}
+
+.mapboxgl-popup-tip {
+  border-width: 5px !important;
+}
