@@ -106,8 +106,11 @@ class CarouselView extends React.Component {
 
   render() {
     const { photos, onClose } = this.props
-    const panes = photos.map((p) => {
-      return <div key={p.url}><Photo {...p} /></div>
+    const panes = photos.map((p, i) => {
+      if (Math.abs(this.state.index - i) <= 1) {
+        return <div key={p.url}><Photo {...p} /></div>
+      }
+      return <div key={p.url}><Photo {...p} lazyLoad /></div>
     })
     return (
       <div className={Styles.container}>

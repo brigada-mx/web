@@ -6,6 +6,7 @@ import Styles from './Carousel.css'
 
 const Photo = (props) => {
   const {
+    lazyLoad,
     actionId,
     description,
     address,
@@ -18,7 +19,7 @@ const Photo = (props) => {
   } = props
 
   return (
-    <div style={{ background: `url(${urlMedium}) no-repeat` }} className={Styles.photo}>
+    <div style={lazyLoad ? null : { background: `url(${urlMedium}) no-repeat` }} className={Styles.photo}>
       <span>{description}</span>
       <span>{submitted}</span>
     </div>
@@ -26,6 +27,7 @@ const Photo = (props) => {
 }
 
 Photo.propTypes = {
+  lazyLoad: PropTypes.bool,
   actionId: PropTypes.number.isRequired,
   description: PropTypes.string,
   address: PropTypes.string,
