@@ -268,7 +268,7 @@ class OrganizationListScreenView extends React.Component {
 
     return (
       <React.Fragment>
-        <div className={Styles.filterShadow}>
+        <div className={Styles.shadow}>
           <div className="row middle between wrapper sm-hidden xs-hidden">
             {filter()}
             <SearchInput
@@ -291,7 +291,12 @@ class OrganizationListScreenView extends React.Component {
         </div>
 
         {filtersVisible &&
-          <div className={`${Styles.filtersSmallScreen} lg-hidden md-hidden`}>{filter({ maxWidth: '100vw' })}</div>
+          <React.Fragment>
+            <div className={`${Styles.filtersSmallScreen} lg-hidden md-hidden`}>{filter({ maxWidth: '100vw' })}</div>
+            <span className={`${Styles.updateButton} lg-hidden md-hidden`} onClick={this.handleToggleFilters}>
+              Actualizar resultados
+            </span>
+          </React.Fragment>
         }
 
         <div className={`${Styles.container} row`}>

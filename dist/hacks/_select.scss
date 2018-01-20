@@ -108,7 +108,7 @@ div .Select .Select-control:hover {
   background: no-repeat url('assets/img/dropdown-arrow-accent.svg');
 }
 
-@media screen and (max-width: 767px) and (min-width: 0px) {
+@media screen and (max-width: 979px) and (min-width: 0px) {
   div.Select {
     background-color: transparent !important;
   }
@@ -140,7 +140,7 @@ div .Select .Select-control:hover {
   }
   .Select .Select-menu {
     font-family: 'nunito-sans-200', sans-serif;
-    opacity: 0.9;
+    // opacity: 0.9;
     font-size: 16px;
     color: #19191D;
     letter-spacing: 0.64px;
