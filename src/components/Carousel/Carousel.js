@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ReactSwipe from 'react-swipe'
 import { connect } from 'react-redux'
+import Swiper from 'react-id-swiper'
+import '!style-loader!css-loader!swiper/dist/css/swiper.css'
 
 import * as Actions from 'src/actions'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
@@ -84,7 +85,9 @@ class CarouselView extends React.Component {
     }
   }
   setSwiperRef = (ref) => {
-    this.swiper = ref
+    if (!ref) return
+    this.swiper = ref.swiper
+    this.swiper.on('slideChange', () => this.setState({ index: this.swiper.activeIndex }))
   }
 
   componentWillUpdate(nextProps) {
@@ -92,13 +95,11 @@ class CarouselView extends React.Component {
   }
 
   prev = () => {
-    this.swiper.prev()
-    this.setState({ index: this.swiper.getPos() })
+    this.swiper.slidePrev()
   }
 
   next = () => {
-    this.swiper.next()
-    this.setState({ index: this.swiper.getPos() })
+    this.swiper.slideNext()
   }
 
   render() {
@@ -109,14 +110,11 @@ class CarouselView extends React.Component {
     return (
       <div className={Styles.container}>
         <span>{this.state.index + 1} / {panes.length}</span>
-        <ReactSwipe
-          key={panes.length}
+        <Swiper
           ref={this.setSwiperRef}
-          className={Styles.carousel}
-          swipeOptions={{ continuous: false }}
         >
           {panes}
-        </ReactSwipe>
+        </Swiper>
 
         <div>
           <button type="button" onClick={this.prev}>Prev</button>
