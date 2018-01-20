@@ -8,6 +8,7 @@ import * as Actions from 'src/actions'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import service, { getBackoffStateless } from 'api/service'
 import Styles from './Carousel.css'
+import Photo from './Photo'
 
 
 class CarouselContainer extends React.Component {
@@ -27,7 +28,7 @@ class CarouselContainer extends React.Component {
   }
 
   render() {
-    const { actionData } = this.props
+    const { actionId, actionData, onActionData, ...rest } = this.props
     if (!actionData) return <LoadingIndicatorCircle />
 
     const submissions = actionData.submissions.map((s) => {
@@ -55,7 +56,7 @@ class CarouselContainer extends React.Component {
         }
       })
     })
-    return <Carousel photos={[].concat(...submissions)} />
+    return <CarouselView {...rest} photos={[].concat(...submissions)} />
   }
 }
 
@@ -75,26 +76,61 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-class Carousel extends React.Component {
+class CarouselView extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      index: 0,
+    }
+  }
+  setSwiperRef = (ref) => {
+    this.swiper = ref
+  }
+
+  componentWillUpdate(nextProps) {
+    if (this.props.photos !== nextProps.photos) this.setState({ index: 0 })
+  }
+
+  prev = () => {
+    this.swiper.prev()
+    this.setState({ index: this.swiper.getPos() })
+  }
+
+  next = () => {
+    this.swiper.next()
+    this.setState({ index: this.swiper.getPos() })
+  }
+
   render() {
-    const { photos } = this.props
-    console.log(photos)
+    const { photos, onClose } = this.props
+    const panes = photos.map((p) => {
+      return <div key={p.url}><Photo {...p} /></div>
+    })
     return (
-      <ReactSwipe
-        className={Styles.carousel}
-        swipeOptions={{ continuous: false }}
-      >
-        <div>PANE 1</div>
-        <div>PANE 2</div>
-        <div>PANE 3</div>
-      </ReactSwipe>
+      <div className={Styles.container}>
+        <span>{this.state.index + 1} / {panes.length}</span>
+        <ReactSwipe
+          key={panes.length}
+          ref={this.setSwiperRef}
+          className={Styles.carousel}
+          swipeOptions={{ continuous: false }}
+        >
+          {panes}
+        </ReactSwipe>
+
+        <div>
+          <button type="button" onClick={this.prev}>Prev</button>
+          <button type="button" onClick={this.next}>Next</button>
+        </div>
+      </div>
     )
   }
 }
 
-Carousel.propTypes = {
+CarouselView.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onClose: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarouselContainer)
-export { Carousel }
+export { CarouselView }

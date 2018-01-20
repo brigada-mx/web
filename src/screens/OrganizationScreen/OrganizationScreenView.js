@@ -101,9 +101,7 @@ class OrganizationScreenView extends React.Component {
     if (actionId === null) return null
 
     return (
-      <div className={Styles.carouselContainer} onClick={this.handleCarouselClose}>
-        <Carousel actionId={actionId} />
-      </div>
+      <Carousel onClose={this.handleCarouselClose} actionId={actionId} />
     )
   }
 

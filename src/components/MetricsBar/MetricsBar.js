@@ -27,7 +27,7 @@ class MetricsBar extends React.Component {
   }
 
   render() {
-    const { value, max, style, severity } = this.props
+    const { value, max, style, severity, className = '' } = this.props
     const doneFlex = value / max
     let doneColor = Colors.brandGreen
     if (severity) {
@@ -51,7 +51,7 @@ class MetricsBar extends React.Component {
       <div
         ref={(node) => { this._container = node }}
         style={style}
-        className={Styles.bar}
+        className={`${Styles.bar} ${className}`}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
@@ -77,6 +77,7 @@ class MetricsBar extends React.Component {
 MetricsBar.propTypes = {
   value: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
+  className: PropTypes.string,
   style: PropTypes.object,
   severity: PropTypes.bool,
 }
