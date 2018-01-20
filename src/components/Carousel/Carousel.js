@@ -64,6 +64,8 @@ class CarouselContainer extends React.Component {
 CarouselContainer.propTypes = {
   actionId: PropTypes.number.isRequired,
   actionData: PropTypes.object,
+  lat: PropTypes.number,
+  lng: PropTypes.number,
   onActionData: PropTypes.func.isRequired,
 }
 
@@ -108,6 +110,7 @@ class CarouselView extends React.Component {
 
   handleKeyDown = (e) => {
     try {
+      if (e.keyCode === 27) this.props.onClose() // 8 is keyCode for delete key
       if (e.keyCode === 37) this.swiper.slidePrev()
       if (e.keyCode === 39) this.swiper.slideNext()
     } catch (exception) {}

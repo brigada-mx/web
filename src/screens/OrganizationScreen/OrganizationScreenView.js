@@ -52,7 +52,7 @@ class OrganizationScreenView extends React.Component {
     this.state = {
       popup: {},
       focused: null,
-      actionId: null,
+      carousel: {},
     }
   }
 
@@ -72,7 +72,7 @@ class OrganizationScreenView extends React.Component {
   }
 
   handleClickListItem = (item) => {
-    this.setState({ actionId: item.id })
+    this.setState({ carousel: { actionId: item.id } })
   }
 
   handleEnterListItem = (item) => {
@@ -85,7 +85,9 @@ class OrganizationScreenView extends React.Component {
   }
 
   handleClickActionFeature = (feature) => {
-    this.props.history.push(`/acciones/${JSON.parse(feature.properties.action).id}`)
+    const actionId = JSON.parse(feature.properties.action).id
+    const [lng, lat] = feature.geometry.coordinates
+    this.setState({ carousel: { actionId, lat, lng } })
   }
 
   handleEnterActionFeature = (feature) => {
@@ -93,15 +95,15 @@ class OrganizationScreenView extends React.Component {
   }
 
   handleCarouselClose = () => {
-    this.setState({ actionId: null })
+    this.setState({ carousel: {} })
   }
 
   renderCarousel = () => {
-    const { actionId } = this.state
-    if (actionId === null) return null
+    const { actionId, lat, lng } = this.state.carousel
+    if (actionId === undefined) return null
 
     return (
-      <Carousel onClose={this.handleCarouselClose} actionId={actionId} />
+      <Carousel onClose={this.handleCarouselClose} actionId={actionId} lat={lat} lng={lng} />
     )
   }
 
