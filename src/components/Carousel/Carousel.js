@@ -94,14 +94,29 @@ class CarouselView extends React.Component {
     }
   }
 
-  setSwiperRef = (ref) => {
-    if (!ref) return
-    this.swiper = ref.swiper
-    this.swiper.on('slideChange', () => this.setState({ index: this.swiper.activeIndex }))
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyDown)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown)
   }
 
   componentWillUpdate(nextProps) {
     if (this.props.photos !== nextProps.photos) this.setState({ index: 0 })
+  }
+
+  handleKeyDown = (e) => {
+    try {
+      if (e.keyCode === 37) this.swiper.slidePrev()
+      if (e.keyCode === 39) this.swiper.slideNext()
+    } catch (exception) {}
+  }
+
+  setSwiperRef = (ref) => {
+    if (!ref) return
+    this.swiper = ref.swiper
+    this.swiper.on('slideChange', () => this.setState({ index: this.swiper.activeIndex }))
   }
 
   render() {
