@@ -30,6 +30,11 @@
   color: #141418;
   letter-spacing: 0;
   line-height: 30px;
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .tagContainer {

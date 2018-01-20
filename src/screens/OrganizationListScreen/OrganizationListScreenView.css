@@ -9,9 +9,19 @@
 
 .filtersSmallScreen {
   position: absolute;
-  max-height: 40px;
   width: 100vw;
   background-color: white;
+}
+
+.filtersSmallScreen:after {
+  content: '';
+  width: 100%;
+  height: 35%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  background-image: linear-gradient(-180deg, rgba(246,248,250,0.00) 0%, #F6F8FA 100%);
 }
 
 .filterButton {
@@ -25,7 +35,32 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.filterShadow {
+.updateButton {
+  position: absolute;
+  left: 50%;
+  margin-left: -128px;
+  z-index: 5;
+  bottom: 16px;
+  background-color: #3DC59F;
+  padding: 16px 46px;
+  font-family: 'nunito-sans-800', sans-serif;
+  font-size: 11px;
+  color: white;
+  letter-spacing: 0.8px;
+  line-height: 16px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.updateButton:hover {
+  background-color: #13A68C;
+}
+
+.updateButton:active {
+  background-color: #13A68C;
+}
+
+.shadow {
   position: relative;
   z-index: 5;
   box-shadow: 15px 15px 30px 0px weakShadow;
@@ -61,7 +96,7 @@
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .container {
-    height: calc(100vh - 283px);
+    height: calc(100vh - 349px);
   }
   .orgsContainer {
     background-color: white;
@@ -72,14 +107,26 @@
     padding: 0px;
     box-shadow: 0 0 100px 0 weakShadow;
   }
-  .filterShadow {
+  .shadow {
     box-shadow: unset;
+  }
+  .mapContainer:before {
+    content: '';
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow: inset 0px 0px 30px 0px strongShadow;
   }
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .container {
-    height: calc(100vh - 225px);
+    height: calc(100vh - 283px);
   }
   .orgsContainer {
     background-color: white;
@@ -90,7 +137,19 @@
     padding: 0px;
     box-shadow: 0 0 100px 0 weakShadow;
   }
-  .filterShadow {
+  .shadow {
     box-shadow: unset;
+  }
+  .mapContainer:before {
+    content: '';
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow: inset 0px 0px 30px 0px strongShadow;
   }
 }
