@@ -8,9 +8,12 @@ import '!style-loader!css-loader!swiper/dist/css/swiper.css'
 import * as Actions from 'src/actions'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import service, { getBackoffStateless } from 'api/service'
+import { distanceKmBetweenCoords } from 'tools/other'
 import Styles from './Carousel.css'
 import Photo from './Photo'
 
+
+const maxMetersGroupSubmissions = 50
 
 class CarouselContainer extends React.Component {
   componentDidMount() {
@@ -29,12 +32,11 @@ class CarouselContainer extends React.Component {
   }
 
   render() {
-    const { actionId, actionData, onActionData, ...rest } = this.props
+    const { actionId, actionData, onActionData, lat, lng, ...rest } = this.props
     if (!actionData) return <LoadingIndicatorCircle />
 
     const submissions = actionData.submissions.map((s) => {
       const {
-        action,
         data: { description, address },
         location,
         organization: organizationId,
@@ -45,7 +47,6 @@ class CarouselContainer extends React.Component {
       } = s
       return urls.map((url, i) => {
         return {
-          actionId: action,
           description,
           address,
           location,
@@ -57,7 +58,15 @@ class CarouselContainer extends React.Component {
         }
       })
     })
-    return <CarouselView {...rest} photos={[].concat(...submissions)} />
+    let filtered = [].concat(...submissions)
+    if (lat && lng) {
+      filtered = filtered.filter((s) => {
+        if (!s.location) return false
+        const { lat: _lat, lng: _lng } = s.location
+        return distanceKmBetweenCoords(lat, lng, _lat, _lng) * 1000 < maxMetersGroupSubmissions
+      })
+    }
+    return <CarouselView {...rest} photos={filtered} />
   }
 }
 

@@ -7,7 +7,6 @@ import Styles from './Carousel.css'
 const Photo = (props) => {
   const {
     lazyLoad,
-    actionId,
     description,
     address,
     location = {},
@@ -28,7 +27,6 @@ const Photo = (props) => {
 
 Photo.propTypes = {
   lazyLoad: PropTypes.bool,
-  actionId: PropTypes.number.isRequired,
   description: PropTypes.string,
   address: PropTypes.string,
   location: PropTypes.object,
