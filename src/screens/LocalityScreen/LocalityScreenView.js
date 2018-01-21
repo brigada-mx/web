@@ -9,6 +9,7 @@ import MetricsBar from 'components/MetricsBar'
 import StackedMetricsBar from 'components/StackedMetricsBar'
 import ActionList from 'components/ActionList'
 import ActionMap from 'components/FeatureMap/ActionMap'
+import Carousel from 'components/Carousel'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DirectionsButton from 'components/DirectionsButton'
 import EstablishmentPopup from 'components/FeatureMap/EstablishmentPopup'
@@ -141,6 +142,7 @@ class LocalityScreenView extends React.Component {
     this.state = {
       popup: null,
       focused: null,
+      carousel: {},
     }
   }
 
@@ -159,7 +161,7 @@ class LocalityScreenView extends React.Component {
   }
 
   handleClickListItem = (item) => {
-    this.props.history.push(`/acciones/${item.id}`)
+    this.setState({ carousel: { actionId: item.id } })
   }
 
   handleEnterListItem = (item) => {
@@ -172,11 +174,26 @@ class LocalityScreenView extends React.Component {
   }
 
   handleClickActionFeature = (feature) => {
-    this.props.history.push(`/acciones/${JSON.parse(feature.properties.action).id}`)
+    const actionId = JSON.parse(feature.properties.action).id
+    const [lng, lat] = feature.geometry.coordinates
+    this.setState({ carousel: { actionId, lat, lng } })
   }
 
   handleEnterActionFeature = (feature) => {
     this.setState({ focused: JSON.parse(feature.properties.action) })
+  }
+
+  handleCarouselClose = () => {
+    this.setState({ carousel: {} })
+  }
+
+  renderCarousel = () => {
+    const { actionId, lat, lng } = this.state.carousel
+    if (actionId === undefined) return null
+
+    return (
+      <Carousel onClose={this.handleCarouselClose} actionId={actionId} lat={lat} lng={lng} />
+    )
   }
 
   renderLocalitySection = () => {
@@ -403,6 +420,7 @@ class LocalityScreenView extends React.Component {
         {this.renderLocalitySection()}
         {this.renderEstablishmentsSection()}
         {this.renderActionsSection()}
+        {this.renderCarousel()}
       </div>
     )
   }
