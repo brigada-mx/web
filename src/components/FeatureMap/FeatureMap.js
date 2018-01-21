@@ -9,10 +9,6 @@ import Styles from './FeatureMap.css'
 
 
 const { mapbox: { accessToken } } = env
-const Mapbox = ReactMapboxGl({
-  accessToken,
-  scrollZoom: false,
-})
 
 const zoomStyle = {
   position: 'absolute',
@@ -33,6 +29,11 @@ class FeatureMap extends React.Component {
     this.state = {
       map: null,
     }
+    this.Mapbox = ReactMapboxGl({
+      accessToken,
+      scrollZoom: false,
+      keyboard: !props.disableKeyboard,
+    })
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -83,6 +84,8 @@ class FeatureMap extends React.Component {
   render() {
     const { popup, legend, fitBounds } = this.props
     if (!_.isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
+    const { Mapbox } = this
+    if (!Mapbox) return null
 
     return (
       <Mapbox
@@ -107,6 +110,7 @@ class FeatureMap extends React.Component {
 }
 
 FeatureMap.propTypes = {
+  disableKeyboard: PropTypes.bool,
   coordinates: PropTypes.arrayOf(PropTypes.number),
   features: PropTypes.arrayOf(PropTypes.object).isRequired,
   layer: PropTypes.object.isRequired,
@@ -120,6 +124,7 @@ FeatureMap.propTypes = {
 }
 
 FeatureMap.defaultProps = {
+  disableKeyboard: false,
   onClickFeature: () => {},
   onEnterFeature: () => {},
   onLeaveFeature: () => {},

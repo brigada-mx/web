@@ -66,7 +66,7 @@ class CarouselContainer extends React.Component {
         return distanceKmBetweenCoords(lat, lng, _lat, _lng) * 1000 < maxMetersGroupSubmissions
       })
     }
-    return <CarouselView {...rest} photos={filtered} />
+    return <CarouselView key={filtered.length} {...rest} photos={filtered} />
   }
 }
 

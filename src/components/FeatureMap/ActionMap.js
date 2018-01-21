@@ -60,6 +60,7 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
   return (
     <FeatureMap
       {...rest}
+      disableKeyboard
       fitBounds={fitBoundsFromCoords(locations)}
       features={features}
       layer={layer}
