@@ -146,6 +146,14 @@ class LocalityScreenView extends React.Component {
     }
   }
 
+  componentWillUpdate(nextProps) {
+    const { data } = nextProps.actions
+    if (!this.props.actions.data && data) {
+      const [focused] = data.results
+      this.setState({ focused })
+    }
+  }
+
   handleClickFeature = (feature) => {
   }
 

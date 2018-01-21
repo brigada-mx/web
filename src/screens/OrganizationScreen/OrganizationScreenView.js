@@ -56,6 +56,14 @@ class OrganizationScreenView extends React.Component {
     }
   }
 
+  componentWillUpdate(nextProps) {
+    const { data } = nextProps.organization
+    if (!this.props.organization.data && data) {
+      const [focused] = data.actions
+      this.setState({ focused })
+    }
+  }
+
   handleClickFeature = (feature) => {
     this.props.history.push(`/comunidades/${feature.properties.id}`)
   }
