@@ -107,29 +107,15 @@ DmgBarChart.propTypes = {
 
 const establishmentMapLayer = {
   id: 'features',
-  // type: 'symbol',
   type: 'circle',
   source: 'features',
-  // layout: {
-  //   'icon-image': '{icon}',
-  //   'icon-allow-overlap': true,
-  // },
   paint: {
     'circle-color': {
       property: 'group',
       type: 'categorical',
-      stops: [
-        [1, '#2965CC'],
-        [2, '#29A634'],
-        [3, '#D99E0B'],
-        [4, '#D13913'],
-        [5, '#8F398F'],
-        [6, '#00B3A4'],
-        [7, '#DB2C6F'],
-        [8, '#9BBF30'],
-        [9, '#96622D'],
-        [10, '#7157D9'],
-      ],
+      stops: Object.keys(metaByScianGroup).map(
+        key => [parseInt(key, 10), metaByScianGroup[key].color]
+      ),
     },
     'circle-opacity': 0.85,
     'circle-radius': 4,
