@@ -32,7 +32,7 @@ const LocalityLegend = ({ className = '', localities, legendTitle }) => {
   })
 
   return (
-    <div className={`${className} ${Styles.container}`}>
+    <div className={Styles.container}>
       <p className={Styles.title}>{legendTitle}</p>
       {items}
     </div>

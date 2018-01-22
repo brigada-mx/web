@@ -8,7 +8,7 @@
   left: 26px;
   bottom: 26px;
   flex-direction: column;
-  width: 182px;
+  width: 245px;
   padding: 15px 15px 9px 15px;
   border-radius: 2px;
   box-shadow: 0 40px 100px 0 strongShadow;
@@ -24,19 +24,36 @@
   margin-bottom: 7px;
 }
 
-.circle {
-  border-radius: 50%;
-  width: 8px;
-  height: 8px;
-  margin: 0 11px 2px 0;
-}
-
 .legendItem {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin: 2px 0;
+}
+
+.legendItem div {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  border-radius: 50%;
+  min-width: 8px;
+  height: 8px;
+  margin: 0 11px 2px 0;
+}
+
+.name {
+  font-size: 12px;
+  font-family: 'nunito-sans', sans-serif;
+  color: #9F9F9F;
+}
+
+.count {
+  font-family: 'roboto-500', sans-serif;
+  font-size: 13px;
+  color: #141418;
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { fmtNum } from 'tools/string'
 import Styles from './EstablishmentLegend.css'
 
 
@@ -29,12 +30,12 @@ const EstablishmentLegend = ({ establishments }) => {
   const items = Object.keys(counts).sort((a, b) => a - b).map((g) => {
     const { color, name } = metaByScianGroup[g]
     return (
-      <div
-        key={g}
-        className={Styles.legendItem}
-      >
-        <span className={Styles.circle} style={{ backgroundColor: color }} />
-        <span>{name} {counts[g]}</span>
+      <div key={g} className={Styles.legendItem}>
+        <div>
+          <span className={Styles.circle} style={{ backgroundColor: color }} />
+          <span className={Styles.label}>{name}</span>
+        </div>
+        <span className={Styles.count}>{fmtNum(counts[g])}</span>
       </div>
     )
   })
