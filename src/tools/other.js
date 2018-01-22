@@ -90,3 +90,14 @@ export const distanceKmBetweenCoords = (lat1, lng1, lat2, lng2) => {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
   return R * c
 }
+
+export const generateSizeStops = (baseStops, baseZoom, minZoom = 3, maxZoom = 15) => {
+  const stops = []
+  for (let zoom = minZoom; zoom <= maxZoom; zoom += 1) {
+    stops.push(baseStops.map((stop) => {
+      const [value, size] = stop
+      return [{ zoom, value }, size * (zoom / baseZoom) ** 1.25]
+    }))
+  }
+  return [].concat(...stops)
+}

@@ -105,6 +105,8 @@ DmgBarChart.propTypes = {
   notHabit: PropTypes.number.isRequired,
 }
 
+const establishmentMapInitialZoom = 13
+
 const establishmentMapLayer = {
   id: 'features',
   type: 'circle',
@@ -118,7 +120,13 @@ const establishmentMapLayer = {
       ),
     },
     'circle-opacity': 0.85,
-    'circle-radius': 4,
+    'circle-radius': {
+      stops: [
+        [establishmentMapInitialZoom, 4],
+        [20, 70],
+      ],
+      base: 2,
+    },
   },
 }
 
@@ -317,6 +325,7 @@ class LocalityScreenView extends React.Component {
           <DirectionsButton lat={lat} lng={lng} />
         </div>
         <FeatureMap
+          initialZoom={establishmentMapInitialZoom}
           features={features}
           layer={establishmentMapLayer}
           coordinates={[lng, lat]}

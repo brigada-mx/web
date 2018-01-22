@@ -6,6 +6,7 @@ import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 
 import env from 'src/env'
 import Colors from 'src/Colors'
+import { generateSizeStops } from 'tools/other'
 import Styles from './LocalityDamageMap.css'
 
 
@@ -21,17 +22,6 @@ const zoomStyle = {
   right: 26,
   border: 'none',
   borderRadius: 2,
-}
-
-const generateSizeStops = (baseStops, baseZoom, minZoom = 3, maxZoom = 15) => {
-  const stops = []
-  for (let zoom = minZoom; zoom <= maxZoom; zoom += 1) {
-    stops.push(baseStops.map((stop) => {
-      const [value, size] = stop
-      return [{ zoom, value }, size * (zoom / baseZoom) ** 1.25]
-    }))
-  }
-  return [].concat(...stops)
 }
 
 const baseZoom = 6

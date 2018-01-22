@@ -21,7 +21,7 @@ const zoomStyle = {
 class FeatureMap extends React.Component {
   constructor(props) {
     super(props)
-    this._initialZoom = [13]
+    this._initialZoom = [props.initialZoom || 13]
     this._initialCoordinates = props.coordinates || [-95.9042505, 17.1073688]
     this._fitBounds = props.fitBounds
     this._fitBoundsOptions = props.fitBoundsOptions || { padding: 20, maxZoom: 13 }
@@ -110,6 +110,7 @@ class FeatureMap extends React.Component {
 }
 
 FeatureMap.propTypes = {
+  initialZoom: PropTypes.number,
   disableKeyboard: PropTypes.bool,
   coordinates: PropTypes.arrayOf(PropTypes.number),
   features: PropTypes.arrayOf(PropTypes.object).isRequired,
