@@ -142,7 +142,7 @@ class CarouselView extends React.Component {
     return (
       <div className={Styles.container}>
         <span className={Styles.progress}>{this.state.index + 1} / {panes.length}</span>
-        <span className={Styles.closeButton} onClick={onClose}>X</span>
+        <span className={Styles.closeButton} onClick={onClose} />
         <Swiper
           {...this.swiperParams}
           ref={this.setSwiperRef}

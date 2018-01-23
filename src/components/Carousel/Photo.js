@@ -19,8 +19,8 @@ const Photo = (props) => {
 
   return (
     <div style={lazyLoad ? null : { background: `url(${urlMedium}) no-repeat center` }} className={Styles.photo}>
-      <span>{description}</span>
-      <span>{submitted}</span>
+      <span className={Styles.description}>{description}</span>
+      <span className={Styles.timestamp}>{submitted}</span>
     </div>
   )
 }

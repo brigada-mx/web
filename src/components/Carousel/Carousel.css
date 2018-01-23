@@ -13,16 +13,42 @@
   background-color: rgba(13,13,13,0.96);
 }
 
+.description {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #686868;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+}
+
+.timestamp {
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 14px;
+  color: #FFFFFF;
+  letter-spacing: 1.26px;
+  line-height: 20px;
+}
+
 .progress {
   position: absolute;
   left: 20px;
   top: 20px;
   z-index: 5;
+  opacity: 0.3;
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 14px;
+  color: #FFFFFF;
+  letter-spacing: 1.26px;
+  line-height: 20px;
 }
 
 .closeButton {
+  background: no-repeat url("assets/img/close-gallery.svg");
+  background-size: 13px 13px;
+  width: 13px;
+  height: 13px;
   position: absolute;
-  right: 20px;
-  top: 20px;
-  z-index: 5;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
 }
