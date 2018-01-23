@@ -30,6 +30,8 @@
   color: #FFFFFF;
   letter-spacing: 1.26px;
   line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .description {
@@ -39,6 +41,7 @@
   color: #686868;
   letter-spacing: 0.4px;
   line-height: 16px;
+  text-align: center;
 }
 
 .progress {
