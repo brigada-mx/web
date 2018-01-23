@@ -18,7 +18,7 @@ const Photo = (props) => {
   } = props
 
   return (
-    <div style={lazyLoad ? null : { background: `url(${urlMedium}) no-repeat` }} className={Styles.photo}>
+    <div style={lazyLoad ? null : { background: `url(${urlMedium}) no-repeat center` }} className={Styles.photo}>
       <span>{description}</span>
       <span>{submitted}</span>
     </div>

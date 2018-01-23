@@ -1,13 +1,16 @@
 .photo {
-  position: relative;
-  width: 80vw;
-  height: 80vh;
+  height: 100%;
+  background-size: contain !important;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
 }
 
 .container {
-  position: relative;
+  position: fixed;
   width: 100vw;
   height: 100vh;
+  bottom: 0;
+  z-index: 10;
+  background-color: rgba(13,13,13,0.96);
 }
 
 .progress {

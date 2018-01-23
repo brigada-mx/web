@@ -1,0 +1,21 @@
+// SWIPER
+
+div.swiper-slide-prev, div.swiper-slide-next {
+  opacity: 0.4;
+}
+
+div.swiper-button-prev, div.swiper-button-next {
+  width: 33%;
+  height: 100%;
+  background-image: none !important;
+  top: 0;
+  cursor: pointer;
+}
+
+div.swiper-button-prev {
+  left: 0;
+}
+
+div.swiper-button-next {
+  right: 0;
+}

@@ -95,9 +95,9 @@ class CarouselView extends React.Component {
       index: 0,
     }
     this.swiperParams = {
-      slidesPerView: 'auto',
+      slidesPerView: 3,
+      spaceBetween: 30,
       centeredSlides: true,
-      spaceBetween: 50,
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
