@@ -327,7 +327,9 @@ class OrganizationListScreenView extends React.Component {
                 onLeaveFeature={this.handleLeaveFeature}
                 fitBounds={this.state.fitBounds.length > 0 ? this.state.fitBounds : undefined}
               />
-              <LocalityLegend className="sm-hidden xs-hidden" localities={localities} legendTitle="¿Dónde opera?" />
+              <div className="sm-hidden xs-hidden">
+                <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
+              </div>
             </div>
           </div>
         </div>

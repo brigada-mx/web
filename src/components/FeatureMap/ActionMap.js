@@ -18,7 +18,7 @@ const layer = {
       type: 'categorical',
       stops: [
         [true, 1],
-        [false, 0.65],
+        [false, 1],
       ],
     },
     'circle-radius': {
@@ -26,7 +26,7 @@ const layer = {
       type: 'categorical',
       stops: [
         [true, 9],
-        [false, 5],
+        [false, 4],
       ],
     },
   },

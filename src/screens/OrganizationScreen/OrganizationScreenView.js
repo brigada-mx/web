@@ -277,6 +277,10 @@ class OrganizationScreenView extends React.Component {
                   <span className={Styles.metricLabel}>Proyectos<br />registrados</span>
                   <span className={Styles.metricValue}>{actions.length}</span>
                 </div>
+                <div className={Styles.metric}>
+                  <span className={Styles.metricLabel}>Fotos<br />capturadas</span>
+                  <span className={Styles.metricValue}>0</span>
+                </div>
               </div>
             </div>
             <div className="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 sm-hidden xs-hidden">

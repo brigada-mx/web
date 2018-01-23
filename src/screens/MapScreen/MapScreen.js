@@ -317,7 +317,9 @@ class MapScreen extends React.Component {
                 onLeaveFeature={this.handleLeaveFeature}
                 fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
               />
-              <LocalityLegend className="sm-hidden xs-hidden" localities={filtered} legendTitle="Nivel de daño" />
+              <div className="sm-hidden xs-hidden">
+                <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />
+              </div>
             </div>
           </div>
         </div>

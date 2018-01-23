@@ -8,6 +8,7 @@
   background-image: url('assets/img/phone.svg');
   margin-right: 6px;
   position: relative;
+  cursor: pointer;
 }
 
 .box:hover {
