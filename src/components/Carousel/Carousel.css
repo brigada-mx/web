@@ -1,16 +1,11 @@
 .mapLink {
-  color: white;
+  color: #A5A5A5;
   text-decoration: none;
-}
-
-.mapLink:before {
-  content: '';
   background: url("assets/img/location-icon.svg") no-repeat;
   background-size: 12px 12px;
-  width: 12px;
-  height: 12px;
-  display: inline-flex;
-  margin-right: 11px;
+  background-position-y: 3px;
+  padding-left: 23px;
+  display: inline-block;
 }
 
 .photo {
@@ -21,11 +16,16 @@
   justify-content: center;
 }
 
-.photo img {
-  max-height: 80%;
-  max-width: 80%;
+.box {
+  max-height: 70%;
+  max-width: 100%;
   margin: 0 auto;
-  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+}
+
+.box img {
+  height: 100%;
+  margin-left: 0 !important;
+  box-shadow: 0 20px 40px 0px rgba(0, 0, 0, 0.5)
 }
 
 .container {
@@ -39,15 +39,20 @@
 
 .labelContainer {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  margin-top: 25px;
+  margin-top: 27px;
   font-family: 'nunito-sans-600', sans-serif;
   font-size: 14px;
-  color: #FFFFFF;
+  color: #A5A5A5;
   letter-spacing: 1.26px;
   line-height: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.labelContainer span {
+  /*margin-bottom: 4px;*/
 }
 
 .description {
@@ -57,20 +62,31 @@
   color: #686868;
   letter-spacing: 0.4px;
   line-height: 16px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
-.progress {
+.progressContainer {
   position: absolute;
   left: 20px;
   top: 20px;
   z-index: 5;
-  opacity: 0.3;
   font-family: 'nunito-sans-600', sans-serif;
   font-size: 14px;
   color: #FFFFFF;
   letter-spacing: 1.26px;
   line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.divider {
+  opacity: 0.3;
+  margin: 0 14px;
+}
+
+.total {
+  opacity: 0.3;
 }
 
 .closeButton {

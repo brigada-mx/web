@@ -34,12 +34,14 @@ const Photo = (props) => {
 
   return (
     <div className={Styles.photo}>
-      {lazyLoad ? <div /> : <img src={urlMedium} alt={description} />}
-      <div className={Styles.labelContainer}>
-        <span>{moment(submitted).format('h:mma, DD MMMM YYYY')}</span>
-        {latLng}
+      <div className={Styles.box}>
+        {lazyLoad ? <div /> : <img src={urlMedium} alt={description} />}
+        <div className={Styles.labelContainer}>
+          <span>{moment(submitted).format('h:mma, DD MMMM YYYY')}</span>
+          {latLng}
+        </div>
+        <span className={Styles.description}>{description}</span>
       </div>
-      <span className={Styles.description}>{description}</span>
     </div>
   )
 }

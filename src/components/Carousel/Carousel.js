@@ -141,7 +141,11 @@ class CarouselView extends React.Component {
     })
     return (
       <div className={Styles.container}>
-        <span className={Styles.progress}>{this.state.index + 1} / {panes.length}</span>
+        <div className={Styles.progressContainer}>
+          <span>{this.state.index + 1}</span>
+          <span className={Styles.divider}>/</span>
+          <span className={Styles.total}>{panes.length}</span>
+        </div>
         <span className={Styles.closeButton} onClick={onClose} />
         <Swiper
           {...this.swiperParams}
