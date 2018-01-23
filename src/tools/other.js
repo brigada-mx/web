@@ -101,3 +101,16 @@ export const generateSizeStops = (baseStops, baseZoom, minZoom = 3, maxZoom = 15
   }
   return [].concat(...stops)
 }
+
+export const toDegrees = (coordinate) => {
+  const absolute = Math.abs(coordinate)
+  const degrees = Math.floor(absolute)
+  const minutesNotTruncated = (absolute - degrees) * 60
+  const minutes = Math.floor(minutesNotTruncated)
+  const seconds = Math.floor((minutesNotTruncated - minutes) * 60)
+  return [Math.sign(coordinate), degrees, minutes, seconds]
+}
+
+export const googleMapsUrl = (lat, lng) => {
+  return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+}

@@ -3,21 +3,11 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
+import { toDegrees, googleMapsUrl } from 'tools/other'
 import Styles from './Carousel.css'
 
 
 moment.locale('es')
-
-const toDegrees = (coordinate) => {
-  const absolute = Math.abs(coordinate)
-  const degrees = Math.floor(absolute)
-  const minutesNotTruncated = (absolute - degrees) * 60
-  const minutes = Math.floor(minutesNotTruncated)
-  const seconds = Math.floor((minutesNotTruncated - minutes) * 60)
-
-  return [degrees, minutes, seconds]
-}
-
 
 const Photo = (props) => {
   const {
@@ -35,9 +25,11 @@ const Photo = (props) => {
   const { lat, lng } = location || {}
   let latLng = null
   if (lat) {
-    const [latd, latm, lats] = toDegrees(lat)
-    const [lngd, lngm, lngs] = toDegrees(lng)
-    latLng = <span>{`${latd}°${latm}'${lats}"N ${lngd}°${lngm}'${lngs}"W`}</span>
+    const [latsign, latd, latm, lats] = toDegrees(lat)
+    const [lngsign, lngd, lngm, lngs] = toDegrees(lng)
+    const latStr = `${latd}°${latm}'${lats}"${latsign >= 0 ? 'N' : 'S'}`
+    const lngStr = `${lngd}°${lngm}'${lngs}"${lngsign >= 0 ? 'E' : 'W'}`
+    latLng = <a className={Styles.mapLink} target="_blank" href={googleMapsUrl(lat, lng)}>{`${latStr} ${lngStr}`}</a>
   }
 
   return (
