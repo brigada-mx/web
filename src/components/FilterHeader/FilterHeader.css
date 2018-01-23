@@ -10,7 +10,7 @@
   position: relative;
   box-sizing: border-box;
   max-width: 60vw;
-  padding: 23px 0 15px 0;
+  padding: 18px 0 11px 0;
   z-index: 3;
 }
 
@@ -30,12 +30,6 @@
   text-transform: uppercase;
   margin-bottom: -22px;
   z-index: 1;
-}
-
-@media screen and (min-width: 980px) {
-  .container {
-    height: 65px;
-  }
 }
 
 @media screen and (max-width: 979px) and (min-width: 0px) {

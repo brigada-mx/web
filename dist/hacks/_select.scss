@@ -31,7 +31,7 @@ div .Select .Select-control:hover {
   border-top: 1px solid #F2F2F4;
   box-shadow: 0 40px 100px 0px rgba(37, 38, 50, 0.1);
   width: 260px;
-  margin-top: 15px;
+  margin-top: 10px;
   left: -14px;
 }
 
@@ -52,12 +52,14 @@ div .Select .Select-control:hover {
   font-size: 15px;
   letter-spacing: 0.6px;
   max-width: 80%;
+  margin: 0 5px 5px 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .Select .Select-multi-value-wrapper {
   width: 100%;
+  padding-left: 3px;
 }
 
 .Select .Select-value .Select-value-label {
