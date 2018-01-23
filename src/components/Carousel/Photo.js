@@ -1,7 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import moment from 'moment'
+
 import Styles from './Carousel.css'
+
+
+moment.locale('es')
+
+const toDegrees = (coordinate) => {
+  const absolute = Math.abs(coordinate)
+  const degrees = Math.floor(absolute)
+  const minutesNotTruncated = (absolute - degrees) * 60
+  const minutes = Math.floor(minutesNotTruncated)
+  const seconds = Math.floor((minutesNotTruncated - minutes) * 60)
+
+  return [degrees, minutes, seconds]
+}
 
 
 const Photo = (props) => {
@@ -9,7 +24,7 @@ const Photo = (props) => {
     lazyLoad,
     description,
     address,
-    location = {},
+    location,
     organizationId,
     submitted,
     url,
@@ -17,12 +32,20 @@ const Photo = (props) => {
     urlSmall,
   } = props
 
+  const { lat, lng } = location || {}
+  let latLng = null
+  if (lat) {
+    const [latd, latm, lats] = toDegrees(lat)
+    const [lngd, lngm, lngs] = toDegrees(lng)
+    latLng = <span>{`${latd}°${latm}'${lats}"N ${lngd}°${lngm}'${lngs}"W`}</span>
+  }
+
   return (
     <div className={Styles.photo}>
-      <img src={urlMedium} alt={description} />
+      {lazyLoad ? <div /> : <img src={urlMedium} alt={description} />}
       <div className={Styles.labelContainer}>
-        <span>{submitted}</span>
-        <span>{submitted}</span>
+        <span>{moment(submitted).format('h:mma, DD MMMM YYYY')}</span>
+        {latLng}
       </div>
       <span className={Styles.description}>{description}</span>
     </div>
