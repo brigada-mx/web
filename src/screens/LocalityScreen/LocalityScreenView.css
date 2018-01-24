@@ -171,13 +171,20 @@
 }
 
 .cardsContainer {
-  padding: 21px 0px 5px 25px;
   display: flex;
   flex-direction: column;
 }
 
-.mapContainer {
+@media screen and (min-width: 1440px) {
+  .cardsContainer {
+    padding: 21px 0 0 25px;
+  }
+}
 
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .cardsContainer {
+    padding: 21px 0 0 25px;
+  }
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
@@ -190,16 +197,11 @@
   .map {
     margin-top: 67px;
   }
-  .actionCardsContainer {
-    background-color: #F6F8FA;
-    padding: 21px 20px 5px 20px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: unset;
-    justify-content: unset;
-  }
   .margContainer {
     justify-content: space-between;
+  }
+  .cardsContainer {
+    padding: 26px 20px 0 20px;
   }
 }
 
@@ -280,10 +282,10 @@
     width: 100%;
     margin-right: 0px;
   }
-  .actionCardsContainer {
-    padding: 21px 5px 20px;
-  }
   .margColumn {
     width: 100%;
+  }
+  .cardsContainer {
+    padding: 26px 20px 0 20px;
   }
 }
