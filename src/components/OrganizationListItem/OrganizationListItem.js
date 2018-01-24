@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { fmtBudget } from 'tools/string'
+import { fmtBudget, truncate } from 'tools/string'
 import Styles from './OrganizationListItem.css'
 
 
@@ -43,7 +43,7 @@ class OrganizationListItem extends React.PureComponent {
           <div className={Styles.tagContainer}>
             {count.slice(0, 3).map((t, i) => <span key={i} className={Styles.tag}>{t.tag}</span>)}
           </div>
-          <span className={Styles.desc}>{desc}</span>
+          <span className={Styles.desc}>{truncate(desc, 154)}</span>
         </div>
         <div className={Styles.metricsContainer}>
           <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
