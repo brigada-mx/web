@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Colors from 'src/Colors'
 import { fitBoundsFromCoords } from 'tools/other'
 import FeatureMap from './FeatureMap'
+import ActionLegend from './ActionLegend'
 
 
 const maxFeatures = 1000
@@ -12,7 +12,7 @@ const layer = {
   type: 'circle',
   source: 'features',
   paint: {
-    'circle-color': Colors.brandGreen,
+    'circle-color': '#3DC59F',
     'circle-opacity': {
       property: 'selected',
       type: 'categorical',
@@ -64,6 +64,7 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
       fitBounds={fitBoundsFromCoords(locations)}
       features={features}
       layer={layer}
+      legend={<ActionLegend />}
     />
   )
 }
@@ -71,6 +72,7 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
 ActionMap.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedId: PropTypes.number,
+  legend: PropTypes.string,
 }
 
 export default ActionMap
