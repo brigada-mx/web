@@ -70,6 +70,10 @@
   text-overflow: ellipsis;
 }
 
+.ellipsis {
+  -webkit-text-fill-color: #3DC587;
+}
+
 .fieldValue a {
   color: #3DC587;
   text-decoration: none;
@@ -229,6 +233,7 @@
   }
   .opsMap {
     width: 222px;
+    height: 250px;
   }
   .actionsContainer {
     margin-top: 55px;
