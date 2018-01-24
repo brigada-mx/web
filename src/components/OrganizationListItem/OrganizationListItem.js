@@ -40,7 +40,7 @@ class OrganizationListItem extends React.PureComponent {
       >
         <div className={Styles.descriptionContainer}>
           <span className={Styles.name}>{name}</span>
-          <div className={Styles.tagContainer}>
+          <div className={`${Styles.tagContainer} lg-hidden md-hidden`}>
             {count.slice(0, 3).map((t, i) => <span key={i} className={Styles.tag}>{t.tag}</span>)}
           </div>
           <span className={Styles.desc}>{desc}</span>
