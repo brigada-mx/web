@@ -8,7 +8,7 @@
   left: 26px;
   bottom: 26px;
   flex-direction: column;
-  width: 245px;
+  width: 296px;
   padding: 15px 15px 9px 15px;
   border-radius: 2px;
   box-shadow: 0 40px 100px 0 strongShadow;
@@ -44,10 +44,11 @@
   margin: 0 11px 2px 0;
 }
 
-.name {
+.label {
   font-size: 12px;
   font-family: 'nunito-sans', sans-serif;
   color: #9F9F9F;
+  text-transform: uppercase;
 }
 
 .count {

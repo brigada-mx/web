@@ -212,83 +212,83 @@ class OrganizationScreenView extends React.Component {
           <OrganizationBreadcrumb name={name} sector={sector} />
 
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 col-xs-4">
-              <div className={Styles.name}>{name}</div>
-            </div>
-            <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-1 sm-hidden xs-hidden">
-              <div className={Styles.buttonsContainer}>
-                {website &&
-                  <a
-                    target="_blank"
-                    className={`${Styles.button} ${Styles.website}`}
-                    href={addProtocol(website)}
-                  />
-                }
-                {phone && <PhoneBox phone={phone} />}
-                {email &&
-                  <a
-                    target="_blank"
-                    className={`${Styles.button} ${Styles.email}`}
-                    href={emailLink(email)}
-                  />
-                }
+            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
+              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
+                <div className={Styles.name}>{name}</div>
+              </div>
+              <div className="col-lg-8 col-md-9 col-sm-8 col-xs-4 gutter">
+                <div className={Styles.summaryContainer}>
+                  <div className={Styles.fieldContainer}>
+                    <span className={Styles.fieldLabel}>WEB</span>
+                    {website &&
+                      <span className={Styles.fieldValue}>
+                        <a target="_blank" href={addProtocol(website)}>{website}</a>
+                      </span>
+                    }
+                  </div>
+                  <div className={Styles.fieldContainer}>
+                    <span className={Styles.fieldLabel}>SECTOR</span>
+                    <span className={Styles.fieldValue}>{sector}</span>
+                  </div>
+                  <div className={Styles.fieldContainer}>
+                    <span className={Styles.fieldLabel}>ESTABLECIDA</span>
+                    <span className={Styles.fieldValue}>{established}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
+                <span className={Styles.mission}>{desc}</span>
+              </div>
+              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4">
+                <div className={Styles.metricsContainer}>
+                  <div className={Styles.metric}>
+                    <span className={Styles.metricLabel}>Inversión<br />estimada</span>
+                    <span className={Styles.metricValue}>
+                      {fmtBudget(actions.reduce((sum, action) => sum + (action.budget || 0), 0))}
+                    </span>
+                  </div>
+                  <div className={Styles.metric}>
+                    <span className={Styles.metricLabel}>Proyectos<br />registrados</span>
+                    <span className={Styles.metricValue}>{actions.length}</span>
+                  </div>
+                  <div className={Styles.metric}>
+                    <span className={Styles.metricLabel}>Fotos<br />capturadas</span>
+                    <span className={Styles.metricValue}>0</span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="row">
-            <div className="col-lg-offset-1 col-lg-4 col-md-offset-1 col-md-5 col-sm-8 col-xs-4">
-              <div className={Styles.summaryContainer}>
-                <div className={Styles.fieldContainer}>
-                  <span className={Styles.fieldLabel}>WEB</span>
+            <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 sm-hidden xs-hidden">
+              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
+                <div className={Styles.buttonsContainer}>
                   {website &&
-                    <span className={Styles.fieldValue}>
-                      <a target="_blank" href={addProtocol(website)}>{website}</a>
-                    </span>
+                    <a
+                      target="_blank"
+                      className={`${Styles.button} ${Styles.website}`}
+                      href={addProtocol(website)}
+                    />
+                  }
+                  {phone && <PhoneBox phone={phone} />}
+                  {email &&
+                    <a
+                      target="_blank"
+                      className={`${Styles.button} ${Styles.email}`}
+                      href={emailLink(email)}
+                    />
                   }
                 </div>
-                <div className={Styles.fieldContainer}>
-                  <span className={Styles.fieldLabel}>SECTOR</span>
-                  <span className={Styles.fieldValue}>{sector}</span>
-                </div>
-                <div className={Styles.fieldContainer}>
-                  <span className={Styles.fieldLabel}>ESTABLECIDA</span>
-                  <span className={Styles.fieldValue}>{established}</span>
+              </div>
+              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
+                <div className={Styles.hq}>
+                  <p className={Styles.subtitle}>¿Dónde estamos?</p>
+                  {this.renderAddress(address)}
                 </div>
               </div>
-            </div>
-            <div className="col-lg-2 col-lg-offset-4 col-md-2 col-md-offset-3 sm-hidden xs-hidden">
-              <div className={Styles.hq}>
-                <p className={Styles.subtitle}>¿Dónde estamos?</p>
-                {this.renderAddress(address)}
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 col-xs-4">
-              <span className={Styles.mission}>{desc}</span>
-              <div className={Styles.metricsContainer}>
-                <div className={Styles.metric}>
-                  <span className={Styles.metricLabel}>Inversión<br />estimada</span>
-                  <span className={Styles.metricValue}>
-                    {fmtBudget(actions.reduce((sum, action) => sum + (action.budget || 0), 0))}
-                  </span>
+              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
+                <div className={Styles.ops}>
+                  <p className={Styles.subtitle}>¿Dónde operamos?</p>
+                  {this.renderMap(actions)}
                 </div>
-                <div className={Styles.metric}>
-                  <span className={Styles.metricLabel}>Proyectos<br />registrados</span>
-                  <span className={Styles.metricValue}>{actions.length}</span>
-                </div>
-                <div className={Styles.metric}>
-                  <span className={Styles.metricLabel}>Fotos<br />capturadas</span>
-                  <span className={Styles.metricValue}>0</span>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-1 sm-hidden xs-hidden">
-              <div className={Styles.ops}>
-                <p className={Styles.subtitle}>¿Dónde operamos?</p>
-                {this.renderMap(actions)}
               </div>
             </div>
           </div>
