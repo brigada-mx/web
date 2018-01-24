@@ -20,10 +20,6 @@
   box-shadow: 0px 40px 100px 0px strongShadow;
 }
 
-.descriptionContainer {
-  padding: 32px 32px 27px 32px;
-}
-
 .name {
   font-family: 'nunito-sans-200', sans-serif;
   font-size: 28px;
@@ -64,11 +60,9 @@
 }
 
 .metricsContainer {
-  padding: 22px 40px 27px 32px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-top: 1px solid #F2F2F4;
 }
 
 .metric {
@@ -96,9 +90,27 @@
   line-height: 62px;
 }
 
-@media screen and (max-width: 1439px) and (min-width: 980px) {
+@media screen and (min-width: 1440px) {
+  .name {
+    margin-bottom: 11px;
+  }
+  .descriptionContainer {
+    padding: 32px 32px 18px 32px;
+  }
   .metricsContainer {
-    padding: 22px 32px 23px 32px;
+    padding: 0 40px 30px 32px;
+  }
+}
+
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .name {
+    margin-bottom: 11px;
+  }
+  .descriptionContainer {
+    padding: 32px 32px 18px 32px;
+  }
+  .metricsContainer {
+    padding: 0 32px 30px 32px;
   }
   .metric {
     flex-direction: column;
@@ -134,9 +146,6 @@
   .orgCard:hover {
     box-shadow: unset;
   }
-  .descriptionContainer {
-    padding: unset;
-  }
   .name {
     font-size: 19px;
     line-height: 32px;
@@ -149,7 +158,6 @@
   }
   .metricsContainer {
     padding: unset;
-    border-top: none;
     padding-right: 43px;
   }
   .metric {
@@ -191,9 +199,6 @@
   .orgCard:hover {
     box-shadow: unset;
   }
-  .descriptionContainer {
-    padding: unset;
-  }
   .name {
     font-size: 16px;
     line-height: 32px;
@@ -206,7 +211,6 @@
   }
   .metricsContainer {
     padding: 5px 0 0 0;
-    border-top: none;
   }
   .metric {
     flex-direction: column;
