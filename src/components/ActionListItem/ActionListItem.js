@@ -14,6 +14,7 @@ class ActionListItem extends React.PureComponent {
     const { action, screen, focused, onClick, onMouseEnter, onMouseLeave } = this.props
     const {
       action_type: actionType,
+      first_thumbnail_medium: mediumThumb,
       desc,
       unit_of_measurement: unit,
       target,
@@ -65,6 +66,7 @@ class ActionListItem extends React.PureComponent {
       const l = thumbs.length
       if (l === 0) return <div className={Styles.emptyThumbnail} />
 
+
       const count = l > 1 ? (
         <div
           className={Styles.thumbnailCount}
@@ -73,12 +75,20 @@ class ActionListItem extends React.PureComponent {
           <span className={Styles.thumbnailCountOverlay}>+{l - 1}</span>
         </div>) : null
       return (
-        <div
-          className={Styles.thumbnail}
-          style={{ backgroundImage: `url(${thumbs[0]})` }}
-        >
-          {count}
-        </div>
+        <React.Fragment>
+          <div
+            className={`${Styles.thumbnail} xs-hidden`}
+            style={{ backgroundImage: `url(${thumbs[0]})` }}
+          >
+            {count}
+          </div>
+          <div
+            className={`${Styles.thumbnail} lg-hidden md-hidden sm-hidden`}
+            style={{ backgroundImage: `url(${mediumThumb})` }}
+          >
+            {count}
+          </div>
+        </React.Fragment>
       )
     }
 
