@@ -8,7 +8,7 @@ import Styles from './OrganizationListItem.css'
 class OrganizationListItem extends React.PureComponent {
   render() {
     const { organization, onClick, focused, onMouseEnter, onMouseLeave } = this.props
-    const { name, actions, desc } = organization
+    const { name, actions, desc, image_count: numImages } = organization
     let budget = 0
     const countByTags = {}
     for (const action of actions) {
@@ -56,7 +56,7 @@ class OrganizationListItem extends React.PureComponent {
           </div>
           <div className={Styles.metric}>
             <span className={Styles.label}>Fotos<br />capturadas</span>
-            <span className={Styles.value}>0</span>
+            <span className={Styles.value}>{numImages}</span>
           </div>
         </div>
       </div>
