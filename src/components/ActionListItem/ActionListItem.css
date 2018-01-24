@@ -184,7 +184,12 @@
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
-
+  .header {
+    margin-bottom: 17px;
+  }
+  .budgetContainer {
+    margin-bottom: 11px;
+  }
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {

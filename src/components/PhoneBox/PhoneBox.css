@@ -1,18 +1,12 @@
 .box {
   display: inline-flex;
-  width: 80px;
-  height: 80px;
   background-color: #3DC59F;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url('assets/img/phone.svg');
-  margin-right: 6px;
   position: relative;
   cursor: pointer;
-}
-
-.box:hover {
-  background-color: #13A68C;
+  text-decoration: none;
 }
 
 .tooltip {
@@ -39,9 +33,55 @@
   border-color: #EDF1F5 transparent transparent transparent;
 }
 
+@media screen and (min-width: 1440px) {
+  .box {
+    width: 80px;
+    height: 80px;
+    margin-right: 6px;
+  }
+  .box:hover {
+    background-color: #13A68C;
+  }
+}
+
 @media screen and (max-width: 1439px) and (min-width: 980px) {
   .box {
     width: 72px;
     height: 72px;
+    margin-right: 6px;
+  }
+  .box:hover {
+    background-color: #13A68C;
+  }
+}
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .box {
+    width: 72px;
+    height: 72px;
+    margin-right: 6px;
+  }
+  .box:hover {
+    background-color: #13A68C;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+  .box {
+    width: 72px;
+    height: 52px;
+    background-color: white;
+    background-image: url('assets/img/phone-dark.svg');
+  }
+  .box:after {
+    content: 'Tel\E9''fono';
+    font-family: 'nunito-sans', sans-serif;
+    font-size: 12px;
+    color: #3DC59F;
+    letter-spacing: 0.4px;
+    line-height: 16px;
+    position: relative;
+    top: 100%;
+    margin: 0 auto;
   }
 }

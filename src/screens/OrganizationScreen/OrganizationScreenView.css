@@ -82,6 +82,7 @@
   background-color: #3DC59F;
   background-repeat: no-repeat;
   background-position: center;
+  text-decoration: none;
 }
 
 .buttonsContainer {
@@ -90,29 +91,13 @@
 
 .website {
   background-image: url('assets/img/website.svg');
-  margin-right: 6px;
-}
-
-.phone {
-  background-image: url('assets/img/phone.svg');
-  margin-right: 6px;
 }
 
 .email {
   background-image: url('assets/img/email.svg');
 }
 
-.button:hover {
-  background-color: #13A68C;
-}
-
-.ops {
-  margin-top: 27px;
-}
-
 .opsMap {
-  width: 250px;
-  height: 250px;
   background-color: #EFEFEF;
   border: 1px solid #EFEFEF;
   box-sizing: border-box;
@@ -175,7 +160,6 @@
 .actionsContainer {
   max-height: 847px;
   overflow-y: scroll;
-  margin-top: 55px;
   background-color: #F6F8FA;
 }
 
@@ -199,6 +183,22 @@
   .buttonsContainer {
     margin-bottom: 37px;
   }
+  .button:hover {
+    background-color: #13A68C;
+  }
+  .ops {
+    margin-top: 27px;
+  }
+  .opsMap {
+    width: 250px;
+    height: 250px;
+  }
+  .website {
+    margin-right: 6px;
+  }
+  .actionsContainer {
+    margin-top: 55px;
+  }
 }
 
 @media screen and (max-width: 1439px) and (min-width: 980px) {
@@ -218,14 +218,67 @@
     width: 72px;
     height: 72px;
   }
+  .button:hover {
+    background-color: #13A68C;
+  }
+  .website {
+    margin-right: 6px;
+  }
+  .ops {
+    margin-top: 27px;
+  }
   .opsMap {
     width: 222px;
+  }
+  .actionsContainer {
+    margin-top: 55px;
+  }
+}
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .breadcrumbLinks {
+    margin: 13px 0 97px 0;
+  }
+  .summaryContainer {
+    margin-bottom: 22px;
+  }
+  .mission {
+    margin-bottom: 39px;
+  }
+  .buttonsContainer {
+    position: absolute;
+    top: 102px;
+    right: 19px;
+  }
+  .button {
+    width: 72px;
+    height: 72px;
+  }
+  .button:hover {
+    background-color: #13A68C;
+  }
+  .website {
+    margin-right: 6px;
+  }
+  .metricsContainer {
+    margin-bottom: 47px;
+  }
+  .hq .subtitle {
+    margin-bottom: 11px;
+  }
+  .opsMap {
+    width: 370px;
+    height: 128px;
+  }
+  .actionsContainer {
+    margin-top: 55px;
   }
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .breadcrumbLinks {
-    margin-bottom: 73px;
+    padding: 0 16px;
+    margin: 13px 0 44px 0;
     overflow: hidden;
     white-space: nowrap;
   }
@@ -237,5 +290,119 @@
   }
   .breadcrumbLinks .orgDetail {
     max-width: 50%;
+  }
+  .name {
+    padding: 0 16px;
+  }
+  .summaryContainer {
+    padding: 0 16px;
+    margin-bottom: 22px;
+  }
+  .mission {
+    padding: 0 16px;
+    margin-bottom: 39px;
+  }
+  .buttonsContainer {
+    width: 100%;
+    padding: 25px 20% 52px 20%;
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #F2F2F4;
+    border-bottom: 1px solid #F2F2F4;
+  }
+  .button {
+    width: 72px;
+    height: 52px;
+    background-color: white;
+  }
+  .button:after {
+    position: relative;
+    top: 100%;
+    margin: 0 auto;
+  }
+  .website {
+    background-image: url('assets/img/website-dark.svg');
+  }
+  .website:after {
+    content: 'Web';
+    font-family: 'nunito-sans', sans-serif;
+    font-size: 12px;
+    color: #3DC59F;
+    letter-spacing: 0.4px;
+    line-height: 16px;
+  }
+  .email {
+    background-image: url('assets/img/email-dark.svg');
+  }
+  .email:after {
+    content: 'Correo';
+    font-family: 'nunito-sans', sans-serif;
+    font-size: 12px;
+    color: #3DC59F;
+    letter-spacing: 0.4px;
+    line-height: 16px;
+  }
+  .metricsContainer {
+    padding-top: 23px;
+    margin-bottom: 47px;
+    border-top: 1px solid #F2F2F4;
+    align-items: baseline;
+  }
+  .metric {
+    flex-direction: column;
+  }
+  .metric:nth-of-type(1) {
+    order: 2;
+  }
+  .metric:nth-of-type(2) {
+    order: 3;
+    padding-right: 16px;
+  }
+  .metric:nth-of-type(3) {
+    order: 1;
+    padding-left: 16px;
+  }
+  .metric:nth-of-type(1) .metricValue {
+    margin-bottom: 2px;
+  }
+  .metric:nth-of-type(2) .metricLabel {
+    color: #CFCFCF;
+  }
+  .metric:nth-of-type(2) .metricValue {
+    font-size: 24px;
+    color: #9F9F9F;
+    letter-spacing: 0;
+    line-height: 30px;
+    margin-bottom: 11px;
+  }
+  .metric:nth-of-type(3) .metricLabel {
+    color: #CFCFCF;
+  }
+  .metric:nth-of-type(3) .metricValue {
+    font-size: 24px;
+    color: #9F9F9F;
+    letter-spacing: 0;
+    line-height: 30px;
+    margin-bottom: 11px;
+  }
+  .metricLabel {
+    order: 1;
+    margin: 2px 0 0 0;
+    text-align: center;
+  }
+  .hq .subtitle {
+    margin-bottom: 11px;
+  }
+  .hq {
+    margin-bottom: 27px;
+    padding: 0 16px;
+  }
+  .ops .subtitle {
+    padding: 0 16px;
+  }
+  .opsMap {
+    width: 100%;
+    height: 160px;
   }
 }

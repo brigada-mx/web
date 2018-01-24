@@ -208,15 +208,15 @@ class OrganizationScreenView extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="wrapper">
+        <div className="wrapper-lg wrapper-md wrapper-sm">
           <OrganizationBreadcrumb name={name} sector={sector} />
 
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
-              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
+            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 sm-gutter col-xs-4 xs-gutter">
+              <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.name}>{name}</div>
               </div>
-              <div className="col-lg-8 col-md-9 col-sm-8 col-xs-4 gutter">
+              <div className="col-lg-8 col-md-9 col-sm-5 col-xs-4 gutter">
                 <div className={Styles.summaryContainer}>
                   <div className={Styles.fieldContainer}>
                     <span className={Styles.fieldLabel}>WEB</span>
@@ -239,7 +239,7 @@ class OrganizationScreenView extends React.Component {
               <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
                 <span className={Styles.mission}>{desc}</span>
               </div>
-              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4">
+              <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
                   <div className={Styles.metric}>
                     <span className={Styles.metricLabel}>Inversión<br />estimada</span>
@@ -258,36 +258,38 @@ class OrganizationScreenView extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 sm-hidden xs-hidden">
-              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
-                <div className={Styles.buttonsContainer}>
-                  {website &&
-                    <a
-                      target="_blank"
-                      className={`${Styles.button} ${Styles.website}`}
-                      href={addProtocol(website)}
-                    />
-                  }
-                  {phone && <PhoneBox phone={phone} />}
-                  {email &&
-                    <a
-                      target="_blank"
-                      className={`${Styles.button} ${Styles.email}`}
-                      href={emailLink(email)}
-                    />
-                  }
+            <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-8 sm-gutter col-xs-4 xs-gutter">
+              <div className="row">
+                <div className="col-lg-12 col-md-12 col-xs-4 center-xs gutter">
+                  <div className={Styles.buttonsContainer}>
+                    {website &&
+                      <a
+                        target="_blank"
+                        className={`${Styles.button} ${Styles.website}`}
+                        href={addProtocol(website)}
+                      />
+                    }
+                    {phone && <PhoneBox phone={phone} />}
+                    {email &&
+                      <a
+                        target="_blank"
+                        className={`${Styles.button} ${Styles.email}`}
+                        href={emailLink(email)}
+                      />
+                    }
+                  </div>
                 </div>
-              </div>
-              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
-                <div className={Styles.hq}>
-                  <p className={Styles.subtitle}>¿Dónde estamos?</p>
-                  {this.renderAddress(address)}
+                <div className="col-lg-12 col-md-12 col-sm-2 col-xs-4 gutter">
+                  <div className={Styles.hq}>
+                    <p className={Styles.subtitle}>¿Dónde estamos?</p>
+                    {this.renderAddress(address)}
+                  </div>
                 </div>
-              </div>
-              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
-                <div className={Styles.ops}>
-                  <p className={Styles.subtitle}>¿Dónde operamos?</p>
-                  {this.renderMap(actions)}
+                <div className="col-lg-12 col-md-12 col-sm-4 col-xs-4 gutter">
+                  <div className={Styles.ops}>
+                    <p className={Styles.subtitle}>¿Dónde operamos?</p>
+                    {this.renderMap(actions)}
+                  </div>
                 </div>
               </div>
             </div>
@@ -295,7 +297,7 @@ class OrganizationScreenView extends React.Component {
         </div>
 
         <div className={`${Styles.actionsContainer} row`}>
-          <div className="col-lg-7 col-md-7 col-sm-4 col-xs-4">
+          <div className="col-lg-7 col-md-7 col-sm-8 col-xs-4">
             <ActionList
               screen="org"
               containerStyle={Styles.cardsContainer}
