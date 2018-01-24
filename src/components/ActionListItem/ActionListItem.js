@@ -91,7 +91,6 @@ class ActionListItem extends React.PureComponent {
 
     return (
       <div
-        onClick={handleClick}
         className={className}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -109,7 +108,7 @@ class ActionListItem extends React.PureComponent {
               {metrics()}
             </div>
           </div>
-          <div className={Styles.thumbnailContainer}>
+          <div onClick={handleClick} className={Styles.thumbnailContainer}>
             {thumbnails()}
           </div>
         </div>
