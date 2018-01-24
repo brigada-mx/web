@@ -221,7 +221,7 @@ class OrganizationScreenView extends React.Component {
                   <div className={Styles.fieldContainer}>
                     <span className={Styles.fieldLabel}>WEB</span>
                     {website &&
-                      <span className={Styles.fieldValue}>
+                      <span className={`${Styles.fieldValue} ${Styles.ellipsis}`}>
                         <a target="_blank" href={addProtocol(website)}>{website}</a>
                       </span>
                     }
