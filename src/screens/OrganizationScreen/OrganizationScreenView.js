@@ -297,7 +297,7 @@ class OrganizationScreenView extends React.Component {
         </div>
 
         <div className={`${Styles.actionsContainer} row`}>
-          <div className="col-lg-7 col-md-7 col-sm-8 col-xs-4">
+          <div className="col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
             <ActionList
               screen="org"
               containerStyle={Styles.cardsContainer}
