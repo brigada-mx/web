@@ -38,3 +38,10 @@
   border-style: solid;
   border-color: #EDF1F5 transparent transparent transparent;
 }
+
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .box {
+    width: 70px;
+    height: 70px;
+  }
+}

@@ -31,4 +31,7 @@
     width: 64px;
     height: 64px;
   }
+  .button:hover:after {
+    margin: 74px 0 0 8px;
+  }
 }

@@ -53,7 +53,7 @@
 .fieldContainer {
   display: flex;
   flex-direction: column;
-  max-width: 33%;
+  max-width: 55%;
 }
 
 .fieldLabel {
@@ -191,8 +191,14 @@
   flex-direction: column;
 }
 
-.mapContainer {
-
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .button {
+    width: 70px;
+    height: 70px;
+  }
+  .opsMap {
+    width: 222px;
+  }
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {

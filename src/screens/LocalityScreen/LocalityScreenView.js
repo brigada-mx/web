@@ -394,7 +394,7 @@ class LocalityScreenView extends React.Component {
         </div>
 
         <div className={`${Styles.actionsContainer} row`}>
-          <div className="col-lg-7 col-md-7 col-sm-4 col-xs-4">
+          <div className="col-lg-7 col-md-7 col-sm-8 col-xs-4">
             <ActionList
               screen="loc"
               containerStyle={Styles.cardsContainer}
