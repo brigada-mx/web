@@ -206,6 +206,12 @@ class OrganizationScreenView extends React.Component {
       />
     )
 
+    const numPhotos = actions.reduce((_sum, action) => {
+      return _sum + (
+        action.submissions.reduce((sum, submission) => sum + submission.thumbnails_small.length, 0)
+      )
+    }, 0)
+
     return (
       <React.Fragment>
         <div className="wrapper-lg wrapper-md wrapper-sm">
@@ -253,7 +259,7 @@ class OrganizationScreenView extends React.Component {
                   </div>
                   <div className={Styles.metric}>
                     <span className={Styles.metricLabel}>Fotos<br />capturadas</span>
-                    <span className={Styles.metricValue}>0</span>
+                    <span className={Styles.metricValue}>{numPhotos}</span>
                   </div>
                 </div>
               </div>
