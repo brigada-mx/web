@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Colors from 'src/Colors'
 import { fitBoundsFromCoords } from 'tools/other'
 import FeatureMap from './FeatureMap'
-import Styles from './EstablishmentLegend.css'
+import ActionLegend from './ActionLegend'
 
 
 const maxFeatures = 1000
@@ -31,19 +30,6 @@ const layer = {
       ],
     },
   },
-}
-
-const legend = () => {
-  return (
-    <div className={Styles.container}>
-      <div className={Styles.legendItem}>
-        <div>
-          <span className={Styles.circle} style={{ backgroundColor: '#3DC59F' }} />
-          <span className={Styles.label}>Fotos</span>
-        </div>
-      </div>
-    </div>
-  )
 }
 
 const ActionMap = ({ actions, selectedId, ...rest }) => {
@@ -78,7 +64,7 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
       fitBounds={fitBoundsFromCoords(locations)}
       features={features}
       layer={layer}
-      legend={legend}
+      legend={<ActionLegend />}
     />
   )
 }
