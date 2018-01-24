@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Colors from 'src/Colors'
 import { fitBoundsFromCoords } from 'tools/other'
 import FeatureMap from './FeatureMap'
+import Styles from './EstablishmentLegend.css'
 
 
 const maxFeatures = 1000
@@ -12,7 +13,7 @@ const layer = {
   type: 'circle',
   source: 'features',
   paint: {
-    'circle-color': Colors.brandGreen,
+    'circle-color': '#3DC59F',
     'circle-opacity': {
       property: 'selected',
       type: 'categorical',
@@ -30,6 +31,19 @@ const layer = {
       ],
     },
   },
+}
+
+const legend = () => {
+  return (
+    <div className={Styles.container}>
+      <div className={Styles.legendItem}>
+        <div>
+          <span className={Styles.circle} style={{ backgroundColor: '#3DC59F' }} />
+          <span className={Styles.label}>Fotos</span>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 const ActionMap = ({ actions, selectedId, ...rest }) => {
@@ -64,6 +78,7 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
       fitBounds={fitBoundsFromCoords(locations)}
       features={features}
       layer={layer}
+      legend={legend}
     />
   )
 }
@@ -71,6 +86,7 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
 ActionMap.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedId: PropTypes.number,
+  legend: PropTypes.string,
 }
 
 export default ActionMap
