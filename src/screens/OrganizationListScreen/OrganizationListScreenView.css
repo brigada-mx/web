@@ -3,7 +3,7 @@
 
 .search {
   position: absolute;
-  top: 17px;
+  top: 21px;
   right: 12.5%;
 }
 
@@ -95,6 +95,9 @@
 
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
+  .search {
+    right: 6.5%;
+  }
   .container {
     height: calc(100vh - 349px);
   }
