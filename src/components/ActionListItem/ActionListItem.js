@@ -61,7 +61,11 @@ class ActionListItem extends React.PureComponent {
       )
     }
 
-    const thumbnails = () => {
+    const handleClick = () => { onClick(action) }
+    const handleMouseEnter = () => { onMouseEnter(action) }
+    const handleMouseLeave = () => { onMouseLeave(action) }
+
+    const renderThumbnails = () => {
       const thumbs = [].concat(...action.submissions.map(s => s.thumbnails_small))
       const l = thumbs.length
       if (l === 0) return <div className={Styles.emptyThumbnail} />
@@ -75,7 +79,7 @@ class ActionListItem extends React.PureComponent {
           <span className={Styles.thumbnailCountOverlay}>+{l - 1}</span>
         </div>) : null
       return (
-        <React.Fragment>
+        <div onClick={handleClick} className={Styles.thumbnailContainer}>
           <div
             className={`${Styles.thumbnail} xs-hidden`}
             style={{ backgroundImage: `url(${thumbs[0]})` }}
@@ -88,13 +92,9 @@ class ActionListItem extends React.PureComponent {
           >
             {count}
           </div>
-        </React.Fragment>
+        </div>
       )
     }
-
-    const handleClick = () => { onClick(action) }
-    const handleMouseEnter = () => { onMouseEnter(action) }
-    const handleMouseLeave = () => { onMouseLeave(action) }
 
     let className = Styles.listItem
     if (focused) className = `${Styles.listItem} ${Styles.listItemFocused}`
@@ -118,9 +118,8 @@ class ActionListItem extends React.PureComponent {
               {metrics()}
             </div>
           </div>
-          <div onClick={handleClick} className={Styles.thumbnailContainer}>
-            {thumbnails()}
-          </div>
+
+          {renderThumbnails()}
         </div>
         {(desc && focused) &&
           <React.Fragment>
