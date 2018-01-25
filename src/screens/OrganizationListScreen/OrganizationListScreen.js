@@ -34,7 +34,7 @@ class OrganizationListScreen extends React.Component {
         }
       },
     })
-    getBackoff(this, 'localities', service.getLocalitiesStatic, {
+    getBackoff(this, 'localities', service.getLocalities, {
       onData: (data) => {
         const localityById = {}
         for (const result of data.results) {

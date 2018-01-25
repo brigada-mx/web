@@ -100,7 +100,7 @@ class MapScreen extends React.Component {
       state: {},
     })
 
-    getBackoff(this, 'localities', service.getLocalitiesStatic, {
+    getBackoff(this, 'localities', service.getLocalities, {
       onData: (data) => {
         const localityByCvegeo = {}
         const coords = []

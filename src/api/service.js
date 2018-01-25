@@ -30,15 +30,11 @@ class Service {
     return sendToApi(`localities/${id}/`)
   }
 
-  getLocalities = async (page_size = 250) => {
-    const params = { has_data: true, page_size }
-    return sendToApi('localities/', { params })
-  }
+  getLocalities = async (page_size = 10000) => {
+    if (this.fake) return sendToApi(`${apiUrlFake}localities.json`, { isRelative: false })
 
-  getLocalitiesStatic = async () => {
-    return sendToApi(
-      'https://s3-us-west-2.amazonaws.com/719s/data/localities.json', { isRelative: false }
-    )
+    const params = { page_size }
+    return sendToApi('localities_raw/', { params })
   }
 
   getOrganizations = async (page_size = 50) => {
