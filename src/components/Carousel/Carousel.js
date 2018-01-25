@@ -95,7 +95,7 @@ class CarouselView extends React.Component {
       index: 0,
     }
     this.swiperParams = {
-      slidesPerView: 2,
+      slidesPerView: 1.85,
       spaceBetween: 100,
       centeredSlides: true,
       autoHeight: true,
@@ -109,7 +109,7 @@ class CarouselView extends React.Component {
           spaceBetween: 4,
         },
         979: {
-          slidesPerView: 2,
+          slidesPerView: 1.85,
           spaceBetween: 40,
         },
       },

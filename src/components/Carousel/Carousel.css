@@ -31,15 +31,20 @@
 }
 
 .closeButton {
-  background: no-repeat url("assets/img/close-gallery.svg");
+  background: no-repeat url("assets/img/close-gallery.svg") center;
   background-size: 13px 13px;
-  width: 13px;
-  height: 13px;
+  width: 73px;
+  height: 73px;
   position: absolute;
-  top: 30px;
-  right: 30px;
+  top: 0px;
+  right: 0px;
   cursor: pointer;
   z-index: 11;
+  opacity: 0.6;
+}
+
+.closeButton:hover {
+  opacity: 1.0;
 }
 
 .outerBox {
