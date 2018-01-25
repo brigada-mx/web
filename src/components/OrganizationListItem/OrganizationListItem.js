@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { fmtBudget } from 'tools/string'
+import { fmtBudget, truncate } from 'tools/string'
 import Styles from './OrganizationListItem.css'
 
 
 class OrganizationListItem extends React.PureComponent {
   render() {
     const { organization, onClick, focused, onMouseEnter, onMouseLeave } = this.props
-    const { name, actions, desc } = organization
+    const { name, actions, desc, image_count: numImages } = organization
     let budget = 0
     const countByTags = {}
     for (const action of actions) {
@@ -43,7 +43,7 @@ class OrganizationListItem extends React.PureComponent {
           <div className={`${Styles.tagContainer} lg-hidden md-hidden`}>
             {count.slice(0, 3).map((t, i) => <span key={i} className={Styles.tag}>{t.tag}</span>)}
           </div>
-          <span className={Styles.desc}>{desc}</span>
+          <span className={Styles.desc}>{truncate(desc, 154)}</span>
         </div>
         <div className={Styles.metricsContainer}>
           <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
@@ -56,7 +56,7 @@ class OrganizationListItem extends React.PureComponent {
           </div>
           <div className={Styles.metric}>
             <span className={Styles.label}>Fotos<br />capturadas</span>
-            <span className={Styles.value}>0</span>
+            <span className={Styles.value}>{numImages}</span>
           </div>
         </div>
       </div>

@@ -54,3 +54,10 @@ export const phoneLink = (phone) => {
 export const emailLink = (email) => {
   return `mailto:${email}`
 }
+
+export const truncate = (s, l) => {
+  if (s.length > l) {
+    return `${s.substring(0, l).trim()}…`
+  }
+  return s
+}
