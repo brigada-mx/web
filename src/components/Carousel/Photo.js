@@ -36,9 +36,11 @@ const Photo = (props) => {
     <div className={Styles.outerBox}>
       <div className={Styles.innerBox}>
         {lazyLoad ? <div /> : <img src={urlMedium} alt={description} />}
-        <div className={Styles.labelContainer}>
-          <span className={Styles.label}>{moment(submitted).format('h:mma, DD MMMM YYYY')}</span>
-          <span className={Styles.label}>{latLng}</span>
+        <div>
+          <div className={Styles.labelContainer}>
+            <span className={Styles.label}>{moment(submitted).format('h:mma, DD MMMM YYYY')}</span>
+            <span className={Styles.label}>{latLng}</span>
+          </div>
         </div>
         <span className={Styles.description}>{description}</span>
       </div>

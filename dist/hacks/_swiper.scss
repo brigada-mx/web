@@ -5,10 +5,11 @@ div.swiper-slide-prev, div.swiper-slide-next {
 }
 
 div.swiper-button-prev, div.swiper-button-next {
-  width: 33%;
+  width: 50%;
   height: 100%;
   background-image: none !important;
   cursor: pointer;
+  top: 0;
 }
 
 div.swiper-button-prev {

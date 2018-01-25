@@ -98,9 +98,20 @@ class CarouselView extends React.Component {
       slidesPerView: 2,
       spaceBetween: 100,
       centeredSlides: true,
+      autoHeight: true,
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
+      },
+      breakpoints: {
+        767: {
+          slidesPerView: 1.1,
+          spaceBetween: 4,
+        },
+        979: {
+          slidesPerView: 2,
+          spaceBetween: 40,
+        },
       },
     }
   }

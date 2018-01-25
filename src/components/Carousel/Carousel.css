@@ -51,14 +51,17 @@
 }
 
 .innerBox {
-  max-height: 70%;
+  height: 70%;
   max-width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .innerBox img {
-  height: 100%;
-  margin-left: 0 !important;
+  max-width: 100%;
+  max-height: 100%;
   box-shadow: 0 20px 40px 0px rgba(0, 0, 0, 0.5)
 }
 
@@ -102,4 +105,16 @@
   line-height: 16px;
   display: flex;
   justify-content: center;
+}
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+  .labelContainer {
+    flex-direction: column;
+  }
+  .label {
+    max-width: 100%;
+  }
+  .description {
+    justify-content: flex-start;
+  }
 }
