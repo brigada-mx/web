@@ -93,7 +93,7 @@ class OrganizationListScreenView extends React.Component {
     if (!locKeys.some(k => prevState[k] !== this.state[k]) && this.state.focused) return
 
     const { data } = this.props.organizations
-    if (!data) return
+    if (!data || data.results.length === 0) return
     const organizations = this.filterOrganizations(data.results)
     const [focused] = organizations
 
@@ -112,6 +112,7 @@ class OrganizationListScreenView extends React.Component {
     }
 
     if (focused && !this.state.focused) state.focused = focused
+    console.log(state)
     this.setState(state)
   }
 

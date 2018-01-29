@@ -126,7 +126,7 @@ class MapScreen extends React.Component {
     if (!keys.some(k => prevState[k] !== this.state[k])) return
 
     const { localities: { data = {} } } = this.state
-    if (!data.results) return
+    if (!data.results || data.results.length === 0) return
 
     const filtered = this.filterLocalities(data.results).sort(compareLocalities)
     const layerFilter = ['in', 'cvegeo'].concat(filtered.map((l) => {
