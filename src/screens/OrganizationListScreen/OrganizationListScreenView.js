@@ -288,7 +288,7 @@ class OrganizationListScreenView extends React.Component {
 
         <div className="row baseline between wrapper lg-hidden md-hidden">
           <span className={Styles.filterButton} onClick={this.handleToggleFilters}>FILTROS</span>
-          <LocalityLegend localities={localities} legendTitle="Nivel de daño" />
+          <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
         </div>
 
         {filtersVisible &&
