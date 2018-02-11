@@ -1,4 +1,4 @@
-const env = process.env.NODE_ENV === 'dev' ? require('./env.dev') : require('./env.prod')
+const env = process.env.NODE_ENV === 'development' ? require('./env.dev') : require('./env.prod')
 
 const common = {
   mapbox: {

@@ -13,7 +13,7 @@ module.exports = env => merge(common, {
       allChunks: true,
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('dev'),
+      'process.env.NODE_ENV': JSON.stringify('development'),
       'process.env.FAKE_API': env ? JSON.stringify(env.FAKE_API) : undefined,
     }),
   ],

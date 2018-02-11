@@ -9,6 +9,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
+    noParse: /(mapbox-gl)\.js$/,
     rules: [
       {
         test: /\.jsx?$/,
