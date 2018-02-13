@@ -288,7 +288,7 @@ class OrganizationScreenView extends React.Component {
                 <div className="col-lg-12 col-md-12 col-sm-2 col-xs-4 gutter">
                   <div className={Styles.hq}>
                     <p className={Styles.subtitle}>¿Dónde estamos?</p>
-                    {this.renderAddress(address)}
+                    {address && this.renderAddress(address)}
                   </div>
                 </div>
                 <div className="col-lg-12 col-md-12 col-sm-4 col-xs-4 gutter">
