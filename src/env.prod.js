@@ -1,5 +1,5 @@
-export const apiUrl = 'http://app.719s.mx/api/'
-export const urlProtocol = 'http'
+export const apiUrl = 'https://api.719s.mx/api/'
+export const urlProtocol = 'https'
 
 export const logging = {
   http: false,

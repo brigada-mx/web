@@ -112,7 +112,6 @@ class OrganizationListScreenView extends React.Component {
     }
 
     if (focused && !this.state.focused) state.focused = focused
-    console.log(state)
     this.setState(state)
   }
 

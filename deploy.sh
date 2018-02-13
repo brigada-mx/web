@@ -8,3 +8,5 @@ aws s3 cp dist/bundle.js s3://${bucketname} --acl public-read
 aws s3 cp dist/bundle.css s3://${bucketname} --acl public-read
 aws s3 cp dist/global.css s3://${bucketname} --acl public-read
 aws s3 sync dist/assets s3://${bucketname}/assets/ --acl public-read
+
+aws cloudfront create-invalidation --distribution-id E3CQ1S9OECWD73 --paths '/*'
