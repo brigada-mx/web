@@ -110,7 +110,7 @@ class LocalityDamageMap extends React.Component {
 
     return (
       <Mapbox
-        style="mapbox://styles/kylebebak/cjbr1wz8o7blj2rpbidkjujq2" // eslint-disable-line react/style-prop-object
+        style="mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk" // eslint-disable-line react/style-prop-object
         zoom={this._initialZoom}
         center={this._initialCoordinates}
         containerStyle={{
