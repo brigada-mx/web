@@ -211,7 +211,7 @@ class MapScreen extends React.Component {
 
     return results.filter((l) => {
       const {
-        name, state_name: stateName, cvegeo = '', action_count: actions, meta: { margGrade = '' },
+        name, state_name: stateName, cvegeo = '', action_count: actions, meta: { margGrade },
       } = l
 
       const matchesSearch = tokenMatch(`${name} ${stateName}`, locSearch)
@@ -221,7 +221,7 @@ class MapScreen extends React.Component {
 
       const margs = valMarg.map(v => v.value)
       const matchestMarg = margs.length === 0 ||
-        margs.some(v => v === margGrade.replace(/ /g, '_').toLowerCase())
+        margs.some(v => v === (margGrade || '').replace(/ /g, '_').toLowerCase())
 
       const numActions = valNumActions.map(v => rangeByValNumActions[v.value])
       const matchesActions = numActions.length === 0 ||
