@@ -57,8 +57,8 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
 
   const data = [
     { name: 'PÉRDIDA TOTAL', num: destroyed },
-    { name: 'PARCIAL (HABITABLE)', num: habit },
-    { name: 'PARCIAL (INHABITABLE)', num: notHabit },
+    { name: 'DAÑO PARCIAL', num: habit },
+    { name: 'REUBICACIÓN', num: notHabit },
   ]
 
   return (

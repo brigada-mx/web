@@ -23,11 +23,11 @@ const LocalityPopup = ({ locality, organization, screen }) => {
           <span className={Styles.value}>{fmtNum(total)}</span>
         </div>
         <div className={Styles.item}>
-          <span className={Styles.label}>Habitables</span>
+          <span className={Styles.label}>Daño Parcial</span>
           <span className={Styles.value}>{fmtNum(habit)}</span>
         </div>
         <div className={Styles.item}>
-          <span className={Styles.label}>No habitables</span>
+          <span className={Styles.label}>Reubicación</span>
           <span className={Styles.value}>{fmtNum(notHabit)}</span>
         </div>
         <div className={Styles.item}>
