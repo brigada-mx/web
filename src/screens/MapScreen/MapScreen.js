@@ -31,16 +31,18 @@ const compareLocalities = (a, b) => {
   return tb - ta
 }
 
-const maxLocalityListItems = 250
-
 class LocalityList extends React.PureComponent {
+  maxItems = () => {
+    return window.innerWidth >= 980 ? 250 : 30
+  }
+
   handleScroll = (e) => {
-    this.props.onScroll(e, this.props.localities.slice(0, maxLocalityListItems))
+    this.props.onScroll(e, this.props.localities.slice(0, this.maxItems()))
   }
 
   render() {
     const { localities, focusedId, ...rest } = this.props
-    const items = localities.slice(0, maxLocalityListItems).map((l) => {
+    const items = localities.slice(0, this.maxItems()).map((l) => {
       const { cvegeo } = l
       return (
         <LocalityListItem
