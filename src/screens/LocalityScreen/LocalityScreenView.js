@@ -240,7 +240,7 @@ class LocalityScreenView extends React.Component {
         return (
           <div key={i} className={Styles.margMetrics}>
             <span className={Styles.margLabel}>{barLabels[i]}</span>
-            <span className={Styles.margBar}><MetricsBar severity value={v} max={100} /></span>
+            <span className={Styles.margBar}>{v ? <MetricsBar severity value={v} max={100} /> : '-'}</span>
           </div>
         )
       })
