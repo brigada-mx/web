@@ -14,7 +14,6 @@ module.exports = env => merge(common, {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
-      'process.env.FAKE_API': env ? JSON.stringify(env.FAKE_API) : undefined,
     }),
   ],
   devServer: {

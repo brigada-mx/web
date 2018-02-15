@@ -23,12 +23,6 @@ const OrganizationScreenWrapper = ({ match }) => {
   return <OrganizationScreen id={Number.parseInt(match.params.id, 10)} />
 }
 
-const BestPracticesScreen = () => (
-  <div>
-    <h2>Mejores Prácticas</h2>
-  </div>
-)
-
 const AboutScreen = () => (
   <div>
     <h2>Nosotros</h2>
@@ -56,8 +50,6 @@ const App = () => {
 
           <Route exact path="/organizaciones" component={OrganizationListScreen} />
           <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
-
-          <Route path="/practicas" component={BestPracticesScreen} />
 
           <Route path="/nosotros" component={AboutScreen} />
 
