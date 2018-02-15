@@ -1,4 +1,4 @@
-export const apiUrl = 'https://api.719s.mx/api/'
+export const apiUrl = 'https://api.ensintonia.org/api/'
 export const urlProtocol = 'https'
 
 export const logging = {
