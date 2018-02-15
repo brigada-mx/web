@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
+import * as Actions from 'src/actions'
 import FilterHeader from 'components/FilterHeader'
 import SearchInput from 'components/SearchInput'
 import OrganizationListItem from 'components/OrganizationListItem'
@@ -50,25 +52,12 @@ class OrganizationListScreenView extends React.Component {
   constructor(props) {
     super(props)
 
-    const { location } = props
-    let valState = []
-    let valMuni = []
-    let valSector = []
-    let valActionType = []
-    if (location.state) {
-      ({ valState = [], valMuni = [], valSector = [], valActionType = [] } = location.state)
-    }
-
     this.state = {
       popup: {},
       focused: null,
       fitBounds: this.defaultFitBounds(),
       organizationSearch: '',
       filtersVisible: false,
-      valState,
-      valMuni,
-      valSector,
-      valActionType,
     }
     this.handleOrganizationSearchKeyUp = _.debounce(
       this.handleOrganizationSearchKeyUp, 150
@@ -88,9 +77,9 @@ class OrganizationListScreenView extends React.Component {
     this._fitBounds = this.defaultFitBounds()
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const locKeys = ['valState', 'valMuni']
-    if (!locKeys.some(k => prevState[k] !== this.state[k]) && this.state.focused) return
+    if (!locKeys.some(k => prevProps[k] !== this.props[k]) && this.state.focused) return
 
     const { data } = this.props.organizations
     if (!data || data.results.length === 0) return
@@ -99,8 +88,8 @@ class OrganizationListScreenView extends React.Component {
 
     const state = {}
 
-    if (locKeys.some(k => prevState[k] !== this.state[k])) {
-      const { valState, valMuni } = this.state
+    if (locKeys.some(k => prevProps[k] !== this.props[k])) {
+      const { valState, valMuni } = this.props
       if (valState.length === 0 && valMuni.length === 0) {
         state.fitBounds = this._fitBounds
       } else {
@@ -116,19 +105,19 @@ class OrganizationListScreenView extends React.Component {
   }
 
   handleStateChange = (v) => {
-    this.setState({ valState: v })
+    this.props.onChangeFilter('valState', v)
   }
 
   handleMuniChange = (v) => {
-    this.setState({ valMuni: v })
+    this.props.onChangeFilter('valMuni', v)
   }
 
   handleSectorChange = (v) => {
-    this.setState({ valSector: v })
+    this.props.onChangeFilter('valSector', v)
   }
 
   handleActionTypeChange = (v) => {
-    this.setState({ valActionType: v })
+    this.props.onChangeFilter('valActionType', v)
   }
 
   handleOrganizationSearchKeyUp = (organizationSearch) => {
@@ -166,7 +155,8 @@ class OrganizationListScreenView extends React.Component {
   }
 
   filterOrganizations = (results) => {
-    const { organizationSearch, valState, valMuni, valSector, valActionType } = this.state
+    const { organizationSearch } = this.state
+    const { valState, valMuni, valSector, valActionType } = this.props
 
     const compareOrganizations = (a, b) => {
       return b.action_count - a.action_count
@@ -230,15 +220,8 @@ class OrganizationListScreenView extends React.Component {
       localities: { data: locData, loading: locLoading, error: locError },
       organizations: { data: orgData, loading: orgLoading, error: orgError },
     } = this.props
-    const {
-      popup,
-      focused,
-      valState,
-      valMuni,
-      valSector,
-      valActionType,
-      filtersVisible,
-    } = this.state
+    const { popup, focused, filtersVisible } = this.state
+    const { valState, valMuni, valSector, valActionType } = this.props
 
     const organizations = this.filterOrganizations(orgData ? orgData.results : [])
     let [_focused] = organizations
@@ -340,10 +323,30 @@ class OrganizationListScreenView extends React.Component {
 
 OrganizationListScreenView.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object,
   localityById: PropTypes.object.isRequired,
   localities: PropTypes.object.isRequired,
   organizations: PropTypes.object.isRequired,
+  valState: PropTypes.array.isRequired,
+  valMuni: PropTypes.array.isRequired,
+  valSector: PropTypes.array.isRequired,
+  valActionType: PropTypes.array.isRequired,
+  onChangeFilter: PropTypes.func.isRequired,
 }
 
-export default withRouter(OrganizationListScreenView)
+const mapStateToProps = (state) => {
+  const {
+    valState = [],
+    valMuni = [],
+    valSector = [],
+    valActionType = [],
+  } = state.filter.organizations
+  return { valState, valMuni, valSector, valActionType }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onChangeFilter: (prop, values) => Actions.filterOrganizations(dispatch, { prop, values }),
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrganizationListScreenView))

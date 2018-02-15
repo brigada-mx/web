@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
+import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import FilterHeader from 'components/FilterHeader'
 import SearchInput from 'components/SearchInput'
@@ -67,13 +69,6 @@ class MapScreen extends React.Component {
   constructor(props) {
     super(props)
 
-    const { location } = props
-    let valState = []
-    let valMuni = []
-    if (location.state) {
-      ({ valState = [], valMuni = [] } = location.state)
-    }
-
     this.state = {
       localities: {
         loading: true,
@@ -85,10 +80,6 @@ class MapScreen extends React.Component {
       popup: null,
       locSearch: '',
       filtersVisible: false,
-      valState,
-      valMuni,
-      valMarg: [],
-      valNumActions: [],
     }
     this.handleLocalitySearchKeyUp = _.debounce(
       this.handleLocalitySearchKeyUp, 150
@@ -123,9 +114,12 @@ class MapScreen extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const keys = ['localities', 'locSearch', 'valState', 'valMuni', 'valMarg', 'valNumActions']
+    const filterKeys = ['valState', 'valMuni', 'valMarg', 'valNumActions']
+    const keys = ['localities', 'locSearch']
     const locKeys = ['valState', 'valMuni']
-    if (!keys.some(k => prevState[k] !== this.state[k])) return
+
+    if (!keys.some(k => prevState[k] !== this.state[k]) &&
+      !filterKeys.some(k => prevProps[k] !== this.props[k])) return
 
     const { localities: { data = {} } } = this.state
     if (!data.results || data.results.length === 0) return
@@ -137,7 +131,7 @@ class MapScreen extends React.Component {
       return Number.parseInt(cvegeo, 10)
     }))
 
-    if (locKeys.some(k => prevState[k] !== this.state[k]) || this.state.fitBounds.length === 0) {
+    if (locKeys.some(k => prevProps[k] !== this.props[k]) || this.state.fitBounds.length === 0) {
       const fitBounds = fitBoundsFromCoords(filtered.map(l => l.location))
       this.setState({ filtered, layerFilter, fitBounds })
     } else {
@@ -146,19 +140,19 @@ class MapScreen extends React.Component {
   }
 
   handleStateChange = (v) => {
-    this.setState({ valState: v })
+    this.props.onChangeFilter('valState', v)
   }
 
   handleMuniChange = (v) => {
-    this.setState({ valMuni: v })
+    this.props.onChangeFilter('valMuni', v)
   }
 
   handleMargChange = (v) => {
-    this.setState({ valMarg: v })
+    this.props.onChangeFilter('valMarg', v)
   }
 
   handleNumActionsChange = (v) => {
-    this.setState({ valNumActions: v })
+    this.props.onChangeFilter('valNumActions', v)
   }
 
   handleLocalitySearchKeyUp = (locSearch) => {
@@ -202,7 +196,8 @@ class MapScreen extends React.Component {
   }
 
   filterLocalities = (results) => {
-    const { locSearch, valState, valMuni, valMarg, valNumActions } = this.state
+    const { locSearch } = this.state
+    const { valState, valMuni, valMarg, valNumActions } = this.props
 
     const rangeByValNumActions = {
       0: [null, 0],
@@ -244,12 +239,9 @@ class MapScreen extends React.Component {
       filtered,
       layerFilter,
       fitBounds,
-      valState,
-      valMuni,
-      valMarg,
-      valNumActions,
       filtersVisible,
     } = this.state
+    const { valState, valMuni, valMarg, valNumActions } = this.props
 
     const filter = (style = {}) => {
       return (
@@ -332,7 +324,27 @@ class MapScreen extends React.Component {
 
 MapScreen.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object,
+  valState: PropTypes.array.isRequired,
+  valMuni: PropTypes.array.isRequired,
+  valMarg: PropTypes.array.isRequired,
+  valNumActions: PropTypes.array.isRequired,
+  onChangeFilter: PropTypes.func.isRequired,
 }
 
-export default withRouter(MapScreen)
+const mapStateToProps = (state) => {
+  const {
+    valState = [],
+    valMuni = [],
+    valMarg = [],
+    valNumActions = [],
+  } = state.filter.localities
+  return { valState, valMuni, valMarg, valNumActions }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onChangeFilter: (prop, values) => Actions.filterLocalities(dispatch, { prop, values }),
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MapScreen))
