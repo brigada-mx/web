@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { NavLink, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, LabelList } from 'recharts'
 
 import FeatureMap from 'components/FeatureMap'
@@ -17,40 +17,9 @@ import EstablishmentLegend, { metaByScianGroup } from 'components/FeatureMap/Est
 import { dmgGrade, metaByDmgGrade, projectStatus, itemFromScrollEvent } from 'tools/other'
 import { fmtNum, fmtBudget } from 'tools/string'
 import Colors from 'src/colors'
+import LocalityBreadcrumb from './LocalityBreadcrumb'
 import Styles from './LocalityScreenView.css'
 
-
-const LocalityBreadcrumb = ({ cvegeo, stateName, munName, name }) => (
-  <div className={Styles.breadcrumbLinks}>
-    <span className={Styles.communities}><NavLink to="/">Comunidades</NavLink></span>
-    <span className={Styles.state}>
-      <NavLink
-        to={{ pathname: '/',
-          state: { valState: [{ value: cvegeo.substring(0, 2), label: stateName }] } }}
-      >
-        {stateName}
-      </NavLink>
-    </span>
-    <span className={Styles.muni}>
-      <NavLink
-        to={{ pathname: '/',
-          state: { valMuni: [{ value: cvegeo.substring(0, 5), label: munName }] } }}
-      >
-        {munName}
-      </NavLink>
-    </span>
-    <span className={Styles.loc}>
-      <NavLink to="#">{name}</NavLink>
-    </span>
-  </div>
-)
-
-LocalityBreadcrumb.propTypes = {
-  cvegeo: PropTypes.string.isRequired,
-  stateName: PropTypes.string.isRequired,
-  munName: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-}
 
 const DmgBarChart = ({ destroyed, habit, notHabit }) => {
   if (destroyed === 0 && habit === 0 && notHabit === 0) return null
@@ -433,7 +402,6 @@ LocalityScreenView.propTypes = {
   locality: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   establishments: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
 }
 
 export default withRouter(LocalityScreenView)

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { NavLink, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
@@ -12,39 +12,9 @@ import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { addProtocol, emailLink, fmtBudget } from 'tools/string'
 import { fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
+import OrganizationBreadcrumb from './OrganizationBreadcrumb'
 import Styles from './OrganizationScreenView.css'
 
-
-const OrganizationBreadcrumb = ({ name, sector }) => {
-  const labelBySector = {
-    civil: 'Civil',
-    public: 'Público',
-    private: 'Privado',
-    religious: 'Religioso',
-  }
-
-  return (
-    <div className={Styles.breadcrumbLinks}>
-      <span className={Styles.orgList}><NavLink to="/organizaciones">Organizaciones</NavLink></span>
-      <span className={Styles.sector}>
-        <NavLink
-          to={{ pathname: '/organizaciones',
-            state: { valSector: [{ value: sector, label: labelBySector[sector] }] } }}
-        >
-          {labelBySector[sector]}
-        </NavLink>
-      </span>
-      <span className={Styles.orgDetail}>
-        <NavLink to="#">{name}</NavLink>
-      </span>
-    </div>
-  )
-}
-
-OrganizationBreadcrumb.propTypes = {
-  name: PropTypes.string.isRequired,
-  sector: PropTypes.string.isRequired,
-}
 
 class OrganizationScreenView extends React.Component {
   constructor(props) {
