@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import * as Actions from 'src/actions'
 import Drawer from 'components/Drawer'
-import LogoImg from 'assets/img/logo.png'
+import LogoImg from 'assets/img/logo-sintonia.svg'
 import Colors from 'src/Colors'
 import Styles from './Nav.css'
 
@@ -52,7 +52,7 @@ const Nav = () => {
     <React.Fragment>
       <nav className={`${Styles.container} wrapper row middle between`}>
 
-        <a href="/"><img src={LogoImg} width="74px" height="auto" alt="Logo" /></a>
+        <a href="/"><img src={LogoImg} width="auto" height="22px" alt="Logo" /></a>
 
         <div className="end">
           <div className={`${Styles.links} sm-hidden xs-hidden`}>

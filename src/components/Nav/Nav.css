@@ -24,6 +24,9 @@
 }
 
 @media screen and (min-width: 980px) {
+  a img {
+    margin-top: 3px;
+  }
   .container {
     height: 65px;
   }
