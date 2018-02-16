@@ -12,7 +12,6 @@ const LocalityLegend = ({ className = '', localities, legendTitle }) => {
     high: 0,
     medium: 0,
     low: 0,
-    unknown: 0,
   }
 
   for (const l of localities) {

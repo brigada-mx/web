@@ -3,55 +3,53 @@ import env from 'src/env'
 import sendToApi from './request'
 
 
-const apiUrlFake = 'https://s3-us-west-2.amazonaws.com/719s/test-data/'
-
 class Service {
-  constructor({ fake = false } = {}) {
-    this.fake = process.env.FAKE_API === 'true' || (env.env === 'dev' && fake)
+  constructor({ fakeUrl = '' } = {}) {
+    this.fakeUrl = env.env === 'dev' && fakeUrl
   }
 
   getLocalityActions = async (locality_id, page_size = 250) => {
-    if (this.fake) return sendToApi(`${apiUrlFake}actions.json`, { isRelative: false })
+    if (this.fakeUrl) return sendToApi(`${fakeUrl}actions.json`, { isRelative: false })
 
     const params = { locality_id, page_size }
     return sendToApi('actions/', { params })
   }
 
   getLocalityEstablishments = async (locality_id, page_size = 250) => {
-    if (this.fake) return sendToApi(`${apiUrlFake}establishments.json`, { isRelative: false })
+    if (this.fakeUrl) return sendToApi(`${fakeUrl}establishments.json`, { isRelative: false })
 
     const params = { locality_id, page_size, is_categorized: true }
     return sendToApi('establishments/', { params })
   }
 
   getLocality = async (id) => {
-    if (this.fake) return sendToApi(`${apiUrlFake}locality.json`, { isRelative: false })
+    if (this.fakeUrl) return sendToApi(`${fakeUrl}locality.json`, { isRelative: false })
 
     return sendToApi(`localities/${id}/`)
   }
 
   getLocalities = async (page_size = 10000) => {
-    if (this.fake) return sendToApi(`${apiUrlFake}localities.json`, { isRelative: false })
+    if (this.fakeUrl) return sendToApi(`${fakeUrl}localities.json`, { isRelative: false })
 
     const params = { page_size }
     return sendToApi('localities_raw/', { params })
   }
 
   getOrganizations = async (page_size = 50) => {
-    if (this.fake) return sendToApi(`${apiUrlFake}organizations.json`, { isRelative: false })
+    if (this.fakeUrl) return sendToApi(`${fakeUrl}organizations.json`, { isRelative: false })
 
     const params = { page_size }
     return sendToApi('organizations/', { params })
   }
 
   getOrganization = async (id) => {
-    if (this.fake) return sendToApi(`${apiUrlFake}organization.json`, { isRelative: false })
+    if (this.fakeUrl) return sendToApi(`${fakeUrl}organization.json`, { isRelative: false })
 
     return sendToApi(`organizations/${id}/`)
   }
 
   getAction = async (id) => {
-    if (this.fake) return sendToApi(`${apiUrlFake}action.json`, { isRelative: false })
+    if (this.fakeUrl) return sendToApi(`${fakeUrl}action.json`, { isRelative: false })
 
     return sendToApi(`actions/${id}/`)
   }
