@@ -16,12 +16,11 @@ class ActionListItem extends React.PureComponent {
       action_type: actionType,
       first_thumbnail_medium: mediumThumb,
       desc,
-      unit_of_measurement: unit,
       target,
       progress = 0,
       budget,
-      start_date: startDate = '?',
-      end_date: endDate = '?',
+      start_date: startDate,
+      end_date: endDate,
       organization: { id: orgId, name: orgName },
       locality: { id: locId, name: locName, municipality_name: muniName, state_name: stateName },
     } = action
@@ -40,7 +39,9 @@ class ActionListItem extends React.PureComponent {
       return (
         <div>
           <span className={Styles.label}>FECHAS: </span>
-          <span className={Styles.dates}>{startDate.replace(/-/g, '.')} - {endDate.replace(/-/g, '.')} </span>
+          <span className={Styles.dates}>
+            {(startDate || '?').replace(/-/g, '.')} - {(endDate || '?').replace(/-/g, '.')}
+          </span>
         </div>
       )
     }
