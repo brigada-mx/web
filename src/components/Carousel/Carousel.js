@@ -37,7 +37,8 @@ class CarouselContainer extends React.Component {
 
     const submissions = actionData.submissions.map((s) => {
       const {
-        data: { description, address },
+        description,
+        address,
         location,
         organization: organizationId,
         submitted,

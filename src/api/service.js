@@ -32,7 +32,7 @@ class Service {
     if (this.fakeUrl) return sendToApi(`${fakeUrl}localities.json`, { isRelative: false })
 
     const params = { page_size }
-    return sendToApi('localities_raw/', { params })
+    return sendToApi('localities/', { params })
   }
 
   getOrganizations = async (page_size = 50) => {
