@@ -1,0 +1,6 @@
+{
+  "name": "AccountScreen",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./AccountScreen.js"
+}

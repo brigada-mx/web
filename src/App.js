@@ -13,6 +13,9 @@ import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
 import OrganizationScreen from 'screens/OrganizationScreen'
+import AccountScreen from 'screens/AccountScreen'
+import ActionSubmissionsScreen from 'screens/ActionSubmissionsScreen'
+import SetPasswordScreen from 'screens/SetPasswordScreen'
 
 
 const LocalityScreenWrapper = ({ match }) => {
@@ -21,6 +24,10 @@ const LocalityScreenWrapper = ({ match }) => {
 
 const OrganizationScreenWrapper = ({ match }) => {
   return <OrganizationScreen id={Number.parseInt(match.params.id, 10)} />
+}
+
+const ActionSubmissionsScreenWrapper = ({ match }) => {
+  return <ActionSubmissionsScreen id={Number.parseInt(match.params.id, 10)} />
 }
 
 const AboutScreen = () => (
@@ -51,7 +58,12 @@ const App = () => {
           <Route exact path="/organizaciones" component={OrganizationListScreen} />
           <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
 
-          <Route path="/nosotros" component={AboutScreen} />
+          <Route exact path="/nosotros" component={AboutScreen} />
+          <Route exact path="/set_password" component={SetPasswordScreen} />
+
+          <Route exact path="/cuenta" component={AccountScreen} />
+          <Route exact path="/cuenta/formularios" component={ActionSubmissionsScreen} />
+          <Route exact path="/cuenta/proyectos/:id" component={ActionSubmissionsScreenWrapper} />
 
         </div>
       </Router>

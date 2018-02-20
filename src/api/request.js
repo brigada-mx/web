@@ -15,13 +15,14 @@ const replaceProtocol = (url, protocol) => {
 }
 
 const _sendToApi = async (
-  _url = '', { method = 'GET', body = {}, params = {}, headers = {}, isRelative = true } = {}
+  _url = '', { method = 'GET', body = {}, params = {}, headers = {}, isRelative = true, token } = {}
 ) => {
   let url = _url
   const _headers = {
     ...headers,
     'Content-Type': 'application/json',
   }
+  if (token) _headers.Authorization = `Bearer ${token}`
 
   const options = {
     method,
@@ -44,9 +45,9 @@ const _sendToApi = async (
  * Guarantees that object returned has exactly one of `data`, `error`, and
  * `exception` keys.
  */
-const sendToApi = async (...args) => {
+const sendToApi = async (url, params) => {
   try {
-    const r = await _sendToApi(...args)
+    const r = await _sendToApi(url, params)
     if (r.status >= 400) return { error: r }
 
     const data = await r.json()
