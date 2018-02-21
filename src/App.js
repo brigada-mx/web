@@ -11,6 +11,7 @@ import reducers from 'src/reducers/index'
 import TestScreen from 'screens/TestScreen'
 import { localStorage } from 'tools/storage'
 import Nav from 'components/Nav'
+import AccountNav from 'components/AccountNav'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
@@ -67,6 +68,7 @@ const App = () => {
 
           <MuiThemeProvider>
             <React.Fragment>
+              <Route path="/(set_password|cuenta)" component={AccountNav} />
               <Route exact path="/set_password" component={SetPasswordScreen} />
               <Route exact path="/cuenta" component={AccountScreen} />
               <Route exact path="/cuenta/formularios" component={ActionSubmissionsScreen} />

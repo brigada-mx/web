@@ -1,0 +1,6 @@
+{
+  "name": "AccountNav",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./AccountNav.js"
+}
