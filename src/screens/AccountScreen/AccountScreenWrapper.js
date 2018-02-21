@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import service, { getBackoff } from 'api/service'
-import { localStorage } from 'tools/storage'
 
 
 class AccountScreenWrapper extends React.Component {
