@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
 
   handleForgotPassword = () => {
     const { email } = this.state
-    this.props.history.push({ pathname: '/password_email', state: { email } })
+    this.props.history.push({ pathname: '/restablecer/email', state: { email } })
   }
 
   render() {
