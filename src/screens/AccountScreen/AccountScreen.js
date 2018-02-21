@@ -1,41 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import service, { getBackoff } from 'api/service'
 import { localStorage } from 'tools/storage'
-import Styles from './AccountScreen.css'
+import LoginScreen from './LoginScreen'
+import AccountScreenWrapper from './AccountScreenWrapper'
 
 
-class AccountScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      organization: {
-        loading: true,
-      },
-    }
-  }
-
-  componentDidMount() {
-    this._mounted = true
-    getBackoff(this, 'organization', () => service.getAccountOrganization())
-  }
-
-  componentWillUnmount() {
-    this._mounted = false
-  }
-
-  render() {
-    return (
-      null
-    )
-  }
-}
-
-AccountScreen.propTypes = {
-}
-
-AccountScreen.defaultProps = {
+const AccountScreen = () => {
+  const { token } = JSON.parse(localStorage.getItem('719s:user')) || {}
+  if (!token) return <LoginScreen />
+  return <AccountScreenWrapper />
 }
 
 export default AccountScreen

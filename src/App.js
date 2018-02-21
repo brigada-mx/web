@@ -27,7 +27,7 @@ const OrganizationScreenWrapper = ({ match }) => {
 }
 
 const ActionSubmissionsScreenWrapper = ({ match }) => {
-  return <ActionSubmissionsScreen id={Number.parseInt(match.params.id, 10)} />
+  return <ActionSubmissionsScreen key={Number.parseInt(match.params.key, 10)} />
 }
 
 const AboutScreen = () => (
