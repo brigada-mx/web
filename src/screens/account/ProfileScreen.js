@@ -63,8 +63,25 @@ class Profile extends React.Component {
         <div><TextField name="name" value={name} hintText="Nombre completo" onChange={this.handleChange} /></div>
         <RaisedButton className={Styles.button} disabled={disabled} label="ACTUALIZAR" onClick={this.handleSubmitName} />
 
-        <div><TextField name="password" value={password} hintText="Contraseña" onChange={this.handleChange} /></div>
-        <div><TextField name="_password" value={_password} hintText="Confirmar contraseña" onChange={this.handleChange} /></div>
+        <div>
+          <TextField
+            type="password"
+            name="password"
+            value={password}
+            hintText="Contraseña"
+            onChange={this.handleChange}
+          />
+        </div>
+        <div>
+          <TextField
+            type="password"
+            name="_password"
+            value={_password}
+            hintText="Confirmar
+            contraseña"
+            onChange={this.handleChange}
+          />
+        </div>
         <RaisedButton className={Styles.button} disabled={disabled} label="CAMBIAR CONTRASEÑA" onClick={this.handleSubmitPassword} />
       </div>
     )

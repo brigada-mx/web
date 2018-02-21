@@ -49,7 +49,7 @@ const AccountNav = ({ history, location, onLogout, token }) => {
 
   return (
     <AppBar
-      title="ADMIN"
+      title="Admin"
       onTitleClick={handleTitleClick}
       showMenuIconButton={false}
       titleStyle={{ cursor: 'pointer' }}

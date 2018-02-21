@@ -45,8 +45,24 @@ class SetPasswordWithTokenScreen extends React.Component {
     const { disabled, password, _password } = this.state
     return (
       <div className={Styles.formContainer}>
-        <div><TextField name="password" value={password} hintText="Contraseña" onChange={this.handleChange} /></div>
-        <div><TextField name="_password" value={_password} hintText="Confirmar contraseña" onChange={this.handleChange} /></div>
+        <div>
+          <TextField
+            type="password"
+            name="password"
+            value={password}
+            hintText="Contraseña"
+            onChange={this.handleChange}
+          />
+        </div>
+        <div>
+          <TextField
+            type="password"
+            name="_password"
+            value={_password}
+            hintText="Confirmar contraseña"
+            onChange={this.handleChange}
+          />
+        </div>
         <RaisedButton className={Styles.button} disabled={disabled} label="RESTABLECER" onClick={this.handleSubmit} />
       </div>
     )

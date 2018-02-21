@@ -40,7 +40,13 @@ class LoginForm extends React.Component {
           <TextField value={email} name="email" hintText="Email" onChange={this.handleChange} />
         </div>
         <div>
-          <TextField value={password} name="password" hintText="Contraseña" onChange={this.handleChange} />
+          <TextField
+            type="password"
+            name="password"
+            value={password}
+            hintText="Contraseña"
+            onChange={this.handleChange}
+          />
         </div>
         <RaisedButton className={Styles.button} disabled={disabled} label="INGRESAR" onClick={this.handleSubmitLogin} />
         <RaisedButton className={Styles.button} label="NO SÉ MI CONTRASEÑA" onClick={this.handleForgotPassword} />
