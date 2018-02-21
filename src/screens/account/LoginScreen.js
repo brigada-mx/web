@@ -27,10 +27,6 @@ class LoginScreen extends React.Component {
     }
   }
 
-  handleSubmitForgotPassword = (email) => {
-
-  }
-
   render() {
     const { formState } = this.state
     return (

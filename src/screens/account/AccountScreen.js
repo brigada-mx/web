@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import LoginScreen from './LoginScreen'
-import AccountScreenWrapper from './AccountScreenWrapper'
+import HomeScreen from './HomeScreen'
 
 
 const AccountScreen = ({ token }) => {
   if (!token) return <LoginScreen />
-  return <AccountScreenWrapper />
+  return <HomeScreen />
 }
 
 const mapStateToProps = (state) => {

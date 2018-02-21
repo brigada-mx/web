@@ -7,7 +7,7 @@ import TextField from 'material-ui/TextField'
 
 import service from 'api/service'
 import { parseQs } from 'tools/string'
-import Styles from 'screens/AccountScreen/LoginForm.css'
+import Styles from 'screens/account/LoginForm.css'
 
 
 class SetPasswordWithTokenScreen extends React.Component {

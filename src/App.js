@@ -16,10 +16,11 @@ import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
 import OrganizationScreen from 'screens/OrganizationScreen'
-import AccountScreen from 'screens/AccountScreen'
-import ActionSubmissionsScreen from 'screens/ActionSubmissionsScreen'
-import PasswordEmailScreen from 'screens/PasswordEmailScreen'
-import SetPasswordWithTokenScreen from 'screens/SetPasswordWithTokenScreen'
+import AccountScreen from 'screens/account/AccountScreen'
+import ActionSubmissionsScreen from 'screens/account/ActionSubmissionsScreen'
+import PasswordEmailScreen from 'screens/account/PasswordEmailScreen'
+import SetPasswordWithTokenScreen from 'screens/account/SetPasswordWithTokenScreen'
+import ProfileScreen from 'screens/account/ProfileScreen'
 
 
 const LocalityScreenWrapper = ({ match }) => {
@@ -73,6 +74,7 @@ const App = () => {
               <Route exact path="/password_email" component={PasswordEmailScreen} />
               <Route path="/set_password" component={SetPasswordWithTokenScreen} />
               <Route exact path="/cuenta" component={AccountScreen} />
+              <Route exact path="/cuenta/perfil" component={ProfileScreen} />
               <Route exact path="/cuenta/formularios" component={ActionSubmissionsScreen} />
               <Route exact path="/cuenta/proyectos/:id" component={ActionSubmissionsScreenWrapper} />
             </React.Fragment>

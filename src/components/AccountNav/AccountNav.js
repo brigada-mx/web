@@ -19,9 +19,14 @@ const AccountNav = ({ history, location, onLogout, token }) => {
     history.push('/')
   }
 
+  const handleProfileClick = () => {
+    history.push('/cuenta/perfil')
+  }
+
   const handleLogoutClick = () => {
     service.deleteToken()
     onLogout()
+    history.push('/cuenta')
   }
 
   const menu = (
@@ -33,6 +38,7 @@ const AccountNav = ({ history, location, onLogout, token }) => {
       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
     >
       <MenuItem primaryText="Plataforma" onClick={handleHomeClick} />
+      {token && <MenuItem primaryText="Perfil" onClick={handleProfileClick} />}
       {token && <MenuItem primaryText="Salir" onClick={handleLogoutClick} />}
     </IconMenu>
   )

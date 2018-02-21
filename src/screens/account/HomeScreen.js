@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import service, { getBackoff } from 'api/service'
+import HomeScreenView from './HomeScreenView'
 
 
-class AccountScreenWrapper extends React.Component {
+class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -25,15 +26,15 @@ class AccountScreenWrapper extends React.Component {
 
   render() {
     return (
-      <span>account</span>
+      <HomeScreenView />
     )
   }
 }
 
-AccountScreenWrapper.propTypes = {
+HomeScreen.propTypes = {
 }
 
-AccountScreenWrapper.defaultProps = {
+HomeScreen.defaultProps = {
 }
 
-export default AccountScreenWrapper
+export default HomeScreen
