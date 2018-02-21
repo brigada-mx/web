@@ -1,7 +1,9 @@
 import 'whatwg-fetch'
 
 import env from 'src/env'
+import { store } from 'src/App'
 import { localStorage } from 'tools/storage'
+import * as Actions from 'src/actions'
 import { stringify } from './queryString'
 
 
@@ -58,13 +60,13 @@ const sendToApi = async (url, params) => {
 }
 
 const sendToApiAuth = async (url, params = {}) => {
-  const { token } = JSON.parse(localStorage.getItem('719s:user')) || {}
+  const { token } = JSON.parse(localStorage.getItem('719s:auth')) || {}
 
   try {
     const r = await _sendToApi(url, { ...params, token })
     const data = await r.json()
     if (r.status === 403 && data.detail === 'invalid_token') {
-      localStorage.removeItem('719s:user')
+      Actions.authUnset(store.dispatch)
       window.location.href = `${env.siteUrl}cuenta`
     }
     if (r.status >= 400) return { error: data }

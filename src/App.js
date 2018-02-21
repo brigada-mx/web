@@ -8,6 +8,7 @@ import { createStore, combineReducers } from 'redux'
 import env from 'src/env'
 import reducers from 'src/reducers/index'
 import TestScreen from 'screens/TestScreen'
+import { localStorage } from 'tools/storage'
 import Nav from 'components/Nav'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
@@ -36,12 +37,14 @@ const AboutScreen = () => (
   </div>
 )
 
-const initialStore = {}
+
 const allReducers = combineReducers({
   ...reducers,
 })
 
+const initialStore = {}
 const store = createStore(allReducers, initialStore)
+initialStore.auth = JSON.parse(localStorage.getItem('719s:auth')) || {}
 
 const App = () => {
   return (
@@ -70,4 +73,6 @@ const App = () => {
     </Provider>
   )
 }
+
 export default App
+export { store }

@@ -1,14 +1,24 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-import { localStorage } from 'tools/storage'
+import { connect } from 'react-redux'
+
 import LoginScreen from './LoginScreen'
 import AccountScreenWrapper from './AccountScreenWrapper'
 
 
-const AccountScreen = () => {
-  const { token } = JSON.parse(localStorage.getItem('719s:user')) || {}
+const AccountScreen = ({ token }) => {
   if (!token) return <LoginScreen />
   return <AccountScreenWrapper />
 }
 
-export default AccountScreen
+const mapStateToProps = (state) => {
+  const { token } = state.auth || {}
+  return { token }
+}
+
+AccountScreen.propTypes = {
+  token: PropTypes.string,
+}
+
+export default connect(mapStateToProps, null)(AccountScreen)
