@@ -1,6 +1,7 @@
 import 'whatwg-fetch'
 
 import env from 'src/env'
+import { localStorage } from 'tools/storage'
 import { stringify } from './queryString'
 
 
@@ -15,7 +16,7 @@ const replaceProtocol = (url, protocol) => {
 }
 
 const _sendToApi = async (
-  _url = '', { method = 'GET', body = {}, params = {}, headers = {}, isRelative = true, token } = {}
+  _url = '', { method = 'GET', body = {}, params = {}, headers = {}, isRelative = true, token = '' } = {}
 ) => {
   let url = _url
   const _headers = {
@@ -48,9 +49,25 @@ const _sendToApi = async (
 const sendToApi = async (url, params) => {
   try {
     const r = await _sendToApi(url, params)
-    if (r.status >= 400) return { error: r }
-
     const data = await r.json()
+    if (r.status >= 400) return { error: data }
+    return { data }
+  } catch (exception) {
+    return { exception }
+  }
+}
+
+const sendToApiAuth = async (url, params = {}) => {
+  const { token } = JSON.parse(localStorage.getItem('719s:user')) || {}
+
+  try {
+    const r = await _sendToApi(url, { ...params, token })
+    const data = await r.json()
+    if (r.status === 403 && data.detail === 'invalid_token') {
+      localStorage.removeItem('719s:user')
+      window.location.href = `${env.siteUrl}cuenta`
+    }
+    if (r.status >= 400) return { error: data }
     return { data }
   } catch (exception) {
     return { exception }
@@ -58,3 +75,4 @@ const sendToApi = async (url, params) => {
 }
 
 export default sendToApi
+export { sendToApiAuth }

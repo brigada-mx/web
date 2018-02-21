@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import env from 'src/env'
-import sendToApi from './request'
+import sendToApi, { sendToApiAuth } from './request'
 
 
 class Service {
@@ -55,7 +55,7 @@ class Service {
     return sendToApi(`actions/${id}/`)
   }
 
-  // ORGANIZATION ACCOUNT AUTH ENDPOINTS
+  // ORGANIZATION ACCOUNT PUBLIC ENDPOINTS
   sendSetPasswordEmail = async (email) => {
     return sendToApi('account/send_set_password_email/', { method: 'POST', body: { email } })
   }
@@ -68,31 +68,47 @@ class Service {
     return sendToApi('account/token/', { method: 'POST', body: { email, password } })
   }
 
-  setPassword = async (password) => {
-    return sendToApi('account/set_password/', { method: 'POST', body: { password } })
-  }
-
+  // ORGANIZATION ACCOUNT PROTECTED ENDPOINTS
   deleteToken = async () => {
-    return sendToApi('account/delete_token/', { method: 'POST' })
+    return sendToApiAuth('account/delete_token/', { method: 'POST' })
   }
 
-  // ORGANIZATION ACCOUNT ENDPOINTS
+  setPassword = async (password) => {
+    return sendToApiAuth('account/set_password/', { method: 'POST', body: { password } })
+  }
+
   getAccountOrganization = async () => {
-    return sendToApi('account/organization/')
+    return sendToApiAuth('account/organization/')
   }
 
   getAccountActions = async (page_size = 250) => {
     const params = { page_size }
-    return sendToApi('account/actions/', { params })
+    return sendToApiAuth('account/actions/', { params })
   }
 
   getAccountSubmissions = async (has_action = false, page_size = 250) => {
     const params = { has_action, page_size }
-    return sendToApi('account/submissions/', { params })
+    return sendToApiAuth('account/submissions/', { params })
   }
 
   getAccountAction = async (key) => {
-    return sendToApi(`account/actions_by_key/${key}/`)
+    return sendToApiAuth(`account/actions_by_key/${key}/`)
+  }
+
+  resetAccountKey = async () => {
+    return sendToApiAuth('account/organization/reset_key/', { method: 'POST' })
+  }
+
+  createAccountAction = async (body) => {
+    return sendToApiAuth('account/actions/', { method: 'POST', body })
+  }
+
+  updateAccountAction = async (id, body) => {
+    return sendToApiAuth(`account/actions/${id}/`, { method: 'PUT', body })
+  }
+
+  updateAccountSubmission = async (id, body) => {
+    return sendToApiAuth(`account/submissions/${id}/`, { method: 'PUT', body })
   }
 }
 
