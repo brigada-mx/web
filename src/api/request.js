@@ -60,7 +60,7 @@ const sendToApi = async (url, params) => {
 }
 
 const sendToApiAuth = async (url, params = {}) => {
-  const { token } = JSON.parse(localStorage.getItem('719s:auth')) || {}
+  const { token } = store.getState().auth || {}
 
   try {
     const r = await _sendToApi(url, { ...params, token })
