@@ -18,7 +18,8 @@ import OrganizationListScreen from 'screens/OrganizationListScreen'
 import OrganizationScreen from 'screens/OrganizationScreen'
 import AccountScreen from 'screens/AccountScreen'
 import ActionSubmissionsScreen from 'screens/ActionSubmissionsScreen'
-import SetPasswordScreen from 'screens/SetPasswordScreen'
+import PasswordEmailScreen from 'screens/PasswordEmailScreen'
+import SetPasswordWithTokenScreen from 'screens/SetPasswordWithTokenScreen'
 
 
 const LocalityScreenWrapper = ({ match }) => {
@@ -68,8 +69,9 @@ const App = () => {
 
           <MuiThemeProvider>
             <React.Fragment>
-              <Route path="/(set_password|cuenta)" component={AccountNav} />
-              <Route exact path="/set_password" component={SetPasswordScreen} />
+              <Route path="/(password_email|set_password|cuenta)" component={AccountNav} />
+              <Route exact path="/password_email" component={PasswordEmailScreen} />
+              <Route path="/set_password" component={SetPasswordWithTokenScreen} />
               <Route exact path="/cuenta" component={AccountScreen} />
               <Route exact path="/cuenta/formularios" component={ActionSubmissionsScreen} />
               <Route exact path="/cuenta/proyectos/:id" component={ActionSubmissionsScreenWrapper} />

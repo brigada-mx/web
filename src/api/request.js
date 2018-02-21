@@ -2,7 +2,6 @@ import 'whatwg-fetch'
 
 import env from 'src/env'
 import { store } from 'src/App'
-import { localStorage } from 'tools/storage'
 import * as Actions from 'src/actions'
 import { stringify } from './queryString'
 

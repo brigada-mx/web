@@ -1,3 +1,15 @@
+import _ from 'lodash'
+
+
+export const parseQs = (qs) => {
+  return _.chain(qs)
+    .replace('?', '')
+    .split('&')
+    .map(_.partial(_.split, _, '=', 2))
+    .fromPairs()
+    .value()
+}
+
 export const toLowerWords = text => (text || '')
   .toLowerCase()
   .replace(/[^\s0-9a-z]/gi, '')
