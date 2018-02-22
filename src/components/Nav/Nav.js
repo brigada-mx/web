@@ -28,7 +28,7 @@ const NavLinks = ({ classNameLink, activeStyle = {}, onHideDrawer }) => {
     <React.Fragment>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">COMUNIDADES</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/organizaciones">ORGANIZACIONES</NavLink>
-      {/* <NavLink onClick={onHideDrawer} className={classNameLink} activeStyle={{ ...selected, ...activeStyle }} to="/nosotros">NOSOTROS</NavLink> */}
+      <a href="http://ensintonia.org/nosotros">NOSOTROS</a>
     </React.Fragment>
   )
 }
