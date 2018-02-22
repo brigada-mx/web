@@ -16,11 +16,12 @@ import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
 import OrganizationScreen from 'screens/OrganizationScreen'
-import AccountScreen from 'screens/account/AccountScreen'
-import ActionSubmissionsScreen from 'screens/account/ActionSubmissionsScreen'
 import PasswordEmailScreen from 'screens/account/PasswordEmailScreen'
 import SetPasswordWithTokenScreen from 'screens/account/SetPasswordWithTokenScreen'
+import protectedScreen from 'screens/account/ProtectedScreen'
+import ActionSubmissionsScreen from 'screens/account/ActionSubmissionsScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
+import HomeScreen from 'screens/account/HomeScreen'
 
 
 const LocalityScreenWrapper = ({ match }) => {
@@ -75,10 +76,10 @@ const App = () => {
                 <Route exact path="/restablecer/email" component={PasswordEmailScreen} />
                 <Route path="/restablecer" component={SetPasswordWithTokenScreen} />
               </Switch>
-              <Route exact path="/cuenta" component={AccountScreen} />
-              <Route exact path="/cuenta/perfil" component={ProfileScreen} />
-              <Route exact path="/cuenta/formularios" component={ActionSubmissionsScreen} />
-              <Route exact path="/cuenta/proyectos/:id" component={ActionSubmissionsScreenWrapper} />
+              <Route exact path="/cuenta" component={protectedScreen(HomeScreen)} />
+              <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
+              <Route exact path="/cuenta/formularios" component={protectedScreen(ActionSubmissionsScreen)} />
+              <Route exact path="/cuenta/proyectos/:id" component={protectedScreen(ActionSubmissionsScreenWrapper)} />
             </React.Fragment>
           </MuiThemeProvider>
 

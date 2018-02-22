@@ -13,7 +13,7 @@ class HomeScreenView extends React.Component {
 
   render() {
     return (
-      null
+      <span>HomeScreenView</span>
     )
   }
 }
