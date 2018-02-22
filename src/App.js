@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
+import { reducer as formReducer } from 'redux-form'
 
 import env from 'src/env'
 import reducers from 'src/reducers/index'
@@ -45,6 +46,7 @@ const AboutScreen = () => (
 
 const allReducers = combineReducers({
   ...reducers,
+  form: formReducer,
 })
 
 const initialStore = { auth: JSON.parse(localStorage.getItem('719s:auth')) || {} }

@@ -6,14 +6,15 @@ import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
 import service, { getBackoff } from 'api/service'
-import Styles from 'screens/account/LoginForm.css'
+import Styles from 'screens/account/Form.css'
+import UserForm from './UserForm'
 
 
 class Profile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: '',
+      full_name: '',
       old_password: '',
       password: '',
       _password: '',
@@ -30,14 +31,14 @@ class Profile extends React.Component {
   }
 
   handleSubmitName = async () => {
-    const { name } = this.state
-    if (!name) {
+    const { full_name } = this.state
+    if (!full_name) {
       this.setState({ error: true })
       return
     }
 
     this.setState({ disabled: true })
-    const { data } = await service.updateMe(name)
+    const { data } = await service.updateMe({ full_name })
     if (data) {
       this.setState({ disabled: false, error: false })
     } else {
@@ -62,11 +63,15 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { disabled, name, old_password, password, _password } = this.state
+    const { disabled, full_name, old_password, password, _password } = this.state
     return (
       <div className={Styles.formContainer}>
-        <div><TextField name="name" value={name} hintText="Nombre completo" onChange={this.handleChange} /></div>
-        <RaisedButton className={Styles.button} disabled={disabled} label="ACTUALIZAR" onClick={this.handleSubmitName} />
+        <UserForm
+          onChange={this.handleChange}
+          onSubmitName={this.handleSubmitName}
+          full_name={full_name}
+          disabled={disabled}
+        />
 
         <div>
           <TextField

@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
 import service from 'api/service'
-import Styles from 'screens/account/LoginForm.css'
+import Styles from 'screens/account/Form.css'
 
 
 class PasswordEmailScreen extends React.Component {

@@ -69,8 +69,8 @@ class Service {
     return sendToApiAuth('account/me/')
   }
 
-  updateMe = async (full_name) => {
-    return sendToApiAuth('account/me/', { method: 'PUT', body: { full_name } })
+  updateMe = async (body) => {
+    return sendToApiAuth('account/me/', { method: 'PUT', body })
   }
 
   getAccountOrganization = async () => {
