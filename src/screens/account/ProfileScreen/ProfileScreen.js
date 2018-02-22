@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -14,8 +13,8 @@ class Profile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      full_name: '',
-      old_password: '',
+      fullName: '',
+      oldPassword: '',
       password: '',
       _password: '',
       error: false,
@@ -31,14 +30,14 @@ class Profile extends React.Component {
   }
 
   handleSubmitName = async () => {
-    const { full_name } = this.state
-    if (!full_name) {
+    const { fullName } = this.state
+    if (!fullName) {
       this.setState({ error: true })
       return
     }
 
     this.setState({ disabled: true })
-    const { data } = await service.updateMe({ full_name })
+    const { data } = await service.updateMe({ fullName })
     if (data) {
       this.setState({ disabled: false, error: false })
     } else {
@@ -47,14 +46,14 @@ class Profile extends React.Component {
   }
 
   handleSubmitPassword = async () => {
-    const { old_password, password, _password } = this.state
-    if (!old_password || password.length < 8 || password !== _password) {
+    const { oldPassword, password, _password } = this.state
+    if (!oldPassword || password.length < 8 || password !== _password) {
       this.setState({ error: true })
       return
     }
 
     this.setState({ disabled: true })
-    const { data } = await service.setPassword(old_password, password)
+    const { data } = await service.setPassword(oldPassword, password)
     if (data) {
       this.setState({ disabled: false, error: false })
     } else {
@@ -63,21 +62,21 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { disabled, full_name, old_password, password, _password } = this.state
+    const { disabled, fullName, oldPassword, password, _password } = this.state
     return (
       <div className={Styles.formContainer}>
         <UserForm
           onChange={this.handleChange}
           onSubmitName={this.handleSubmitName}
-          full_name={full_name}
+          fullName={fullName}
           disabled={disabled}
         />
 
         <div>
           <TextField
             type="password"
-            name="old_password"
-            value={old_password}
+            name="oldPassword"
+            value={oldPassword}
             hintText="Contraseña actual"
             onChange={this.handleChange}
           />

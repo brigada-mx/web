@@ -1,20 +1,20 @@
-/* eslint-disable camelcase */
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { Field, reduxForm } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
 import Styles from 'screens/account/Form.css'
 
 
-const UserForm = ({ onChange, onSubmitName, full_name, disabled }) => {
+const UserForm = ({ onChange, onSubmitName, fullName, disabled }) => {
   return (
     <React.Fragment>
       <div>
         <TextField
-          name="full_name"
-          value={full_name}
+          name="fullName"
+          value={fullName}
           hintText="Nombre completo"
           onChange={onChange}
         />
@@ -32,8 +32,8 @@ const UserForm = ({ onChange, onSubmitName, full_name, disabled }) => {
 UserForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmitName: PropTypes.func.isRequired,
-  full_name: PropTypes.string.isRequired,
+  fullName: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
 }
 
-export default UserForm
+export default reduxForm({ form: 'contact' })(UserForm)
