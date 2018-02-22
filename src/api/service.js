@@ -73,8 +73,8 @@ class Service {
     return sendToApiAuth('account/delete_token/', { method: 'POST' })
   }
 
-  setPassword = async (password) => {
-    return sendToApiAuth('account/set_password/', { method: 'POST', body: { password } })
+  setPassword = async (old_password, password) => {
+    return sendToApiAuth('account/set_password/', { method: 'POST', body: { old_password, password } })
   }
 
   updateMe = async (full_name) => {

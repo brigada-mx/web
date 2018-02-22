@@ -16,6 +16,10 @@ import Styles from './AccountNav.css'
 
 const AccountNav = ({ history, location, onLogout, token }) => {
   const handleHomeClick = () => {
+    history.push('/cuenta')
+  }
+
+  const handlePlatformClick = () => {
     history.push('/')
   }
 
@@ -37,7 +41,8 @@ const AccountNav = ({ history, location, onLogout, token }) => {
       targetOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
     >
-      <MenuItem primaryText="Plataforma" onClick={handleHomeClick} />
+      <MenuItem primaryText="Admin" onClick={handleHomeClick} />
+      <MenuItem primaryText="Plataforma" onClick={handlePlatformClick} />
       {token && <MenuItem primaryText="Perfil" onClick={handleProfileClick} />}
       {token && <MenuItem primaryText="Salir" onClick={handleLogoutClick} />}
     </IconMenu>

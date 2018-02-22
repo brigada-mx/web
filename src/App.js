@@ -47,8 +47,7 @@ const allReducers = combineReducers({
   ...reducers,
 })
 
-const initialStore = {}
-initialStore.auth = JSON.parse(localStorage.getItem('719s:auth')) || {}
+const initialStore = { auth: JSON.parse(localStorage.getItem('719s:auth')) || {} }
 const store = createStore(allReducers, initialStore)
 
 const App = () => {
