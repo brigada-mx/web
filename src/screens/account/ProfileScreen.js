@@ -1,11 +1,11 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withRouter } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
-import service from 'api/service'
+import service, { getBackoff } from 'api/service'
 import Styles from 'screens/account/LoginForm.css'
 
 
@@ -14,11 +14,15 @@ class Profile extends React.Component {
     super(props)
     this.state = {
       name: '',
-      oldPassword: '',
+      old_password: '',
       password: '',
       _password: '',
       error: false,
     }
+  }
+
+  componentDidMount() {
+    getBackoff(service.getMe, { key: 'me' })
   }
 
   handleChange = (e) => {
@@ -42,14 +46,14 @@ class Profile extends React.Component {
   }
 
   handleSubmitPassword = async () => {
-    const { oldPassword, password, _password } = this.state
-    if (!oldPassword || password.length < 8 || password !== _password) {
+    const { old_password, password, _password } = this.state
+    if (!old_password || password.length < 8 || password !== _password) {
       this.setState({ error: true })
       return
     }
 
     this.setState({ disabled: true })
-    const { data } = await service.setPassword(oldPassword, password)
+    const { data } = await service.setPassword(old_password, password)
     if (data) {
       this.setState({ disabled: false, error: false })
     } else {
@@ -58,7 +62,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { disabled, name, oldPassword, password, _password } = this.state
+    const { disabled, name, old_password, password, _password } = this.state
     return (
       <div className={Styles.formContainer}>
         <div><TextField name="name" value={name} hintText="Nombre completo" onChange={this.handleChange} /></div>
@@ -67,8 +71,8 @@ class Profile extends React.Component {
         <div>
           <TextField
             type="password"
-            name="oldPassword"
-            value={oldPassword}
+            name="old_password"
+            value={old_password}
             hintText="Contraseña actual"
             onChange={this.handleChange}
           />
@@ -100,4 +104,4 @@ class Profile extends React.Component {
 Profile.propTypes = {
 }
 
-export default withRouter(Profile)
+export default Profile

@@ -16,7 +16,7 @@ import Styles from './AccountNav.css'
 
 const AccountNav = ({ history, location, onLogout, token }) => {
   const handleHomeClick = () => {
-    history.push('/cuenta')
+    if (location.pathname !== '/cuenta') history.push('/cuenta')
   }
 
   const handlePlatformClick = () => {
@@ -24,13 +24,13 @@ const AccountNav = ({ history, location, onLogout, token }) => {
   }
 
   const handleProfileClick = () => {
-    history.push('/cuenta/perfil')
+    if (location.pathname !== '/cuenta/perfil') history.push('/cuenta/perfil')
   }
 
   const handleLogoutClick = () => {
     service.deleteToken()
     onLogout()
-    history.push('/cuenta')
+    if (location.pathname !== '/cuenta') history.push('/cuenta')
   }
 
   const menu = (

@@ -45,3 +45,10 @@ export async function authUnset(dispatch) {
     type: 'AUTH_UNSET',
   })
 }
+
+export async function getter(dispatch, { response, key }) {
+  dispatch({
+    type: 'GETTER',
+    payload: { response, key },
+  })
+}

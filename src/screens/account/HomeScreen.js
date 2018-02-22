@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import service, { getBackoff } from 'api/service'
+import service, { getBackoffComponent } from 'api/service'
 import HomeScreenView from './HomeScreenView'
 
 
@@ -17,7 +17,7 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     this._mounted = true
-    getBackoff(this, 'organization', () => service.getAccountOrganization())
+    getBackoffComponent(this, 'organization', () => service.getAccountOrganization())
   }
 
   componentWillUnmount() {
