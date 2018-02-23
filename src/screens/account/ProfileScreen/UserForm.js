@@ -1,13 +1,14 @@
 import React from 'react'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
+import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { TextField } from 'components/Fields'
 import Styles from 'screens/account/Form.css'
 
 
-const UserForm = ({ handleSubmit, pristine, submitting }) => {
+const UserForm = ({ handleSubmit, submitting }) => {
   return (
     <React.Fragment>
       <div>
@@ -15,7 +16,7 @@ const UserForm = ({ handleSubmit, pristine, submitting }) => {
       </div>
       <RaisedButton
         className={Styles.button}
-        disabled={pristine || submitting}
+        disabled={submitting}
         label="ACTUALIZAR"
         onClick={handleSubmit}
       />
@@ -27,4 +28,9 @@ UserForm.propTypes = {
   ...rxfPropTypes,
 }
 
-export default reduxForm({ form: 'user' })(UserForm)
+const mapStateToProps = (state) => {
+  const { me = {} } = state.getter
+  return { initialValues: me.data || {} }
+}
+
+export default connect(mapStateToProps, null)(reduxForm({ form: 'me' })(UserForm))

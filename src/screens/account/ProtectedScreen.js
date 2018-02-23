@@ -15,16 +15,16 @@ const ProtectedScreen = ({ children, token, history, location }) => {
   return <React.Fragment>{children}</React.Fragment>
 }
 
-const mapStateToProps = (state) => {
-  const { token } = state.auth || {}
-  return { token }
-}
-
 ProtectedScreen.propTypes = {
   children: PropTypes.any.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   token: PropTypes.string,
+}
+
+const mapStateToProps = (state) => {
+  const { token } = state.auth || {}
+  return { token }
 }
 
 const Screen = withRouter(connect(mapStateToProps, null)(ProtectedScreen))

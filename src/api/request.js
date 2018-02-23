@@ -7,6 +7,22 @@ import * as Actions from 'src/actions'
 import { stringify } from './queryString'
 
 
+const objKeysToSnake = (obj) => {
+  const _obj = {}
+  for (const k of Object.keys(obj)) {
+    _obj[_.snakeCase(k)] = obj[k]
+  }
+  return _obj
+}
+
+const objKeysToCamel = (obj) => {
+  const _obj = {}
+  for (const k of Object.keys(obj)) {
+    _obj[_.camelCase(k)] = obj[k]
+  }
+  return _obj
+}
+
 const toQueryString = (params) => {
   const s = stringify(params)
   return s ? `?${s}` : ''
@@ -20,26 +36,21 @@ const replaceProtocol = (url, protocol) => {
 const _sendToApi = async (
   url = '', { method = 'GET', body = {}, params = {}, headers = {}, isRelative = true, token = '' } = {}
 ) => {
-  let _url = url
   const _headers = {
     ...headers,
     'Content-Type': 'application/json',
   }
   if (token) _headers.Authorization = `Bearer ${token}`
 
-  const _body = {}
-  for (const k of Object.keys(body)) {
-    _body[_.snakeCase(k)] = body[k]
-  }
-
   const options = {
     method,
-    body: JSON.stringify(_body), // `body` must be a string, not an object
+    body: JSON.stringify(objKeysToSnake(body)), // `body` must be a string, not an object
     headers: new Headers(_headers),
   }
 
   if (['GET', 'HEAD'].indexOf(method) > -1) { delete options.body }
 
+  let _url = url
   if (isRelative) {
     _url = `${env.apiUrl}${_url}`
   } else {
@@ -58,7 +69,7 @@ const sendToApi = async (url, params) => {
     const r = await _sendToApi(url, params)
     const data = await r.json()
     if (r.status >= 400) return { error: data }
-    return { data }
+    return { data: objKeysToCamel(data) }
   } catch (exception) {
     return { exception }
   }
@@ -75,7 +86,7 @@ const sendToApiAuth = async (url, params = {}) => {
       window.location.href = `${env.siteUrl}cuenta`
     }
     if (r.status >= 400) return { error: data }
-    return { data }
+    return { data: objKeysToCamel(data) }
   } catch (exception) {
     return { exception }
   }

@@ -63,6 +63,13 @@ const AccountNav = ({ history, location, onLogout, token }) => {
   )
 }
 
+AccountNav.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  token: PropTypes.string,
+}
+
 const mapStateToProps = (state) => {
   const { token } = state.auth || {}
   return { token }
@@ -72,13 +79,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLogout: () => Actions.authUnset(dispatch),
   }
-}
-
-AccountNav.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  onLogout: PropTypes.func.isRequired,
-  token: PropTypes.string,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountNav))

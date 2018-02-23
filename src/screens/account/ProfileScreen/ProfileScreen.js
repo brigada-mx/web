@@ -21,6 +21,10 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
+    this.load()
+  }
+
+  load = () => {
     getBackoff(service.getMe, { key: 'me' })
   }
 
@@ -30,8 +34,12 @@ class Profile extends React.Component {
 
   handleSubmitName = async (values) => {
     const { data } = await service.updateMe(values)
-    if (data) this.setState({ error: false })
-    else this.setState({ error: true })
+    if (data) {
+      this.load()
+      this.setState({ error: false })
+    } else {
+      this.setState({ error: true })
+    }
   }
 
   handleSubmitPassword = async () => {
@@ -54,7 +62,7 @@ class Profile extends React.Component {
     const { disabled, oldPassword, password, confirmPassword } = this.state
     return (
       <div className={Styles.formContainer}>
-        <UserForm onSubmit={this.handleSubmitName} />
+        <UserForm onSubmit={this.handleSubmitName} enableReinitialize />
 
         <div>
           <TextField
