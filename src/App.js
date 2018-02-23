@@ -11,6 +11,7 @@ import env from 'src/env'
 import reducers from 'src/reducers/index'
 import TestScreen from 'screens/TestScreen'
 import { localStorage } from 'tools/storage'
+import SnackBar from 'components/SnackBar'
 import Nav from 'components/Nav'
 import AccountNav from 'components/AccountNav'
 import MapScreen from 'screens/MapScreen'
@@ -81,6 +82,7 @@ const App = () => {
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
               <Route exact path="/cuenta/formularios" component={protectedScreen(ActionSubmissionsScreen)} />
               <Route exact path="/cuenta/proyectos/:id" component={protectedScreen(ActionSubmissionsScreenWrapper)} />
+              <SnackBar />
             </React.Fragment>
           </MuiThemeProvider>
 

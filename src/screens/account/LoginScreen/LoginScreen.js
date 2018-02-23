@@ -12,6 +12,7 @@ const LoginScreen = ({ onLogin, onResponse }) => {
   const handleSubmit = async ({ email, password }) => {
     const { data } = await service.token(email, password)
     if (data) onLogin({ ...data, email })
+    else onResponse('No reconocemos este email/contraseña', 'error')
   }
 
   return <LoginForm onSubmit={handleSubmit} />

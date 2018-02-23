@@ -52,3 +52,10 @@ export async function getter(dispatch, { response, key }) {
     payload: { response, key },
   })
 }
+
+export async function snackbar(dispatch, { message, status }) {
+  dispatch({
+    type: 'SNACKBAR',
+    payload: { message, status },
+  })
+}

@@ -3,6 +3,7 @@ import action from './action'
 import filter from './filter'
 import auth from './auth'
 import getter from './getter'
+import snackbar from './snackbar'
 
 export default {
   drawer,
@@ -10,4 +11,5 @@ export default {
   filter,
   auth,
   getter,
+  snackbar,
 }
