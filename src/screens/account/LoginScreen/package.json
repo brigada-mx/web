@@ -1,0 +1,6 @@
+{
+  "name": "LoginScreen",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LoginScreen.js"
+}

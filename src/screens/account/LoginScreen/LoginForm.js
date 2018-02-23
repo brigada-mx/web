@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
-import Styles from './Form.css'
+import Styles from 'screens/account/Form.css'
 
 
 class LoginForm extends React.Component {
