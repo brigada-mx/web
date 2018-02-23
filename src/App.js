@@ -9,7 +9,6 @@ import { reducer as formReducer } from 'redux-form'
 
 import env from 'src/env'
 import reducers from 'src/reducers/index'
-import TestScreen from 'screens/TestScreen'
 import { localStorage } from 'tools/storage'
 import SnackBar from 'components/SnackBar'
 import Nav from 'components/Nav'
@@ -60,8 +59,6 @@ const App = () => {
         <div>
           <Route exact path="/" component={Nav} />
           <Route path="/(comunidades|organizaciones|nosotros)" component={Nav} />
-
-          {env.env === 'dev' && <Route exact path="/test" component={TestScreen} />}
 
           <Route exact path="/" component={MapScreen} />
           <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
