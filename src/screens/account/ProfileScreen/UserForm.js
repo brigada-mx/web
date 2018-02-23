@@ -1,39 +1,30 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, propTypes as reduxFormPropTypes } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
 
+import { TextField } from 'components/Fields'
 import Styles from 'screens/account/Form.css'
 
 
-const UserForm = ({ onChange, onSubmitName, fullName, disabled }) => {
+const UserForm = ({ handleSubmit, pristine, submitting }) => {
   return (
     <React.Fragment>
       <div>
-        <TextField
-          name="fullName"
-          value={fullName}
-          hintText="Nombre completo"
-          onChange={onChange}
-        />
+        <Field name="fullName" component={TextField} hintText="Nombre completo" />
       </div>
       <RaisedButton
         className={Styles.button}
-        disabled={disabled}
+        disabled={pristine || submitting}
         label="ACTUALIZAR"
-        onClick={onSubmitName}
+        onClick={handleSubmit}
       />
     </React.Fragment>
   )
 }
 
 UserForm.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  onSubmitName: PropTypes.func.isRequired,
-  fullName: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
+  ...reduxFormPropTypes,
 }
 
 export default reduxForm({ form: 'contact' })(UserForm)

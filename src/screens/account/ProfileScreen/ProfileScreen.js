@@ -13,10 +13,9 @@ class Profile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      fullName: '',
       oldPassword: '',
       password: '',
-      _password: '',
+      confirmPassword: '',
       error: false,
     }
   }
@@ -29,25 +28,15 @@ class Profile extends React.Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  handleSubmitName = async () => {
-    const { fullName } = this.state
-    if (!fullName) {
-      this.setState({ error: true })
-      return
-    }
-
-    this.setState({ disabled: true })
-    const { data } = await service.updateMe({ fullName })
-    if (data) {
-      this.setState({ disabled: false, error: false })
-    } else {
-      this.setState({ disabled: false, error: true })
-    }
+  handleSubmitName = async (values) => {
+    const { data } = await service.updateMe(values)
+    if (data) this.setState({ error: false })
+    else this.setState({ error: true })
   }
 
   handleSubmitPassword = async () => {
-    const { oldPassword, password, _password } = this.state
-    if (!oldPassword || password.length < 8 || password !== _password) {
+    const { oldPassword, password, confirmPassword } = this.state
+    if (!oldPassword || password.length < 8 || password !== confirmPassword) {
       this.setState({ error: true })
       return
     }
@@ -62,15 +51,10 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { disabled, fullName, oldPassword, password, _password } = this.state
+    const { disabled, oldPassword, password, confirmPassword } = this.state
     return (
       <div className={Styles.formContainer}>
-        <UserForm
-          onChange={this.handleChange}
-          onSubmitName={this.handleSubmitName}
-          fullName={fullName}
-          disabled={disabled}
-        />
+        <UserForm onSubmit={this.handleSubmitName} />
 
         <div>
           <TextField
@@ -93,13 +77,18 @@ class Profile extends React.Component {
         <div>
           <TextField
             type="password"
-            name="_password"
-            value={_password}
+            name="confirmPassword"
+            value={confirmPassword}
             hintText="Confirmar contraseña nueva"
             onChange={this.handleChange}
           />
         </div>
-        <RaisedButton className={Styles.button} disabled={disabled} label="CAMBIAR CONTRASEÑA" onClick={this.handleSubmitPassword} />
+        <RaisedButton
+          className={Styles.button}
+          disabled={disabled}
+          label="CAMBIAR CONTRASEÑA"
+          onClick={this.handleSubmitPassword}
+        />
       </div>
     )
   }
