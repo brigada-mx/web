@@ -15,12 +15,16 @@ const fieldOf = (inputComponent) => {
   return WrappedField
 }
 
-const TextInput = ({ input: { name, value, onChange }, ...rest }) => {
+const TextInput = ({ input, meta, ...rest }) => {
+  const { name, value, onChange, onBlur } = input
+  const { touched, error } = meta
   return (
     <TextFieldMui
+      onBlur={onBlur}
       name={name}
       value={value}
       onChange={onChange}
+      errorText={touched && error}
       {...rest}
     />
   )

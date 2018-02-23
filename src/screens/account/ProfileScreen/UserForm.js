@@ -28,9 +28,14 @@ UserForm.propTypes = {
   ...rxfPropTypes,
 }
 
+const validate = (values) => {
+  if (!values.fullName) return { fullName: 'Se requiere un nombre' }
+  return {}
+}
+
 const mapStateToProps = (state) => {
   const { me = {} } = state.getter
   return { initialValues: me.data || {} }
 }
 
-export default connect(mapStateToProps, null)(reduxForm({ form: 'me' })(UserForm))
+export default connect(mapStateToProps, null)(reduxForm({ form: 'me', validate })(UserForm))
