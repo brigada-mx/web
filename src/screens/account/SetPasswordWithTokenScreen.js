@@ -54,7 +54,12 @@ const SetPasswordWithTokenScreen = ({ history, location, onResponse }) => {
     const { token = '' } = params
 
     const { data } = await service.setPasswordWithToken(token, password)
-    if (data) history.push('/cuenta')
+    if (!data) {
+      onResponse('El email que te mandamos ya no es válido, pide otro', 'error')
+      return
+    }
+    history.push('/cuenta')
+    onResponse('Cambiaste tu contraseña', 'success')
   }
 
   return <ReduxForm onSubmit={handleSubmit} />

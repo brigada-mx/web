@@ -22,15 +22,22 @@ class Profile extends React.Component {
 
   handleSubmitName = async (values) => {
     const { data } = await service.updateMe(values)
-    if (data) this.load()
+    if (!data) {
+      this.props.onResponse('Hubo un error', 'error')
+      return
+    }
+    this.load()
+    this.props.onResponse('Cambiaste tu nombre', 'success')
   }
 
   handleSubmitPassword = async ({ oldPassword, password }) => {
     const { data } = await service.setPassword(oldPassword, password)
-    if (data) {
-      this.props.reset()
-      this.props.onResponse('Cambiaste tu contraseña', 'success')
-    } else this.props.onResponse('Contraseña actual incorrecta', 'error')
+    if (!data) {
+      this.props.onResponse('Contraseña actual incorrecta', 'error')
+      return
+    }
+    this.props.reset()
+    this.props.onResponse('Cambiaste tu contraseña', 'success')
   }
 
   render() {

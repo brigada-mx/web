@@ -36,10 +36,12 @@ const ReduxForm = reduxForm({ form: 'passwordEmail', validate })(Form)
 const PasswordEmailScreen = ({ history, location, onResponse }) => {
   const handleSubmit = async ({ email }) => {
     const { data } = await service.sendSetPasswordEmail(email)
-    if (data) {
-      history.push('/cuenta')
-      onResponse(`Mandamos un email a ${email}`, 'success')
-    } else onResponse(`No pudimos mandar el email ${email}`, 'error')
+    if (!data) {
+      onResponse(`No pudimos mandar el email ${email}`, 'error')
+      return
+    }
+    history.push('/cuenta')
+    onResponse(`Mandamos un email a ${email}`, 'success')
   }
 
   return <ReduxForm onSubmit={handleSubmit} initialValues={location.state} />
