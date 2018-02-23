@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import { store } from 'src/App'
 import { TextField } from 'components/Fields'
 import { validateEmail } from 'tools/string'
 import Styles from 'screens/account/Form.css'
@@ -12,7 +13,12 @@ import Styles from 'screens/account/Form.css'
 
 const LoginForm = ({ handleSubmit, submitting, history }) => {
   const handleForgotPassword = () => {
-    history.push('/restablecer/email')
+    try {
+      const { email } = store.getState().form.login.values
+      history.push({ pathname: '/restablecer/email', state: { email } })
+    } catch (e) {
+      history.push('/restablecer/email')
+    }
   }
 
   return (

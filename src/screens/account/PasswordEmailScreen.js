@@ -33,17 +33,18 @@ const validate = ({ email }) => {
 
 const ReduxForm = reduxForm({ form: 'passwordEmail', validate })(Form)
 
-const PasswordEmailScreen = ({ history, onResponse }) => {
+const PasswordEmailScreen = ({ history, location, onResponse }) => {
   const handleSubmit = async ({ email }) => {
     const { data } = await service.sendSetPasswordEmail(email)
     if (data) history.push('/cuenta')
   }
 
-  return <ReduxForm onSubmit={handleSubmit} />
+  return <ReduxForm onSubmit={handleSubmit} initialValues={location.state} />
 }
 
 PasswordEmailScreen.propTypes = {
   history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   onResponse: PropTypes.func.isRequired,
 }
 
