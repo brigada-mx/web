@@ -2,63 +2,50 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router-dom'
+import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
 
+import { TextField } from 'components/Fields'
+import { validateEmail } from 'tools/string'
 import Styles from 'screens/account/Form.css'
 
 
-class LoginForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      email: '',
-      password: '',
-    }
+const LoginForm = ({ handleSubmit, submitting, history }) => {
+  const handleForgotPassword = () => {
+    history.push('/restablecer/email')
   }
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
-
-  handleSubmitLogin = () => {
-    const { email, password } = this.state
-    this.props.onSubmitLogin(email, password)
-  }
-
-  handleForgotPassword = () => {
-    const { email } = this.state
-    this.props.history.push({ pathname: '/restablecer/email', state: { email } })
-  }
-
-  render() {
-    const { email, password } = this.state
-    const { disabled } = this.props
-    return (
-      <div className={Styles.formContainer}>
-        <div>
-          <TextField value={email} name="email" hintText="Email" onChange={this.handleChange} />
-        </div>
-        <div>
-          <TextField
-            type="password"
-            name="password"
-            value={password}
-            hintText="Contraseña"
-            onChange={this.handleChange}
-          />
-        </div>
-        <RaisedButton className={Styles.button} disabled={disabled} label="INGRESAR" onClick={this.handleSubmitLogin} />
-        <RaisedButton className={Styles.button} label="NO SÉ MI CONTRASEÑA" onClick={this.handleForgotPassword} />
+  return (
+    <div className={Styles.formContainer}>
+      <div>
+        <TextField
+          name="email"
+          hintText="Email"
+        />
       </div>
-    )
-  }
+      <div>
+        <TextField
+          type="password"
+          name="password"
+          hintText="Contraseña"
+        />
+      </div>
+      <RaisedButton className={Styles.button} disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
+      <RaisedButton className={Styles.button} label="NO SÉ MI CONTRASEÑA" onClick={handleForgotPassword} />
+    </div>
+  )
 }
 
 LoginForm.propTypes = {
-  onSubmitLogin: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  ...rxfPropTypes,
   history: PropTypes.object.isRequired,
 }
 
-export default withRouter(LoginForm)
+const validate = ({ email, password }) => {
+  const errors = {}
+  if (!validateEmail(email)) errors.email = 'Se requiere un email válido'
+  if (!password) errors.password = 'Debes ingresar una contraseña'
+  return errors
+}
+
+export default withRouter(reduxForm({ form: 'login', validate })(LoginForm))

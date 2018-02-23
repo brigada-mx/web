@@ -9,8 +9,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import * as Actions from 'src/actions'
 import service from 'api/service'
 import { parseQs } from 'tools/string'
-import Styles from 'screens/account/Form.css'
 import { TextField } from 'components/Fields'
+import Styles from 'screens/account/Form.css'
 
 
 const Form = ({ handleSubmit, submitting }) => {
@@ -68,7 +68,7 @@ SetPasswordWithTokenScreen.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onResponse: (message, success) => Actions.snackbar(dispatch, { message, success }),
+    onResponse: (message, status) => Actions.snackbar(dispatch, { message, status }),
   }
 }
 

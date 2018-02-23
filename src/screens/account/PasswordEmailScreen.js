@@ -49,7 +49,7 @@ PasswordEmailScreen.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onResponse: (message, success) => Actions.snackbar(dispatch, { message, success }),
+    onResponse: (message, status) => Actions.snackbar(dispatch, { message, status }),
   }
 }
 

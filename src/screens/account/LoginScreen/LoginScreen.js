@@ -8,44 +8,24 @@ import service from 'api/service'
 import LoginForm from './LoginForm'
 
 
-class LoginScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      formState: null,
-    }
-  }
-
-  handleSubmitLogin = async (email, password) => {
-    this.setState({ formState: 'submitting' })
+const LoginScreen = ({ onLogin, onResponse }) => {
+  const handleSubmit = async ({ email, password }) => {
     const { data } = await service.token(email, password)
-    if (data) {
-      this.setState({ formState: null })
-      this.props.onLogin({ ...data, email })
-    } else {
-      this.setState({ formState: 'error' })
-    }
+    if (data) onLogin({ ...data, email })
   }
 
-  render() {
-    const { formState } = this.state
-    return (
-      <LoginForm
-        error={formState === 'error'}
-        disabled={formState === 'submitting'}
-        onSubmitLogin={this.handleSubmitLogin}
-      />
-    )
-  }
+  return <LoginForm onSubmit={handleSubmit} />
 }
 
 LoginScreen.propTypes = {
   onLogin: PropTypes.func.isRequired,
+  onResponse: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: auth => Actions.authSet(dispatch, { auth }),
+    onResponse: (message, status) => Actions.snackbar(dispatch, { message, status }),
   }
 }
 
