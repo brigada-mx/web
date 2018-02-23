@@ -28,8 +28,8 @@ UserForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = (values) => {
-  if (!values.fullName) return { fullName: 'Se requiere un nombre' }
+const validate = ({ fullName }) => {
+  if (!fullName) return { fullName: 'Se requiere un nombre' }
   return {}
 }
 

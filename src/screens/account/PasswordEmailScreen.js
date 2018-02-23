@@ -6,10 +6,10 @@ import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import * as Actions from 'src/actions'
 import { TextField } from 'components/Fields'
 import service from 'api/service'
 import { validateEmail } from 'tools/string'
-import * as Actions from 'src/actions'
 import Styles from 'screens/account/Form.css'
 
 
@@ -26,16 +26,16 @@ Form.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = (values) => {
-  if (!validateEmail(values.email)) return { email: 'Se requiere un email válido' }
+const validate = ({ email }) => {
+  if (!validateEmail(email)) return { email: 'Se requiere un email válido' }
   return {}
 }
 
 const ReduxForm = reduxForm({ form: 'passwordEmail', validate })(Form)
 
 const PasswordEmailScreen = ({ history, onResponse }) => {
-  const handleSubmit = async (values) => {
-    const { data } = await service.sendSetPasswordEmail(values.email)
+  const handleSubmit = async ({ email }) => {
+    const { data } = await service.sendSetPasswordEmail(email)
     if (data) history.push('/cuenta')
   }
 

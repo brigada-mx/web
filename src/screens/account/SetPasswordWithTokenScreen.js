@@ -2,76 +2,74 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router-dom'
+import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
+import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
 
+import * as Actions from 'src/actions'
 import service from 'api/service'
 import { parseQs } from 'tools/string'
 import Styles from 'screens/account/Form.css'
+import { TextField } from 'components/Fields'
 
 
-class SetPasswordWithTokenScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      password: '',
-      _password: '',
-      disabled: false,
-      error: false,
-    }
-  }
+const Form = ({ handleSubmit, submitting }) => {
+  return (
+    <div className={Styles.formContainer}>
+      <div>
+        <TextField
+          type="password"
+          name="password"
+          hintText="Contraseña"
+        />
+      </div>
+      <div>
+        <TextField
+          type="password"
+          name="confirmPassword"
+          hintText="Confirmar contraseña"
+        />
+      </div>
+      <RaisedButton className={Styles.button} disabled={submitting} label="RESTABLECER" onClick={handleSubmit} />
+    </div>
+  )
+}
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
+Form.propTypes = {
+  ...rxfPropTypes,
+}
 
-  handleSubmit = async () => {
-    const { password, _password } = this.state
-    if (password.length < 8 || password !== _password) {
-      this.setState({ error: true })
-      return
-    }
+const validate = ({ password, confirmPassword }) => {
+  const errors = {}
+  if (password !== undefined && password.length < 8) errors.password = 'Debe tener al menos 8 caracteres'
+  if (password !== confirmPassword) errors.confirmPassword = 'Las contraseñas tienen que ser iguales'
+  return errors
+}
 
-    const params = parseQs(this.props.location.search)
+const ReduxForm = reduxForm({ form: 'setPasswordWithToken', validate })(Form)
+
+const SetPasswordWithTokenScreen = ({ history, location, onResponse }) => {
+  const handleSubmit = async ({ password }) => {
+    const params = parseQs(location.search)
     const { token = '' } = params
 
-    this.setState({ disabled: true })
     const { data } = await service.setPasswordWithToken(token, password)
-    if (data) this.props.history.push('/cuenta')
-    this.setState({ disabled: false, error: true })
+    if (data) history.push('/cuenta')
   }
 
-  render() {
-    const { disabled, password, _password } = this.state
-    return (
-      <div className={Styles.formContainer}>
-        <div>
-          <TextField
-            type="password"
-            name="password"
-            value={password}
-            hintText="Contraseña"
-            onChange={this.handleChange}
-          />
-        </div>
-        <div>
-          <TextField
-            type="password"
-            name="_password"
-            value={_password}
-            hintText="Confirmar contraseña"
-            onChange={this.handleChange}
-          />
-        </div>
-        <RaisedButton className={Styles.button} disabled={disabled} label="RESTABLECER" onClick={this.handleSubmit} />
-      </div>
-    )
-  }
+  return <ReduxForm onSubmit={handleSubmit} />
 }
 
 SetPasswordWithTokenScreen.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  onResponse: PropTypes.func.isRequired,
 }
 
-export default withRouter(SetPasswordWithTokenScreen)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onResponse: (message, success) => Actions.snackbar(dispatch, { message, success }),
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(SetPasswordWithTokenScreen))
