@@ -1,16 +1,30 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
-import PropTypes from 'prop-types'
+
+import { Field } from 'redux-form'
 
 import TextFieldMui from 'material-ui/TextField'
 
 
-export const TextField = ({ hintText, input: { name, value, onChange } }) => {
+const fieldOf = (inputComponent) => {
+  const WrappedField = (props) => {
+    return (
+      <Field component={inputComponent} {...props} />
+    )
+  }
+  return WrappedField
+}
+
+const TextInput = ({ input: { name, value, onChange }, ...rest }) => {
   return (
     <TextFieldMui
       name={name}
       value={value}
-      hintText={hintText}
       onChange={onChange}
+      {...rest}
     />
   )
 }
+
+const TextField = fieldOf(TextInput)
+export { TextField }

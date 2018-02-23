@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Field, reduxForm, propTypes as reduxFormPropTypes } from 'redux-form'
+import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { TextField } from 'components/Fields'
@@ -11,7 +11,7 @@ const UserForm = ({ handleSubmit, pristine, submitting }) => {
   return (
     <React.Fragment>
       <div>
-        <Field name="fullName" component={TextField} hintText="Nombre completo" />
+        <TextField name="fullName" hintText="Nombre completo" />
       </div>
       <RaisedButton
         className={Styles.button}
@@ -24,7 +24,7 @@ const UserForm = ({ handleSubmit, pristine, submitting }) => {
 }
 
 UserForm.propTypes = {
-  ...reduxFormPropTypes,
+  ...rxfPropTypes,
 }
 
-export default reduxForm({ form: 'contact' })(UserForm)
+export default reduxForm({ form: 'user' })(UserForm)
