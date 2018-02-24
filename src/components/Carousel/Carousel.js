@@ -17,12 +17,12 @@ const maxMetersGroupSubmissions = 50
 
 class CarouselContainer extends React.Component {
   componentDidMount() {
-    getBackoff(() => service.getAction(this.props.actionId), { onResponse: this.handleResponse })
+    getBackoff(() => service.getAction(this.props.actionId), { snackbar: this.handleResponse })
   }
 
   componentWillUpdate(nextProps) {
     if (this.props.actionId === nextProps.actionId) return
-    getBackoff(() => service.getAction(nextProps.actionId), { onResponse: this.handleResponse })
+    getBackoff(() => service.getAction(nextProps.actionId), { snackbar: this.handleResponse })
   }
 
   handleResponse = ({ data }) => {

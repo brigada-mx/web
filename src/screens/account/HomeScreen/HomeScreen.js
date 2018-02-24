@@ -19,21 +19,21 @@ class HomeScreen extends React.Component {
   handleResetKey = async (values) => {
     const { data } = await service.resetAccountKey(values)
     if (!data) {
-      this.props.onResponse('Hubo un error', 'error')
+      this.props.snackbar('Hubo un error', 'error')
       return
     }
     this.loadOrganization()
-    this.props.onResponse('Cambiaste la llave secreta de tu organización', 'success')
+    this.props.snackbar('Cambiaste la llave secreta de tu organización', 'success')
   }
 
   handleSubmitOrganization = async (values) => {
     const { data } = await service.updateAccountOrganization(values)
     if (!data) {
-      this.props.onResponse('Hubo un error', 'error')
+      this.props.snackbar('Hubo un error', 'error')
       return
     }
     this.loadOrganization()
-    this.props.onResponse('Actualizaste tu organización', 'success')
+    this.props.snackbar('Actualizaste tu organización', 'success')
   }
 
   componentDidMount() {
@@ -55,13 +55,13 @@ class HomeScreen extends React.Component {
 }
 
 HomeScreen.propTypes = {
-  onResponse: PropTypes.func.isRequired,
+  snackbar: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onResponse: (message, status) => Actions.snackbar(dispatch, { message, status }),
+    snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
     reset: () => dispatch(reset('accountNewAction')),
   }
 }

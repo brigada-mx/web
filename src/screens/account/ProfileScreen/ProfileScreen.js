@@ -23,21 +23,21 @@ class Profile extends React.Component {
   handleSubmitName = async (values) => {
     const { data } = await service.updateMe(values)
     if (!data) {
-      this.props.onResponse('Hubo un error', 'error')
+      this.props.snackbar('Hubo un error', 'error')
       return
     }
     this.load()
-    this.props.onResponse('Cambiaste tu nombre', 'success')
+    this.props.snackbar('Cambiaste tu nombre', 'success')
   }
 
   handleSubmitPassword = async ({ oldPassword, password }) => {
     const { data } = await service.setPassword(oldPassword, password)
     if (!data) {
-      this.props.onResponse('Contraseña actual incorrecta', 'error')
+      this.props.snackbar('Contraseña actual incorrecta', 'error')
       return
     }
     this.props.reset()
-    this.props.onResponse('Cambiaste tu contraseña', 'success')
+    this.props.snackbar('Cambiaste tu contraseña', 'success')
   }
 
   render() {
@@ -51,13 +51,13 @@ class Profile extends React.Component {
 }
 
 Profile.propTypes = {
-  onResponse: PropTypes.func.isRequired,
+  snackbar: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onResponse: (message, status) => Actions.snackbar(dispatch, { message, status }),
+    snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
     reset: () => dispatch(reset('resetPassword')),
   }
 }

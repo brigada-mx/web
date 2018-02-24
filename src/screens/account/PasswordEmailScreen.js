@@ -33,15 +33,15 @@ const validate = ({ email }) => {
 
 const ReduxForm = reduxForm({ form: 'passwordEmail', validate })(Form)
 
-const PasswordEmailScreen = ({ history, location, onResponse }) => {
+const PasswordEmailScreen = ({ history, location, snackbar }) => {
   const handleSubmit = async ({ email }) => {
     const { data } = await service.sendSetPasswordEmail(email)
     if (!data) {
-      onResponse(`No pudimos mandar el email ${email}`, 'error')
+      snackbar(`No pudimos mandar el email ${email}`, 'error')
       return
     }
     history.push('/cuenta')
-    onResponse(`Mandamos un email a ${email}`, 'success')
+    snackbar(`Mandamos un email a ${email}`, 'success')
   }
 
   return <ReduxForm onSubmit={handleSubmit} initialValues={location.state} />
@@ -50,12 +50,12 @@ const PasswordEmailScreen = ({ history, location, onResponse }) => {
 PasswordEmailScreen.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  onResponse: PropTypes.func.isRequired,
+  snackbar: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onResponse: (message, status) => Actions.snackbar(dispatch, { message, status }),
+    snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
   }
 }
 

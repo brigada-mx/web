@@ -48,18 +48,18 @@ const validate = ({ password, confirmPassword }) => {
 
 const ReduxForm = reduxForm({ form: 'setPasswordWithToken', validate })(Form)
 
-const SetPasswordWithTokenScreen = ({ history, location, onResponse }) => {
+const SetPasswordWithTokenScreen = ({ history, location, snackbar }) => {
   const handleSubmit = async ({ password }) => {
     const params = parseQs(location.search)
     const { token = '' } = params
 
     const { data } = await service.setPasswordWithToken(token, password)
     if (!data) {
-      onResponse('El email que te mandamos ya no es válido, pide otro', 'error')
+      snackbar('El email que te mandamos ya no es válido, pide otro', 'error')
       return
     }
     history.push('/cuenta')
-    onResponse('Cambiaste tu contraseña', 'success')
+    snackbar('Cambiaste tu contraseña', 'success')
   }
 
   return <ReduxForm onSubmit={handleSubmit} />
@@ -68,12 +68,12 @@ const SetPasswordWithTokenScreen = ({ history, location, onResponse }) => {
 SetPasswordWithTokenScreen.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  onResponse: PropTypes.func.isRequired,
+  snackbar: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onResponse: (message, status) => Actions.snackbar(dispatch, { message, status }),
+    snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
   }
 }
 
