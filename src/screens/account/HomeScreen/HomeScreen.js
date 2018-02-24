@@ -27,8 +27,7 @@ class HomeScreen extends React.Component {
   }
 
   handleSubmitOrganization = async (values) => {
-    const { data } = await service.updateAccountOrganization(
-      { ...values, yearEstablished: parseInt(values.yearEstablished, 10) })
+    const { data } = await service.updateAccountOrganization(values)
     if (!data) {
       this.props.onResponse('Hubo un error', 'error')
       return

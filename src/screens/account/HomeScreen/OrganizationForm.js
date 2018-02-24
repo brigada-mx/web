@@ -3,8 +3,9 @@ import React from 'react'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
+import MenuItem from 'material-ui/MenuItem'
 
-import { TextField } from 'components/Fields'
+import { TextField, SelectField } from 'components/Fields'
 import Styles from 'screens/account/Form.css'
 
 
@@ -14,6 +15,7 @@ const OrganizationForm = ({ handleSubmit, submitting }) => {
       <h2>Tu Organización</h2>
       <div>
         <TextField
+          floatingLabelText="Llave secreta"
           name="secretKey"
           readOnly
           disabled
@@ -21,19 +23,36 @@ const OrganizationForm = ({ handleSubmit, submitting }) => {
       </div>
       <div>
         <TextField
+          floatingLabelText="Nombre"
           name="name"
           hintText="Nombre"
         />
       </div>
       <div>
+        <SelectField
+          floatingLabelText="Sector"
+          name="sector"
+        >
+          <MenuItem value="civil" primaryText="Civil" />
+          <MenuItem value="public" primaryText="Público" />
+          <MenuItem value="private" primaryText="Privado" />
+          <MenuItem value="religious" primaryText="Religioso" />
+        </SelectField>
+      </div>
+      <div>
         <TextField
+          floatingLabelText="Descripción"
           name="desc"
           hintText="Descripción"
+          multiLine
+          rows={3}
         />
       </div>
       <div>
         <TextField
+          floatingLabelText="Año establecido"
           type="number"
+          normalize={year => year && parseInt(year, 10)}
           name="yearEstablished"
           hintText="Anó establecido"
         />
