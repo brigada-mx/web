@@ -19,13 +19,13 @@ const OrganizationForm = ({ handleSubmit, submitting }) => {
           name="secretKey"
           readOnly
           disabled
+          format={(value) => { return value ? value.replace(/\./g, ' ') : '' }}
         />
       </div>
       <div>
         <TextField
           floatingLabelText="Nombre"
           name="name"
-          hintText="Nombre"
         />
       </div>
       <div>
@@ -43,7 +43,6 @@ const OrganizationForm = ({ handleSubmit, submitting }) => {
         <TextField
           floatingLabelText="Descripción"
           name="desc"
-          hintText="Descripción"
           multiLine
           rows={3}
         />
@@ -52,9 +51,8 @@ const OrganizationForm = ({ handleSubmit, submitting }) => {
         <TextField
           floatingLabelText="Año establecido"
           type="number"
-          normalize={year => year && parseInt(year, 10)}
+          normalize={value => value && parseInt(value, 10)}
           name="yearEstablished"
-          hintText="Anó establecido"
         />
       </div>
       <RaisedButton
