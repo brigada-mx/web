@@ -47,7 +47,7 @@ ResetPasswordForm.propTypes = {
 
 const validate = ({ oldPassword, password, confirmPassword }) => {
   const errors = {}
-  if (!oldPassword) errors.oldPassword = 'Debes meter tu contraseña actual'
+  if (!oldPassword) errors.oldPassword = 'Debes ingresar tu contraseña actual'
   if (!password || password.length < 8) errors.password = 'Debe tener al menos 8 caracteres'
   if (password !== confirmPassword) errors.confirmPassword = 'Las contraseñas tienen que ser iguales'
   return errors
