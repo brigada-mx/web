@@ -1,10 +1,6 @@
 @value colors: "src/colors.css";
 @value brandOffWhite, strongShadow from colors;
 
-.emptyMetric {
-  border: 1px solid red;
-}
-
 .orgCard {
   background-color: white;
   margin-bottom: 18px;
