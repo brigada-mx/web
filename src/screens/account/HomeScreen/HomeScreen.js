@@ -10,11 +10,18 @@ import service, { getBackoff } from 'api/service'
 import Styles from 'screens/account/Form.css'
 import OrganizationForm from './OrganizationForm'
 import ContactForm from './ContactForm'
+import { CreateActionForm } from './ActionForm'
 
+
+const initialActionValues = { published: true }
 
 class HomeScreen extends React.Component {
   loadOrganization = () => {
     getBackoff(service.getAccountOrganization, { key: 'accountOrganization' })
+  }
+
+  loadActions = () => {
+    getBackoff(service.getAccountActions, { key: 'accountActions' })
   }
 
   handleResetKey = async (values) => {
@@ -50,20 +57,44 @@ class HomeScreen extends React.Component {
     this.props.snackbar('Actualizaste tus datos de contacto', 'success')
   }
 
+  handleCreateAction = async (body) => {
+    const { data } = await service.createAccountAction(body)
+    if (!data) {
+      this.props.snackbar('Hubo un error', 'error')
+      return
+    }
+    this.props.resetAction()
+    this.loadActions()
+    this.props.snackbar('Agregaste un nuevo proyecto', 'success')
+  }
+
   componentDidMount() {
     this.loadOrganization()
+    this.loadActions()
   }
 
   render() {
     return (
-      <div className={Styles.formContainer}>
-        <OrganizationForm onSubmit={this.handleSubmitOrganization} enableReinitialize />
-        <ContactForm onSubmit={this.handleSubmitContact} enableReinitialize />
-        <RaisedButton
-          className={Styles.button}
-          label="CAMBIAR LLAVE SECRETA"
-          onClick={this.handleResetKey}
-        />
+      <div>
+        <div className={Styles.formContainer}>
+          <h2>Tu Organización</h2>
+          <OrganizationForm onSubmit={this.handleSubmitOrganization} enableReinitialize />
+          <RaisedButton
+            className={Styles.button}
+            label="CAMBIAR LLAVE SECRETA"
+            onClick={this.handleResetKey}
+          />
+        </div>
+
+        <div className={Styles.formContainer}>
+          <h2>Datos de contacto</h2>
+          <ContactForm onSubmit={this.handleSubmitContact} enableReinitialize />
+        </div>
+
+        <div className={Styles.formContainer}>
+          <h2>Agregar proyecto</h2>
+          <CreateActionForm onSubmit={this.handleCreateAction} initialValues={initialActionValues} />
+        </div>
       </div>
     )
   }
@@ -71,13 +102,13 @@ class HomeScreen extends React.Component {
 
 HomeScreen.propTypes = {
   snackbar: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
+  resetAction: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
-    reset: () => dispatch(reset('accountNewAction')),
+    resetAction: () => dispatch(reset('accountNewAction')),
   }
 }
 

@@ -12,7 +12,6 @@ import Styles from 'screens/account/Form.css'
 const OrganizationForm = ({ handleSubmit, submitting }) => {
   return (
     <React.Fragment>
-      <h2>Tu Organización</h2>
       <div>
         <TextField
           floatingLabelText="Llave secreta"

@@ -3,8 +3,8 @@ import React from 'react'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
-import flattenObject from 'tools/flatten'
 
+import flattenObject from 'tools/flatten'
 import { TextField } from 'components/Fields'
 import Styles from 'screens/account/Form.css'
 
@@ -12,7 +12,6 @@ import Styles from 'screens/account/Form.css'
 const ContactForm = ({ handleSubmit, submitting }) => {
   return (
     <React.Fragment>
-      <h2>Datos de contacto</h2>
       <div>
         <TextField
           floatingLabelText="Email"
