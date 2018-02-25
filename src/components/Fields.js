@@ -10,12 +10,12 @@ import {
   AutoComplete as AutoCompleteInput,
 } from 'redux-form-material-ui'
 
+import Styles from 'screens/account/Form.css'
+
 
 const fieldOf = (inputComponent) => {
   const WrappedField = (props) => {
-    return (
-      <Field component={inputComponent} {...props} />
-    )
+    return <Field className={Styles.field} component={inputComponent} {...props} />
   }
   return WrappedField
 }

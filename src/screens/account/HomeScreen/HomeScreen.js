@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import { reset } from 'redux-form'
 import { connect } from 'react-redux'
-import RaisedButton from 'material-ui/RaisedButton'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
@@ -16,6 +15,11 @@ import { CreateActionForm } from './ActionForm'
 const initialActionValues = { published: true }
 
 class HomeScreen extends React.Component {
+  componentDidMount() {
+    this.loadOrganization()
+    this.loadActions()
+  }
+
   loadOrganization = () => {
     getBackoff(service.getAccountOrganization, { key: 'accountOrganization' })
   }
@@ -68,32 +72,34 @@ class HomeScreen extends React.Component {
     this.props.snackbar('Agregaste un nuevo proyecto', 'success')
   }
 
-  componentDidMount() {
-    this.loadOrganization()
-    this.loadActions()
+  handleLocalityChange = async (e, v) => {
+    console.log(v)
   }
 
   render() {
     return (
       <div>
+        <div className={Styles.sectionHeader}>Tu Organización</div>
         <div className={Styles.formContainer}>
-          <h2>Tu Organización</h2>
-          <OrganizationForm onSubmit={this.handleSubmitOrganization} enableReinitialize />
-          <RaisedButton
-            className={Styles.button}
-            label="CAMBIAR LLAVE SECRETA"
-            onClick={this.handleResetKey}
+          <OrganizationForm
+            onResetKey={this.handleResetKey}
+            onSubmit={this.handleSubmitOrganization}
+            enableReinitialize
           />
         </div>
 
+        <div className={Styles.sectionHeader}>Datos de contacto</div>
         <div className={Styles.formContainer}>
-          <h2>Datos de contacto</h2>
           <ContactForm onSubmit={this.handleSubmitContact} enableReinitialize />
         </div>
 
+        <div className={Styles.sectionHeader}>Agregar proyecto</div>
         <div className={Styles.formContainer}>
-          <h2>Agregar proyecto</h2>
-          <CreateActionForm onSubmit={this.handleCreateAction} initialValues={initialActionValues} />
+          <CreateActionForm
+            onSubmit={this.handleCreateAction}
+            initialValues={initialActionValues}
+            onLocalityChange={this.handleLocalityChange}
+          />
         </div>
       </div>
     )

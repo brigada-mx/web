@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
@@ -9,7 +10,7 @@ import { TextField, SelectField } from 'components/Fields'
 import Styles from 'screens/account/Form.css'
 
 
-const OrganizationForm = ({ handleSubmit, submitting }) => {
+const OrganizationForm = ({ handleSubmit, submitting, onResetKey }) => {
   return (
     <React.Fragment>
       <div>
@@ -26,6 +27,12 @@ const OrganizationForm = ({ handleSubmit, submitting }) => {
           floatingLabelText="Nombre"
           name="name"
         />
+        <TextField
+          floatingLabelText="Año establecido"
+          type="number"
+          normalize={value => value && parseInt(value, 10)}
+          name="yearEstablished"
+        />
       </div>
       <div>
         <SelectField
@@ -37,8 +44,6 @@ const OrganizationForm = ({ handleSubmit, submitting }) => {
           <MenuItem value="private" primaryText="Privado" />
           <MenuItem value="religious" primaryText="Religioso" />
         </SelectField>
-      </div>
-      <div>
         <TextField
           floatingLabelText="Descripción"
           name="desc"
@@ -47,24 +52,24 @@ const OrganizationForm = ({ handleSubmit, submitting }) => {
         />
       </div>
       <div>
-        <TextField
-          floatingLabelText="Año establecido"
-          type="number"
-          normalize={value => value && parseInt(value, 10)}
-          name="yearEstablished"
+        <RaisedButton
+          className={Styles.button}
+          disabled={submitting}
+          label="ACTUALIZAR"
+          onClick={handleSubmit}
+        />
+        <RaisedButton
+          className={Styles.button}
+          label="CAMBIAR LLAVE SECRETA"
+          onClick={onResetKey}
         />
       </div>
-      <RaisedButton
-        className={Styles.button}
-        disabled={submitting}
-        label="ACTUALIZAR"
-        onClick={handleSubmit}
-      />
     </React.Fragment>
   )
 }
 
 OrganizationForm.propTypes = {
+  onResetKey: PropTypes.func.isRequired,
   ...rxfPropTypes,
 }
 

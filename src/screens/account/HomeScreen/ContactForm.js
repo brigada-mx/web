@@ -17,26 +17,28 @@ const ContactForm = ({ handleSubmit, submitting }) => {
           floatingLabelText="Email"
           name="email"
         />
-      </div>
-      <div>
         <TextField
           floatingLabelText="Teléfono"
           name="phone"
         />
-      </div>
-      <div>
         <TextField
           floatingLabelText="Persona responsable"
           name="person_responsible"
         />
-      </div>
-      <div>
         <TextField
           floatingLabelText="Sitio web"
           name="website"
         />
       </div>
       <div>
+        <TextField
+          floatingLabelText="Calle y número"
+          name="street"
+        />
+        <TextField
+          floatingLabelText="Localidad o colonia"
+          name="locality"
+        />
         <TextField
           floatingLabelText="Código postal"
           name="zip"
@@ -47,23 +49,9 @@ const ContactForm = ({ handleSubmit, submitting }) => {
           floatingLabelText="Ciudad"
           name="city"
         />
-      </div>
-      <div>
         <TextField
           floatingLabelText="Estado"
           name="state"
-        />
-      </div>
-      <div>
-        <TextField
-          floatingLabelText="Calle y número"
-          name="street"
-        />
-      </div>
-      <div>
-        <TextField
-          floatingLabelText="Localidad o colonia"
-          name="locality"
         />
       </div>
       <RaisedButton

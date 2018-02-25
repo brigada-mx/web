@@ -1,17 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import MenuItem from 'material-ui/MenuItem'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Add from 'material-ui/svg-icons/content/add'
+import Done from 'material-ui/svg-icons/action/done'
 import Reset from 'material-ui/svg-icons/action/cached'
 
 import { TextField, SelectField, Checkbox, DatePicker, AutoComplete } from 'components/Fields'
 import Styles from 'screens/account/Form.css'
 
 
-const fields = (update = true) => {
+const Fields = ({ update, onLocalityChange }) => {
   return (
     <React.Fragment>
       {update &&
@@ -28,9 +30,8 @@ const fields = (update = true) => {
         <TextField
           floatingLabelText="Localidad"
           name="localityId"
+          onChange={onLocalityChange}
         />
-      </div>
-      <div>
         <SelectField
           floatingLabelText="Tipo de proyecto"
           name="actionType"
@@ -48,8 +49,6 @@ const fields = (update = true) => {
           <MenuItem value="sports_installations" primaryText="Instalaciones deportivas" />
           <MenuItem value="cultural_sites" primaryText="Patrimonio histórico y cultural" />
         </SelectField>
-      </div>
-      <div>
         <TextField
           floatingLabelText="Descripción"
           name="desc"
@@ -61,14 +60,10 @@ const fields = (update = true) => {
           floatingLabelText="Meta"
           name="target"
         />
-      </div>
-      <div>
         <TextField
           floatingLabelText="Unidad de medida de meta"
           name="unitOfMeasurement"
         />
-      </div>
-      <div>
         <TextField
           type="number"
           floatingLabelText="Avance contra meta"
@@ -81,14 +76,10 @@ const fields = (update = true) => {
           floatingLabelText="Presupuesto estimado (opcional)"
           name="budget"
         />
-      </div>
-      <div>
         <DatePicker
           floatingLabelText="Fecha de inicio"
           name="startDate"
         />
-      </div>
-      <div>
         <DatePicker
           floatingLabelText="Fecha final estimada"
           name="endDate"
@@ -104,21 +95,37 @@ const fields = (update = true) => {
   )
 }
 
-const CreateForm = ({ handleSubmit, reset, submitting }) => {
+Fields.propTypes = {
+  update: PropTypes.bool.isRequired,
+  onLocalityChange: PropTypes.func.isRequired,
+}
+
+const CreateForm = ({ handleSubmit, reset, submitting, onLocalityChange }) => {
   return (
     <React.Fragment>
-      {fields(false)}
-      <FloatingActionButton onClick={handleSubmit} disabled={submitting}>
-        <Add />
-      </FloatingActionButton>
-      <FloatingActionButton onClick={reset} disabled={submitting}>
-        <Reset />
-      </FloatingActionButton>
+      <Fields update={false} onLocalityChange={onLocalityChange} />
+      <div className={Styles.buttonGroup}>
+        <FloatingActionButton
+          className={Styles.button}
+          onClick={reset}
+          disabled={submitting}
+        >
+          <Reset />
+        </FloatingActionButton>
+        <FloatingActionButton
+          className={Styles.button}
+          onClick={handleSubmit}
+          disabled={submitting}
+        >
+          <Add />
+        </FloatingActionButton>
+      </div>
     </React.Fragment>
   )
 }
 
 CreateForm.propTypes = {
+  onLocalityChange: PropTypes.func.isRequired,
   ...rxfPropTypes,
 }
 
