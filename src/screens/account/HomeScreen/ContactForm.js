@@ -70,8 +70,8 @@ ContactForm.propTypes = {
 
 const validate = ({ email, phone }) => {
   const errors = {}
-  if (!email) errors.email = 'Debes ingresar el nombre'
-  if (!phone) errors.phone = 'Debes ingresar la descripción'
+  if (!email) errors.email = 'Agrega el nombre'
+  if (!phone) errors.phone = 'Agrega la descripción'
   return errors
 }
 

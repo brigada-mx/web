@@ -75,8 +75,8 @@ OrganizationForm.propTypes = {
 
 const validate = ({ name, desc, yearEstablished }) => {
   const errors = {}
-  if (!name) errors.name = 'Debes ingresar el nombre'
-  if (!desc) errors.desc = 'Debes ingresar la descripción'
+  if (!name) errors.name = 'Angresa el nombre'
+  if (!desc) errors.desc = 'Agrega la descripción de tu organización'
   if (!yearEstablished || yearEstablished.toString().length !== 4) {
     errors.yearEstablished = 'Ingresa un año válido'
   }

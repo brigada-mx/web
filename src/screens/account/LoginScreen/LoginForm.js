@@ -50,7 +50,7 @@ LoginForm.propTypes = {
 const validate = ({ email, password }) => {
   const errors = {}
   if (!validateEmail(email)) errors.email = 'Se requiere un email válido'
-  if (!password) errors.password = 'Debes ingresar una contraseña'
+  if (!password) errors.password = 'Ingresa tu contraseña'
   return errors
 }
 

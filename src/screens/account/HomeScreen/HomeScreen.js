@@ -74,7 +74,9 @@ class HomeScreen extends React.Component {
   }
 
   handleCreateAction = async (body) => {
-    const { data } = await service.createAccountAction(body)
+    const { data } = await service.createAccountAction(
+      { ...body, locality: body.locality.value }
+    )
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
@@ -85,7 +87,7 @@ class HomeScreen extends React.Component {
   }
 
   handleLocalityChange = async (e, v) => {
-    if (!v) {
+    if (!v || v.value) {
       this.setState({ localitiesSearch: [] })
       return
     }

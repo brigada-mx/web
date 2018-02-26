@@ -17,8 +17,15 @@ import Styles from 'screens/account/Form.css'
 const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
   const localities = localitiesSearch.map((l) => {
     const { id, name, municipality_name: munName, state_name: stateName } = l
-    return `${name}, ${munName}, ${stateName}`
+    return { text: `${name}, ${munName}, ${stateName}`, value: id }
   })
+  const formatAuto = (value) => {
+    try {
+      return value.text
+    } catch (e) {
+      return value || ''
+    }
+  }
 
   return (
     <React.Fragment>
@@ -36,10 +43,11 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
         <AutoComplete
           className={Styles.wideInput}
           floatingLabelText="Localidad"
-          name="localityId"
+          name="locality"
           onChange={onLocalityChange}
           dataSource={localities}
           filter={AutoCompleteMui.noFilter}
+          format={formatAuto}
         />
       </div>
       <div>
@@ -63,6 +71,8 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
         <TextField
           floatingLabelText="Descripción"
           name="desc"
+          multiLine
+          rows={3}
         />
       </div>
       <div>
@@ -140,10 +150,11 @@ CreateForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = ({ email, phone }) => {
+const validate = ({ locality, actionType, desc }) => {
   const errors = {}
-  if (!email) errors.email = 'Debes ingresar el nombre'
-  if (!phone) errors.phone = 'Debes ingresar la descripción'
+  if (!locality || !locality.value) errors.locality = 'Escoge una localidad de la lista'
+  if (!actionType) errors.actionType = 'Escoge el tipo de proyecto'
+  if (!desc) errors.desc = 'Agrega una descripción del proyecto'
   return errors
 }
 
