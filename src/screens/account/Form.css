@@ -29,3 +29,8 @@
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.wideInput {
+  margin-left: -30vw !important;
+  width: 60vw !important;
+}

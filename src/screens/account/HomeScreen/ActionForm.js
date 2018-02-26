@@ -4,16 +4,22 @@ import PropTypes from 'prop-types'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import MenuItem from 'material-ui/MenuItem'
+import AutoCompleteMui from 'material-ui/AutoComplete'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Add from 'material-ui/svg-icons/content/add'
 import Done from 'material-ui/svg-icons/action/done'
-import Reset from 'material-ui/svg-icons/action/cached'
+import Reset from 'material-ui/svg-icons/navigation/close'
 
 import { TextField, SelectField, Checkbox, DatePicker, AutoComplete } from 'components/Fields'
 import Styles from 'screens/account/Form.css'
 
 
-const Fields = ({ update, onLocalityChange }) => {
+const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
+  const localities = localitiesSearch.map((l) => {
+    const { id, name, municipality_name: munName, state_name: stateName } = l
+    return `${name}, ${munName}, ${stateName}`
+  })
+
   return (
     <React.Fragment>
       {update &&
@@ -27,11 +33,16 @@ const Fields = ({ update, onLocalityChange }) => {
         </div>
       }
       <div>
-        <TextField
+        <AutoComplete
+          className={Styles.wideInput}
           floatingLabelText="Localidad"
           name="localityId"
           onChange={onLocalityChange}
+          dataSource={localities}
+          filter={AutoCompleteMui.noFilter}
         />
+      </div>
+      <div>
         <SelectField
           floatingLabelText="Tipo de proyecto"
           name="actionType"
@@ -98,12 +109,13 @@ const Fields = ({ update, onLocalityChange }) => {
 Fields.propTypes = {
   update: PropTypes.bool.isRequired,
   onLocalityChange: PropTypes.func.isRequired,
+  localitiesSearch: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
-const CreateForm = ({ handleSubmit, reset, submitting, onLocalityChange }) => {
+const CreateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
   return (
     <React.Fragment>
-      <Fields update={false} onLocalityChange={onLocalityChange} />
+      <Fields update={false} {...rest} />
       <div className={Styles.buttonGroup}>
         <FloatingActionButton
           className={Styles.button}
@@ -125,7 +137,6 @@ const CreateForm = ({ handleSubmit, reset, submitting, onLocalityChange }) => {
 }
 
 CreateForm.propTypes = {
-  onLocalityChange: PropTypes.func.isRequired,
   ...rxfPropTypes,
 }
 

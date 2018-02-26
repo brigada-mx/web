@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import _ from 'lodash'
 import { reset } from 'redux-form'
 import { connect } from 'react-redux'
 
@@ -15,6 +16,17 @@ import { CreateActionForm } from './ActionForm'
 const initialActionValues = { published: true }
 
 class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      localitiesSearch: [],
+    }
+
+    this.handleLocalityChange = _.debounce(
+      this.handleLocalityChange, 250
+    )
+  }
+
   componentDidMount() {
     this.loadOrganization()
     this.loadActions()
@@ -73,7 +85,13 @@ class HomeScreen extends React.Component {
   }
 
   handleLocalityChange = async (e, v) => {
-    console.log(v)
+    if (!v) {
+      this.setState({ localitiesSearch: [] })
+      return
+    }
+    const { data } = await service.getLocalitiesSearch(v, 10)
+    if (!data) return
+    this.setState({ localitiesSearch: data.results })
   }
 
   render() {
@@ -99,6 +117,7 @@ class HomeScreen extends React.Component {
             onSubmit={this.handleCreateAction}
             initialValues={initialActionValues}
             onLocalityChange={this.handleLocalityChange}
+            localitiesSearch={this.state.localitiesSearch}
           />
         </div>
       </div>
