@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
@@ -10,7 +9,7 @@ import { TextField, SelectField } from 'components/Fields'
 import Styles from 'screens/account/Form.css'
 
 
-const OrganizationForm = ({ handleSubmit, submitting, onResetKey }) => {
+const OrganizationForm = ({ handleSubmit, submitting }) => {
   return (
     <React.Fragment>
       <div>
@@ -58,18 +57,12 @@ const OrganizationForm = ({ handleSubmit, submitting, onResetKey }) => {
           label="ACTUALIZAR"
           onClick={handleSubmit}
         />
-        <RaisedButton
-          className={Styles.button}
-          label="CAMBIAR LLAVE SECRETA"
-          onClick={onResetKey}
-        />
       </div>
     </React.Fragment>
   )
 }
 
 OrganizationForm.propTypes = {
-  onResetKey: PropTypes.func.isRequired,
   ...rxfPropTypes,
 }
 

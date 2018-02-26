@@ -10,6 +10,7 @@ import Done from 'material-ui/svg-icons/action/done'
 import Reset from 'material-ui/svg-icons/navigation/close'
 
 import { TextField, SelectField, Checkbox, DatePicker, AutoComplete } from 'components/Fields'
+import { projectTypes } from 'src/choices'
 import Styles from 'screens/account/Form.css'
 
 
@@ -61,18 +62,9 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
           floatingLabelText="Tipo de proyecto"
           name="action_type"
         >
-          <MenuItem value="houses" primaryText="Vivienda" />
-          <MenuItem value="roads_bridges" primaryText="Carreteras y puentes" />
-          <MenuItem value="schools" primaryText="Escuelas" />
-          <MenuItem value="consumer_goods" primaryText="Bienes de consumo" />
-          <MenuItem value="clothes" primaryText="Ropa" />
-          <MenuItem value="health" primaryText="Salud" />
-          <MenuItem value="water_infrastructure" primaryText="Infraestructura hidráulica" />
-          <MenuItem value="administration" primaryText="Administración y operación" />
-          <MenuItem value="social_development" primaryText="Desarrollo social" />
-          <MenuItem value="public_spaces" primaryText="Espacio público" />
-          <MenuItem value="sports_installations" primaryText="Instalaciones deportivas" />
-          <MenuItem value="cultural_sites" primaryText="Patrimonio histórico y cultural" />
+          {projectTypes.map(({ value, label }) => {
+            return <MenuItem value={value} primaryText={label} />
+          })}
         </SelectField>
         <TextField
           floatingLabelText="Descripción"

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 import { fmtNum } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
+import { projectTypeByValue } from 'src/choices'
 import Styles from './ActionListItem.css'
 
 
@@ -110,7 +111,9 @@ class ActionListItem extends React.PureComponent {
           <div className={Styles.textContainer}>
             {screen === 'loc' && organizationLink()}
             {screen === 'org' && localityLink()}
-            <div className={Styles.header}>{`Construcción de ${actionType.toLowerCase()}`}</div>
+            <div className={Styles.header}>
+              {`Construcción de ${(projectTypeByValue[actionType] || actionType).toLowerCase()}`}
+            </div>
             <div className={Styles.fieldsContainer}>
               <div className={Styles.budgetContainer}>
                 <span className={Styles.label}>PRESUPUESTO: </span>

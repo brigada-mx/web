@@ -9,15 +9,21 @@ import service, { getBackoff } from 'api/service'
 import Styles from 'screens/account/Form.css'
 import UserForm from './UserForm'
 import ResetPasswordForm from './ResetPasswordForm'
+import ResetSecretKeyForm from './ResetSecretKeyForm'
 
 
 class Profile extends React.Component {
   componentDidMount() {
-    this.load()
+    this.loadMe()
+    this.loadOrganization()
   }
 
-  load = () => {
+  loadMe = () => {
     getBackoff(service.getMe, { key: 'me' })
+  }
+
+  loadOrganization = () => {
+    getBackoff(service.getAccountOrganization, { key: 'accountOrganization' })
   }
 
   handleSubmitName = async (values) => {
@@ -40,11 +46,24 @@ class Profile extends React.Component {
     this.props.snackbar('Cambiaste tu contraseña', 'success')
   }
 
+  handleResetKey = async (values) => {
+    if (window.confirm('¡Cuidado! Si cambias tu llave secreta, tendrás que mandar la nueva llave a todas las personas que suben fotos a tu organización.')) {
+      const { data } = await service.resetAccountKey(values)
+      if (!data) {
+        this.props.snackbar('Hubo un error', 'error')
+        return
+      }
+      this.loadOrganization()
+      this.props.snackbar('Cambiaste la llave secreta de tu organización', 'success')
+    }
+  }
+
   render() {
     return (
       <div className={Styles.formContainer}>
         <UserForm onSubmit={this.handleSubmitName} enableReinitialize />
         <ResetPasswordForm onSubmit={this.handleSubmitPassword} />
+        <ResetSecretKeyForm onSubmit={this.handleResetKey} enableReinitialize />
       </div>
     )
   }

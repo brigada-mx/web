@@ -77,16 +77,6 @@ class HomeScreen extends React.Component {
     getBackoff(service.getAccountActions, { key: 'accountActions' })
   }
 
-  handleResetKey = async (values) => {
-    const { data } = await service.resetAccountKey(values)
-    if (!data) {
-      this.props.snackbar('Hubo un error', 'error')
-      return
-    }
-    this.loadOrganization()
-    this.props.snackbar('Cambiaste la llave secreta de tu organización', 'success')
-  }
-
   handleSubmitOrganization = async (values) => {
     const { data } = await service.updateAccountOrganization(values)
     if (!data) {
@@ -156,11 +146,7 @@ class HomeScreen extends React.Component {
       <div>
         <div className={Styles.sectionHeader}>Tu Organización</div>
         <div className={Styles.formContainer}>
-          <OrganizationForm
-            onResetKey={this.handleResetKey}
-            onSubmit={this.handleSubmitOrganization}
-            enableReinitialize
-          />
+          <OrganizationForm onSubmit={this.handleSubmitOrganization} enableReinitialize />
         </div>
 
         <div className={Styles.sectionHeader}>Datos de contacto</div>
