@@ -27,14 +27,14 @@ const mapStateToProps = (state) => {
   return { token }
 }
 
-const Screen = withRouter(connect(mapStateToProps, null)(ProtectedScreen))
+const ReduxScreen = withRouter(connect(mapStateToProps, null)(ProtectedScreen))
 
 const protectedScreen = (WrappedComponent) => {
-  const wrapped = () => {
-    return <Screen><WrappedComponent /></Screen>
+  const wrapped = (props) => {
+    return <ReduxScreen><WrappedComponent {...props} /></ReduxScreen>
   }
   return wrapped
 }
 
 export default protectedScreen
-export { Screen as ProtectedScreen }
+export { ReduxScreen as ProtectedScreen }

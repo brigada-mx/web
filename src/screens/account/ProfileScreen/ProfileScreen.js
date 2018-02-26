@@ -32,7 +32,7 @@ class Profile extends React.Component {
       this.props.snackbar('Hubo un error', 'error')
       return
     }
-    this.load()
+    this.loadMe()
     this.props.snackbar('Cambiaste tu nombre', 'success')
   }
 

@@ -12,7 +12,7 @@ import Styles from './ActionListItem.css'
 
 class ActionListItem extends React.PureComponent {
   render() {
-    const { action, screen, focused, onClick, onMouseEnter, onMouseLeave } = this.props
+    const { action, screen, focused, onClick, onMouseEnter, onMouseLeave, onClickItem } = this.props
     const {
       action_type: actionType,
       first_thumbnail_medium: mediumThumb,
@@ -58,14 +58,15 @@ class ActionListItem extends React.PureComponent {
     const localityLink = () => {
       return (
         <Link className={Styles.link} onClick={e => e.stopPropagation()} to={{ pathname: `/comunidades/${locId}` }}>
-          {stateName}, {muniName}, {locName}
+          {locName}, {muniName}, {stateName}
         </Link>
       )
     }
 
-    const handleClick = () => { onClick(action) }
-    const handleMouseEnter = () => { onMouseEnter(action) }
-    const handleMouseLeave = () => { onMouseLeave(action) }
+    const handleClick = onClick && (() => { onClick(action) })
+    const handleMouseEnter = onMouseEnter && (() => { onMouseEnter(action) })
+    const handleMouseLeave = onMouseLeave && (() => { onMouseLeave(action) })
+    const handleClickItem = onClickItem && (() => { onClickItem(action) })
 
     const renderThumbnails = () => {
       const thumbs = [].concat(...action.submissions.map(s => s.thumbnails_small))
@@ -98,14 +99,16 @@ class ActionListItem extends React.PureComponent {
       )
     }
 
-    let className = Styles.listItem
-    if (focused) className = `${Styles.listItem} ${Styles.listItemFocused}`
+    const classNames = [Styles.listItem]
+    if (focused) classNames.push(Styles.listItemFocused)
+    if (screen === 'admin') classNames.push(Styles.container)
 
     return (
       <div
-        className={className}
+        className={classNames.join(' ')}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onClick={handleClickItem}
       >
         <div className={Styles.summaryContainer}>
           <div className={Styles.textContainer}>
@@ -138,18 +141,16 @@ class ActionListItem extends React.PureComponent {
 
 ActionListItem.propTypes = {
   action: PropTypes.object.isRequired,
-  screen: PropTypes.oneOf(['org', 'loc']).isRequired,
+  screen: PropTypes.oneOf(['org', 'loc', 'admin']).isRequired,
   focused: PropTypes.bool,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
+  onClickItem: PropTypes.func,
 }
 
 ActionListItem.defaultProps = {
   focused: false,
-  onClick: () => {},
-  onMouseEnter: () => {},
-  onMouseLeave: () => {},
 }
 
 export default ActionListItem

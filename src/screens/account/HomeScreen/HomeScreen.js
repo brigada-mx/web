@@ -5,52 +5,20 @@ import _ from 'lodash'
 import moment from 'moment'
 import { reset } from 'redux-form'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
-import Styles from 'screens/account/Form.css'
+import ActionListItem from 'components/ActionListItem'
+import FormStyles from 'screens/account/Form.css'
 import OrganizationForm from './OrganizationForm'
 import ContactForm from './ContactForm'
-import { CreateActionForm, UpdateActionForm } from './ActionForm'
+import { CreateActionForm } from './ActionForm'
+import Styles from './HomeScreen.css'
 
 
 const initialActionValues = { published: true }
-
-const UpdateActionFormList = ({ actions, ...rest }) => {
-  const actionList = actions.map((a) => {
-    const { municipality_name, name, state_name } = a.action_locality
-    const localityText = `${name}, ${municipality_name}, ${state_name}`
-    const initialValues = {
-      ...a,
-      locality: { text: localityText, value: a.locality },
-      start_date: a.start_date ? moment(a.start_date).toDate() : null,
-      end_date: a.end_date ? moment(a.end_date).toDate() : null,
-    }
-    return (
-      <div key={a.id} className={Styles.formContainer}>
-        <UpdateActionForm
-          form={`accountNewAction_${a.id}`}
-          initialValues={initialValues}
-          enableReinitialize
-          {...rest}
-        />
-      </div>
-    )
-  })
-  return <React.Fragment>{actionList}</React.Fragment>
-}
-
-UpdateActionFormList.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-}
-
-const mapStateToProps = (state) => {
-  const { accountActions = { data: {} } } = state.getter
-  return { actions: accountActions.data.results || [] }
-}
-
-const UpdateActionFormListRedux = connect(mapStateToProps, null)(UpdateActionFormList)
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -121,16 +89,6 @@ class HomeScreen extends React.Component {
     this.props.snackbar('Agregaste un nuevo proyecto', 'success')
   }
 
-  handleUpdateAction = async (body) => {
-    const { data } = await service.updateAccountAction(body.id, this.prepareActionBody(body))
-    if (!data) {
-      this.props.snackbar('Hubo un error', 'error')
-      return
-    }
-    this.loadActions()
-    this.props.snackbar('Actualizaste tu proyecto', 'success')
-  }
-
   handleLocalityChange = async (e, v) => {
     if (v.value) {
       this.setState({ localitiesSearch: [] })
@@ -141,21 +99,33 @@ class HomeScreen extends React.Component {
     this.setState({ localitiesSearch: data.results })
   }
 
+  handleClickAction = (action) => {
+    this.props.history.push(`/cuenta/proyectos/${action.key}`)
+  }
+
   render() {
+    const { actions } = this.props
+    const publishedActions = actions.filter(a => a.published).map((a) => {
+      return <ActionListItem key={a.id} action={a} screen="admin" focused onClickItem={this.handleClickAction} />
+    })
+    const unpublishedActions = actions.filter(a => !a.published).map((a) => {
+      return <ActionListItem key={a.id} action={a} screen="admin" focused onClickItem={this.handleClickAction} />
+    })
+
     return (
       <div>
-        <div className={Styles.sectionHeader}>Tu Organización</div>
-        <div className={Styles.formContainer}>
+        <div className={FormStyles.sectionHeader}>Tu Organización</div>
+        <div className={FormStyles.formContainer}>
           <OrganizationForm onSubmit={this.handleSubmitOrganization} enableReinitialize />
         </div>
 
-        <div className={Styles.sectionHeader}>Datos de contacto</div>
-        <div className={Styles.formContainer}>
+        <div className={FormStyles.sectionHeader}>Datos de contacto</div>
+        <div className={FormStyles.formContainer}>
           <ContactForm onSubmit={this.handleSubmitContact} enableReinitialize />
         </div>
 
-        <div className={Styles.sectionHeader}>Agregar proyecto</div>
-        <div className={Styles.formContainer}>
+        <div className={FormStyles.sectionHeader}>Agregar proyecto</div>
+        <div className={FormStyles.formContainer}>
           <CreateActionForm
             onSubmit={this.handleCreateAction}
             initialValues={initialActionValues}
@@ -164,20 +134,35 @@ class HomeScreen extends React.Component {
           />
         </div>
 
-        <div className={Styles.sectionHeader}>Actualizar proyectos</div>
-        <UpdateActionFormListRedux
-          onSubmit={this.handleUpdateAction}
-          onLocalityChange={this.handleLocalityChange}
-          localitiesSearch={this.state.localitiesSearch}
-        />
+        {publishedActions.length && (
+          <React.Fragment>
+            <div className={FormStyles.sectionHeader}>Acciones publicados</div>
+            <div className={Styles.actionList}>{publishedActions}</div>
+          </React.Fragment>
+        )}
+
+        {unpublishedActions.length && (
+          <React.Fragment>
+            <div className={FormStyles.sectionHeader}>Acciones sin publicar</div>
+            <div className={Styles.actionList}>{unpublishedActions}</div>
+          </React.Fragment>
+        )}
+
       </div>
     )
   }
 }
 
 HomeScreen.propTypes = {
+  history: PropTypes.object.isRequired,
+  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
   snackbar: PropTypes.func.isRequired,
   resetAction: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => {
+  const { accountActions = { data: {} } } = state.getter
+  return { actions: accountActions.data.results || [] }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -187,4 +172,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(HomeScreen)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeScreen))

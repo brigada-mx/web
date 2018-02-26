@@ -34,7 +34,7 @@ const OrganizationScreenWrapper = ({ match }) => {
 }
 
 const ActionSubmissionsScreenWrapper = ({ match }) => {
-  return <ActionSubmissionsScreen key={Number.parseInt(match.params.key, 10)} />
+  return <ActionSubmissionsScreen actionKey={Number.parseInt(match.params.key, 10)} />
 }
 
 const AboutScreen = () => (
@@ -77,8 +77,8 @@ const App = () => {
               </Switch>
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen)} />
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
-              <Route exact path="/cuenta/formularios" component={protectedScreen(ActionSubmissionsScreen)} />
-              <Route exact path="/cuenta/proyectos/:id" component={protectedScreen(ActionSubmissionsScreenWrapper)} />
+              <Route exact path="/cuenta/fotos" component={protectedScreen(ActionSubmissionsScreen)} />
+              <Route exact path="/cuenta/proyectos/:key" component={protectedScreen(ActionSubmissionsScreenWrapper)} />
               <SnackBar />
             </React.Fragment>
           </MuiThemeProvider>

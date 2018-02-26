@@ -13,15 +13,13 @@ class ActionSubmissionsScreen extends React.Component {
 
   render() {
     return (
-      null
+      <span>{this.props.actionKey}</span>
     )
   }
 }
 
 ActionSubmissionsScreen.propTypes = {
-}
-
-ActionSubmissionsScreen.defaultProps = {
+  actionKey: PropTypes.number,
 }
 
 export default ActionSubmissionsScreen

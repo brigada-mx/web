@@ -63,7 +63,7 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
           name="action_type"
         >
           {projectTypes.map(({ value, label }) => {
-            return <MenuItem value={value} primaryText={label} />
+            return <MenuItem key={value} value={value} primaryText={label} />
           })}
         </SelectField>
         <TextField
