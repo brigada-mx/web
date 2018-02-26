@@ -16,7 +16,7 @@ const OrganizationForm = ({ handleSubmit, submitting, onResetKey }) => {
       <div>
         <TextField
           floatingLabelText="Llave secreta"
-          name="secretKey"
+          name="secret_key"
           readOnly
           disabled
           format={(value) => { return value ? value.replace(/\./g, ' ') : '' }}
@@ -30,8 +30,8 @@ const OrganizationForm = ({ handleSubmit, submitting, onResetKey }) => {
         <TextField
           floatingLabelText="Año establecido"
           type="number"
-          normalize={value => value && parseInt(value, 10)}
-          name="yearEstablished"
+          normalize={(value) => { return value ? parseInt(value, 10) : null }}
+          name="year_established"
         />
       </div>
       <div>
@@ -73,12 +73,12 @@ OrganizationForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = ({ name, desc, yearEstablished }) => {
+const validate = ({ name, desc, year_established }) => {
   const errors = {}
   if (!name) errors.name = 'Angresa el nombre'
   if (!desc) errors.desc = 'Agrega la descripción de tu organización'
-  if (!yearEstablished || yearEstablished.toString().length !== 4) {
-    errors.yearEstablished = 'Ingresa un año válido'
+  if (!year_established || year_established.toString().length !== 4) {
+    errors.year_established = 'Ingresa un año válido'
   }
   return errors
 }

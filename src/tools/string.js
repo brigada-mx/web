@@ -21,7 +21,7 @@ export const toLowerWords = text => (text || '')
   .split(/\s+/g)
   .filter(x => x.length > 0)
 
-const cleanAccentedChars = (s) => {
+export const cleanAccentedChars = (s) => {
   let _s = s.replace(/[áÁ]/g, 'a')
   _s = _s.replace(/[éÉ]/g, 'e')
   _s = _s.replace(/[íÍ]/g, 'i')

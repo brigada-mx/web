@@ -1,27 +1,10 @@
 import 'whatwg-fetch'
-import _ from 'lodash'
 
 import env from 'src/env'
 import { store } from 'src/App'
 import * as Actions from 'src/actions'
 import { stringify } from './queryString'
 
-
-const objKeysToSnake = (obj) => {
-  const _obj = {}
-  for (const k of Object.keys(obj)) {
-    _obj[_.snakeCase(k)] = obj[k]
-  }
-  return _obj
-}
-
-const objKeysToCamel = (obj) => {
-  const _obj = {}
-  for (const k of Object.keys(obj)) {
-    _obj[_.camelCase(k)] = obj[k]
-  }
-  return _obj
-}
 
 const toQueryString = (params) => {
   const s = stringify(params)
@@ -44,7 +27,7 @@ const _sendToApi = async (
 
   const options = {
     method,
-    body: JSON.stringify(objKeysToSnake(body)), // `body` must be a string, not an object
+    body: JSON.stringify(body), // `body` must be a string, not an object
     headers: new Headers(_headers),
   }
 
@@ -69,7 +52,7 @@ const sendToApi = async (url, params) => {
     const r = await _sendToApi(url, params)
     const data = await r.json()
     if (r.status >= 400) return { error: data }
-    return { data: objKeysToCamel(data) }
+    return { data }
   } catch (exception) {
     return { exception }
   }
@@ -86,7 +69,7 @@ const sendToApiAuth = async (url, params = {}) => {
       window.location.href = `${env.siteUrl}cuenta`
     }
     if (r.status >= 400) return { error: data }
-    return { data: objKeysToCamel(data) }
+    return { data }
   } catch (exception) {
     return { exception }
   }
