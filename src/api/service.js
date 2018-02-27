@@ -87,6 +87,11 @@ class Service {
     return sendToApiAuth('account/actions/', { params })
   }
 
+  getAccountActionsMinimal = async (page_size = 250) => {
+    const params = { page_size }
+    return sendToApiAuth('account/actions/minimal/', { params })
+  }
+
   getAccountSubmissions = async (has_action = false, page_size = 250) => {
     const params = { has_action, page_size }
     return sendToApiAuth('account/submissions/', { params })
@@ -131,7 +136,7 @@ export const getBackoff = async (...args) => {
 
     if (response.exception) {
       if (count >= 4) return
-      setTimeout(() => inner(getter, onResponse, key), delay)
+      setTimeout(() => inner(getter, { onResponse, key }), delay)
       delay *= 2
       count += 1
     }
