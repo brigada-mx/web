@@ -77,8 +77,11 @@ const validate = ({ name, desc, year_established }) => {
 }
 
 const mapStateToProps = (state) => {
-  const { accountOrganization = {} } = state.getter
-  return { initialValues: accountOrganization.data || {} }
+  try {
+    return { initialValues: state.getter.accountOrganization.data || {} }
+  } catch (e) {
+    return { initialValues: {} }
+  }
 }
 
 export default connect(mapStateToProps, null)(reduxForm({ form: 'accountOrganization', validate })(OrganizationForm))

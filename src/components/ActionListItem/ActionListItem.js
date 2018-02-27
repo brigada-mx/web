@@ -113,7 +113,7 @@ class ActionListItem extends React.PureComponent {
         <div className={Styles.summaryContainer}>
           <div className={Styles.textContainer}>
             {screen === 'loc' && organizationLink()}
-            {screen === 'org' && localityLink()}
+            {screen === 'org' || screen === 'admin' && localityLink()}
             <div className={Styles.header}>
               {`Construcción de ${(projectTypeByValue[actionType] || actionType).toLowerCase()}`}
             </div>

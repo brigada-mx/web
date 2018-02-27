@@ -70,16 +70,17 @@ ContactForm.propTypes = {
 
 const validate = ({ email, phone }) => {
   const errors = {}
-  if (!email) errors.email = 'Agrega el nombre'
-  if (!phone) errors.phone = 'Agrega la descripción'
+  if (!email) errors.email = 'Agrega un email'
+  if (!phone) errors.phone = 'Agrega un teléfono'
   return errors
 }
 
 const mapStateToProps = (state) => {
-  const { accountOrganization = {} } = state.getter
-  const { data } = accountOrganization
-  if (!data) return { initialValues: {} }
-  return { initialValues: flattenObject(data.contact || {}) }
+  try {
+    return { initialValues: flattenObject(state.getter.accountOrganization.data.contact || {}) }
+  } catch (e) {
+    return { initialValues: {} }
+  }
 }
 
 export default connect(mapStateToProps, null)(reduxForm({ form: 'accountContact', validate })(ContactForm))

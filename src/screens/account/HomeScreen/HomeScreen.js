@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import _ from 'lodash'
-import moment from 'moment'
 import { reset } from 'redux-form'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -12,9 +11,9 @@ import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import ActionListItem from 'components/ActionListItem'
 import FormStyles from 'screens/account/Form.css'
+import { CreateActionForm, prepareActionBody } from 'screens/account/ActionForm'
 import OrganizationForm from './OrganizationForm'
 import ContactForm from './ContactForm'
-import { CreateActionForm } from './ActionForm'
 import Styles from './HomeScreen.css'
 
 
@@ -68,18 +67,8 @@ class HomeScreen extends React.Component {
     this.props.snackbar('Actualizaste tus datos de contacto', 'success')
   }
 
-  prepareActionBody = (body) => {
-    const { locality, start_date, end_date } = body
-    return {
-      ...body,
-      locality: locality.value,
-      start_date: start_date ? moment(start_date).format('YYYY-MM-DD') : null,
-      end_date: end_date ? moment(end_date).format('YYYY-MM-DD') : null,
-    }
-  }
-
   handleCreateAction = async (body) => {
-    const { data } = await service.createAccountAction(this.prepareActionBody(body))
+    const { data } = await service.createAccountAction(prepareActionBody(body))
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
@@ -136,7 +125,7 @@ class HomeScreen extends React.Component {
 
         {publishedActions.length && (
           <React.Fragment>
-            <div className={FormStyles.sectionHeader}>Acciones publicados</div>
+            <div className={FormStyles.sectionHeader}>Acciones publicadas</div>
             <div className={Styles.actionList}>{publishedActions}</div>
           </React.Fragment>
         )}
@@ -161,8 +150,11 @@ HomeScreen.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { accountActions = { data: {} } } = state.getter
-  return { actions: accountActions.data.results || [] }
+  try {
+    return { actions: state.getter.accountActions.data.results || [] }
+  } catch (e) {
+    return { actions: [] }
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

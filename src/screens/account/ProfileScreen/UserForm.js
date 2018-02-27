@@ -34,8 +34,11 @@ const validate = ({ full_name }) => {
 }
 
 const mapStateToProps = (state) => {
-  const { me = {} } = state.getter
-  return { initialValues: me.data || {} }
+  try {
+    return { initialValues: state.getter.me.data || {} }
+  } catch (e) {
+    return { initialValues: {} }
+  }
 }
 
 export default connect(mapStateToProps, null)(reduxForm({ form: 'me', validate })(UserForm))

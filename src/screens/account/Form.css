@@ -35,3 +35,15 @@
   margin-left: -15vw !important;
   width: 60vw !important;
 }
+
+@media screen and (max-width: 767px) {
+  .row {
+    display: unset;
+    flex-direction: unset;
+  }
+
+  .wideInput {
+    margin-left: unset;
+    width: unset;
+  }
+}

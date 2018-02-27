@@ -49,8 +49,11 @@ const validate = ({ secret_key, confirmSecretKey }) => {
 }
 
 const mapStateToProps = (state) => {
-  const { accountOrganization = {} } = state.getter
-  return { initialValues: accountOrganization.data || {} }
+  try {
+    return { initialValues: state.getter.accountOrganization.data || {} }
+  } catch (e) {
+    return { initialValues: {} }
+  }
 }
 
 export default connect(mapStateToProps, null)(reduxForm({ form: 'resetSecretKey', validate })(ResetSecretKeyForm))

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import moment from 'moment'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import MenuItem from 'material-ui/MenuItem'
 import AutoCompleteMui from 'material-ui/AutoComplete'
@@ -16,8 +17,8 @@ import Styles from 'screens/account/Form.css'
 
 const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
   const localities = localitiesSearch.map((l) => {
-    const { id, name, municipality_name, state_name } = l
-    return { text: `${name}, ${municipality_name}, ${state_name}`, value: id }
+    const { id, name, municipality_name: muniName, state_name: stateName } = l
+    return { text: `${name}, ${muniName}, ${stateName}`, value: id }
   })
   const formatDatePicker = value => value || null
   const formatAutoComplete = (value) => {
@@ -92,7 +93,7 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
         />
         <TextField
           type="number"
-          floatingLabelText="Presupuesto estimado (opcional)"
+          floatingLabelText="Presupuesto estimado MXN"
           name="budget"
           normalize={(value) => { return value ? parseInt(value, 10) : null }}
         />
@@ -108,6 +109,8 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
           name="end_date"
           format={formatDatePicker}
         />
+      </div>
+      <div>
         <Checkbox
           label="¿Publicado?"
           name="published"
@@ -179,17 +182,47 @@ UpdateForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = ({ locality, action_type, desc, budget, target, progress }) => {
+const validate = ({ locality, action_type: actionType, desc, budget, target, progress }) => {
   const errors = {}
   if (!locality || !locality.value) errors.locality = 'Escoge una localidad de la lista'
-  if (!action_type) errors.action_type = 'Escoge el tipo de proyecto'
+  if (!actionType) errors.action_type = 'Escoge el tipo de proyecto'
   if (!desc) errors.desc = 'Agrega una descripción del proyecto'
   if (budget && budget < 0) errors.budget = 'El presupuesto no puede ser negativo'
+
   if (target && target < 0) errors.target = 'Le meta no puede ser negativo'
   if (progress && progress < 0) errors.progress = 'El avance no puede ser negativo'
+
+  if (progress && !target || progress > target) {
+    errors.progress = 'El avance no puede ser mayor que la meta'
+    errors.target = 'El avance no puede ser mayor que la meta'
+  }
   return errors
 }
 
+export const prepareActionBody = (body) => {
+  const { locality, start_date: startDate, end_date: endDate } = body
+  return {
+    ...body,
+    locality: locality.value,
+    start_date: startDate ? moment(startDate).format('YYYY-MM-DD') : null,
+    end_date: endDate ? moment(endDate).format('YYYY-MM-DD') : null,
+  }
+}
+
+export const prepareInitialValues = (values) => {
+  const {
+    start_date: startDate,
+    end_date: endDate,
+    locality: { id, name, municipality_name: muniName, state_name: stateName },
+  } = values
+  return {
+    ...values,
+    start_date: startDate && moment(startDate).toDate(),
+    end_date: endDate && moment(endDate).toDate(),
+    locality: { text: `${name}, ${muniName}, ${stateName}`, value: id },
+  }
+}
+
 const ReduxCreateForm = reduxForm({ form: 'accountNewAction', validate })(CreateForm)
-const ReduxUpdateForm = reduxForm({ validate })(UpdateForm)
+const ReduxUpdateForm = reduxForm({ validate })(UpdateForm) // pass `form` arg when instantiating form
 export { ReduxCreateForm as CreateActionForm, ReduxUpdateForm as UpdateActionForm }
