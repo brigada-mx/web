@@ -1,13 +1,16 @@
+let id = 0
 const defaultState = {
-  visible: false,
 }
 
 export default function reduce(state = defaultState, { type, payload }) {
   switch (type) {
-  case 'DRAWER_TOGGLE': {
+  case 'SNACKBAR': {
+    id += 1
+    const { message, status } = payload
     return {
-      ...state,
-      visible: payload.visible,
+      id,
+      message,
+      status,
     }
   }
   default:

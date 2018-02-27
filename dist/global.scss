@@ -7,6 +7,6 @@
 @import 'mixins';
 @import 'grid';
 @import 'animate';
-@import 'hacks/mapbox';
-@import 'hacks/select';
-@import 'hacks/swiper';
+@import 'overrides/mapbox';
+@import 'overrides/select';
+@import 'overrides/swiper';

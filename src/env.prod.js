@@ -1,3 +1,4 @@
+export const siteUrl = 'https://app.ensintonia.org/'
 export const apiUrl = 'https://api.ensintonia.org/api/'
 export const urlProtocol = 'https'
 

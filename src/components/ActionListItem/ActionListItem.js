@@ -6,22 +6,22 @@ import { Link } from 'react-router-dom'
 
 import { fmtNum } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
+import { projectTypeByValue } from 'src/choices'
 import Styles from './ActionListItem.css'
 
 
 class ActionListItem extends React.PureComponent {
   render() {
-    const { action, screen, focused, onClick, onMouseEnter, onMouseLeave } = this.props
+    const { action, screen, focused, onClick, onMouseEnter, onMouseLeave, onClickItem } = this.props
     const {
       action_type: actionType,
       first_thumbnail_medium: mediumThumb,
       desc,
-      unit_of_measurement: unit,
       target,
       progress = 0,
       budget,
-      start_date: startDate = '?',
-      end_date: endDate = '?',
+      start_date: startDate,
+      end_date: endDate,
       organization: { id: orgId, name: orgName },
       locality: { id: locId, name: locName, municipality_name: muniName, state_name: stateName },
     } = action
@@ -40,7 +40,9 @@ class ActionListItem extends React.PureComponent {
       return (
         <div>
           <span className={Styles.label}>FECHAS: </span>
-          <span className={Styles.dates}>{startDate.replace(/-/g, '.')} - {endDate.replace(/-/g, '.')} </span>
+          <span className={Styles.dates}>
+            {(startDate || '?').replace(/-/g, '.')} - {(endDate || '?').replace(/-/g, '.')}
+          </span>
         </div>
       )
     }
@@ -56,14 +58,15 @@ class ActionListItem extends React.PureComponent {
     const localityLink = () => {
       return (
         <Link className={Styles.link} onClick={e => e.stopPropagation()} to={{ pathname: `/comunidades/${locId}` }}>
-          {stateName}, {muniName}, {locName}
+          {locName}, {muniName}, {stateName}
         </Link>
       )
     }
 
-    const handleClick = () => { onClick(action) }
-    const handleMouseEnter = () => { onMouseEnter(action) }
-    const handleMouseLeave = () => { onMouseLeave(action) }
+    const handleClick = onClick && (() => { onClick(action) })
+    const handleMouseEnter = onMouseEnter && (() => { onMouseEnter(action) })
+    const handleMouseLeave = onMouseLeave && (() => { onMouseLeave(action) })
+    const handleClickItem = onClickItem && (() => { onClickItem(action) })
 
     const renderThumbnails = () => {
       const thumbs = [].concat(...action.submissions.map(s => s.thumbnails_small))
@@ -96,20 +99,24 @@ class ActionListItem extends React.PureComponent {
       )
     }
 
-    let className = Styles.listItem
-    if (focused) className = `${Styles.listItem} ${Styles.listItemFocused}`
+    const classNames = [Styles.listItem]
+    if (focused) classNames.push(Styles.listItemFocused)
+    if (screen === 'admin') classNames.push(Styles.container)
 
     return (
       <div
-        className={className}
+        className={classNames.join(' ')}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onClick={handleClickItem}
       >
         <div className={Styles.summaryContainer}>
           <div className={Styles.textContainer}>
             {screen === 'loc' && organizationLink()}
-            {screen === 'org' && localityLink()}
-            <div className={Styles.header}>{`Construcción de ${actionType.toLowerCase()}`}</div>
+            {screen === 'org' || screen === 'admin' && localityLink()}
+            <div className={Styles.header}>
+              {`Construcción de ${(projectTypeByValue[actionType] || actionType).toLowerCase()}`}
+            </div>
             <div className={Styles.fieldsContainer}>
               <div className={Styles.budgetContainer}>
                 <span className={Styles.label}>PRESUPUESTO: </span>
@@ -134,18 +141,16 @@ class ActionListItem extends React.PureComponent {
 
 ActionListItem.propTypes = {
   action: PropTypes.object.isRequired,
-  screen: PropTypes.oneOf(['org', 'loc']).isRequired,
+  screen: PropTypes.oneOf(['org', 'loc', 'admin']).isRequired,
   focused: PropTypes.bool,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
+  onClickItem: PropTypes.func,
 }
 
 ActionListItem.defaultProps = {
   focused: false,
-  onClick: () => {},
-  onMouseEnter: () => {},
-  onMouseLeave: () => {},
 }
 
 export default ActionListItem

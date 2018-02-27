@@ -7,7 +7,7 @@ import '!style-loader!css-loader!swiper/dist/css/swiper.css'
 
 import * as Actions from 'src/actions'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import service, { getBackoffStateless } from 'api/service'
+import service, { getBackoff } from 'api/service'
 import { distanceKmBetweenCoords } from 'tools/other'
 import Styles from './Carousel.css'
 import Photo from './Photo'
@@ -17,15 +17,15 @@ const maxMetersGroupSubmissions = 50
 
 class CarouselContainer extends React.Component {
   componentDidMount() {
-    getBackoffStateless(() => service.getAction(this.props.actionId), this.handleResponse)
+    getBackoff(() => service.getAction(this.props.actionId), { onResponse: this.handleResponse })
   }
 
   componentWillUpdate(nextProps) {
     if (this.props.actionId === nextProps.actionId) return
-    getBackoffStateless(() => service.getAction(nextProps.actionId), this.handleResponse)
+    getBackoff(() => service.getAction(nextProps.actionId), { onResponse: this.handleResponse })
   }
 
-  handleResponse = ({ data, error, exception }) => {
+  handleResponse = ({ data }) => {
     if (!data) return
     const { onActionData, actionId } = this.props
     onActionData(actionId, data)
@@ -37,7 +37,8 @@ class CarouselContainer extends React.Component {
 
     const submissions = actionData.submissions.map((s) => {
       const {
-        data: { description, address },
+        description,
+        address,
         location,
         organization: organizationId,
         submitted,

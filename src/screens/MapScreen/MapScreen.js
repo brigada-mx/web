@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
 import * as Actions from 'src/actions'
-import service, { getBackoff } from 'api/service'
+import service, { getBackoffComponent } from 'api/service'
 import FilterHeader from 'components/FilterHeader'
 import SearchInput from 'components/SearchInput'
 import LocalityListItem from 'components/LocalityListItem'
@@ -93,19 +93,18 @@ class MapScreen extends React.Component {
       state: {},
     })
 
-    getBackoff(this, 'localities', service.getLocalities, {
-      onData: (data) => {
-        const localityByCvegeo = {}
-        const coords = []
-        data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
-          coords.push(r.location)
-          localityByCvegeo[r.cvegeo] = r
-          return { ...r, dmgGrade: dmgGrade(r) }
-        })
-        const fitBounds = fitBoundsFromCoords(coords)
-        localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
-        this.setState({ localityByCvegeo })
-      },
+    getBackoffComponent(this, 'localities', service.getLocalities, ({ data }) => {
+      if (!data) return
+      const localityByCvegeo = {}
+      const coords = []
+      data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
+        coords.push(r.location)
+        localityByCvegeo[r.cvegeo] = r
+        return { ...r, dmgGrade: dmgGrade(r) }
+      })
+      const fitBounds = fitBoundsFromCoords(coords)
+      localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
+      this.setState({ localityByCvegeo })
     })
   }
 

@@ -114,3 +114,23 @@ export const toDegrees = (coordinate) => {
 export const googleMapsUrl = (lat, lng) => {
   return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
 }
+
+export const flattenObject = (obj) => {
+  const toReturn = {}
+
+  for (const i in obj) {
+    if (obj[i] === undefined) continue
+
+    if ((typeof obj[i]) === 'object') {
+      const flat = flattenObject(obj[i])
+      for (const x in flat) {
+        if (flat[x] === undefined) continue
+
+        toReturn[`${i}$.{x}`] = flat[x]
+      }
+    } else {
+      toReturn[i] = obj[i]
+    }
+  }
+  return toReturn
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import service, { getBackoff } from 'api/service'
+import service, { getBackoffComponent } from 'api/service'
 import OrganizationScreenView from './OrganizationScreenView'
 
 
@@ -18,7 +18,7 @@ class OrganizationScreen extends React.Component {
   componentDidMount() {
     this._mounted = true
     const { id } = this.props
-    getBackoff(this, 'organization', () => service.getOrganization(id))
+    getBackoffComponent(this, 'organization', () => service.getOrganization(id))
   }
 
   componentWillUnmount() {

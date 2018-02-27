@@ -1,14 +1,14 @@
 const defaultState = {
-  visible: false,
 }
 
 export default function reduce(state = defaultState, { type, payload }) {
   switch (type) {
-  case 'DRAWER_TOGGLE': {
-    return {
-      ...state,
-      visible: payload.visible,
-    }
+  case 'AUTH_SET': {
+    const { auth } = payload
+    return auth
+  }
+  case 'AUTH_UNSET': {
+    return {}
   }
   default:
     return state

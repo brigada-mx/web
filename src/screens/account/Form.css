@@ -1,0 +1,49 @@
+.field {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.sectionHeader {
+  font-family: 'roboto-600', sans-serif;
+  margin-left: 5%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 24;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 5%;
+}
+
+.button {
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.wideInput {
+  margin-left: -15vw !important;
+  width: 60vw !important;
+}
+
+@media screen and (max-width: 767px) {
+  .row {
+    display: unset;
+    flex-direction: unset;
+  }
+
+  .wideInput {
+    margin-left: unset;
+    width: unset;
+  }
+}

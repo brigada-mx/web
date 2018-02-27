@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import env from 'src/env'
-import sendToApi from './request'
+import { store } from 'src/App'
+import * as Actions from 'src/actions'
+import sendToApi, { sendToApiAuth } from './request'
 
 
 class Service {
@@ -8,90 +10,155 @@ class Service {
     this.fakeUrl = env.env === 'dev' && fakeUrl
   }
 
+  // PUBLIC ENDPOINTS
   getLocalityActions = async (locality_id, page_size = 250) => {
-    if (this.fakeUrl) return sendToApi(`${fakeUrl}actions.json`, { isRelative: false })
-
     const params = { locality_id, page_size }
     return sendToApi('actions/', { params })
   }
 
   getLocalityEstablishments = async (locality_id, page_size = 250) => {
-    if (this.fakeUrl) return sendToApi(`${fakeUrl}establishments.json`, { isRelative: false })
-
     const params = { locality_id, page_size, is_categorized: true }
     return sendToApi('establishments/', { params })
   }
 
   getLocality = async (id) => {
-    if (this.fakeUrl) return sendToApi(`${fakeUrl}locality.json`, { isRelative: false })
-
     return sendToApi(`localities/${id}/`)
   }
 
   getLocalities = async (page_size = 10000) => {
-    if (this.fakeUrl) return sendToApi(`${fakeUrl}localities.json`, { isRelative: false })
-
     const params = { page_size }
-    return sendToApi('localities_raw/', { params })
+    return sendToApi('localities/', { params })
+  }
+
+  getLocalitiesSearch = async (search, page_size = 30) => {
+    const params = { search, page_size }
+    return sendToApi('localities_search/', { params })
   }
 
   getOrganizations = async (page_size = 50) => {
-    if (this.fakeUrl) return sendToApi(`${fakeUrl}organizations.json`, { isRelative: false })
-
     const params = { page_size }
     return sendToApi('organizations/', { params })
   }
 
   getOrganization = async (id) => {
-    if (this.fakeUrl) return sendToApi(`${fakeUrl}organization.json`, { isRelative: false })
-
     return sendToApi(`organizations/${id}/`)
   }
 
   getAction = async (id) => {
-    if (this.fakeUrl) return sendToApi(`${fakeUrl}action.json`, { isRelative: false })
-
     return sendToApi(`actions/${id}/`)
+  }
+
+  // ORGANIZATION ACCOUNT PUBLIC ENDPOINTS
+  sendSetPasswordEmail = async (email) => {
+    return sendToApi('account/send_set_password_email/', { method: 'POST', body: { email } })
+  }
+
+  setPasswordWithToken = async (token, password) => {
+    return sendToApi('account/set_password_with_token/', { method: 'POST', body: { token, password } })
+  }
+
+  token = async (email, password) => {
+    return sendToApi('account/token/', { method: 'POST', body: { email, password } })
+  }
+
+  // ORGANIZATION ACCOUNT PROTECTED ENDPOINTS
+  deleteToken = async () => {
+    return sendToApiAuth('account/delete_token/', { method: 'POST' })
+  }
+
+  setPassword = async (old_password, password) => {
+    return sendToApiAuth('account/set_password/', { method: 'POST', body: { old_password, password } })
+  }
+
+  getMe = async () => {
+    return sendToApiAuth('account/me/')
+  }
+
+  updateMe = async (body) => {
+    return sendToApiAuth('account/me/', { method: 'PUT', body })
+  }
+
+  getAccountOrganization = async () => {
+    return sendToApiAuth('account/organization/')
+  }
+
+  getAccountActions = async (page_size = 250) => {
+    const params = { page_size }
+    return sendToApiAuth('account/actions/', { params })
+  }
+
+  getAccountActionsMinimal = async (page_size = 250) => {
+    const params = { page_size }
+    return sendToApiAuth('account/actions/minimal/', { params })
+  }
+
+  getAccountSubmissions = async (has_action = false, page_size = 250) => {
+    const params = { has_action, page_size }
+    return sendToApiAuth('account/submissions/', { params })
+  }
+
+  getAccountAction = async (key) => {
+    return sendToApiAuth(`account/actions_by_key/${key}/`)
+  }
+
+  resetAccountKey = async () => {
+    return sendToApiAuth('account/organization/reset_key/', { method: 'POST' })
+  }
+
+  updateAccountOrganization = async (body) => {
+    return sendToApiAuth('account/organization/', { method: 'PUT', body })
+  }
+
+  createAccountAction = async (body) => {
+    return sendToApiAuth('account/actions/', { method: 'POST', body })
+  }
+
+  updateAccountAction = async (id, body) => {
+    return sendToApiAuth(`account/actions/${id}/`, { method: 'PUT', body })
+  }
+
+  updateAccountSubmission = async (id, body) => {
+    return sendToApiAuth(`account/submissions/${id}/`, { method: 'PUT', body })
   }
 }
 
 /**
- * Function that can be called by smart components to fetch data, and back off
- * exponentially if fetch throws an exception. Accepts a `self` argument, which
- * must be component's `this`.
+ * Fetches data. Throws results into Redux and/or passes them to `onResponse`.
+ * Backs of exponentially if fetch throws exception.
  */
 export const getBackoff = async (...args) => {
   let count = 0
   let delay = 1000
-  const inner = async (self, stateKey, getter, { onData, onError, onException } = {}) => {
-    const { data, error, exception } = await getter()
-    if (data) {
-      if (onData) onData(data)
-      self.setState({ [stateKey]: { loading: false, data, error: undefined } })
-    }
-    if (error) {
-      if (onError) onError(error)
-      self.setState({ [stateKey]: { loading: false, error } })
-    }
-    if (exception && self._mounted) {
-      if (onException) onException(exception)
-      setTimeout(() => inner(self, stateKey, getter, { onData, onError, onException }), delay)
-      if (count < 4) delay *= 2
+  const inner = async (getter, { onResponse, key }) => {
+    const response = await getter()
+    if (onResponse) onResponse(response)
+    if (key) Actions.getter(store.dispatch, { response, key })
+
+    if (response.exception) {
+      if (count >= 4) return
+      setTimeout(() => inner(getter, { onResponse, key }), delay)
+      delay *= 2
       count += 1
     }
   }
   inner(...args)
 }
 
-export const getBackoffStateless = async (...args) => {
+/**
+ * Called by smart components to fetch data, and back off exponentially if fetch
+ * throws exception. Accepts a `self` argument, which must be component's `this`.
+ */
+export const getBackoffComponent = async (...args) => {
   let count = 0
   let delay = 1000
-  const inner = async (getter, onResponse) => {
+  const inner = async (self, stateKey, getter, onResponse) => {
     const { data, error, exception } = await getter()
-    onResponse({ data, error, exception })
+    if (onResponse) onResponse({ data, error, exception })
 
-    if (exception) {
-      setTimeout(() => inner(getter, onResponse), delay)
+    if (data) self.setState({ [stateKey]: { loading: false, data, error: undefined } })
+    if (error) self.setState({ [stateKey]: { loading: false, error } })
+    if (exception && self._mounted) {
+      setTimeout(() => inner(self, stateKey, getter, onResponse), delay)
       if (count < 4) delay *= 2
       count += 1
     }

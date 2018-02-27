@@ -1,10 +1,27 @@
+import _ from 'lodash'
+
+
+export const validateEmail = (email) => {
+  const re = /\S+@\S+\.\S+/
+  return re.test(email)
+}
+
+export const parseQs = (qs) => {
+  return _.chain(qs)
+    .replace('?', '')
+    .split('&')
+    .map(_.partial(_.split, _, '=', 2))
+    .fromPairs()
+    .value()
+}
+
 export const toLowerWords = text => (text || '')
   .toLowerCase()
   .replace(/[^\s0-9a-z]/gi, '')
   .split(/\s+/g)
   .filter(x => x.length > 0)
 
-const cleanAccentedChars = (s) => {
+export const cleanAccentedChars = (s) => {
   let _s = s.replace(/[áÁ]/g, 'a')
   _s = _s.replace(/[éÉ]/g, 'e')
   _s = _s.replace(/[íÍ]/g, 'i')
