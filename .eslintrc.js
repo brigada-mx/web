@@ -13,7 +13,7 @@ module.exports = {
   "rules": {
     "one-var": 1,
     "one-var-declaration-per-line": 1,
-    "camelcase": 0,
+    "camelcase": 1,
     "function-paren-newline": 0,
     "object-curly-newline": [2, { "consistent": true }],
     "max-len": [2, { "ignoreStrings": true, "ignoreTemplateLiterals": true, "ignoreTrailingComments": true, "ignoreComments": true, "tabWidth": 2, "code": 100 }],

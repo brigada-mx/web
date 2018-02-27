@@ -44,13 +44,21 @@ const AboutScreen = () => (
 )
 
 
-const allReducers = combineReducers({
+const appReducer = combineReducers({
   ...reducers,
   form: formReducer,
 })
 
+const rootReducer = (state, action) => {
+  if (action.type === 'AUTH_UNSET') {
+    state = undefined // eslint-disable-line no-param-reassign
+  }
+
+  return appReducer(state, action)
+}
+
 const initialStore = { auth: JSON.parse(localStorage.getItem('719s:auth')) || {} }
-const store = createStore(allReducers, initialStore)
+const store = createStore(rootReducer, initialStore)
 
 const App = () => {
   return (

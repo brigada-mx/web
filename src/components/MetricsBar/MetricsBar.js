@@ -30,6 +30,8 @@ class MetricsBar extends React.Component {
     const { value, max, style, severity, className = '' } = this.props
     let doneFlex = value / max
     if (Number.isNaN(doneFlex)) doneFlex = 0
+    if (doneFlex > 1) doneFlex = 1
+
     let doneColor = Colors.brandGreen
     if (severity) {
       const multiplier = doneFlex ** 0.75
