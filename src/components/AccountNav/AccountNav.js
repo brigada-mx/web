@@ -43,8 +43,8 @@ const AccountNav = ({ history, location, onLogout, token }) => {
     >
       <MenuItem primaryText="Admin" onClick={handleHomeClick} />
       <MenuItem primaryText="Plataforma" onClick={handlePlatformClick} />
-      {token && <MenuItem primaryText="Perfil" onClick={handleProfileClick} />}
-      {token && <MenuItem primaryText="Salir" onClick={handleLogoutClick} />}
+      <MenuItem primaryText="Perfil" onClick={handleProfileClick} />
+      <MenuItem primaryText="Salir" onClick={handleLogoutClick} />
     </IconMenu>
   )
 
@@ -52,6 +52,7 @@ const AccountNav = ({ history, location, onLogout, token }) => {
     if (location.pathname !== '/cuenta') history.push('/cuenta')
   }
 
+  if (!token) return null
   return (
     <AppBar
       title="Admin"

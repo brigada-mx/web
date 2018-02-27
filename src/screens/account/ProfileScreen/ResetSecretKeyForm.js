@@ -43,7 +43,7 @@ ResetSecretKeyForm.propTypes = {
 
 const validate = ({ secret_key, confirmSecretKey }) => {
   if (!confirmSecretKey || confirmSecretKey !== secret_key.replace(/\./g, ' ')) {
-    return { confirmSecretKey: 'Ingresa tu llave actual si quieres cambiarla.' }
+    return { confirmSecretKey: 'Ingresa tu llave actual si quieres cambiarla' }
   }
   return {}
 }

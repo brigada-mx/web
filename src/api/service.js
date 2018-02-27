@@ -30,8 +30,8 @@ class Service {
     return sendToApi('localities/', { params })
   }
 
-  getLocalitiesSearch = async (search, page_size = 30) => {
-    const params = { search, page_size }
+  getLocalitiesSearch = async (search, page_size = 50, has_data = true) => {
+    const params = { search, has_data, page_size }
     return sendToApi('localities_search/', { params })
   }
 

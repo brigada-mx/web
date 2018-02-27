@@ -1,28 +1,28 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { store } from 'src/App'
 import { TextField } from 'components/Fields'
 import { validateEmail } from 'tools/string'
-import Styles from 'screens/account/Form.css'
+import FormStyles from 'screens/account/Form.css'
+import Styles from './LoginForm.css'
 
 
-const LoginForm = ({ handleSubmit, submitting, history }) => {
-  const handleForgotPassword = () => {
+const LoginForm = ({ handleSubmit, submitting }) => {
+  const forgotPasswordLink = () => {
     try {
       const { email } = store.getState().form.login.values
-      history.push({ pathname: '/restablecer/email', state: { email } })
+      return { pathname: '/restablecer/email', state: { email } }
     } catch (e) {
-      history.push('/restablecer/email')
+      return '/restablecer/email'
     }
   }
 
   return (
-    <div className={Styles.formContainer}>
+    <div className={FormStyles.formContainer}>
       <div>
         <TextField
           name="email"
@@ -36,15 +36,14 @@ const LoginForm = ({ handleSubmit, submitting, history }) => {
           hintText="Contraseña"
         />
       </div>
-      <RaisedButton className={Styles.button} disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
-      <RaisedButton className={Styles.button} label="NO SÉ MI CONTRASEÑA" onClick={handleForgotPassword} />
+      <RaisedButton className={FormStyles.button} disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
+      <Link className={Styles.link} to={forgotPasswordLink()}>No sé mi contraseña</Link>
     </div>
   )
 }
 
 LoginForm.propTypes = {
   ...rxfPropTypes,
-  history: PropTypes.object.isRequired,
 }
 
 const validate = ({ email, password }) => {
@@ -54,4 +53,4 @@ const validate = ({ email, password }) => {
   return errors
 }
 
-export default withRouter(reduxForm({ form: 'login', validate })(LoginForm))
+export default reduxForm({ form: 'login', validate })(LoginForm)

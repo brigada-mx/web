@@ -78,7 +78,7 @@ const App = () => {
 
           <MuiThemeProvider>
             <React.Fragment>
-              <Route path="/(restablecer|cuenta)" component={AccountNav} />
+              <Route path="/cuenta" component={AccountNav} />
               <Switch>
                 <Route exact path="/restablecer/email" component={PasswordEmailScreen} />
                 <Route path="/restablecer" component={SetPasswordWithTokenScreen} />

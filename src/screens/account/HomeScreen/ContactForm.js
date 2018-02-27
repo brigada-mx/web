@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import flattenObject from 'tools/flatten'
 import { TextField } from 'components/Fields'
+import { validateEmail } from 'tools/string'
 import Styles from 'screens/account/Form.css'
 
 
@@ -70,7 +71,7 @@ ContactForm.propTypes = {
 
 const validate = ({ email, phone }) => {
   const errors = {}
-  if (!email) errors.email = 'Agrega un email'
+  if (!validateEmail(email)) return { email: 'Se requiere un email válido' }
   if (!phone) errors.phone = 'Agrega un teléfono'
   return errors
 }

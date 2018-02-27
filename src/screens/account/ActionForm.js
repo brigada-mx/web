@@ -5,14 +5,11 @@ import moment from 'moment'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import MenuItem from 'material-ui/MenuItem'
 import AutoCompleteMui from 'material-ui/AutoComplete'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import Add from 'material-ui/svg-icons/content/add'
-import Done from 'material-ui/svg-icons/action/done'
-import Reset from 'material-ui/svg-icons/navigation/close'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import { TextField, SelectField, Checkbox, DatePicker, AutoComplete } from 'components/Fields'
 import { projectTypes } from 'src/choices'
-import Styles from 'screens/account/Form.css'
+import FormStyles from 'screens/account/Form.css'
 
 
 const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
@@ -48,7 +45,7 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
       }
       <div>
         <AutoComplete
-          className={Styles.wideInput}
+          className={FormStyles.wideInput}
           floatingLabelText="Localidad"
           name="locality"
           onChange={onLocalityChange}
@@ -98,7 +95,7 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
           normalize={(value) => { return value ? parseInt(value, 10) : null }}
         />
       </div>
-      <div className={Styles.row}>
+      <div className={FormStyles.row}>
         <DatePicker
           floatingLabelText="Fecha de inicio"
           name="start_date"
@@ -130,21 +127,19 @@ const CreateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
   return (
     <React.Fragment>
       <Fields update={false} {...rest} />
-      <div className={Styles.row}>
-        <FloatingActionButton
-          className={Styles.button}
+      <div className={FormStyles.row}>
+        <RaisedButton
+          className={FormStyles.button}
+          disabled={submitting}
+          label="CANCELAR"
           onClick={reset}
+        />
+        <RaisedButton
+          className={FormStyles.button}
           disabled={submitting}
-        >
-          <Reset />
-        </FloatingActionButton>
-        <FloatingActionButton
-          className={Styles.button}
+          label="AGREGAR"
           onClick={handleSubmit}
-          disabled={submitting}
-        >
-          <Add />
-        </FloatingActionButton>
+        />
       </div>
     </React.Fragment>
   )
@@ -158,21 +153,19 @@ const UpdateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
   return (
     <React.Fragment>
       <Fields update {...rest} />
-      <div className={Styles.row}>
-        <FloatingActionButton
-          className={Styles.button}
+      <div className={FormStyles.row}>
+        <RaisedButton
+          className={FormStyles.button}
+          disabled={submitting}
+          label="CANCELAR"
           onClick={reset}
+        />
+        <RaisedButton
+          className={FormStyles.button}
           disabled={submitting}
-        >
-          <Reset />
-        </FloatingActionButton>
-        <FloatingActionButton
-          className={Styles.button}
+          label="ACTUALIZAR"
           onClick={handleSubmit}
-          disabled={submitting}
-        >
-          <Done />
-        </FloatingActionButton>
+        />
       </div>
     </React.Fragment>
   )
@@ -182,7 +175,17 @@ UpdateForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = ({ locality, action_type: actionType, desc, budget, target, progress }) => {
+const validate = ({
+  locality,
+  action_type:
+  actionType,
+  desc,
+  budget,
+  target,
+  progress,
+  start_date: startDate,
+  end_date: endDate,
+}) => {
   const errors = {}
   if (!locality || !locality.value) errors.locality = 'Escoge una localidad de la lista'
   if (!actionType) errors.action_type = 'Escoge el tipo de proyecto'
@@ -195,6 +198,11 @@ const validate = ({ locality, action_type: actionType, desc, budget, target, pro
   if (progress && !target || progress > target) {
     errors.progress = 'El avance no puede ser mayor que la meta'
     errors.target = 'El avance no puede ser mayor que la meta'
+  }
+
+  if (startDate && endDate && startDate > endDate) {
+    errors.start_date = 'Fecha inicio debe ser antes de fecha fin'
+    errors.end_date = 'Fecha inicio debe ser antes de fecha fin'
   }
   return errors
 }
