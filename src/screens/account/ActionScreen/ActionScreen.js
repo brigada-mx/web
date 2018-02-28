@@ -27,16 +27,11 @@ class ActionScreen extends React.Component {
 
   componentDidMount() {
     this.loadAction()
-    this.loadActions()
   }
 
   loadAction = () => {
     const { actionKey } = this.props
     getBackoff(() => { return service.getAccountAction(actionKey) }, { key: `accountAction_${actionKey}` })
-  }
-
-  loadActions = () => {
-    getBackoff(service.getAccountActionsMinimal, { key: 'accountActionsMinimal' })
   }
 
   handleUpdateAction = async (body) => {

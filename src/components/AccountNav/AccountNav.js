@@ -39,7 +39,6 @@ const AccountNav = ({ history, location, onLogout, token, orgId }) => {
     <React.Fragment>
       <FlatButton
         containerElement={<Link to={platformLink()} />}
-        linkButton
         label="Perfil Público"
       />
 

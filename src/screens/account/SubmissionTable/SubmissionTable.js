@@ -2,11 +2,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import moment from 'moment'
 import ReactTable from 'react-table'
 import Checkbox from 'material-ui/Checkbox'
 import '!style-loader!css-loader!react-table/react-table.css'
 
 import { tokenMatch } from 'tools/string'
+import Styles from './SubmissionTable.css'
 
 
 const pageSizeOptions = [5, 10, 20, 50]
@@ -15,7 +17,7 @@ const defaultFilterMethod = (filter, row) => {
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
 }
 
-const SubmissionTable = ({ submissions, onTogglePublished, history }) => {
+const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
   const columns = [
     {
       Header: 'Publicada',
@@ -37,6 +39,23 @@ const SubmissionTable = ({ submissions, onTogglePublished, history }) => {
     {
       Header: 'Creada',
       accessor: 'submitted',
+      Cell: props => <span>{moment(props.original.submitted).format('h:mma, DD MMMM YYYY')}</span>,
+      filterable: false,
+    },
+    {
+      Header: 'Fotos',
+      Cell: (props) => {
+        const thumbs = (props.original.thumbnails_small || []).map((thumb) => {
+          return (
+            <div
+              key={thumb}
+              className={Styles.thumbnail}
+              style={{ backgroundImage: `url(${thumb})` }}
+            />
+          )
+        })
+        return <div className={Styles.thumbnailContainer}>{thumbs}</div>
+      },
       filterable: false,
     },
   ]
@@ -57,9 +76,7 @@ const SubmissionTable = ({ submissions, onTogglePublished, history }) => {
         return {
           onClick: (e, handleOriginal) => {
             const { id } = column
-            if (id !== 'published' && id !== 'locality.name') {
-              history.push(`/cuenta/proyectos/${rowInfo.original.key}`)
-            }
+            if (id !== 'published') onRowClicked(rowInfo.original.id)
             if (handleOriginal) handleOriginal()
           },
         }
@@ -71,6 +88,7 @@ const SubmissionTable = ({ submissions, onTogglePublished, history }) => {
 SubmissionTable.propTypes = {
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   onTogglePublished: PropTypes.func.isRequired,
+  onRowClicked: PropTypes.func.isRequired,
 }
 
 export default SubmissionTable
