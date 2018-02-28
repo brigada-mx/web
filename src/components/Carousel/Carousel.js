@@ -33,7 +33,7 @@ class CarouselContainer extends React.Component {
 
   render() {
     const { actionId, actionData, onActionData, lat, lng, ...rest } = this.props
-    if (!actionData) return <LoadingIndicatorCircle />
+    if (!actionData) return <CarouselView key={0} {...rest} photos={[]} loading />
 
     const submissions = actionData.submissions.map((s) => {
       const {
@@ -144,7 +144,16 @@ class CarouselView extends React.Component {
   }
 
   render() {
-    const { photos, onClose } = this.props
+    const { photos, onClose, loading = false } = this.props
+    if (loading) {
+      return (
+        <div className={Styles.container}>
+          <span className={Styles.closeButton} onClick={onClose} />
+          <LoadingIndicatorCircle />
+        </div>
+      )
+    }
+
     const panes = photos.map((p, i) => {
       if (Math.abs(this.state.index - i) <= 1) {
         return <div key={p.url}><Photo {...p} /></div>
@@ -173,6 +182,7 @@ class CarouselView extends React.Component {
 CarouselView.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.object).isRequired,
   onClose: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarouselContainer)
