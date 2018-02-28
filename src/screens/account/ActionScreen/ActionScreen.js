@@ -9,10 +9,10 @@ import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import { UpdateActionForm, prepareActionBody, prepareInitialValues } from 'screens/account/ActionForm'
 import FormStyles from 'screens/account/Form.css'
-import Styles from './ActionSubmissionsScreen.css'
+import Styles from './ActionScreen.css'
 
 
-class ActionSubmissionsScreen extends React.Component {
+class ActionScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -83,7 +83,7 @@ class ActionSubmissionsScreen extends React.Component {
   }
 }
 
-ActionSubmissionsScreen.propTypes = {
+ActionScreen.propTypes = {
   initialActionValues: PropTypes.object.isRequired,
   actionKey: PropTypes.number.isRequired,
   snackbar: PropTypes.func.isRequired,
@@ -106,4 +106,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActionSubmissionsScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(ActionScreen)

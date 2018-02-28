@@ -7,7 +7,6 @@ import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 
-import env from 'src/env'
 import reducers from 'src/reducers/index'
 import { localStorage } from 'tools/storage'
 import SnackBar from 'components/SnackBar'
@@ -20,7 +19,7 @@ import OrganizationScreen from 'screens/OrganizationScreen'
 import PasswordEmailScreen from 'screens/account/PasswordEmailScreen'
 import SetPasswordWithTokenScreen from 'screens/account/SetPasswordWithTokenScreen'
 import protectedScreen from 'screens/account/ProtectedScreen'
-import ActionSubmissionsScreen from 'screens/account/ActionSubmissionsScreen'
+import ActionScreen from 'screens/account/ActionScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
 import HomeScreen from 'screens/account/HomeScreen'
 
@@ -33,8 +32,8 @@ const OrganizationScreenWrapper = ({ match }) => {
   return <OrganizationScreen id={Number.parseInt(match.params.id, 10)} />
 }
 
-const ActionSubmissionsScreenWrapper = ({ match }) => {
-  return <ActionSubmissionsScreen actionKey={Number.parseInt(match.params.key, 10)} />
+const ActionScreenWrapper = ({ match }) => {
+  return <ActionScreen actionKey={Number.parseInt(match.params.key, 10)} />
 }
 
 const AboutScreen = () => (
@@ -85,8 +84,8 @@ const App = () => {
               </Switch>
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen)} />
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
-              <Route exact path="/cuenta/fotos" component={protectedScreen(ActionSubmissionsScreen)} />
-              <Route exact path="/cuenta/proyectos/:key" component={protectedScreen(ActionSubmissionsScreenWrapper)} />
+              <Route exact path="/cuenta/fotos" component={protectedScreen(ActionScreen)} />
+              <Route exact path="/cuenta/proyectos/:key" component={protectedScreen(ActionScreenWrapper)} />
               <SnackBar />
             </React.Fragment>
           </MuiThemeProvider>
