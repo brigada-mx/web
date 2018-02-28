@@ -31,6 +31,7 @@ const layer = {
     },
   },
 }
+const fitBoundsOptions = { padding: 50, maxZoom: 13 }
 
 const ActionMap = ({ actions, selectedId, ...rest }) => {
   const selected = actions.filter(a => a.id === selectedId)
@@ -62,6 +63,7 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
       {...rest}
       disableKeyboard
       fitBounds={fitBoundsFromCoords(locations)}
+      fitBoundsOptions={fitBoundsOptions}
       features={features}
       layer={layer}
       legend={<ActionLegend />}

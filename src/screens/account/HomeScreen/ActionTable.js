@@ -30,6 +30,11 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
       filterable: false,
     },
     {
+      Header: 'Llave',
+      accessor: 'key',
+      filterable: false,
+    },
+    {
       Header: 'Localidad',
       accessor: 'locality.name',
       Cell: (props) => {
