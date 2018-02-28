@@ -6,7 +6,7 @@
 .sectionHeader {
   font-family: 'roboto-600', sans-serif;
   margin-left: 5%;
-  margin-top: 15px;
+  margin-top: 35px;
   margin-bottom: 15px;
   font-size: 24;
 }
@@ -40,7 +40,7 @@
 }
 
 .wideInput {
-  width: 60vw !important;
+  width: 80vw !important;
 }
 
 @media screen and (max-width: 767px) {

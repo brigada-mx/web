@@ -67,7 +67,7 @@ class ActionScreen extends React.Component {
       <div>
         <div className={FormStyles.sectionHeader}>Actualizar proyecto</div>
         { initialActionValues.id &&
-        <div className={FormStyles.formContainer}>
+        <div className={FormStyles.formContainerLeft}>
           <UpdateActionForm
             onSubmit={this.handleUpdateAction}
             initialValues={initialActionValues}
