@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
+import Modal from 'components/Modal'
 import FormStyles from 'screens/account/Form.css'
 import { CreateActionForm, prepareActionBody } from 'screens/account/ActionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
@@ -24,6 +25,7 @@ class HomeScreen extends React.Component {
     super(props)
     this.state = {
       localitiesSearch: [],
+      submissionId: undefined,
     }
 
     this.handleLocalityChange = _.debounce(
@@ -115,6 +117,14 @@ class HomeScreen extends React.Component {
     this.props.snackbar(message, 'success')
   }
 
+  handleRowClickedSubmission = (id) => {
+    this.setState({ submissionId: id })
+  }
+
+  handleModalClose = async () => {
+    this.setState({ submissionId: undefined })
+  }
+
   render() {
     const { actions, submissions } = this.props
 
@@ -153,10 +163,14 @@ class HomeScreen extends React.Component {
             <SubmissionTable
               submissions={submissions}
               onTogglePublished={this.handleTogglePublishedSubmission}
+              onRowClicked={this.handleRowClickedSubmission}
             />
           </React.Fragment>
         }
 
+        {this.state.submissionId !== undefined &&
+          <Modal className={Styles.modal} onClose={this.handleModalClose}><span>101010</span></Modal>
+        }
       </div>
     )
   }
