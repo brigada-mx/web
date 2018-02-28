@@ -4,13 +4,13 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { reset } from 'redux-form'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import FormStyles from 'screens/account/Form.css'
 import { CreateActionForm, prepareActionBody } from 'screens/account/ActionForm'
+import SubmissionTable from 'screens/account/SubmissionTable'
 import OrganizationForm from './OrganizationForm'
 import ContactForm from './ContactForm'
 import ActionTable from './ActionTable'
@@ -34,6 +34,7 @@ class HomeScreen extends React.Component {
   componentDidMount() {
     this.loadOrganization()
     this.loadActions()
+    this.loadSubmissions()
   }
 
   loadOrganization = () => {
@@ -42,6 +43,10 @@ class HomeScreen extends React.Component {
 
   loadActions = () => {
     getBackoff(service.getAccountActions, { key: 'accountActions' })
+  }
+
+  loadSubmissions = () => {
+    getBackoff(service.getAccountSubmissions, { key: 'accountSubmissions' })
   }
 
   handleSubmitOrganization = async (values) => {
@@ -99,8 +104,19 @@ class HomeScreen extends React.Component {
     this.props.snackbar(message, 'success')
   }
 
+  handleTogglePublishedSubmission = async (id, published) => {
+    const { data } = await service.updateAccountSubmission(id, { published })
+    if (!data) {
+      this.props.snackbar(`Hubo un error, no se pudo ${published ? 'publicar' : 'ocultar'} estas fotos`, 'error')
+      return
+    }
+    this.loadSubmissions()
+    const message = published ? 'Publicaste estas fotos' : 'Ocultaste estas fotos'
+    this.props.snackbar(message, 'success')
+  }
+
   render() {
-    const { actions } = this.props
+    const { actions, submissions } = this.props
 
     return (
       <div>
@@ -124,12 +140,22 @@ class HomeScreen extends React.Component {
           />
         </div>
 
-        {actions.length && (
+        {actions.length &&
           <React.Fragment>
             <div className={FormStyles.sectionHeader}>Proyectos</div>
             <ActionTable actions={actions} onTogglePublished={this.handleTogglePublished} />
           </React.Fragment>
-        )}
+        }
+
+        {submissions.length > 0 &&
+          <React.Fragment>
+            <div className={FormStyles.sectionHeader}>Fotos sin proyecto</div>
+            <SubmissionTable
+              submissions={submissions}
+              onTogglePublished={this.handleTogglePublishedSubmission}
+            />
+          </React.Fragment>
+        }
 
       </div>
     )
@@ -137,25 +163,36 @@ class HomeScreen extends React.Component {
 }
 
 HomeScreen.propTypes = {
-  history: PropTypes.object.isRequired,
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   snackbar: PropTypes.func.isRequired,
   resetAction: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
+  let actions = []
+  let submissions = []
+
   try {
-    const actions = (state.getter.accountActions.data.results || []).sort((a, b) => {
+    actions = (state.getter.accountActions.data.results || []).sort((a, b) => {
       if (a.published < b.published) return 1
       if (a.published > b.published) return -1
       if (a.start_date < b.start_date) return 1
       if (a.start_date > b.start_date) return -1
       return 0
     })
-    return { actions }
-  } catch (e) {
-    return { actions: [] }
-  }
+  } catch (e) {}
+  try {
+    submissions = (state.getter.accountSubmissions.data.results || []).sort((a, b) => {
+      if (a.published < b.published) return 1
+      if (a.published > b.published) return -1
+      if (a.submitted < b.submitted) return 1
+      if (a.submitted > b.submitted) return -1
+      return 0
+    })
+  } catch (e) {}
+
+  return { actions, submissions }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -165,4 +202,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeScreen))
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

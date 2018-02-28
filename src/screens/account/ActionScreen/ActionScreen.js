@@ -8,6 +8,7 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import { UpdateActionForm, prepareActionBody, prepareInitialValues } from 'screens/account/ActionForm'
+import SubmissionTable from 'screens/account/SubmissionTable'
 import FormStyles from 'screens/account/Form.css'
 import Styles from './ActionScreen.css'
 
@@ -39,7 +40,7 @@ class ActionScreen extends React.Component {
   }
 
   handleUpdateAction = async (body) => {
-    const { id } = this.props.initialActionValues
+    const { id } = this.props.action
     if (!id) return
 
     const { data } = await service.updateAccountAction(id, prepareActionBody(body))
@@ -61,22 +62,44 @@ class ActionScreen extends React.Component {
     this.setState({ localitiesSearch: data.results })
   }
 
+  handleTogglePublishedSubmission = async (id, published) => {
+    const { data } = await service.updateAccountSubmission(id, { published })
+    if (!data) {
+      this.props.snackbar(`Hubo un error, no se pudo ${published ? 'publicar' : 'ocultar'} estas fotos`, 'error')
+      return
+    }
+    this.loadAction()
+    const message = published ? 'Publicaste estas fotos' : 'Ocultaste estas fotos'
+    this.props.snackbar(message, 'success')
+  }
+
   render() {
-    const { initialActionValues } = this.props
+    const { action } = this.props
+    const { submissions = [] } = action
     return (
       <div>
         <div className={FormStyles.sectionHeader}>Actualizar proyecto</div>
-        { initialActionValues.id &&
-        <div className={FormStyles.formContainerLeft}>
-          <UpdateActionForm
-            onSubmit={this.handleUpdateAction}
-            initialValues={initialActionValues}
-            onLocalityChange={this.handleLocalityChange}
-            localitiesSearch={this.state.localitiesSearch}
-            form={`accountUpdateAction_${this.props.actionKey}`}
-            enableReinitialize
-          />
-        </div>
+        {action.id &&
+          <div className={FormStyles.formContainerLeft}>
+            <UpdateActionForm
+              onSubmit={this.handleUpdateAction}
+              initialValues={action}
+              onLocalityChange={this.handleLocalityChange}
+              localitiesSearch={this.state.localitiesSearch}
+              form={`accountUpdateAction_${this.props.actionKey}`}
+              enableReinitialize
+            />
+          </div>
+        }
+
+        {submissions.length > 0 &&
+          <React.Fragment>
+            <div className={FormStyles.sectionHeader}>Fotos</div>
+            <SubmissionTable
+              submissions={submissions}
+              onTogglePublished={this.handleTogglePublishedSubmission}
+            />
+          </React.Fragment>
         }
       </div>
     )
@@ -84,7 +107,7 @@ class ActionScreen extends React.Component {
 }
 
 ActionScreen.propTypes = {
-  initialActionValues: PropTypes.object.isRequired,
+  action: PropTypes.object.isRequired,
   actionKey: PropTypes.number.isRequired,
   snackbar: PropTypes.func.isRequired,
 }
@@ -93,10 +116,10 @@ const mapStateToProps = (state, props) => {
   const { actionKey } = props
   try {
     return {
-      initialActionValues: prepareInitialValues(state.getter[`accountAction_${actionKey}`].data || {}),
+      action: prepareInitialValues(state.getter[`accountAction_${actionKey}`].data || {}),
     }
   } catch (e) {
-    return { initialActionValues: {} }
+    return { action: {} }
   }
 }
 
