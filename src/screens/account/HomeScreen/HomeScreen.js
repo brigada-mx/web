@@ -90,7 +90,10 @@ class HomeScreen extends React.Component {
 
   handleTogglePublished = async (id, published) => {
     const { data } = await service.updateAccountAction(id, { published })
-    if (!data) return
+    if (!data) {
+      this.props.snackbar(`Hubo un error, no se pudo ${published ? 'publicar' : 'ocultar'} este proyecto`, 'error')
+      return
+    }
     this.loadActions()
     const message = published ? 'Publicaste este proyecto' : 'Ocultaste este proyecto'
     this.props.snackbar(message, 'success')
@@ -102,17 +105,17 @@ class HomeScreen extends React.Component {
     return (
       <div>
         <div className={FormStyles.sectionHeader}>Tu Organización</div>
-        <div className={FormStyles.formContainer}>
+        <div className={FormStyles.formContainerLeft}>
           <OrganizationForm onSubmit={this.handleSubmitOrganization} enableReinitialize />
         </div>
 
         <div className={FormStyles.sectionHeader}>Datos de contacto</div>
-        <div className={FormStyles.formContainer}>
+        <div className={FormStyles.formContainerLeft}>
           <ContactForm onSubmit={this.handleSubmitContact} enableReinitialize />
         </div>
 
         <div className={FormStyles.sectionHeader}>Agregar proyecto</div>
-        <div className={FormStyles.formContainer}>
+        <div className={FormStyles.formContainerLeft}>
           <CreateActionForm
             onSubmit={this.handleCreateAction}
             initialValues={initialActionValues}

@@ -17,7 +17,7 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
       Header: 'Publicado',
       accessor: 'published',
       Cell: props => (<Checkbox
-        defaultChecked={props.original.published}
+        checked={props.original.published}
         onCheck={(e, checked) => onTogglePublished(props.original.id, checked)}
       />),
     },
@@ -45,6 +45,10 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
     {
       Header: 'Unidad',
       accessor: 'unit_of_measurement',
+    },
+    {
+      Header: 'Inicio',
+      accessor: 'start_date',
     },
   ]
 
