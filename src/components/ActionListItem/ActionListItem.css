@@ -2,10 +2,6 @@
 @value brandOffWhite, brandGreen, grey6, grey2, strongShadow from colors;
 
 
-.container {
-  cursor: pointer;
-}
-
 .listItem {
   box-sizing: border-box;
   background-color: white;

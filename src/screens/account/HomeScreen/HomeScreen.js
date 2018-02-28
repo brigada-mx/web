@@ -9,11 +9,11 @@ import { withRouter } from 'react-router-dom'
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
-import ActionListItem from 'components/ActionListItem'
 import FormStyles from 'screens/account/Form.css'
 import { CreateActionForm, prepareActionBody } from 'screens/account/ActionForm'
 import OrganizationForm from './OrganizationForm'
 import ContactForm from './ContactForm'
+import ActionTable from './ActionTable'
 import Styles from './HomeScreen.css'
 
 
@@ -88,18 +88,16 @@ class HomeScreen extends React.Component {
     this.setState({ localitiesSearch: data.results })
   }
 
-  handleClickAction = (action) => {
-    this.props.history.push(`/cuenta/proyectos/${action.key}`)
+  handleTogglePublished = async (id, published) => {
+    const { data } = await service.updateAccountAction(id, { published })
+    if (!data) return
+    this.loadActions()
+    const message = published ? 'Publicaste este proyecto' : 'Ocultaste este proyecto'
+    this.props.snackbar(message, 'success')
   }
 
   render() {
     const { actions } = this.props
-    const publishedActions = actions.filter(a => a.published).map((a) => {
-      return <ActionListItem key={a.id} action={a} screen="admin" focused onClickItem={this.handleClickAction} />
-    })
-    const unpublishedActions = actions.filter(a => !a.published).map((a) => {
-      return <ActionListItem key={a.id} action={a} screen="admin" focused onClickItem={this.handleClickAction} />
-    })
 
     return (
       <div>
@@ -123,17 +121,10 @@ class HomeScreen extends React.Component {
           />
         </div>
 
-        {publishedActions.length && (
+        {actions.length && (
           <React.Fragment>
-            <div className={FormStyles.sectionHeader}>Acciones publicadas</div>
-            <div className={Styles.actionList}>{publishedActions}</div>
-          </React.Fragment>
-        )}
-
-        {unpublishedActions.length && (
-          <React.Fragment>
-            <div className={FormStyles.sectionHeader}>Acciones sin publicar</div>
-            <div className={Styles.actionList}>{unpublishedActions}</div>
+            <div className={FormStyles.sectionHeader}>Proyectos</div>
+            <ActionTable actions={actions} onTogglePublished={this.handleTogglePublished} />
           </React.Fragment>
         )}
 
@@ -151,7 +142,14 @@ HomeScreen.propTypes = {
 
 const mapStateToProps = (state) => {
   try {
-    return { actions: state.getter.accountActions.data.results || [] }
+    const actions = (state.getter.accountActions.data.results || []).sort((a, b) => {
+      if (a.published < b.published) return 1
+      if (a.published > b.published) return -1
+      if (a.start_date < b.start_date) return 1
+      if (a.start_date > b.start_date) return -1
+      return 0
+    })
+    return { actions }
   } catch (e) {
     return { actions: [] }
   }

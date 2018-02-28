@@ -101,7 +101,6 @@ class ActionListItem extends React.PureComponent {
 
     const classNames = [Styles.listItem]
     if (focused) classNames.push(Styles.listItemFocused)
-    if (screen === 'admin') classNames.push(Styles.container)
 
     return (
       <div
@@ -113,7 +112,7 @@ class ActionListItem extends React.PureComponent {
         <div className={Styles.summaryContainer}>
           <div className={Styles.textContainer}>
             {screen === 'loc' && organizationLink()}
-            {screen === 'org' || screen === 'admin' && localityLink()}
+            {screen === 'org' && localityLink()}
             <div className={Styles.header}>
               {`Construcción de ${(projectTypeByValue[actionType] || actionType).toLowerCase()}`}
             </div>
@@ -141,7 +140,7 @@ class ActionListItem extends React.PureComponent {
 
 ActionListItem.propTypes = {
   action: PropTypes.object.isRequired,
-  screen: PropTypes.oneOf(['org', 'loc', 'admin']).isRequired,
+  screen: PropTypes.oneOf(['org', 'loc']).isRequired,
   focused: PropTypes.bool,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
