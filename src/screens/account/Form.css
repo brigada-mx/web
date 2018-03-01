@@ -1,3 +1,9 @@
+.loader {
+  position: absolute;
+  left: 50vw;
+  top: 20vh;
+}
+
 .field {
   margin-left: 10px;
   margin-right: 10px;

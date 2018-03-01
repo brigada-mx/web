@@ -2,7 +2,7 @@
 import React from 'react'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
@@ -78,10 +78,8 @@ const App = () => {
           <MuiThemeProvider>
             <React.Fragment>
               <Route path="/cuenta" component={AccountNav} />
-              <Switch>
-                <Route exact path="/restablecer/email" component={PasswordEmailScreen} />
-                <Route path="/restablecer" component={SetPasswordWithTokenScreen} />
-              </Switch>
+              <Route exact path="/restablecer/email" component={PasswordEmailScreen} />
+              <Route path="/establecer" component={SetPasswordWithTokenScreen} />
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen)} />
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
               <Route exact path="/cuenta/fotos" component={protectedScreen(ActionScreen)} />

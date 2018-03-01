@@ -97,6 +97,10 @@ class Service {
     return sendToApiAuth('account/submissions/', { params })
   }
 
+  getAccountSubmission = async (id) => {
+    return sendToApiAuth(`account/submissions/${id}`)
+  }
+
   getAccountAction = async (key) => {
     return sendToApiAuth(`account/actions_by_key/${key}/`)
   }
