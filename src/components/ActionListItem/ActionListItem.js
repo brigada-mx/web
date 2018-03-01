@@ -24,6 +24,7 @@ class ActionListItem extends React.PureComponent {
       end_date: endDate,
       organization: { id: orgId, name: orgName },
       locality: { id: locId, name: locName, municipality_name: muniName, state_name: stateName },
+      unit_of_measurement: unit,
     } = action
 
     const metrics = () => {
@@ -31,6 +32,7 @@ class ActionListItem extends React.PureComponent {
       return (
         <div className={Styles.goalProgress}>
           <span className={Styles.label}>{fmtNum(progress)} DE {fmtNum(target)}</span>
+          {unit && <span className={Styles.label}>{unit}</span>}
           <span className={Styles.bar}><MetricsBar value={progress} max={target} /></span>
         </div>
       )
