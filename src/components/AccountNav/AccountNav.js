@@ -11,6 +11,7 @@ import IconButton from 'material-ui/IconButton'
 import FlatButton from 'material-ui/FlatButton'
 
 import * as Actions from 'src/actions'
+import env from 'src/env'
 import service from 'api/service'
 import Styles from './AccountNav.css'
 
@@ -37,6 +38,10 @@ const AccountNav = ({ history, location, onLogout, token, orgId }) => {
 
   const menu = (
     <React.Fragment>
+      <FlatButton
+        containerElement={<Link to={env.surveyUrl} target="_blank" />}
+        label="Subir Fotos"
+      />
       <FlatButton
         containerElement={<Link to={platformLink()} />}
         label="Perfil Público"

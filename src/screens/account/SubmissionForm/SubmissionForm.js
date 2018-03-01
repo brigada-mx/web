@@ -70,12 +70,6 @@ const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
         <RaisedButton
           className={FormStyles.button}
           disabled={submitting}
-          label="CANCELAR"
-          onClick={reset}
-        />
-        <RaisedButton
-          className={FormStyles.button}
-          disabled={submitting}
           label="ACTUALIZAR"
           onClick={handleSubmit}
         />

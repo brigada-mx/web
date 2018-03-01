@@ -24,7 +24,7 @@ class FeatureMap extends React.Component {
     this._initialZoom = [props.initialZoom || 13]
     this._initialCoordinates = props.coordinates || [-95.9042505, 17.1073688]
     this._fitBounds = props.fitBounds
-    this._fitBoundsOptions = props.fitBoundsOptions || { padding: 20, maxZoom: 13 }
+    this._fitBoundsOptions = props.fitBoundsOptions || { padding: 20, maxZoom: 10 }
     this._loaded = false
     this.state = {
       map: null,
