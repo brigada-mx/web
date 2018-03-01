@@ -1,0 +1,17 @@
+.thumbnail {
+  width: 180px;
+  height: 180px;
+  box-sizing: border-box;
+  border: 1px solid #EFEFEF;
+  position: relative;
+  background-size: cover;
+  margin-right: 40px;
+}
+
+.thumbnailContainer {
+  margin-top: 40px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

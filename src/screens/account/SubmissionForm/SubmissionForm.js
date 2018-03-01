@@ -12,6 +12,7 @@ import { projectTypeByValue } from 'src/choices'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { TextField, Checkbox, AutoComplete } from 'components/Fields'
 import FormStyles from 'screens/account/Form.css'
+import Styles from './SubmissionForm.css'
 
 
 const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
@@ -149,16 +150,32 @@ class SubmissionFormWrapper extends React.Component {
     const { submission, actions } = this.props
     if (!submission.id) return <LoadingIndicatorCircle className={FormStyles.loader} />
 
-    return (
-      <div className={FormStyles.formContainerLeft}>
-        <ReduxUpdateForm
-          onSubmit={this.handleSubmit}
-          initialValues={submission}
-          actionSearch={actions}
-          form={`accountUpdateSubmission_${this.props.submissionId}`}
-          enableReinitialize
+    const thumbs = submission.thumbnails_small.map((thumb, i) => {
+      const mediumThumb = submission.thumbnails_medium[i]
+      return (
+        <a
+          key={thumb}
+          className={Styles.thumbnail}
+          style={{ backgroundImage: `url(${thumb})` }}
+          href={mediumThumb}
+          target="_blank"
         />
-      </div>
+      )
+    })
+
+    return (
+      <React.Fragment>
+        <div className={FormStyles.formContainerLeft}>
+          <ReduxUpdateForm
+            onSubmit={this.handleSubmit}
+            initialValues={submission}
+            actionSearch={actions}
+            form={`accountUpdateSubmission_${this.props.submissionId}`}
+            enableReinitialize
+          />
+        </div>
+        <div className={Styles.thumbnailContainer}>{thumbs}</div>
+      </React.Fragment>
     )
   }
 }
