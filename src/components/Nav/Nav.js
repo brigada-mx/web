@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink, Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import * as Actions from 'src/actions'
@@ -29,6 +29,7 @@ const NavLinks = ({ classNameLink, activeStyle = {}, onHideDrawer }) => {
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">COMUNIDADES</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/organizaciones">ORGANIZACIONES</NavLink>
       <a href="http://ensintonia.org/nosotros">NOSOTROS</a>
+      <Link onClick={onHideDrawer} className={classNameLink} to="/cuenta">LOGIN</Link>
     </React.Fragment>
   )
 }

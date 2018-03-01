@@ -5,6 +5,7 @@ import _ from 'lodash'
 import Select from 'react-select'
 import '!style-loader!css-loader!react-select/dist/react-select.css'
 
+import { projectTypeByValue } from 'src/choices'
 import Styles from './FilterHeader.css'
 
 
@@ -64,7 +65,7 @@ const FilterHeader = (props) => {
       if (a.action_type > b.action_type) return 1
       return 0
     }).map((i) => {
-      return { value: i.action_type, label: i.action_type }
+      return { value: i.action_type, label: projectTypeByValue[i.action_type] || '?' }
     })
   }
 

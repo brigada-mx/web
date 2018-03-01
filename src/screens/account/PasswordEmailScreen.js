@@ -16,7 +16,13 @@ import Styles from 'screens/account/Form.css'
 const Form = ({ handleSubmit, submitting }) => {
   return (
     <div className={Styles.formContainer}>
-      <div><TextField name="email" hintText="Email" /></div>
+      <div>
+        <TextField
+          name="email"
+          hintText="Email"
+          autocapitalize="off"
+        />
+      </div>
       <RaisedButton className={Styles.button} disabled={submitting} label="ENVIAR EMAIL" onClick={handleSubmit} />
     </div>
   )

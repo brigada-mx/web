@@ -27,6 +27,7 @@ const LoginForm = ({ handleSubmit, submitting }) => {
         <TextField
           name="email"
           hintText="Email"
+          autocapitalize="off"
         />
       </div>
       <div>

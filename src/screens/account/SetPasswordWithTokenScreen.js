@@ -30,7 +30,7 @@ const Form = ({ handleSubmit, submitting }) => {
           hintText="Confirmar contraseña"
         />
       </div>
-      <RaisedButton className={Styles.button} disabled={submitting} label="RESTABLECER" onClick={handleSubmit} />
+      <RaisedButton className={Styles.button} disabled={submitting} label="ESTABLECER" onClick={handleSubmit} />
     </div>
   )
 }
@@ -48,16 +48,21 @@ const validate = ({ password, confirmPassword }) => {
 
 const ReduxForm = reduxForm({ form: 'setPasswordWithToken', validate })(Form)
 
-const SetPasswordWithTokenScreen = ({ history, location, snackbar }) => {
+const SetPasswordWithTokenScreen = ({ history, location, snackbar, onLogin }) => {
   const handleSubmit = async ({ password }) => {
     const params = parseQs(location.search)
-    const { token = '' } = params
+    const { token = '', email = '' } = params
 
     const { data } = await service.setPasswordWithToken(token, password)
     if (!data) {
       snackbar('El email que te mandamos ya no es válido, pide otro', 'error')
       return
     }
+
+    // log user in to site
+    const { data: loginData } = await service.token(email, password)
+    if (loginData) onLogin({ ...loginData, email })
+
     history.push('/cuenta')
     snackbar('Cambiaste tu contraseña', 'success')
   }
@@ -69,10 +74,12 @@ SetPasswordWithTokenScreen.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   snackbar: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onLogin: auth => Actions.authSet(dispatch, { auth }),
     snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
   }
 }
