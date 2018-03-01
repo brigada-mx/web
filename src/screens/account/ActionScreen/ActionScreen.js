@@ -9,6 +9,7 @@ import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import Modal from 'components/Modal'
 import { UpdateActionForm, prepareActionBody, prepareInitialValues } from 'screens/account/ActionForm'
+import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
 import FormStyles from 'screens/account/Form.css'
 import Styles from './ActionScreen.css'
@@ -81,6 +82,8 @@ class ActionScreen extends React.Component {
   render() {
     const { action } = this.props
     const { submissions = [] } = action
+    const { submissionId } = this.state
+
     return (
       <div>
         <div className={FormStyles.sectionHeader}>Actualizar proyecto</div>
@@ -108,8 +111,10 @@ class ActionScreen extends React.Component {
           </React.Fragment>
         }
 
-        {this.state.submissionId !== undefined &&
-          <Modal className={Styles.modal} onClose={this.handleModalClose}><span>101010</span></Modal>
+        {submissionId !== undefined &&
+          <Modal className={Styles.modal} onClose={this.handleModalClose}>
+            <SubmissionForm submissionId={submissionId} />
+          </Modal>
         }
       </div>
     )

@@ -11,6 +11,7 @@ import { cleanAccentedChars } from 'tools/string'
 import Modal from 'components/Modal'
 import FormStyles from 'screens/account/Form.css'
 import { CreateActionForm, prepareActionBody } from 'screens/account/ActionForm'
+import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
 import OrganizationForm from './OrganizationForm'
 import ContactForm from './ContactForm'
@@ -127,6 +128,7 @@ class HomeScreen extends React.Component {
 
   render() {
     const { actions, submissions } = this.props
+    const { submissionId } = this.state
 
     return (
       <div>
@@ -168,8 +170,10 @@ class HomeScreen extends React.Component {
           </React.Fragment>
         }
 
-        {this.state.submissionId !== undefined &&
-          <Modal className={Styles.modal} onClose={this.handleModalClose}><span>101010</span></Modal>
+        {submissionId !== undefined &&
+          <Modal className={Styles.modal} onClose={this.handleModalClose}>
+            <SubmissionForm submissionId={submissionId} />
+          </Modal>
         }
       </div>
     )

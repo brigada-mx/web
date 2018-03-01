@@ -170,15 +170,27 @@ SubmissionFormWrapper.propTypes = {
   snackbar: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state, props) => {
-  const { submissionId } = props
+const mapStateToProps = (state, { submissionId }) => {
+  let submission = {}
+  let actions = []
+
   try {
-    return {
-      action: state.getter[`accountSubmission_${submissionId}`].data || {},
+    submission = state.getter[`accountSubmission_${submissionId}`].data
+    if (submission.action) {
+      const { id, key, action_type: type, desc } = submission.action
+      submission.action.text = `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`
+      submission.action.value = id
     }
-  } catch (e) {
-    return { action: {} }
-  }
+  } catch (e) {}
+  try {
+    actions = state.getter.accountActionsMinimal.data.results.sort((a, b) => {
+      if (a.key < b.key) return 1
+      if (a.key > b.key) return -1
+      return 0
+    })
+  } catch (e) {}
+
+  return { submission, actions }
 }
 
 const mapDispatchToProps = (dispatch) => {
