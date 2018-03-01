@@ -152,7 +152,7 @@ class HomeScreen extends React.Component {
           />
         </div>
 
-        {actions.length &&
+        {actions.length > 0 &&
           <React.Fragment>
             <div className={FormStyles.sectionHeader}>Proyectos</div>
             <ActionTable actions={actions} onTogglePublished={this.handleTogglePublished} />
