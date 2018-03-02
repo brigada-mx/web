@@ -33,10 +33,6 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
       accessor: 'description',
     },
     {
-      Header: 'Dirección',
-      accessor: 'address',
-    },
-    {
       Header: 'Creada',
       accessor: 'submitted',
       Cell: props => <span>{moment(props.original.submitted).format('h:mma, DD MMMM YYYY')}</span>,

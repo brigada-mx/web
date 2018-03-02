@@ -42,12 +42,6 @@ const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
           multiLine
           rows={3}
         />
-        <TextField
-          floatingLabelText="Dirección"
-          name="address"
-          multiLine
-          rows={3}
-        />
       </div>
       <div>
         <Checkbox
@@ -77,12 +71,11 @@ const validate = ({ action }) => {
 }
 
 export const prepareSubmissionBody = (body) => {
-  const { action_id: id, description, address } = body
+  const { action_id: id, description } = body
   return {
     ...body,
     action: id,
     desc: description,
-    addr: address,
   }
 }
 
