@@ -13,9 +13,21 @@ const projectTypes = [
   { value: 'cultural_sites', label: 'Patrimonio histórico y cultural' },
 ]
 
+const sectors = [
+  { value: 'civil', label: 'Civil' },
+  { value: 'public', label: 'Público' },
+  { value: 'private', label: 'Privado' },
+  { value: 'religious', label: 'Religioso' },
+]
+
 const projectTypeByValue = projectTypes.reduce((obj, { value, label }) => {
   obj[value] = label // eslint-disable-line no-param-reassign
   return obj
 }, {})
 
-export { projectTypes, projectTypeByValue }
+const sectorByValue = sectors.reduce((obj, { value, label }) => {
+  obj[value] = label // eslint-disable-line no-param-reassign
+  return obj
+}, {})
+
+export { projectTypes, projectTypeByValue, sectors, sectorByValue }

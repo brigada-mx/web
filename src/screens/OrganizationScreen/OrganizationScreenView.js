@@ -12,6 +12,7 @@ import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { addProtocol, emailLink, fmtBudget } from 'tools/string'
 import { fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
+import { sectorByValue } from 'src/choices'
 import OrganizationBreadcrumb from './OrganizationBreadcrumb'
 import Styles from './OrganizationScreenView.css'
 
@@ -203,10 +204,11 @@ class OrganizationScreenView extends React.Component {
                         <a target="_blank" href={addProtocol(website)}>{website}</a>
                       </span>
                     }
+                    {!website && <span className={Styles.fieldValue}>No disponible</span>}
                   </div>
                   <div className={Styles.fieldContainer}>
                     <span className={Styles.fieldLabel}>SECTOR</span>
-                    <span className={Styles.fieldValue}>{sector}</span>
+                    <span className={Styles.fieldValue}>{sectorByValue[sector] || sector}</span>
                   </div>
                   <div className={Styles.fieldContainer}>
                     <span className={Styles.fieldLabel}>ESTABLECIDA</span>

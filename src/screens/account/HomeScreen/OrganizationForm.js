@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import MenuItem from 'material-ui/MenuItem'
 
 import { TextField, SelectField } from 'components/Fields'
+import { sectors } from 'src/choices'
 import Styles from 'screens/account/Form.css'
 
 
@@ -38,10 +39,7 @@ const OrganizationForm = ({ handleSubmit, submitting }) => {
           floatingLabelText="Sector"
           name="sector"
         >
-          <MenuItem value="civil" primaryText="Civil" />
-          <MenuItem value="public" primaryText="Público" />
-          <MenuItem value="private" primaryText="Privado" />
-          <MenuItem value="religious" primaryText="Religioso" />
+          {sectors.map(({ value, label }) => <MenuItem value={value} primaryText={label} />)}
         </SelectField>
         <TextField
           floatingLabelText="Descripción"
