@@ -96,14 +96,14 @@ class HomeScreen extends React.Component {
     this.setState({ localitiesSearch: data.results })
   }
 
-  handleTogglePublished = async (id, published) => {
+  handleTogglePublished = async (id, key, published) => {
     const { data } = await service.updateAccountAction(id, { published })
     if (!data) {
       this.props.snackbar(`Hubo un error, no se pudo ${published ? 'publicar' : 'ocultar'} este proyecto`, 'error')
       return
     }
     this.loadActions()
-    const message = published ? 'Publicaste este proyecto' : 'Ocultaste este proyecto'
+    const message = published ? `Publicaste proyecto #${key}` : `Ocultaste proyecto #${key}`
     this.props.snackbar(message, 'success')
   }
 
@@ -152,7 +152,7 @@ class HomeScreen extends React.Component {
           />
         </div>
 
-        {actions.length &&
+        {actions.length > 0 &&
           <React.Fragment>
             <div className={FormStyles.sectionHeader}>Proyectos</div>
             <ActionTable actions={actions} onTogglePublished={this.handleTogglePublished} />

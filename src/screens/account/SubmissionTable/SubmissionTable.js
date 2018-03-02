@@ -66,6 +66,7 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
 
   return (
     <ReactTable
+      className="-highlight"
       pageSizeOptions={pageSizeOptions}
       defaultPageSize={pageSize}
       data={submissions}
@@ -73,12 +74,13 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
       defaultFilterMethod={defaultFilterMethod}
       filterable
       getTdProps={(state, rowInfo, column) => {
+        const { id } = column
         return {
           onClick: (e, handleOriginal) => {
-            const { id } = column
             if (id !== 'published') onRowClicked(rowInfo.original.id)
             if (handleOriginal) handleOriginal()
           },
+          style: id !== 'published' ? { cursor: 'pointer' } : {},
         }
       }}
     />

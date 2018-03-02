@@ -4,13 +4,14 @@ import PropTypes from 'prop-types'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import AutoCompleteMui from 'material-ui/AutoComplete'
+import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { projectTypeByValue } from 'src/choices'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import { TextField, Checkbox, AutoComplete } from 'components/Fields'
+import { TextField, Checkbox, SelectField } from 'components/Fields'
 import FormStyles from 'screens/account/Form.css'
 import Styles from './SubmissionForm.css'
 
@@ -18,33 +19,21 @@ import Styles from './SubmissionForm.css'
 const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
   const actions = actionSearch.map((a) => {
     const { id, key, action_type: type, desc } = a
-    return { text: `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`, value: id }
+    return { label: `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`, value: id }
   })
-  const formatAutoComplete = (value) => {
-    try {
-      return value.text
-    } catch (e) {
-      return value || ''
-    }
-  }
-  const normalizeAutoComplete = (value) => {
-    if (!value) return { value: '', text: '' }
-    if (typeof value === 'string') return { value: '', text: value }
-    return value
-  }
 
   return (
     <React.Fragment>
       <div>
-        <AutoComplete
+        <SelectField
           className={FormStyles.wideInput}
           floatingLabelText="Proyecto"
-          name="action"
-          dataSource={actions}
-          filter={AutoCompleteMui.fuzzyFilter}
-          format={formatAutoComplete}
-          normalize={normalizeAutoComplete}
-        />
+          name="action_id"
+        >
+          {actions.map(({ value, label }) => {
+            return <MenuItem key={value} value={value} primaryText={label} />
+          })}
+        </SelectField>
       </div>
       <div>
         <TextField
@@ -70,12 +59,6 @@ const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
         <RaisedButton
           className={FormStyles.button}
           disabled={submitting}
-          label="CANCELAR"
-          onClick={reset}
-        />
-        <RaisedButton
-          className={FormStyles.button}
-          disabled={submitting}
           label="ACTUALIZAR"
           onClick={handleSubmit}
         />
@@ -90,16 +73,14 @@ UpdateForm.propTypes = {
 }
 
 const validate = ({ action }) => {
-  const errors = {}
-  if (!action || !action.value) errors.action = 'Escoge un proyecto de la lista'
-  return errors
+  return {}
 }
 
 export const prepareSubmissionBody = (body) => {
-  const { action, description, address } = body
+  const { action_id: id, description, address } = body
   return {
     ...body,
-    action: action.value,
+    action: id,
     desc: description,
     addr: address,
   }
@@ -192,12 +173,8 @@ const mapStateToProps = (state, { submissionId }) => {
   let actions = []
 
   try {
-    submission = state.getter[`accountSubmission_${submissionId}`].data
-    if (submission.action) {
-      const { id, key, action_type: type, desc } = submission.action
-      submission.action.text = `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`
-      submission.action.value = id
-    }
+    submission = { ...state.getter[`accountSubmission_${submissionId}`].data }
+    if (submission.action) submission.action_id = submission.action.id
   } catch (e) {}
   try {
     actions = state.getter.accountActionsMinimal.data.results.sort((a, b) => {

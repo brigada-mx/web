@@ -9,6 +9,7 @@ const common = {
     },
     sourceLayer: 'tileset-2018-02-13-b7pu9b',
   },
+  surveyUrl: 'https://ee.humanitarianresponse.info/x/#Yhgh',
 }
 
 export default { ...common, ...env }

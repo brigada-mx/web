@@ -131,12 +131,6 @@ const CreateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
         <RaisedButton
           className={FormStyles.button}
           disabled={submitting}
-          label="CANCELAR"
-          onClick={reset}
-        />
-        <RaisedButton
-          className={FormStyles.button}
-          disabled={submitting}
           label="AGREGAR"
           onClick={handleSubmit}
         />
@@ -154,12 +148,6 @@ const UpdateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
     <React.Fragment>
       <Fields update {...rest} />
       <div className={FormStyles.row}>
-        <RaisedButton
-          className={FormStyles.button}
-          disabled={submitting}
-          label="CANCELAR"
-          onClick={reset}
-        />
         <RaisedButton
           className={FormStyles.button}
           disabled={submitting}

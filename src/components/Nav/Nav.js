@@ -11,7 +11,7 @@ import Colors from 'src/Colors'
 import Styles from './Nav.css'
 
 
-const NavLinks = ({ classNameLink, activeStyle = {}, onHideDrawer }) => {
+const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer }) => {
   const selected = { color: Colors.brandGreen }
 
   const locIsActive = (match, location) => {
@@ -29,15 +29,21 @@ const NavLinks = ({ classNameLink, activeStyle = {}, onHideDrawer }) => {
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">COMUNIDADES</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/organizaciones">ORGANIZACIONES</NavLink>
       <a href="http://ensintonia.org/nosotros">NOSOTROS</a>
-      <Link onClick={onHideDrawer} className={classNameLink} to="/cuenta">LOGIN</Link>
+      <Link onClick={onHideDrawer} className={classNameLink} to="/cuenta" target="_blank">{token ? 'MI CUENTA' : 'LOGIN'}</Link>
     </React.Fragment>
   )
 }
 
 NavLinks.propTypes = {
   onHideDrawer: PropTypes.func.isRequired,
+  token: PropTypes.string,
   classNameLink: PropTypes.string,
   activeStyle: PropTypes.object,
+}
+
+const mapStateToProps = (state) => {
+  const { token } = state.auth || {}
+  return { token }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -46,7 +52,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ReduxNavLinks = withRouter(connect(null, mapDispatchToProps)(NavLinks))
+const ReduxNavLinks = withRouter(connect(mapStateToProps, mapDispatchToProps)(NavLinks))
 
 const Nav = () => {
   return (

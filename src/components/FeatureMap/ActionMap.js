@@ -31,7 +31,7 @@ const layer = {
     },
   },
 }
-const fitBoundsOptions = { padding: 50, maxZoom: 13 }
+const fitBoundsOptions = { padding: 50, maxZoom: 10 }
 
 const ActionMap = ({ actions, selectedId, ...rest }) => {
   const selected = actions.filter(a => a.id === selectedId)

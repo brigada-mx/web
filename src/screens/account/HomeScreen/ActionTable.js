@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import ReactTable from 'react-table'
 import Checkbox from 'material-ui/Checkbox'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import '!style-loader!css-loader!react-table/react-table.css'
 
 import { tokenMatch } from 'tools/string'
@@ -25,7 +25,7 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
       accessor: 'published',
       Cell: props => (<Checkbox
         checked={props.original.published}
-        onCheck={(e, checked) => onTogglePublished(props.original.id, checked)}
+        onCheck={(e, checked) => onTogglePublished(props.original.id, props.original.key, checked)}
       />),
       filterable: false,
     },
@@ -37,10 +37,6 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
     {
       Header: 'Localidad',
       accessor: 'locality.name',
-      Cell: (props) => {
-        const { id, name } = props.original.locality
-        return <Link className={Styles.link} to={{ pathname: `/comunidades/${id}` }}>{name}</Link>
-      },
     },
     {
       Header: 'Descripción',
@@ -75,6 +71,7 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
 
   return (
     <ReactTable
+      className="-highlight"
       pageSizeOptions={pageSizeOptions}
       defaultPageSize={pageSize}
       data={actions}
@@ -82,14 +79,15 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
       defaultFilterMethod={defaultFilterMethod}
       filterable
       getTdProps={(state, rowInfo, column) => {
+        const { id } = column
         return {
           onClick: (e, handleOriginal) => {
-            const { id } = column
-            if (id !== 'published' && id !== 'locality.name') {
+            if (id !== 'published') {
               history.push(`/cuenta/proyectos/${rowInfo.original.key}`)
             }
             if (handleOriginal) handleOriginal()
           },
+          style: id !== 'published' ? { cursor: 'pointer' } : {},
         }
       }}
     />
