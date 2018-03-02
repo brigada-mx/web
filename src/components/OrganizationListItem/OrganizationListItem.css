@@ -66,6 +66,12 @@
   align-items: center;
 }
 
+.emptyMetric {
+  display: flex;
+  align-items: center;
+  opacity: 0.2;
+}
+
 .label {
   font-family: 'nunito-sans', sans-serif;
   font-size: 12px;
@@ -84,6 +90,14 @@
   color: #3DC587;
   letter-spacing: -0.1px;
   line-height: 62px;
+}
+
+.emptyMetric .value {
+  color: #0F0F0F;
+}
+
+.emptyMetric .label {
+  color: #0F0F0F;
 }
 
 @media screen and (min-width: 1440px) {
@@ -109,6 +123,10 @@
     padding: 0 32px 30px 32px;
   }
   .metric {
+    flex-direction: column;
+    align-items: start;
+  }
+  .emptyMetric {
     flex-direction: column;
     align-items: start;
   }
@@ -157,6 +175,10 @@
     padding-right: 43px;
   }
   .metric {
+    flex-direction: column;
+    align-items: start;
+  }
+  .emptyMetric {
     flex-direction: column;
     align-items: start;
   }
@@ -209,6 +231,10 @@
     padding: 5px 0 0 0;
   }
   .metric {
+    flex-direction: column;
+    align-items: start;
+  }
+  .emptyMetric {
     flex-direction: column;
     align-items: start;
   }

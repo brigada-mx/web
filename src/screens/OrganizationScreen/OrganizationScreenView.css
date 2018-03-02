@@ -143,6 +143,12 @@
   align-items: center;
 }
 
+.emptyMetric {
+  display: flex;
+  align-items: center;
+  opacity: 0.2;
+}
+
 .metricLabel {
   font-family: 'nunito-sans', sans-serif;
   font-size: 12px;
@@ -171,6 +177,14 @@
   background-color: #F6F8FA;
   display: flex;
   flex-direction: column;
+}
+
+.emptyMetric .metricValue {
+  color: #0F0F0F;
+}
+
+.emptyMetric .metricLabel {
+  color: #0F0F0F;
 }
 
 @media screen and (min-width: 1440px) {
@@ -363,6 +377,9 @@
     align-items: baseline;
   }
   .metric {
+    flex-direction: column;
+  }
+  .emptyMetric {
     flex-direction: column;
   }
   .metric:nth-of-type(1) {

@@ -182,6 +182,8 @@ class OrganizationScreenView extends React.Component {
       )
     }, 0)
 
+    const budget = actions.reduce((sum, action) => sum + (action.budget || 0), 0)
+
     return (
       <React.Fragment>
         <div className="wrapper-lg wrapper-md wrapper-sm">
@@ -217,10 +219,10 @@ class OrganizationScreenView extends React.Component {
               </div>
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
-                  <div className={Styles.metric}>
+                  <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
                     <span className={Styles.metricLabel}>Inversión<br />estimada</span>
                     <span className={Styles.metricValue}>
-                      {fmtBudget(actions.reduce((sum, action) => sum + (action.budget || 0), 0))}
+                      {fmtBudget(budget)}
                     </span>
                   </div>
                   <div className={Styles.metric}>
