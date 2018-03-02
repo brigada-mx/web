@@ -15,6 +15,13 @@
   background-color: white;
 }
 
+.source {
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 10px;
+  color: #9F9F9F;
+  margin-top: 7px;
+}
+
 .title {
   font-family: 'nunito-sans-600', sans-serif;
   font-size: 14px;

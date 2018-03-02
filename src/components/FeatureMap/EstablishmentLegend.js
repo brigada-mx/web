@@ -44,6 +44,7 @@ const EstablishmentLegend = ({ establishments }) => {
     <div className={Styles.container}>
       <p className={Styles.title}>Infraestructura local</p>
       {establishments.length > 0 && items}
+      {establishments.length > 0 && <p className={Styles.source}>FUENTE: INEGI</p>}
       {establishments.length === 0 && <p>INEGI no tiene datos para esta localidad</p>}
     </div>
   )

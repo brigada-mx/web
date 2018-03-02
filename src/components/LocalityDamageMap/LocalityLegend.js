@@ -34,6 +34,7 @@ const LocalityLegend = ({ className = '', localities, legendTitle }) => {
     <div className={Styles.container}>
       <p className={Styles.title}>{legendTitle}</p>
       {items}
+      <p className={Styles.source}>FUENTE: INEGI</p>
     </div>
   )
 }
