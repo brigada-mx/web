@@ -1,16 +1,13 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import Styles from './Modal.css'
 
 
-class Modal extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
+const modalRoot = document.getElementById('modal')
 
+class Modal extends React.Component {
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown)
   }
@@ -27,11 +24,12 @@ class Modal extends React.Component {
 
   render() {
     const { children, onClose, className = '' } = this.props
-    return (
+    return ReactDOM.createPortal(
       <div className={`${Styles.container} ${className}`}>
         <span className={Styles.closeButton} onClick={onClose}>X</span>
         {children}
-      </div>
+      </div>,
+      modalRoot,
     )
   }
 }

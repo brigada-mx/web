@@ -82,7 +82,7 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
         const { id } = column
         return {
           onClick: (e, handleOriginal) => {
-            if (id !== 'published') {
+            if (id !== 'published' && rowInfo) {
               history.push(`/cuenta/proyectos/${rowInfo.original.key}`)
             }
             if (handleOriginal) handleOriginal()

@@ -3,17 +3,17 @@
   width: 100vw;
   height: 100vh;
   bottom: 0;
-  z-index: 10;
   background-color: white;
 }
 
 .closeButton {
+  font-family: 'nunito-sans-800', sans-serif;
   position: absolute;
   top: 50px;
   right: 50px;
   font-size: 45px;
+  z-index: 10;
   cursor: pointer;
-  z-index: 11;
   opacity: 0.6;
   color: black;
 }

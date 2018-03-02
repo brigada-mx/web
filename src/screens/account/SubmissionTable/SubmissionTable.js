@@ -77,7 +77,7 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
         const { id } = column
         return {
           onClick: (e, handleOriginal) => {
-            if (id !== 'published') onRowClicked(rowInfo.original.id)
+            if (id !== 'published' && rowInfo) onRowClicked(rowInfo.original.id)
             if (handleOriginal) handleOriginal()
           },
           style: id !== 'published' ? { cursor: 'pointer' } : {},
