@@ -39,7 +39,7 @@ const OrganizationForm = ({ handleSubmit, submitting }) => {
           floatingLabelText="Sector"
           name="sector"
         >
-          {sectors.map(({ value, label }) => <MenuItem value={value} primaryText={label} />)}
+          {sectors.map(({ value, label }) => <MenuItem key={value} value={value} primaryText={label} />)}
         </SelectField>
         <TextField
           floatingLabelText="Descripción"

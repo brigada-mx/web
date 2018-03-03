@@ -17,7 +17,7 @@ const ContactForm = ({ handleSubmit, submitting }) => {
         <TextField
           floatingLabelText="Email"
           name="email"
-          autocapitalize="off"
+          autoCapitalize="off"
         />
         <TextField
           floatingLabelText="Teléfono"

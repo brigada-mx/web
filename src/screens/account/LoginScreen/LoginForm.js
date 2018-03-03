@@ -21,13 +21,23 @@ const LoginForm = ({ handleSubmit, submitting }) => {
     }
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && e.shiftKey === false) {
+      e.preventDefault()
+      handleSubmit()
+    }
+  }
+
   return (
-    <div className={FormStyles.formContainer}>
+    <form
+      className={FormStyles.formContainer}
+      onKeyDown={handleKeyDown}
+    >
       <div>
         <TextField
           name="email"
           hintText="Email"
-          autocapitalize="off"
+          autoCapitalize="off"
         />
       </div>
       <div>
@@ -39,7 +49,7 @@ const LoginForm = ({ handleSubmit, submitting }) => {
       </div>
       <RaisedButton className={FormStyles.button} disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
       <Link className={Styles.link} to={forgotPasswordLink()}>No sé mi contraseña</Link>
-    </div>
+    </form>
   )
 }
 

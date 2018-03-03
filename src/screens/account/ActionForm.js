@@ -74,22 +74,25 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
       <div>
         <TextField
           type="number"
-          floatingLabelText="Meta"
+          min="0"
+          floatingLabelText="Núm. de unidades a entregar"
           name="target"
           normalize={(value) => { return value ? parseInt(value, 10) : null }}
         />
         <TextField
-          floatingLabelText="Unidad de medida de meta"
+          floatingLabelText="Unidad de medida"
           name="unit_of_measurement"
         />
         <TextField
           type="number"
-          floatingLabelText="Avance contra meta"
+          min="0"
+          floatingLabelText="Núm. de unidades ya entregadas"
           name="progress"
           normalize={(value) => { return value ? parseInt(value, 10) : null }}
         />
         <TextField
           type="number"
+          min="0"
           floatingLabelText="Presupuesto estimado MXN"
           name="budget"
           normalize={(value) => { return value ? parseInt(value, 10) : null }}
@@ -180,10 +183,10 @@ const validate = ({
   if (!desc) errors.desc = 'Agrega una descripción del proyecto'
   if (budget && budget < 0) errors.budget = 'El presupuesto no puede ser negativo'
 
-  if (target && target < 0) errors.target = 'Le meta no puede ser negativo'
+  if (target && target < 0) errors.target = 'La meta no puede ser negativa'
   if (progress && progress < 0) errors.progress = 'El avance no puede ser negativo'
 
-  if (progress && !target || progress > target) {
+  if (progress && !target || (progress && target && progress > target)) {
     errors.progress = 'El avance no puede ser mayor que la meta'
     errors.target = 'El avance no puede ser mayor que la meta'
   }

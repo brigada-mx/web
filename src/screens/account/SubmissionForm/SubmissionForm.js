@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
-import AutoCompleteMui from 'material-ui/AutoComplete'
 import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
 

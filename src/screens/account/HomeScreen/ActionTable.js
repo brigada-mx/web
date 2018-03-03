@@ -30,7 +30,7 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
       filterable: false,
     },
     {
-      Header: 'Llave',
+      Header: 'Clave',
       accessor: 'key',
       filterable: false,
     },

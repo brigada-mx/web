@@ -20,7 +20,7 @@ const Form = ({ handleSubmit, submitting }) => {
         <TextField
           name="email"
           hintText="Email"
-          autocapitalize="off"
+          autoCapitalize="off"
         />
       </div>
       <RaisedButton className={Styles.button} disabled={submitting} label="ENVIAR EMAIL" onClick={handleSubmit} />
