@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { Link } from 'react-router-dom'
 
-import { fmtNum } from 'tools/string'
+import { fmtNum, thumborUrl } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
 import { projectTypeByValue } from 'src/choices'
 import Styles from './ActionListItem.css'
@@ -15,7 +15,6 @@ class ActionListItem extends React.PureComponent {
     const { action, screen, focused, onClick, onMouseEnter, onMouseLeave, onClickItem } = this.props
     const {
       action_type: actionType,
-      first_thumbnail_medium: mediumThumb,
       desc,
       target,
       progress = 0,
@@ -71,15 +70,14 @@ class ActionListItem extends React.PureComponent {
     const handleClickItem = onClickItem && (() => { onClickItem(action) })
 
     const renderThumbnails = () => {
-      const thumbs = [].concat(...action.submissions.map(s => s.thumbnails_small))
-      const l = thumbs.length
+      const images = [].concat(...action.submissions.map(s => s.image_urls))
+      const l = images.length
       if (l === 0) return <div className={Styles.emptyThumbnail} />
-
 
       const count = l > 1 ? (
         <div
           className={Styles.thumbnailCount}
-          style={{ backgroundImage: `url(${thumbs[1]})` }}
+          style={{ backgroundImage: `url(${thumborUrl(images[1], 240, 240, true)})` }}
         >
           <span className={Styles.thumbnailCountOverlay}>+{l - 1}</span>
         </div>) : null
@@ -87,13 +85,13 @@ class ActionListItem extends React.PureComponent {
         <div onClick={handleClick} className={Styles.thumbnailContainer}>
           <div
             className={`${Styles.thumbnail} xs-hidden`}
-            style={{ backgroundImage: `url(${thumbs[0]})` }}
+            style={{ backgroundImage: `url(${thumborUrl(images[0], 240, 240, true)})` }}
           >
             {count}
           </div>
           <div
             className={`${Styles.thumbnail} lg-hidden md-hidden sm-hidden`}
-            style={{ backgroundImage: `url(${mediumThumb})` }}
+            style={{ backgroundImage: `url(${thumborUrl(images[0], 1280, 240, true)})` }}
           >
             {count}
           </div>

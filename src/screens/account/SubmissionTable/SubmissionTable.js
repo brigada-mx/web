@@ -7,7 +7,7 @@ import ReactTable from 'react-table'
 import Checkbox from 'material-ui/Checkbox'
 import '!style-loader!css-loader!react-table/react-table.css'
 
-import { tokenMatch } from 'tools/string'
+import { tokenMatch, thumborUrl } from 'tools/string'
 import Styles from './SubmissionTable.css'
 
 
@@ -41,12 +41,12 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
     {
       Header: 'Fotos',
       Cell: (props) => {
-        const thumbs = (props.original.thumbnails_small || []).map((thumb) => {
+        const thumbs = (props.original.image_urls || []).map((url) => {
           return (
             <div
-              key={thumb}
+              key={url}
               className={Styles.thumbnail}
-              style={{ backgroundImage: `url(${thumb})` }}
+              style={{ backgroundImage: `url(${thumborUrl(url, 120, 120, true)})` }}
             />
           )
         })

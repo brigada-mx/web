@@ -43,10 +43,8 @@ class CarouselContainer extends React.Component {
         organization: organizationId,
         submitted,
         image_urls: urls,
-        thumbnails_medium: urlsMedium,
-        thumbnails_small: urlsSmall,
       } = s
-      return urls.map((url, i) => {
+      return urls.map((url) => {
         return {
           description,
           address,
@@ -54,8 +52,6 @@ class CarouselContainer extends React.Component {
           organizationId,
           submitted,
           url,
-          urlMedium: urlsMedium[i],
-          urlSmall: urlsSmall[i],
         }
       })
     })

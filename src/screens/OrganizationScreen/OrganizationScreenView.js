@@ -165,6 +165,7 @@ class OrganizationScreenView extends React.Component {
       name,
       sector,
       year_established: established,
+      image_count: numPhotos,
     } = data
     const { focused } = this.state
 
@@ -176,12 +177,6 @@ class OrganizationScreenView extends React.Component {
         onEnterFeature={this.handleEnterActionFeature}
       />
     )
-
-    const numPhotos = actions.reduce((_sum, action) => {
-      return _sum + (
-        action.submissions.reduce((sum, submission) => sum + submission.thumbnails_small.length, 0)
-      )
-    }, 0)
 
     const budget = actions.reduce((sum, action) => sum + (action.budget || 0), 0)
 

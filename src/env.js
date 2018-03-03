@@ -10,6 +10,7 @@ const common = {
     sourceLayer: 'tileset-2018-02-13-b7pu9b',
   },
   surveyUrl: 'https://ee.humanitarianresponse.info/x/#Yhgh',
+  thumborUrl: 'https://d1usq577esam6j.cloudfront.net',
 }
 
 export default { ...common, ...env }

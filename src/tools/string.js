@@ -1,5 +1,7 @@
 import _ from 'lodash'
 
+import env from 'src/env'
+
 
 export const validateEmail = (email) => {
   const re = /\S+@\S+\.\S+/
@@ -77,4 +79,23 @@ export const truncate = (s, l) => {
     return `${s.substring(0, l).trim()}…`
   }
   return s
+}
+
+export const getLocation = (href) => {
+  const match = href.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/)
+  return match && {
+    href,
+    protocol: match[1],
+    host: match[2],
+    hostname: match[3],
+    port: match[4],
+    pathname: match[5],
+    search: match[6],
+    hash: match[7],
+  }
+}
+
+export const thumborUrl = (url, width, height, crop = false) => {
+  const parsed = getLocation(url)
+  return parsed && `${env.thumborUrl}/${crop ? '' : 'fit-in/'}${width}x${height}${parsed.pathname}`
 }

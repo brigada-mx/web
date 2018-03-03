@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 
 import { toDegrees, googleMapsUrl } from 'tools/other'
+import { thumborUrl } from 'tools/string'
 import Styles from './Carousel.css'
 
 
@@ -18,8 +19,6 @@ const Photo = (props) => {
     organizationId,
     submitted,
     url,
-    urlMedium,
-    urlSmall,
   } = props
 
   const { lat, lng } = location || {}
@@ -35,7 +34,7 @@ const Photo = (props) => {
   return (
     <div className={Styles.outerBox}>
       <div className={Styles.innerBox}>
-        {lazyLoad ? <div /> : <img src={urlMedium} alt={description} />}
+        {lazyLoad ? <div /> : <img src={thumborUrl(url, 1280, 1280)} alt={description} />}
         <div>
           <div className={Styles.labelContainer}>
             <span className={Styles.label}>{moment(submitted).format('h:mma, DD MMMM YYYY')}</span>
@@ -56,8 +55,6 @@ Photo.propTypes = {
   organizationId: PropTypes.number.isRequired,
   submitted: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  urlMedium: PropTypes.string.isRequired,
-  urlSmall: PropTypes.string.isRequired,
 }
 
 export default Photo

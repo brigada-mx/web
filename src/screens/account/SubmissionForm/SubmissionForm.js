@@ -11,6 +11,7 @@ import service, { getBackoff } from 'api/service'
 import { projectTypeByValue } from 'src/choices'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { TextField, Checkbox, SelectField } from 'components/Fields'
+import { thumborUrl } from 'tools/string'
 import FormStyles from 'screens/account/Form.css'
 import Styles from './SubmissionForm.css'
 
@@ -123,14 +124,13 @@ class SubmissionFormWrapper extends React.Component {
     const { submission, actions } = this.props
     if (!submission.id) return <LoadingIndicatorCircle className={FormStyles.loader} />
 
-    const thumbs = submission.thumbnails_small.map((thumb, i) => {
-      const mediumThumb = submission.thumbnails_medium[i]
+    const thumbs = submission.image_urls.map((url) => {
       return (
         <a
-          key={thumb}
+          key={url}
           className={Styles.thumbnail}
-          style={{ backgroundImage: `url(${thumb})` }}
-          href={mediumThumb}
+          style={{ backgroundImage: `url(${thumborUrl(url, 480, 480, true)})` }}
+          href={thumborUrl(url, 1280, 1280)}
           target="_blank"
         />
       )
