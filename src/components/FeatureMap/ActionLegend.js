@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Styles from './EstablishmentLegend.css'
+import Styles from './Legend.css'
 
 
 const style = { opacity: 0.80, width: 'unset' }

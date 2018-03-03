@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { fmtNum } from 'tools/string'
-import Styles from './EstablishmentLegend.css'
+import Styles from './Legend.css'
 
 
 export const metaByScianGroup = {
@@ -44,7 +44,7 @@ const EstablishmentLegend = ({ establishments }) => {
     <div className={Styles.container}>
       <p className={Styles.title}>Infraestructura local</p>
       {establishments.length > 0 && items}
-      {establishments.length > 0 && <p className={Styles.source}>FUENTE: INEGI</p>}
+      {establishments.length > 0 && <p className={Styles.source}>Fuente: INEGI</p>}
       {establishments.length === 0 && <p>INEGI no tiene datos para esta localidad</p>}
     </div>
   )
