@@ -14,9 +14,7 @@ const Photo = (props) => {
   const {
     lazyLoad,
     description,
-    address,
     location,
-    organizationId,
     submitted,
     url,
   } = props
@@ -50,9 +48,7 @@ const Photo = (props) => {
 Photo.propTypes = {
   lazyLoad: PropTypes.bool,
   description: PropTypes.string,
-  address: PropTypes.string,
   location: PropTypes.object,
-  organizationId: PropTypes.number.isRequired,
   submitted: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
 }
