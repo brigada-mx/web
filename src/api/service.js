@@ -48,6 +48,11 @@ class Service {
     return sendToApi(`actions/${id}/`)
   }
 
+  getDonors = async (page_size = 10000) => {
+    const params = { page_size }
+    return sendToApi('donors/', { params })
+  }
+
   // ORGANIZATION ACCOUNT PUBLIC ENDPOINTS
   sendSetPasswordEmail = async (email) => {
     return sendToApi('account/send_set_password_email/', { method: 'POST', body: { email } })

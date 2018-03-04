@@ -208,7 +208,7 @@ export const prepareActionBody = (body) => {
   }
 }
 
-export const prepareInitialValues = (values) => {
+export const prepareInitialActionValues = (values) => {
   const {
     start_date: startDate,
     end_date: endDate,

@@ -8,7 +8,8 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import Modal from 'components/Modal'
-import { UpdateActionForm, prepareActionBody, prepareInitialValues } from 'screens/account/ActionForm'
+import { UpdateActionForm, prepareActionBody, prepareInitialActionValues } from 'screens/account/ActionForm'
+import DonationsForm, { prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationsForm'
 import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
 import FormStyles from 'screens/account/Form.css'
@@ -35,6 +36,7 @@ class ActionScreen extends React.Component {
   loadAction = () => {
     const { actionKey } = this.props
     getBackoff(() => { return service.getAccountAction(actionKey) }, { key: `accountAction_${actionKey}` })
+    getBackoff(() => { return service.getDonors() }, { key: 'donors' })
   }
 
   handleUpdateAction = async (body) => {
@@ -79,10 +81,15 @@ class ActionScreen extends React.Component {
     this.setState({ submissionId: undefined })
   }
 
+  handleSubmitDonations = async ({ donations }) => {
+    // find new, deleted and updated instances
+    console.log(donations)
+  }
+
   render() {
-    const { action } = this.props
+    const { action, donors, donations } = this.props
     const { submissions = [] } = action
-    const { submissionId } = this.state
+    const { submissionId, localitiesSearch } = this.state
 
     return (
       <div>
@@ -93,7 +100,7 @@ class ActionScreen extends React.Component {
               onSubmit={this.handleUpdateAction}
               initialValues={action}
               onLocalityChange={this.handleLocalityChange}
-              localitiesSearch={this.state.localitiesSearch}
+              localitiesSearch={localitiesSearch}
               form={`accountUpdateAction_${this.props.actionKey}`}
               enableReinitialize
             />
@@ -116,26 +123,45 @@ class ActionScreen extends React.Component {
             <SubmissionForm submissionId={submissionId} />
           </Modal>
         }
+
+        <div className={FormStyles.sectionHeader}>Donaciones</div>
+        <div className={FormStyles.formContainerLeft}>
+          <DonationsForm
+            onSubmit={this.handleSubmitDonations}
+            initialValues={donations}
+            donorsSearch={donors}
+            form={`accountActionDonations_${this.props.actionKey}`}
+            enableReinitialize
+          />
+        </div>
       </div>
     )
   }
 }
 
 ActionScreen.propTypes = {
+  donors: PropTypes.arrayOf(PropTypes.object).isRequired,
   action: PropTypes.object.isRequired,
+  donations: PropTypes.object.isRequired,
   actionKey: PropTypes.number.isRequired,
   snackbar: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state, props) => {
   const { actionKey } = props
+  let action = {}
+  let donors = []
+  const donations = { donations: [] }
+
   try {
-    return {
-      action: prepareInitialValues(state.getter[`accountAction_${actionKey}`].data || {}),
-    }
-  } catch (e) {
-    return { action: {} }
-  }
+    action = prepareInitialActionValues(state.getter[`accountAction_${actionKey}`].data || {})
+    donations.donations = action.donations.map((d) => prepareInitialDonationValues(d))
+  } catch (e) {}
+  try {
+    donors = state.getter.donors.data.results || []
+  } catch (e) {}
+
+  return { action, donations, donors }
 }
 
 const mapDispatchToProps = (dispatch) => {
