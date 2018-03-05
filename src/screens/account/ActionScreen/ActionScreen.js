@@ -31,12 +31,16 @@ class ActionScreen extends React.Component {
 
   componentDidMount() {
     this.loadAction()
+    this.loadDonors()
   }
 
   loadAction = () => {
     const { actionKey } = this.props
     getBackoff(() => { return service.getAccountAction(actionKey) }, { key: `accountAction_${actionKey}` })
-    getBackoff(() => { return service.getDonors() }, { key: 'donors' })
+  }
+
+  loadDonors = () => {
+    getBackoff(service.getDonors, { key: 'donors' })
   }
 
   handleUpdateAction = async (body) => {
@@ -83,7 +87,38 @@ class ActionScreen extends React.Component {
 
   handleSubmitDonations = async ({ donations }) => {
     // find new, deleted and updated instances
-    console.log(donations)
+    const { snackbar } = this.props
+    const { action } = this.props
+    if (!action.donations) {
+      snackbar('Hubo un error', 'error')
+      return
+    }
+
+    const newIds = new Set(donations.map(d => d.id))
+    const prepared = donations.map(d => prepareDonationBody(d))
+    const results = []
+
+    for (const d of prepared) {
+      if (d.id === undefined) results.push(service.createAccountDonation({ ...d, action: action.id }))
+      else {
+        const old = _.find(action.donations, o => o.id === d.id)
+        if (!old) {
+          snackbar('Hubo un error', 'error')
+          return
+        }
+        if (old.amount === d.amount && old.received_date === d.received_date && old.donor.id === d.donor) continue
+        results.push(service.updateAccountDonation(d.id, d))
+      }
+    }
+    for (const d of action.donations) {
+      if (!newIds.has(d.id)) results.push(service.deleteAccountDonation(d.id))
+    }
+    for (const result of await Promise.all(results)) {
+      if (result.data) snackbar('Se guardaron los cambios', 'success')
+      else snackbar('Hubo un error', 'error')
+    }
+    this.loadAction()
+    this.loadDonors()
   }
 
   render() {

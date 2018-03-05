@@ -81,16 +81,24 @@ const Donations = ({ fields, donorsSearch }) => { // eslint-disable-line react/p
   )
 }
 
-const DonationsForm = ({ handleSubmit, submitting, donorsSearch }) => {
+const DonationsForm = ({ handleSubmit, reset, submitting, donorsSearch }) => {
   return (
     <React.Fragment>
       <FieldArray name="donations" component={Donations} donorsSearch={donorsSearch} />
-      <RaisedButton
-        className={FormStyles.button}
-        disabled={submitting}
-        label="GUARDAR DONACIONES"
-        onClick={handleSubmit}
-      />
+      <div className={FormStyles.row}>
+        <RaisedButton
+          className={FormStyles.button}
+          disabled={submitting}
+          label="GUARDAR CAMBIOS"
+          onClick={handleSubmit}
+        />
+        <RaisedButton
+          className={FormStyles.button}
+          disabled={submitting}
+          label="DESHACER CAMBIOS"
+          onClick={reset}
+        />
+      </div>
     </React.Fragment>
   )
 }
@@ -105,10 +113,16 @@ const validate = ({ donations }) => {
 
   const allErrors = {}
   const donationErrors = []
-  donations.forEach(({ amount, donor }, i) => {
+  donations.forEach(({ id, amount, donor }, i) => {
     const errors = {}
     if (amount && amount < 0) errors.amount = 'El monto no puede ser negativo'
-    if (!donor || (!donor.value && !donor.text)) errors.donor = 'Escoge un donante de la lista, o ingresa un nuevo donante'
+
+    if (id) {
+      if (!donor || !donor.value) errors.donor = 'Escoge un donante de la lista'
+    } else if (!donor || (!donor.value && !donor.text)) {
+      errors.donor = 'Escoge un donante de la lista, o ingresa un nuevo donante'
+    }
+
     if (errors.donor || errors.amount) donationErrors[i] = errors
   })
   if (donationErrors.length) allErrors.donations = donationErrors
@@ -117,11 +131,14 @@ const validate = ({ donations }) => {
 
 export const prepareDonationBody = (body) => {
   const { donor, received_date: date } = body
-  return {
+  const prepared = {
     ...body,
     donor: donor.value,
+    donor_name: donor.text,
     received_date: date ? moment(date).format('YYYY-MM-DD') : null,
   }
+  if (donor.value) prepared.donor_id = donor.value
+  return prepared
 }
 
 export const prepareInitialDonationValues = (values) => {

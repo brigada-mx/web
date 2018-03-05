@@ -129,6 +129,18 @@ class Service {
   updateAccountSubmission = async (id, body) => {
     return sendToApiAuth(`account/submissions/${id}/`, { method: 'PUT', body })
   }
+
+  createAccountDonation = async (body) => {
+    return sendToApiAuth('account/donations/', { method: 'POST', body })
+  }
+
+  updateAccountDonation = async (id, body) => {
+    return sendToApiAuth(`account/donations/${id}/`, { method: 'PUT', body })
+  }
+
+  deleteAccountDonation = async (id) => {
+    return sendToApiAuth(`account/donations/${id}/`, { method: 'DELETE' })
+  }
 }
 
 /**
