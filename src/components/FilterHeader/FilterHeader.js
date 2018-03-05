@@ -27,6 +27,7 @@ const FilterHeader = (props) => {
     valActionType,
     style = {},
   } = props
+  if (valMuni.length > 0 && valState.length > 0) onStateChange([])
 
   const shortenState = (name) => {
     if (name.toLowerCase() === 'veracruz de ignacio de la llave') return 'Veracruz'

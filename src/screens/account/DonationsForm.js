@@ -36,7 +36,7 @@ const Donations = ({ fields, donorsSearch }) => { // eslint-disable-line react/p
       <RaisedButton
         className={FormStyles.button}
         label="AGREGAR DONACIÓN"
-        onClick={() => fields.push({})}
+        onClick={() => fields.unshift({})}
       />
       {fields.map((donation, i) => (
         <div key={i}>
