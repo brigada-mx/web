@@ -99,24 +99,28 @@ class ActionScreen extends React.Component {
     const results = []
 
     for (const d of prepared) {
-      if (d.id === undefined) results.push(service.createAccountDonation({ ...d, action: action.id }))
-      else {
+      if (d.id === undefined) {
+        results.push(service.createAccountDonation({ ...d, action: action.id }))
+      } else {
         const old = _.find(action.donations, o => o.id === d.id)
         if (!old) {
           snackbar('Hubo un error', 'error')
           return
         }
-        if (old.amount === d.amount && old.received_date === d.received_date && old.donor.id === d.donor) continue
+        if (old.amount === d.amount &&
+          old.received_date === d.received_date && old.donor.id === d.donor) continue
         results.push(service.updateAccountDonation(d.id, d))
       }
     }
     for (const d of action.donations) {
       if (!newIds.has(d.id)) results.push(service.deleteAccountDonation(d.id))
     }
+    let errors = 0
     for (const result of await Promise.all(results)) {
-      if (result.data) snackbar('Se guardaron los cambios', 'success')
-      else snackbar('Hubo un error', 'error')
+      if (!result.data) errors += 1
     }
+    if (!errors) snackbar('Se guardaron todos los cambios', 'success')
+    else snackbar(`No se guardaron todos los cambios, hubo ${errors} error(es)`, 'error')
     this.loadAction()
     this.loadDonors()
   }

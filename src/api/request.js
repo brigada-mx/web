@@ -50,6 +50,8 @@ const _sendToApi = async (
 const sendToApi = async (url, params) => {
   try {
     const r = await _sendToApi(url, params)
+    if (r.status === 204) return { data: {} }
+
     const data = await r.json()
     if (r.status >= 400) return { error: data }
     return { data }
@@ -63,6 +65,8 @@ const sendToApiAuth = async (url, params = {}) => {
 
   try {
     const r = await _sendToApi(url, { ...params, token })
+    if (r.status === 204) return { data: {} }
+
     const data = await r.json()
     if (r.status === 403 && data.detail === 'invalid_token') {
       Actions.authUnset(store.dispatch)
