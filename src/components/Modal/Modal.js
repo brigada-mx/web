@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
+import ReactGA from 'react-ga'
+
 import Styles from './Modal.css'
 
 
@@ -9,6 +11,7 @@ const modalRoot = document.getElementById('modal')
 
 class Modal extends React.Component {
   componentDidMount() {
+    ReactGA.modalview(`${window.location.pathname}/_/${this.props.gaName || ''}`)
     document.addEventListener('keydown', this.handleKeyDown)
   }
 
@@ -38,6 +41,7 @@ Modal.propTypes = {
   children: PropTypes.any,
   onClose: PropTypes.func.isRequired,
   className: PropTypes.string,
+  gaName: PropTypes.string,
 }
 
 export default Modal

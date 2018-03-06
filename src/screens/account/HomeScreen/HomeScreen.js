@@ -171,7 +171,7 @@ class HomeScreen extends React.Component {
         }
 
         {submissionId !== undefined &&
-          <Modal className={Styles.modal} onClose={this.handleModalClose}>
+          <Modal className={Styles.modal} onClose={this.handleModalClose} gaName={`submission/${submissionId}`}>
             <SubmissionForm submissionId={submissionId} />
           </Modal>
         }

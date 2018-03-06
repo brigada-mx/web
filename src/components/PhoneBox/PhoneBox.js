@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { fireGaEvent } from 'tools/other'
 import { phoneLink } from 'tools/string'
 import Styles from './PhoneBox.css'
 
@@ -14,6 +15,7 @@ class PhoneBox extends React.Component {
   }
 
   toggle = () => {
+    if (this.state.focused === false) fireGaEvent('phone')
     this.setState({ focused: !this.state.focused })
   }
 
@@ -36,6 +38,7 @@ class PhoneBox extends React.Component {
         target="_blank"
         className={`${Styles.box} ${Styles.phone}`}
         href={phoneLink(phone)}
+        onClick={() => fireGaEvent('phone')}
       />
     )
   }

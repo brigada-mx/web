@@ -11,7 +11,7 @@ import PhoneBox from 'components/PhoneBox'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { addProtocol, emailLink, fmtBudget } from 'tools/string'
-import { fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
+import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
 import { sectorByValue } from 'src/choices'
 import OrganizationBreadcrumb from './OrganizationBreadcrumb'
 import Styles from './OrganizationScreenView.css'
@@ -196,7 +196,13 @@ class OrganizationScreenView extends React.Component {
                     <span className={Styles.fieldLabel}>WEB</span>
                     {website &&
                       <span className={`${Styles.fieldValue} ${Styles.ellipsis}`}>
-                        <a target="_blank" href={addProtocol(website)}>{website}</a>
+                        <a
+                          target="_blank"
+                          href={addProtocol(website)}
+                          onClick={() => fireGaEvent('website')}
+                        >
+                          {website}
+                        </a>
                       </span>
                     }
                     {!website && <span className={Styles.fieldValue}>No disponible</span>}
@@ -242,6 +248,7 @@ class OrganizationScreenView extends React.Component {
                         target="_blank"
                         className={`${Styles.button} ${Styles.website}`}
                         href={addProtocol(website)}
+                        onClick={() => fireGaEvent('website')}
                       />
                     }
                     {phone && <PhoneBox phone={phone} />}
@@ -250,6 +257,7 @@ class OrganizationScreenView extends React.Component {
                         target="_blank"
                         className={`${Styles.button} ${Styles.email}`}
                         href={emailLink(email)}
+                        onClick={() => fireGaEvent('email')}
                       />
                     }
                   </div>

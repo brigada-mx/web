@@ -158,7 +158,7 @@ class ActionScreen extends React.Component {
         }
 
         {submissionId !== undefined &&
-          <Modal className={Styles.modal} onClose={this.handleModalClose}>
+          <Modal className={Styles.modal} onClose={this.handleModalClose} gaName={`submission/${submissionId}`}>
             <SubmissionForm submissionId={submissionId} />
           </Modal>
         }
@@ -194,7 +194,7 @@ const mapStateToProps = (state, props) => {
 
   try {
     action = prepareInitialActionValues(state.getter[`accountAction_${actionKey}`].data || {})
-    donations.donations = action.donations.map((d) => prepareInitialDonationValues(d))
+    donations.donations = action.donations.map(d => prepareInitialDonationValues(d))
   } catch (e) {}
   try {
     donors = state.getter.donors.data.results || []

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import Swiper from 'react-id-swiper'
+import ReactGA from 'react-ga'
 import '!style-loader!css-loader!swiper/dist/css/swiper.css'
 
 import * as Actions from 'src/actions'
@@ -17,7 +18,9 @@ const maxMetersGroupSubmissions = 50
 
 class CarouselContainer extends React.Component {
   componentDidMount() {
-    getBackoff(() => service.getAction(this.props.actionId), { onResponse: this.handleResponse })
+    const { actionId } = this.props
+    ReactGA.modalview(`${window.location.pathname}/_/carousel/${actionId}`)
+    getBackoff(() => service.getAction(actionId), { onResponse: this.handleResponse })
   }
 
   componentWillUpdate(nextProps) {

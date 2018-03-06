@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 
+import ReactGA from 'react-ga'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
@@ -59,11 +60,20 @@ const rootReducer = (state, action) => {
 const initialStore = { auth: JSON.parse(localStorage.getItem('719s:auth')) || {} }
 const store = createStore(rootReducer, initialStore)
 
+ReactGA.initialize('UA-108487748-1')
+
+const gaLogPageView = () => {
+  ReactGA.set({ page: window.location.pathname })
+  ReactGA.pageview(window.location.pathname)
+  return null
+}
+
 const App = () => {
   return (
     <Provider store={store}>
       <Router>
         <div>
+          <Route path="/" component={gaLogPageView} />
           <Route exact path="/" component={Nav} />
           <Route path="/(comunidades|organizaciones|nosotros)" component={Nav} />
 

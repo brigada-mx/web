@@ -1,4 +1,5 @@
 import moment from 'moment'
+import ReactGA from 'react-ga';
 
 import Colors from 'src/colors'
 
@@ -133,4 +134,11 @@ export const flattenObject = (obj) => {
     }
   }
   return toReturn
+}
+
+export const fireGaEvent = (category, action = null) => {
+  ReactGA.event({
+    category,
+    action: action || window.location.pathname,
+  })
 }
