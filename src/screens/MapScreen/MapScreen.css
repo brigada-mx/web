@@ -116,16 +116,15 @@
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .search {
-    top: 1.75vh;
     right: 12.5%;
   }
   .container {
-    height: 65vh;
+    height: calc(100% - 283px);
   }
   .listContainer {
     display: flex;
     flex-direction: row;
-    height: 19vh;
+    height: 152px;
     align-items: center;
   }
 }
