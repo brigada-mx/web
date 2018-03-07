@@ -57,7 +57,7 @@ div .Select .Select-control:hover {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.Select-control div.Select-value:not(:first-child) {
+.Select-control div.Select-value:not(:first-of-type) {
   display: none;
 }
 

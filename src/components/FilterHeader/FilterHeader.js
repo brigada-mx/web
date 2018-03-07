@@ -74,9 +74,9 @@ const FilterHeader = (props) => {
     if (index > 0) return null
     if (length > 1) return (
       <div className="many">
-        <span>Estado</span>
-        <span>·</span>
-        <span>{length}</span>
+        <span className="placeholder">Estado</span>
+        <span className="divider">·</span>
+        <span className="count">{length}</span>
       </div>
     )
     return <span className="one">{label}</span>
