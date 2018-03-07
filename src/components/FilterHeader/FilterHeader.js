@@ -82,7 +82,7 @@ const FilterHeader = (props) => {
     return <span className="one">{label}</span>
   }
 
-  const selectsLarge = (className) => {
+  const selectsLarge = () => {
     return (
       <React.Fragment>
         <Select
@@ -92,7 +92,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={className}
+          className={`${Styles.filter} ${Styles.stateFilter}`}
           value={valState}
           placeholder="Estado"
           onChange={onStateChange}
@@ -106,7 +106,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={className}
+          className={`${Styles.filter} ${Styles.muniFilter}`}
           value={valMuni}
           placeholder="Municipio"
           onChange={onMuniChange}
@@ -119,7 +119,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={className}
+          className={`${Styles.filter} ${Styles.margFilter}`}
           value={valMarg}
           placeholder="Marginación social"
           onChange={onMargChange}
@@ -137,7 +137,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={className}
+          className={`${Styles.filter} ${Styles.totalFilter}`}
           value={valNumActions}
           placeholder="Total de proyectos"
           onChange={onNumActionsChange}
@@ -155,7 +155,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={className}
+          className={`${Styles.filter} ${Styles.sectorFilter}`}
           value={valSector}
           placeholder="Sector"
           onChange={onSectorChange}
@@ -173,7 +173,7 @@ const FilterHeader = (props) => {
           clearable={false}
           closeOnSelect={false}
           removeSelected={false}
-          className={className}
+          className={`${Styles.filter} ${Styles.typeFilter}`}
           value={valActionType}
           placeholder="Tipo de proyecto"
           onChange={onActionTypeChange}
@@ -183,7 +183,7 @@ const FilterHeader = (props) => {
     )
   }
 
-  const selectsSmall = (className) => {
+  const selectsSmall = () => {
     return (
       <React.Fragment>
         {valMarg &&
@@ -198,7 +198,7 @@ const FilterHeader = (props) => {
               closeOnSelect={false}
               removeSelected={false}
               searchable={false}
-              className={className}
+              className={`${Styles.filter} ${Styles.margFilter}`}
               value={valMarg}
               placeholder=""
               onChange={onMargChange}
@@ -221,7 +221,7 @@ const FilterHeader = (props) => {
               closeOnSelect={false}
               removeSelected={false}
               searchable={false}
-              className={className}
+              className={`${Styles.filter} ${Styles.totalFilter}`}
               value={valNumActions}
               placeholder=""
               onChange={onNumActionsChange}
@@ -246,7 +246,7 @@ const FilterHeader = (props) => {
               closeOnSelect={false}
               removeSelected={false}
               searchable={false}
-              className={className}
+              className={`${Styles.filter} ${Styles.sectorFilter}`}
               value={valSector}
               placeholder=""
               onChange={onSectorChange}
@@ -269,7 +269,7 @@ const FilterHeader = (props) => {
               closeOnSelect={false}
               removeSelected={false}
               searchable={false}
-              className={className}
+              className={`${Styles.filter} ${Styles.typeFilter}`}
               value={valActionType}
               placeholder=""
               onChange={onActionTypeChange}
@@ -286,7 +286,7 @@ const FilterHeader = (props) => {
           closeOnSelect={false}
           removeSelected={false}
           searchable={false}
-          className={className}
+          className={`${Styles.filter} ${Styles.stateFilter}`}
           value={valState}
           placeholder=""
           onChange={onStateChange}
@@ -300,7 +300,7 @@ const FilterHeader = (props) => {
           closeOnSelect={false}
           removeSelected={false}
           searchable={false}
-          className={className}
+          className={`${Styles.filter} ${Styles.muniFilter}`}
           value={valMuni}
           placeholder=""
           onChange={onMuniChange}
@@ -313,10 +313,10 @@ const FilterHeader = (props) => {
   return (
     <React.Fragment>
       <div style={style} className={`${Styles.container} sm-hidden xs-hidden`}>
-        {selectsLarge(Styles.filter)}
+        {selectsLarge()}
       </div>
       <div style={style} className={`${Styles.container} lg-hidden md-hidden wrapper-sm wrapper-xs`}>
-        {selectsSmall(Styles.filter)}
+        {selectsSmall()}
       </div>
     </React.Fragment>
   )

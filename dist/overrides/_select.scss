@@ -3,6 +3,8 @@
 .Select .Select-control {
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 div .Select .Select-control:hover {
@@ -15,6 +17,10 @@ div .Select .Select-control:hover {
   color: #141418;
   letter-spacing: 0.6px;
   padding-left: 0px;
+}
+
+.Select-control .Select-arrow-zone {
+  margin-bottom: 1px;
 }
 
 .Select-arrow-zone .Select-arrow {
@@ -44,6 +50,8 @@ div .Select .Select-control:hover {
 }
 
 .Select-control div.Select-value {
+  display: flex;
+  align-items: center;
   background-color: #3DC59F;
   border: none;
   color: white;
@@ -52,7 +60,7 @@ div .Select .Select-control:hover {
   font-size: 15px;
   letter-spacing: 0.6px;
   max-width: 90%;
-  margin: 0 5px 5px 0;
+  margin: 0 0 5px 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -61,13 +69,14 @@ div .Select .Select-control:hover {
   display: none;
 }
 
-.Select .Select-multi-value-wrapper {
-  width: 100%;
+.Select.Select--multi .Select-multi-value-wrapper {
+  width: 96%;
   padding-left: 3px;
+  display: flex;
 }
 
 .Select .Select-value .Select-value-label {
-  max-width: 80%;
+  max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -81,6 +90,10 @@ div .Select .Select-control:hover {
 .Select .Select-option {
   padding: 1px 25px 1px 54px;
   text-indent: -29px;
+}
+
+div.Select-value span.Select-value-icon {
+  padding: 0 5px;
 }
 
 div.Select-value span.Select-value-icon:hover {
