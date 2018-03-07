@@ -26,7 +26,9 @@ class OrganizationList extends React.PureComponent {
 
   render() {
     const { organizations, onScroll, focusedId, ...rest } = this.props
-    const items = organizations.map((o) => {
+    const items = organizations.filter(
+      o => o.action_count > 0 || Object.keys(o.contact).length > 0
+    ).map((o) => {
       const { id } = o
 
       return (
