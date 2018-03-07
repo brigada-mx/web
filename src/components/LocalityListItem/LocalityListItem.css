@@ -134,7 +134,7 @@
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .listItem {
     width: 332px;
-    height: 126px;
+    height: 17vh;
     margin: 0px 0px 0px 12px;
     border-left: unset;
     border-bottom: 2px solid #939aa1;
@@ -163,7 +163,7 @@
     padding: 12px 25px 13px 20px;
   }
   .listItemMetricsContainer {
-    margin-top: 5px;
+    margin-top: 0px;
   }
   .listItemMetrics {
     justify-content: space-between;

@@ -99,7 +99,7 @@
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .container {
-    height: 58px;
+    height: 7vh;
     width: 80%;
     flex-direction: row;
     justify-content: flex-end;
