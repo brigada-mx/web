@@ -51,10 +51,14 @@ div .Select .Select-control:hover {
   font-family: 'nunito-sans', sans-serif;
   font-size: 15px;
   letter-spacing: 0.6px;
-  max-width: 80%;
+  max-width: 90%;
   margin: 0 5px 5px 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.Select-control div.Select-value:not(:first-child) {
+  display: none;
 }
 
 .Select .Select-multi-value-wrapper {

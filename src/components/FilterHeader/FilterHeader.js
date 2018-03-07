@@ -70,6 +70,18 @@ const FilterHeader = (props) => {
     })
   }
 
+  const renderValue = (label, index, length) => {
+    if (index > 0) return null
+    if (length > 1) return (
+      <div className="many">
+        <span>Estado</span>
+        <span>·</span>
+        <span>{length}</span>
+      </div>
+    )
+    return <span className="one">{label}</span>
+  }
+
   const selectsLarge = (className) => {
     return (
       <React.Fragment>
@@ -85,6 +97,7 @@ const FilterHeader = (props) => {
           placeholder="Estado"
           onChange={onStateChange}
           options={stateOptions()}
+          valueRenderer={({ label }, index) => renderValue(label, index, valState.length)}
         />
 
         <Select

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
+import ReactGA from 'react-ga'
 import { withRouter, Link } from 'react-router-dom'
 import AppBar from 'material-ui/AppBar'
 import IconMenu from 'material-ui/IconMenu'
@@ -39,7 +40,7 @@ const AccountNav = ({ history, location, onLogout, token, orgId }) => {
   const menu = (
     <React.Fragment>
       <FlatButton
-        containerElement={<Link to={env.surveyUrl} target="_blank" />}
+        containerElement={<ReactGA.OutboundLink eventLabel="survey" to={env.surveyUrl} target="_blank" />}
         label="Subir Fotos"
       />
       <FlatButton
