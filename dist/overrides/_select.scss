@@ -74,9 +74,18 @@ div .Select .Select-control:hover {
   padding: 5px 7px 4px 7px;
 }
 
+.Select-value-label .divider {
+  margin: 0 5px 0 4px;
+}
+
 .Select .Select-option {
   padding: 1px 25px 1px 54px;
   text-indent: -29px;
+}
+
+div.Select-value span.Select-value-icon:hover {
+  color: #D8F3EB;
+  background-color: unset;
 }
 
 .Select .Select-option:first-of-type {
@@ -179,3 +188,4 @@ div .Select .Select-control:hover {
     padding: 9px 0px 9px 44px;
   }
 }
+
