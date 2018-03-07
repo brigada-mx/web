@@ -5,6 +5,7 @@ import _ from 'lodash'
 import Select from 'react-select'
 import '!style-loader!css-loader!react-select/dist/react-select.css'
 
+import MultiSelect from 'components/MultiSelect'
 import { projectTypeByValue } from 'src/choices'
 import Styles from './FilterHeader.css'
 
@@ -70,22 +71,10 @@ const FilterHeader = (props) => {
     })
   }
 
-  const renderValue = (label, index, length) => {
-    if (index > 0) return null
-    if (length > 1) return (
-      <div className="many">
-        <span className="placeholder">Estado</span>
-        <span className="divider">·</span>
-        <span className="count">{length}</span>
-      </div>
-    )
-    return <span className="one">{label}</span>
-  }
-
   const selectsLarge = (className) => {
     return (
       <React.Fragment>
-        <Select
+        <MultiSelect
           multi
           joinValues
           noResultsText="Cero resultados"
@@ -95,12 +84,12 @@ const FilterHeader = (props) => {
           className={className}
           value={valState}
           placeholder="Estado"
+          multiLabel="Estado"
           onChange={onStateChange}
           options={stateOptions()}
-          valueRenderer={({ label }, index) => renderValue(label, index, valState.length)}
         />
 
-        <Select
+        <MultiSelect
           multi
           noResultsText="Cero resultados"
           clearable={false}
@@ -109,11 +98,12 @@ const FilterHeader = (props) => {
           className={className}
           value={valMuni}
           placeholder="Municipio"
+          multiLabel="Municipio"
           onChange={onMuniChange}
           options={muniOptions()}
         />
 
-        {valMarg && <Select
+        {valMarg && <MultiSelect
           multi
           noResultsText="Cero resultados"
           clearable={false}
@@ -122,6 +112,7 @@ const FilterHeader = (props) => {
           className={className}
           value={valMarg}
           placeholder="Marginación social"
+          multiLabel="Marginación"
           onChange={onMargChange}
           options={[
             { value: 'muy_alto', label: 'Muy alta' },
@@ -131,7 +122,7 @@ const FilterHeader = (props) => {
           ]}
         />}
 
-        {valNumActions && <Select
+        {valNumActions && <MultiSelect
           multi
           noResultsText="Cero resultados"
           clearable={false}
@@ -140,6 +131,7 @@ const FilterHeader = (props) => {
           className={className}
           value={valNumActions}
           placeholder="Total de proyectos"
+          multiLabel="Proyectos"
           onChange={onNumActionsChange}
           options={[
             { value: '0', label: '0' },
@@ -149,7 +141,7 @@ const FilterHeader = (props) => {
           ]}
         />}
 
-        {valSector && <Select
+        {valSector && <MultiSelect
           multi
           noResultsText="Cero resultados"
           clearable={false}
@@ -158,6 +150,7 @@ const FilterHeader = (props) => {
           className={className}
           value={valSector}
           placeholder="Sector"
+          multiLabel="Sector"
           onChange={onSectorChange}
           options={[
             { value: 'civil', label: 'Civil' },
@@ -167,7 +160,7 @@ const FilterHeader = (props) => {
           ]}
         />}
 
-        {(valActionType && actions) && <Select
+        {(valActionType && actions) && <MultiSelect
           multi
           noResultsText="Cero resultados"
           clearable={false}
@@ -176,6 +169,7 @@ const FilterHeader = (props) => {
           className={className}
           value={valActionType}
           placeholder="Tipo de proyecto"
+          multiLabel="Tipo"
           onChange={onActionTypeChange}
           options={actionTypeOptions()}
         />}
