@@ -15,8 +15,32 @@
 }
 
 .filter {
-  min-width: 12vw;
-  margin-right: 32px;
+  margin-right: 22px;
+  max-width: 16vw;
+}
+
+.stateFilter {
+  min-width: 68px;
+}
+
+.muniFilter {
+  min-width: 88px;
+}
+
+.margFilter {
+  min-width: 157px;
+}
+
+.totalFilter {
+  min-width: 152px;
+}
+
+.sectorFilter {
+  min-width: 68px;
+}
+
+.typeFilter {
+  min-width: 140px;
 }
 
 .title {

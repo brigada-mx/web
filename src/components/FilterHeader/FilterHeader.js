@@ -79,7 +79,7 @@ class FilterHeader extends React.Component {
       })
     }
 
-    const selectsLarge = (className) => {
+    const selectsLarge = () => {
       return (
         <React.Fragment>
           <MultiSelect
@@ -89,7 +89,7 @@ class FilterHeader extends React.Component {
             clearable={false}
             closeOnSelect={false}
             removeSelected={false}
-            className={className}
+            className={`${Styles.filter} ${Styles.stateFilter}`}
             value={valState}
             placeholder="Estado"
             multiLabel="Estado"
@@ -103,7 +103,7 @@ class FilterHeader extends React.Component {
             clearable={false}
             closeOnSelect={false}
             removeSelected={false}
-            className={className}
+            className={`${Styles.filter} ${Styles.muniFilter}`}
             value={valMuni}
             placeholder="Municipio"
             multiLabel="Municipio"
@@ -117,7 +117,7 @@ class FilterHeader extends React.Component {
             clearable={false}
             closeOnSelect={false}
             removeSelected={false}
-            className={className}
+            className={`${Styles.filter} ${Styles.margFilter}`}
             value={valMarg}
             placeholder="Marginación social"
             multiLabel="Marginación"
@@ -136,7 +136,7 @@ class FilterHeader extends React.Component {
             clearable={false}
             closeOnSelect={false}
             removeSelected={false}
-            className={className}
+            className={`${Styles.filter} ${Styles.totalFilter}`}
             value={valNumActions}
             placeholder="Total de proyectos"
             multiLabel="Proyectos"
@@ -155,7 +155,7 @@ class FilterHeader extends React.Component {
             clearable={false}
             closeOnSelect={false}
             removeSelected={false}
-            className={className}
+            className={`${Styles.filter} ${Styles.sectorFilter}`}
             value={valSector}
             placeholder="Sector"
             multiLabel="Sector"
@@ -174,7 +174,7 @@ class FilterHeader extends React.Component {
             clearable={false}
             closeOnSelect={false}
             removeSelected={false}
-            className={className}
+            className={`${Styles.filter} ${Styles.typeFilter}`}
             value={valActionType}
             placeholder="Tipo de proyecto"
             multiLabel="Tipo"
@@ -185,7 +185,7 @@ class FilterHeader extends React.Component {
       )
     }
 
-    const selectsSmall = (className) => {
+    const selectsSmall = () => {
       return (
         <React.Fragment>
           {valMarg &&
@@ -200,7 +200,7 @@ class FilterHeader extends React.Component {
                 closeOnSelect={false}
                 removeSelected={false}
                 searchable={false}
-                className={className}
+                className={Styles.filter}
                 value={valMarg}
                 placeholder=""
                 onChange={onMargChange}
@@ -223,7 +223,7 @@ class FilterHeader extends React.Component {
                 closeOnSelect={false}
                 removeSelected={false}
                 searchable={false}
-                className={className}
+                className={Styles.filter}
                 value={valNumActions}
                 placeholder=""
                 onChange={onNumActionsChange}
@@ -248,7 +248,7 @@ class FilterHeader extends React.Component {
                 closeOnSelect={false}
                 removeSelected={false}
                 searchable={false}
-                className={className}
+                className={Styles.filter}
                 value={valSector}
                 placeholder=""
                 onChange={onSectorChange}
@@ -271,7 +271,7 @@ class FilterHeader extends React.Component {
                 closeOnSelect={false}
                 removeSelected={false}
                 searchable={false}
-                className={className}
+                className={Styles.filter}
                 value={valActionType}
                 placeholder=""
                 onChange={onActionTypeChange}
@@ -288,7 +288,7 @@ class FilterHeader extends React.Component {
             closeOnSelect={false}
             removeSelected={false}
             searchable={false}
-            className={className}
+            className={Styles.filter}
             value={valState}
             placeholder=""
             onChange={onStateChange}
@@ -302,7 +302,7 @@ class FilterHeader extends React.Component {
             closeOnSelect={false}
             removeSelected={false}
             searchable={false}
-            className={className}
+            className={Styles.filter}
             value={valMuni}
             placeholder=""
             onChange={onMuniChange}
@@ -315,10 +315,10 @@ class FilterHeader extends React.Component {
     return (
       <React.Fragment>
         <div style={style} className={`${Styles.container} sm-hidden xs-hidden`}>
-          {selectsLarge(Styles.filter)}
+          {selectsLarge()}
         </div>
         <div style={style} className={`${Styles.container} lg-hidden md-hidden wrapper-sm wrapper-xs`}>
-          {selectsSmall(Styles.filter)}
+          {selectsSmall()}
         </div>
       </React.Fragment>
     )
