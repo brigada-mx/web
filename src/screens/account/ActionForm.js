@@ -7,7 +7,7 @@ import MenuItem from 'material-ui/MenuItem'
 import AutoCompleteMui from 'material-ui/AutoComplete'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import { TextField, SelectField, Checkbox, DatePicker, AutoComplete } from 'components/Fields'
+import { TextField, SelectField, Toggle, DatePicker, AutoComplete } from 'components/Fields'
 import { projectTypes } from 'src/choices'
 import FormStyles from 'screens/account/Form.css'
 
@@ -112,7 +112,7 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
         />
       </div>
       <div>
-        <Checkbox
+        <Toggle
           label="¿Publicado?"
           name="published"
         />

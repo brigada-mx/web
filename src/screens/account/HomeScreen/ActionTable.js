@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ReactTable from 'react-table'
-import Checkbox from 'material-ui/Checkbox'
+import Toggle from 'material-ui/Toggle'
 import { withRouter } from 'react-router-dom'
 import '!style-loader!css-loader!react-table/react-table.css'
 
@@ -21,24 +21,12 @@ const defaultFilterMethod = (filter, row) => {
 const ActionTable = ({ actions, onTogglePublished, history }) => {
   const columns = [
     {
-      Header: 'Publicado',
-      accessor: 'published',
-      Cell: props => (<Checkbox
-        checked={props.original.published}
-        onCheck={(e, checked) => onTogglePublished(props.original.id, props.original.key, checked)}
-      />),
-    },
-    {
       Header: 'Clave',
       accessor: 'key',
     },
     {
       Header: 'Localidad',
       accessor: 'locality.name',
-    },
-    {
-      Header: 'Descripción',
-      accessor: 'desc',
     },
     {
       Header: 'Tipo',
@@ -54,8 +42,20 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
       accessor: 'unit_of_measurement',
     },
     {
+      Header: 'Presupuesto',
+      accessor: 'budget',
+    },
+    {
       Header: 'Inicio',
       accessor: 'start_date',
+    },
+    {
+      Header: '¿Publicar?',
+      accessor: 'published',
+      Cell: props => (<Toggle
+        toggled={props.original.published}
+        onToggle={(e, toggled) => onTogglePublished(props.original.id, props.original.key, toggled)}
+      />),
     },
   ]
 

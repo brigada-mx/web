@@ -8,6 +8,7 @@ import {
   Checkbox as CheckboxInput,
   DatePicker as DatePickerInput,
   AutoComplete as AutoCompleteInput,
+  Toggle as ToggleInput,
 } from 'redux-form-material-ui'
 
 import Styles from 'screens/account/Form.css'
@@ -23,6 +24,7 @@ const fieldOf = (inputComponent) => {
 const TextField = fieldOf(TextInput)
 const SelectField = fieldOf(SelectInput)
 const Checkbox = fieldOf(CheckboxInput)
+const Toggle = fieldOf(ToggleInput)
 const DatePicker = fieldOf(DatePickerInput)
 const AutoComplete = fieldOf(AutoCompleteInput)
-export { TextField, SelectField, Checkbox, DatePicker, AutoComplete }
+export { TextField, SelectField, Checkbox, Toggle, DatePicker, AutoComplete }

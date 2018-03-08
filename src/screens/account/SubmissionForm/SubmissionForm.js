@@ -10,7 +10,7 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { projectTypeByValue } from 'src/choices'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import { TextField, Checkbox, SelectField } from 'components/Fields'
+import { TextField, Toggle, SelectField } from 'components/Fields'
 import { thumborUrl } from 'tools/string'
 import FormStyles from 'screens/account/Form.css'
 import Styles from './SubmissionForm.css'
@@ -44,7 +44,7 @@ const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
         />
       </div>
       <div>
-        <Checkbox
+        <Toggle
           label="¿Publicado?"
           name="published"
         />

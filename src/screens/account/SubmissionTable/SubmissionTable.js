@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 import ReactTable from 'react-table'
-import Checkbox from 'material-ui/Checkbox'
+import Toggle from 'material-ui/Toggle'
 import '!style-loader!css-loader!react-table/react-table.css'
 
 import { tokenMatch, thumborUrl } from 'tools/string'
@@ -44,11 +44,11 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
       Cell: props => <span>{moment(props.original.submitted).format('h:mma, DD MMMM YYYY')}</span>,
     },
     {
-      Header: 'Publicada',
+      Header: '¿Publicar?',
       accessor: 'published',
-      Cell: props => (<Checkbox
-        checked={props.original.published}
-        onCheck={(e, checked) => onTogglePublished(props.original.id, checked)}
+      Cell: props => (<Toggle
+        toggled={props.original.published}
+        onToggle={(e, toggled) => onTogglePublished(props.original.id, toggled)}
       />),
     },
   ]
