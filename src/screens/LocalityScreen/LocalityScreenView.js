@@ -53,7 +53,7 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
           }
         />
         <CartesianGrid vertical={false} stroke="#E4E7EB" horizontalPoints={[0, 26, 52, 78, 104]} />
-        <Bar dataKey="num" fill={Colors.brandGreen} isAnimationActive={false} >
+        <Bar dataKey="num" fill="#3DC59F" isAnimationActive={false} >
           <LabelList
             dataKey="num"
             position="insideTop"

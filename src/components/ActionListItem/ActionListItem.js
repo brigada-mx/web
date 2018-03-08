@@ -30,8 +30,7 @@ class ActionListItem extends React.PureComponent {
       if (!target) return null
       return (
         <div className={Styles.goalProgress}>
-          <span className={Styles.label}>{fmtNum(progress)} DE {fmtNum(target)}</span>
-          {unit && <span className={Styles.label}>{unit}</span>}
+          <span className={Styles.label}>{fmtNum(progress)} DE {fmtNum(target)} {unit && <span>{unit}</span>}</span>
           <span className={Styles.bar}><MetricsBar value={progress} max={target} /></span>
         </div>
       )
