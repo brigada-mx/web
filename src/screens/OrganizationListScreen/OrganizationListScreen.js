@@ -1,7 +1,6 @@
 import React from 'react'
 
 import service, { getBackoffComponent } from 'api/service'
-import { dmgGrade } from 'tools/other'
 import OrganizationListScreenView from './OrganizationListScreenView'
 
 
@@ -9,10 +8,6 @@ class OrganizationListScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      localityById: {},
-      localities: {
-        loading: true,
-      },
       organizations: {
         loading: true,
       },
@@ -32,15 +27,6 @@ class OrganizationListScreen extends React.Component {
         }
         result.actionCvegeos = actionCvegeos
       }
-    })
-    getBackoffComponent(this, 'localities', service.getLocalities, ({ data }) => {
-      if (!data) return
-      const localityById = {}
-      for (const result of data.results) {
-        result.dmgGrade = dmgGrade(result)
-        localityById[result.id] = result
-      }
-      this.setState({ localityById })
     })
   }
 

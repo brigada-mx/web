@@ -46,6 +46,7 @@ const Donations = ({ fields, donorsSearch }) => { // eslint-disable-line react/p
               floatingLabelText="Donador"
               name={`${donation}.donor`}
               dataSource={donors}
+              fullWidth
               filter={AutoCompleteMui.fuzzyFilter}
               format={formatAutoComplete}
               normalize={normalizeAutoComplete}

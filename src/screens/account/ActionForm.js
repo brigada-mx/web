@@ -48,6 +48,7 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
           className={FormStyles.wideInput}
           floatingLabelText="Localidad"
           name="locality"
+          fullWidth
           onChange={onLocalityChange}
           dataSource={localities}
           filter={AutoCompleteMui.noFilter}
