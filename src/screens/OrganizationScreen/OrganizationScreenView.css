@@ -323,7 +323,12 @@
   }
   .summaryContainer {
     padding: 0 16px;
-    margin-bottom: 22px;
+    margin-bottom: 0px;
+    justify-content: unset;
+    flex-wrap: wrap;
+  }
+  .fieldContainer {
+    margin: 0 40px 22px 0;
   }
   .mission {
     padding: 0 16px;

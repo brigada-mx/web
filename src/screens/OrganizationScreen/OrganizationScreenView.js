@@ -190,7 +190,7 @@ class OrganizationScreenView extends React.Component {
               <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.name}>{name}</div>
               </div>
-              <div className="col-lg-8 col-md-9 col-sm-5 col-xs-4 gutter">
+              <div className="col-lg-8 col-md-9 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.summaryContainer}>
                   <div className={Styles.fieldContainer}>
                     <span className={Styles.fieldLabel}>WEB</span>
@@ -262,7 +262,7 @@ class OrganizationScreenView extends React.Component {
                     }
                   </div>
                 </div>
-                <div className="col-lg-12 col-md-12 col-sm-2 col-xs-4 gutter">
+                <div className="col-lg-12 col-md-12 col-sm-3 col-xs-4 gutter">
                   <div className={Styles.hq}>
                     <p className={Styles.subtitle}>¿Dónde estamos?</p>
                     {address && this.renderAddress(address)}
