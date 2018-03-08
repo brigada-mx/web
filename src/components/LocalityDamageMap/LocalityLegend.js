@@ -12,6 +12,7 @@ const LocalityLegend = ({ className = '', localities, legendTitle }) => {
     high: 0,
     medium: 0,
     low: 0,
+    unknown: 0,
   }
 
   for (const l of localities) {
@@ -29,6 +30,7 @@ const LocalityLegend = ({ className = '', localities, legendTitle }) => {
       </div>
     )
   })
+  if (counts.unknown === 0) items.pop()
 
   return (
     <div className={Styles.container}>

@@ -15,7 +15,7 @@ import LocalityLegend from 'components/LocalityDamageMap/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
 import { localStorage } from 'tools/storage'
-import { fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
+import { fitBoundsFromCoords, itemFromScrollEvent, dmgGrade } from 'tools/other'
 import Styles from './OrganizationListScreenView.css'
 
 
@@ -131,7 +131,7 @@ class OrganizationListScreenView extends React.Component {
   }
 
   handleEnterFeature = (feature) => {
-    const locality = this.props.localityById[feature.properties.id]
+    const locality = JSON.parse(feature.properties.locality) || {}
     this.setState({ popup: { locality, organization: this.state.focused } })
   }
 
@@ -191,14 +191,9 @@ class OrganizationListScreenView extends React.Component {
   getLocalityFeatures = (organization) => {
     const localities = []
     const features = organization.actions.map((action) => {
-      const { location: { lat, lng }, cvegeo, id } = action.locality
-      const locality = this.props.localityById[id]
-      let total = -1
-
-      if (locality) {
-        ({ total } = locality.meta)
-        localities.push(locality)
-      }
+      const { locality } = action
+      const { location: { lat, lng }, cvegeo, id, meta: { total = -1 } } = locality
+      localities.push(locality)
 
       return {
         type: 'Feature',
@@ -217,13 +212,25 @@ class OrganizationListScreenView extends React.Component {
     return { localities, features }
   }
 
+  getLocalitiesFromOrgs = (organizations) => {
+    try {
+      const localitiesPerOrg = organizations.data.results.map((o) => {
+        return o.actions.map((a) => {
+          const { locality } = a
+          locality.dmgGrade = dmgGrade(locality)
+          return locality
+        })
+      })
+      return [].concat(...localitiesPerOrg)
+    } catch (e) {
+      return []
+    }
+  }
+
   render() {
-    const {
-      localities: { data: locData, loading: locLoading, error: locError },
-      organizations: { data: orgData, loading: orgLoading, error: orgError },
-    } = this.props
-    const { popup, focused, filtersVisible } = this.state
+    const { organizations: { data: orgData, loading: orgLoading, error: orgError } } = this.props
     const { valState, valMuni, valSector, valActionType } = this.props
+    const { popup, focused, filtersVisible } = this.state
 
     const organizations = this.filterOrganizations(orgData ? orgData.results : [])
     let [_focused] = organizations
@@ -237,7 +244,7 @@ class OrganizationListScreenView extends React.Component {
       return (
         <FilterHeader
           style={style}
-          localities={locData ? locData.results : []}
+          localities={this.getLocalitiesFromOrgs(this.props.organizations)}
           actions={orgData ? [].concat(...orgData.results.map(o => o.actions)) : []}
           onStateChange={this.handleStateChange}
           onMuniChange={this.handleMuniChange}
@@ -325,8 +332,6 @@ class OrganizationListScreenView extends React.Component {
 
 OrganizationListScreenView.propTypes = {
   history: PropTypes.object.isRequired,
-  localityById: PropTypes.object.isRequired,
-  localities: PropTypes.object.isRequired,
   organizations: PropTypes.object.isRequired,
   valState: PropTypes.array.isRequired,
   valMuni: PropTypes.array.isRequired,
