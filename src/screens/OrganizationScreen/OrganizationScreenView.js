@@ -186,7 +186,7 @@ class OrganizationScreenView extends React.Component {
           <OrganizationBreadcrumb name={name} sector={sector} />
 
           <div className="row">
-            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 sm-gutter col-xs-4 xs-gutter">
+            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
               <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.name}>{name}</div>
               </div>
@@ -239,7 +239,7 @@ class OrganizationScreenView extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-8 sm-gutter col-xs-4 xs-gutter">
+            <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-1 col-sm-8 sm-gutter col-xs-4 xs-gutter">
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-xs-4 center-xs gutter">
                   <div className={Styles.buttonsContainer}>
