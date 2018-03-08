@@ -25,7 +25,8 @@ class HomeScreen extends React.Component {
     super(props)
     this.state = {
       localitiesSearch: [],
-      createAction: false,
+      createActionModal: false,
+      trashModal: false,
     }
 
     this.handleLocalityChange = _.debounce(
@@ -119,12 +120,16 @@ class HomeScreen extends React.Component {
   }
 
   handleToggleCreateActionModal = (open) => {
-    this.setState({ createAction: open })
+    this.setState({ createActionModal: open })
+  }
+
+  handleToggleActionTrashModal = (open) => {
+    this.setState({ trashModal: open })
   }
 
   render() {
     const { actions, submissions } = this.props
-    const { createAction } = this.state
+    const { createActionModal, trashModal } = this.state
 
     return (
       <div>
@@ -143,10 +148,18 @@ class HomeScreen extends React.Component {
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>
             <span>PROYECTOS</span>
-            <RaisedButton
-              label="AGREGAR"
-              onClick={() => this.handleToggleCreateActionModal(true)}
-            />
+            <div>
+              <span
+                className={FormStyles.link}
+                onClick={() => this.handleToggleActionTrashModal(true)}
+              >
+                Basurero
+              </span>
+              <RaisedButton
+                label="AGREGAR"
+                onClick={() => this.handleToggleCreateActionModal(true)}
+              />
+            </div>
           </div>
           {actions.length > 0 &&
             <ActionTable actions={actions} onTogglePublished={this.handleTogglePublished} />
@@ -163,11 +176,11 @@ class HomeScreen extends React.Component {
           </div>
         }
 
-        {createAction &&
+        {createActionModal &&
           <Modal
             className={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
             onClose={() => this.handleToggleCreateActionModal(false)}
-            gaName="createAction"
+            gaName="createActionModal"
           >
             <div className={FormStyles.sectionHeader}>Agregar proyecto</div>
             <CreateActionForm
@@ -176,6 +189,16 @@ class HomeScreen extends React.Component {
               onLocalityChange={this.handleLocalityChange}
               localitiesSearch={this.state.localitiesSearch}
             />
+          </Modal>
+        }
+
+        {trashModal &&
+          <Modal
+            className={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
+            onClose={() => this.handleToggleActionTrashModal(false)}
+            gaName="actionTrashModal"
+          >
+            <div className={FormStyles.sectionHeader}>Proyectos borrados</div>
           </Modal>
         }
       </div>
