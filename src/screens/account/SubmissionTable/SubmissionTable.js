@@ -69,10 +69,10 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
         const { id } = column
         return {
           onClick: (e, handleOriginal) => {
-            if (id !== 'published' && rowInfo) onRowClicked(rowInfo.original.id)
+            if (id !== 'published' && rowInfo && onRowClicked) onRowClicked(rowInfo.original.id)
             if (handleOriginal) handleOriginal()
           },
-          style: id !== 'published' ? { cursor: 'pointer' } : {},
+          style: id !== 'published' && onRowClicked ? { cursor: 'pointer' } : {},
         }
       }}
     />
@@ -82,7 +82,7 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
 SubmissionTable.propTypes = {
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   onTogglePublished: PropTypes.func.isRequired,
-  onRowClicked: PropTypes.func.isRequired,
+  onRowClicked: PropTypes.func,
 }
 
 export default SubmissionTable

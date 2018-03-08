@@ -1,0 +1,6 @@
+@value colors: "src/colors.css";
+@value grey2 from colors;
+
+.key {
+  color: grey2;
+}

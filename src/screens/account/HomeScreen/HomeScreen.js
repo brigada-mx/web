@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { reset } from 'redux-form'
 import { connect } from 'react-redux'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
@@ -11,12 +12,10 @@ import { cleanAccentedChars } from 'tools/string'
 import Modal from 'components/Modal'
 import FormStyles from 'screens/account/Form.css'
 import { CreateActionForm, prepareActionBody } from 'screens/account/ActionForm'
-import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
 import OrganizationForm from './OrganizationForm'
 import ContactForm from './ContactForm'
 import ActionTable from './ActionTable'
-import Styles from './HomeScreen.css'
 
 
 const initialActionValues = { published: true }
@@ -26,7 +25,7 @@ class HomeScreen extends React.Component {
     super(props)
     this.state = {
       localitiesSearch: [],
-      submissionId: undefined,
+      createAction: false,
     }
 
     this.handleLocalityChange = _.debounce(
@@ -84,6 +83,7 @@ class HomeScreen extends React.Component {
     this.props.resetAction()
     this.loadActions()
     this.props.snackbar('Agregaste un nuevo proyecto', 'success')
+    this.handleToggleCreateActionModal(false)
   }
 
   handleLocalityChange = async (e, v) => {
@@ -118,46 +118,40 @@ class HomeScreen extends React.Component {
     this.props.snackbar(message, 'success')
   }
 
-  handleRowClickedSubmission = (id) => {
-    this.setState({ submissionId: id })
-  }
-
-  handleModalClose = async () => {
-    this.setState({ submissionId: undefined })
+  handleToggleCreateActionModal = (open) => {
+    this.setState({ createAction: open })
   }
 
   render() {
     const { actions, submissions } = this.props
-    const { submissionId } = this.state
+    const { createAction } = this.state
 
     return (
       <div>
-        <div className={FormStyles.sectionHeader}>Tu Organización</div>
-        <div className={FormStyles.formContainerLeft}>
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>ORGANIZACIÓN</div>
           <OrganizationForm onSubmit={this.handleSubmitOrganization} enableReinitialize />
         </div>
 
-        <div className={FormStyles.sectionHeader}>Datos de contacto</div>
-        <div className={FormStyles.formContainerLeft}>
-          <ContactForm onSubmit={this.handleSubmitContact} enableReinitialize />
-        </div>
-
-        <div className={FormStyles.sectionHeader}>Agregar proyecto</div>
-        <div className={FormStyles.formContainerLeft}>
-          <CreateActionForm
-            onSubmit={this.handleCreateAction}
-            initialValues={initialActionValues}
-            onLocalityChange={this.handleLocalityChange}
-            localitiesSearch={this.state.localitiesSearch}
-          />
-        </div>
-
-        {actions.length > 0 &&
-          <div className={FormStyles.card}>
-            <div className={FormStyles.sectionHeader}>PROYECTOS</div>
-            <ActionTable actions={actions} onTogglePublished={this.handleTogglePublished} />
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>CONTACTO</div>
+          <div className={FormStyles.formContainerLeft}>
+            <ContactForm onSubmit={this.handleSubmitContact} enableReinitialize />
           </div>
-        }
+        </div>
+
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>
+            <span>PROYECTOS</span>
+            <RaisedButton
+              label="AGREGAR"
+              onClick={() => this.handleToggleCreateActionModal(true)}
+            />
+          </div>
+          {actions.length > 0 &&
+            <ActionTable actions={actions} onTogglePublished={this.handleTogglePublished} />
+          }
+        </div>
 
         {submissions.length > 0 &&
           <div className={FormStyles.card}>
@@ -165,14 +159,23 @@ class HomeScreen extends React.Component {
             <SubmissionTable
               submissions={submissions}
               onTogglePublished={this.handleTogglePublishedSubmission}
-              onRowClicked={this.handleRowClickedSubmission}
             />
           </div>
         }
 
-        {submissionId !== undefined &&
-          <Modal className={Styles.modal} onClose={this.handleModalClose} gaName={`submission/${submissionId}`}>
-            <SubmissionForm submissionId={submissionId} />
+        {createAction &&
+          <Modal
+            className={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
+            onClose={() => this.handleToggleCreateActionModal(false)}
+            gaName="createAction"
+          >
+            <div className={FormStyles.sectionHeader}>Agregar proyecto</div>
+            <CreateActionForm
+              onSubmit={this.handleCreateAction}
+              initialValues={initialActionValues}
+              onLocalityChange={this.handleLocalityChange}
+              localitiesSearch={this.state.localitiesSearch}
+            />
           </Modal>
         }
       </div>

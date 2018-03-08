@@ -15,6 +15,12 @@ const ContactForm = ({ handleSubmit, submitting }) => {
     <React.Fragment>
       <div>
         <TextField
+          floatingLabelText="Persona responsable"
+          name="person_responsible"
+        />
+      </div>
+      <div>
+        <TextField
           floatingLabelText="Email"
           name="email"
           autoCapitalize="off"
@@ -22,10 +28,6 @@ const ContactForm = ({ handleSubmit, submitting }) => {
         <TextField
           floatingLabelText="Teléfono"
           name="phone"
-        />
-        <TextField
-          floatingLabelText="Persona responsable"
-          name="person_responsible"
         />
         <TextField
           floatingLabelText="Sitio web"

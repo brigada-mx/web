@@ -10,10 +10,13 @@
 }
 
 .sectionHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   font-family: 'roboto-600', sans-serif;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  font-size: 22;
+  margin-bottom: 15px;
+  font-size: 23;
 }
 
 .row {
@@ -26,12 +29,16 @@
   visibility: hidden;
 }
 
+.modal {
+  background-color: rgba(255,255,255,0.97);
+  padding: 20px;
+}
+
 .formContainerLeft {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  margin: 20px 5%;
 }
 
 .formContainer {
@@ -39,7 +46,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 20px 5%;
 }
 
 .button {

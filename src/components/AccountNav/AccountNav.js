@@ -64,7 +64,7 @@ const AccountNav = ({ history, location, onLogout, token, orgId }) => {
   if (!token) return null
   return (
     <AppBar
-      title="Admin"
+      title="Mi Cuenta"
       onTitleClick={handleHomeClick}
       showMenuIconButton={false}
       titleStyle={{ cursor: 'pointer' }}
