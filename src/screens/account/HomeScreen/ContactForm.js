@@ -3,10 +3,12 @@ import React from 'react'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
+import MenuItem from 'material-ui/MenuItem'
 
 import flattenObject from 'tools/flatten'
-import { TextField } from 'components/Fields'
+import { TextField, SelectField } from 'components/Fields'
 import { validateEmail } from 'tools/string'
+import { states } from 'src/choices'
 import Styles from 'screens/account/Form.css'
 
 
@@ -50,13 +52,15 @@ const ContactForm = ({ handleSubmit, submitting }) => {
       </div>
       <div>
         <TextField
-          floatingLabelText="Ciudad"
+          floatingLabelText="Municipio o delegación"
           name="city"
         />
-        <TextField
+        <SelectField
           floatingLabelText="Estado"
           name="state"
-        />
+        >
+          {states.map(s => <MenuItem key={s} value={s} primaryText={s} />)}
+        </SelectField>
       </div>
       <RaisedButton
         className={Styles.button}

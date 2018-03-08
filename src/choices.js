@@ -43,4 +43,6 @@ const sectorByValue = sectors.reduce((obj, { value, label }) => {
   return obj
 }, {})
 
-export { projectTypes, projectTypeByValue, sectors, sectorByValue }
+const states = ['Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Coahuila de Zaragoza', 'Colima', 'Chiapas', 'Chihuahua', 'Ciudad de México', 'Durango', 'Guanajuato', 'Guerrero', 'Hidalgo', 'Jalisco', 'Estado de México', 'Michoacán de Ocampo', 'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas']
+
+export { projectTypes, projectTypeByValue, sectors, sectorByValue, states }

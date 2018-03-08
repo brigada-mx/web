@@ -20,23 +20,6 @@ const defaultFilterMethod = (filter, row) => {
 const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
   const columns = [
     {
-      Header: 'Publicada',
-      accessor: 'published',
-      Cell: props => (<Checkbox
-        checked={props.original.published}
-        onCheck={(e, checked) => onTogglePublished(props.original.id, checked)}
-      />),
-    },
-    {
-      Header: 'Descripción',
-      accessor: 'description',
-    },
-    {
-      Header: 'Creada',
-      accessor: 'submitted',
-      Cell: props => <span>{moment(props.original.submitted).format('h:mma, DD MMMM YYYY')}</span>,
-    },
-    {
       Header: 'Fotos',
       Cell: (props) => {
         const thumbs = (props.original.image_urls || []).map((url) => {
@@ -50,6 +33,23 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
         })
         return <div className={Styles.thumbnailContainer}>{thumbs}</div>
       },
+    },
+    {
+      Header: 'Descripción',
+      accessor: 'description',
+    },
+    {
+      Header: 'Creada',
+      accessor: 'submitted',
+      Cell: props => <span>{moment(props.original.submitted).format('h:mma, DD MMMM YYYY')}</span>,
+    },
+    {
+      Header: 'Publicada',
+      accessor: 'published',
+      Cell: props => (<Checkbox
+        checked={props.original.published}
+        onCheck={(e, checked) => onTogglePublished(props.original.id, checked)}
+      />),
     },
   ]
 
