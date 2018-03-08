@@ -119,6 +119,18 @@ class HomeScreen extends React.Component {
     this.props.snackbar(message, 'success')
   }
 
+  handleChangeSubmissionAction = async (id, actionId) => {
+    const { data } = await service.updateAccountSubmission(id, { action: actionId })
+    if (!data) {
+      this.props.snackbar('Hubo un error, no se pudo asignar estas fotos a un proyecto', 'error')
+      return
+    }
+    this.loadSubmissions()
+    const action = _.find(this.props.actions, a => a.id === actionId)
+    const message = `Asignaste estas fotos a proyecto ${action && action.key}`
+    this.props.snackbar(message, 'success')
+  }
+
   handleToggleCreateActionModal = (open) => {
     this.setState({ createActionModal: open })
   }
@@ -172,6 +184,7 @@ class HomeScreen extends React.Component {
             <SubmissionTable
               submissions={submissions}
               onTogglePublished={this.handleTogglePublishedSubmission}
+              onChangeAction={this.handleChangeSubmissionAction}
             />
           </div>
         }

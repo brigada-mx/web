@@ -8,6 +8,7 @@ import Toggle from 'material-ui/Toggle'
 import '!style-loader!css-loader!react-table/react-table.css'
 
 import { tokenMatch, thumborUrl } from 'tools/string'
+import SubmissionActionSelect from './SubmissionActionSelect'
 import Styles from './SubmissionTable.css'
 
 
@@ -17,7 +18,7 @@ const defaultFilterMethod = (filter, row) => {
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
 }
 
-const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
+const SubmissionTable = ({ submissions, onChangeAction, onTogglePublished, onRowClicked }) => {
   const columns = [
     {
       Header: 'Fotos',
@@ -53,6 +54,18 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
     },
   ]
 
+  if (onChangeAction) {
+    columns.splice(3, 0, {
+      Header: 'Proyecto',
+      accessor: 'action_id',
+      Cell: props => (<SubmissionActionSelect
+        value={props.original.action_id}
+        onChange={(event, key, payload) => onChangeAction(props.original.id, payload)}
+        getterKey="accountActions"
+      />),
+    })
+  }
+
   let pageSize = 5
   if (submissions.length > 5) pageSize = 10
   if (submissions.length > 10) pageSize = 20
@@ -82,6 +95,7 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
 SubmissionTable.propTypes = {
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   onTogglePublished: PropTypes.func.isRequired,
+  onChangeAction: PropTypes.func,
   onRowClicked: PropTypes.func,
 }
 

@@ -29,7 +29,7 @@ class SnackBar extends React.PureComponent {
         ref={(el) => { this.snackbar = el }}
         open={Boolean(message)}
         message={message}
-        autoHideDuration={2500}
+        autoHideDuration={3000}
         contentStyle={{ color: colorByStatus[status], fontWeight: 'bold' }}
         onRequestClose={this.handleRequestClose}
       />,
