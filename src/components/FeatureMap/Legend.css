@@ -16,9 +16,12 @@
 }
 
 .source {
-  font-family: 'nunito-sans-600', sans-serif;
-  font-size: 10px;
-  color: #9F9F9F;
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #0F0F0F;
+  opacity: 0.4;
+  letter-spacing: 0.4px;
+  line-height: 16px;
   margin-top: 7px;
 }
 
