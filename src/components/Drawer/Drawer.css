@@ -32,6 +32,7 @@
 
 .children a {
   text-decoration: none;
+  text-transform: capitalize;
   color: #141418;
   width: calc(100% - 2px);
   text-align: left;

@@ -12,7 +12,7 @@
   font-size: 13px;
   letter-spacing: .52px;
   line-height: 12px;
-  color: #CDCFD1;
+  color: #5A5A5D;
 }
 
 .search::placeholder {
@@ -21,6 +21,10 @@
   letter-spacing: .52px;
   line-height: 12px;
   color: #CDCFD1;
+}
+
+.search:focus::placeholder {
+  color: #5A5A5D;
 }
 
 

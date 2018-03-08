@@ -139,6 +139,16 @@
   background-size: cover;
 }
 
+.thumbnail:hover:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.03;
+  cursor: pointer;
+}
+
 .thumbnailCount {
   position: absolute;
   background-size: cover;
