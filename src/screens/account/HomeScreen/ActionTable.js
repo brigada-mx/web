@@ -27,12 +27,10 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
         checked={props.original.published}
         onCheck={(e, checked) => onTogglePublished(props.original.id, props.original.key, checked)}
       />),
-      filterable: false,
     },
     {
       Header: 'Clave',
       accessor: 'key',
-      filterable: false,
     },
     {
       Header: 'Localidad',
@@ -46,22 +44,18 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
       Header: 'Tipo',
       accessor: 'action_type',
       Cell: props => projectTypeByValue[props.original.action_type] || props.original.action_type,
-      filterable: false,
     },
     {
       Header: 'Meta',
       accessor: 'target',
-      filterable: false,
     },
     {
       Header: 'Unidad',
       accessor: 'unit_of_measurement',
-      filterable: false,
     },
     {
       Header: 'Inicio',
       accessor: 'start_date',
-      filterable: false,
     },
   ]
 
@@ -77,7 +71,6 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
       data={actions}
       columns={columns}
       defaultFilterMethod={defaultFilterMethod}
-      filterable
       getTdProps={(state, rowInfo, column) => {
         const { id } = column
         return {

@@ -153,21 +153,21 @@ class HomeScreen extends React.Component {
         </div>
 
         {actions.length > 0 &&
-          <React.Fragment>
-            <div className={FormStyles.sectionHeader}>Proyectos</div>
+          <div className={FormStyles.card}>
+            <div className={FormStyles.sectionHeader}>PROYECTOS</div>
             <ActionTable actions={actions} onTogglePublished={this.handleTogglePublished} />
-          </React.Fragment>
+          </div>
         }
 
         {submissions.length > 0 &&
-          <React.Fragment>
-            <div className={FormStyles.sectionHeader}>Fotos sin proyecto</div>
+          <div className={FormStyles.card}>
+            <div className={FormStyles.sectionHeader}>FOTOS SIN PROYECTO</div>
             <SubmissionTable
               submissions={submissions}
               onTogglePublished={this.handleTogglePublishedSubmission}
               onRowClicked={this.handleRowClickedSubmission}
             />
-          </React.Fragment>
+          </div>
         }
 
         {submissionId !== undefined &&

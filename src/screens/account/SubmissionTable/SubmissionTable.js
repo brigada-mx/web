@@ -26,7 +26,6 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
         checked={props.original.published}
         onCheck={(e, checked) => onTogglePublished(props.original.id, checked)}
       />),
-      filterable: false,
     },
     {
       Header: 'Descripción',
@@ -36,7 +35,6 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
       Header: 'Creada',
       accessor: 'submitted',
       Cell: props => <span>{moment(props.original.submitted).format('h:mma, DD MMMM YYYY')}</span>,
-      filterable: false,
     },
     {
       Header: 'Fotos',
@@ -52,7 +50,6 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
         })
         return <div className={Styles.thumbnailContainer}>{thumbs}</div>
       },
-      filterable: false,
     },
   ]
 
@@ -68,7 +65,6 @@ const SubmissionTable = ({ submissions, onTogglePublished, onRowClicked }) => {
       data={submissions}
       columns={columns}
       defaultFilterMethod={defaultFilterMethod}
-      filterable
       getTdProps={(state, rowInfo, column) => {
         const { id } = column
         return {
