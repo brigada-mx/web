@@ -160,7 +160,7 @@ class OrganizationScreenView extends React.Component {
 
     const {
       actions,
-      contact: { email, phone, website, address },
+      contact: { email, phone, website, address, person_responsible: person },
       desc,
       name,
       sector,
@@ -251,7 +251,7 @@ class OrganizationScreenView extends React.Component {
                         onClick={() => fireGaEvent('website')}
                       />
                     }
-                    {phone && <PhoneBox phone={phone} />}
+                    {phone && <PhoneBox phone={phone} name={person} />}
                     {email &&
                       <a
                         target="_blank"

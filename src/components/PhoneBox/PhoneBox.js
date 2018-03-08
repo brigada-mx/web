@@ -20,16 +20,17 @@ class PhoneBox extends React.Component {
   }
 
   render() {
-    const { phone } = this.props
+    const { phone, name } = this.props
     const { focused } = this.state
 
+    const text = name ? `${phone} : ${name}` : phone
     if (window.innerWidth >= 768) {
       return (
         <div
           onClick={this.toggle}
           className={Styles.box}
         >
-          {focused && <span className={Styles.tooltip}>{phone}</span>}
+          {focused && <span className={Styles.tooltip}>{text}</span>}
         </div>
       )
     }
@@ -46,6 +47,7 @@ class PhoneBox extends React.Component {
 
 PhoneBox.propTypes = {
   phone: PropTypes.string.isRequired,
+  name: PropTypes.string,
 }
 
 export default PhoneBox
