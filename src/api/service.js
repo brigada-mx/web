@@ -87,18 +87,18 @@ class Service {
     return sendToApiAuth('account/organization/')
   }
 
-  getAccountActions = async (page_size = 250) => {
-    const params = { page_size }
+  getAccountActions = async (archived = false, page_size = 250) => {
+    const params = { archived, page_size }
     return sendToApiAuth('account/actions/', { params })
   }
 
-  getAccountActionsMinimal = async (page_size = 250) => {
-    const params = { page_size }
-    return sendToApiAuth('account/actions/minimal/', { params })
+  getAccountActionsMinimal = async (archived = false, page_size = 250) => {
+    const params = { archived, page_size }
+    return sendToApiAuth('account/actions/', { ...params, fields: 'id,action_type,desc,key' })
   }
 
-  getAccountSubmissions = async (has_action = false, page_size = 250) => {
-    const params = { has_action, page_size }
+  getAccountSubmissions = async (has_action = false, archived = false, page_size = 250) => {
+    const params = { has_action, archived, page_size }
     return sendToApiAuth('account/submissions/', { params })
   }
 
