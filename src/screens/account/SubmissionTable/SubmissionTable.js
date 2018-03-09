@@ -26,6 +26,7 @@ const SubmissionTable = ({
   onTogglePublished,
   onRestore,
   onRowClicked,
+  onDelete,
 }) => {
   const columns = [
     {
@@ -73,6 +74,16 @@ const SubmissionTable = ({
       />),
     })
   }
+  if (onDelete) {
+    columns.push({
+      Header: '¿Borrar?',
+      Cell: props => (<RaisedButton
+        className={FormStyles.button}
+        label="BORRAR"
+        onClick={() => onDelete(props.original.id)}
+      />),
+    })
+  }
 
   if (onChangeAction) {
     columns.splice(3, 0, {
@@ -117,6 +128,7 @@ SubmissionTable.propTypes = {
   onTogglePublished: PropTypes.func,
   onChangeAction: PropTypes.func,
   onRowClicked: PropTypes.func,
+  onDelete: PropTypes.func,
 }
 
 export default SubmissionTable

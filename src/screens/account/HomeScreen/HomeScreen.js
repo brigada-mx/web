@@ -111,15 +111,14 @@ class HomeScreen extends React.Component {
     this.props.snackbar(message, 'success')
   }
 
-  handleTogglePublishedSubmission = async (id, published) => {
-    const { data } = await service.updateAccountSubmission(id, { published })
+  handleDeleteSubmission = async (id) => {
+    const { data } = await service.archiveAccountSubmission(id, true)
     if (!data) {
-      this.props.snackbar(`Hubo un error, no se pudo ${published ? 'publicar' : 'ocultar'} estas fotos`, 'error')
+      this.props.snackbar('Hubo un error', 'error')
       return
     }
     this.loadSubmissions()
-    const message = published ? 'Publicaste estas fotos' : 'Ocultaste estas fotos'
-    this.props.snackbar(message, 'success')
+    this.props.snackbar('Mandaste estas fotos al basurero', 'success')
   }
 
   handleChangeSubmissionAction = async (id, actionId) => {
@@ -193,24 +192,24 @@ class HomeScreen extends React.Component {
           }
         </div>
 
-          <div className={FormStyles.card}>
-            <div className={FormStyles.sectionHeader}>
-              <span>FOTOS SIN PROYECTO</span>
-              <span
-                className={FormStyles.link}
-                onClick={() => this.handleToggleSubmissionTrashModal(true)}
-              >
-                Basurero
-              </span>
-            </div>
-            {submissions.length > 0 &&
-              <SubmissionTable
-                submissions={submissions}
-                onTogglePublished={this.handleTogglePublishedSubmission}
-                onChangeAction={this.handleChangeSubmissionAction}
-              />
-            }
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>
+            <span>FOTOS SIN PROYECTO</span>
+            <span
+              className={FormStyles.link}
+              onClick={() => this.handleToggleSubmissionTrashModal(true)}
+            >
+              Basurero
+            </span>
           </div>
+          {submissions.length > 0 &&
+            <SubmissionTable
+              submissions={submissions}
+              onDelete={this.handleDeleteSubmission}
+              onChangeAction={this.handleChangeSubmissionAction}
+            />
+          }
+        </div>
 
         {createActionModal &&
           <Modal
