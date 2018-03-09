@@ -82,6 +82,10 @@
   margin-bottom: 70px;
 }
 
+.toggle {
+  margin-top: 15px;
+}
+
 @media screen and (max-width: 767px) {
   .row {
     display: unset;

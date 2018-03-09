@@ -21,6 +21,7 @@ const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
     const { id, key, action_type: type, desc } = a
     return { label: `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`, value: id }
   })
+  actions.unshift({ value: null, label: 'Ninguno' })
 
   return (
     <React.Fragment>
@@ -43,7 +44,7 @@ const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
           rows={3}
         />
       </div>
-      <div>
+      <div className={FormStyles.toggle}>
         <Toggle
           label="¿Publicado?"
           name="published"

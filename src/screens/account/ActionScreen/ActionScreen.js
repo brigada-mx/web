@@ -12,6 +12,7 @@ import { UpdateActionForm, prepareActionBody, prepareInitialActionValues } from 
 import DonationsForm, { prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationsForm'
 import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
+import { getProjectType } from 'src/choices'
 import FormStyles from 'screens/account/Form.css'
 import Styles from './ActionScreen.css'
 
@@ -22,6 +23,7 @@ class ActionScreen extends React.Component {
     this.state = {
       localitiesSearch: [],
       submissionId: undefined,
+      trashModal: false,
     }
 
     this.handleLocalityChange = _.debounce(
@@ -85,6 +87,10 @@ class ActionScreen extends React.Component {
     this.setState({ submissionId: undefined })
   }
 
+  handleToggleActionTrashModal = (open) => {
+    this.setState({ trashModal: open })
+  }
+
   handleSubmitDonations = async ({ donations }) => {
     // find new, deleted and updated instances
     const { snackbar } = this.props
@@ -128,51 +134,77 @@ class ActionScreen extends React.Component {
   render() {
     const { action, donors, donations } = this.props
     const { submissions = [] } = action
-    const { submissionId, localitiesSearch } = this.state
+    const { submissionId, localitiesSearch, trashModal } = this.state
 
     return (
       <div>
-        <div className={FormStyles.sectionHeader}>Actualizar proyecto</div>
         {action.id &&
-          <div className={FormStyles.formContainerLeft}>
-            <UpdateActionForm
-              onSubmit={this.handleUpdateAction}
-              initialValues={action}
-              onLocalityChange={this.handleLocalityChange}
-              localitiesSearch={localitiesSearch}
-              form={`accountUpdateAction_${this.props.actionKey}`}
-              enableReinitialize
-            />
+          <div className={FormStyles.card}>
+            <div className={FormStyles.sectionHeader}>{getProjectType(action.action_type)}</div>
+            <div className={FormStyles.formContainerLeft}>
+              <UpdateActionForm
+                onSubmit={this.handleUpdateAction}
+                initialValues={action}
+                onLocalityChange={this.handleLocalityChange}
+                localitiesSearch={localitiesSearch}
+                form={`accountUpdateAction_${this.props.actionKey}`}
+                enableReinitialize
+              />
+            </div>
           </div>
         }
 
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>DONACIONES</div>
+          <div className={FormStyles.formContainerLeft}>
+            <DonationsForm
+              onSubmit={this.handleSubmitDonations}
+              initialValues={donations}
+              donorsSearch={donors}
+              form={`accountActionDonations_${this.props.actionKey}`}
+              enableReinitialize
+            />
+          </div>
+        </div>
+
         {submissions.length > 0 &&
-          <React.Fragment>
-            <div className={FormStyles.sectionHeader}>Fotos</div>
+          <div className={FormStyles.card}>
+            <div className={FormStyles.sectionHeader}>
+              <span>FOTOS</span>
+              <span
+                className={FormStyles.link}
+                onClick={() => this.handleToggleActionTrashModal(true)}
+              >
+                Basurero
+              </span>
+            </div>
             <SubmissionTable
               submissions={submissions}
               onTogglePublished={this.handleTogglePublishedSubmission}
               onRowClicked={this.handleRowClickedSubmission}
             />
-          </React.Fragment>
+          </div>
         }
 
         {submissionId !== undefined &&
-          <Modal className={Styles.modal} onClose={this.handleModalClose} gaName={`submission/${submissionId}`}>
+          <Modal
+            className={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
+            onClose={this.handleModalClose}
+            gaName={`submission/${submissionId}`}
+          >
             <SubmissionForm submissionId={submissionId} />
           </Modal>
         }
 
-        <div className={FormStyles.sectionHeader}>Donaciones</div>
-        <div className={FormStyles.formContainerLeft}>
-          <DonationsForm
-            onSubmit={this.handleSubmitDonations}
-            initialValues={donations}
-            donorsSearch={donors}
-            form={`accountActionDonations_${this.props.actionKey}`}
-            enableReinitialize
-          />
-        </div>
+        {trashModal &&
+          <Modal
+            className={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
+            onClose={() => this.handleToggleActionTrashModal(false)}
+            gaName="actionTrashModal"
+          >
+            <div className={FormStyles.sectionHeader}>Fotos borrados</div>
+          </Modal>
+        }
       </div>
     )
   }

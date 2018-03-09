@@ -111,7 +111,7 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
           format={formatDatePicker}
         />
       </div>
-      <div>
+      <div className={FormStyles.toggle}>
         <Toggle
           label="¿Publicado?"
           name="published"

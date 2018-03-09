@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 import { fmtNum, thumborUrl } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
-import { projectTypeByValue } from 'src/choices'
+import { getProjectType } from 'src/choices'
 import Styles from './ActionListItem.css'
 
 
@@ -112,10 +112,7 @@ class ActionListItem extends React.PureComponent {
           <div className={Styles.textContainer}>
             {screen === 'loc' && organizationLink()}
             {screen === 'org' && localityLink()}
-            <div className={Styles.header}>
-              {projectTypeByValue[actionType] ||
-                actionType.split('_').map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(' ')}
-            </div>
+            <div className={Styles.header}>{getProjectType(actionType)}</div>
             <div className={Styles.fieldsContainer}>
               <div className={Styles.budgetContainer}>
                 <span className={Styles.label}>PRESUPUESTO: </span>

@@ -38,11 +38,16 @@ const projectTypeByValue = projectTypes.reduce((obj, { value, label }) => {
   return obj
 }, {})
 
+const getProjectType = (value) => {
+  return projectTypeByValue[value] ||
+    value.split('_').map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(' ')
+}
+
 const sectorByValue = sectors.reduce((obj, { value, label }) => {
   obj[value] = label // eslint-disable-line no-param-reassign
   return obj
 }, {})
 
-const states = ['Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Coahuila de Zaragoza', 'Colima', 'Chiapas', 'Chihuahua', 'Ciudad de México', 'Durango', 'Guanajuato', 'Guerrero', 'Hidalgo', 'Jalisco', 'Estado de México', 'Michoacán de Ocampo', 'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas']
+const states = ['Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Coahuila', 'Colima', 'Chiapas', 'Chihuahua', 'Ciudad de México', 'Durango', 'Guanajuato', 'Guerrero', 'Hidalgo', 'Jalisco', 'Estado de México', 'Michoacán', 'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas']
 
-export { projectTypes, projectTypeByValue, sectors, sectorByValue, states }
+export { projectTypes, projectTypeByValue, getProjectType, sectors, sectorByValue, states }
