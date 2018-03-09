@@ -1,0 +1,6 @@
+{
+  "name": "ActionTable",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ActionTable.js"
+}

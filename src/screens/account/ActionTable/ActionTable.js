@@ -4,11 +4,13 @@ import PropTypes from 'prop-types'
 
 import ReactTable from 'react-table'
 import Toggle from 'material-ui/Toggle'
+import RaisedButton from 'material-ui/RaisedButton'
 import { withRouter } from 'react-router-dom'
 import '!style-loader!css-loader!react-table/react-table.css'
 
 import { tokenMatch } from 'tools/string'
 import { projectTypeByValue } from 'src/choices'
+import FormStyles from 'screens/account/Form.css'
 import Styles from './ActionTable.css'
 
 
@@ -18,7 +20,7 @@ const defaultFilterMethod = (filter, row) => {
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
 }
 
-const ActionTable = ({ actions, onTogglePublished, history }) => {
+const ActionTable = ({ actions, onTogglePublished, onRestore, history }) => {
   const columns = [
     {
       Header: 'Clave',
@@ -49,15 +51,27 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
       Header: 'Inicio',
       accessor: 'start_date',
     },
-    {
+  ]
+  if (onTogglePublished) {
+    columns.push({
       Header: '¿Publicar?',
       accessor: 'published',
       Cell: props => (<Toggle
         toggled={props.original.published}
         onToggle={(e, toggled) => onTogglePublished(props.original.id, props.original.key, toggled)}
       />),
-    },
-  ]
+    })
+  }
+  if (onRestore) {
+    columns.push({
+      Header: '¿Restaurar?',
+      Cell: props => (<RaisedButton
+        className={FormStyles.button}
+        label="RESTAURAR"
+        onClick={() => onRestore(props.original.id, props.original.key)}
+      />),
+    })
+  }
 
   let pageSize = 5
   if (actions.length > 5) pageSize = 10
@@ -73,13 +87,14 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
       defaultFilterMethod={defaultFilterMethod}
       getTdProps={(state, rowInfo, column) => {
         const { id } = column
+        const handleRowClicked = onRestore ? undefined : (e, handleOriginal) => {
+          if (id !== 'published' && rowInfo) {
+            history.push(`/cuenta/proyectos/${rowInfo.original.key}`)
+          }
+          if (handleOriginal) handleOriginal()
+        }
         return {
-          onClick: (e, handleOriginal) => {
-            if (id !== 'published' && rowInfo) {
-              history.push(`/cuenta/proyectos/${rowInfo.original.key}`)
-            }
-            if (handleOriginal) handleOriginal()
-          },
+          onClick: handleRowClicked,
           style: id !== 'published' ? { cursor: 'pointer' } : {},
         }
       }}
@@ -89,7 +104,8 @@ const ActionTable = ({ actions, onTogglePublished, history }) => {
 
 ActionTable.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onTogglePublished: PropTypes.func.isRequired,
+  onTogglePublished: PropTypes.func,
+  onRestore: PropTypes.func,
   history: PropTypes.object.isRequired,
 }
 

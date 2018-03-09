@@ -88,7 +88,7 @@ class ActionScreen extends React.Component {
     this.setState({ submissionId: undefined })
   }
 
-  handleToggleActionTrashModal = (open) => {
+  handleToggleSubmissionTrashModal = (open) => {
     this.setState({ trashModal: open })
   }
 
@@ -98,7 +98,7 @@ class ActionScreen extends React.Component {
       this.props.snackbar('Hubo un error', 'error')
       return
     }
-    this.props.snackbar('Mandaste este proyecto al basurero', 'success')
+    this.props.snackbar(`Mandaste proyecto ${this.props.action.key} al basurero`, 'success')
     this.props.history.push('/cuenta')
   }
 
@@ -185,7 +185,7 @@ class ActionScreen extends React.Component {
               <span>FOTOS</span>
               <span
                 className={FormStyles.link}
-                onClick={() => this.handleToggleActionTrashModal(true)}
+                onClick={() => this.handleToggleSubmissionTrashModal(true)}
               >
                 Basurero
               </span>
@@ -210,9 +210,9 @@ class ActionScreen extends React.Component {
 
         {trashModal &&
           <Modal
-            className={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
-            onClose={() => this.handleToggleActionTrashModal(false)}
-            gaName="actionTrashModal"
+            className={`${FormStyles.modal} ${FormStyles.formContainer}`}
+            onClose={() => this.handleToggleSubmissionTrashModal(false)}
+            gaName="submissionTrashModal"
           >
             <div className={FormStyles.sectionHeader}>Fotos borrados</div>
           </Modal>

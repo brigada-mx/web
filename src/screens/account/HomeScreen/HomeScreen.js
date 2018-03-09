@@ -13,9 +13,10 @@ import Modal from 'components/Modal'
 import FormStyles from 'screens/account/Form.css'
 import { CreateActionForm, prepareActionBody } from 'screens/account/ActionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
+import ActionTable from 'screens/account/ActionTable'
+import ActionTrash from 'screens/account/ActionTrash'
 import OrganizationForm from './OrganizationForm'
 import ContactForm from './ContactForm'
-import ActionTable from './ActionTable'
 
 
 const initialActionValues = { published: true }
@@ -139,6 +140,10 @@ class HomeScreen extends React.Component {
     this.setState({ trashModal: open })
   }
 
+  handleRestoreAction = () => {
+    this.loadActions()
+  }
+
   render() {
     const { actions, submissions } = this.props
     const { createActionModal, trashModal } = this.state
@@ -207,11 +212,11 @@ class HomeScreen extends React.Component {
 
         {trashModal &&
           <Modal
-            className={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
+            className={`${FormStyles.modal} ${FormStyles.formContainer}`}
             onClose={() => this.handleToggleActionTrashModal(false)}
             gaName="actionTrashModal"
           >
-            <div className={FormStyles.sectionHeader}>Proyectos borrados</div>
+            <ActionTrash onRestore={this.handleRestoreAction} />
           </Modal>
         }
       </div>
