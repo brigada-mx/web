@@ -15,6 +15,7 @@ import { CreateActionForm, prepareActionBody } from 'screens/account/ActionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
 import ActionTable from 'screens/account/ActionTable'
 import ActionTrash from 'screens/account/ActionTrash'
+import SubmissionTrash from 'screens/account/SubmissionTrash'
 import OrganizationForm from './OrganizationForm'
 import ContactForm from './ContactForm'
 
@@ -28,6 +29,7 @@ class HomeScreen extends React.Component {
       localitiesSearch: [],
       createActionModal: false,
       trashModal: false,
+      submissionTrashModal: false,
     }
 
     this.handleLocalityChange = _.debounce(
@@ -140,13 +142,21 @@ class HomeScreen extends React.Component {
     this.setState({ trashModal: open })
   }
 
+  handleToggleSubmissionTrashModal = (open) => {
+    this.setState({ submissionTrashModal: open })
+  }
+
   handleRestoreAction = () => {
     this.loadActions()
   }
 
+  handleRestoreSubmission = () => {
+    this.loadSubmissions()
+  }
+
   render() {
     const { actions, submissions } = this.props
-    const { createActionModal, trashModal } = this.state
+    const { createActionModal, trashModal, submissionTrashModal } = this.state
 
     return (
       <div>
@@ -183,16 +193,24 @@ class HomeScreen extends React.Component {
           }
         </div>
 
-        {submissions.length > 0 &&
           <div className={FormStyles.card}>
-            <div className={FormStyles.sectionHeader}>FOTOS SIN PROYECTO</div>
-            <SubmissionTable
-              submissions={submissions}
-              onTogglePublished={this.handleTogglePublishedSubmission}
-              onChangeAction={this.handleChangeSubmissionAction}
-            />
+            <div className={FormStyles.sectionHeader}>
+              <span>FOTOS SIN PROYECTO</span>
+              <span
+                className={FormStyles.link}
+                onClick={() => this.handleToggleSubmissionTrashModal(true)}
+              >
+                Basurero
+              </span>
+            </div>
+            {submissions.length > 0 &&
+              <SubmissionTable
+                submissions={submissions}
+                onTogglePublished={this.handleTogglePublishedSubmission}
+                onChangeAction={this.handleChangeSubmissionAction}
+              />
+            }
           </div>
-        }
 
         {createActionModal &&
           <Modal
@@ -217,6 +235,16 @@ class HomeScreen extends React.Component {
             gaName="actionTrashModal"
           >
             <ActionTrash onRestore={this.handleRestoreAction} />
+          </Modal>
+        }
+
+        {submissionTrashModal &&
+          <Modal
+            className={`${FormStyles.modal} ${FormStyles.formContainer}`}
+            onClose={() => this.handleToggleSubmissionTrashModal(false)}
+            gaName="submissionTrashModal"
+          >
+            <SubmissionTrash onRestore={this.handleRestoreSubmission} />
           </Modal>
         }
       </div>
