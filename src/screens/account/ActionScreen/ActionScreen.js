@@ -13,6 +13,7 @@ import { UpdateActionForm, prepareActionBody, prepareInitialActionValues } from 
 import DonationsForm, { prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationsForm'
 import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
+import SubmissionTrash from 'screens/account/SubmissionTrash'
 import { getProjectType } from 'src/choices'
 import FormStyles from 'screens/account/Form.css'
 import Styles from './ActionScreen.css'
@@ -214,7 +215,7 @@ class ActionScreen extends React.Component {
             onClose={() => this.handleToggleSubmissionTrashModal(false)}
             gaName="submissionTrashModal"
           >
-            <div className={FormStyles.sectionHeader}>Fotos borrados</div>
+            <SubmissionTrash />
           </Modal>
         }
       </div>

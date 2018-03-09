@@ -5,10 +5,12 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import ReactTable from 'react-table'
 import Toggle from 'material-ui/Toggle'
+import RaisedButton from 'material-ui/RaisedButton'
 import '!style-loader!css-loader!react-table/react-table.css'
 
 import { tokenMatch, thumborUrl } from 'tools/string'
 import SubmissionActionSelect from './SubmissionActionSelect'
+import FormStyles from 'screens/account/Form.css'
 import Styles from './SubmissionTable.css'
 
 
@@ -18,7 +20,13 @@ const defaultFilterMethod = (filter, row) => {
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
 }
 
-const SubmissionTable = ({ submissions, onChangeAction, onTogglePublished, onRowClicked }) => {
+const SubmissionTable = ({
+  submissions,
+  onChangeAction,
+  onTogglePublished,
+  onRestore,
+  onRowClicked,
+}) => {
   const columns = [
     {
       Header: 'Fotos',
@@ -44,15 +52,27 @@ const SubmissionTable = ({ submissions, onChangeAction, onTogglePublished, onRow
       accessor: 'submitted',
       Cell: props => <span>{moment(props.original.submitted).format('h:mma, DD MMMM YYYY')}</span>,
     },
-    {
+  ]
+  if (onTogglePublished) {
+    columns.push({
       Header: '¿Publicar?',
       accessor: 'published',
       Cell: props => (<Toggle
         toggled={props.original.published}
         onToggle={(e, toggled) => onTogglePublished(props.original.id, toggled)}
       />),
-    },
-  ]
+    })
+  }
+  if (onRestore) {
+    columns.push({
+      Header: '¿Restaurar?',
+      Cell: props => (<RaisedButton
+        className={FormStyles.button}
+        label="RESTAURAR"
+        onClick={() => onRestore(props.original.id)}
+      />),
+    })
+  }
 
   if (onChangeAction) {
     columns.splice(3, 0, {
@@ -94,7 +114,7 @@ const SubmissionTable = ({ submissions, onChangeAction, onTogglePublished, onRow
 
 SubmissionTable.propTypes = {
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onTogglePublished: PropTypes.func.isRequired,
+  onTogglePublished: PropTypes.func,
   onChangeAction: PropTypes.func,
   onRowClicked: PropTypes.func,
 }
