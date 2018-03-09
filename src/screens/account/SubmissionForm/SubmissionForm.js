@@ -16,7 +16,7 @@ import FormStyles from 'screens/account/Form.css'
 import Styles from './SubmissionForm.css'
 
 
-const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
+const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, actionSearch = [] }) => {
   const actions = actionSearch.map((a) => {
     const { id, key, action_type: type, desc } = a
     return { label: `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`, value: id }
@@ -57,6 +57,12 @@ const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
           label="ACTUALIZAR"
           onClick={handleSubmit}
         />
+        <RaisedButton
+          className={FormStyles.button}
+          disabled={submitting}
+          label="Borrar"
+          onClick={onDelete}
+        />
       </div>
     </React.Fragment>
   )
@@ -64,6 +70,7 @@ const UpdateForm = ({ handleSubmit, reset, submitting, actionSearch = [] }) => {
 
 UpdateForm.propTypes = {
   ...rxfPropTypes,
+  onDelete: PropTypes.func.isRequired,
   actionSearch: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
@@ -121,6 +128,16 @@ class SubmissionFormWrapper extends React.Component {
     this.props.snackbar('Actualizaste estas fotos', 'success')
   }
 
+  handleDelete = async () => {
+    const { data } = await service.archiveAccountSubmission(this.props.submissionId, true)
+    if (!data) {
+      this.props.snackbar('Hubo un error', 'error')
+      return
+    }
+    this.loadSubmissionsForAction()
+    this.props.snackbar('Mandaste estas fotos al basurero', 'success')
+  }
+
   render() {
     const { submission, actions } = this.props
     if (!submission.id) return <LoadingIndicatorCircle className={FormStyles.loader} />
@@ -145,6 +162,7 @@ class SubmissionFormWrapper extends React.Component {
             initialValues={submission}
             actionSearch={actions}
             form={`accountUpdateSubmission_${this.props.submissionId}`}
+            onDelete={this.handleDelete}
             enableReinitialize
           />
         </div>

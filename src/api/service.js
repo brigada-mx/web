@@ -141,6 +141,16 @@ class Service {
   deleteAccountDonation = async (id) => {
     return sendToApiAuth(`account/donations/${id}/`, { method: 'DELETE' })
   }
+
+  archiveAccountAction = async (id, archived) => {
+    const body = { archived }
+    return sendToApiAuth(`account/actions/${id}/archive/`, { method: 'POST', body })
+  }
+
+  archiveAccountSubmission = async (id, archived) => {
+    const body = { archived }
+    return sendToApiAuth(`account/submissions/${id}/archive/`, { method: 'POST', body })
+  }
 }
 
 /**

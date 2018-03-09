@@ -147,7 +147,7 @@ CreateForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const UpdateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
+const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, ...rest }) => {
   return (
     <React.Fragment>
       <Fields update {...rest} />
@@ -158,6 +158,12 @@ const UpdateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
           label="ACTUALIZAR"
           onClick={handleSubmit}
         />
+        <RaisedButton
+          className={FormStyles.button}
+          disabled={submitting}
+          label="Borrar"
+          onClick={onDelete}
+        />
       </div>
     </React.Fragment>
   )
@@ -165,6 +171,7 @@ const UpdateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
 
 UpdateForm.propTypes = {
   ...rxfPropTypes,
+  onDelete: PropTypes.func.isRequired,
 }
 
 const validate = ({

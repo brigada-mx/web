@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
@@ -91,6 +92,16 @@ class ActionScreen extends React.Component {
     this.setState({ trashModal: open })
   }
 
+  handleDeleteAction = async () => {
+    const { data } = await service.archiveAccountAction(this.props.action.id, true)
+    if (!data) {
+      this.props.snackbar('Hubo un error', 'error')
+      return
+    }
+    this.props.snackbar('Mandaste este proyecto al basurero', 'success')
+    this.props.history.push('/cuenta')
+  }
+
   handleSubmitDonations = async ({ donations }) => {
     // find new, deleted and updated instances
     const { snackbar } = this.props
@@ -149,6 +160,7 @@ class ActionScreen extends React.Component {
                 localitiesSearch={localitiesSearch}
                 form={`accountUpdateAction_${this.props.actionKey}`}
                 enableReinitialize
+                onDelete={this.handleDeleteAction}
               />
             </div>
           </div>
@@ -216,6 +228,7 @@ ActionScreen.propTypes = {
   donations: PropTypes.object.isRequired,
   actionKey: PropTypes.number.isRequired,
   snackbar: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state, props) => {
@@ -241,4 +254,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActionScreen)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ActionScreen))
