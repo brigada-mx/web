@@ -1,5 +1,5 @@
-export const siteUrl = 'https://app.ensintonia.org/'
-export const apiUrl = 'https://api.ensintonia.org/api/'
+export const siteUrl = 'https://app.brigada.mx/'
+export const apiUrl = 'https://api.brigada.mx/api/'
 export const urlProtocol = 'https'
 
 export const logging = {

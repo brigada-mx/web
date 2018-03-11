@@ -16,6 +16,6 @@ Check out `build.sh`. Run `npm run build`.
 We use [CloudFront](https://console.aws.amazon.com/cloudfront/home?region=us-west-2#) to cache our assets at edge locations. `deploy.sh` includes a command to invalidate this cache so clients get the updated web app as soon as it's deployed.
 
 An Amazon-issued SSL certificate provides security for the web app and the API.
-Route 53 DNS ensures <https://app.ensintonia.org> points to the web app, and that HTTP requests are redirected to HTTPS.
+Route 53 DNS ensures <https://app.brigada.mx> points to the web app, and that HTTP requests are redirected to HTTPS.
 
 CloudFront also __gzips__ assets, which greatly reduces bundle size and initial load time.
