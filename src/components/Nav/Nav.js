@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import * as Actions from 'src/actions'
 import Drawer from 'components/Drawer'
-import LogoImg from 'assets/img/logo-sintonia.svg'
+import LogoImg from 'assets/img/logo.svg'
 import Colors from 'src/Colors'
 import Styles from './Nav.css'
 
