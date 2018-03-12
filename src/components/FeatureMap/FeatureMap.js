@@ -33,6 +33,7 @@ class FeatureMap extends React.Component {
       accessToken,
       scrollZoom: false,
       keyboard: !props.disableKeyboard,
+      dragPan: props.dragPan,
     })
   }
 
@@ -110,6 +111,7 @@ class FeatureMap extends React.Component {
 }
 
 FeatureMap.propTypes = {
+  dragPan: PropTypes.bool,
   initialZoom: PropTypes.number,
   disableKeyboard: PropTypes.bool,
   coordinates: PropTypes.arrayOf(PropTypes.number),
@@ -125,6 +127,7 @@ FeatureMap.propTypes = {
 }
 
 FeatureMap.defaultProps = {
+  dragPan: true,
   disableKeyboard: false,
   onClickFeature: () => {},
   onEnterFeature: () => {},

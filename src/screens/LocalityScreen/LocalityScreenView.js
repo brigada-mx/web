@@ -294,6 +294,7 @@ class LocalityScreenView extends React.Component {
           <DirectionsButton lat={lat} lng={lng} />
         </div>
         <FeatureMap
+          dragPan={window.innerWidth >= 980}
           initialZoom={establishmentMapInitialZoom}
           features={features}
           layer={establishmentMapLayer}

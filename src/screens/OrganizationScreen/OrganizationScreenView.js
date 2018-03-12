@@ -138,6 +138,7 @@ class OrganizationScreenView extends React.Component {
     return (
       <div className={Styles.opsMap}>
         <LocalityDamageMap
+          dragPan={window.innerWidth >= 980}
           zoomControl={false}
           features={features}
           popup={popup ? <LocalityPopup

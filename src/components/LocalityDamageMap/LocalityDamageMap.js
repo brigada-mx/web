@@ -11,10 +11,6 @@ import Styles from './LocalityDamageMap.css'
 
 
 const { mapbox: { accessToken } } = env
-const Mapbox = ReactMapboxGl({
-  accessToken,
-  scrollZoom: false,
-})
 
 const zoomStyle = {
   position: 'absolute',
@@ -67,6 +63,11 @@ class LocalityDamageMap extends React.Component {
     this._fitBounds = props.fitBounds
     this._fitBoundsOptions = props.fitBoundsOptions || { padding: 20, maxZoom: 10 }
     this._map = null
+    this.Mapbox = ReactMapboxGl({
+      accessToken,
+      scrollZoom: false,
+      dragPan: props.dragPan,
+    })
   }
 
   handleMapLoaded = (map) => {
@@ -107,6 +108,8 @@ class LocalityDamageMap extends React.Component {
     }
 
     if (!_.isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
+    const { Mapbox } = this
+    if (!Mapbox) return null
 
     return (
       <Mapbox
@@ -141,6 +144,7 @@ class LocalityDamageMap extends React.Component {
 }
 
 LocalityDamageMap.propTypes = {
+  dragPan: PropTypes.bool,
   features: PropTypes.arrayOf(PropTypes.object),
   sourceLayer: PropTypes.string,
   sourceOptions: PropTypes.object,
@@ -155,10 +159,11 @@ LocalityDamageMap.propTypes = {
 }
 
 LocalityDamageMap.defaultProps = {
+  dragPan: true,
+  zoomControl: true,
   onClickFeature: () => {},
   onEnterFeature: () => {},
   onLeaveFeature: () => {},
-  zoomControl: true,
 }
 
 export default LocalityDamageMap
