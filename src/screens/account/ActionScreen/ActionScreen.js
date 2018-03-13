@@ -9,6 +9,7 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import Modal from 'components/Modal'
+import WithSideNav from 'components/WithSideNav'
 import { UpdateActionForm, prepareActionBody, prepareInitialActionValues } from 'screens/account/ActionForm'
 import DonationsForm, { prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationsForm'
 import SubmissionForm from 'screens/account/SubmissionForm'
@@ -148,7 +149,7 @@ class ActionScreen extends React.Component {
     const { submissions = [] } = action
     const { submissionId, localitiesSearch, trashModal } = this.state
 
-    return (
+    const content = (
       <div>
         {action.id &&
           <div className={FormStyles.card}>
@@ -220,6 +221,7 @@ class ActionScreen extends React.Component {
         }
       </div>
     )
+    return <WithSideNav>{content}</WithSideNav>
   }
 }
 

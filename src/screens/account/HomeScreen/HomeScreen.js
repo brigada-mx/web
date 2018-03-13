@@ -10,6 +10,7 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import Modal from 'components/Modal'
+import WithSideNav from 'components/WithSideNav'
 import FormStyles from 'screens/account/Form.css'
 import { CreateActionForm, prepareActionBody } from 'screens/account/ActionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
@@ -157,7 +158,7 @@ class HomeScreen extends React.Component {
     const { actions, submissions } = this.props
     const { createActionModal, trashModal, submissionTrashModal } = this.state
 
-    return (
+    const content = (
       <div>
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>ORGANIZACIÓN</div>
@@ -248,6 +249,7 @@ class HomeScreen extends React.Component {
         }
       </div>
     )
+    return <WithSideNav>{content}</WithSideNav>
   }
 }
 
