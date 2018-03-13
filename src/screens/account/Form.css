@@ -73,12 +73,12 @@
 .card {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   width: 70vw;
-  margin-top: 50px;
+  margin-bottom: 50px;
   padding: 15px;
 }
 
 .card:last-of-type {
-  margin-bottom: 70px;
+  margin-bottom: 80px;
 }
 
 .toggle {

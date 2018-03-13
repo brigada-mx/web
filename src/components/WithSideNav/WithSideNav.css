@@ -2,13 +2,18 @@
   flex: 1;
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 
 .nav {
   flex: 1;
+  margin-top: 50px;
+}
+
+.innerNav {
+  margin-left: 25px;
 }
 
 .content {
   flex: 3.5;
+  margin-top: 50px;
 }

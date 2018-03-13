@@ -10,6 +10,7 @@ import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
+import BackButton from 'components/BackButton'
 import { UpdateActionForm, prepareActionBody, prepareInitialActionValues } from 'screens/account/ActionForm'
 import DonationsForm, { prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationsForm'
 import SubmissionForm from 'screens/account/SubmissionForm'
@@ -221,7 +222,7 @@ class ActionScreen extends React.Component {
         }
       </div>
     )
-    return <WithSideNav>{content}</WithSideNav>
+    return <WithSideNav navComponents={<BackButton to="/cuenta" />}>{content}</WithSideNav>
   }
 }
 

@@ -7,7 +7,9 @@ import Styles from './WithSideNav.css'
 const WithSideNav = ({ children, navComponents }) => {
   return (
     <div className={Styles.container}>
-      <div className={Styles.nav}>{navComponents}</div>
+      <div className={Styles.nav}>
+        <div className={Styles.innerNav}>{navComponents}</div>
+      </div>
       <div className={Styles.content}>{children}</div>
     </div>
   )
