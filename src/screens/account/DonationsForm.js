@@ -119,9 +119,9 @@ const validate = ({ donations }) => {
     if (amount && amount < 0) errors.amount = 'El monto no puede ser negativo'
 
     if (id) {
-      if (!donor || !donor.value) errors.donor = 'Escoge un donante de la lista'
+      if (!donor || !donor.value) errors.donor = 'Escoge un donador de la lista'
     } else if (!donor || (!donor.value && !donor.text)) {
-      errors.donor = 'Escoge un donante de la lista, o ingresa un nuevo donante'
+      errors.donor = 'Escoge un donador de la lista, o ingresa un nuevo donador'
     }
 
     if (errors.donor || errors.amount) donationErrors[i] = errors

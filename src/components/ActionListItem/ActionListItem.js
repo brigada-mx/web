@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Link } from 'react-router-dom'
+import _ from 'lodash'
 
 import { fmtNum, thumborUrl } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
@@ -19,12 +20,33 @@ class ActionListItem extends React.PureComponent {
       target,
       progress = 0,
       budget,
+      donations,
       start_date: startDate,
       end_date: endDate,
       organization: { id: orgId, name: orgName },
       locality: { id: locId, name: locName, municipality_name: muniName, state_name: stateName },
       unit_of_measurement: unit,
     } = action
+
+    const getDonors = () => {
+      if (donations.length === 0) return null
+
+      const amountByDonor = {}
+      for (const d of donations) {
+        const { amount = 0, donor: { name } } = d
+        if (name in amountByDonor) amountByDonor[name] += amount
+        else amountByDonor[name] = amount
+      }
+      const donors = _.sortBy(Object.keys(amountByDonor).map((donor) => {
+        return { donor, amount: amountByDonor[donor] }
+      }), d => -d.amount)
+      return (
+        <React.Fragment>
+          <span className={`${Styles.link} ${Styles.donorsDivider} `}>/</span>
+          <span className={`${Styles.link} ${Styles.donors}`}>Financiado por {donors.map(d => d.donor).join(', ')}</span>
+        </React.Fragment>
+      )
+    }
 
     const metrics = () => {
       if (!target) return null
@@ -110,8 +132,11 @@ class ActionListItem extends React.PureComponent {
       >
         <div className={Styles.summaryContainer}>
           <div className={Styles.textContainer}>
-            {screen === 'loc' && organizationLink()}
-            {screen === 'org' && localityLink()}
+            <div className={Styles.row}>
+              {screen === 'loc' && organizationLink()}
+              {screen === 'org' && localityLink()}
+              {getDonors()}
+            </div>
             <div className={Styles.header}>{getProjectType(actionType)}</div>
             <div className={Styles.fieldsContainer}>
               <div className={Styles.budgetContainer}>

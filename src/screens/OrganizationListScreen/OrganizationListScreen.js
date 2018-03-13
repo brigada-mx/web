@@ -32,7 +32,7 @@ class OrganizationListScreen extends React.Component {
         if (a.score > b.score) return -1
         return 0
       })
-      return { data: { results: sorted } }
+      return { data: { results: sorted } } // eslint-disable-line consistent-return
     })
   }
 

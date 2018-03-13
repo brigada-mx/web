@@ -31,6 +31,22 @@
   display: table;
 }
 
+.donors {
+  color: #9F9F9F;
+}
+
+.donorsDivider {
+  color: #9F9F9F;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .summaryContainer {
   display: flex;
   flex-direction: row;

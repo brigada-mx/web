@@ -107,7 +107,7 @@ class HomeScreen extends React.Component {
       return
     }
     this.loadActions()
-    const message = published ? `Publicaste proyecto #${key}` : `Ocultaste proyecto #${key}`
+    const message = published ? `Publicaste proyecto ${key}` : `Ocultaste proyecto ${key}`
     this.props.snackbar(message, 'success')
   }
 
