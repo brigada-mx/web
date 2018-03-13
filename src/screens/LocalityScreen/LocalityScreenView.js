@@ -16,7 +16,6 @@ import EstablishmentPopup from 'components/FeatureMap/EstablishmentPopup'
 import EstablishmentLegend, { metaByScianGroup } from 'components/FeatureMap/EstablishmentLegend'
 import { dmgGrade, metaByDmgGrade, projectStatus, itemFromScrollEvent } from 'tools/other'
 import { fmtNum, fmtBudget } from 'tools/string'
-import Colors from 'src/colors'
 import LocalityBreadcrumb from './LocalityBreadcrumb'
 import Styles from './LocalityScreenView.css'
 
@@ -131,8 +130,12 @@ class LocalityScreenView extends React.Component {
     }, 200)
   }
 
-  handleClickListItem = (item) => {
+  handleClickPhotos = (item) => {
     this.setState({ carousel: { actionId: item.id } })
+  }
+
+  handleClickListItem = (item) => {
+    console.log(item)
   }
 
   handleEnterListItem = (item) => {
@@ -251,7 +254,7 @@ class LocalityScreenView extends React.Component {
             </div>
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
               <div className={Styles.vizHeader}>
-                <span className={Styles.vizLabel}>MARGINACIÓN<br />SOCIAL</span>
+                <span className={Styles.vizLabel}>REZAGO<br />SOCIAL</span>
                 <span className={Styles.vizCount}>{margGrade}</span>
               </div>
               <div className={Styles.margContainer}>
@@ -371,7 +374,8 @@ class LocalityScreenView extends React.Component {
               actions={actions}
               onScroll={this.handleScroll}
               focusedId={focused && focused.id}
-              onClick={this.handleClickListItem}
+              onClickPhotos={this.handleClickPhotos}
+              onClickItem={this.handleClickListItem}
               onMouseEnter={this.handleEnterListItem}
             />
           </div>

@@ -50,8 +50,12 @@ class OrganizationScreenView extends React.Component {
     this.setState({ popup: {} })
   }
 
-  handleClickListItem = (item) => {
+  handleClickPhotos = (item) => {
     this.setState({ carousel: { actionId: item.id } })
+  }
+
+  handleClickListItem = (item) => {
+    console.log(item)
   }
 
   handleEnterListItem = (item) => {
@@ -288,7 +292,8 @@ class OrganizationScreenView extends React.Component {
               actions={actions}
               onScroll={this.handleScroll}
               focusedId={focused && focused.id}
-              onClick={this.handleClickListItem}
+              onClickPhotos={this.handleClickPhotos}
+              onClickItem={this.handleClickListItem}
               onMouseEnter={this.handleEnterListItem}
             />
           </div>

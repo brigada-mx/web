@@ -35,7 +35,7 @@ const LocalityPopup = ({ locality, organization, screen }) => {
           <span className={Styles.value}>{fmtNum(destroyed)}</span>
         </div>
         <div className={Styles.item}>
-          <span className={Styles.label}>Marginación social</span>
+          <span className={Styles.label}>Rezago social</span>
           <span className={Styles.value}>{fmtNum(margGrade)}</span>
         </div>
       </Popup>
@@ -52,7 +52,7 @@ const LocalityPopup = ({ locality, organization, screen }) => {
             <span className={Styles.value}>{fmtNum(total)}</span>
           </div>
           <div className={Styles.item}>
-            <span className={Styles.label}>Marginación social</span>
+            <span className={Styles.label}>Rezago social</span>
             <span className={Styles.value}>{fmtNum(margGrade)}</span>
           </div>
         </Popup>
@@ -68,7 +68,7 @@ const LocalityPopup = ({ locality, organization, screen }) => {
           <span className={Styles.value}>{fmtNum(total)}</span>
         </div>
         <div className={Styles.item}>
-          <span className={Styles.label}>Marginación social</span>
+          <span className={Styles.label}>Rezago social</span>
           <span className={Styles.value}>{fmtNum(margGrade)}</span>
         </div>
 

@@ -13,7 +13,16 @@ import Styles from './ActionListItem.css'
 
 class ActionListItem extends React.PureComponent {
   render() {
-    const { action, screen, focused, onClick, onMouseEnter, onMouseLeave, onClickItem } = this.props
+    const {
+      action,
+      screen,
+      focused,
+      onClickPhotos,
+      onMouseEnter,
+      onMouseLeave,
+      onClickItem,
+    } = this.props
+
     const {
       action_type: actionType,
       desc,
@@ -85,7 +94,7 @@ class ActionListItem extends React.PureComponent {
       )
     }
 
-    const handleClick = onClick && (() => { onClick(action) })
+    const handleClickPhotos = onClickPhotos && (() => { onClickPhotos(action) })
     const handleMouseEnter = onMouseEnter && (() => { onMouseEnter(action) })
     const handleMouseLeave = onMouseLeave && (() => { onMouseLeave(action) })
     const handleClickItem = onClickItem && (() => { onClickItem(action) })
@@ -103,7 +112,7 @@ class ActionListItem extends React.PureComponent {
           <span className={Styles.thumbnailCountOverlay}>+{l - 1}</span>
         </div>) : null
       return (
-        <div onClick={handleClick} className={Styles.thumbnailContainer}>
+        <div onClick={handleClickPhotos} className={Styles.thumbnailContainer}>
           <div
             className={`${Styles.thumbnail} xs-hidden`}
             style={{ backgroundImage: `url(${thumborUrl(images[0], 240, 240, true)})` }}
@@ -164,7 +173,7 @@ ActionListItem.propTypes = {
   action: PropTypes.object.isRequired,
   screen: PropTypes.oneOf(['org', 'loc']).isRequired,
   focused: PropTypes.bool,
-  onClick: PropTypes.func,
+  onClickPhotos: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   onClickItem: PropTypes.func,

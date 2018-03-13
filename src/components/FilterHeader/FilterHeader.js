@@ -119,8 +119,8 @@ class FilterHeader extends React.Component {
             removeSelected={false}
             className={`${Styles.filter} ${Styles.margFilter}`}
             value={valMarg}
-            placeholder="Marginación social"
-            multiLabel="Marginación"
+            placeholder="Rezago social"
+            multiLabel="Rezago"
             onChange={onMargChange}
             options={[
               { value: 'muy_alto', label: 'Muy alta' },
@@ -190,7 +190,7 @@ class FilterHeader extends React.Component {
         <React.Fragment>
           {valMarg &&
             <React.Fragment>
-              <span className={Styles.title}>Marginación social</span>
+              <span className={Styles.title}>Rezago social</span>
               <Select
                 multi
                 autoFocus

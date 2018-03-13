@@ -76,7 +76,7 @@ class LocalityListItem extends React.PureComponent {
           <div className={Styles.listItemMetricsContainer}>
             <div className={`${Styles.listItemMetrics} ${Styles.marg}`}>
               <span className={Styles.value}>{margGrade || '?'}</span>
-              <span className={Styles.label}>Marginación social</span>
+              <span className={Styles.label}>Rezago social</span>
             </div>
 
             <div className={`${Styles.listItemMetrics} ${Styles.dmg}`}>
