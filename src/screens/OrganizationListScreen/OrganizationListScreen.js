@@ -31,7 +31,7 @@ class OrganizationListScreen extends React.Component {
         if (a.score < b.score) return 1
         if (a.score > b.score) return -1
         return 0
-      })
+      }).filter(o => o.actions.length > 0)
       return { data: { results: sorted } } // eslint-disable-line consistent-return
     })
   }
