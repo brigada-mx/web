@@ -55,10 +55,6 @@ class OrganizationScreenView extends React.Component {
   }
 
   handleClickListItem = (item) => {
-    console.log(item)
-  }
-
-  handleEnterListItem = (item) => {
     this.setState({ focused: item })
   }
 
@@ -294,7 +290,6 @@ class OrganizationScreenView extends React.Component {
               focusedId={focused && focused.id}
               onClickPhotos={this.handleClickPhotos}
               onClickItem={this.handleClickListItem}
-              onMouseEnter={this.handleEnterListItem}
             />
           </div>
           <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
