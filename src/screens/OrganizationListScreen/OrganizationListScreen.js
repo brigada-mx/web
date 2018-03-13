@@ -27,6 +27,12 @@ class OrganizationListScreen extends React.Component {
         }
         result.actionCvegeos = actionCvegeos
       }
+      const sorted = data.results.sort((a, b) => {
+        if (a.score < b.score) return 1
+        if (a.score > b.score) return -1
+        return 0
+      })
+      return { data: { results: sorted } }
     })
   }
 

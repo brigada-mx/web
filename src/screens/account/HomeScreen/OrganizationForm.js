@@ -7,15 +7,18 @@ import MenuItem from 'material-ui/MenuItem'
 
 import { TextField, SelectField } from 'components/Fields'
 import { sectors } from 'src/choices'
+import { normalizeTransparencyScore } from 'tools/other'
 import FormStyles from 'screens/account/Form.css'
 import Styles from './OrganizationForm.css'
 
 
 const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
-  const { secret_key: key, name } = initialValues
+  const { secret_key: key, score } = initialValues
+  const normalizedScore = Number(normalizeTransparencyScore(score || 0)).toFixed(1)
   return (
     <React.Fragment>
       <span className={Styles.key}>{key ? key.replace(/\./g, ' ') : ''}</span>
+      {false && <span className={Styles.score}>indicador de transparencia: {normalizedScore}</span>}
       <div className={FormStyles.formContainerLeft}>
         <div>
           <TextField
@@ -34,7 +37,9 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
             floatingLabelText="Sector"
             name="sector"
           >
-            {sectors.map(({ value, label }) => <MenuItem key={value} value={value} primaryText={label} />)}
+            {sectors.map(
+              ({ value, label }) => <MenuItem key={value} value={value} primaryText={label} />
+            )}
           </SelectField>
           <TextField
             floatingLabelText="Descripción"

@@ -161,8 +161,11 @@ export const getBackoff = async (...args) => {
   let count = 0
   let delay = 1000
   const inner = async (getter, { onResponse, key }) => {
-    const response = await getter()
-    if (onResponse) onResponse(response)
+    let response = await getter()
+    if (onResponse) {
+      const modified = onResponse(response)
+      if (modified) response = modified
+    }
     if (key) Actions.getter(store.dispatch, { response, key })
 
     if (response.exception) {
@@ -183,8 +186,12 @@ export const getBackoffComponent = async (...args) => {
   let count = 0
   let delay = 1000
   const inner = async (self, stateKey, getter, onResponse) => {
-    const { data, error, exception } = await getter()
-    if (onResponse) onResponse({ data, error, exception })
+    let response = await getter()
+    if (onResponse) {
+      const modified = onResponse(response)
+      if (modified) response = modified
+    }
+    const { data, error, exception } = response
 
     if (data) self.setState({ [stateKey]: { loading: false, data, error: undefined } })
     if (error) self.setState({ [stateKey]: { loading: false, error } })

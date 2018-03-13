@@ -160,10 +160,6 @@ class OrganizationListScreenView extends React.Component {
     const { organizationSearch } = this.state
     const { valState, valMuni, valSector, valActionType } = this.props
 
-    const compareOrganizations = (a, b) => {
-      return b.action_count - a.action_count
-    }
-
     return results.filter((o) => {
       const { name, desc, actionCvegeos } = o
 
@@ -185,7 +181,7 @@ class OrganizationListScreenView extends React.Component {
       }
 
       return matchesSearch && matchesCvegeo && matchesSector && matchesActionType
-    }).sort(compareOrganizations)
+    })
   }
 
   getLocalityFeatures = (organization) => {

@@ -1,5 +1,4 @@
 import moment from 'moment'
-import ReactGA from 'react-ga';
 
 import Colors from 'src/colors'
 
@@ -141,4 +140,8 @@ export const fireGaEvent = (category, action = null) => {
     category,
     action: action || window.location.pathname,
   })
+}
+
+export const normalizeTransparencyScore = (score = 0) => {
+  return 20 * (1 / (1 + Math.exp(-1 * score / 20)) - 0.5)
 }
