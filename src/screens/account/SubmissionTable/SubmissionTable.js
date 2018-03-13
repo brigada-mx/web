@@ -8,9 +8,10 @@ import Toggle from 'material-ui/Toggle'
 import RaisedButton from 'material-ui/RaisedButton'
 import '!style-loader!css-loader!react-table/react-table.css'
 
+import ConfirmButton from 'components/ConfirmButton'
 import { tokenMatch, thumborUrl } from 'tools/string'
-import SubmissionActionSelect from './SubmissionActionSelect'
 import FormStyles from 'screens/account/Form.css'
+import SubmissionActionSelect from './SubmissionActionSelect'
 import Styles from './SubmissionTable.css'
 
 
@@ -77,10 +78,10 @@ const SubmissionTable = ({
   if (onDelete) {
     columns.push({
       Header: '¿Borrar?',
-      Cell: props => (<RaisedButton
+      Cell: props => (<ConfirmButton
         className={FormStyles.button}
-        label="BORRAR"
-        onClick={() => onDelete(props.original.id)}
+        text="Borrar"
+        onConfirm={() => onDelete(props.original.id)}
       />),
     })
   }

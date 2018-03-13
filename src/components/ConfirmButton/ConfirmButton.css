@@ -1,0 +1,17 @@
+@value colors: "src/colors.css";
+@value grey3 from colors;
+
+.link {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 13px;
+  color: grey3;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

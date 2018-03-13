@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { projectTypeByValue } from 'src/choices'
+import ConfirmButton from 'components/ConfirmButton'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { TextField, Toggle, SelectField } from 'components/Fields'
 import { thumborUrl } from 'tools/string'
@@ -57,11 +58,11 @@ const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, actionSearch = 
           label="ACTUALIZAR"
           onClick={handleSubmit}
         />
-        <RaisedButton
+        <ConfirmButton
           className={FormStyles.button}
           disabled={submitting}
-          label="Borrar"
-          onClick={onDelete}
+          text="Borrar"
+          onConfirm={onDelete}
         />
       </div>
     </React.Fragment>

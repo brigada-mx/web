@@ -8,6 +8,7 @@ import AutoCompleteMui from 'material-ui/AutoComplete'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { TextField, SelectField, Toggle, DatePicker, AutoComplete } from 'components/Fields'
+import ConfirmButton from 'components/ConfirmButton'
 import { projectTypes } from 'src/choices'
 import FormStyles from 'screens/account/Form.css'
 
@@ -158,11 +159,11 @@ const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, ...rest }) => {
           label="ACTUALIZAR"
           onClick={handleSubmit}
         />
-        <RaisedButton
+        <ConfirmButton
           className={FormStyles.button}
           disabled={submitting}
-          label="Borrar"
-          onClick={onDelete}
+          text="Borrar"
+          onConfirm={onDelete}
         />
       </div>
     </React.Fragment>
