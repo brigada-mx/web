@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
-import { fmtNum, thumborUrl } from 'tools/string'
+import { fmtNum, fmtBudget, thumborUrl } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
 import { getProjectType } from 'src/choices'
 import Styles from './ActionListItem.css'
@@ -53,6 +53,40 @@ class ActionListItem extends React.PureComponent {
         <React.Fragment>
           <span className={`${Styles.link} ${Styles.donorsDivider} `}>/</span>
           <span className={`${Styles.link} ${Styles.donors}`}>Financiado por {donors.map(d => d.donor).join(', ')}</span>
+        </React.Fragment>
+      )
+    }
+
+    const getDonations = () => {
+      if (donations.length === 0) return null
+
+      const rows = donations.sort((a, b) => {
+        if (!a.received_date) return 1
+        if (!b.received_date) return -1
+        if (a.received_date < b.received_date) return 1
+        if (a.received_date > b.received_date) return -1
+        return 0
+      }).map(({ received_date: date, amount, donor: { name } }) => {
+        return (
+          <tr>
+            <th>{name}</th>
+            <th>{fmtBudget(amount)}</th>
+            <th>{(date || '?').replace(/-/g, '.')}</th>
+          </tr>
+        )
+      })
+
+      return (
+        <React.Fragment>
+          <span className={Styles.label}>DONACIONES: </span>
+          <table className={Styles.donations}>
+            <tr>
+              <th>Donador</th>
+              <th>Monto MXN</th>
+              <th>Fecha recibida</th>
+            </tr>
+            {rows}
+          </table>
         </React.Fragment>
       )
     }
@@ -161,6 +195,7 @@ class ActionListItem extends React.PureComponent {
         {(desc && focused) &&
           <React.Fragment>
             <div className={Styles.description}>{desc}</div>
+            {getDonations()}
             {dates()}
           </React.Fragment>
         }
