@@ -76,12 +76,23 @@ class ActionListItem extends React.PureComponent {
       })
 
       return (
-        <React.Fragment>
+        <div className={Styles.donationContainer}>
           <span className={Styles.label}>DONACIONES (MXN): </span>
           <table className={Styles.donations}>
             <tbody>{rows}</tbody>
           </table>
-        </React.Fragment>
+        </div>
+      )
+    }
+
+    const dates = () => {
+      return (
+        <div className={Styles.datesContainer}>
+          <span className={Styles.label}>FECHAS: </span>
+          <span className={Styles.dates}>
+            {(startDate || '?').replace(/-/g, '.')} - {(endDate || '?').replace(/-/g, '.')}
+          </span>
+        </div>
       )
     }
 
@@ -93,17 +104,6 @@ class ActionListItem extends React.PureComponent {
             {fmtNum(progress)} DE {fmtNum(target)} {unit && <span>{unit}</span>}
           </span>
           <span className={Styles.bar}><MetricsBar value={progress} max={target} /></span>
-        </div>
-      )
-    }
-
-    const dates = () => {
-      return (
-        <div>
-          <span className={Styles.label}>FECHAS: </span>
-          <span className={Styles.dates}>
-            {(startDate || '?').replace(/-/g, '.')} - {(endDate || '?').replace(/-/g, '.')}
-          </span>
         </div>
       )
     }
@@ -171,7 +171,7 @@ class ActionListItem extends React.PureComponent {
       >
         <div className={Styles.summaryContainer}>
           <div className={Styles.textContainer}>
-            <div className={Styles.row}>
+            <div className={Styles.metadata}>
               {screen === 'loc' && organizationLink()}
               {screen === 'org' && localityLink()}
               {getDonors()}
@@ -191,8 +191,10 @@ class ActionListItem extends React.PureComponent {
         {(desc && focused) &&
           <React.Fragment>
             <div className={Styles.description}>{desc}</div>
-            {getDonations()}
-            {dates()}
+            <div className={Styles.footer}>
+              {getDonations()}
+              {dates()}
+            </div>
           </React.Fragment>
         }
       </div>
