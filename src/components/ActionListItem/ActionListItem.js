@@ -175,7 +175,7 @@ class ActionListItem extends React.PureComponent {
       >
         <div className={Styles.summaryContainer}>
           <div className={Styles.textContainer}>
-            <div className={Styles.row}>
+            <div className={Styles.metadata}>
               {screen === 'loc' && organizationLink()}
               {screen === 'org' && localityLink()}
               {getDonors()}

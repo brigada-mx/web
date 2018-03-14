@@ -19,6 +19,7 @@
   font-size: 24px;
   color: #141418;
   line-height: 30px;
+  border-bottom: 1px solid #EDF1F5;
 }
 
 .link {
@@ -27,25 +28,35 @@
   color: #3DC59F;
   letter-spacing: 0.4px;
   line-height: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   text-decoration: none;
   display: table;
 }
 
 .donors {
-  color: #9F9F9F;
+  opacity: 0.4;
+  color: #0F0F0F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .donorsDivider {
-  color: #9F9F9F;
+  opacity: 0.4;
+  color: #0F0F0F;
   margin-left: 10px;
   margin-right: 10px;
 }
 
-.row {
+.metadata {
   display: flex;
   flex-direction: row;
   align-items: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .donations {
@@ -67,7 +78,6 @@
 .textContainer {
   display: flex;
   flex-direction: column;
-  width: 68%;
 }
 
 .thumbnailContainer {
@@ -82,7 +92,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 90%;
 }
 
 .label {
@@ -114,7 +124,7 @@
 .goalProgress {
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 80%;
 }
 
 .goalProgress .label {
@@ -138,7 +148,7 @@
   color: #141418;
   letter-spacing: 0.6px;
   line-height: 30px;
-  margin: 18px 0 23px 0;
+  margin: 14px 0 23px 0;
 }
 
 .dates {
@@ -147,13 +157,16 @@
   color: #141418;
   letter-spacing: 0.4px;
   line-height: 16px;
+  display: inline-flex;
+  margin-bottom: 10px;
 }
 
 .emptyThumbnail {
   width: 120px;
   height: 120px;
-  background: no-repeat url("assets/img/empty-thumbnail.png");
-  background-size: 120px 120px;
+  background: no-repeat url("assets/img/empty-thumbnail.svg") center;
+  background-size: 48px 73px;
+  background-color: #EDF1F5;
 }
 
 .thumbnail {
@@ -210,27 +223,37 @@
 
 @media screen and (min-width: 1440px) {
   .header {
-    margin: 2px 0 14px 0;
+    padding-bottom: 23px;
+    margin-bottom: 14px;
+  }
+  .textContainer {
+    width: 78%;
   }
 }
 
 @media screen and (max-width: 1439px) and (min-width: 980px) {
   .header {
-    margin: 2px 0 14px 0;
+    padding-bottom: 23px;
+    margin-bottom: 14px;
+  }
+  .textContainer {
+    width: 70%;
   }
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .header {
-    margin-bottom: 17px;
+    padding-bottom: 23px;
+    margin-bottom: 14px;
   }
-  .budgetContainer {
-    margin-bottom: 11px;
+  .textContainer {
+    width: 78%;
   }
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .header {
+    padding-bottom: 21px;
     margin-bottom: 17px;
   }
   .summaryContainer {
@@ -243,17 +266,27 @@
   .fieldsContainer {
     flex-direction: column;
     align-items: left;
+    width: 100%;
+  }
+  .label {
+    width: unset;
+    min-width: 35%;
+  }
+  .value {
+    margin-left: 5px;
+  }
+  .bar {
+    width: 65%;
   }
   .goalProgress {
-    flex-direction: column;
     align-items: left;
+    width: 100%;
   }
   .budgetContainer {
-    margin-bottom: 11px;
+    margin-bottom: 4px;
   }
   .goalProgress {
-    width: 100%;
-    margin-bottom: 19px;
+    margin-bottom: 15px;
   }
   .thumbnailContainer {
     width: 100%;
@@ -261,14 +294,17 @@
   .thumbnail {
     width: 100%;
   }
+  .emptyThumbnail {
+    width: 100%;
+  }
   .thumbnailCount {
     height: 100%;
     border-top: none;
   }
+  .description {
+    margin: 17px 0 19px 0;
+  }
   .label {
     text-align: left;
-  }
-  .bar {
-    width: 100%;
   }
 }
