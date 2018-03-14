@@ -10,6 +10,14 @@ import { projectTypeByValue } from 'src/choices'
 import Styles from './FilterHeader.css'
 
 
+const margValuesAndLabels = [
+  { value: 'muy_alto', label: 'Muy alto' },
+  { value: 'alto', label: 'Alto' },
+  { value: 'medio', label: 'Medio' },
+  { value: 'bajo', label: 'Bajo' },
+  { value: 'muy_bajo', label: 'Muy bajo' },
+]
+
 class FilterHeader extends React.Component {
   componentWillUpdate(nextProps) {
     const { valState, valMuni, onStateChange, onMuniChange } = this.props
@@ -122,12 +130,7 @@ class FilterHeader extends React.Component {
             placeholder="Rezago social"
             multiLabel="Rezago"
             onChange={onMargChange}
-            options={[
-              { value: 'muy_alto', label: 'Muy alta' },
-              { value: 'alto', label: 'Alta' },
-              { value: 'medio', label: 'Media' },
-              { value: 'bajo', label: 'Baja' },
-            ]}
+            options={margValuesAndLabels}
           />}
 
           {valNumActions && <MultiSelect
@@ -204,12 +207,7 @@ class FilterHeader extends React.Component {
                 value={valMarg}
                 placeholder=""
                 onChange={onMargChange}
-                options={[
-                  { value: 'muy_alto', label: 'Muy alta' },
-                  { value: 'alto', label: 'Alta' },
-                  { value: 'medio', label: 'Media' },
-                  { value: 'bajo', label: 'Baja' },
-                ]}
+                options={margValuesAndLabels}
               />
             </React.Fragment>
           }
