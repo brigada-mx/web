@@ -116,7 +116,7 @@ const validate = ({ donations }) => {
   const donationErrors = []
   donations.forEach(({ id, amount, donor }, i) => {
     const errors = {}
-    if (amount && amount < 0) errors.amount = 'El monto no puede ser negativo'
+    if (!amount || amount < 0) errors.amount = 'Agrega un monto positivo'
 
     if (id) {
       if (!donor || !donor.value) errors.donor = 'Escoge un donador de la lista'
