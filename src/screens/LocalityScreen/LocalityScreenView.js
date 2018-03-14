@@ -176,13 +176,16 @@ class LocalityScreenView extends React.Component {
       } = data
       const {
         analfabet,
+        dropout,
         noPrimary,
-        noToilet,
-        noElec,
-        noPlumb,
-        noFridge,
+        noHealth,
         dirtFloor,
-        roomOccup,
+        noToilet,
+        noPlumb,
+        noDrain,
+        noElec,
+        noWasher,
+        noFridge,
         margGrade,
         destroyed,
         habit,
@@ -192,22 +195,23 @@ class LocalityScreenView extends React.Component {
       const { lat, lng } = location
       const dmgMeta = metaByDmgGrade(dmgGrade(data))
 
-      const barLabels = [
-        'Analfabetismo',
-        'Primaria incompleta',
-        'Falta excusado',
-        'Falta electricidad',
-        'Falta agua entubada',
-        'Falta refrigerador',
-        'Piso de tierra',
-        'Ocupantes por cuarto',
+      const labels = [
+        { value: analfabet, label: 'Analfabetismo' },
+        { value: dropout, label: 'Deserción escolar' },
+        { value: noPrimary, label: 'Primaria incompleta' },
+        { value: noHealth, label: 'Sin servicios de salud' },
+        { value: dirtFloor, label: 'Piso de tierra' },
+        { value: noToilet, label: 'Sin excusado' },
+        { value: noPlumb, label: 'Sin agua entubada' },
+        { value: noDrain, label: 'Sin drenaje' },
+        { value: noElec, label: 'Sin electricidad' },
+        { value: noWasher, label: 'Sin lavadora' },
+        { value: noFridge, label: 'Sin refrigerador' },
       ]
-      const bars = [
-        analfabet, noPrimary, noToilet, noElec, noPlumb, noFridge, dirtFloor, roomOccup,
-      ].map((v, i) => {
+      const bars = labels.map(({ value: v, label }, i) => {
         return (
           <div key={i} className={Styles.margMetrics}>
-            <span className={Styles.margLabel}>{barLabels[i]}</span>
+            <span className={Styles.margLabel}>{label}</span>
             <span className={Styles.margBar}>{v ? <MetricsBar severity value={v} max={100} /> : '-'}</span>
           </div>
         )
@@ -254,8 +258,8 @@ class LocalityScreenView extends React.Component {
                 <span className={Styles.vizCount}>{margGrade}</span>
               </div>
               <div className={Styles.margContainer}>
-                <div className={Styles.margColumn}>{bars.slice(0, 4)}</div>
-                <div className={Styles.margColumn}>{bars.slice(4, 8)}</div>
+                <div className={Styles.margColumn}>{bars.slice(0, 6)}</div>
+                <div className={Styles.margColumn}>{bars.slice(6, 11)}</div>
               </div>
             </div>
           </div>
