@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
-import { fmtNum, fmtBudget, thumborUrl } from 'tools/string'
+import { fmtNum, fmtBudgetPlain, thumborUrl } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
 import { getProjectType } from 'src/choices'
 import Styles from './ActionListItem.css'
@@ -66,25 +66,19 @@ class ActionListItem extends React.PureComponent {
         if (a.received_date < b.received_date) return 1
         if (a.received_date > b.received_date) return -1
         return 0
-      }).map(({ received_date: date, amount, donor: { name } }) => {
+      }).map(({ amount, donor: { name } }) => {
         return (
           <tr>
             <th>{name}</th>
-            <th>{fmtBudget(amount)}</th>
-            <th>{(date || '?').replace(/-/g, '.')}</th>
+            <th>{fmtBudgetPlain(amount)}</th>
           </tr>
         )
       })
 
       return (
         <React.Fragment>
-          <span className={Styles.label}>DONACIONES: </span>
+          <span className={Styles.label}>DONACIONES (MXN): </span>
           <table className={Styles.donations}>
-            <tr>
-              <th>Donador</th>
-              <th>Monto MXN</th>
-              <th>Fecha recibida</th>
-            </tr>
             {rows}
           </table>
         </React.Fragment>
@@ -95,7 +89,9 @@ class ActionListItem extends React.PureComponent {
       if (!target) return null
       return (
         <div className={Styles.goalProgress}>
-          <span className={Styles.label}>{fmtNum(progress)} DE {fmtNum(target)} {unit && <span>{unit}</span>}</span>
+          <span className={Styles.label}>
+            {fmtNum(progress)} DE {fmtNum(target)} {unit && <span>{unit}</span>}
+          </span>
           <span className={Styles.bar}><MetricsBar value={progress} max={target} /></span>
         </div>
       )
