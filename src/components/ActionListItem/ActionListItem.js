@@ -169,29 +169,31 @@ class ActionListItem extends React.PureComponent {
         onMouseLeave={handleMouseLeave}
         onClick={handleClickItem}
       >
-        <div className={Styles.summaryContainer}>
-          <div className={Styles.textContainer}>
-            <div className={Styles.metadata}>
-              {screen === 'loc' && organizationLink()}
-              {screen === 'org' && localityLink()}
-              {getDonors()}
-            </div>
-            <div className={Styles.header}>{getProjectType(actionType)}</div>
-            <div className={Styles.fieldsContainer}>
-              <div className={Styles.budgetContainer}>
-                <span className={Styles.label}>PRESUPUESTO: </span>
-                <span className={Styles.value}>{budget ? `$${fmtNum(budget)}` : 'No disponible'}</span>
+        <div className={Styles.cardTop}>
+          <div className={Styles.summaryContainer}>
+            <div className={Styles.textContainer}>
+              <div className={Styles.metadata}>
+                {screen === 'loc' && organizationLink()}
+                {screen === 'org' && localityLink()}
+                {getDonors()}
               </div>
-              {metrics()}
+              <div className={Styles.header}>{getProjectType(actionType)}</div>
+              <div className={Styles.fieldsContainer}>
+                <div className={Styles.budgetContainer}>
+                  <span className={Styles.label}>PRESUPUESTO: </span>
+                  <span className={Styles.value}>{budget ? `$${fmtNum(budget)}` : 'No disponible'}</span>
+                </div>
+                {metrics()}
+              </div>
             </div>
-          </div>
 
-          {renderThumbnails()}
+            {renderThumbnails()}
+          </div>
+          <div className={Styles.description}>{desc}</div>
         </div>
         {(desc && focused) &&
           <React.Fragment>
-            <div className={Styles.description}>{desc}</div>
-            <div className={Styles.footer}>
+            <div className={Styles.cardBottom}>
               {getDonations()}
               {dates()}
             </div>

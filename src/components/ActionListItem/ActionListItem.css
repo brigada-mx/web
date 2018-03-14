@@ -6,7 +6,6 @@
   box-sizing: border-box;
   background-color: white;
   margin-bottom: 16px;
-  padding: 27px;
   cursor: pointer;
 }
 
@@ -59,9 +58,14 @@
   white-space: nowrap;
 }
 
-.footer {
+.cardTop {
+  padding: 27px 27px 0 27px;
+}
+
+.cardBottom {
   display: flex;
-  flex-direction: row;
+  padding: 31px 27px 36px 27px;
+  background-color: #F8F9FB;
 }
 
 .donationContainer {
@@ -82,7 +86,7 @@
   color: #141418;
   line-height: 21px;
   letter-spacing: 0.4px;
-  margin: 5px 0 20px 0;
+  margin-top: 5px;
   border-collapse: separate;
   width: 100%;
   text-align: left;
@@ -178,7 +182,7 @@
   color: #141418;
   letter-spacing: 0.6px;
   line-height: 30px;
-  margin: 14px 0 23px 0;
+  margin: 14px 0 22px 0;
 }
 
 .datesContainer {
