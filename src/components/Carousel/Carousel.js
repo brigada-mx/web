@@ -43,14 +43,14 @@ class CarouselContainer extends React.Component {
         description,
         location,
         submitted,
-        image_urls: urls,
+        images,
       } = s
-      return urls.map((url) => {
+      return images.map((image) => {
         return {
           description,
           location,
           submitted,
-          url,
+          image,
         }
       })
     })
@@ -151,9 +151,9 @@ class CarouselView extends React.Component {
 
     const panes = photos.map((p, i) => {
       if (Math.abs(this.state.index - i) <= 1) {
-        return <div key={p.url}><Photo {...p} /></div>
+        return <div key={p.image.url}><Photo {...p} /></div>
       }
-      return <div key={p.url}><Photo {...p} lazyLoad /></div>
+      return <div key={p.image.url}><Photo {...p} lazyLoad /></div>
     })
     return (
       <div className={Styles.container}>

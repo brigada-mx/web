@@ -130,7 +130,7 @@ class ActionListItem extends React.PureComponent {
     const handleClickItem = onClickItem && (() => { onClickItem(action) })
 
     const renderThumbnails = () => {
-      const images = [].concat(...action.submissions.map(s => s.image_urls))
+      const images = [].concat(...action.submissions.map(s => s.images))
       const l = images.length
       if (l === 0) return <div className={Styles.emptyThumbnail} />
 

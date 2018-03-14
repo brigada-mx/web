@@ -100,7 +100,7 @@ export const getLocation = (href) => {
   }
 }
 
-export const thumborUrl = (url, width, height, crop = false) => {
+export const thumborUrl = ({ url, datetime, transform }, width, height, crop = false) => {
   const parsed = getLocation(url)
   return parsed && `${env.thumborUrl}/${crop ? '' : 'fit-in/'}${width}x${height}${parsed.pathname}`
 }
