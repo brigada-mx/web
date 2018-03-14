@@ -77,10 +77,12 @@ class ActionListItem extends React.PureComponent {
 
       return (
         <React.Fragment>
-          <span className={Styles.label}>DONACIONES (MXN): </span>
-          <table className={Styles.donations}>
-            {rows}
-          </table>
+          <div className={Styles.donationContainer}>
+            <span className={Styles.label}>DONACIONES (MXN): </span>
+            <table className={Styles.donations}>
+              {rows}
+            </table>
+          </div>
         </React.Fragment>
       )
     }
@@ -99,7 +101,7 @@ class ActionListItem extends React.PureComponent {
 
     const dates = () => {
       return (
-        <div>
+        <div className={Styles.datesContainer}>
           <span className={Styles.label}>FECHAS: </span>
           <span className={Styles.dates}>
             {(startDate || '?').replace(/-/g, '.')} - {(endDate || '?').replace(/-/g, '.')}
