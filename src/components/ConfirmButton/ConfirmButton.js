@@ -27,12 +27,14 @@ class ConfirmButton extends React.Component {
     const { text, className } = this.props
     if (!confirm) {
       return (
-        <span
-          onClick={() => this.toggleConfirm(true)}
-          className={`${Styles.link} ${className}`}
-        >
-          {text}
-        </span>
+        <div className={`${Styles.row} ${className}`}>
+          <span
+            onClick={() => this.toggleConfirm(true)}
+            className={Styles.link}
+          >
+            {text}
+          </span>
+        </div>
       )
     }
     return (

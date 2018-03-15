@@ -33,12 +33,12 @@ const SubmissionTable = ({
     {
       Header: 'Fotos',
       Cell: (props) => {
-        const thumbs = (props.original.image_urls || []).map((url) => {
+        const thumbs = (props.original.images || []).map((image) => {
           return (
             <div
-              key={url}
+              key={image.url}
               className={Styles.thumbnail}
-              style={{ backgroundImage: `url(${thumborUrl(url, 120, 120, true)})` }}
+              style={{ backgroundImage: `url(${thumborUrl(image, 120, 120, true)})` }}
             />
           )
         })

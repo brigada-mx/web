@@ -143,13 +143,13 @@ class SubmissionFormWrapper extends React.Component {
     const { submission, actions } = this.props
     if (!submission.id) return <LoadingIndicatorCircle className={FormStyles.loader} />
 
-    const thumbs = submission.image_urls.map((url) => {
+    const thumbs = submission.images.map((image) => {
       return (
         <a
-          key={url}
+          key={image.url}
           className={Styles.thumbnail}
-          style={{ backgroundImage: `url(${thumborUrl(url, 480, 480, true)})` }}
-          href={thumborUrl(url, 1280, 1280)}
+          style={{ backgroundImage: `url(${thumborUrl(image, 480, 480, true)})` }}
+          href={thumborUrl(image, 1280, 1280)}
           target="_blank"
         />
       )

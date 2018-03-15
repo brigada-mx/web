@@ -16,7 +16,7 @@ const Photo = (props) => {
     description,
     location,
     submitted,
-    url,
+    image,
   } = props
 
   const { lat, lng } = location || {}
@@ -32,7 +32,7 @@ const Photo = (props) => {
   return (
     <div className={Styles.outerBox}>
       <div className={Styles.innerBox}>
-        {lazyLoad ? <div /> : <img src={thumborUrl(url, 1280, 1280)} alt={description} />}
+        {lazyLoad ? <div /> : <img src={thumborUrl(image, 1280, 1280)} alt={description} />}
         <div>
           <div className={Styles.labelContainer}>
             <span className={Styles.label}>{moment(submitted).format('h:mma, DD MMMM YYYY')}</span>
@@ -50,7 +50,7 @@ Photo.propTypes = {
   description: PropTypes.string,
   location: PropTypes.object,
   submitted: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  image: PropTypes.object.isRequired,
 }
 
 export default Photo
