@@ -100,7 +100,17 @@ export const getLocation = (href) => {
   }
 }
 
-export const thumborUrl = ({ url, datetime, rotate, hidden }, width, height, crop = false) => {
+export const thumborUrl = (
+  { url, rotate: r = 0 }, width, height, { crop = false, rotate = true } = {}
+) => {
   const parsed = getLocation(url)
-  return parsed && `${env.thumborUrl}/${crop ? '' : 'fit-in/'}${width}x${height}${parsed.pathname}`
+  const rotateFilter = rotate ? `/filters:rotate(${-r * 90})` : ''
+  return parsed && `${env.thumborUrl}/${crop ? '' : 'fit-in/'}${width}x${height}${rotateFilter}${parsed.pathname}`
+}
+
+export const imageStyleObject = ({ rotate = 0, hidden, datetime }) => {
+  return {
+    transform: `rotate(${rotate * 90}deg)`,
+    opacity: hidden ? 0.3 : 1,
+  }
 }

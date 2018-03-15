@@ -9,7 +9,7 @@ import RotateRight from 'material-ui/svg-icons/image/rotate-right'
 
 import * as Actions from 'src/actions'
 import service from 'api/service'
-import { thumborUrl } from 'tools/string'
+import { thumborUrl, imageStyleObject } from 'tools/string'
 import FormStyles from 'screens/account/Form.css'
 import Styles from './SubmissionForm.css'
 
@@ -29,6 +29,7 @@ class EditableImage extends React.PureComponent {
     const { data } = await service.updateAccountSubmissionImage(id, { ...body, url })
     if (!data) {
       snackbar('No se pudo editar esta foto', 'error')
+      this.setState({ submitting: false })
       return
     }
 
@@ -51,7 +52,10 @@ class EditableImage extends React.PureComponent {
       <div className={Styles.thumbnailContainer}>
         <a
           className={Styles.thumbnail}
-          style={{ backgroundImage: `url("${thumborUrl(image, 480, 480, true)}")` }}
+          style={{
+            backgroundImage: `url("${thumborUrl(image, 480, 480, { crop: true, rotate: false })}")`,
+            ...imageStyleObject(image),
+          }}
           href={thumborUrl(image, 1280, 1280)}
           target="_blank"
         />

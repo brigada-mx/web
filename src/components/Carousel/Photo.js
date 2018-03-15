@@ -32,7 +32,10 @@ const Photo = (props) => {
   return (
     <div className={Styles.outerBox}>
       <div className={Styles.innerBox}>
-        {lazyLoad ? <div /> : <img src={thumborUrl(image, 1280, 1280)} alt={description} />}
+        {lazyLoad ? <div /> : <img
+          src={thumborUrl(image, 1280, 1280)}
+          alt={description}
+        />}
         <div>
           <div className={Styles.labelContainer}>
             <span className={Styles.label}>{moment(submitted).format('h:mma, DD MMMM YYYY')}</span>

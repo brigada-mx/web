@@ -9,7 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import '!style-loader!css-loader!react-table/react-table.css'
 
 import ConfirmButton from 'components/ConfirmButton'
-import { tokenMatch, thumborUrl } from 'tools/string'
+import { tokenMatch, thumborUrl, imageStyleObject } from 'tools/string'
 import FormStyles from 'screens/account/Form.css'
 import SubmissionActionSelect from './SubmissionActionSelect'
 import Styles from './SubmissionTable.css'
@@ -38,7 +38,10 @@ const SubmissionTable = ({
             <div
               key={image.url}
               className={Styles.thumbnail}
-              style={{ backgroundImage: `url("${thumborUrl(image, 120, 120, true)}")` }}
+              style={{
+                backgroundImage: `url("${thumborUrl(image, 120, 120, { crop: true, rotate: false })}")`,
+                ...imageStyleObject(image),
+              }}
             />
           )
         })

@@ -4,6 +4,7 @@
   height: 100vh;
   bottom: 0;
   background-color: white;
+  overflow: auto;
 }
 
 .closeButton {
