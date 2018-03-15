@@ -30,7 +30,7 @@ const DmgBarChart = ({ destroyed, habit, notHabit }) => {
   ]
 
   return (
-    <ResponsiveContainer width="100%" height={134}>
+    <ResponsiveContainer width="100%" height={166}>
       <BarChart
         data={data}
         margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
