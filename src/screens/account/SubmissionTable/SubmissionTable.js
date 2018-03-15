@@ -38,7 +38,7 @@ const SubmissionTable = ({
             <div
               key={image.url}
               className={Styles.thumbnail}
-              style={{ backgroundImage: `url(${thumborUrl(image, 120, 120, true)})` }}
+              style={{ backgroundImage: `url("${thumborUrl(image, 120, 120, true)}")` }}
             />
           )
         })

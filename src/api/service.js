@@ -151,6 +151,10 @@ class Service {
     const body = { archived }
     return sendToApiAuth(`account/submissions/${id}/archive/`, { method: 'POST', body })
   }
+
+  updateAccountSubmissionImage = async (id, body) => {
+    return sendToApiAuth(`account/submissions/${id}/image/`, { method: 'PUT', body })
+  }
 }
 
 /**

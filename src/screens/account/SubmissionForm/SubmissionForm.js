@@ -12,9 +12,9 @@ import { projectTypeByValue } from 'src/choices'
 import ConfirmButton from 'components/ConfirmButton'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { TextField, Toggle, SelectField } from 'components/Fields'
-import { thumborUrl } from 'tools/string'
 import FormStyles from 'screens/account/Form.css'
 import Styles from './SubmissionForm.css'
+import EditableImage from './EditableImage'
 
 
 const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, actionSearch = [] }) => {
@@ -139,18 +139,22 @@ class SubmissionFormWrapper extends React.Component {
     this.props.snackbar('Mandaste estas fotos al basurero', 'success')
   }
 
+  handleUpdatePhoto = () => {
+    this.loadSubmission()
+    this.loadSubmissionsForAction()
+  }
+
   render() {
-    const { submission, actions } = this.props
+    const { submission, actions, submissionId } = this.props
     if (!submission.id) return <LoadingIndicatorCircle className={FormStyles.loader} />
 
     const thumbs = submission.images.map((image) => {
       return (
-        <a
+        <EditableImage
+          onUpdate={this.handleUpdatePhoto}
           key={image.url}
-          className={Styles.thumbnail}
-          style={{ backgroundImage: `url(${thumborUrl(image, 480, 480, true)})` }}
-          href={thumborUrl(image, 1280, 1280)}
-          target="_blank"
+          image={image}
+          submissionId={submissionId}
         />
       )
     })
@@ -162,12 +166,12 @@ class SubmissionFormWrapper extends React.Component {
             onSubmit={this.handleSubmit}
             initialValues={submission}
             actionSearch={actions}
-            form={`accountUpdateSubmission_${this.props.submissionId}`}
+            form={`accountUpdateSubmission_${submissionId}`}
             onDelete={this.handleDelete}
             enableReinitialize
           />
         </div>
-        <div className={Styles.thumbnailContainer}>{thumbs}</div>
+        <div className={Styles.thumbnailsContainer}>{thumbs}</div>
       </React.Fragment>
     )
   }

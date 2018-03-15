@@ -137,7 +137,7 @@ class ActionListItem extends React.PureComponent {
       const count = l > 1 ? (
         <div
           className={Styles.thumbnailCount}
-          style={{ backgroundImage: `url(${thumborUrl(images[1], 240, 240, true)})` }}
+          style={{ backgroundImage: `url("${thumborUrl(images[1], 240, 240, true)}")` }}
         >
           <span className={Styles.thumbnailCountOverlay}>+{l - 1}</span>
         </div>) : null
@@ -145,13 +145,13 @@ class ActionListItem extends React.PureComponent {
         <div onClick={handleClickPhotos} className={Styles.thumbnailContainer}>
           <div
             className={`${Styles.thumbnail} xs-hidden`}
-            style={{ backgroundImage: `url(${thumborUrl(images[0], 240, 240, true)})` }}
+            style={{ backgroundImage: `url("${thumborUrl(images[0], 240, 240, true)}")` }}
           >
             {count}
           </div>
           <div
             className={`${Styles.thumbnail} lg-hidden md-hidden sm-hidden`}
-            style={{ backgroundImage: `url(${thumborUrl(images[0], 1280, 240, true)})` }}
+            style={{ backgroundImage: `url("${thumborUrl(images[0], 1280, 240, true)}")` }}
           >
             {count}
           </div>

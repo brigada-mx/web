@@ -1,4 +1,5 @@
 import moment from 'moment'
+import ReactGA from 'react-ga'
 
 import Colors from 'src/colors'
 
