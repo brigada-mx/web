@@ -340,8 +340,16 @@
   .description {
     margin: 17px 0 19px 0;
   }
+  .cardBottom {
+    flex-direction: column;
+  }
   .donationContainer {
     width: 100%;
+    margin-right: 0px;
+  }
+  .datesContainer {
+    display: flex;
+    margin-top: 16px;
   }
   .datesContainer .label {
     width: unset;
@@ -349,8 +357,5 @@
   }
   .label {
     text-align: left;
-  }
-  .datesContainer {
-    display: flex;
   }
 }
