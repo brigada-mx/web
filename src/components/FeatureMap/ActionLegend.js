@@ -11,7 +11,7 @@ const ActionLegend = () => {
       <div className={Styles.legendItem}>
         <div>
           <span className={Styles.circle} style={{ backgroundColor: '#3DC59F' }} />
-          <span className={Styles.label}>Fotos de proyectos</span>
+          <span className={Styles.label}>FOTOS DE PROYECTOS</span>
         </div>
       </div>
     </div>

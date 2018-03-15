@@ -59,7 +59,7 @@ const Nav = () => {
     <React.Fragment>
       <nav className={`${Styles.container} wrapper row middle between`}>
 
-        <a href="/"><img src={LogoImg} width="auto" height="22px" alt="Logo" /></a>
+        <a href="/"><img src={LogoImg} width="auto" height="24px" alt="Logo" /></a>
 
         <div className="end">
           <div className={`${Styles.links} sm-hidden xs-hidden`}>
