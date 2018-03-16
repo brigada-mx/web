@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { fireGaEvent } from 'tools/other'
-import { phoneLink } from 'tools/string'
+import { phoneLink, getTextWidth } from 'tools/string'
 import Styles from './PhoneBox.css'
 
 
@@ -20,7 +20,9 @@ class PhoneBox extends React.Component {
   }
 
   render() {
-    const { phone, name } = this.props
+    let { phone, name } = this.props
+    const text = name && name.length > phone.length ? name : phone
+    const textWidth = getTextWidth(text, 'roboto-700 13px')
     const { focused } = this.state
 
     if (window.innerWidth >= 768) {
@@ -29,10 +31,11 @@ class PhoneBox extends React.Component {
           onClick={this.toggle}
           className={Styles.box}
         >
-          {focused && <div className={Styles.tooltip}>
-            {name && <span className={Styles.name}>{name}</span>}
-            <span className={Styles.phone}>{phone}</span>
-          </div>
+          {focused &&
+            <div style={{ left: -0.5 * textWidth + 12.5 }} className={Styles.tooltip}>
+              {name && <span className={Styles.name}>{name}</span>}
+              <span className={Styles.phone}>{phone}</span>
+            </div>
           }
         </div>
       )
