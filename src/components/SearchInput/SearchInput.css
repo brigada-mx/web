@@ -21,6 +21,7 @@
   letter-spacing: .52px;
   line-height: 12px;
   color: #CDCFD1;
+  transition: all .15s linear;
 }
 
 .search:focus::placeholder {

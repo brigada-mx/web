@@ -6,6 +6,14 @@
   border-bottom: 1px solid brandOffWhite;
 }
 
+a img {
+  transition: all .15s linear;
+}
+
+a:hover img {
+  opacity: 0.8;
+}
+
 .links a {
   font-family: 'nunito-sans-800', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -18,6 +26,7 @@
   padding: 28px 0 26px 0;
   display: inline-block;
   color: #5A5A5D;
+  transition: all .15s linear;
 }
 
 .links a:hover {

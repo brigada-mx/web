@@ -17,6 +17,19 @@ div .Select .Select-control:hover {
   color: #141418;
   letter-spacing: 0.6px;
   padding-left: 0px;
+  transition: all .15s linear;
+}
+
+.Select.is-open .Select-control .Select-placeholder {
+  color: #3DC59F;
+}
+
+.Select-control:hover .Select-placeholder {
+  color: #3DC59F;
+}
+
+.Select-control:hover .Select-placeholder {
+  color: #3DC59F;
 }
 
 .Select-control .Select-arrow-zone {
@@ -28,6 +41,11 @@ div .Select .Select-control:hover {
   background: no-repeat url('assets/img/dropdown-arrow.svg');
   width: 8px;
   height: 5px;
+  transition: all .15s linear;
+}
+
+.Select-control:hover .Select-arrow-zone .Select-arrow {
+  background: no-repeat url('assets/img/dropdown-arrow-accent.svg');
 }
 
 .Select .Select-menu-outer {
@@ -133,6 +151,7 @@ div.Select-value span.Select-value-icon:hover {
 }
 
 .Select.is-open > .Select-control .Select-arrow {
+  top: 0px !important;
   background: no-repeat url('assets/img/dropdown-arrow-accent.svg');
 }
 

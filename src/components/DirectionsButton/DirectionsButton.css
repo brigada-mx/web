@@ -5,6 +5,7 @@
   width: 80px;
   height: 80px;
   background-color: #3DC59F;
+  transition: all .15s linear;
 }
 
 .button:hover {

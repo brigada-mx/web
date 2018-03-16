@@ -7,13 +7,18 @@
   position: relative;
   cursor: pointer;
   text-decoration: none;
+  transition: all .15s linear;
+}
+
+.box:hover {
+  background-color: #13A68C;
 }
 
 .tooltip {
   z-index: 2;
   position: absolute;
-  top: -46px;
-  left: -15px;
+  top: -66px;
+  left: -20%;
   background-color: #EDF1F5;
   text-align: center;
   font-family: 'roboto-700', sans-serif;
@@ -21,7 +26,9 @@
   color: #141418;
   letter-spacing: 0.52px;
   line-height: 12px;
-  padding: 10px
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .tooltip:after {
@@ -33,6 +40,15 @@
   border-width: 5px;
   border-style: solid;
   border-color: #EDF1F5 transparent transparent transparent;
+}
+
+.name {
+  white-space: nowrap;
+  margin-bottom: 8px;
+}
+
+.phone {
+  white-space: nowrap;
 }
 
 @media screen and (min-width: 1440px) {

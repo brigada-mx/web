@@ -12,6 +12,14 @@
   display: inline-block;
 }
 
+a {
+  transition: all .15s linear;
+}
+
+a:hover {
+  color: #13A68C;
+}
+
 .breadcrumbLinks span {
   display: inline-block;
 }
@@ -71,7 +79,12 @@
 }
 
 .ellipsis {
+  transition: all .15s linear;
   -webkit-text-fill-color: #3DC587;
+}
+
+.ellipsis:hover {
+  -webkit-text-fill-color: #13A68C;
 }
 
 .fieldValue a {
