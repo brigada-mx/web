@@ -11,7 +11,7 @@ import Colors from 'src/Colors'
 import Styles from './Nav.css'
 
 
-const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer }) => {
+const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer, livechat }) => {
   const selected = { color: Colors.brandGreen }
 
   const locIsActive = (match, location) => {
@@ -24,11 +24,16 @@ const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer }) => {
     return pathname.startsWith('/organizaciones')
   }
 
+  const openChat = () => {
+    livechat(true)
+  }
+
   return (
     <React.Fragment>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">Comunidades</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/organizaciones">Organizaciones</NavLink>
       <a href="http://brigada.mx/nosotros">Nosotros</a>
+      <Link onClick={openChat} className={classNameLink} to="#">Soporte</Link>
       <Link onClick={onHideDrawer} className={classNameLink} to="/cuenta">{token ? 'Mi cuenta' : 'Login'}</Link>
     </React.Fragment>
   )
@@ -36,6 +41,7 @@ const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer }) => {
 
 NavLinks.propTypes = {
   onHideDrawer: PropTypes.func.isRequired,
+  livechat: PropTypes.func.isRequired,
   token: PropTypes.string,
   classNameLink: PropTypes.string,
   activeStyle: PropTypes.object,
@@ -49,6 +55,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onHideDrawer: () => Actions.drawerToggle(dispatch, { visible: false }),
+    livechat: open => Actions.livechat(dispatch, { open }),
   }
 }
 

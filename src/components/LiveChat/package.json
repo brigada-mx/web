@@ -1,0 +1,6 @@
+{
+  "name": "LiveChat",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LiveChat.js"
+}

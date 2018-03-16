@@ -59,3 +59,10 @@ export async function snackbar(dispatch, { message, status }) {
     payload: { message, status },
   })
 }
+
+export async function livechat(dispatch, { open }) {
+  dispatch({
+    type: 'LIVECHAT',
+    payload: { open },
+  })
+}

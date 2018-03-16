@@ -13,6 +13,7 @@ import { localStorage } from 'tools/storage'
 import SnackBar from 'components/SnackBar'
 import Nav from 'components/Nav'
 import AccountNav from 'components/AccountNav'
+import LiveChat from 'components/LiveChat'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
@@ -74,6 +75,7 @@ const App = () => {
       <Router>
         <div>
           <Route path="/" component={gaLogPageView} />
+          <Route path="/" component={LiveChat} />
           <Route exact path="/" component={Nav} />
           <Route path="/(comunidades|organizaciones|nosotros)" component={Nav} />
 

@@ -12,12 +12,13 @@ import IconButton from 'material-ui/IconButton'
 import FlatButton from 'material-ui/FlatButton'
 
 import * as Actions from 'src/actions'
+import LiveChat from 'components/LiveChat'
 import env from 'src/env'
 import service from 'api/service'
 import Styles from './AccountNav.css'
 
 
-const AccountNav = ({ history, location, onLogout, token, orgId }) => {
+const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => {
   const handleHomeClick = () => {
     if (location.pathname !== '/cuenta') history.push('/cuenta')
   }
@@ -37,8 +38,17 @@ const AccountNav = ({ history, location, onLogout, token, orgId }) => {
     return '/'
   }
 
+  const openChat = () => {
+    livechat(true)
+  }
+
   const menu = (
     <React.Fragment>
+      <FlatButton
+        containerElement={<Link to="#" />}
+        onClick={openChat}
+        label="Soporte"
+      />
       <FlatButton
         containerElement={<ReactGA.OutboundLink eventLabel="survey" to={env.surveyUrl} target="_blank" />}
         label="Subir Fotos"
@@ -77,6 +87,7 @@ AccountNav.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   onLogout: PropTypes.func.isRequired,
+  livechat: PropTypes.func.isRequired,
   token: PropTypes.string,
   orgId: PropTypes.number,
 }
@@ -89,6 +100,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogout: () => Actions.authUnset(dispatch),
+    livechat: open => Actions.livechat(dispatch, { open }),
   }
 }
 
