@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router-dom'
 import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, LabelList } from 'recharts'
+import { Sticky, StickyContainer } from 'react-sticky'
 
 import FeatureMap from 'components/FeatureMap'
 import MetricsBar from 'components/MetricsBar'
@@ -118,7 +119,7 @@ class LocalityScreenView extends React.Component {
 
   setDocumentTitle = (name) => {
     if (this._documentTitle) return
-    const title = `Comunidades - ${name} - Brigada` // stackoverflow style
+    const title = `${name} - Brigada` // stackoverflow style
     document.title = title
     this._documentTitle = title
   }
@@ -374,7 +375,7 @@ class LocalityScreenView extends React.Component {
           </div>
         </div>
 
-        <div className={`${Styles.actionsContainer} row`}>
+        <StickyContainer className={`${Styles.actionsContainer} row`}>
           <div className="col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
             <ActionList
               screen="loc"
@@ -387,13 +388,20 @@ class LocalityScreenView extends React.Component {
             />
           </div>
           <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
-            {actionMap &&
-              <div className={Styles.mapContainer}>
-                {actionMap}
-              </div>
-            }
+            <Sticky>
+              {
+                ({ style }) => {
+                  return actionMap && <div style={{
+                    ...style,
+                    height: '100vh',
+                    width: '100%',
+                    overflow: 'auto',
+                  }}>{actionMap}</div>
+                }
+              }
+            </Sticky>
           </div>
-        </div>
+        </StickyContainer>
       </div>
     )
   }

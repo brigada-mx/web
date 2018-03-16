@@ -181,8 +181,6 @@ a:hover {
 }
 
 .actionListContainer {
-  max-height: 847px;
-  overflow-y: scroll;
   background-color: #F6F8FA;
 }
 
