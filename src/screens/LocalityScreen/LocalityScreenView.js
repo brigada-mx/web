@@ -348,32 +348,38 @@ class LocalityScreenView extends React.Component {
       />
     )
 
-    return (
-      <div>
-        <div className={Styles.actionMetricsContainer}>
-          <div className="row">
-            <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between gutter bottom-xs">
-              <div className={Styles.vizHeader}>
-                <span className={Styles.vizLabel}>PROYECTOS DE<br />RECONSTRUCCIÓN</span>
-                <span className={Styles.vizCount}>{actions.length}</span>
-              </div>
-              <div className={Styles.vizHeader}>
-                <span className={Styles.vizLabel}>ORGANIZACIONES<br />COMPROMETIDAS</span>
-                <span className={Styles.vizCount}>{Object.keys(orgs).length}</span>
-              </div>
-              <div className={Styles.vizHeader}>
-                <span className={Styles.vizLabel}>INVERSIÓN<br />ESTIMADA</span>
-                <span className={Styles.vizCount}>{fmtBudget(budget)}</span>
-              </div>
+    const actionMetrics = (
+      <div className={Styles.actionMetricsContainer}>
+        <div className="row">
+          <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4 flex between gutter bottom-xs">
+            <div className={Styles.vizHeader}>
+              <span className={Styles.vizLabel}>PROYECTOS DE<br />RECONSTRUCCIÓN</span>
+              <span className={Styles.vizCount}>{actions.length}</span>
             </div>
-          </div>
-          <div className={`${Styles.actionProgress} row`}>
-            <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4">
-              <span className={Styles.vizLabel}>AVANCE</span>
-              <StackedMetricsBar labels={labels} values={status} />
+            <div className={Styles.vizHeader}>
+              <span className={Styles.vizLabel}>ORGANIZACIONES<br />COMPROMETIDAS</span>
+              <span className={Styles.vizCount}>{Object.keys(orgs).length}</span>
+            </div>
+            <div className={Styles.vizHeader}>
+              <span className={Styles.vizLabel}>INVERSIÓN<br />ESTIMADA</span>
+              <span className={Styles.vizCount}>{fmtBudget(budget)}</span>
             </div>
           </div>
         </div>
+        <div className={`${Styles.actionProgress} row`}>
+          <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-xs-4">
+            <span className={Styles.vizLabel}>AVANCE</span>
+            <StackedMetricsBar labels={labels} values={status} />
+          </div>
+        </div>
+      </div>
+    )
+
+    if (actions.length === 0) return actionMetrics
+
+    return (
+      <div>
+        {actionMetrics}
 
         <StickyContainer className={`${Styles.actionsContainer} row`}>
           <div className="col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
