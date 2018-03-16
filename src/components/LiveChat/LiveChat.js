@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import LiveChatLoader from './LiveChatLoader'
-import Styles from './LiveChat.css'
 
 
 const LiveChat = ({ open }) => {

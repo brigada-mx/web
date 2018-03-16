@@ -23,6 +23,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Perfil - Brigada'
     this.loadMe()
     this.loadOrganization()
   }

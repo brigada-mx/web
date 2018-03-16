@@ -87,6 +87,7 @@ class MapScreen extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Brigada'
     this._mounted = true
     this.props.history.replace({
       pathname: '/',

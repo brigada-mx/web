@@ -36,6 +36,7 @@ class ActionScreen extends React.Component {
   }
 
   componentDidMount() {
+    document.title = `Proyecto ${this.props.actionKey} - Brigada`
     this.loadAction()
     this.loadDonors()
   }

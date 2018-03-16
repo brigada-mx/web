@@ -12,7 +12,6 @@ import IconButton from 'material-ui/IconButton'
 import FlatButton from 'material-ui/FlatButton'
 
 import * as Actions from 'src/actions'
-import LiveChat from 'components/LiveChat'
 import env from 'src/env'
 import service from 'api/service'
 import Styles from './AccountNav.css'

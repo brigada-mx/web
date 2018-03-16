@@ -35,6 +35,13 @@ class OrganizationScreenView extends React.Component {
     }
   }
 
+  setDocumentTitle = (name) => {
+    if (this._documentTitle) return
+    const title = `Organizaciones - ${name} - Brigada`
+    document.title = title
+    this._documentTitle = title
+  }
+
   handleClickFeature = (feature) => {
     this.props.history.push(`/comunidades/${feature.properties.id}`)
   }
@@ -159,6 +166,7 @@ class OrganizationScreenView extends React.Component {
     const { organization: { loading, data, error } } = this.props
     if (loading || !data) return <LoadingIndicatorCircle />
 
+    this.setDocumentTitle(data.name)
     const {
       actions,
       contact: { email, phone, website, address, person_responsible: person },

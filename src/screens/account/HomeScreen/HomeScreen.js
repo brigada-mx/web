@@ -39,6 +39,7 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Cuenta - Brigada'
     this.loadOrganization()
     this.loadActions()
     this.loadSubmissions()

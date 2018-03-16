@@ -72,6 +72,7 @@ class OrganizationListScreenView extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Organizaciones - Brigada'
     this.props.history.replace({
       pathname: '/organizaciones',
       state: {},

@@ -116,6 +116,13 @@ class LocalityScreenView extends React.Component {
     }
   }
 
+  setDocumentTitle = (name) => {
+    if (this._documentTitle) return
+    const title = `Comunidades - ${name} - Brigada` // stackoverflow style
+    document.title = title
+    this._documentTitle = title
+  }
+
   handleClickFeature = (feature) => {
   }
 
@@ -171,6 +178,7 @@ class LocalityScreenView extends React.Component {
 
     if (loading) return <LoadingIndicatorCircle />
     if (data) {
+      this.setDocumentTitle(data.name)
       const {
         name, municipality_name: munName, state_name: stateName, cvegeo, location, meta,
       } = data
