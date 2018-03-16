@@ -32,6 +32,10 @@
   color: #5A5A5D;
 }
 
+.links .button:hover {
+  border: 1px solid brandGreen;
+}
+
 @media screen and (min-width: 980px) {
   a img {
     margin-top: 3px;
