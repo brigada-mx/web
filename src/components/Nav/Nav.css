@@ -7,21 +7,29 @@
 }
 
 .links a {
-  font-family: 'nunito-sans-900', sans-serif;
+  font-family: 'nunito-sans-800', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 11px;
   letter-spacing: .8px;
-  margin-left: 44px;
+  margin-left: 27px;
   text-decoration: none;
   text-transform: uppercase;
-  padding: 30px 0 24px 0;
+  padding: 28px 0 26px 0;
   display: inline-block;
   color: #5A5A5D;
 }
 
 .links a:hover {
   color: brandGreen;
+}
+
+.links .button {
+  border: 1px solid #5A5A5D;
+  padding: 12px 0 10px 0;
+  width: 110px;
+  text-align: center;
+  color: #5A5A5D;
 }
 
 @media screen and (min-width: 980px) {
