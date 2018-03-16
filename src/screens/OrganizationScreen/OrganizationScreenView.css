@@ -174,6 +174,8 @@ a:hover {
 
 .metricValue {
   font-family: 'nunito-sans-200';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-size: 48px;
   color: #3DC587;
   letter-spacing: -0.1px;
