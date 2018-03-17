@@ -57,12 +57,16 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
     }
   }
 
-  if (features.length === 0) return null
+  const fitBounds = fitBoundsFromCoords(locations)
+
   return (
     <FeatureMap
       {...rest}
+      interactive={locations.length > 0}
+      initialZoom={locations.length > 0 ? 13 : 5.5}
+      zoom={locations.length > 0}
       disableKeyboard
-      fitBounds={fitBoundsFromCoords(locations)}
+      fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
       fitBoundsOptions={fitBoundsOptions}
       features={features}
       layer={layer}

@@ -34,6 +34,7 @@ class FeatureMap extends React.Component {
       scrollZoom: false,
       keyboard: !props.disableKeyboard,
       dragPan: props.dragPan,
+      interactive: props.interactive,
     })
   }
 
@@ -83,7 +84,7 @@ class FeatureMap extends React.Component {
   }
 
   render() {
-    const { popup, legend, fitBounds } = this.props
+    const { popup, legend, fitBounds, zoom } = this.props
     if (!_.isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
     const { Mapbox } = this
     if (!Mapbox) return null
@@ -104,14 +105,16 @@ class FeatureMap extends React.Component {
       >
         {popup}
         {legend}
-        <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />
+        {zoom && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
       </Mapbox>
     )
   }
 }
 
 FeatureMap.propTypes = {
+  zoom: PropTypes.bool,
   dragPan: PropTypes.bool,
+  interactive: PropTypes.bool,
   initialZoom: PropTypes.number,
   disableKeyboard: PropTypes.bool,
   coordinates: PropTypes.arrayOf(PropTypes.number),
@@ -127,6 +130,8 @@ FeatureMap.propTypes = {
 }
 
 FeatureMap.defaultProps = {
+  zoom: true,
+  interactive: true,
   dragPan: true,
   disableKeyboard: false,
   onClickFeature: () => {},
