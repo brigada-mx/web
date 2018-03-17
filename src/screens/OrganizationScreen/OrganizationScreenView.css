@@ -400,34 +400,34 @@ a:hover {
   .emptyMetric {
     flex-direction: column;
   }
-  .metric:nth-of-type(1) {
+  .metricsContainer div:nth-child(1) {
     order: 2;
   }
-  .metric:nth-of-type(2) {
+  .metricsContainer div:nth-child(2) {
     order: 3;
     padding-right: 16px;
   }
-  .metric:nth-of-type(3) {
+  .metricsContainer div:nth-child(3) {
     order: 1;
     padding-left: 16px;
   }
-  .metric:nth-of-type(1) .metricValue {
+  .metricsContainer div:nth-child(1) .metricValue {
     margin-bottom: 2px;
   }
-  .metric:nth-of-type(2) .metricLabel {
+  .metricsContainer div:nth-child(2) .metricLabel {
     color: #CFCFCF;
   }
-  .metric:nth-of-type(2) .metricValue {
+  .metricsContainer div:nth-child(2) .metricValue {
     font-size: 24px;
     color: #9F9F9F;
     letter-spacing: 0;
     line-height: 30px;
     margin-bottom: 11px;
   }
-  .metric:nth-of-type(3) .metricLabel {
+  .metricsContainer div:nth-child(3) .metricLabel {
     color: #CFCFCF;
   }
-  .metric:nth-of-type(3) .metricValue {
+  .metricsContainer div:nth-child(3) .metricValue {
     font-size: 24px;
     color: #9F9F9F;
     letter-spacing: 0;
