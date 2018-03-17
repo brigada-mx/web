@@ -77,6 +77,24 @@ a:hover {
   margin-bottom: 47px;
 }
 
+.headerSourceWrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.source {
+opacity: 0.4;
+font-family: 'nunito-sans-300', sans-serif;
+font-size: 10px;
+color: #0F0F0F;
+letter-spacing: 0.16px;
+line-height: 13px;
+margin-bottom: 11px;
+}
+
 .vizHeader {
   display: inline-flex;
   flex-direction: row;

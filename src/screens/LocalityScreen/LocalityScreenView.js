@@ -249,9 +249,12 @@ class LocalityScreenView extends React.Component {
           </div>
           <div className="row">
             <div className="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3 col-sm-8 col-xs-4 lg-gutter md-gutter">
-              <div className={Styles.vizHeader}>
-                <span className={Styles.vizLabel}>VIVIENDAS<br />DAÑADAS</span>
-                <span className={Styles.vizCount}>{fmtNum(total)}</span>
+              <div className={Styles.headerSourceWrap}>
+                <div className={Styles.vizHeader}>
+                  <span className={Styles.vizLabel}>VIVIENDAS<br />DAÑADAS</span>
+                  <span className={Styles.vizCount}>{fmtNum(total)}</span>
+                </div>
+                <div className={Styles.source}>Fuente: SEDATU</div>
               </div>
               <div className={Styles.dmgChartContainer}>
                 <DmgBarChart
@@ -262,9 +265,12 @@ class LocalityScreenView extends React.Component {
               </div>
             </div>
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 col-xs-4">
-              <div className={Styles.vizHeader}>
-                <span className={Styles.vizLabel}>REZAGO<br />SOCIAL</span>
-                <span className={Styles.vizCount}>{margGrade}</span>
+              <div className={Styles.headerSourceWrap}>
+                <div className={Styles.vizHeader}>
+                  <span className={Styles.vizLabel}>REZAGO<br />SOCIAL</span>
+                  <span className={Styles.vizCount}>{margGrade}</span>
+                </div>
+                <div className={Styles.source}>Fuente: CONEVAL</div>
               </div>
               <div className={Styles.margContainer}>
                 <div className={Styles.margColumn}>{bars.slice(0, 6)}</div>
