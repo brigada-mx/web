@@ -159,7 +159,7 @@ class Service {
 
 /**
  * Fetches data. Throws results into Redux and/or passes them to `onResponse`.
- * Backs of exponentially if fetch throws exception.
+ * Backs off exponentially if fetch throws exception.
  */
 export const getBackoff = async (...args) => {
   let count = 0
@@ -195,10 +195,10 @@ export const getBackoffComponent = async (...args) => {
       const modified = onResponse(response)
       if (modified) response = modified
     }
-    const { data, error, exception } = response
+    const { data, error, exception, status } = response
 
-    if (data) self.setState({ [stateKey]: { loading: false, data, error: undefined } })
-    if (error) self.setState({ [stateKey]: { loading: false, error } })
+    if (data) self.setState({ [stateKey]: { loading: false, data, error: undefined, status } })
+    if (error) self.setState({ [stateKey]: { loading: false, error, status } })
     if (exception && self._mounted) {
       setTimeout(() => inner(self, stateKey, getter, onResponse), delay)
       if (count < 4) delay *= 2

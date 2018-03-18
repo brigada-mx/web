@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { ResponsiveContainer, BarChart, Bar, XAxis, CartesianGrid, LabelList } from 'recharts'
 import { Sticky, StickyContainer } from 'react-sticky'
 
@@ -175,9 +175,10 @@ class LocalityScreenView extends React.Component {
   }
 
   renderLocalitySection = () => {
-    const { locality: { loading, data, error } } = this.props
-
+    const { locality: { loading, data, error, status } } = this.props
+    if (status === 404) return <Redirect to="/" />
     if (loading) return <LoadingIndicatorCircle />
+
     if (data) {
       this.setDocumentTitle(data.name)
       const {

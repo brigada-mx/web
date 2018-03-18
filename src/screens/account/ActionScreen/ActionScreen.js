@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
@@ -147,7 +147,8 @@ class ActionScreen extends React.Component {
   }
 
   render() {
-    const { action, donors, donations } = this.props
+    const { action, donors, donations, status } = this.props
+    if (status === 404) return <Redirect to="/cuenta" />
     const { submissions = [] } = action
     const { submissionId, localitiesSearch, trashModal } = this.state
 
@@ -242,15 +243,17 @@ const mapStateToProps = (state, props) => {
   let donors = []
   const donations = { donations: [] }
 
+  const reduxAction = state.getter[`accountAction_${actionKey}`]
+  const status = reduxAction && reduxAction.status
   try {
-    action = prepareInitialActionValues(state.getter[`accountAction_${actionKey}`].data || {})
+    action = prepareInitialActionValues(reduxAction.data || {})
     donations.donations = action.donations.map(d => prepareInitialDonationValues(d))
   } catch (e) {}
   try {
     donors = state.getter.donors.data.results || []
   } catch (e) {}
 
-  return { action, donations, donors }
+  return { action, donations, donors, status }
 }
 
 const mapDispatchToProps = (dispatch) => {

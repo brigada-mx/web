@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { Sticky, StickyContainer } from 'react-sticky'
 
 import LocalityDamageMap from 'components/LocalityDamageMap'
@@ -164,7 +164,8 @@ class OrganizationScreenView extends React.Component {
   }
 
   render() {
-    const { organization: { loading, data, error } } = this.props
+    const { organization: { loading, data, error, status } } = this.props
+    if (status === 404) return <Redirect to="/organizaciones" />
     if (loading || !data) return <LoadingIndicatorCircle />
 
     this.setDocumentTitle(data.name)

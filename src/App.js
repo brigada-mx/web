@@ -3,7 +3,7 @@ import React from 'react'
 
 import ReactGA from 'react-ga'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
@@ -38,12 +38,6 @@ const ActionScreenWrapper = ({ match }) => {
   return <ActionScreen actionKey={Number.parseInt(match.params.key, 10)} />
 }
 
-const AboutScreen = () => (
-  <div>
-    <h2>Nosotros</h2>
-  </div>
-)
-
 
 const appReducer = combineReducers({
   ...reducers,
@@ -72,36 +66,36 @@ const gaLogPageView = () => {
 const App = () => {
   return (
     <Provider store={store}>
-      <Router>
-        <div>
-          <Route path="/" component={gaLogPageView} />
-          <Route path="/" component={LiveChat} />
-          <Route exact path="/" component={Nav} />
-          <Route path="/(comunidades|organizaciones|nosotros)" component={Nav} />
+      <MuiThemeProvider>
+        <Router>
+          <div>
+            <Route path="/" component={gaLogPageView} />
+            <LiveChat />
+            <SnackBar />
 
-          <Route exact path="/" component={MapScreen} />
-          <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
+            <Route exact path="/" component={Nav} />
+            <Route path="/(comunidades|organizaciones)" component={Nav} />
+            <Route path="/cuenta" component={AccountNav} />
 
-          <Route exact path="/organizaciones" component={OrganizationListScreen} />
-          <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
+            <Switch>
+              <Route exact path="/" component={MapScreen} />
+              <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
 
-          <Route exact path="/nosotros" component={AboutScreen} />
+              <Route exact path="/organizaciones" component={OrganizationListScreen} />
+              <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
 
-          <MuiThemeProvider>
-            <React.Fragment>
-              <Route path="/cuenta" component={AccountNav} />
               <Route exact path="/restablecer/email" component={PasswordEmailScreen} />
               <Route path="/establecer" component={SetPasswordWithTokenScreen} />
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen)} />
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
               <Route exact path="/cuenta/fotos" component={protectedScreen(ActionScreen)} />
               <Route exact path="/cuenta/proyectos/:key" component={protectedScreen(ActionScreenWrapper)} />
-              <SnackBar />
-            </React.Fragment>
-          </MuiThemeProvider>
-
-        </div>
-      </Router>
+              <Redirect from="/cuenta" to="/cuenta" />
+              <Redirect to="/" />
+            </Switch>
+          </div>
+        </Router>
+      </MuiThemeProvider>
     </Provider>
   )
 }
