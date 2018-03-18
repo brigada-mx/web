@@ -56,14 +56,17 @@ export const fmtNum = (num) => {
 }
 
 export const fmtBudgetPlain = (b) => {
-  if (b !== 0 && !b) return '$'
+  if (!b) return '$'
   return `$${b.toLocaleString()}`
 }
 
-export const fmtBudget = (b) => { // round to 2 decimal places
-  if (b !== 0 && !b) return '$'
-  const millions = Math.round(b / 10000) / 100
-  return `$${millions}M`
+export const fmtBudget = (b) => { // round to 1 decimal place
+  if (!b) return '$'
+  const millions = Math.round(b / 100000) / 10
+  if (millions) return `$${millions}M`
+
+  const thousands = Math.round(b / 1000)
+  return `$${thousands}K`
 }
 
 export const addProtocol = (url, protocol = 'http') => {

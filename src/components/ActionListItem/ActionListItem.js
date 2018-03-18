@@ -181,7 +181,7 @@ class ActionListItem extends React.PureComponent {
               <div className={Styles.fieldsContainer}>
                 <div className={Styles.budgetContainer}>
                   <span className={Styles.label}>PRESUPUESTO: </span>
-                  <span className={Styles.value}>{budget ? `$${fmtNum(budget)}` : 'No disponible'}</span>
+                  <span className={Styles.value}>{budget ? `$${budget.toLocaleString()}` : 'No disponible'}</span>
                 </div>
                 {metrics()}
               </div>
