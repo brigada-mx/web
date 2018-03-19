@@ -10,6 +10,7 @@
     "material-ui": "^0.20.0",
     "moment": "^2.20.1",
     "prop-types": "^15.6.0",
+    "raven-js": "^3.23.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-ga": "^2.4.1",

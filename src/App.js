@@ -2,6 +2,7 @@
 import React from 'react'
 
 import ReactGA from 'react-ga'
+import Raven from 'raven-js'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
@@ -24,6 +25,7 @@ import protectedScreen from 'screens/account/ProtectedScreen'
 import ActionScreen from 'screens/account/ActionScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
 import HomeScreen from 'screens/account/HomeScreen'
+import env from 'src/env'
 
 
 const LocalityScreenWrapper = ({ match }) => {
@@ -55,7 +57,11 @@ const rootReducer = (state, action) => {
 const initialStore = { auth: JSON.parse(localStorage.getItem('719s:auth')) || {} }
 const store = createStore(rootReducer, initialStore)
 
-ReactGA.initialize('UA-108487748-1')
+ReactGA.initialize('UA-108487748-1', { testMode: env.env === 'dev' })
+
+if (env.env === 'prod') {
+  Raven.config('https://3036725f3ff84d689133e21736eaca9a@sentry.io/306469').install()
+}
 
 const gaLogPageView = () => {
   ReactGA.set({ page: window.location.pathname })
