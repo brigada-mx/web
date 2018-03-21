@@ -12,7 +12,10 @@ const UserForm = ({ handleSubmit, submitting }) => {
   return (
     <React.Fragment>
       <div>
-        <TextField name="full_name" hintText="Nombre completo" />
+        <TextField name="first_name" hintText="Nombre" />
+      </div>
+      <div>
+        <TextField name="surnames" hintText="Apellidos" />
       </div>
       <RaisedButton
         className={Styles.button}
@@ -28,9 +31,11 @@ UserForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = ({ full_name }) => {
-  if (!full_name) return { full_name: 'Se requiere un nombre' }
-  return {}
+const validate = ({ first_name: name, surnames }) => {
+  const errors = {}
+  if (!name) errors.first_name = 'Se requiere un nombre'
+  if (!surnames) errors.surnames = 'Se requieren apellidos'
+  return errors
 }
 
 const mapStateToProps = (state) => {
