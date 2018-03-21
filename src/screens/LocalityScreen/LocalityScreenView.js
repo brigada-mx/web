@@ -119,7 +119,7 @@ class LocalityScreenView extends React.Component {
 
   setDocumentTitle = (name) => {
     if (this._documentTitle) return
-    const title = `${name} - Brigada` // stackoverflow style
+    const title = `${name} - Brigada`
     document.title = title
     this._documentTitle = title
   }

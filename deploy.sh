@@ -1,6 +1,6 @@
 # `aws` command depends on credentials in `~/.aws` directory
+python3 ./tools/sitemap.py
 ./build.sh
-python3 tools/sitemap.py
 
 bucketname='719s-web'
 

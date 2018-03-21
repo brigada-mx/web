@@ -36,11 +36,19 @@ class OrganizationScreenView extends React.Component {
     }
   }
 
-  setDocumentTitle = (name) => {
+  setDocumentMeta = (name, description) => {
     if (this._documentTitle) return
     const title = `${name} - Brigada`
     document.title = title
     this._documentTitle = title
+
+    if (!description) return
+    const metaTags = document.getElementsByTagName('meta')
+    for (const meta of metaTags) {
+      if (meta.name.toLowerCase() === 'description') {
+        meta.content = description
+      }
+    }
   }
 
   handleClickFeature = (feature) => {
@@ -168,7 +176,7 @@ class OrganizationScreenView extends React.Component {
     if (status === 404) return <Redirect to="/organizaciones" />
     if (loading || !data) return <LoadingIndicatorCircle />
 
-    this.setDocumentTitle(data.name)
+    this.setDocumentMeta(data.name, data.desc)
     const {
       actions,
       contact: { email, phone, website, address, person_responsible: person },
