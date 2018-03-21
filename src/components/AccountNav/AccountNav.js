@@ -73,6 +73,7 @@ const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => 
   if (!token) return null
   return (
     <AppBar
+      className={Styles.nav}
       title="Mi Cuenta"
       onTitleClick={handleHomeClick}
       showMenuIconButton={false}

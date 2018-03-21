@@ -7,6 +7,9 @@
 .nav {
   flex: 1;
   margin-top: 50px;
+  position: sticky;
+  top: 100px;
+  max-height: 400px; /* must be less than height of parent container*/
 }
 
 .innerNav {
