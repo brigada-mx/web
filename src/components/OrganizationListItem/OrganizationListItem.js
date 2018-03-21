@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { Link } from 'react-router-dom'
+
 import { fmtBudget, truncate } from 'tools/string'
 import Styles from './OrganizationListItem.css'
 
 
 class OrganizationListItem extends React.PureComponent {
   render() {
-    const { organization, onClick, focused, onMouseEnter, onMouseLeave } = this.props
+    const { organization, onClick, focused, onMouseEnter, onMouseLeave, to = '' } = this.props
     const { name, actions, desc, image_count: numImages } = organization
     let budget = 0
     const countByTags = {}
@@ -24,19 +26,21 @@ class OrganizationListItem extends React.PureComponent {
       return { tag: k, count: countByTags[k] }
     }).sort((a, b) => a.count - b.count)
 
-    const handleClick = () => { onClick(organization) }
-    const handleMouseEnter = () => { onMouseEnter(organization) }
-    const handleMouseLeave = () => { onMouseLeave(organization) }
+    const handleClick = onClick && (() => { onClick(organization) })
+    const handleMouseEnter = onMouseEnter && (() => { onMouseEnter(organization) })
+    const handleMouseLeave = onMouseLeave && (() => { onMouseLeave(organization) })
 
     let className = Styles.orgCard
     if (focused) className = `${Styles.orgCard} ${Styles.orgCardFocused}`
 
     return (
-      <div
+      <Link
+        to={to}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={className}
+        style={{ textDecoration: 'none' }}
       >
         <div className={Styles.descriptionContainer}>
           <span className={Styles.name}>{name}</span>
@@ -59,23 +63,18 @@ class OrganizationListItem extends React.PureComponent {
             <span className={Styles.value}>{numImages}</span>
           </div>
         </div>
-      </div>
+      </Link>
     )
   }
 }
 
 OrganizationListItem.propTypes = {
   organization: PropTypes.object.isRequired,
+  to: PropTypes.string,
   focused: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
-}
-
-OrganizationListItem.defaultProps = {
-  onClick: () => {},
-  onMouseEnter: () => {},
-  onMouseLeave: () => {},
 }
 
 export default OrganizationListItem

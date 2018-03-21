@@ -34,6 +34,7 @@ class OrganizationList extends React.PureComponent {
       return (
         <OrganizationListItem
           key={id}
+          to={`/organizaciones/${id}`}
           organization={o}
           focused={id === focusedId}
           {...rest}
@@ -138,10 +139,6 @@ class OrganizationListScreenView extends React.Component {
 
   handleLeaveFeature = () => {
     this.setState({ popup: {} })
-  }
-
-  handleClickListItem = (item) => {
-    this.props.history.push(`/organizaciones/${item.id}`)
   }
 
   handleEnterListItem = (item) => {
@@ -296,7 +293,6 @@ class OrganizationListScreenView extends React.Component {
                 organizations={organizations}
                 onScroll={this.handleScroll}
                 focusedId={_focused && _focused.id}
-                onClick={this.handleClickListItem}
                 onMouseEnter={this.handleEnterListItem}
                 onMouseLeave={this.handleLeaveListItem}
               />

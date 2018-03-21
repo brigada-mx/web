@@ -45,13 +45,14 @@ class LocalityList extends React.PureComponent {
   render() {
     const { localities, focusedId, ...rest } = this.props
     const items = localities.slice(0, this.maxItems()).map((l) => {
-      const { cvegeo } = l
+      const { cvegeo, id } = l
       return (
         <LocalityListItem
           key={cvegeo}
           locality={l}
+          to={`/comunidades/${id}`}
           {...rest}
-          focused={focusedId === l.id && l.id !== undefined}
+          focused={focusedId === id && id !== undefined}
         />
       )
     })
@@ -174,10 +175,6 @@ class MapScreen extends React.Component {
     this.setState({ popup: null })
   }
 
-  handleClickListItem = (item) => {
-    this.props.history.push(`/comunidades/${item.id}`)
-  }
-
   handleEnterListItem = (item) => {
     this.setState({ popup: item })
   }
@@ -292,7 +289,6 @@ class MapScreen extends React.Component {
               <LocalityList
                 localities={filtered}
                 onScroll={this.handleScroll}
-                onClick={this.handleClickListItem}
                 onMouseEnter={this.handleEnterListItem}
                 onMouseLeave={this.handleLeaveListItem}
                 focusedId={popup ? popup.id : null}
