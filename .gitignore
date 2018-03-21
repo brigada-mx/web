@@ -7,3 +7,4 @@ sandbox/*
 .DS_Store
 requester.pyr
 src/data/*
+sitemap.xml
