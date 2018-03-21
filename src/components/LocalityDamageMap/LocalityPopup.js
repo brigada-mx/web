@@ -14,7 +14,7 @@ const LocalityPopup = ({ locality, organization, screen }) => {
 
   if (screen === 'loc') {
     return (
-      <Popup coordinates={[lng, lat]}>
+      <Popup offset={12} coordinates={[lng, lat]}>
         <span className={Styles.header}>
           <span className={Styles.loc}>{name},</span><span className={Styles.state}>{'\u00A0'}{stateName}</span>
         </span>
@@ -45,7 +45,7 @@ const LocalityPopup = ({ locality, organization, screen }) => {
   if (screen === 'org') {
     if (!organization) {
       return (
-        <Popup coordinates={[lng, lat]}>
+        <Popup offset={12} coordinates={[lng, lat]}>
           <span className={Styles.header}>{name}, {stateName}</span>
           <div className={Styles.item}>
             <span className={Styles.label}>Viviendas dañadas</span>
@@ -61,7 +61,7 @@ const LocalityPopup = ({ locality, organization, screen }) => {
 
     const actions = organization.actions.filter(a => locality.cvegeo === a.locality.cvegeo)
     return (
-      <Popup coordinates={[lng, lat]}>
+      <Popup offset={12} coordinates={[lng, lat]}>
         <span className={Styles.header}>{name}, {stateName}</span>
         <div className={Styles.item}>
           <span className={Styles.label}>Viviendas dañadas</span>

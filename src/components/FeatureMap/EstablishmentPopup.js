@@ -22,7 +22,7 @@ const EstablishmentPopup = ({ establishment }) => {
   } = establishment
 
   return (
-    <Popup coordinates={[lng, lat]}>
+    <Popup offset={10} coordinates={[lng, lat]}>
       <div className={Styles.container}>
         <p className={Styles.header}>{name}</p>
         <p className={Styles.address}>{street} {number === '0' ? '' : number}</p>

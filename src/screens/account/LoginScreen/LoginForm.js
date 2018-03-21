@@ -49,6 +49,7 @@ const LoginForm = ({ handleSubmit, submitting }) => {
       </div>
       <RaisedButton className={FormStyles.button} disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
       <Link className={Styles.link} to={forgotPasswordLink()}>No sé mi contraseña</Link>
+      <a className={Styles.link} href="https://goo.gl/forms/GPMPXnnK2j2IPeYk1">Crear una cuenta</a>
     </form>
   )
 }
