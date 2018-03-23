@@ -158,8 +158,8 @@ class Service {
 }
 
 /**
- * Fetches data. Throws results into Redux and/or passes them to `onResponse`.
- * Backs off exponentially if fetch throws exception.
+ * Fetches data. Optionally passes results to `onResponse` then throws them into
+ * Redux. Backs off exponentially if fetch throws exception.
  */
 export const getBackoff = async (...args) => {
   let count = 0

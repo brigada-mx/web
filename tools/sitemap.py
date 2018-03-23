@@ -34,7 +34,7 @@ def generate_sitemap(urls):
 
 
 if __name__ == '__main__':
-    r = requests.get('https://api.brigada.mx/api/organizations/', params={'page_size': 1000})
+    r = requests.get('https://api.brigada.mx/api/organizations/', params={'page_size': 1000}, timeout=15)
     r.raise_for_status()
     urls = [org_url(org['id']) for org in r.json()['results']]
     with open('dist/sitemap.xml', 'w') as file:

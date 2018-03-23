@@ -26,10 +26,10 @@ class Modal extends React.Component {
   }
 
   render() {
-    const { children, onClose, className = '' } = this.props
+    const { children, onClose, className = '', buttonClassName = '' } = this.props
     return ReactDOM.createPortal(
       <div className={`${Styles.container} ${className}`}>
-        <span className={Styles.closeButton} onClick={onClose}>X</span>
+        <span className={`${Styles.closeButton} ${buttonClassName}`} onClick={onClose}>X</span>
         {children}
       </div>,
       modalRoot,
@@ -41,6 +41,7 @@ Modal.propTypes = {
   children: PropTypes.any,
   onClose: PropTypes.func.isRequired,
   className: PropTypes.string,
+  buttonClassName: PropTypes.string,
   gaName: PropTypes.string,
 }
 
