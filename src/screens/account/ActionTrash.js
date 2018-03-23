@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import ActionTable from 'screens/account/ActionTable'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
 
 
 class ActionTrash extends React.Component {

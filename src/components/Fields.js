@@ -11,7 +11,7 @@ import {
   Toggle as ToggleInput,
 } from 'redux-form-material-ui'
 
-import Styles from 'screens/account/Form.css'
+import Styles from 'src/Form.css'
 
 
 const fieldOf = (inputComponent) => {

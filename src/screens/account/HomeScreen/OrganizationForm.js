@@ -8,7 +8,7 @@ import MenuItem from 'material-ui/MenuItem'
 import { TextField, SelectField } from 'components/Fields'
 import { sectors } from 'src/choices'
 import { normalizeTransparencyScore } from 'tools/other'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
 import Styles from './OrganizationForm.css'
 
 

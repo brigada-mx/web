@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
-import Styles from 'screens/account/Form.css'
+import Styles from 'src/Form.css'
 import UserForm from './UserForm'
 import ResetPasswordForm from './ResetPasswordForm'
 import ResetSecretKeyForm from './ResetSecretKeyForm'

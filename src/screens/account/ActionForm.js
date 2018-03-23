@@ -10,7 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { TextField, SelectField, Toggle, DatePicker, AutoComplete } from 'components/Fields'
 import ConfirmButton from 'components/ConfirmButton'
 import { projectTypes } from 'src/choices'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
 
 
 const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {

@@ -1,24 +1,31 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Link } from 'react-router-dom'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
+import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import * as Actions from 'src/actions'
 import { store } from 'src/App'
 import { TextField } from 'components/Fields'
 import { validateEmail } from 'tools/string'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
+import GlobalStyles from 'src/Global.css'
 import Styles from './LoginForm.css'
 
 
-const LoginForm = ({ handleSubmit, submitting }) => {
-  const forgotPasswordLink = () => {
+const LoginForm = ({ handleSubmit, submitting, modal }) => {
+  const handleForgotPassword = () => {
     try {
       const { email } = store.getState().form.login.values
-      return { pathname: '/restablecer/email', state: { email } }
+      modal('forgotPassword', { email })
     } catch (e) {
-      return '/restablecer/email'
+      modal('forgotPassword')
     }
+  }
+
+  const handleCreateAccount = () => {
+    modal('createAccount')
   }
 
   const handleKeyDown = (e) => {
@@ -33,6 +40,7 @@ const LoginForm = ({ handleSubmit, submitting }) => {
       className={FormStyles.formContainer}
       onKeyDown={handleKeyDown}
     >
+      <span className={FormStyles.formHeader}>Ingresar a tu cuenta</span>
       <div>
         <TextField
           name="email"
@@ -48,14 +56,17 @@ const LoginForm = ({ handleSubmit, submitting }) => {
         />
       </div>
       <RaisedButton className={FormStyles.button} disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
-      <Link className={Styles.link} to={forgotPasswordLink()}>No sé mi contraseña</Link>
-      <a className={Styles.link} href="https://goo.gl/forms/GPMPXnnK2j2IPeYk1">Crear una cuenta</a>
+      <div className={Styles.linkContainer}>
+        <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleForgotPassword}>Olvidé mi contraseña</span>
+        <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleCreateAccount}>Crear una cuenta</span>
+      </div>
     </form>
   )
 }
 
 LoginForm.propTypes = {
   ...rxfPropTypes,
+  modal: PropTypes.func.isRequired,
 }
 
 const validate = ({ email, password }) => {
@@ -65,4 +76,10 @@ const validate = ({ email, password }) => {
   return errors
 }
 
-export default reduxForm({ form: 'login', validate })(LoginForm)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
+  }
+}
+
+export default reduxForm({ form: 'login', validate })(connect(null, mapDispatchToProps)(LoginForm))

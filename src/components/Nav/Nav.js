@@ -7,12 +7,12 @@ import { connect } from 'react-redux'
 import * as Actions from 'src/actions'
 import Drawer from 'components/Drawer'
 import LogoImg from 'assets/img/logo.svg'
-import Colors from 'src/Colors'
+import colors from 'src/colors'
 import Styles from './Nav.css'
 
 
-const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer, livechat }) => {
-  const selected = { color: Colors.brandGreen }
+const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer, modal, livechat }) => {
+  const selected = { color: colors.brandGreen }
 
   const locIsActive = (match, location) => {
     const { pathname } = location
@@ -28,13 +28,19 @@ const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer, livech
     livechat(true)
   }
 
+  const handleClickLogin = () => {
+    onHideDrawer()
+    modal('login')
+  }
+
   return (
     <React.Fragment>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">Comunidades</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/organizaciones">Organizaciones</NavLink>
       <a href="http://brigada.mx/nosotros">Nosotros</a>
       <Link onClick={openChat} className={classNameLink} to="#">Soporte</Link>
-      <Link onClick={onHideDrawer} className={`${classNameLink} ${Styles.button}`} to="/cuenta">{token ? 'Mi cuenta' : 'Login'}</Link>
+      {token && <Link onClick={onHideDrawer} className={`${classNameLink} ${Styles.button}`} to="/cuenta">Mi Cuenta</Link>}
+      {!token && <a onClick={handleClickLogin} className={`${classNameLink} ${Styles.button}`}>Login</a>}
     </React.Fragment>
   )
 }
@@ -42,6 +48,7 @@ const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer, livech
 NavLinks.propTypes = {
   onHideDrawer: PropTypes.func.isRequired,
   livechat: PropTypes.func.isRequired,
+  modal: PropTypes.func.isRequired,
   token: PropTypes.string,
   classNameLink: PropTypes.string,
   activeStyle: PropTypes.object,
@@ -56,6 +63,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onHideDrawer: () => Actions.drawerToggle(dispatch, { visible: false }),
     livechat: open => Actions.livechat(dispatch, { open }),
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
   }
 }
 
@@ -69,10 +77,10 @@ const Nav = () => {
         <a href="http://brigada.mx"><img src={LogoImg} width="auto" height="24px" alt="Logo" /></a>
 
         <div className="end">
-          <div className={`${Styles.links} sm-hidden xs-hidden`}>
+          <div className={`${Styles.big} sm-hidden xs-hidden`}>
             <ReduxNavLinks />
           </div>
-          <Drawer classNameWrapper="lg-hidden md-hidden">
+          <Drawer classNameWrapper={`${Styles.small} lg-hidden md-hidden`}>
             <ReduxNavLinks activeStyle={{ borderRight: '2px solid #3DC59F' }} classNameLink={Styles.burgerNavLinks} />
           </Drawer>
         </div>

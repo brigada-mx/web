@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
+import * as Actions from 'src/actions'
+import { connect } from 'react-redux'
 import ReactGA from 'react-ga'
 
 import Styles from './Modal.css'
@@ -25,11 +27,17 @@ class Modal extends React.Component {
     } catch (exception) {}
   }
 
+  handleClose = () => {
+    const { closeModal, onClose } = this.props
+    closeModal()
+    onClose()
+  }
+
   render() {
-    const { children, onClose, className = '', buttonClassName = '' } = this.props
+    const { children, className = '', buttonClassName = '' } = this.props
     return ReactDOM.createPortal(
       <div className={`${Styles.container} ${className}`}>
-        <span className={`${Styles.closeButton} ${buttonClassName}`} onClick={onClose}>X</span>
+        <span className={`${Styles.closeButton} ${buttonClassName}`} onClick={this.handleClose}>X</span>
         {children}
       </div>,
       modalRoot,
@@ -40,9 +48,17 @@ class Modal extends React.Component {
 Modal.propTypes = {
   children: PropTypes.any,
   onClose: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   className: PropTypes.string,
   buttonClassName: PropTypes.string,
   gaName: PropTypes.string,
 }
 
-export default Modal
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    closeModal: () => Actions.modal(dispatch, ''),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Modal)

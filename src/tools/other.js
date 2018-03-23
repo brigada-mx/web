@@ -1,7 +1,7 @@
 import moment from 'moment'
 import ReactGA from 'react-ga'
 
-import Colors from 'src/colors'
+import colors from 'src/colors'
 
 
 export const itemFromScrollEvent = (e, items) => {
@@ -45,11 +45,11 @@ export const dmgGrade = (locality) => {
 
 export const metaByDmgGrade = (grade) => {
   const lookup = {
-    severe: { label: 'MUY GRAVE', labelFem: 'MUY GRAVE', color: Colors.severe },
-    high: { label: 'GRAVE', labelFem: 'GRAVE', color: Colors.high },
-    medium: { label: 'MEDIO', labelFem: 'MEDIA', color: Colors.medium },
-    low: { label: 'MENOR', labelFem: 'MENOR', color: Colors.low },
-    unknown: { label: 'SIN DATOS', labelFem: 'SIN DATOS', color: Colors.unknown },
+    severe: { label: 'MUY GRAVE', labelFem: 'MUY GRAVE', color: colors.severe },
+    high: { label: 'GRAVE', labelFem: 'GRAVE', color: colors.high },
+    medium: { label: 'MEDIO', labelFem: 'MEDIA', color: colors.medium },
+    low: { label: 'MENOR', labelFem: 'MENOR', color: colors.low },
+    unknown: { label: 'SIN DATOS', labelFem: 'SIN DATOS', color: colors.unknown },
   }
   return lookup[grade] || lookup.unknown
 }

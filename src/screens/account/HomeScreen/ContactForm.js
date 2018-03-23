@@ -9,7 +9,7 @@ import flattenObject from 'tools/flatten'
 import { TextField, SelectField } from 'components/Fields'
 import { validateEmail } from 'tools/string'
 import { states } from 'src/choices'
-import Styles from 'screens/account/Form.css'
+import Styles from 'src/Form.css'
 
 
 const ContactForm = ({ handleSubmit, submitting }) => {

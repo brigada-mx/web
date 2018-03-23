@@ -5,6 +5,7 @@ import auth from './auth'
 import getter from './getter'
 import snackbar from './snackbar'
 import livechat from './livechat'
+import modal from './modal'
 
 export default {
   drawer,
@@ -14,4 +15,5 @@ export default {
   getter,
   snackbar,
   livechat,
+  modal,
 }

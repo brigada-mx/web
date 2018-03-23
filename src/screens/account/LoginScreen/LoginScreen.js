@@ -2,17 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service from 'api/service'
 import LoginForm from './LoginForm'
 
 
-const LoginScreen = ({ onLogin, snackbar }) => {
+const LoginScreen = ({ onLogin, snackbar, history, location }) => {
   const handleSubmit = async ({ email, password }) => {
     const { data } = await service.token(email, password)
-    if (data) onLogin({ ...data, email })
-    else snackbar('No reconocemos este email/contraseña', 'error')
+    if (data) {
+      onLogin({ ...data, email })
+      if (location.pathname !== '/cuenta') history.push('/cuenta')
+    } else {
+      snackbar('No reconocemos este email/contraseña', 'error')
+    }
   }
 
   return <LoginForm onSubmit={handleSubmit} />
@@ -21,6 +26,8 @@ const LoginScreen = ({ onLogin, snackbar }) => {
 LoginScreen.propTypes = {
   onLogin: PropTypes.func.isRequired,
   snackbar: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -30,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(LoginScreen)
+export default withRouter(connect(null, mapDispatchToProps)(LoginScreen))

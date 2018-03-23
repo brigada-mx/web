@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import Snackbar from 'material-ui/Snackbar'
 
 import { connect } from 'react-redux'
-import Colors from 'src/Colors'
+import colors from 'src/colors'
 
 
 const snackBarRoot = document.getElementById('snackbar')
@@ -19,8 +19,8 @@ class SnackBar extends React.PureComponent {
   render() {
     const { id, message = '', status = 'neutral' } = this.props
     const colorByStatus = {
-      success: Colors.brandGreen,
-      error: Colors.severe,
+      success: colors.brandGreen,
+      error: colors.severe,
       neutral: 'white',
     }
 

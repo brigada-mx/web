@@ -7,7 +7,7 @@ import AutoCompleteMui from 'material-ui/AutoComplete'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { TextField, DatePicker, AutoComplete } from 'components/Fields'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
 
 
 const Donations = ({ fields, donorsSearch }) => { // eslint-disable-line react/prop-types

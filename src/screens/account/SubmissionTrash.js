@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import SubmissionTable from 'screens/account/SubmissionTable'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
 
 
 class SubmissionTrash extends React.Component {

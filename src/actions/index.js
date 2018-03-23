@@ -66,3 +66,10 @@ export async function livechat(dispatch, { open }) {
     payload: { open },
   })
 }
+
+export async function modal(dispatch, modalName, props = {}) {
+  dispatch({
+    type: 'MODAL',
+    payload: { modalName, ...props },
+  })
+}

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { TextField } from 'components/Fields'
-import Styles from 'screens/account/Form.css'
+import Styles from 'src/Form.css'
 
 
 const ResetSecretKeyForm = ({ handleSubmit, submitting }) => {

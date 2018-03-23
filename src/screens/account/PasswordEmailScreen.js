@@ -10,7 +10,7 @@ import * as Actions from 'src/actions'
 import { TextField } from 'components/Fields'
 import service from 'api/service'
 import { validateEmail } from 'tools/string'
-import Styles from 'screens/account/Form.css'
+import Styles from 'src/Form.css'
 
 
 const Form = ({ handleSubmit, submitting }) => {

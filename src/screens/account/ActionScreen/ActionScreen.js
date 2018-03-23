@@ -17,7 +17,7 @@ import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
 import SubmissionTrash from 'screens/account/SubmissionTrash'
 import { getProjectType } from 'src/choices'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
 import Styles from './ActionScreen.css'
 
 

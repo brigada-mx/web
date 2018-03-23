@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Colors from 'src/Colors'
+import colors from 'src/colors'
 import Styles from './MetricsBar.css'
 
 
@@ -32,7 +32,7 @@ class MetricsBar extends React.Component {
     if (Number.isNaN(doneFlex)) doneFlex = 0
     if (doneFlex > 1) doneFlex = 1
 
-    let doneColor = Colors.brandGreen
+    let doneColor = colors.brandGreen
     if (severity) {
       const multiplier = doneFlex ** 0.75
       const r = { start: 255, end: 255 }

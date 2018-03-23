@@ -12,7 +12,7 @@ import { projectTypeByValue } from 'src/choices'
 import ConfirmButton from 'components/ConfirmButton'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { TextField, Toggle, SelectField } from 'components/Fields'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
 import Styles from './SubmissionForm.css'
 import EditableImage from './EditableImage'
 

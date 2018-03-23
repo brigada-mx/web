@@ -6,15 +6,15 @@
   border-bottom: 1px solid brandOffWhite;
 }
 
-a img {
+.container a img {
   transition: all .15s linear;
 }
 
-a:hover img {
+.container a:hover img {
   opacity: 0.8;
 }
 
-.links a {
+.big a {
   font-family: 'nunito-sans-800', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -29,11 +29,15 @@ a:hover img {
   transition: all .15s linear;
 }
 
-.links a:hover {
+.big a:hover {
   color: brandGreen;
 }
 
-.links .button {
+.button {
+  cursor: pointer;
+}
+
+.big .button {
   border: 1px solid #5A5A5D;
   padding: 12px 0 10px 0;
   width: 110px;
@@ -41,12 +45,12 @@ a:hover img {
   color: #5A5A5D;
 }
 
-.links .button:hover {
+.big .button:hover {
   border: 1px solid brandGreen;
 }
 
 @media screen and (min-width: 980px) {
-  a img {
+  .big a img {
     margin-top: 3px;
   }
   .container {

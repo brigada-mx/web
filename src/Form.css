@@ -1,6 +1,19 @@
 @value colors: "src/colors.css";
 @value grey3 from colors;
 
+.formHeader {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  font-size: 23;
+}
+
+.formSubHeader {
+  margin-top: -30px;
+  margin-bottom: 40px;
+  font-size: 16;
+  color: grey3;
+}
+
 .loader {
   position: absolute;
   left: 50vw;

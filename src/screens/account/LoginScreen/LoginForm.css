@@ -1,10 +1,13 @@
+.linkContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .link {
-  font-family: 'nunito-sans', sans-serif;
-  font-size: 12px;
-  color: #3DC59F;
-  letter-spacing: 0.4px;
-  line-height: 16px;
   margin-top: 16px;
-  text-decoration: none;
-  display: table;
+}
+
+.link:first-of-type {
+  margin-right: 20px;
 }

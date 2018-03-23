@@ -5,7 +5,7 @@ import _ from 'lodash'
 import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 
 import env from 'src/env'
-import Colors from 'src/Colors'
+import colors from 'src/colors'
 import { generateSizeStops } from 'tools/other'
 import Styles from './LocalityDamageMap.css'
 
@@ -45,11 +45,11 @@ const layerPaint = {
   'circle-color': {
     property: 'total',
     stops: [
-      [-1, Colors.unknown],
-      [0, Colors.low],
-      [40, Colors.medium],
-      [250, Colors.high],
-      [1250, Colors.severe],
+      [-1, colors.unknown],
+      [0, colors.low],
+      [40, colors.medium],
+      [250, colors.high],
+      [1250, colors.severe],
     ],
   },
   'circle-opacity': 0.75,

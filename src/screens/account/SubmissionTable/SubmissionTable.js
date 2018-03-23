@@ -10,7 +10,7 @@ import '!style-loader!css-loader!react-table/react-table.css'
 
 import ConfirmButton from 'components/ConfirmButton'
 import { tokenMatch, thumborUrl, imageStyleObject } from 'tools/string'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
 import SubmissionActionSelect from './SubmissionActionSelect'
 import Styles from './SubmissionTable.css'
 

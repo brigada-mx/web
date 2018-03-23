@@ -10,7 +10,7 @@ import '!style-loader!css-loader!react-table/react-table.css'
 
 import { tokenMatch } from 'tools/string'
 import { projectTypeByValue } from 'src/choices'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
 import Styles from './ActionTable.css'
 
 

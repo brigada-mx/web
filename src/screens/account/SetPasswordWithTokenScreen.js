@@ -10,12 +10,15 @@ import * as Actions from 'src/actions'
 import service from 'api/service'
 import { parseQs } from 'tools/string'
 import { TextField } from 'components/Fields'
-import Styles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
+import Styles from 'src/Form.css'
 
 
 const Form = ({ handleSubmit, submitting }) => {
   return (
     <div className={Styles.formContainer}>
+      <span className={FormStyles.formHeader}>Establecer tu contraseña</span>
+      <span className={FormStyles.formSubHeader}>Ingresa tu nueva contraseña y repítela para confirmar</span>
       <div>
         <TextField
           type="password"

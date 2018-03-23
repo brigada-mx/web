@@ -10,7 +10,7 @@ import RotateRight from 'material-ui/svg-icons/image/rotate-right'
 import * as Actions from 'src/actions'
 import service from 'api/service'
 import { thumborUrl, imageStyleObject } from 'tools/string'
-import FormStyles from 'screens/account/Form.css'
+import FormStyles from 'src/Form.css'
 import Styles from './SubmissionForm.css'
 
 

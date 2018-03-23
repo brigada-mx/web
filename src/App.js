@@ -13,13 +13,13 @@ import reducers from 'src/reducers/index'
 import { localStorage } from 'tools/storage'
 import SnackBar from 'components/SnackBar'
 import Nav from 'components/Nav'
+import ModalSelector from 'components/Modal/ModalSelector'
 import AccountNav from 'components/AccountNav'
 import LiveChat from 'components/LiveChat'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
 import OrganizationScreen from 'screens/OrganizationScreen'
-import PasswordEmailScreen from 'screens/account/PasswordEmailScreen'
 import SetPasswordWithTokenScreen from 'screens/account/SetPasswordWithTokenScreen'
 import protectedScreen from 'screens/account/ProtectedScreen'
 import ActionScreen from 'screens/account/ActionScreen'
@@ -78,6 +78,7 @@ const App = () => {
             <Route path="/" component={gaLogPageView} />
             <LiveChat />
             <SnackBar />
+            <ModalSelector />
 
             <Route exact path="/" component={Nav} />
             <Route path="/(comunidades|organizaciones)" component={Nav} />
@@ -90,7 +91,6 @@ const App = () => {
               <Route exact path="/organizaciones" component={OrganizationListScreen} />
               <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
 
-              <Route exact path="/restablecer/email" component={PasswordEmailScreen} />
               <Route path="/establecer" component={SetPasswordWithTokenScreen} />
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen)} />
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
