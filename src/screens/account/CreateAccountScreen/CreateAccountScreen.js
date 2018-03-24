@@ -6,10 +6,10 @@ import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service from 'api/service'
-import LoginForm from './LoginForm'
+import CreateAccountForm from './CreateAccountForm'
 
 
-const LoginScreen = ({ onLogin, snackbar, history, location, closeModal }) => {
+const CreateAccountScreen = ({ onLogin, snackbar, history, location, closeModal }) => {
   const handleSubmit = async ({ email, password }) => {
     const { data } = await service.token(email, password)
     if (data) {
@@ -21,10 +21,10 @@ const LoginScreen = ({ onLogin, snackbar, history, location, closeModal }) => {
     }
   }
 
-  return <LoginForm onSubmit={handleSubmit} />
+  return <CreateAccountForm onSubmit={handleSubmit} />
 }
 
-LoginScreen.propTypes = {
+CreateAccountScreen.propTypes = {
   onLogin: PropTypes.func.isRequired,
   snackbar: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
@@ -40,4 +40,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(LoginScreen))
+export default withRouter(connect(null, mapDispatchToProps)(CreateAccountScreen))
