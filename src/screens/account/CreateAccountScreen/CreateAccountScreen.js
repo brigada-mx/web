@@ -12,7 +12,7 @@ const CreateAccountScreen = ({ snackbar, modal }) => {
   const handleSubmit = async ({ email, ...rest }) => {
     const { data } = await service.createAccount({ email, ...rest })
     if (data) modal('accountCreated', { email })
-    else snackbar('Hubo un error', 'error')
+    else snackbar('Hubo un error: igual y ya existe un usuario con este email, o un grupo con este nombre', 'error', 5000)
   }
 
   return <CreateAccountForm onSubmit={handleSubmit} />
@@ -26,7 +26,7 @@ CreateAccountScreen.propTypes = {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: auth => Actions.authSet(dispatch, { auth }),
-    snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
+    snackbar: (message, status, duration) => Actions.snackbar(dispatch, { message, status, duration }),
     modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
   }
 }

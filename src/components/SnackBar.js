@@ -17,7 +17,7 @@ class SnackBar extends React.PureComponent {
   }
 
   render() {
-    const { id, message = '', status = 'neutral' } = this.props
+    const { id, message = '', status = 'neutral', duration = 3000 } = this.props
     const colorByStatus = {
       success: colors.brandGreen,
       error: colors.severe,
@@ -29,7 +29,7 @@ class SnackBar extends React.PureComponent {
         ref={(el) => { this.snackbar = el }}
         open={Boolean(message)}
         message={message}
-        autoHideDuration={3000}
+        autoHideDuration={duration}
         contentStyle={{ color: colorByStatus[status], fontWeight: 'bold' }}
         onRequestClose={this.handleRequestClose}
       />,
@@ -42,11 +42,12 @@ SnackBar.propTypes = {
   id: PropTypes.number, // this prop ensures SnackBar re-renders even if message hasn't changed
   message: PropTypes.string,
   status: PropTypes.oneOf(['success', 'error', 'neutral']),
+  duration: PropTypes.number,
 }
 
 const mapStateToProps = (state) => {
-  const { id, message, status } = state.snackbar
-  return { id, message, status }
+  const { id, message, status, duration } = state.snackbar
+  return { id, message, status, duration }
 }
 
 export default connect(mapStateToProps, null)(SnackBar)
