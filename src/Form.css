@@ -4,7 +4,7 @@
 .formHeader {
   margin-top: 20px;
   margin-bottom: 40px;
-  font-size: 23;
+  font-size: 24;
 }
 
 .formSubHeader {
@@ -12,6 +12,12 @@
   margin-bottom: 40px;
   font-size: 16;
   color: grey3;
+}
+
+.formHeaderSmall {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 20;
 }
 
 .loader {

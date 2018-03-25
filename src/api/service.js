@@ -110,6 +110,10 @@ class Service {
     return sendToApiAuth(`account/actions_by_key/${key}/`)
   }
 
+  createAccount = async (body) => {
+    return sendToApiAuth('account/organizations/', { method: 'POST', body })
+  }
+
   resetAccountKey = async () => {
     return sendToApiAuth('account/organization/reset_key/', { method: 'POST' })
   }

@@ -1,0 +1,23 @@
+@value colors: "src/colors.css";
+@value grey3 from colors;
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  border: 1px solid #5A5A5D;
+  padding: 12px 0 10px 0;
+  width: 110px;
+  text-align: center;
+  color: #5A5A5D;
+  font-size: 15px;
+  align-self: flex-end;
+  margin-top: 30px;
+}
+
+.info {
+  color: grey3;
+  font-size: 15px;
+}

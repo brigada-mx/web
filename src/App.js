@@ -21,6 +21,7 @@ import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
 import OrganizationScreen from 'screens/OrganizationScreen'
 import SetPasswordWithTokenScreen from 'screens/account/SetPasswordWithTokenScreen'
+import CreateAccountScreen from 'screens/account/CreateAccountScreen'
 import protectedScreen from 'screens/account/ProtectedScreen'
 import ActionScreen from 'screens/account/ActionScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
@@ -92,6 +93,7 @@ const App = () => {
               <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
 
               <Route path="/establecer" component={SetPasswordWithTokenScreen} />
+              <Route path="/crear/cuenta" component={CreateAccountScreen} />
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen)} />
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
               <Route exact path="/cuenta/fotos" component={protectedScreen(ActionScreen)} />

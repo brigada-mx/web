@@ -23,14 +23,14 @@ class Modal extends React.Component {
 
   handleKeyDown = (e) => {
     try {
-      if (e.keyCode === 27) this.props.onClose() // 8 is keyCode for delete key
+      if (e.keyCode === 27) this.handleClose() // 8 is keyCode for delete key
     } catch (exception) {}
   }
 
   handleClose = () => {
     const { closeModal, onClose } = this.props
     closeModal()
-    onClose()
+    if (onClose) onClose()
   }
 
   render() {
@@ -47,7 +47,7 @@ class Modal extends React.Component {
 
 Modal.propTypes = {
   children: PropTypes.any,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   closeModal: PropTypes.func.isRequired,
   className: PropTypes.string,
   buttonClassName: PropTypes.string,

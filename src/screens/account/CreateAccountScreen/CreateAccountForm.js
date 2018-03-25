@@ -2,32 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
-import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
+import { RadioButton } from 'material-ui/RadioButton'
 
-import * as Actions from 'src/actions'
-import { store } from 'src/App'
-import { TextField } from 'components/Fields'
+import { TextField, RadioButtonGroup } from 'components/Fields'
 import { validateEmail } from 'tools/string'
 import FormStyles from 'src/Form.css'
-import GlobalStyles from 'src/Global.css'
 import Styles from './CreateAccountForm.css'
 
 
-const CreateAccountForm = ({ handleSubmit, submitting, modal }) => {
-  const handleForgotPassword = () => {
-    try {
-      const { email } = store.getState().form.login.values
-      modal('forgotPassword', { email })
-    } catch (e) {
-      modal('forgotPassword')
-    }
-  }
-
-  const handleCreateAccount = () => {
-    modal('createAccount')
-  }
-
+const CreateAccountForm = ({ handleSubmit, submitting }) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && e.shiftKey === false) {
       e.preventDefault()
@@ -40,46 +24,57 @@ const CreateAccountForm = ({ handleSubmit, submitting, modal }) => {
       className={FormStyles.formContainer}
       onKeyDown={handleKeyDown}
     >
-      <span className={FormStyles.formHeader}>Ingresar a tu cuenta</span>
+      <span className={FormStyles.formHeader}>Registro para Brigada</span>
+      <div>
+        <TextField
+          name="first_name"
+          hintText="Tu nombre"
+        />
+      </div>
+      <div>
+        <TextField
+          name="surnames"
+          hintText="Tus apellidos"
+        />
+      </div>
       <div>
         <TextField
           name="email"
-          hintText="Email"
+          hintText="Tu email"
           autoCapitalize="off"
         />
       </div>
+      <span className={FormStyles.formHeaderSmall}>¿Cómo se llama tu grupo?</span>
       <div>
         <TextField
-          type="password"
-          name="password"
-          hintText="Contraseña"
+          name="name"
+          hintText="Nombre de tu grupo"
         />
       </div>
-      <RaisedButton className={FormStyles.button} disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
-      <div className={Styles.linkContainer}>
-        <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleForgotPassword}>Olvidé mi contraseña</span>
-        <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleCreateAccount}>Crear una cuenta</span>
-      </div>
+      <span className={FormStyles.formHeaderSmall}>¿A qué sector pertenece?</span>
+      <RadioButtonGroup className={Styles.buttonGroup} name="sector">
+        <RadioButton className={Styles.radioButton} value="civil" label="Civil" />
+        <RadioButton className={Styles.radioButton} value="public" label="Público" />
+        <RadioButton className={Styles.radioButton} value="private" label="Privado" />
+        <RadioButton className={Styles.radioButton} value="religious" label="Religioso" />
+      </RadioButtonGroup>
+      <RaisedButton className={FormStyles.button} disabled={submitting} label="REGISTRAR" onClick={handleSubmit} />
     </form>
   )
 }
 
 CreateAccountForm.propTypes = {
   ...rxfPropTypes,
-  modal: PropTypes.func.isRequired,
 }
 
-const validate = ({ email, password }) => {
+const validate = ({ first_name: firstName, surnames, email, name, sector }) => {
   const errors = {}
+  if (!firstName) errors.first_name = 'Ingresa tu nombre'
+  if (!surnames) errors.surnames = 'Ingresa apellidos'
   if (!validateEmail(email)) errors.email = 'Se requiere un email válido'
-  if (!password) errors.password = 'Ingresa tu contraseña'
+  if (!name) errors.name = 'Ingresa el nombre de tu grupo'
+  if (!sector) errors.sector = 'Selecciona un sector'
   return errors
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
-  }
-}
-
-export default reduxForm({ form: 'login', validate })(connect(null, mapDispatchToProps)(CreateAccountForm))
+export default reduxForm({ form: 'createAccount', validate })(CreateAccountForm)

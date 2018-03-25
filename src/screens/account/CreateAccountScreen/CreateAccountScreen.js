@@ -2,42 +2,33 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service from 'api/service'
 import CreateAccountForm from './CreateAccountForm'
 
 
-const CreateAccountScreen = ({ onLogin, snackbar, history, location, closeModal }) => {
-  const handleSubmit = async ({ email, password }) => {
-    const { data } = await service.token(email, password)
-    if (data) {
-      onLogin({ ...data, email })
-      if (location.pathname !== '/cuenta') history.push('/cuenta')
-      closeModal()
-    } else {
-      snackbar('No reconocemos este email/contraseña', 'error')
-    }
+const CreateAccountScreen = ({ snackbar, modal }) => {
+  const handleSubmit = async ({ email, ...rest }) => {
+    const { data } = await service.createAccount({ email, ...rest })
+    if (data) modal('accountCreated', { email })
+    else snackbar('Hubo un error', 'error')
   }
 
   return <CreateAccountForm onSubmit={handleSubmit} />
 }
 
 CreateAccountScreen.propTypes = {
-  onLogin: PropTypes.func.isRequired,
   snackbar: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
+  modal: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: auth => Actions.authSet(dispatch, { auth }),
     snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
-    closeModal: () => Actions.modal(dispatch, ''),
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(CreateAccountScreen))
+export default connect(null, mapDispatchToProps)(CreateAccountScreen)
