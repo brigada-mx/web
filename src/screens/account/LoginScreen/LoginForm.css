@@ -2,10 +2,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.link {
-  margin-top: 16px;
+  margin-top: 26px;
 }
 
 .link:first-of-type {

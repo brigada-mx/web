@@ -40,6 +40,7 @@ const LoginForm = ({ handleSubmit, submitting, modal }) => {
       className={FormStyles.formContainer}
       onKeyDown={handleKeyDown}
     >
+      <span className={FormStyles.formLogo} />
       <span className={FormStyles.formHeader}>Ingresar a tu cuenta</span>
       <div>
         <TextField
@@ -55,10 +56,12 @@ const LoginForm = ({ handleSubmit, submitting, modal }) => {
           hintText="Contraseña"
         />
       </div>
-      <RaisedButton className={FormStyles.button} disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
-      <div className={Styles.linkContainer}>
-        <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleForgotPassword}>Olvidé mi contraseña</span>
-        <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleCreateAccount}>Crear una cuenta</span>
+      <div className={FormStyles.buttonContainer}>
+        <RaisedButton className={FormStyles.button} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
+        <div className={Styles.linkContainer}>
+          <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleForgotPassword}>Olvidé mi contraseña</span>
+          <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleCreateAccount}>Crear una cuenta</span>
+        </div>
       </div>
     </form>
   )

@@ -11,12 +11,15 @@ import { TextField } from 'components/Fields'
 import service from 'api/service'
 import { validateEmail } from 'tools/string'
 import Styles from 'src/Form.css'
+import FormStyles from 'src/Form.css'
 
 
 const Form = ({ handleSubmit, submitting }) => {
   return (
     <div className={Styles.formContainer}>
-      <span className={Styles.formHeader}>Ingresa tu email y te mandaremos un correo para restablecer tu contraseña</span>
+      <span className={FormStyles.formLogo} />
+      <span className={Styles.formHeader}>Olvidé mi contraseña</span>
+      <span className={Styles.formText}>Ingresa tu email y te mandaremos un correo para restablecer tu contraseña</span>
       <div>
         <TextField
           name="email"
@@ -24,7 +27,9 @@ const Form = ({ handleSubmit, submitting }) => {
           autoCapitalize="off"
         />
       </div>
-      <RaisedButton className={Styles.button} disabled={submitting} label="ENVIAR EMAIL" onClick={handleSubmit} />
+      <div className={FormStyles.buttonContainer}>
+        <RaisedButton className={FormStyles.button} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="ENVIAR EMAIL" onClick={handleSubmit} />
+      </div>
     </div>
   )
 }

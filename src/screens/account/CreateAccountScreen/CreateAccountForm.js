@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
-import { RadioButton } from 'material-ui/RadioButton'
+import MenuItem from 'material-ui/MenuItem'
 
-import { TextField, RadioButtonGroup } from 'components/Fields'
+import { TextField, SelectField } from 'components/Fields'
 import { validateEmail } from 'tools/string'
 import FormStyles from 'src/Form.css'
 import Styles from './CreateAccountForm.css'
@@ -24,41 +24,44 @@ const CreateAccountForm = ({ handleSubmit, submitting }) => {
       className={FormStyles.formContainer}
       onKeyDown={handleKeyDown}
     >
+      <span className={FormStyles.formLogo} />
       <span className={FormStyles.formHeader}>Registro para Brigada</span>
       <div>
         <TextField
           name="first_name"
-          hintText="Tu nombre"
+          hintText="Nombre"
         />
       </div>
       <div>
         <TextField
           name="surnames"
-          hintText="Tus apellidos"
+          hintText="Apellido"
         />
       </div>
       <div>
         <TextField
           name="email"
-          hintText="Tu email"
+          hintText="Email"
           autoCapitalize="off"
         />
       </div>
-      <span className={FormStyles.formHeaderSmall}>¿Cómo se llama tu grupo?</span>
       <div>
         <TextField
           name="name"
-          hintText="Nombre de tu grupo"
+          hintText="¿Cómo se llama tu organización?"
         />
       </div>
-      <span className={FormStyles.formHeaderSmall}>¿A qué sector pertenece?</span>
-      <RadioButtonGroup className={Styles.buttonGroup} name="sector">
-        <RadioButton className={Styles.radioButton} value="civil" label="Civil" />
-        <RadioButton className={Styles.radioButton} value="public" label="Público" />
-        <RadioButton className={Styles.radioButton} value="private" label="Privado" />
-        <RadioButton className={Styles.radioButton} value="religious" label="Religioso" />
-      </RadioButtonGroup>
-      <RaisedButton className={FormStyles.button} disabled={submitting} label="REGISTRAR" onClick={handleSubmit} />
+      <div className={FormStyles.dropdown}>
+        <SelectField floatingLabelText="¿A qué sector pertenece?" name="sector">
+          <MenuItem value="civil" primaryText="Civil" />
+          <MenuItem value="public" primaryText="Público" />
+          <MenuItem value="private" primaryText="Privado" />
+          <MenuItem value="religious" primaryText="Religioso" />
+        </SelectField>
+      </div>
+      <div className={FormStyles.buttonContainer}>
+        <RaisedButton className={FormStyles.button} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="REGISTRAR" onClick={handleSubmit} />
+      </div>
     </form>
   )
 }
