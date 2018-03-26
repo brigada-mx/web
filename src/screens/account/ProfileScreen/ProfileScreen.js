@@ -9,6 +9,8 @@ import FlatButton from 'material-ui/FlatButton'
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import FormStyles from 'src/Form.css'
+import WithSideNav from 'components/WithSideNav'
+import BackButton from 'components/BackButton'
 import UserForm from './UserForm'
 import ResetPasswordForm from './ResetPasswordForm'
 import ResetSecretKeyForm from './ResetSecretKeyForm'
@@ -90,29 +92,31 @@ class Profile extends React.Component {
     ]
 
     return (
-      <div className={FormStyles.formContainer}>
-        <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>Tu nombre</div>
-          <UserForm onSubmit={this.handleSubmitName} enableReinitialize />
+      <WithSideNav navComponents={<BackButton to="/cuenta" />}>
+        <div className={FormStyles.formContainer}>
+          <div className={FormStyles.card}>
+            <div className={FormStyles.sectionHeader}>Tu nombre</div>
+            <UserForm onSubmit={this.handleSubmitName} enableReinitialize />
+          </div>
+          <div className={FormStyles.card}>
+            <div className={FormStyles.sectionHeader}>Tu contraseña</div>
+            <ResetPasswordForm onSubmit={this.handleSubmitPassword} />
+          </div>
+          <div className={FormStyles.card}>
+            <div className={FormStyles.sectionHeader}>Tu llave secreta</div>
+            <ResetSecretKeyForm onSubmit={this.handleResetKeyOpen} enableReinitialize />
+          </div>
+          <Dialog
+            title="¡Cuidado!"
+            actions={actions}
+            modal={false}
+            open={this.state.resetKeyOpen}
+            onRequestClose={this.handleResetKeyClose}
+          >
+            {'Si cambias tu llave secreta, tendrás que mandar la nueva llave a todas las personas que suben fotos a tu organización.'}
+          </Dialog>
         </div>
-        <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>Tu contraseña</div>
-          <ResetPasswordForm onSubmit={this.handleSubmitPassword} />
-        </div>
-        <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>Tu llave secreta</div>
-          <ResetSecretKeyForm onSubmit={this.handleResetKeyOpen} enableReinitialize />
-        </div>
-        <Dialog
-          title="¡Cuidado!"
-          actions={actions}
-          modal={false}
-          open={this.state.resetKeyOpen}
-          onRequestClose={this.handleResetKeyClose}
-        >
-          {'Si cambias tu llave secreta, tendrás que mandar la nueva llave a todas las personas que suben fotos a tu organización.'}
-        </Dialog>
-      </div>
+      </WithSideNav>
     )
   }
 }
