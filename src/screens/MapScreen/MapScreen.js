@@ -327,13 +327,15 @@ MapScreen.propTypes = {
   onChangeFilter: PropTypes.func.isRequired,
 }
 
+MapScreen.defaultProps = {
+  valState: [],
+  valMuni: [],
+  valMarg: [],
+  valNumActions: [],
+}
+
 const mapStateToProps = (state) => {
-  const {
-    valState = [],
-    valMuni = [],
-    valMarg = [],
-    valNumActions = [],
-  } = state.filter.localities
+  const { valState, valMuni, valMarg, valNumActions } = state.filter.localities
   return { valState, valMuni, valMarg, valNumActions }
 }
 

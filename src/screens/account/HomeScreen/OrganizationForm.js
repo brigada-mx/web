@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import MenuItem from 'material-ui/MenuItem'
 
-import { TextField, SelectField } from 'components/Fields'
+import { TextField, SelectField, Toggle } from 'components/Fields'
 import { sectors } from 'src/choices'
 import { normalizeTransparencyScore } from 'tools/other'
 import FormStyles from 'src/Form.css'
@@ -46,6 +46,12 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
             name="desc"
             multiLine
             rows={3}
+          />
+        </div>
+        <div className={FormStyles.toggle}>
+          <Toggle
+            label="Estamos buscando voluntarios"
+            name="accepting_help"
           />
         </div>
         <div>

@@ -1,13 +1,9 @@
-.linkContainer {
+.buttonGroup {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.link {
-  margin-top: 16px;
-}
-
-.link:first-of-type {
-  margin-right: 20px;
+.radioButton {
+  margin-right: 50px;
 }

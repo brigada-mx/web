@@ -333,13 +333,15 @@ OrganizationListScreenView.propTypes = {
   onChangeFilter: PropTypes.func.isRequired,
 }
 
+OrganizationListScreenView.defaultProps = {
+  valState: [],
+  valMuni: [],
+  valSector: [],
+  valActionType: [],
+}
+
 const mapStateToProps = (state) => {
-  const {
-    valState = [],
-    valMuni = [],
-    valSector = [],
-    valActionType = [],
-  } = state.filter.organizations
+  const { valState, valMuni, valSector, valActionType } = state.filter.organizations
   return { valState, valMuni, valSector, valActionType }
 }
 

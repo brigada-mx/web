@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import LoginScreen from 'screens/account/LoginScreen'
 import PasswordEmailScreen from 'screens/account/PasswordEmailScreen'
+import CreateAccountScreen from 'screens/account/CreateAccountScreen'
+import AccountCreated from 'screens/account/AccountCreated'
 import Modal from './Modal'
 import Styles from './Modal.css'
 
@@ -12,6 +14,8 @@ import Styles from './Modal.css'
 const componentByName = {
   login: LoginScreen,
   forgotPassword: PasswordEmailScreen,
+  createAccount: CreateAccountScreen,
+  accountCreated: AccountCreated,
 }
 
 const ModalSelector = (props) => {
