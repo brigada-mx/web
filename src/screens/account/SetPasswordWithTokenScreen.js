@@ -18,7 +18,7 @@ const Form = ({ handleSubmit, submitting }) => {
   return (
     <div className={Styles.formContainer}>
       <span className={FormStyles.formHeader}>Establecer tu contraseña</span>
-      <span className={FormStyles.formSubHeader}>Ingresa tu nueva contraseña y repítela para confirmar</span>
+      <span className={FormStyles.formText}>Ingresa tu nueva contraseña y repítela para confirmar</span>
       <div>
         <TextField
           type="password"
@@ -33,7 +33,9 @@ const Form = ({ handleSubmit, submitting }) => {
           hintText="Confirmar contraseña"
         />
       </div>
-      <RaisedButton className={Styles.button} disabled={submitting} label="ESTABLECER" onClick={handleSubmit} />
+      <div className={FormStyles.buttonContainer}>
+        <RaisedButton className={FormStyles.button} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="ESTABLECER" onClick={handleSubmit} />
+      </div>
     </div>
   )
 }
