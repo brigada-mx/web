@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
@@ -12,7 +13,7 @@ import FormStyles from 'src/Form.css'
 import Styles from './OrganizationForm.css'
 
 
-const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
+const OrganizationForm = ({ handleSubmit, submitting, initialValues, help = false }) => {
   const { secret_key: key, score } = initialValues
   const normalizedScore = Number(normalizeTransparencyScore(score || 0)).toFixed(1)
   return (
@@ -56,6 +57,17 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
             name="accepting_help"
           />
         </div>
+        {help ? (
+          <div className={FormStyles.row}>
+            <TextField
+              floatingLabelText="Describe perfil de voluntario"
+              className={FormStyles.wideInput}
+              name="help_desc"
+              multiLine
+              rows={3}
+            />
+          </div>
+        ) : null}
         <div className={FormStyles.row}>
           <RaisedButton
             backgroundColor="#3DC59F"
@@ -73,6 +85,7 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
 
 OrganizationForm.propTypes = {
   ...rxfPropTypes,
+  help: PropTypes.bool,
 }
 
 const validate = ({ name, desc, year_established: year }) => {
@@ -85,7 +98,8 @@ const validate = ({ name, desc, year_established: year }) => {
 
 const mapStateToProps = (state) => {
   try {
-    return { initialValues: state.getter.accountOrganization.data || {} }
+    const { accepting_help: help } = state.form.accountOrganization.values
+    return { initialValues: state.getter.accountOrganization.data || {}, help }
   } catch (e) {
     return { initialValues: {} }
   }
