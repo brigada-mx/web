@@ -119,9 +119,9 @@ export const imageStyleObject = ({ rotate = 0, hidden, datetime }) => {
 }
 
 export const getTextWidth = (text, font) => {
-    const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement('canvas'))
-    const context = canvas.getContext('2d')
-    context.font = font
-    const metrics = context.measureText(text)
-    return metrics.width
+  const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement('canvas'))
+  const context = canvas.getContext('2d')
+  context.font = font
+  const metrics = context.measureText(text)
+  return metrics.width
 }

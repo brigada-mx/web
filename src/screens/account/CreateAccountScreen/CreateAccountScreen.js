@@ -10,9 +10,14 @@ import CreateAccountForm from './CreateAccountForm'
 
 const CreateAccountScreen = ({ snackbar, modal }) => {
   const handleSubmit = async ({ email, ...rest }) => {
-    const { data } = await service.createAccount({ email, ...rest })
-    if (data) modal('accountCreated', { email })
-    else snackbar('Hubo un error: igual y ya existe un usuario con este email, o un grupo con este nombre', 'error', 5000)
+    const { data, status } = await service.createAccount({ email, ...rest })
+    if (data) {
+      modal('accountCreated', { email })
+      return
+    }
+
+    if (status === 400) snackbar('Hubo un error: igual y ya existe un usuario con este email, o un grupo con este nombre', 'error', 5000)
+    else snackbar('Checa tu conexión', 'error')
   }
 
   return <CreateAccountForm onSubmit={handleSubmit} />

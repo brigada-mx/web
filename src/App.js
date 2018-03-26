@@ -93,7 +93,7 @@ const App = () => {
               <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
 
               <Route path="/establecer" component={SetPasswordWithTokenScreen} />
-              <Route path="/crear/cuenta" component={CreateAccountScreen} />
+              <Route exact path="/crear/cuenta" component={CreateAccountScreen} />
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen)} />
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
               <Route exact path="/cuenta/fotos" component={protectedScreen(ActionScreen)} />

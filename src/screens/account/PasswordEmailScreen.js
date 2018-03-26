@@ -16,6 +16,7 @@ import Styles from 'src/Form.css'
 const Form = ({ handleSubmit, submitting }) => {
   return (
     <div className={Styles.formContainer}>
+      <span className={Styles.formHeader}>Ingresa tu email y te mandaremos un correo para restablecer tu contraseña</span>
       <div>
         <TextField
           name="email"
