@@ -36,10 +36,14 @@ class Modal extends React.Component {
   render() {
     const { children, className = '', buttonClassName = '' } = this.props
     return ReactDOM.createPortal(
-      <div className={`${Styles.container} ${className}`}>
-        <span className={`${Styles.closeButton} ${buttonClassName}`} onClick={this.handleClose}>X</span>
-        {children}
-      </div>,
+      <div className={Styles.overlay}>
+        <div className={`${Styles.container} ${className}`}>
+          <div className={Styles.content}>
+            <span className={`${Styles.closeButton} ${buttonClassName}`} onClick={this.handleClose}>X</span>
+            {children}
+          </div>
+        </div>,
+      </div>
       modalRoot,
     )
   }
