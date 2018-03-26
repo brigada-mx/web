@@ -124,6 +124,10 @@ class OrganizationListScreenView extends React.Component {
     this.props.onChangeFilter('valActionType', v)
   }
 
+  handleAcceptingHelpChange = (v) => {
+    this.props.onChangeFilter('valAcceptingHelp', v)
+  }
+
   handleOrganizationSearchKeyUp = (organizationSearch) => {
     this.setState({ organizationSearch })
   }
@@ -156,10 +160,10 @@ class OrganizationListScreenView extends React.Component {
 
   filterOrganizations = (results) => {
     const { organizationSearch } = this.state
-    const { valState, valMuni, valSector, valActionType } = this.props
+    const { valState, valMuni, valSector, valActionType, valAcceptingHelp } = this.props
 
     return results.filter((o) => {
-      const { name, desc, actionCvegeos } = o
+      const { name, desc, actionCvegeos, accepting_help: help } = o
 
       const matchesSearch = tokenMatch(`${name} ${desc}`, organizationSearch)
 
@@ -168,6 +172,9 @@ class OrganizationListScreenView extends React.Component {
 
       const sectors = valSector.map(v => v.value)
       const matchesSector = sectors.length === 0 || sectors.some(v => o.sector === v)
+
+      const helps = valAcceptingHelp.map(v => v.value)
+      const matchesHelp = helps.length === 0 || helps.some(v => o.accepting_help === v)
 
       const actionTypes = valActionType.map(v => v.value)
       let matchesActionType = actionTypes.length === 0
@@ -178,7 +185,7 @@ class OrganizationListScreenView extends React.Component {
         }
       }
 
-      return matchesSearch && matchesCvegeo && matchesSector && matchesActionType
+      return matchesSearch && matchesCvegeo && matchesSector && matchesActionType && matchesHelp
     })
   }
 
@@ -223,7 +230,7 @@ class OrganizationListScreenView extends React.Component {
 
   render() {
     const { organizations: { data: orgData, loading: orgLoading, error: orgError } } = this.props
-    const { valState, valMuni, valSector, valActionType } = this.props
+    const { valState, valMuni, valSector, valActionType, valAcceptingHelp } = this.props
     const { popup, focused, filtersVisible } = this.state
 
     const organizations = this.filterOrganizations(orgData ? orgData.results : [])
@@ -244,10 +251,12 @@ class OrganizationListScreenView extends React.Component {
           onMuniChange={this.handleMuniChange}
           onSectorChange={this.handleSectorChange}
           onActionTypeChange={this.handleActionTypeChange}
+          onAcceptingHelpChange={this.handleAcceptingHelpChange}
           valState={valState}
           valMuni={valMuni}
           valSector={valSector}
           valActionType={valActionType}
+          valAcceptingHelp={valAcceptingHelp}
         />
       )
     }
@@ -313,7 +322,7 @@ class OrganizationListScreenView extends React.Component {
                 fitBounds={this.state.fitBounds.length > 0 ? this.state.fitBounds : undefined}
               />
               <div className="sm-hidden xs-hidden">
-                <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
+                <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" /><LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
               </div>
             </div>
           </div>
@@ -330,6 +339,7 @@ OrganizationListScreenView.propTypes = {
   valMuni: PropTypes.array.isRequired,
   valSector: PropTypes.array.isRequired,
   valActionType: PropTypes.array.isRequired,
+  valAcceptingHelp: PropTypes.array.isRequired,
   onChangeFilter: PropTypes.func.isRequired,
 }
 
@@ -338,11 +348,18 @@ OrganizationListScreenView.defaultProps = {
   valMuni: [],
   valSector: [],
   valActionType: [],
+  valAcceptingHelp: [],
 }
 
 const mapStateToProps = (state) => {
-  const { valState, valMuni, valSector, valActionType } = state.filter.organizations
-  return { valState, valMuni, valSector, valActionType }
+  const {
+    valState,
+    valMuni,
+    valSector,
+    valActionType,
+    valAcceptingHelp,
+  } = state.filter.organizations
+  return { valState, valMuni, valSector, valActionType, valAcceptingHelp }
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -35,6 +35,7 @@ class FilterHeader extends React.Component {
       onNumActionsChange,
       onSectorChange,
       onActionTypeChange,
+      onAcceptingHelpChange,
       localities,
       actions,
       valState,
@@ -43,6 +44,7 @@ class FilterHeader extends React.Component {
       valNumActions,
       valSector,
       valActionType,
+      valAcceptingHelp,
       style = {},
     } = this.props
 
@@ -85,6 +87,10 @@ class FilterHeader extends React.Component {
       }).map((i) => {
         return { value: i.action_type, label: projectTypeByValue[i.action_type] || '?' }
       })
+    }
+
+    const acceptingHelpOptions = () => {
+      return [{ value: true, label: 'Sí' }, { value: false, label: 'No' }]
     }
 
     const selectsLarge = () => {
@@ -184,6 +190,19 @@ class FilterHeader extends React.Component {
             onChange={onActionTypeChange}
             options={actionTypeOptions()}
           />}
+
+          {valAcceptingHelp && <MultiSelect
+            multi
+            clearable={false}
+            closeOnSelect={false}
+            removeSelected={false}
+            className={`${Styles.filter} ${Styles.typeFilter}`}
+            value={valAcceptingHelp}
+            placeholder="Buscando ayuda"
+            multiLabel="Ayuda"
+            onChange={onAcceptingHelpChange}
+            options={acceptingHelpOptions()}
+          />}
         </React.Fragment>
       )
     }
@@ -211,6 +230,7 @@ class FilterHeader extends React.Component {
               />
             </React.Fragment>
           }
+
           {valNumActions &&
             <React.Fragment>
               <span className={Styles.title}>Total de proyectos</span>
@@ -234,6 +254,7 @@ class FilterHeader extends React.Component {
               />
             </React.Fragment>
           }
+
           {valSector &&
             <React.Fragment>
               <span className={Styles.title}>Sector</span>
@@ -259,6 +280,7 @@ class FilterHeader extends React.Component {
               />
             </React.Fragment>
           }
+
           {(valActionType && actions) &&
             <React.Fragment>
               <span className={Styles.title}>Tipo de proyecto</span>
@@ -277,6 +299,44 @@ class FilterHeader extends React.Component {
               />
             </React.Fragment>
           }
+
+          {(valActionType && actions) &&
+            <React.Fragment>
+              <span className={Styles.title}>Tipo de proyecto</span>
+              <Select
+                multi
+                noResultsText="Cero resultados"
+                clearable={false}
+                closeOnSelect={false}
+                removeSelected={false}
+                searchable={false}
+                className={Styles.filter}
+                value={valActionType}
+                placeholder=""
+                onChange={onActionTypeChange}
+                options={actionTypeOptions()}
+              />
+            </React.Fragment>
+          }
+
+          {valAcceptingHelp &&
+            <React.Fragment>
+              <span className={Styles.title}>Buscando ayuda</span>
+              <Select
+                multi
+                clearable={false}
+                closeOnSelect={false}
+                removeSelected={false}
+                searchable={false}
+                className={Styles.filter}
+                value={valAcceptingHelp}
+                placeholder=""
+                onChange={onAcceptingHelpChange}
+                options={acceptingHelpOptions()}
+              />
+            </React.Fragment>
+          }
+
           <span className={Styles.title}>Estado</span>
           <Select
             multi
@@ -292,6 +352,7 @@ class FilterHeader extends React.Component {
             onChange={onStateChange}
             options={stateOptions()}
           />
+
           <span className={Styles.title}>Municipio</span>
           <Select
             multi
@@ -330,6 +391,7 @@ FilterHeader.propTypes = {
   onNumActionsChange: PropTypes.func,
   onSectorChange: PropTypes.func,
   onActionTypeChange: PropTypes.func,
+  onAcceptingHelpChange: PropTypes.func,
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
   actions: PropTypes.arrayOf(PropTypes.object),
   valState: PropTypes.arrayOf(PropTypes.any),
@@ -338,6 +400,7 @@ FilterHeader.propTypes = {
   valNumActions: PropTypes.arrayOf(PropTypes.any),
   valSector: PropTypes.arrayOf(PropTypes.any),
   valActionType: PropTypes.arrayOf(PropTypes.any),
+  valAcceptingHelp: PropTypes.arrayOf(PropTypes.any),
   style: PropTypes.object,
 }
 
