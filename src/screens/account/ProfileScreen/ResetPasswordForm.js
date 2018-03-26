@@ -4,7 +4,7 @@ import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { TextField } from 'components/Fields'
-import Styles from 'src/Form.css'
+import FormStyles from 'src/Form.css'
 
 
 const ResetPasswordForm = ({ handleSubmit, submitting }) => {
@@ -31,12 +31,16 @@ const ResetPasswordForm = ({ handleSubmit, submitting }) => {
           hintText="Confirmar contraseña nueva"
         />
       </div>
-      <RaisedButton
-        className={Styles.button}
-        disabled={submitting}
-        label="CAMBIAR CONTRASEÑA"
-        onClick={handleSubmit}
-      />
+      <div className={FormStyles.row}>
+        <RaisedButton
+          backgroundColor="#3DC59F"
+          labelColor="#ffffff"
+          className={FormStyles.primaryButton}
+          disabled={submitting}
+          label="CAMBIAR"
+          onClick={handleSubmit}
+        />
+      </div>
     </React.Fragment>
   )
 }

@@ -46,21 +46,29 @@ const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => 
       <FlatButton
         containerElement={<Link to="#" />}
         onClick={openChat}
+        className={Styles.button}
         label="Soporte"
       />
       <FlatButton
         containerElement={<ReactGA.OutboundLink eventLabel="survey" to={env.surveyUrl} target="_blank" />}
+        className={Styles.button}
         label="Subir Fotos"
       />
       <FlatButton
         containerElement={<Link to={platformLink()} />}
+        className={Styles.button}
         label="Perfil Público"
       />
 
       <IconMenu
         iconButtonElement={
-          <IconButton><MoreVertIcon /></IconButton>
+          <IconButton>
+            <MoreVertIcon
+              className={Styles.menuButton}
+            />
+          </IconButton>
         }
+
         targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
       >

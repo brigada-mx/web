@@ -9,7 +9,8 @@ import flattenObject from 'tools/flatten'
 import { TextField, SelectField } from 'components/Fields'
 import { validateEmail } from 'tools/string'
 import { states } from 'src/choices'
-import Styles from 'src/Form.css'
+import Styles from './OrganizationForm.css'
+import FormStyles from 'src/Form.css'
 
 
 const ContactForm = ({ handleSubmit, submitting }) => {
@@ -20,8 +21,6 @@ const ContactForm = ({ handleSubmit, submitting }) => {
           floatingLabelText="Persona responsable"
           name="person_responsible"
         />
-      </div>
-      <div>
         <TextField
           floatingLabelText="Email"
           name="email"
@@ -31,12 +30,12 @@ const ContactForm = ({ handleSubmit, submitting }) => {
           floatingLabelText="Teléfono"
           name="phone"
         />
+      </div>
+      <div className={FormStyles.row}>
         <TextField
           floatingLabelText="Sitio web"
           name="website"
         />
-      </div>
-      <div>
         <TextField
           floatingLabelText="Calle y número"
           name="street"
@@ -45,12 +44,8 @@ const ContactForm = ({ handleSubmit, submitting }) => {
           floatingLabelText="Localidad o colonia"
           name="locality"
         />
-        <TextField
-          floatingLabelText="Código postal"
-          name="zip"
-        />
       </div>
-      <div>
+      <div className={FormStyles.row}>
         <TextField
           floatingLabelText="Municipio o delegación"
           name="city"
@@ -59,15 +54,23 @@ const ContactForm = ({ handleSubmit, submitting }) => {
           floatingLabelText="Estado"
           name="state"
         >
+        <TextField
+          floatingLabelText="Código postal"
+          name="zip"
+        />
           {states.map(s => <MenuItem key={s} value={s} primaryText={s} />)}
         </SelectField>
       </div>
-      <RaisedButton
-        className={Styles.button}
-        disabled={submitting}
-        label="ACTUALIZAR"
-        onClick={handleSubmit}
-      />
+      <div className={FormStyles.row}>
+        <RaisedButton
+          backgroundColor="#3DC59F"
+          labelColor="#ffffff"
+          className={FormStyles.primaryButton}
+          disabled={submitting}
+          label="ACTUALIZAR"
+          onClick={handleSubmit}
+        />
+      </div>
     </React.Fragment>
   )
 }

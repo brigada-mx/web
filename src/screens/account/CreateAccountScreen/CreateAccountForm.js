@@ -28,18 +28,21 @@ const CreateAccountForm = ({ handleSubmit, submitting }) => {
       <span className={FormStyles.formHeader}>Registro para Brigada</span>
       <div>
         <TextField
+          className={FormStyles.wideInput}
           name="first_name"
           hintText="Nombre"
         />
       </div>
       <div>
         <TextField
+          className={FormStyles.wideInput}
           name="surnames"
           hintText="Apellido"
         />
       </div>
       <div>
         <TextField
+          className={FormStyles.wideInput}
           name="email"
           hintText="Email"
           autoCapitalize="off"
@@ -47,12 +50,13 @@ const CreateAccountForm = ({ handleSubmit, submitting }) => {
       </div>
       <div>
         <TextField
+          className={FormStyles.wideInput}
           name="name"
           hintText="¿Cómo se llama tu organización?"
         />
       </div>
       <div className={FormStyles.dropdown}>
-        <SelectField floatingLabelText="¿A qué sector pertenece?" name="sector">
+        <SelectField floatingLabelText="¿A qué sector pertenece?" className={FormStyles.wideInput} name="sector">
           <MenuItem value="civil" primaryText="Civil" />
           <MenuItem value="public" primaryText="Público" />
           <MenuItem value="private" primaryText="Privado" />
@@ -60,7 +64,7 @@ const CreateAccountForm = ({ handleSubmit, submitting }) => {
         </SelectField>
       </div>
       <div className={FormStyles.buttonContainer}>
-        <RaisedButton className={FormStyles.button} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="REGISTRAR" onClick={handleSubmit} />
+        <RaisedButton className={FormStyles.primaryButton} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="REGISTRAR" onClick={handleSubmit} />
       </div>
     </form>
   )

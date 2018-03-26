@@ -44,7 +44,33 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
           />
         </div>
       }
-      <div>
+      <div className={FormStyles.row}>
+        <SelectField
+            floatingLabelText="Tipo de proyecto"
+            name="action_type"
+          >
+            {projectTypes.map(({ value, label }) => {
+              return <MenuItem key={value} value={value} primaryText={label} />
+            })}
+        </SelectField>
+        <TextField
+          type="number"
+          min="0"
+          floatingLabelText="Presupuesto estimado MXN"
+          name="budget"
+          normalize={(value) => { return value ? parseInt(value, 10) : null }}
+        />
+      </div>
+      <div className={FormStyles.row}>
+        <TextField
+          floatingLabelText="Descripción"
+          className={FormStyles.wideInput}
+          name="desc"
+          multiLine
+          rows={3}
+        />
+      </div>
+      <div className={FormStyles.row}>
         <AutoComplete
           className={FormStyles.wideInput}
           floatingLabelText="Localidad"
@@ -57,23 +83,7 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
           normalize={normalizeAutoComplete}
         />
       </div>
-      <div>
-        <SelectField
-          floatingLabelText="Tipo de proyecto"
-          name="action_type"
-        >
-          {projectTypes.map(({ value, label }) => {
-            return <MenuItem key={value} value={value} primaryText={label} />
-          })}
-        </SelectField>
-        <TextField
-          floatingLabelText="Descripción"
-          name="desc"
-          multiLine
-          rows={3}
-        />
-      </div>
-      <div>
+      <div className={FormStyles.row}>
         <TextField
           type="number"
           min="0"
@@ -90,13 +100,6 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
           min="0"
           floatingLabelText="Núm. de unidades ya entregadas"
           name="progress"
-          normalize={(value) => { return value ? parseInt(value, 10) : null }}
-        />
-        <TextField
-          type="number"
-          min="0"
-          floatingLabelText="Presupuesto estimado MXN"
-          name="budget"
           normalize={(value) => { return value ? parseInt(value, 10) : null }}
         />
       </div>
@@ -134,7 +137,9 @@ const CreateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
       <Fields update={false} {...rest} />
       <div className={FormStyles.row}>
         <RaisedButton
-          className={FormStyles.button}
+          backgroundColor="#3DC59F"
+          labelColor="#ffffff"
+          className={FormStyles.primaryButton}
           disabled={submitting}
           label="AGREGAR"
           onClick={handleSubmit}
@@ -154,7 +159,9 @@ const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, ...rest }) => {
       <Fields update {...rest} />
       <div className={FormStyles.row}>
         <RaisedButton
-          className={FormStyles.button}
+          backgroundColor="#3DC59F"
+          labelColor="#ffffff"
+          className={FormStyles.primaryButton}
           disabled={submitting}
           label="ACTUALIZAR"
           onClick={handleSubmit}

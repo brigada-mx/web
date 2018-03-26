@@ -1,5 +1,14 @@
 @value colors: "src/colors.css";
 
+.modalScreenWrapper {
+  display: flex;
+  width: 30vw;
+  height: 90vh;
+  margin: 0 auto;
+  overflow: auto;
+  align-items: center;
+}
+
 .link {
   font-family: 'nunito-sans', sans-serif;
   font-size: 12px;

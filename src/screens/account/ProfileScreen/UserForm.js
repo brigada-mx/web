@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { TextField } from 'components/Fields'
-import Styles from 'src/Form.css'
+import FormStyles from 'src/Form.css'
 
 
 const UserForm = ({ handleSubmit, submitting }) => {
@@ -17,12 +17,16 @@ const UserForm = ({ handleSubmit, submitting }) => {
       <div>
         <TextField name="surnames" hintText="Apellidos" />
       </div>
-      <RaisedButton
-        className={Styles.button}
-        disabled={submitting}
-        label="ACTUALIZAR"
-        onClick={handleSubmit}
-      />
+      <div className={FormStyles.row}>
+        <RaisedButton
+          backgroundColor="#3DC59F"
+          labelColor="#ffffff"
+          className={FormStyles.primaryButton}
+          disabled={submitting}
+          label="ACTUALIZAR"
+          onClick={handleSubmit}
+        />
+      </div>
     </React.Fragment>
   )
 }

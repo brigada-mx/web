@@ -42,17 +42,19 @@ const LoginForm = ({ handleSubmit, submitting, modal }) => {
     >
       <span className={FormStyles.formLogo} />
       <span className={FormStyles.formHeader}>Ingresar a tu cuenta</span>
-      <div>
+      <div className={FormStyles.row}>
         <TextField
           name="email"
           hintText="Email"
+          className={FormStyles.wideInput}
           autoCapitalize="off"
         />
       </div>
-      <div>
+      <div className={FormStyles.row}>
         <TextField
           type="password"
           name="password"
+          className={FormStyles.wideInput}
           hintText="Contraseña"
         />
       </div>

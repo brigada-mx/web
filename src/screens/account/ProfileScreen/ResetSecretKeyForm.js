@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { TextField } from 'components/Fields'
-import Styles from 'src/Form.css'
+import FormStyles from 'src/Form.css'
 
 
 const ResetSecretKeyForm = ({ handleSubmit, submitting }) => {
@@ -27,12 +27,16 @@ const ResetSecretKeyForm = ({ handleSubmit, submitting }) => {
           format={(value) => { return value ? value.replace(/\./g, ' ') : '' }}
         />
       </div>
-      <RaisedButton
-        className={Styles.button}
-        label="CAMBIAR LLAVE SECRETA"
-        onClick={handleSubmit}
-        disabled={submitting}
-      />
+      <div className={FormStyles.row}>
+        <RaisedButton
+          backgroundColor="#3DC59F"
+          labelColor="#ffffff"
+          className={FormStyles.primaryButton}
+          label="CAMBIAR"
+          onClick={handleSubmit}
+          disabled={submitting}
+        />
+      </div>
     </React.Fragment>
   )
 }

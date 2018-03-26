@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
-import Styles from 'src/Form.css'
+import FormStyles from 'src/Form.css'
 import UserForm from './UserForm'
 import ResetPasswordForm from './ResetPasswordForm'
 import ResetSecretKeyForm from './ResetSecretKeyForm'
@@ -90,10 +90,19 @@ class Profile extends React.Component {
     ]
 
     return (
-      <div className={Styles.formContainer}>
-        <UserForm onSubmit={this.handleSubmitName} enableReinitialize />
-        <ResetPasswordForm onSubmit={this.handleSubmitPassword} />
-        <ResetSecretKeyForm onSubmit={this.handleResetKeyOpen} enableReinitialize />
+      <div className={FormStyles.formContainer}>
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>Tu nombre</div>
+          <UserForm onSubmit={this.handleSubmitName} enableReinitialize />
+        </div>
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>Tu contraseña</div>
+          <ResetPasswordForm onSubmit={this.handleSubmitPassword} />
+        </div>
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>Tu llave secreta</div>
+          <ResetSecretKeyForm onSubmit={this.handleResetKeyOpen} enableReinitialize />
+        </div>
         <Dialog
           title="¡Cuidado!"
           actions={actions}

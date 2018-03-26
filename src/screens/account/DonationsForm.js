@@ -88,16 +88,12 @@ const DonationsForm = ({ handleSubmit, reset, submitting, donorsSearch }) => {
       <FieldArray name="donations" component={Donations} donorsSearch={donorsSearch} />
       <div className={FormStyles.row}>
         <RaisedButton
-          className={FormStyles.button}
+          backgroundColor="#3DC59F"
+          labelColor="#ffffff"
+          className={FormStyles.primaryButton}
           disabled={submitting}
-          label="GUARDAR CAMBIOS"
+          label="ACTUALIZAR"
           onClick={handleSubmit}
-        />
-        <RaisedButton
-          className={FormStyles.button}
-          disabled={submitting}
-          label="DESHACER CAMBIOS"
-          onClick={reset}
         />
       </div>
     </React.Fragment>

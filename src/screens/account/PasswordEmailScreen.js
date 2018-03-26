@@ -28,7 +28,7 @@ const Form = ({ handleSubmit, submitting }) => {
         />
       </div>
       <div className={FormStyles.buttonContainer}>
-        <RaisedButton className={FormStyles.button} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="ENVIAR EMAIL" onClick={handleSubmit} />
+        <RaisedButton className={FormStyles.primaryButton} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="ENVIAR EMAIL" onClick={handleSubmit} />
       </div>
     </div>
   )

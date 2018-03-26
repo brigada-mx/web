@@ -162,12 +162,12 @@ class HomeScreen extends React.Component {
     const content = (
       <div>
         <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>ORGANIZACIÓN</div>
+          <div className={FormStyles.sectionHeader}>Organización</div>
           <OrganizationForm onSubmit={this.handleSubmitOrganization} enableReinitialize />
         </div>
 
         <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>CONTACTO</div>
+          <div className={FormStyles.sectionHeader}>Contacto</div>
           <div className={FormStyles.formContainerLeft}>
             <ContactForm onSubmit={this.handleSubmitContact} enableReinitialize />
           </div>
@@ -175,7 +175,7 @@ class HomeScreen extends React.Component {
 
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>
-            <span>PROYECTOS</span>
+            <span>Proyectos</span>
             <div>
               <span
                 className={FormStyles.link}
@@ -184,6 +184,9 @@ class HomeScreen extends React.Component {
                 Basurero
               </span>
               <RaisedButton
+                backgroundColor="#3DC59F"
+                labelColor="#ffffff"
+                className={FormStyles.primaryButton}
                 label="AGREGAR"
                 onClick={() => this.handleToggleCreateActionModal(true)}
               />
@@ -196,7 +199,7 @@ class HomeScreen extends React.Component {
 
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>
-            <span>FOTOS SIN PROYECTO</span>
+            <span>Fotos sin proyecto</span>
             <span
               className={FormStyles.link}
               onClick={() => this.handleToggleSubmissionTrashModal(true)}

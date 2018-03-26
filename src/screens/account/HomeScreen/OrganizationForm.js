@@ -17,10 +17,10 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
   const normalizedScore = Number(normalizeTransparencyScore(score || 0)).toFixed(1)
   return (
     <React.Fragment>
-      <span className={Styles.key}>{key ? key.replace(/\./g, ' ') : ''}</span>
+      <span className={Styles.key}>Llave: {key ? key.replace(/\./g, ' ') : ''}</span>
       {false && <span className={Styles.score}>indicador de transparencia: {normalizedScore}</span>}
       <div className={FormStyles.formContainerLeft}>
-        <div>
+        <div className={FormStyles.row}>
           <TextField
             floatingLabelText="Nombre"
             name="name"
@@ -31,8 +31,6 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
             normalize={(value) => { return value ? parseInt(value, 10) : null }}
             name="year_established"
           />
-        </div>
-        <div>
           <SelectField
             floatingLabelText="Sector"
             name="sector"
@@ -41,22 +39,28 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
               ({ value, label }) => <MenuItem key={value} value={value} primaryText={label} />
             )}
           </SelectField>
+        </div>
+        <div className={FormStyles.row}>
           <TextField
             floatingLabelText="Descripción"
+            className={FormStyles.wideInput}
             name="desc"
             multiLine
             rows={3}
           />
         </div>
-        <div className={FormStyles.toggle}>
+        <div>
           <Toggle
             label="Estamos buscando voluntarios"
+            className={FormStyles.toggle}
             name="accepting_help"
           />
         </div>
-        <div>
+        <div className={FormStyles.row}>
           <RaisedButton
-            className={FormStyles.button}
+            backgroundColor="#3DC59F"
+            labelColor="#ffffff"
+            className={FormStyles.primaryButton}
             disabled={submitting}
             label="ACTUALIZAR"
             onClick={handleSubmit}
