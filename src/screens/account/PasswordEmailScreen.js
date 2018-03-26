@@ -19,8 +19,9 @@ const Form = ({ handleSubmit, submitting }) => {
       <span className={FormStyles.formLogo} />
       <span className={FormStyles.formHeader}>Olvidé mi contraseña</span>
       <span className={FormStyles.formText}>Ingresa tu email y te mandaremos un correo para restablecer tu contraseña</span>
-      <div>
+      <div className={FormStyles.row}>
         <TextField
+          className={FormStyles.wideInput}
           name="email"
           hintText="Email"
           autoCapitalize="off"

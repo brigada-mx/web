@@ -16,18 +16,20 @@ import Styles from 'src/Form.css'
 
 const Form = ({ handleSubmit, submitting }) => {
   return (
-    <div className={Styles.formContainer}>
+    <div className={FormStyles.formContainer}>
       <span className={FormStyles.formHeader}>Establecer tu contraseña</span>
       <span className={FormStyles.formText}>Ingresa tu nueva contraseña y repítela para confirmar</span>
-      <div>
+      <div className={FormStyles.row}>
         <TextField
+          className={FormStyles.wideInput}
           type="password"
           name="password"
           hintText="Contraseña"
         />
       </div>
-      <div>
+      <div className={FormStyles.row}>
         <TextField
+          className={FormStyles.wideInput}
           type="password"
           name="confirmPassword"
           hintText="Confirmar contraseña"

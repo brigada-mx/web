@@ -24,3 +24,21 @@
 .link:hover {
   color: #13A68C;
 }
+
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .modalScreenWrapper {
+    width: 40vw;
+  }
+}
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .modalScreenWrapper {
+    width: 60vw;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+  .modalScreenWrapper {
+    width: 90vw;
+  }
+}
