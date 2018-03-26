@@ -10,16 +10,15 @@ import * as Actions from 'src/actions'
 import { TextField } from 'components/Fields'
 import service from 'api/service'
 import { validateEmail } from 'tools/string'
-import Styles from 'src/Form.css'
 import FormStyles from 'src/Form.css'
 
 
 const Form = ({ handleSubmit, submitting }) => {
   return (
-    <div className={Styles.formContainer}>
+    <div className={FormStyles.formContainer}>
       <span className={FormStyles.formLogo} />
-      <span className={Styles.formHeader}>Olvidé mi contraseña</span>
-      <span className={Styles.formText}>Ingresa tu email y te mandaremos un correo para restablecer tu contraseña</span>
+      <span className={FormStyles.formHeader}>Olvidé mi contraseña</span>
+      <span className={FormStyles.formText}>Ingresa tu email y te mandaremos un correo para restablecer tu contraseña</span>
       <div>
         <TextField
           name="email"
@@ -45,7 +44,7 @@ const validate = ({ email }) => {
 
 const ReduxForm = reduxForm({ form: 'passwordEmail', validate })(Form)
 
-const PasswordEmailScreen = ({ history, location, snackbar }) => {
+const PasswordEmailScreen = ({ history, snackbar, email: initialEmail = '' }) => {
   const handleSubmit = async ({ email }) => {
     const { data } = await service.sendSetPasswordEmail(email)
     if (!data) {
@@ -56,13 +55,13 @@ const PasswordEmailScreen = ({ history, location, snackbar }) => {
     snackbar(`Mandamos un email a ${email}`, 'success')
   }
 
-  return <ReduxForm onSubmit={handleSubmit} initialValues={location.state} />
+  return <ReduxForm onSubmit={handleSubmit} initialValues={{ email: initialEmail }} />
 }
 
 PasswordEmailScreen.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   snackbar: PropTypes.func.isRequired,
+  email: PropTypes.string,
 }
 
 const mapDispatchToProps = (dispatch) => {
