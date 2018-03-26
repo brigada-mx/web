@@ -1,3 +1,7 @@
+.selectorContent {
+  width: 28%;
+}
+
 .container {
   display: flex;
   position: fixed;
@@ -28,7 +32,6 @@
   padding: 40px 40px 100px 40px;
   border-radius: 2px;
   box-sizing: border-box;
-  width: 28%;
 }
 
 .closeButton {

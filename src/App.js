@@ -27,6 +27,7 @@ import ActionScreen from 'screens/account/ActionScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
 import HomeScreen from 'screens/account/HomeScreen'
 import env from 'src/env'
+import Styles from 'src/Global.css'
 
 
 const LocalityScreenWrapper = ({ match }) => {
@@ -41,6 +42,13 @@ const ActionScreenWrapper = ({ match }) => {
   return <ActionScreen actionKey={Number.parseInt(match.params.key, 10)} />
 }
 
+const SetPasswordWithTokenScreenWrapper = () => {
+  return <SetPasswordWithTokenScreen className={Styles.modalScreenWrapper} />
+}
+
+const CreateAccountScreenWrapper = () => {
+  return <CreateAccountScreen className={Styles.modalScreenWrapper} />
+}
 
 const appReducer = combineReducers({
   ...reducers,
@@ -92,8 +100,8 @@ const App = () => {
               <Route exact path="/organizaciones" component={OrganizationListScreen} />
               <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
 
-              <Route path="/establecer" component={SetPasswordWithTokenScreen} />
-              <Route exact path="/crear/cuenta" component={CreateAccountScreen} />
+              <Route path="/establecer" component={SetPasswordWithTokenScreenWrapper} />
+              <Route exact path="/crear/cuenta" component={CreateAccountScreenWrapper} />
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen)} />
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
               <Route exact path="/cuenta/fotos" component={protectedScreen(ActionScreen)} />

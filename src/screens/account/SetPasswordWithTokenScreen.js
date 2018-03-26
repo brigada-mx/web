@@ -51,7 +51,7 @@ const validate = ({ password, confirmPassword }) => {
 
 const ReduxForm = reduxForm({ form: 'setPasswordWithToken', validate })(Form)
 
-const SetPasswordWithTokenScreen = ({ history, location, snackbar, onLogin }) => {
+const SetPasswordWithTokenScreen = ({ history, location, snackbar, onLogin, className = '' }) => {
   const handleSubmit = async ({ password }) => {
     const params = parseQs(location.search)
     const { token = '', email = '' } = params
@@ -70,6 +70,7 @@ const SetPasswordWithTokenScreen = ({ history, location, snackbar, onLogin }) =>
     snackbar('Cambiaste tu contraseña', 'success')
   }
 
+  if (className) return <div className={className}><ReduxForm onSubmit={handleSubmit} /></div>
   return <ReduxForm onSubmit={handleSubmit} />
 }
 
@@ -78,6 +79,7 @@ SetPasswordWithTokenScreen.propTypes = {
   location: PropTypes.object.isRequired,
   snackbar: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
+  className: PropTypes.string,
 }
 
 const mapDispatchToProps = (dispatch) => {

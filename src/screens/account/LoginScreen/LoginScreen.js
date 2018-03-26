@@ -9,7 +9,7 @@ import service from 'api/service'
 import LoginForm from './LoginForm'
 
 
-const LoginScreen = ({ onLogin, snackbar, history, location, closeModal }) => {
+const LoginScreen = ({ onLogin, snackbar, history, location, closeModal, className = '' }) => {
   const handleSubmit = async ({ email, password }) => {
     const { data } = await service.token(email, password)
     if (data) {
@@ -21,6 +21,7 @@ const LoginScreen = ({ onLogin, snackbar, history, location, closeModal }) => {
     }
   }
 
+  if (className) return <div className={className}><LoginForm onSubmit={handleSubmit} /></div>
   return <LoginForm onSubmit={handleSubmit} />
 }
 
@@ -30,6 +31,7 @@ LoginScreen.propTypes = {
   closeModal: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  className: PropTypes.string,
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -215,7 +215,7 @@ class HomeScreen extends React.Component {
 
         {createActionModal &&
           <Modal
-            className={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
+            contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
             onClose={() => this.handleToggleCreateActionModal(false)}
             gaName="createActionModal"
           >
@@ -231,7 +231,7 @@ class HomeScreen extends React.Component {
 
         {trashModal &&
           <Modal
-            className={`${FormStyles.modal} ${FormStyles.formContainer}`}
+            contentClassName={`${FormStyles.modal} ${FormStyles.formContainer}`}
             onClose={() => this.handleToggleActionTrashModal(false)}
             gaName="actionTrashModal"
           >
@@ -241,7 +241,7 @@ class HomeScreen extends React.Component {
 
         {submissionTrashModal &&
           <Modal
-            className={`${FormStyles.modal} ${FormStyles.formContainer}`}
+            contentClassName={`${FormStyles.modal} ${FormStyles.formContainer}`}
             onClose={() => this.handleToggleSubmissionTrashModal(false)}
             gaName="submissionTrashModal"
           >

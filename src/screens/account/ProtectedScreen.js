@@ -4,13 +4,14 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import Styles from 'src/Global.css'
 import LoginScreen from './LoginScreen'
 
 
 const ProtectedScreen = ({ children, token, history, location }) => {
   if (!token) {
     if (location.pathname !== '/cuenta') history.push('/cuenta')
-    return <LoginScreen />
+    return <LoginScreen className={Styles.modalScreenWrapper} />
   }
   return <React.Fragment>{children}</React.Fragment>
 }

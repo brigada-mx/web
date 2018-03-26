@@ -205,7 +205,7 @@ class ActionScreen extends React.Component {
 
         {submissionId !== undefined &&
           <Modal
-            className={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
+            contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
             onClose={this.handleModalClose}
             gaName={`submission/${submissionId}`}
           >
@@ -215,7 +215,7 @@ class ActionScreen extends React.Component {
 
         {trashModal &&
           <Modal
-            className={`${FormStyles.modal} ${FormStyles.formContainer}`}
+            contentClassName={`${FormStyles.modal} ${FormStyles.formContainer}`}
             onClose={() => this.handleToggleSubmissionTrashModal(false)}
             gaName="submissionTrashModal"
           >

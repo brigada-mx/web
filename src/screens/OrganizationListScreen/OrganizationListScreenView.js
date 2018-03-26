@@ -163,7 +163,7 @@ class OrganizationListScreenView extends React.Component {
     const { valState, valMuni, valSector, valActionType, valAcceptingHelp } = this.props
 
     return results.filter((o) => {
-      const { name, desc, actionCvegeos, accepting_help: help } = o
+      const { name, desc, actionCvegeos } = o
 
       const matchesSearch = tokenMatch(`${name} ${desc}`, organizationSearch)
 
