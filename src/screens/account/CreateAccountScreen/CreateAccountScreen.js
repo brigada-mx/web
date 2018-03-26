@@ -8,7 +8,7 @@ import service from 'api/service'
 import CreateAccountForm from './CreateAccountForm'
 
 
-const CreateAccountScreen = ({ snackbar, modal }) => {
+const CreateAccountScreen = ({ snackbar, modal, className = '' }) => {
   const handleSubmit = async ({ email, ...rest }) => {
     const { data, status } = await service.createAccount({ email, ...rest })
     if (data) {
@@ -20,12 +20,14 @@ const CreateAccountScreen = ({ snackbar, modal }) => {
     else snackbar('Checa tu conexión', 'error')
   }
 
+  if (className) return <div className={className}><CreateAccountForm onSubmit={handleSubmit} /></div>
   return <CreateAccountForm onSubmit={handleSubmit} />
 }
 
 CreateAccountScreen.propTypes = {
   snackbar: PropTypes.func.isRequired,
   modal: PropTypes.func.isRequired,
+  className: PropTypes.string,
 }
 
 const mapDispatchToProps = (dispatch) => {

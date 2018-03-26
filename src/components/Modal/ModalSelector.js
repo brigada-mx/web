@@ -23,7 +23,7 @@ const ModalSelector = (props) => {
   const Component = componentByName[modalName]
   if (!Component) return null
 
-  return <Modal><Component {...rest} /></Modal>
+  return <Modal contentClassName={Styles.selectorContent}><Component {...rest} /></Modal>
 }
 
 ModalSelector.propTypes = {
