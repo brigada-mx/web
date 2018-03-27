@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withRouter } from 'react-router-dom'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -44,14 +43,13 @@ const validate = ({ email }) => {
 
 const ReduxForm = reduxForm({ form: 'passwordEmail', validate })(Form)
 
-const PasswordEmailScreen = ({ history, snackbar, email: initialEmail = '' }) => {
+const PasswordEmailScreen = ({ snackbar, email: initialEmail = '' }) => {
   const handleSubmit = async ({ email }) => {
     const { data } = await service.sendSetPasswordEmail(email)
     if (!data) {
       snackbar(`No pudimos mandar el email ${email}`, 'error')
       return
     }
-    history.push('/cuenta')
     snackbar(`Mandamos un email a ${email}`, 'success')
   }
 
@@ -59,7 +57,6 @@ const PasswordEmailScreen = ({ history, snackbar, email: initialEmail = '' }) =>
 }
 
 PasswordEmailScreen.propTypes = {
-  history: PropTypes.object.isRequired,
   snackbar: PropTypes.func.isRequired,
   email: PropTypes.string,
 }
@@ -70,4 +67,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(PasswordEmailScreen))
+export default connect(null, mapDispatchToProps)(PasswordEmailScreen)

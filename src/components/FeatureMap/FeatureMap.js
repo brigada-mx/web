@@ -5,6 +5,7 @@ import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl'
 import _ from 'lodash'
 
 import env from 'src/env'
+import MapErrorBoundary from 'components/MapErrorBoundary'
 import Styles from './FeatureMap.css'
 
 
@@ -90,23 +91,25 @@ class FeatureMap extends React.Component {
     if (!Mapbox) return null
 
     return (
-      <Mapbox
-        style="mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk" // eslint-disable-line react/style-prop-object
-        zoom={this._initialZoom}
-        center={this._initialCoordinates}
-        containerStyle={{
-          height: '100%',
-          width: '100%',
-          position: 'relative',
-        }}
-        onStyleLoad={this.handleMapLoaded}
-        fitBounds={this._fitBounds}
-        fitBoundsOptions={this._fitBoundsOptions}
-      >
-        {popup}
-        {legend}
-        {zoom && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
-      </Mapbox>
+      <MapErrorBoundary>
+        <Mapbox
+          style="mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk" // eslint-disable-line react/style-prop-object
+          zoom={this._initialZoom}
+          center={this._initialCoordinates}
+          containerStyle={{
+            height: '100%',
+            width: '100%',
+            position: 'relative',
+          }}
+          onStyleLoad={this.handleMapLoaded}
+          fitBounds={this._fitBounds}
+          fitBoundsOptions={this._fitBoundsOptions}
+        >
+          {popup}
+          {legend}
+          {zoom && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
+        </Mapbox>
+      </MapErrorBoundary>
     )
   }
 }
