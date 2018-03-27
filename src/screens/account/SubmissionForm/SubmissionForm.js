@@ -146,7 +146,7 @@ class SubmissionFormWrapper extends React.Component {
 
   render() {
     const { submission, actions, submissionId } = this.props
-    if (!submission.id) return <LoadingIndicatorCircle className={FormStyles.loader} />
+    if (!submission.id) return <LoadingIndicatorCircle className={Styles.loader} />
 
     const thumbs = submission.images.map((image) => {
       return (

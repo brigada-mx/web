@@ -4,6 +4,14 @@
   height: 100%;
 }
 
+#modal {
+  font-family: 'nunito-sans', sans-serif;
+}
+
+#snackbar {
+  font-family: 'nunito-sans', sans-serif;
+}
+
 @import 'reset';
 @import 'mixins';
 @import 'grid';

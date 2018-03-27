@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import RaisedButton from 'material-ui/RaisedButton'
-
 import Modal from 'components/Modal'
 import FormStyles from 'src/Form.css'
+import GlobalStyles from 'src/Global.css'
 import Styles from './HelpWanted.css'
 
 
@@ -45,13 +44,13 @@ class HelpWanted extends React.Component {
         }
 
         <div className={Styles.helpContainer}>
-          <RaisedButton
-            backgroundColor="#3DC59F"
-            labelColor="#ffffff"
-            className={FormStyles.primaryButton}
-            label="BUSCAMOS VOLUNTARIOS"
+          <span className={Styles.infoText}>Estamos recibiendo voluntarios</span>
+          <span
+            className={`${GlobalStyles.link} ${Styles.linkText}`}
             onClick={this.handleClick}
-          />
+          >
+            Contáctanos
+          </span>
         </div>
       </React.Fragment>
     )

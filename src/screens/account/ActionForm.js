@@ -46,12 +46,12 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
       }
       <div className={FormStyles.row}>
         <SelectField
-            floatingLabelText="Tipo de proyecto"
-            name="action_type"
-          >
-            {projectTypes.map(({ value, label }) => {
-              return <MenuItem key={value} value={value} primaryText={label} />
-            })}
+          floatingLabelText="Tipo de proyecto"
+          name="action_type"
+        >
+          {projectTypes.map(({ value, label }) => {
+            return <MenuItem key={value} value={value} primaryText={label} />
+          })}
         </SelectField>
         <TextField
           type="number"

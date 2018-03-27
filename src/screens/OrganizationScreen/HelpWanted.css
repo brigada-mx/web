@@ -1,9 +1,12 @@
 .helpContainer {
+  font-family: 'nunito-sans-300', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 80px;
+  border-top: 1px solid #F2F2F4;
+  border-bottom: 1px solid #F2F2F4;
 }
 
 .modalContent {
@@ -12,7 +15,20 @@
 }
 
 .modalContainer {
-  width: 28%;
+  min-width: 28%;
+  max-width: 80%;
   padding: 20px;
   min-height: 50%;
+  max-height: 80%;
+  overflow-y: scroll;
+}
+
+.infoText {
+  color: black;
+  font-size: 16px;
+}
+
+.linkText {
+  margin-top: 15px;
+  font-size: 18px;
 }
