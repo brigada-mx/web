@@ -43,6 +43,10 @@
   min-width: 140px;
 }
 
+.volunteerFilter {
+  min-width: 110px;
+}
+
 .title {
   font-family: 'nunito-sans-800', sans-serif;
   font-size: 11px;
