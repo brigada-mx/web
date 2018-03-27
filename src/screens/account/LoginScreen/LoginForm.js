@@ -59,7 +59,7 @@ const LoginForm = ({ handleSubmit, submitting, modal }) => {
         />
       </div>
       <div className={FormStyles.buttonContainer}>
-        <RaisedButton className={FormStyles.button} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
+        <RaisedButton className={FormStyles.primaryButton} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
         <div className={Styles.linkContainer}>
           <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleForgotPassword}>Olvidé mi contraseña</span>
           <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleCreateAccount}>Crear una cuenta</span>

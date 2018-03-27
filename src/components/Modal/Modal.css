@@ -49,3 +49,21 @@
 .closeButton:hover {
   opacity: 1.0;
 }
+
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .selectorContent {
+    width: 38%;
+  }
+}
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .selectorContent {
+    width: 42%;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+  .selectorContent {
+    width: 90%;
+  }
+}

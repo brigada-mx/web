@@ -26,6 +26,7 @@ import protectedScreen from 'screens/account/ProtectedScreen'
 import ActionScreen from 'screens/account/ActionScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
 import HomeScreen from 'screens/account/HomeScreen'
+import AccountCreated from 'screens/account/AccountCreated'
 import env from 'src/env'
 import Styles from 'src/Global.css'
 
@@ -94,6 +95,7 @@ const App = () => {
             <Route path="/cuenta" component={AccountNav} />
 
             <Switch>
+              <Route exact path="/test" component={AccountCreated} />
               <Route exact path="/" component={MapScreen} />
               <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
 
