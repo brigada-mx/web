@@ -11,6 +11,7 @@ import ActionList from 'components/ActionList'
 import PhoneBox from 'components/PhoneBox'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
+import MapErrorBoundary from 'components/MapErrorBoundary'
 import { addProtocol, emailLink, fmtBudget } from 'tools/string'
 import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
 import { sectorByValue } from 'src/choices'
@@ -153,20 +154,22 @@ class OrganizationScreenView extends React.Component {
     const { popup } = this.state
     return (
       <div className={Styles.opsMap}>
-        <LocalityDamageMap
-          dragPan={window.innerWidth >= 980}
-          zoomControl={false}
-          features={features}
-          popup={popup ? <LocalityPopup
-            locality={popup.locality}
-            organization={popup.organization}
-            screen="org"
-          /> : null}
-          onClickFeature={this.handleClickFeature}
-          onEnterFeature={this.handleEnterFeature}
-          onLeaveFeature={this.handleLeaveFeature}
-          fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
-        />
+        <MapErrorBoundary>
+          <LocalityDamageMap
+            dragPan={window.innerWidth >= 980}
+            zoomControl={false}
+            features={features}
+            popup={popup ? <LocalityPopup
+              locality={popup.locality}
+              organization={popup.organization}
+              screen="org"
+            /> : null}
+            onClickFeature={this.handleClickFeature}
+            onEnterFeature={this.handleEnterFeature}
+            onLeaveFeature={this.handleLeaveFeature}
+            fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
+          />
+        </MapErrorBoundary>
       </div>
     )
   }
