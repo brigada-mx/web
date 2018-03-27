@@ -196,10 +196,10 @@ class FilterHeader extends React.Component {
             clearable={false}
             closeOnSelect={false}
             removeSelected={false}
-            className={`${Styles.filter} ${Styles.typeFilter}`}
+            className={`${Styles.filter} ${Styles.volunteerFilter}`}
             value={valAcceptingHelp}
-            placeholder="Buscando ayuda"
-            multiLabel="Ayuda"
+            placeholder="Voluntariado"
+            multiLabel="Voluntariado"
             onChange={onAcceptingHelpChange}
             options={acceptingHelpOptions()}
           />}
@@ -300,28 +300,9 @@ class FilterHeader extends React.Component {
             </React.Fragment>
           }
 
-          {(valActionType && actions) &&
-            <React.Fragment>
-              <span className={Styles.title}>Tipo de proyecto</span>
-              <Select
-                multi
-                noResultsText="Cero resultados"
-                clearable={false}
-                closeOnSelect={false}
-                removeSelected={false}
-                searchable={false}
-                className={Styles.filter}
-                value={valActionType}
-                placeholder=""
-                onChange={onActionTypeChange}
-                options={actionTypeOptions()}
-              />
-            </React.Fragment>
-          }
-
           {valAcceptingHelp &&
             <React.Fragment>
-              <span className={Styles.title}>Buscando ayuda</span>
+              <span className={Styles.title}>Voluntariado</span>
               <Select
                 multi
                 clearable={false}
