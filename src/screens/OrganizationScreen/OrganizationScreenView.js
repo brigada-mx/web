@@ -3,77 +3,22 @@ import PropTypes from 'prop-types'
 
 import { withRouter, Redirect } from 'react-router-dom'
 import { Sticky, StickyContainer } from 'react-sticky'
-import RaisedButton from 'material-ui/RaisedButton'
 
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import Carousel from 'components/Carousel'
 import ActionList from 'components/ActionList'
 import PhoneBox from 'components/PhoneBox'
-import Modal from 'components/Modal'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import MapErrorBoundary from 'components/MapErrorBoundary'
 import { addProtocol, emailLink, fmtBudget } from 'tools/string'
 import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
 import { sectorByValue } from 'src/choices'
-import FormStyles from 'src/Form.css'
 import OrganizationBreadcrumb from './OrganizationBreadcrumb'
+import HelpWanted from './HelpWanted'
 import Styles from './OrganizationScreenView.css'
 
-
-class HelpWanted extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      modal: false,
-    }
-  }
-
-  handleClick = () => {
-    this.setState({ modal: true })
-  }
-
-  handleClose = () => {
-    this.setState({ modal: false })
-  }
-
-  render() {
-    const { help, helpDesc = '', organizationId } = this.props
-    const { modal } = this.state
-
-    if (!help) return null
-    return (
-      <React.Fragment>
-        {modal &&
-          <Modal
-            contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
-            onClose={this.handleClose}
-            gaName={`volunteer/${organizationId}`}
-          >
-            <span>{helpDesc}</span>
-          </Modal>
-        }
-
-        <div className={Styles.helpContainer}>
-          <RaisedButton
-            backgroundColor="#3DC59F"
-            labelColor="#ffffff"
-            className={FormStyles.primaryButton}
-            label="VOLUNTARIADO"
-            onClick={this.handleClick}
-          />
-        </div>
-      </React.Fragment>
-    )
-  }
-}
-
-HelpWanted.propTypes = {
-  help: PropTypes.bool,
-  helpDesc: PropTypes.string,
-  organizationId: PropTypes.number.isRequired,
-}
 
 class OrganizationScreenView extends React.Component {
   constructor(props) {
@@ -378,12 +323,10 @@ class OrganizationScreenView extends React.Component {
             <Sticky>
               {
                 ({ style }) => {
-                  return actionMap && <div style={{
-                    ...style,
-                    height: '100vh',
-                    width: '100%',
-                    overflow: 'auto',
-                  }}>{actionMap}</div>
+                  return actionMap &&
+                    <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>
+                      {actionMap}
+                    </div>
                 }
               }
             </Sticky>
