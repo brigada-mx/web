@@ -60,7 +60,7 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues, help = fals
         {help ? (
           <div className={FormStyles.row}>
             <TextField
-              floatingLabelText="Describe perfil de voluntario"
+              floatingLabelText="Describe el perfil de voluntario que están buscando"
               className={FormStyles.wideInput}
               name="help_desc"
               multiLine

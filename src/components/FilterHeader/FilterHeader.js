@@ -10,12 +10,28 @@ import { projectTypeByValue } from 'src/choices'
 import Styles from './FilterHeader.css'
 
 
-const margValuesAndLabels = [
+const margOptions = [
   { value: 'muy_alto', label: 'Muy alto' },
   { value: 'alto', label: 'Alto' },
   { value: 'medio', label: 'Medio' },
   { value: 'bajo', label: 'Bajo' },
   { value: 'muy_bajo', label: 'Muy bajo' },
+]
+
+const acceptingHelpOptions = [{ value: true, label: 'Sí' }, { value: false, label: 'No' }]
+
+const numActionsOptions = [
+  { value: '0', label: '0' },
+  { value: '1', label: '1-9' },
+  { value: '2', label: '10-49' },
+  { value: '3', label: '50+' },
+]
+
+const sectorOptions = [
+  { value: 'civil', label: 'Civil' },
+  { value: 'public', label: 'Público' },
+  { value: 'private', label: 'Privado' },
+  { value: 'religious', label: 'Religioso' },
 ]
 
 class FilterHeader extends React.Component {
@@ -89,10 +105,6 @@ class FilterHeader extends React.Component {
       })
     }
 
-    const acceptingHelpOptions = () => {
-      return [{ value: true, label: 'Sí' }, { value: false, label: 'No' }]
-    }
-
     const selectsLarge = () => {
       return (
         <React.Fragment>
@@ -136,7 +148,7 @@ class FilterHeader extends React.Component {
             placeholder="Rezago social"
             multiLabel="Rezago"
             onChange={onMargChange}
-            options={margValuesAndLabels}
+            options={margOptions}
           />}
 
           {valNumActions && <MultiSelect
@@ -150,12 +162,7 @@ class FilterHeader extends React.Component {
             placeholder="Total de proyectos"
             multiLabel="Proyectos"
             onChange={onNumActionsChange}
-            options={[
-              { value: '0', label: '0' },
-              { value: '1', label: '1-9' },
-              { value: '2', label: '10-49' },
-              { value: '3', label: '50+' },
-            ]}
+            options={numActionsOptions}
           />}
 
           {valSector && <MultiSelect
@@ -169,12 +176,7 @@ class FilterHeader extends React.Component {
             placeholder="Sector"
             multiLabel="Sector"
             onChange={onSectorChange}
-            options={[
-              { value: 'civil', label: 'Civil' },
-              { value: 'public', label: 'Público' },
-              { value: 'private', label: 'Privado' },
-              { value: 'religious', label: 'Religioso' },
-            ]}
+            options={sectorOptions}
           />}
 
           {(valActionType && actions) && <MultiSelect
@@ -201,7 +203,7 @@ class FilterHeader extends React.Component {
             placeholder="Voluntariado"
             multiLabel="Voluntariado"
             onChange={onAcceptingHelpChange}
-            options={acceptingHelpOptions()}
+            options={acceptingHelpOptions}
           />}
         </React.Fragment>
       )
@@ -226,7 +228,7 @@ class FilterHeader extends React.Component {
                 value={valMarg}
                 placeholder=""
                 onChange={onMargChange}
-                options={margValuesAndLabels}
+                options={margOptions}
               />
             </React.Fragment>
           }
@@ -245,12 +247,7 @@ class FilterHeader extends React.Component {
                 value={valNumActions}
                 placeholder=""
                 onChange={onNumActionsChange}
-                options={[
-                  { value: '0', label: '0' },
-                  { value: '1', label: '1-9' },
-                  { value: '2', label: '10-49' },
-                  { value: '3', label: '50+' },
-                ]}
+                options={numActionsOptions}
               />
             </React.Fragment>
           }
@@ -271,12 +268,7 @@ class FilterHeader extends React.Component {
                 value={valSector}
                 placeholder=""
                 onChange={onSectorChange}
-                options={[
-                  { value: 'civil', label: 'Civil' },
-                  { value: 'public', label: 'Público' },
-                  { value: 'private', label: 'Privado' },
-                  { value: 'religious', label: 'Religioso' },
-                ]}
+                options={sectorOptions}
               />
             </React.Fragment>
           }
@@ -313,7 +305,7 @@ class FilterHeader extends React.Component {
                 value={valAcceptingHelp}
                 placeholder=""
                 onChange={onAcceptingHelpChange}
-                options={acceptingHelpOptions()}
+                options={acceptingHelpOptions}
               />
             </React.Fragment>
           }
