@@ -40,15 +40,17 @@ class HelpWanted extends React.Component {
             gaName={`volunteer/${organizationId}`}
           >
             <div className={Styles.modalContent}>
-              <span className={FormStyles.formHeader}>Buscamos voluntarios</span>
-              <p className={FormStyles.formText}>{helpDesc}</p>
-              {email && <RaisedButton
-                containerElement={<a href={emailLink(email)} target="_blank" />}
-                backgroundColor="#3DC59F"
-                labelColor="#ffffff"
-                className={FormStyles.primaryButton}
-                label="CONTACTAR"
-              />}
+              <span className={Styles.helpTitle}>Buscamos voluntarios</span>
+              <p className={Styles.helpText}>{helpDesc}</p>
+              <div className={FormStyles.buttonContainer}>
+                {email && <RaisedButton
+                  containerElement={<a href={emailLink(email, 'Me interesa ser voluntario')} target="_blank" />}
+                  backgroundColor="#3DC59F"
+                  labelColor="#ffffff"
+                  className={FormStyles.primaryButton}
+                  label="ME INTERESA"
+                />}
+              </div>
             </div>
           </Modal>
         }

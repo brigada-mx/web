@@ -78,8 +78,9 @@ export const phoneLink = (phone) => {
   return `tel:${phone.replace(/\s/g, '')}`
 }
 
-export const emailLink = (email) => {
-  return `mailto:${email}`
+export const emailLink = (email, subject) => {
+  if (!subject) return `mailto:${email}`
+  return `mailto:${email}?subject=${subject}`
 }
 
 export const truncate = (s, l) => {
