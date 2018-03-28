@@ -19,10 +19,9 @@ class MapErrorBoundary extends React.Component {
       return (
         <div className={Styles.container}>
           <span>
-            No se pudo cargar el mapa. Es posible que no tienes habilitado WebGL.
+            En ciertos dispositivos, Chrome no es capaz de cargar este mapa.
           </span>
-          <span>Intenta abrir la página en otro navegador. Si no funciona favor de contactarnos.</span>
-          <span>Si quieres checar si tienes WebGL habilitado, <a href="http://webglreport.com/?v=1" target="_blank">ve a esta página</a>.</span>
+          <span>Intenta abrir la página en Firefox, Safari o Edge. Si no funciona <a href="mailto:eduardo@brigada.mx" target="_blank">favor de contactarnos</a>.</span>
         </div>
       )
     }

@@ -19,3 +19,7 @@ An Amazon-issued SSL certificate provides security for the web app and the API.
 Route 53 DNS ensures <https://app.brigada.mx> points to the web app, and that HTTP requests are redirected to HTTPS.
 
 CloudFront also __gzips__ assets, which greatly reduces bundle size and initial load time.
+
+
+## Optimize Bundle Size
+Run `NODE_ENV=production webpack --config webpack.prod.js --json > stats.json` to generate a `stats.json` file, and upload it [here](https://chrisbateman.github.io/webpack-visualizer/) for a sweet sunburst chart.

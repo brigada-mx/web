@@ -21,6 +21,7 @@ const projectTypes = [
   { label: 'Planeación urbana o rural', value: 'urban_rural_planning' },
   { label: 'Reactivación económica', value: 'local_economy' },
   { label: 'Rendición de cuentas', value: 'accountability' },
+  { label: 'Reparación de vivienda', value: 'house_repair' },
   { label: 'Salud', value: 'health' },
   { label: 'Vivienda permanente', value: 'houses' },
   { label: 'Vivienda temporal', value: 'temporary_houses' },

@@ -8,3 +8,4 @@ sandbox/*
 requester.pyr
 src/data/*
 sitemap.xml
+stats.json
