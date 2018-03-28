@@ -305,7 +305,7 @@ class OrganizationScreenView extends React.Component {
           </div>
         </div>
 
-        <HelpWanted help={help} helpDesc={helpDesc} organizationId={id} />
+        <HelpWanted help={help} helpDesc={helpDesc} organizationId={id} email={email} />
 
         <StickyContainer className={`${!help ? Styles.actionsContainer : ''} row`}>
           <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>

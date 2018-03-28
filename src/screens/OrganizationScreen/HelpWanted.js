@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import RaisedButton from 'material-ui/RaisedButton'
+
 import Modal from 'components/Modal'
+import { emailLink } from 'tools/string'
 import FormStyles from 'src/Form.css'
 import GlobalStyles from 'src/Global.css'
 import Styles from './HelpWanted.css'
@@ -24,7 +27,7 @@ class HelpWanted extends React.Component {
   }
 
   render() {
-    const { help, helpDesc = '', organizationId } = this.props
+    const { help, helpDesc = '', organizationId, email } = this.props
     const { modal } = this.state
 
     if (!help) return null
@@ -37,14 +40,21 @@ class HelpWanted extends React.Component {
             gaName={`volunteer/${organizationId}`}
           >
             <div className={Styles.modalContent}>
-              <span className={FormStyles.formHeader}>Estamos buscando voluntarios</span>
+              <span className={FormStyles.formHeader}>Buscamos voluntarios</span>
               <p className={FormStyles.formText}>{helpDesc}</p>
+              {email && <RaisedButton
+                containerElement={<a href={emailLink(email)} target="_blank" />}
+                backgroundColor="#3DC59F"
+                labelColor="#ffffff"
+                className={FormStyles.primaryButton}
+                label="CONTACTAR"
+              />}
             </div>
           </Modal>
         }
 
         <div className={Styles.helpContainer}>
-          <span className={Styles.infoText}>Estamos recibiendo voluntarios</span>
+          <span className={Styles.infoText}>Buscamos voluntarios</span>
           <span
             className={`${GlobalStyles.link} ${Styles.linkText}`}
             onClick={this.handleClick}
@@ -59,6 +69,7 @@ class HelpWanted extends React.Component {
 
 HelpWanted.propTypes = {
   help: PropTypes.bool,
+  email: PropTypes.string,
   helpDesc: PropTypes.string,
   organizationId: PropTypes.number.isRequired,
 }
