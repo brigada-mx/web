@@ -48,9 +48,9 @@ class Service {
     return sendToApi(`actions/${id}/`)
   }
 
-  getDonors = async (page_size = 10000) => {
+  getDonorsMini = async (page_size = 10000) => {
     const params = { page_size }
-    return sendToApi('donors/', { params })
+    return sendToApi('donors_mini/', { params })
   }
 
   // ORGANIZATION ACCOUNT PUBLIC ENDPOINTS

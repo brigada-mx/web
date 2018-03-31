@@ -69,18 +69,25 @@ export const fmtBudget = (b) => { // round to 1 decimal place
   return `$${thousands}K`
 }
 
+export const cleanUrl = (url) => {
+  return url.replace(/["';<>]/g, '')
+}
+
 export const addProtocol = (url, protocol = 'http') => {
-  if (url.startsWith('http://') || url.startsWith('http://')) return url
-  return `${protocol}://${url}`
+  const clean = cleanUrl(url)
+  if (clean.startsWith('http://') || clean.startsWith('https://')) return clean
+  return `${protocol}://${clean}`
 }
 
 export const phoneLink = (phone) => {
-  return `tel:${phone.replace(/\s/g, '')}`
+  const clean = cleanUrl(phone)
+  return `tel:${clean.replace(/\s/g, '')}`
 }
 
 export const emailLink = (email, subject) => {
-  if (!subject) return `mailto:${email}`
-  return `mailto:${email}?subject=${subject}`
+  const clean = cleanUrl(email)
+  if (!subject) return `mailto:${clean}`
+  return `mailto:${clean}?subject=${cleanUrl(subject)}`
 }
 
 export const truncate = (s, l) => {
@@ -107,7 +114,8 @@ export const getLocation = (href) => {
 export const thumborUrl = (
   { url, rotate: r = 0 }, width, height, { crop = false, rotate = true } = {}
 ) => {
-  const parsed = getLocation(url)
+  const clean = addProtocol(url)
+  const parsed = getLocation(clean)
   const rotateFilter = rotate ? `/filters:rotate(${-r * 90})` : ''
   return parsed && `${env.thumborUrl}/${crop ? '' : 'fit-in/'}${width}x${height}${rotateFilter}${parsed.pathname}`
 }

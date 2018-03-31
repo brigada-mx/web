@@ -47,7 +47,7 @@ class ActionScreen extends React.Component {
   }
 
   loadDonors = () => {
-    getBackoff(service.getDonors, { key: 'donors' })
+    getBackoff(service.getDonorsMini, { key: 'donors' })
   }
 
   handleUpdateAction = async (body) => {
