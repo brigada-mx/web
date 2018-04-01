@@ -49,11 +49,11 @@ class DonorProfile extends React.Component {
         <div className={FormStyles.formContainer}>
           <div className={FormStyles.card}>
             <div className={FormStyles.sectionHeader}>Tu nombre</div>
-            <UserForm onSubmit={this.handleSubmitName} enableReinitialize />
+            <UserForm type="donor" form="donorMe" onSubmit={this.handleSubmitName} enableReinitialize />
           </div>
           <div className={FormStyles.card}>
             <div className={FormStyles.sectionHeader}>Tu contraseña</div>
-            <ResetPasswordForm onSubmit={this.handleSubmitPassword} />
+            <ResetPasswordForm form="donorResetPassword" onSubmit={this.handleSubmitPassword} />
           </div>
         </div>
       </WithSideNav>
@@ -69,7 +69,7 @@ DonorProfile.propTypes = {
 const mapDispatchToProps = (dispatch) => {
   return {
     snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
-    reset: () => dispatch(reset('resetPassword')),
+    reset: () => dispatch(reset('donorResetPassword')),
   }
 }
 

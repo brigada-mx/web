@@ -41,7 +41,7 @@ const NavLinks = ({
     modal('login')
   }
 
-  const loginButton () => {
+  const loginButton = () => {
     const className = `${classNameLink} ${Styles.button}`
     if (orgToken) return <Link onClick={onHideDrawer} className={className} to="/cuenta">Mi Cuenta</Link>
     if (donorToken) return <Link onClick={onHideDrawer} className={className} to="/donador">Mi Cuenta</Link>
@@ -70,8 +70,8 @@ NavLinks.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { token: orgToken } = state.org.auth || {}
-  const { token: donorToken } = state.donor.auth || {}
+  const { token: orgToken } = state.auth.org || {}
+  const { token: donorToken } = state.auth.donor || {}
   return { orgToken, donorToken }
 }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
@@ -33,6 +34,7 @@ const UserForm = ({ handleSubmit, submitting }) => {
 
 UserForm.propTypes = {
   ...rxfPropTypes,
+  type: PropTypes.string.isRequired,
 }
 
 const validate = ({ first_name: name, surnames }) => {
@@ -42,12 +44,12 @@ const validate = ({ first_name: name, surnames }) => {
   return errors
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, { type }) => {
   try {
-    return { initialValues: state.getter.me.data || {} }
+    return { initialValues: state.getter[`${type}Me`].data || {} }
   } catch (e) {
     return { initialValues: {} }
   }
 }
 
-export default connect(mapStateToProps, null)(reduxForm({ form: 'me', validate })(UserForm))
+export default connect(mapStateToProps, null)(reduxForm({ validate })(UserForm))

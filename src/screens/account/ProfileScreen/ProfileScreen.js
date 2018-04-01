@@ -31,7 +31,7 @@ class Profile extends React.Component {
   }
 
   loadMe = () => {
-    getBackoff(service.getMe, { key: 'me' })
+    getBackoff(service.getMe, { key: 'orgMe' })
   }
 
   loadOrganization = () => {
@@ -96,11 +96,11 @@ class Profile extends React.Component {
         <div className={FormStyles.formContainer}>
           <div className={FormStyles.card}>
             <div className={FormStyles.sectionHeader}>Tu nombre</div>
-            <UserForm onSubmit={this.handleSubmitName} enableReinitialize />
+            <UserForm type="org" form="orgMe" onSubmit={this.handleSubmitName} enableReinitialize />
           </div>
           <div className={FormStyles.card}>
             <div className={FormStyles.sectionHeader}>Tu contraseña</div>
-            <ResetPasswordForm onSubmit={this.handleSubmitPassword} />
+            <ResetPasswordForm form="orgResetPassword" onSubmit={this.handleSubmitPassword} />
           </div>
           <div className={FormStyles.card}>
             <div className={FormStyles.sectionHeader}>Tu llave secreta</div>
@@ -129,7 +129,7 @@ Profile.propTypes = {
 const mapDispatchToProps = (dispatch) => {
   return {
     snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
-    reset: () => dispatch(reset('resetPassword')),
+    reset: () => dispatch(reset('orgResetPassword')),
   }
 }
 

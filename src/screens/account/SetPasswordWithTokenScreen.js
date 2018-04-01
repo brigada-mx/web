@@ -61,21 +61,21 @@ const SetPasswordWithTokenScreen = ({ history, location, snackbar, onLogin, clas
     const params = parseQs(location.search)
     const { token = '', email = '', type = 'org' } = params
 
-    const fSetByType = {
+    const fSetPasswordByType = {
       org: service.setPasswordWithToken,
       donor: service.donorSetPasswordWithToken,
     }
-    const fTokenByType = { org: service.token, donor: service.donorToken }
+    const fGetTokenByType = { org: service.token, donor: service.donorToken }
     const accountUrlByType = { org: '/cuenta', donor: '/donador' }
 
-    const { data } = await fSetByType[type](token, password)
+    const { data } = await fSetPasswordByType[type](token, password)
     if (!data) {
       snackbar('El email que te mandamos ya no es válido, pide otro', 'error')
       return
     }
 
     // log user in to site
-    const { data: loginData } = await fTokenByType[type](email, password)
+    const { data: loginData } = await fGetTokenByType[type](email, password)
     if (loginData) onLogin({ ...loginData, email }, type)
 
     history.push(accountUrlByType[type])

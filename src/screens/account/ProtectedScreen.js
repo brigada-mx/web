@@ -30,8 +30,8 @@ ProtectedScreen.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { token: orgToken } = state.org.auth || {}
-  const { token: donorToken } = state.donor.auth || {}
+  const { token: orgToken } = state.auth.org || {}
+  const { token: donorToken } = state.auth.donor || {}
   return { orgToken, donorToken }
 }
 

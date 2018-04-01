@@ -57,4 +57,4 @@ const validate = ({ old_password: oldPassword, password, confirmPassword }) => {
   return errors
 }
 
-export default reduxForm({ form: 'resetPassword', validate })(ResetPasswordForm)
+export default reduxForm({ validate })(ResetPasswordForm)

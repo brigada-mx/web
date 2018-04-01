@@ -101,7 +101,7 @@ AccountNav.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { token, organization_id: orgId } = state.org.auth || {}
+  const { token, organization_id: orgId } = state.auth.org || {}
   return { token, orgId }
 }
 
