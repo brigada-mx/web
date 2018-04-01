@@ -8,9 +8,13 @@ import Styles from 'src/Global.css'
 import LoginScreen from './LoginScreen'
 
 
-const ProtectedScreen = ({ children, token, history, location }) => {
-  if (!token) {
+const ProtectedScreen = ({ children, orgToken, donorToken, history, location, type }) => {
+  if (type === 'org' && !orgToken) {
     if (location.pathname !== '/cuenta') history.push('/cuenta')
+    return <LoginScreen className={Styles.modalScreenWrapper} />
+  }
+  if (type === 'donor' && !donorToken) {
+    if (location.pathname !== '/donador') history.push('/donador')
     return <LoginScreen className={Styles.modalScreenWrapper} />
   }
   return <React.Fragment>{children}</React.Fragment>
@@ -20,22 +24,24 @@ ProtectedScreen.propTypes = {
   children: PropTypes.any.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  token: PropTypes.string,
+  orgToken: PropTypes.string,
+  donorToken: PropTypes.string,
+  type: PropTypes.oneOf(['org', 'donor']).isRequired,
 }
 
 const mapStateToProps = (state) => {
-  const { token } = state.auth || {}
-  return { token }
+  const { token: orgToken } = state.org.auth || {}
+  const { token: donorToken } = state.donor.auth || {}
+  return { orgToken, donorToken }
 }
 
 const ReduxScreen = withRouter(connect(mapStateToProps, null)(ProtectedScreen))
 
-const protectedScreen = (WrappedComponent) => {
+const protectedScreen = (WrappedComponent, type = 'org') => {
   const wrapped = (props) => {
-    return <ReduxScreen><WrappedComponent {...props} /></ReduxScreen>
+    return <ReduxScreen type={type}><WrappedComponent {...props} /></ReduxScreen>
   }
   return wrapped
 }
 
 export default protectedScreen
-export { ReduxScreen as ProtectedScreen }

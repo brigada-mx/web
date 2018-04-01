@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import ReactGA from 'react-ga'
 import { withRouter, Link } from 'react-router-dom'
 import AppBar from 'material-ui/AppBar'
 import IconMenu from 'material-ui/IconMenu'
@@ -12,28 +11,27 @@ import IconButton from 'material-ui/IconButton'
 import FlatButton from 'material-ui/FlatButton'
 
 import * as Actions from 'src/actions'
-import env from 'src/env'
 import service from 'api/service'
-import Styles from './AccountNav.css'
+import Styles from './DonorNav.css'
 
 
-const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => {
+const DonorNav = ({ history, location, onLogout, livechat, token, donorId }) => {
   const handleHomeClick = () => {
-    if (location.pathname !== '/cuenta') history.push('/cuenta')
+    if (location.pathname !== '/donador') history.push('/donador')
   }
 
   const handleProfileClick = () => {
-    if (location.pathname !== '/cuenta/perfil') history.push('/cuenta/perfil')
+    if (location.pathname !== '/donador/perfil') history.push('/donador/perfil')
   }
 
   const handleLogoutClick = () => {
     service.deleteToken()
     onLogout()
-    if (location.pathname !== '/cuenta') history.push('/cuenta')
+    if (location.pathname !== '/donador') history.push('/donador')
   }
 
   const platformLink = () => {
-    if (orgId) return `/organizaciones/${orgId}`
+    if (donorId) return `/donadores/${donorId}`
     return '/'
   }
 
@@ -48,11 +46,6 @@ const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => 
         onClick={openChat}
         className={Styles.button}
         label="Soporte"
-      />
-      <FlatButton
-        containerElement={<ReactGA.OutboundLink eventLabel="survey" to={env.surveyUrl} target="_blank" />}
-        className={Styles.button}
-        label="Subir Fotos"
       />
       <FlatButton
         containerElement={<Link to={platformLink()} />}
@@ -91,25 +84,25 @@ const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => 
   )
 }
 
-AccountNav.propTypes = {
+DonorNav.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   onLogout: PropTypes.func.isRequired,
   livechat: PropTypes.func.isRequired,
   token: PropTypes.string,
-  orgId: PropTypes.number,
+  donorId: PropTypes.number,
 }
 
 const mapStateToProps = (state) => {
-  const { token, organization_id: orgId } = state.org.auth || {}
-  return { token, orgId }
+  const { token, donor_id: donorId } = state.donor.auth || {}
+  return { token, donorId }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogout: () => Actions.authUnset(dispatch, { type: 'org' }),
+    onLogout: () => Actions.authUnset(dispatch, { type: 'donor' }),
     livechat: open => Actions.livechat(dispatch, { open }),
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountNav))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DonorNav))

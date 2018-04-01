@@ -32,7 +32,7 @@ CreateAccountScreen.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogin: auth => Actions.authSet(dispatch, { auth }),
+    onLogin: auth => Actions.authSet(dispatch, { auth, type = 'org' }),
     snackbar: (message, status, duration) => Actions.snackbar(dispatch, { message, status, duration }),
     modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
   }

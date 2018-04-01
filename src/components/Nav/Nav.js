@@ -11,7 +11,15 @@ import colors from 'src/colors'
 import Styles from './Nav.css'
 
 
-const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer, modal, livechat }) => {
+const NavLinks = ({
+  orgToken,
+  donorToken,
+  classNameLink,
+  activeStyle = {},
+  onHideDrawer,
+  modal,
+  livechat
+}) => {
   const selected = { color: colors.brandGreen }
 
   const locIsActive = (match, location) => {
@@ -33,14 +41,20 @@ const NavLinks = ({ token, classNameLink, activeStyle = {}, onHideDrawer, modal,
     modal('login')
   }
 
+  const loginButton () => {
+    const className = `${classNameLink} ${Styles.button}`
+    if (orgToken) return <Link onClick={onHideDrawer} className={className} to="/cuenta">Mi Cuenta</Link>
+    if (donorToken) return <Link onClick={onHideDrawer} className={className} to="/donador">Mi Cuenta</Link>
+    return <a onClick={handleClickLogin} className={className}>Login</a>
+  }
+
   return (
     <React.Fragment>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">Comunidades</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/organizaciones">Organizaciones</NavLink>
       <a href="http://brigada.mx/nosotros">Nosotros</a>
       <Link onClick={openChat} className={classNameLink} to="#">Soporte</Link>
-      {token && <Link onClick={onHideDrawer} className={`${classNameLink} ${Styles.button}`} to="/cuenta">Mi Cuenta</Link>}
-      {!token && <a onClick={handleClickLogin} className={`${classNameLink} ${Styles.button}`}>Login</a>}
+      {loginButton()}
     </React.Fragment>
   )
 }
@@ -49,14 +63,16 @@ NavLinks.propTypes = {
   onHideDrawer: PropTypes.func.isRequired,
   livechat: PropTypes.func.isRequired,
   modal: PropTypes.func.isRequired,
-  token: PropTypes.string,
+  orgToken: PropTypes.string,
+  donorToken: PropTypes.string,
   classNameLink: PropTypes.string,
   activeStyle: PropTypes.object,
 }
 
 const mapStateToProps = (state) => {
-  const { token } = state.auth || {}
-  return { token }
+  const { token: orgToken } = state.org.auth || {}
+  const { token: donorToken } = state.donor.auth || {}
+  return { orgToken, donorToken }
 }
 
 const mapDispatchToProps = (dispatch) => {

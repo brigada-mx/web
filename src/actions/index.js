@@ -29,20 +29,21 @@ export async function filterLocalities(dispatch, { prop, values }) {
   })
 }
 
-export async function authSet(dispatch, { auth }) {
-  localStorage.setItem('719s:auth', JSON.stringify(auth))
+export async function authSet(dispatch, { auth, type = 'org' }) {
+  localStorage.setItem(`719s:auth-${type}`, JSON.stringify(auth))
 
   dispatch({
     type: 'AUTH_SET',
-    payload: { auth },
+    payload: { auth, type },
   })
 }
 
-export async function authUnset(dispatch) {
-  localStorage.removeItem('719s:auth')
+export async function authUnset(dispatch, { type = 'org' }) {
+  localStorage.removeItem(`719s:auth-${type}`)
 
   dispatch({
     type: 'AUTH_UNSET',
+    payload: { type },
   })
 }
 

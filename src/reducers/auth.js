@@ -1,14 +1,17 @@
 const defaultState = {
+  org: {},
+  donor: {},
 }
 
 export default function reduce(state = defaultState, { type, payload }) {
   switch (type) {
   case 'AUTH_SET': {
-    const { auth } = payload
-    return auth
+    const { auth, type: t } = payload
+    return { ...state, [t]: auth }
   }
   case 'AUTH_UNSET': {
-    return {}
+    const { type: t } = payload
+    return { ...state, [t]: {} }
   }
   default:
     return state

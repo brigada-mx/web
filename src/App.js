@@ -15,6 +15,7 @@ import SnackBar from 'components/SnackBar'
 import Nav from 'components/Nav'
 import ModalSelector from 'components/Modal/ModalSelector'
 import AccountNav from 'components/AccountNav'
+import DonorNav from 'components/DonorNav'
 import LiveChat from 'components/LiveChat'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
@@ -25,8 +26,10 @@ import CreateAccountScreen from 'screens/account/CreateAccountScreen'
 import protectedScreen from 'screens/account/ProtectedScreen'
 import ActionScreen from 'screens/account/ActionScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
+import DonorProfileScreen from 'screens/account/ProfileScreen/DonorProfileScreen'
 import HomeScreen from 'screens/account/HomeScreen'
 import AccountCreated from 'screens/account/AccountCreated'
+import DonorHomeScreen from 'screens/account/DonorHomeScreen'
 import env from 'src/env'
 import Styles from 'src/Global.css'
 
@@ -93,6 +96,7 @@ const App = () => {
             <Route exact path="/" component={Nav} />
             <Route path="/(comunidades|organizaciones)" component={Nav} />
             <Route path="/cuenta" component={AccountNav} />
+            <Route path="/donador" component={DonorNav} />
 
             <Switch>
               <Route exact path="/test" component={AccountCreated} />
@@ -104,11 +108,16 @@ const App = () => {
 
               <Route path="/establecer" component={SetPasswordWithTokenScreenWrapper} />
               <Route exact path="/crear/cuenta" component={CreateAccountScreenWrapper} />
-              <Route exact path="/cuenta" component={protectedScreen(HomeScreen)} />
-              <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen)} />
-              <Route exact path="/cuenta/fotos" component={protectedScreen(ActionScreen)} />
-              <Route exact path="/cuenta/proyectos/:key" component={protectedScreen(ActionScreenWrapper)} />
+              <Route exact path="/cuenta" component={protectedScreen(HomeScreen, 'org')} />
+              <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen, 'org')} />
+              <Route exact path="/cuenta/fotos" component={protectedScreen(ActionScreen, 'org')} />
+              <Route exact path="/cuenta/proyectos/:key" component={protectedScreen(ActionScreenWrapper, 'org')} />
+
+              <Route exact path="/donador" component={protectedScreen(DonorHomeScreen, 'donor')} />
+              <Route exact path="/donador/perfil" component={protectedScreen(DonorProfileScreen, 'donor')} />
+
               <Redirect from="/cuenta" to="/cuenta" />
+              <Redirect from="/donador" to="/donador" />
               <Redirect to="/" />
             </Switch>
           </div>

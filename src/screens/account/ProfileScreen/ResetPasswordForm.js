@@ -49,9 +49,9 @@ ResetPasswordForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = ({ old_password, password, confirmPassword }) => {
+const validate = ({ old_password: oldPassword, password, confirmPassword }) => {
   const errors = {}
-  if (!old_password) errors.old_password = 'Ingresa tu contraseña actual'
+  if (!oldPassword) errors.old_password = 'Ingresa tu contraseña actual'
   if (!password || password.length < 8) errors.password = 'Debe tener al menos 8 caracteres'
   if (password !== confirmPassword) errors.confirmPassword = 'Las contraseñas tienen que ser iguales'
   return errors

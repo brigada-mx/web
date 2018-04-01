@@ -11,14 +11,15 @@ import service from 'api/service'
 import { parseQs } from 'tools/string'
 import { TextField } from 'components/Fields'
 import FormStyles from 'src/Form.css'
-import Styles from 'src/Form.css'
 
 
 const Form = ({ handleSubmit, submitting }) => {
   return (
     <div className={FormStyles.formContainer}>
       <span className={FormStyles.formHeader}>Establecer tu contraseña</span>
-      <span className={FormStyles.formText}>Ingresa tu nueva contraseña y repítela para confirmar</span>
+      <span className={FormStyles.formText}>
+        Ingresa tu nueva contraseña y repítela para confirmar
+      </span>
       <div className={FormStyles.row}>
         <TextField
           className={FormStyles.wideInput}
@@ -58,19 +59,26 @@ const ReduxForm = reduxForm({ form: 'setPasswordWithToken', validate })(Form)
 const SetPasswordWithTokenScreen = ({ history, location, snackbar, onLogin, className = '' }) => {
   const handleSubmit = async ({ password }) => {
     const params = parseQs(location.search)
-    const { token = '', email = '' } = params
+    const { token = '', email = '', type = 'org' } = params
 
-    const { data } = await service.setPasswordWithToken(token, password)
+    const fSetByType = {
+      org: service.setPasswordWithToken,
+      donor: service.donorSetPasswordWithToken,
+    }
+    const fTokenByType = { org: service.token, donor: service.donorToken }
+    const accountUrlByType = { org: '/cuenta', donor: '/donador' }
+
+    const { data } = await fSetByType[type](token, password)
     if (!data) {
       snackbar('El email que te mandamos ya no es válido, pide otro', 'error')
       return
     }
 
     // log user in to site
-    const { data: loginData } = await service.token(email, password)
-    if (loginData) onLogin({ ...loginData, email })
+    const { data: loginData } = await fTokenByType[type](email, password)
+    if (loginData) onLogin({ ...loginData, email }, type)
 
-    history.push('/cuenta')
+    history.push(accountUrlByType[type])
     snackbar('Cambiaste tu contraseña', 'success')
   }
 
@@ -88,7 +96,7 @@ SetPasswordWithTokenScreen.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogin: auth => Actions.authSet(dispatch, { auth }),
+    onLogin: (auth, type) => Actions.authSet(dispatch, { auth, type }),
     snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
   }
 }

@@ -1,0 +1,24 @@
+.nav {
+  position: sticky !important;
+  top: 0;
+  background-color: #ffffff !important;
+  box-shadow: unset !important;
+  border-bottom: 1px solid #F2F2F4;
+}
+
+.nav h1 {
+  color: #5A5A5D !important;
+}
+
+.button {
+  color: #5A5A5D !important;
+  line-height: 48px !important;
+}
+
+.button:hover {
+  background-color: unset !important;
+}
+
+.menuButton {
+  color: #5A5A5D !important;
+}
