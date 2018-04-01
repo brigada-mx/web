@@ -40,7 +40,7 @@ const CreateAccountForm = ({ handleSubmit, submitting }) => {
           hintText="Apellido"
         />
       </div>
-      <div>
+      <div className={Styles.inputGroup}>
         <TextField
           className={FormStyles.wideInput}
           name="email"
@@ -48,7 +48,7 @@ const CreateAccountForm = ({ handleSubmit, submitting }) => {
           autoCapitalize="off"
         />
       </div>
-      <div>
+      <div className={Styles.inputGroup}>
         <TextField
           className={FormStyles.wideInput}
           name="name"

@@ -159,6 +159,19 @@ class Service {
   updateAccountSubmissionImage = async (id, body) => {
     return sendToApiAuth(`account/submissions/${id}/image/`, { method: 'PUT', body })
   }
+
+  // DONOR ACCOUNT PUBLIC ENDPOINTS
+  donorSendSetPasswordEmail = async (email) => {
+    return sendToApi('donor_account/send_set_password_email/', { method: 'POST', body: { email } })
+  }
+
+  donorSetPasswordWithToken = async (token, password) => {
+    return sendToApi('donor_account/set_password_with_token/', { method: 'POST', body: { token, password } })
+  }
+
+  donorToken = async (email, password) => {
+    return sendToApi('donor_account/token/', { method: 'POST', body: { email, password } })
+  }
 }
 
 /**
