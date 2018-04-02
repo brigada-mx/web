@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 
 export default class LiveChatLoader extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.loadLiveChatApi.bind(this)()
   }
 

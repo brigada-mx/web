@@ -8,13 +8,20 @@ import Styles from 'src/Global.css'
 import LoginScreen from './LoginScreen'
 
 
+const loginUrl = (type, pathname) => {
+  const base = { org: '/cuenta', donor: '/donador' }[type]
+  if (!pathname.startsWith(base) || pathname === base || pathname === `${base}/`) return base
+  return `${base}?next=${pathname}`
+}
+
 const ProtectedScreen = ({ children, orgToken, donorToken, history, location, type }) => {
+  const { pathname } = location
   if (type === 'org' && !orgToken) {
-    if (location.pathname !== '/cuenta') history.push('/cuenta')
+    if (pathname !== '/cuenta') history.push(loginUrl('org', pathname))
     return <LoginScreen type="org" className={Styles.modalScreenWrapper} />
   }
   if (type === 'donor' && !donorToken) {
-    if (location.pathname !== '/donador') history.push('/donador')
+    if (pathname !== '/donador') history.push(loginUrl('donor', pathname))
     return <LoginScreen type="donor" className={Styles.modalScreenWrapper} />
   }
   return <React.Fragment>{children}</React.Fragment>

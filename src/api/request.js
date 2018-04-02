@@ -63,7 +63,6 @@ const sendToApi = async (url, params) => {
 
 const sendToApiAuth = async (type, url, params = {}) => {
   const { token } = store.getState().auth[type] || {}
-  const loginUrlByType = { org: '/cuenta', donor: '/donador' }
 
   try {
     const r = await _sendToApi(url, { ...params, token })
@@ -73,7 +72,6 @@ const sendToApiAuth = async (type, url, params = {}) => {
     const data = await r.json()
     if (status === 403 && data.detail === 'invalid_token') {
       Actions.authUnset(store.dispatch, { type })
-      window.location.href = `${env.siteUrl}${loginUrlByType[type]}`
     }
     if (status >= 400) return { error: data, status }
     return { data, status }

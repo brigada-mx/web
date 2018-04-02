@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
-import { toDegrees, googleMapsUrl } from 'tools/other'
-import { thumborUrl } from 'tools/string'
+import { toDegrees } from 'tools/other'
+import { thumborUrl, googleMapsUrl } from 'tools/string'
 import Styles from './Carousel.css'
 
 

@@ -120,6 +120,10 @@ export const thumborUrl = (
   return parsed && `${env.thumborUrl}/${crop ? '' : 'fit-in/'}${width}x${height}${rotateFilter}${parsed.pathname}`
 }
 
+export const googleMapsUrl = (lat, lng) => {
+  return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+}
+
 export const imageStyleObject = ({ rotate = 0, hidden, datetime }) => {
   return {
     transform: `rotate(${rotate * 90}deg)`,

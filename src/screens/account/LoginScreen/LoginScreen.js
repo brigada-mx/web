@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
+import { parseQs } from 'tools/string'
 import service from 'api/service'
 import LoginForm from './LoginForm'
 
@@ -17,7 +18,11 @@ const LoginScreen = ({ onLogin, snackbar, history, location, closeModal, classNa
     const { data } = await fGetTokenByType[type](email, password)
     if (data) {
       onLogin({ ...data, email }, type)
-      if (location.pathname !== accountUrl) history.push(accountUrl)
+
+      const params = parseQs(location.search)
+      if (params.next) history.push(params.next)
+      else if (location.pathname !== accountUrl) history.push(accountUrl)
+
       closeModal()
     } else {
       snackbar('No reconocemos este email/contraseña', 'error')
