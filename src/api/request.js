@@ -63,7 +63,7 @@ const sendToApi = async (url, params) => {
 
 const sendToApiAuth = async (type, url, params = {}) => {
   const { token } = store.getState().auth[type] || {}
-  const loginUrlByType = { org: 'cuenta', donor: 'donador' }
+  const loginUrlByType = { org: '/cuenta', donor: '/donador' }
 
   try {
     const r = await _sendToApi(url, { ...params, token })

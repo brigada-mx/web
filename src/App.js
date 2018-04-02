@@ -66,7 +66,10 @@ const rootReducer = (state, action) => {
   return appReducer(state, action)
 }
 
-const initialStore = { auth: JSON.parse(localStorage.getItem('719s:auth')) || {} }
+const initialStore = { auth: {
+  org: JSON.parse(localStorage.getItem('719s:auth-org')) || {},
+  donor: JSON.parse(localStorage.getItem('719s:auth-donor')) || {},
+} }
 const store = createStore(rootReducer, initialStore)
 
 ReactGA.initialize('UA-108487748-1', { testMode: env.env === 'dev' })
