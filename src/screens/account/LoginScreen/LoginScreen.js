@@ -9,20 +9,23 @@ import service from 'api/service'
 import LoginForm from './LoginForm'
 
 
-const LoginScreen = ({ onLogin, snackbar, history, location, closeModal, className = '' }) => {
+const LoginScreen = ({ onLogin, snackbar, history, location, closeModal, className, type }) => {
   const handleSubmit = async ({ email, password }) => {
-    const { data } = await service.token(email, password)
+    const fGetTokenByType = { org: service.token, donor: service.donorToken }
+    const accountUrl = { org: '/cuenta', donor: '/donador' }[type]
+
+    const { data } = await fGetTokenByType[type](email, password)
     if (data) {
-      onLogin({ ...data, email })
-      if (location.pathname !== '/cuenta') history.push('/cuenta')
+      onLogin({ ...data, email }, type)
+      if (location.pathname !== accountUrl) history.push(accountUrl)
       closeModal()
     } else {
       snackbar('No reconocemos este email/contraseña', 'error')
     }
   }
 
-  if (className) return <div className={className}><LoginForm onSubmit={handleSubmit} /></div>
-  return <LoginForm onSubmit={handleSubmit} />
+  if (!className) return <LoginForm type={type} onSubmit={handleSubmit} />
+  return <div className={className}><LoginForm type={type} onSubmit={handleSubmit} /></div>
 }
 
 LoginScreen.propTypes = {
@@ -32,11 +35,12 @@ LoginScreen.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   className: PropTypes.string,
+  type: PropTypes.oneOf(['org', 'donor']).isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogin: auth => Actions.authSet(dispatch, { auth }),
+    onLogin: (auth, type) => Actions.authSet(dispatch, { auth, type }),
     snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
     closeModal: () => Actions.modal(dispatch, ''),
   }

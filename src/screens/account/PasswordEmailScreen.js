@@ -12,11 +12,12 @@ import { validateEmail } from 'tools/string'
 import FormStyles from 'src/Form.css'
 
 
-const Form = ({ handleSubmit, submitting }) => {
+const Form = ({ handleSubmit, submitting, type }) => {
+  const headerText = type === 'donor' ? 'Olvidé mi contraseña de donador' : 'Olvidé mi contraseña'
   return (
     <div className={FormStyles.formContainer}>
       <span className={FormStyles.formLogo} />
-      <span className={FormStyles.formHeader}>Olvidé mi contraseña</span>
+      <span className={FormStyles.formHeader}>{headerText}</span>
       <span className={FormStyles.formText}>Ingresa tu email y te mandaremos un correo para restablecer tu contraseña</span>
       <div className={FormStyles.row}>
         <TextField
@@ -35,6 +36,7 @@ const Form = ({ handleSubmit, submitting }) => {
 
 Form.propTypes = {
   ...rxfPropTypes,
+  type: PropTypes.oneOf(['org', 'donor']).isRequired,
 }
 
 const validate = ({ email }) => {
@@ -44,22 +46,24 @@ const validate = ({ email }) => {
 
 const ReduxForm = reduxForm({ form: 'passwordEmail', validate })(Form)
 
-const PasswordEmailScreen = ({ snackbar, email: initialEmail = '' }) => {
+const PasswordEmailScreen = ({ snackbar, email: initialEmail = '', type }) => {
   const handleSubmit = async ({ email }) => {
-    const { data } = await service.sendSetPasswordEmail(email)
+    const f = { org: service.sendSetPasswordEmail, donor: service.donorSendSetPasswordEmail }[type]
+    const { data } = await f(email)
     if (!data) {
-      snackbar(`No pudimos mandar el email ${email}`, 'error')
+      snackbar(`No pudimos mandar el email a ${email}`, 'error')
       return
     }
     snackbar(`Mandamos un email a ${email}`, 'success')
   }
 
-  return <ReduxForm onSubmit={handleSubmit} initialValues={{ email: initialEmail }} />
+  return <ReduxForm type={type} onSubmit={handleSubmit} initialValues={{ email: initialEmail }} />
 }
 
 PasswordEmailScreen.propTypes = {
   snackbar: PropTypes.func.isRequired,
   email: PropTypes.string,
+  type: PropTypes.oneOf(['org', 'donor']).isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {

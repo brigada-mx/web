@@ -38,7 +38,7 @@ const NavLinks = ({
 
   const handleClickLogin = () => {
     onHideDrawer()
-    modal('login')
+    modal('login', { type: 'org' })
   }
 
   const loginButton = () => {

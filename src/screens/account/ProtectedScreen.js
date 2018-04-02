@@ -11,11 +11,11 @@ import LoginScreen from './LoginScreen'
 const ProtectedScreen = ({ children, orgToken, donorToken, history, location, type }) => {
   if (type === 'org' && !orgToken) {
     if (location.pathname !== '/cuenta') history.push('/cuenta')
-    return <LoginScreen className={Styles.modalScreenWrapper} />
+    return <LoginScreen type="org" className={Styles.modalScreenWrapper} />
   }
   if (type === 'donor' && !donorToken) {
     if (location.pathname !== '/donador') history.push('/donador')
-    return <LoginScreen className={Styles.modalScreenWrapper} />
+    return <LoginScreen type="donor" className={Styles.modalScreenWrapper} />
   }
   return <React.Fragment>{children}</React.Fragment>
 }

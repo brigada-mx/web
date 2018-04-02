@@ -94,7 +94,7 @@ DonorNav.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { token, donor_id: donorId } = state.donor.auth || {}
+  const { token, donor_id: donorId } = state.auth.donor || {}
   return { token, donorId }
 }
 

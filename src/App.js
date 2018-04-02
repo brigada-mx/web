@@ -28,7 +28,6 @@ import ActionScreen from 'screens/account/ActionScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
 import DonorProfileScreen from 'screens/account/ProfileScreen/DonorProfileScreen'
 import HomeScreen from 'screens/account/HomeScreen'
-import AccountCreated from 'screens/account/AccountCreated'
 import DonorHomeScreen from 'screens/account/DonorHomeScreen'
 import env from 'src/env'
 import Styles from 'src/Global.css'
@@ -99,7 +98,6 @@ const App = () => {
             <Route path="/donador" component={DonorNav} />
 
             <Switch>
-              <Route exact path="/test" component={AccountCreated} />
               <Route exact path="/" component={MapScreen} />
               <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
 
