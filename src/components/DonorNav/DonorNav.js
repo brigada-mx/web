@@ -25,7 +25,7 @@ const DonorNav = ({ history, location, onLogout, livechat, token, donorId }) => 
   }
 
   const handleLogoutClick = () => {
-    service.deleteToken()
+    service.donorDeleteToken()
     onLogout()
     if (location.pathname !== '/donador') history.push('/donador')
   }

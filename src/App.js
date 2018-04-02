@@ -59,11 +59,8 @@ const appReducer = combineReducers({
 })
 
 const rootReducer = (state, action) => {
-  if (action.type === 'AUTH_UNSET') {
-    state = undefined // eslint-disable-line no-param-reassign
-  }
-
-  return appReducer(state, action)
+  // clean other branches of state tree on logout to prevent leakage of (possibly sensitive) info
+  return appReducer(action.type === 'AUTH_UNSET' ? { auth: state.auth } : state, action)
 }
 
 const initialStore = { auth: {

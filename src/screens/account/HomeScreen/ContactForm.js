@@ -54,12 +54,12 @@ const ContactForm = ({ handleSubmit, submitting }) => {
           floatingLabelText="Estado"
           name="state"
         >
+          {states.map(s => <MenuItem key={s} value={s} primaryText={s} />)}
+        </SelectField>
         <TextField
           floatingLabelText="Código postal"
           name="zip"
         />
-          {states.map(s => <MenuItem key={s} value={s} primaryText={s} />)}
-        </SelectField>
       </div>
       <div className={FormStyles.row}>
         <RaisedButton
