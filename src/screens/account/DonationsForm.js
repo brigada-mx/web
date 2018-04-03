@@ -6,7 +6,7 @@ import { reduxForm, FieldArray, propTypes as rxfPropTypes } from 'redux-form'
 import AutoCompleteMui from 'material-ui/AutoComplete'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import { TextField, DatePicker, Toggle, AutoComplete } from 'components/Fields'
+import { TextField, DatePicker, Toggle, AutoComplete, Checkbox } from 'components/Fields'
 import FormStyles from 'src/Form.css'
 
 
@@ -83,9 +83,10 @@ const Donations = ({ fields, donorsSearch }) => { // eslint-disable-line react/p
               />
             </div>
             <div className={FormStyles.toggle}>
-              <Toggle
+              <Checkbox
                 label="¿Aprobada por donador?"
                 name={`${donation}.approved_by_donor`}
+                labelPosition="left"
                 disabled
               />
             </div>

@@ -6,7 +6,7 @@ import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import { TextField, Toggle, DatePicker, AutoComplete } from 'components/Fields'
+import { TextField, Toggle, DatePicker, AutoComplete, Checkbox } from 'components/Fields'
 import { tokenMatch } from 'tools/string'
 import service, { getBackoff } from 'api/service'
 import ConfirmButton from 'components/ConfirmButton'
@@ -86,18 +86,21 @@ class Fields extends React.Component {
             rows={3}
           />
         </div>
-        <div className={FormStyles.toggle}>
-          <Toggle
-            label="¿Aprobada por tí?"
-            name="approved_by_donor"
-          />
-        </div>
-        <div className={FormStyles.toggle}>
-          <Toggle
-            label="¿Aprobada por organización?"
-            name="approved_by_org"
-            disabled
-          />
+        <div className={FormStyles.row}>
+          <div className={FormStyles.toggle}>
+            <Toggle
+              label="¿Aprobada por tí?"
+              name="approved_by_donor"
+            />
+          </div>
+          <div className={FormStyles.toggle}>
+            <Checkbox
+              label="¿Aprobada por organización?"
+              name="approved_by_org"
+              labelPosition="left"
+              disabled
+            />
+          </div>
         </div>
       </React.Fragment>
     )

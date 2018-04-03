@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 import ReactTable from 'react-table'
 import Toggle from 'material-ui/Toggle'
+import Checkbox from 'material-ui/Checkbox'
 import { withRouter, Link } from 'react-router-dom'
 import '!style-loader!css-loader!react-table/react-table.css'
 
@@ -19,7 +20,6 @@ const defaultFilterMethod = (filter, row) => {
 }
 
 const DonationTable = ({ donations, onToggleApproved, history }) => {
-  console.log(donations)
   const columns = [
     {
       Header: 'ID',
@@ -49,9 +49,9 @@ const DonationTable = ({ donations, onToggleApproved, history }) => {
     {
       Header: '¿Aprobada por org?',
       accessor: 'approved_by_org',
-      Cell: props => (<Toggle
+      Cell: props => (<Checkbox
         disabled
-        toggled={props.original.approved_by_org}
+        checked={props.original.approved_by_org}
       />),
     },
   ]
