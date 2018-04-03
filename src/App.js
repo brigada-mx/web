@@ -29,6 +29,7 @@ import ProfileScreen from 'screens/account/ProfileScreen'
 import DonorProfileScreen from 'screens/account/ProfileScreen/DonorProfileScreen'
 import HomeScreen from 'screens/account/HomeScreen'
 import DonorHomeScreen from 'screens/account/DonorHomeScreen'
+import DonationScreen from 'screens/account/DonationScreen'
 import env from 'src/env'
 import Styles from 'src/Global.css'
 
@@ -51,6 +52,10 @@ const SetPasswordWithTokenScreenWrapper = () => {
 
 const CreateAccountScreenWrapper = () => {
   return <CreateAccountScreen className={Styles.modalScreenWrapper} />
+}
+
+const DonationScreenWrapper = ({ match }) => {
+  return <DonationScreen id={Number.parseInt(match.params.id, 10)} />
 }
 
 const appReducer = combineReducers({
@@ -113,6 +118,7 @@ const App = () => {
 
               <Route exact path="/donador" component={protectedScreen(DonorHomeScreen, 'donor')} />
               <Route exact path="/donador/perfil" component={protectedScreen(DonorProfileScreen, 'donor')} />
+              <Route exact path="/donador/donaciones/:id" component={protectedScreen(DonationScreenWrapper, 'donor')} />
 
               <Redirect from="/cuenta" to="/cuenta" />
               <Redirect from="/donador" to="/donador" />

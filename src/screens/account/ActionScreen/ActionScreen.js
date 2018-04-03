@@ -233,6 +233,7 @@ ActionScreen.propTypes = {
   actionKey: PropTypes.number.isRequired,
   snackbar: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+  status: PropTypes.number,
 }
 
 const mapStateToProps = (state, props) => {

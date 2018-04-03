@@ -26,10 +26,10 @@ const DonationTable = ({ donations, onToggleApproved, history }) => {
     },
     {
       Header: 'Org',
-      accessor: 'action.organization_id',
+      accessor: 'action.organization.id',
       Cell: (props) => {
-        const { organization_id: orgId } = props.original.action
-        return <Link className={Styles.link} to={`/organizaciones/${orgId}`}>{orgId}</Link>
+        const { id } = props.original.action.organization
+        return <Link className={Styles.link} to={`/organizaciones/${id}`}>{id}</Link>
       },
     },
     {
@@ -80,7 +80,7 @@ const DonationTable = ({ donations, onToggleApproved, history }) => {
       getTdProps={(state, rowInfo, column) => {
         const { id } = column
         const handleRowClicked = (e, handleOriginal) => {
-          if (id !== 'approved' && id !== 'action.organization_id' && rowInfo) {
+          if (id !== 'approved_by_donor' && id !== 'action.organization.id' && rowInfo) {
             history.push(`/donador/donaciones/${rowInfo.original.id}`)
           }
           if (handleOriginal) handleOriginal()

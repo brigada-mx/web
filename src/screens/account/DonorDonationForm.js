@@ -188,12 +188,17 @@ export const prepareDonationBody = (body) => {
 export const prepareInitialDonationValues = (values) => {
   const {
     received_date: date,
-    donor: { id, name },
+    action: {
+      id,
+      action_type: type,
+      locality: { municipality_name: muniName, name },
+      organization: { name: orgName },
+    },
   } = values
   return {
     ...values,
     received_date: date && moment(date).toDate(),
-    donor: { text: name, value: id },
+    action: { text: `${orgName} - ${type} - ${name}, ${muniName}`, value: id },
   }
 }
 
