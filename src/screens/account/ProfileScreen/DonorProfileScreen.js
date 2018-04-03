@@ -15,7 +15,7 @@ import ResetPasswordForm from './ResetPasswordForm'
 
 class DonorProfile extends React.Component {
   componentDidMount() {
-    document.title = 'Perfil - Brigada'
+    document.title = 'Perfil Donador - Brigada'
     this.loadMe()
   }
 

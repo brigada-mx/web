@@ -33,9 +33,7 @@ class HomeScreen extends React.Component {
       submissionTrashModal: false,
     }
 
-    this.handleLocalityChange = _.debounce(
-      this.handleLocalityChange, 250
-    )
+    this.handleLocalityChange = _.debounce(this.handleLocalityChange, 250)
   }
 
   componentDidMount() {
@@ -269,13 +267,7 @@ const mapStateToProps = (state) => {
   let submissions = []
 
   try {
-    actions = (state.getter.accountActions.data.results || []).sort((a, b) => {
-      if (a.published < b.published) return 1
-      if (a.published > b.published) return -1
-      if (a.start_date < b.start_date) return 1
-      if (a.start_date > b.start_date) return -1
-      return 0
-    })
+    actions = state.getter.accountActions.data.results || []
   } catch (e) {}
   try {
     submissions = (state.getter.accountSubmissions.data.results || []).sort((a, b) => {

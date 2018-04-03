@@ -63,9 +63,7 @@ class OrganizationListScreenView extends React.Component {
       organizationSearch: '',
       filtersVisible: false,
     }
-    this.handleOrganizationSearchKeyUp = _.debounce(
-      this.handleOrganizationSearchKeyUp, 150
-    )
+    this.handleOrganizationSearchKeyUp = _.debounce(this.handleOrganizationSearchKeyUp, 150)
     this._fitBounds = this.defaultFitBounds()
   }
 

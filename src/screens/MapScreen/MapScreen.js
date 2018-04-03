@@ -83,9 +83,7 @@ class MapScreen extends React.Component {
       locSearch: '',
       filtersVisible: false,
     }
-    this.handleLocalitySearchKeyUp = _.debounce(
-      this.handleLocalitySearchKeyUp, 150
-    )
+    this.handleLocalitySearchKeyUp = _.debounce(this.handleLocalitySearchKeyUp, 150)
   }
 
   componentDidMount() {

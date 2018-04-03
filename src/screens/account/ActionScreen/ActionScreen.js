@@ -30,9 +30,7 @@ class ActionScreen extends React.Component {
       trashModal: false,
     }
 
-    this.handleLocalityChange = _.debounce(
-      this.handleLocalityChange, 250
-    )
+    this.handleLocalityChange = _.debounce(this.handleLocalityChange, 250)
   }
 
   componentDidMount() {
