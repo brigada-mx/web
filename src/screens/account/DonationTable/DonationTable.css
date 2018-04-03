@@ -4,4 +4,6 @@
   line-height: 16px;
   text-decoration: none;
   display: table;
+  cursor: pointer;
+  transition: all .15s linear;
 }

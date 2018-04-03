@@ -9,6 +9,7 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
+import DonationTable from 'screens/account/DonationTable'
 import { CreateDonationForm, prepareDonationBody } from 'screens/account/DonorDonationForm'
 import FormStyles from 'src/Form.css'
 import DonorForm from './DonorForm'
@@ -54,7 +55,7 @@ class DonorHomeScreen extends React.Component {
       this.props.snackbar(`Hubo un error, no se pudo ${approved ? 'aprobar' : 'ocultar'} esta donación`, 'error')
       return
     }
-    this.loadActions()
+    this.loadDonations()
     const message = approved ? `Aprobaste donación ${id}` : `Ocultaste donación ${id}`
     this.props.snackbar(message, 'success')
   }
@@ -98,7 +99,7 @@ class DonorHomeScreen extends React.Component {
               />
             </div>
           </div>
-          {(donations.length > 0 && false) &&
+          {donations.length > 0 &&
             <DonationTable donations={donations} onToggleApproved={this.handleToggleApproved} />
           }
         </div>
@@ -130,12 +131,7 @@ DonorHomeScreen.propTypes = {
 
 const mapStateToProps = (state) => {
   try {
-    const donations = (state.getter.donorDonations.data.results || []).sort((a, b) => {
-      if (a.modified < b.modified) return 1
-      if (a.modified > b.modified) return -1
-      return 0
-    })
-    return { donations }
+    return { donations: state.getter.donorDonations.data.results || [] }
   } catch (e) {
     return { donations: [] }
   }

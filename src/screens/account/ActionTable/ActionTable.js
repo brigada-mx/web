@@ -11,7 +11,6 @@ import '!style-loader!css-loader!react-table/react-table.css'
 import { tokenMatch } from 'tools/string'
 import { projectTypeByValue } from 'src/choices'
 import FormStyles from 'src/Form.css'
-import Styles from './ActionTable.css'
 
 
 const pageSizeOptions = [5, 10, 20, 50]
