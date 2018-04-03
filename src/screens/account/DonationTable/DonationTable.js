@@ -19,6 +19,7 @@ const defaultFilterMethod = (filter, row) => {
 }
 
 const DonationTable = ({ donations, onToggleApproved, history }) => {
+  console.log(donations)
   const columns = [
     {
       Header: 'ID',
@@ -28,8 +29,8 @@ const DonationTable = ({ donations, onToggleApproved, history }) => {
       Header: 'Org',
       accessor: 'action.organization.id',
       Cell: (props) => {
-        const { id } = props.original.action.organization
-        return <Link className={Styles.link} to={`/organizaciones/${id}`}>{id}</Link>
+        const { id, name } = props.original.action.organization
+        return <Link className={Styles.link} to={`/organizaciones/${id}`}>{name}</Link>
       },
     },
     {

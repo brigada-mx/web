@@ -28,11 +28,12 @@ class Fields extends React.Component {
     const dataSource = actions.map((a) => {
       const {
         id,
+        key,
         action_type: type,
         locality: { municipality_name: muniName, name },
         organization: { name: orgName },
       } = a
-      return { text: `${orgName} - ${type} - ${name}, ${muniName}`, value: id }
+      return { text: `${key}, ${orgName}, ${type} - ${name}, ${muniName}`, value: id }
     })
     const formatDatePicker = value => value || null
     const formatAutoComplete = (value) => {
@@ -190,6 +191,7 @@ export const prepareInitialDonationValues = (values) => {
     received_date: date,
     action: {
       id,
+      key,
       action_type: type,
       locality: { municipality_name: muniName, name },
       organization: { name: orgName },
@@ -198,7 +200,7 @@ export const prepareInitialDonationValues = (values) => {
   return {
     ...values,
     received_date: date && moment(date).toDate(),
-    action: { text: `${orgName} - ${type} - ${name}, ${muniName}`, value: id },
+    action: { text: `${key}, ${orgName}, ${type} - ${name}, ${muniName}`, value: id }
   }
 }
 

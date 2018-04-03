@@ -6,7 +6,7 @@ import { reduxForm, FieldArray, propTypes as rxfPropTypes } from 'redux-form'
 import AutoCompleteMui from 'material-ui/AutoComplete'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import { TextField, DatePicker, AutoComplete } from 'components/Fields'
+import { TextField, DatePicker, Toggle, AutoComplete } from 'components/Fields'
 import FormStyles from 'src/Form.css'
 
 
@@ -65,6 +65,30 @@ const Donations = ({ fields, donorsSearch }) => { // eslint-disable-line react/p
               name={`${donation}.received_date`}
               format={formatDatePicker}
             />
+          </div>
+          <div className={FormStyles.row}>
+            <TextField
+              floatingLabelText="Descripción"
+              className={FormStyles.wideInput}
+              name={`${donation}.desc`}
+              multiLine
+              rows={1}
+            />
+          </div>
+          <div className={FormStyles.row}>
+            <div className={FormStyles.toggle}>
+              <Toggle
+                label="¿Aprobada por tí?"
+                name={`${donation}.approved_by_org`}
+              />
+            </div>
+            <div className={FormStyles.toggle}>
+              <Toggle
+                label="¿Aprobada por donador?"
+                name={`${donation}.approved_by_donor`}
+                disabled
+              />
+            </div>
             <RaisedButton
               className={FormStyles.button}
               label="QUITAR DONACIÓN"

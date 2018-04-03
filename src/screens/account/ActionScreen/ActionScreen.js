@@ -126,8 +126,9 @@ class ActionScreen extends React.Component {
           snackbar('Hubo un error', 'error')
           return
         }
-        if (old.amount === d.amount &&
-          old.received_date === d.received_date && old.donor.id === d.donor) continue
+        if (old.amount === d.amount && old.received_date === d.received_date
+          && old.desc === d.desc && old.approved_by_org === d.approved_by_org
+          && old.approved_by_donor === d.approved_by_donor && old.donor.id === d.donor) continue
         results.push(service.updateAccountDonation(d.id, d))
       }
     }
