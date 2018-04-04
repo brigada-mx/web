@@ -10,7 +10,7 @@ import service, { getBackoff } from 'api/service'
 import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
 import DonorDonationTable from 'screens/account/DonorDonationTable'
-import { CreateDonationForm, prepareDonationBody } from 'screens/account/DonationForm'
+import { CreateDonationForm, prepareDonationBody } from 'screens/account/DonorDonationForm'
 import FormStyles from 'src/Form.css'
 import DonorForm from './DonorForm'
 
@@ -100,7 +100,10 @@ class DonorHomeScreen extends React.Component {
             </div>
           </div>
           {donations.length > 0 &&
-            <DonorDonationTable donations={donations} onToggleApproved={this.handleToggleApproved} />
+            <DonorDonationTable
+              donations={donations}
+              onToggleApproved={this.handleToggleApproved}
+            />
           }
         </div>
 
@@ -108,7 +111,7 @@ class DonorHomeScreen extends React.Component {
           <Modal
             contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
             onClose={() => this.handleToggleCreateDonationModal(false)}
-            gaName="createDonationModal"
+            gaName="donorCreateDonationModal"
           >
             <div className={FormStyles.sectionHeader}>Agregar donación</div>
             <CreateDonationForm

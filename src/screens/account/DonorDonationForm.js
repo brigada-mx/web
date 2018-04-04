@@ -5,7 +5,6 @@ import moment from 'moment'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
-import AutoCompleteMui from 'material-ui/AutoComplete'
 
 import { TextField, Toggle, DatePicker, AutoComplete, Checkbox } from 'components/Fields'
 import { tokenMatch } from 'tools/string'
@@ -16,7 +15,7 @@ import FormStyles from 'src/Form.css'
 
 class Fields extends React.Component {
   componentDidMount() {
-    getBackoff(service.getDonorsMini, { key: 'miniDonors' })
+    getBackoff(service.getActionsMini, { key: 'miniActions' })
   }
 
   filter = (searchText, key) => {
@@ -25,12 +24,16 @@ class Fields extends React.Component {
   }
 
   render() {
-    const { donors } = this.props
-    const dataSource = donors.map((d) => {
-      const { id, name, desc } = d
-      const text = [name]
-      if (desc) text.push(desc)
-      return { text: text.join(' - '), value: id }
+    const { actions } = this.props
+    const dataSource = actions.map((a) => {
+      const {
+        id,
+        key,
+        action_type: type,
+        locality: { municipality_name: muniName, name },
+        organization: { name: orgName },
+      } = a
+      return { text: `${key}, ${orgName}, ${type} - ${name}, ${muniName}`, value: id }
     })
     const formatDatePicker = value => value || null
     const formatAutoComplete = (value) => {
@@ -51,11 +54,11 @@ class Fields extends React.Component {
         <div className={FormStyles.row}>
           <AutoComplete
             className={FormStyles.wideInput}
-            floatingLabelText="Donador"
-            name="donor"
-            dataSource={dataSource}
+            floatingLabelText="Proyecto (escribe al menos 5 caracteres para ver opciones)"
+            name="action"
             fullWidth
-            filter={AutoCompleteMui.fuzzyFilter}
+            dataSource={dataSource}
+            filter={this.filter}
             format={formatAutoComplete}
             normalize={normalizeAutoComplete}
           />
@@ -87,13 +90,13 @@ class Fields extends React.Component {
           <div className={FormStyles.toggle}>
             <Toggle
               label="¿Aprobada por tí?"
-              name="approved_by_org"
+              name="approved_by_donor"
             />
           </div>
           <div className={FormStyles.toggle}>
             <Checkbox
-              label="¿Aprobada por donador?"
-              name="approved_by_donor"
+              label="¿Aprobada por organización?"
+              name="approved_by_org"
               labelPosition="left"
               disabled
             />
@@ -105,14 +108,14 @@ class Fields extends React.Component {
 }
 
 Fields.propTypes = {
-  donors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 const mapStateToProps = (state) => {
   try {
-    return { donors: state.getter.miniDonors.data.results }
+    return { actions: state.getter.miniActions.data.results }
   } catch (e) {
-    return { donors: [] }
+    return { actions: [] }
   }
 }
 
@@ -169,41 +172,41 @@ UpdateForm.propTypes = {
   onDelete: PropTypes.func.isRequired,
 }
 
-const validate = ({ id, amount, donor }) => {
+const validate = ({ action, amount }) => {
   const errors = {}
-  if (id) {
-    if (!donor || !donor.value) errors.donor = 'Escoge un donador de la lista'
-  } else if (!donor || (!donor.value && !donor.text)) {
-    errors.donor = 'Escoge un donador de la lista, o ingresa un nuevo donador'
-  }
+  if (!action || !action.value) errors.action = 'Escoge un proyecto de la lista'
   if (amount < 0) errors.amount = 'Agrega un monto positivo'
   return errors
 }
 
 export const prepareDonationBody = (body) => {
-  const { donor, received_date: date } = body
+  const { action, received_date: date } = body
   const prepared = {
     ...body,
-    donor: donor.value,
-    donor_name: donor.text,
+    action: action.value,
     received_date: date ? moment(date).format('YYYY-MM-DD') : null,
   }
-  if (donor.value) prepared.donor_id = donor.value
   return prepared
 }
 
 export const prepareInitialDonationValues = (values) => {
   const {
     received_date: date,
-    donor: { id, name },
+    action: {
+      id,
+      key,
+      action_type: type,
+      locality: { municipality_name: muniName, name },
+      organization: { name: orgName },
+    },
   } = values
   return {
     ...values,
     received_date: date && moment(date).toDate(),
-    donor: { text: name, value: id },
+    action: { text: `${key}, ${orgName}, ${type} - ${name}, ${muniName}`, value: id }
   }
 }
 
-const ReduxCreateForm = reduxForm({ form: 'orgNewDonation', validate })(CreateForm)
+const ReduxCreateForm = reduxForm({ form: 'donorNewDonation', validate })(CreateForm)
 const ReduxUpdateForm = reduxForm({ validate })(UpdateForm) // pass `form` arg when instantiating form
 export { ReduxCreateForm as CreateDonationForm, ReduxUpdateForm as UpdateDonationForm }

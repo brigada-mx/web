@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import _ from 'lodash'
+import { reset } from 'redux-form'
 import { connect } from 'react-redux'
 import { withRouter, Redirect } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -24,13 +25,17 @@ import FormStyles from 'src/Form.css'
 import Styles from './ActionScreen.css'
 
 
+const initialDonationValues = { approved_by_donor: false, approved_by_org: true }
+
 class ActionScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       localitiesSearch: [],
       submissionId: undefined,
+      donationId: undefined,
       trashModal: false,
+      createDonationModal: false,
     }
 
     this.handleLocalityChange = _.debounce(this.handleLocalityChange, 250)
@@ -92,6 +97,10 @@ class ActionScreen extends React.Component {
     this.setState({ trashModal: open })
   }
 
+  handleToggleCreateDonationModal = (open) => {
+    this.setState({ createDonationModal: open })
+  }
+
   handleDeleteAction = async () => {
     const { data } = await service.archiveAccountAction(this.props.action.id, true)
     if (!data) {
@@ -100,6 +109,18 @@ class ActionScreen extends React.Component {
     }
     this.props.snackbar(`Mandaste proyecto ${this.props.action.key} al basurero`, 'success')
     this.props.history.push('/cuenta')
+  }
+
+  handleCreateDonation = async (body) => {
+    const { data } = await service.createAccountDonation(prepareDonationBody(body))
+    if (!data) {
+      this.props.snackbar('Hubo un error', 'error')
+      return
+    }
+    this.props.resetDonation()
+    this.loadAction()
+    this.props.snackbar('Agregaste una nueva donación', 'success')
+    this.handleToggleCreateDonationModal(false)
   }
 
   handleToggleDonationApproved = async (id, approved) => {
@@ -117,7 +138,13 @@ class ActionScreen extends React.Component {
     const { action, donations, status } = this.props
     if (status === 404) return <Redirect to="/cuenta" />
     const { submissions = [] } = action
-    const { submissionId, localitiesSearch, trashModal } = this.state
+    const {
+      submissionId,
+      donationId,
+      localitiesSearch,
+      trashModal,
+      createDonationModal,
+    } = this.state
 
     const content = (
       <div>
@@ -197,6 +224,21 @@ class ActionScreen extends React.Component {
             <SubmissionTrash />
           </Modal>
         }
+
+        {createDonationModal &&
+          <Modal
+            contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
+            onClose={() => this.handleToggleCreateDonationModal(false)}
+            gaName="orgCreateDonationModal"
+          >
+            <div className={FormStyles.sectionHeader}>Agregar donación</div>
+            <CreateDonationForm
+              onSubmit={this.handleCreateDonation}
+              initialValues={initialDonationValues}
+              onLocalityChange={this.handleLocalityChange}
+            />
+          </Modal>
+        }
       </div>
     )
     return <WithSideNav navComponents={<BackButton to="/cuenta" />}>{content}</WithSideNav>
@@ -210,6 +252,7 @@ ActionScreen.propTypes = {
   snackbar: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   status: PropTypes.number,
+  resetDonation: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state, props) => {
@@ -230,6 +273,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
+    resetDonation: () => dispatch(reset('orgNewDonation')),
   }
 }
 
