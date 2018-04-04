@@ -15,12 +15,12 @@ class SubmissionTrash extends React.Component {
   }
 
   loadSubmissions = () => {
-    getBackoff(() => service.getAccountSubmissions(undefined, true),
+    getBackoff(() => service.accountGetSubmissions(undefined, true),
       { key: 'accountSubmissionsTrash' })
   }
 
   handleRestore = async (id) => {
-    const { data } = await service.archiveAccountSubmission(id, false)
+    const { data } = await service.accountArchiveSubmission(id, false)
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return

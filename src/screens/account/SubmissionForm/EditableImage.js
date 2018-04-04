@@ -26,7 +26,7 @@ class EditableImage extends React.PureComponent {
     this.setState({ submitting: true })
 
     const { snackbar, submissionId: id, image: { url } } = this.props
-    const { data } = await service.updateAccountSubmissionImage(id, { ...body, url })
+    const { data } = await service.accountUpdateSubmissionImage(id, { ...body, url })
     if (!data) {
       snackbar('No se pudo editar esta foto', 'error')
       this.setState({ submitting: false })

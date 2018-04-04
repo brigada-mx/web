@@ -88,30 +88,30 @@ class Service {
     return sendToApiAuth('org', '/account/me/', { method: 'PUT', body })
   }
 
-  getAccountOrganization = async () => {
+  accountGetOrganization = async () => {
     return sendToApiAuth('org', '/account/organization/')
   }
 
-  getAccountActions = async (archived = false, page_size = 250) => {
+  accountGetActions = async (archived = false, page_size = 250) => {
     const params = { archived, page_size }
     return sendToApiAuth('org', '/account/actions/', { params })
   }
 
-  getAccountActionsMinimal = async (archived = false, page_size = 250) => {
+  accountGetActionsMinimal = async (archived = false, page_size = 250) => {
     const params = { archived, page_size }
     return sendToApiAuth('org', '/account/actions/', { ...params, fields: 'id,action_type,desc,key' })
   }
 
-  getAccountSubmissions = async (has_action = false, archived = false, page_size = 250) => {
+  accountGetSubmissions = async (has_action = false, archived = false, page_size = 250) => {
     const params = { has_action, archived, page_size }
     return sendToApiAuth('org', '/account/submissions/', { params })
   }
 
-  getAccountSubmission = async (id) => {
+  accountGetSubmission = async (id) => {
     return sendToApiAuth('org', `/account/submissions/${id}/`)
   }
 
-  getAccountAction = async (key) => {
+  accountGetAction = async (key) => {
     return sendToApiAuth('org', `/account/actions_by_key/${key}/`)
   }
 
@@ -119,49 +119,49 @@ class Service {
     return sendToApiAuth('org', '/account/organizations/', { method: 'POST', body })
   }
 
-  resetAccountKey = async () => {
+  accountResetKey = async () => {
     return sendToApiAuth('org', '/account/organization/reset_key/', { method: 'POST' })
   }
 
-  updateAccountOrganization = async (body) => {
+  accountUpdateOrganization = async (body) => {
     return sendToApiAuth('org', '/account/organization/', { method: 'PUT', body })
   }
 
-  createAccountAction = async (body) => {
+  accountCreateAction = async (body) => {
     return sendToApiAuth('org', '/account/actions/', { method: 'POST', body })
   }
 
-  updateAccountAction = async (id, body) => {
+  accountUpdateAction = async (id, body) => {
     return sendToApiAuth('org', `/account/actions/${id}/`, { method: 'PUT', body })
   }
 
-  updateAccountSubmission = async (id, body) => {
+  accountUpdateSubmission = async (id, body) => {
     return sendToApiAuth('org', `/account/submissions/${id}/`, { method: 'PUT', body })
   }
 
-  createAccountDonation = async (body) => {
+  accountCreateDonation = async (body) => {
     return sendToApiAuth('org', '/account/donations/', { method: 'POST', body })
   }
 
-  updateAccountDonation = async (id, body) => {
+  accountUpdateDonation = async (id, body) => {
     return sendToApiAuth('org', `/account/donations/${id}/`, { method: 'PUT', body })
   }
 
-  deleteAccountDonation = async (id) => {
+  accountDeleteDonation = async (id) => {
     return sendToApiAuth('org', `/account/donations/${id}/`, { method: 'DELETE' })
   }
 
-  archiveAccountAction = async (id, archived) => {
+  accountArchiveAction = async (id, archived) => {
     const body = { archived }
     return sendToApiAuth('org', `/account/actions/${id}/archive/`, { method: 'POST', body })
   }
 
-  archiveAccountSubmission = async (id, archived) => {
+  accountArchiveSubmission = async (id, archived) => {
     const body = { archived }
     return sendToApiAuth('org', `/account/submissions/${id}/archive/`, { method: 'POST', body })
   }
 
-  updateAccountSubmissionImage = async (id, body) => {
+  accountUpdateSubmissionImage = async (id, body) => {
     return sendToApiAuth('org', `/account/submissions/${id}/image/`, { method: 'PUT', body })
   }
 

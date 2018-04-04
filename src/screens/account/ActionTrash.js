@@ -15,11 +15,11 @@ class ActionTrash extends React.Component {
   }
 
   loadActions = () => {
-    getBackoff(() => service.getAccountActions(true), { key: 'accountActionsTrash' })
+    getBackoff(() => service.accountGetActions(true), { key: 'accountActionsTrash' })
   }
 
   handleRestore = async (id, key) => {
-    const { data } = await service.archiveAccountAction(id, false)
+    const { data } = await service.accountArchiveAction(id, false)
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return

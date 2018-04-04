@@ -48,14 +48,14 @@ class ActionScreen extends React.Component {
 
   loadAction = () => {
     const { actionKey } = this.props
-    getBackoff(() => { return service.getAccountAction(actionKey) }, { key: `accountAction_${actionKey}` })
+    getBackoff(() => { return service.accountGetAction(actionKey) }, { key: `accountAction_${actionKey}` })
   }
 
   handleUpdateAction = async (body) => {
     const { id } = this.props.action
     if (!id) return
 
-    const { data } = await service.updateAccountAction(id, prepareActionBody(body))
+    const { data } = await service.accountUpdateAction(id, prepareActionBody(body))
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
@@ -75,7 +75,7 @@ class ActionScreen extends React.Component {
   }
 
   handleTogglePublishedSubmission = async (id, published) => {
-    const { data } = await service.updateAccountSubmission(id, { published })
+    const { data } = await service.accountUpdateSubmission(id, { published })
     if (!data) {
       this.props.snackbar(`Hubo un error, no se pudo ${published ? 'publicar' : 'ocultar'} estas fotos`, 'error')
       return
@@ -110,7 +110,7 @@ class ActionScreen extends React.Component {
   }
 
   handleDeleteAction = async () => {
-    const { data } = await service.archiveAccountAction(this.props.action.id, true)
+    const { data } = await service.accountArchiveAction(this.props.action.id, true)
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
@@ -120,7 +120,7 @@ class ActionScreen extends React.Component {
   }
 
   handleCreateDonation = async (body) => {
-    const { data } = await service.createAccountDonation(prepareDonationBody(
+    const { data } = await service.accountCreateDonation(prepareDonationBody(
       { ...body, action: this.props.action.id })
     )
     if (!data) {
@@ -134,7 +134,7 @@ class ActionScreen extends React.Component {
   }
 
   handleUpdateDonation = async (id, body) => {
-    const { data } = await service.updateAccountDonation(id, prepareDonationBody(body))
+    const { data } = await service.accountUpdateDonation(id, prepareDonationBody(body))
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
@@ -145,7 +145,7 @@ class ActionScreen extends React.Component {
 
   handleDeleteDonation = async (id) => {
     const { snackbar } = this.props
-    const { data } = await service.deleteAccountDonation(id, true)
+    const { data } = await service.accountDeleteDonation(id, true)
     if (!data) {
       snackbar('Hubo un error', 'error')
       return
@@ -156,7 +156,7 @@ class ActionScreen extends React.Component {
   }
 
   handleToggleDonationApproved = async (id, approved) => {
-    const { data } = await service.updateAccountDonation(id, { approved_by_org: approved })
+    const { data } = await service.accountUpdateDonation(id, { approved_by_org: approved })
     if (!data) {
       this.props.snackbar(`Hubo un error, no se pudo ${approved ? 'aprobar' : 'ocultar'} esta donación`, 'error')
       return

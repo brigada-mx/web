@@ -44,19 +44,19 @@ class HomeScreen extends React.Component {
   }
 
   loadOrganization = () => {
-    getBackoff(service.getAccountOrganization, { key: 'accountOrganization' })
+    getBackoff(service.accountGetOrganization, { key: 'accountOrganization' })
   }
 
   loadActions = () => {
-    getBackoff(service.getAccountActions, { key: 'accountActions' })
+    getBackoff(service.accountGetActions, { key: 'accountActions' })
   }
 
   loadSubmissions = () => {
-    getBackoff(service.getAccountSubmissions, { key: 'accountSubmissions' })
+    getBackoff(service.accountGetSubmissions, { key: 'accountSubmissions' })
   }
 
   handleSubmitOrganization = async (values) => {
-    const { data } = await service.updateAccountOrganization(values)
+    const { data } = await service.accountUpdateOrganization(values)
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
@@ -66,7 +66,7 @@ class HomeScreen extends React.Component {
   }
 
   handleSubmitContact = async ({ zip, city, state, street, locality, ...rest }) => {
-    const { data } = await service.updateAccountOrganization({ contact: {
+    const { data } = await service.accountUpdateOrganization({ contact: {
       ...rest,
       address: { zip, city, state, street, locality },
     } })
@@ -79,7 +79,7 @@ class HomeScreen extends React.Component {
   }
 
   handleCreateAction = async (body) => {
-    const { data } = await service.createAccountAction(prepareActionBody(body))
+    const { data } = await service.accountCreateAction(prepareActionBody(body))
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
@@ -101,7 +101,7 @@ class HomeScreen extends React.Component {
   }
 
   handleTogglePublished = async (id, key, published) => {
-    const { data } = await service.updateAccountAction(id, { published })
+    const { data } = await service.accountUpdateAction(id, { published })
     if (!data) {
       this.props.snackbar(`Hubo un error, no se pudo ${published ? 'publicar' : 'ocultar'} este proyecto`, 'error')
       return
@@ -112,7 +112,7 @@ class HomeScreen extends React.Component {
   }
 
   handleDeleteSubmission = async (id) => {
-    const { data } = await service.archiveAccountSubmission(id, true)
+    const { data } = await service.accountArchiveSubmission(id, true)
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
@@ -122,7 +122,7 @@ class HomeScreen extends React.Component {
   }
 
   handleChangeSubmissionAction = async (id, actionId) => {
-    const { data } = await service.updateAccountSubmission(id, { action: actionId })
+    const { data } = await service.accountUpdateSubmission(id, { action: actionId })
     if (!data) {
       this.props.snackbar('Hubo un error, no se pudo asignar estas fotos a un proyecto', 'error')
       return

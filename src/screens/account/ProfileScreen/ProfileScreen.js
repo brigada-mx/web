@@ -35,7 +35,7 @@ class Profile extends React.Component {
   }
 
   loadOrganization = () => {
-    getBackoff(service.getAccountOrganization, { key: 'accountOrganization' })
+    getBackoff(service.accountGetOrganization, { key: 'accountOrganization' })
   }
 
   handleSubmitName = async (values) => {
@@ -67,7 +67,7 @@ class Profile extends React.Component {
   }
 
   handleResetKey = async (values) => {
-    const { data } = await service.resetAccountKey()
+    const { data } = await service.accountResetKey()
     this.setState({ resetKeyOpen: false })
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')

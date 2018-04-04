@@ -99,27 +99,27 @@ class SubmissionFormWrapper extends React.Component {
   loadSubmissionsForAction = () => {
     try {
       const { key } = this.props.submission.action
-      getBackoff(() => { return service.getAccountAction(key) }, { key: `accountAction_${key}` })
+      getBackoff(() => { return service.accountGetAction(key) }, { key: `accountAction_${key}` })
     } catch (e) {
-      getBackoff(service.getAccountSubmissions, { key: 'accountSubmissions' })
+      getBackoff(service.accountGetSubmissions, { key: 'accountSubmissions' })
     }
   }
 
   loadActionsForSearch = () => {
-    getBackoff(service.getAccountActionsMinimal, { key: 'accountActionsMinimal' })
+    getBackoff(service.accountGetActionsMinimal, { key: 'accountActionsMinimal' })
   }
 
   loadSubmission = () => {
     const { submissionId } = this.props
     getBackoff(
-      () => { return service.getAccountSubmission(submissionId) },
+      () => { return service.accountGetSubmission(submissionId) },
       { key: `accountSubmission_${submissionId}` }
     )
   }
 
   handleSubmit = async (values) => {
     const body = prepareSubmissionBody(values)
-    const { data } = await service.updateAccountSubmission(this.props.submissionId, body)
+    const { data } = await service.accountUpdateSubmission(this.props.submissionId, body)
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
@@ -130,7 +130,7 @@ class SubmissionFormWrapper extends React.Component {
   }
 
   handleDelete = async () => {
-    const { data } = await service.archiveAccountSubmission(this.props.submissionId, true)
+    const { data } = await service.accountArchiveSubmission(this.props.submissionId, true)
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
