@@ -27,10 +27,8 @@ class Fields extends React.Component {
   render() {
     const { donors } = this.props
     const dataSource = donors.map((d) => {
-      const { id, name, desc } = d
-      const text = [name]
-      if (desc) text.push(desc)
-      return { text: text.join(' - '), value: id }
+      const { id, name } = d
+      return { text: name, value: id }
     })
     const formatDatePicker = value => value || null
     const formatAutoComplete = (value) => {

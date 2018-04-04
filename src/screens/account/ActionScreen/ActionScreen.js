@@ -101,6 +101,14 @@ class ActionScreen extends React.Component {
     this.setState({ createDonationModal: open })
   }
 
+  handleDonationRowClicked = (donationId) => {
+    this.setState({ donationId })
+  }
+
+  handleUpdateDonationModalClose = () => {
+    this.setState({ donationId: undefined })
+  }
+
   handleDeleteAction = async () => {
     const { data } = await service.archiveAccountAction(this.props.action.id, true)
     if (!data) {
@@ -112,15 +120,39 @@ class ActionScreen extends React.Component {
   }
 
   handleCreateDonation = async (body) => {
-    const { data } = await service.createAccountDonation(prepareDonationBody(body))
+    const { data } = await service.createAccountDonation(prepareDonationBody(
+      { ...body, action: this.props.action.id })
+    )
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
       return
     }
     this.props.resetDonation()
     this.loadAction()
-    this.props.snackbar('Agregaste una nueva donación', 'success')
     this.handleToggleCreateDonationModal(false)
+    this.props.snackbar('Agregaste una nueva donación', 'success')
+  }
+
+  handleUpdateDonation = async (id, body) => {
+    const { data } = await service.updateAccountDonation(id, prepareDonationBody(body))
+    if (!data) {
+      this.props.snackbar('Hubo un error', 'error')
+      return
+    }
+    this.loadAction()
+    this.props.snackbar(`Modificaste donación ${id}`, 'success')
+  }
+
+  handleDeleteDonation = async (id) => {
+    const { snackbar } = this.props
+    const { data } = await service.deleteAccountDonation(id, true)
+    if (!data) {
+      snackbar('Hubo un error', 'error')
+      return
+    }
+    this.loadAction()
+    this.handleUpdateDonationModalClose()
+    snackbar(`Borraste donación ${id}`, 'success')
   }
 
   handleToggleDonationApproved = async (id, approved) => {
@@ -145,6 +177,7 @@ class ActionScreen extends React.Component {
       trashModal,
       createDonationModal,
     } = this.state
+    const donation = _.find(donations, d => d.id === donationId)
 
     const content = (
       <div>
@@ -182,6 +215,7 @@ class ActionScreen extends React.Component {
             <DonationTable
               donations={donations}
               onToggleApproved={this.handleToggleDonationApproved}
+              onRowClicked={this.handleDonationRowClicked}
             />
           }
         </div>
@@ -235,7 +269,22 @@ class ActionScreen extends React.Component {
             <CreateDonationForm
               onSubmit={this.handleCreateDonation}
               initialValues={initialDonationValues}
-              onLocalityChange={this.handleLocalityChange}
+            />
+          </Modal>
+        }
+
+        {donation &&
+          <Modal
+            contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
+            onClose={this.handleUpdateDonationModalClose}
+            gaName={`orgDonation/${donationId}`}
+          >
+            <UpdateDonationForm
+              onSubmit={body => this.handleUpdateDonation(donationId, body)}
+              initialValues={prepareInitialDonationValues(donation)}
+              form={`accountUpdateDonation_${donationId}`}
+              enableReinitialize
+              onDelete={() => this.handleDeleteDonation(donationId)}
             />
           </Modal>
         }
@@ -247,7 +296,7 @@ class ActionScreen extends React.Component {
 
 ActionScreen.propTypes = {
   action: PropTypes.object.isRequired,
-  donations: PropTypes.object.isRequired,
+  donations: PropTypes.arrayOf(PropTypes.object).isRequired,
   actionKey: PropTypes.number.isRequired,
   snackbar: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,

@@ -97,8 +97,8 @@ const DonationTable = ({ donations, onToggleApproved, onRowClicked }) => {
 
 DonationTable.propTypes = {
   donations: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onToggleApproved: PropTypes.func,
   onRowClicked: PropTypes.func.isRequired,
+  onToggleApproved: PropTypes.func,
 }
 
 export default DonationTable

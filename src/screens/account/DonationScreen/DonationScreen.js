@@ -8,7 +8,7 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import WithSideNav from 'components/WithSideNav'
 import BackButton from 'components/BackButton'
-import { UpdateDonationForm, prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationForm'
+import { UpdateDonationForm, prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonorDonationForm'
 import FormStyles from 'src/Form.css'
 import Styles from './DonationScreen.css'
 
@@ -59,7 +59,6 @@ class DonationScreen extends React.Component {
               <UpdateDonationForm
                 onSubmit={this.handleUpdateDonation}
                 initialValues={donation}
-                onLocalityChange={this.handleLocalityChange}
                 form={`donorUpdateDonation_${this.props.id}`}
                 enableReinitialize
                 onDelete={this.handleDeleteDonation}
