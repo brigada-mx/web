@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { withRouter, Redirect } from 'react-router-dom'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
@@ -12,7 +13,9 @@ import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
 import BackButton from 'components/BackButton'
 import { UpdateActionForm, prepareActionBody, prepareInitialActionValues } from 'screens/account/ActionForm'
-import DonationsForm, { prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationsForm'
+import { CreateDonationForm, UpdateDonationForm,
+  prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationForm'
+import DonationTable from 'screens/account/DonationTable'
 import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
 import SubmissionTrash from 'screens/account/SubmissionTrash'
@@ -36,16 +39,11 @@ class ActionScreen extends React.Component {
   componentDidMount() {
     document.title = `Proyecto ${this.props.actionKey} - Brigada`
     this.loadAction()
-    this.loadDonors()
   }
 
   loadAction = () => {
     const { actionKey } = this.props
     getBackoff(() => { return service.getAccountAction(actionKey) }, { key: `accountAction_${actionKey}` })
-  }
-
-  loadDonors = () => {
-    getBackoff(service.getDonorsMini, { key: 'donors' })
   }
 
   handleUpdateAction = async (body) => {
@@ -104,49 +102,19 @@ class ActionScreen extends React.Component {
     this.props.history.push('/cuenta')
   }
 
-  handleSubmitDonations = async ({ donations }) => {
-    // find new, deleted and updated instances
-    const { snackbar } = this.props
-    const { action } = this.props
-    if (!action.donations) {
-      snackbar('Hubo un error', 'error')
+  handleToggleDonationApproved = async (id, approved) => {
+    const { data } = await service.updateAccountDonation(id, { approved_by_org: approved })
+    if (!data) {
+      this.props.snackbar(`Hubo un error, no se pudo ${approved ? 'aprobar' : 'ocultar'} esta donación`, 'error')
       return
     }
-
-    const newIds = new Set(donations.map(d => d.id))
-    const prepared = donations.map(d => prepareDonationBody(d))
-    const results = []
-
-    for (const d of prepared) {
-      if (d.id === undefined) {
-        results.push(service.createAccountDonation({ ...d, action: action.id }))
-      } else {
-        const old = _.find(action.donations, o => o.id === d.id)
-        if (!old) {
-          snackbar('Hubo un error', 'error')
-          return
-        }
-        if (old.amount === d.amount && old.received_date === d.received_date
-          && old.desc === d.desc && old.approved_by_org === d.approved_by_org
-          && old.approved_by_donor === d.approved_by_donor && old.donor.id === d.donor) continue
-        results.push(service.updateAccountDonation(d.id, d))
-      }
-    }
-    for (const d of action.donations) {
-      if (!newIds.has(d.id)) results.push(service.deleteAccountDonation(d.id))
-    }
-    let errors = 0
-    for (const result of await Promise.all(results)) {
-      if (!result.data) errors += 1
-    }
-    if (!errors) snackbar('Se guardaron todos los cambios', 'success')
-    else snackbar(`No se guardaron todos los cambios, hubo ${errors} error(es)`, 'error')
     this.loadAction()
-    this.loadDonors()
+    const message = approved ? `Aprobaste donación ${id}` : `Ocultaste donación ${id}`
+    this.props.snackbar(message, 'success')
   }
 
   render() {
-    const { action, donors, donations, status } = this.props
+    const { action, donations, status } = this.props
     if (status === 404) return <Redirect to="/cuenta" />
     const { submissions = [] } = action
     const { submissionId, localitiesSearch, trashModal } = this.state
@@ -171,22 +139,30 @@ class ActionScreen extends React.Component {
         }
 
         <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>DONACIONES</div>
-          <div className={FormStyles.formContainerLeft}>
-            <DonationsForm
-              onSubmit={this.handleSubmitDonations}
-              initialValues={donations}
-              donorsSearch={donors}
-              form={`accountActionDonations_${this.props.actionKey}`}
-              enableReinitialize
-            />
+          <div className={FormStyles.sectionHeader}>
+            <span>Donaciones</span>
+            <div>
+              <RaisedButton
+                backgroundColor="#3DC59F"
+                labelColor="#ffffff"
+                className={FormStyles.primaryButton}
+                label="AGREGAR"
+                onClick={() => this.handleToggleCreateDonationModal(true)}
+              />
+            </div>
           </div>
+          {donations.length > 0 &&
+            <DonationTable
+              donations={donations}
+              onToggleApproved={this.handleToggleDonationApproved}
+            />
+          }
         </div>
 
         {submissions.length > 0 &&
           <div className={FormStyles.card}>
             <div className={FormStyles.sectionHeader}>
-              <span>FOTOS</span>
+              <span>Fotos</span>
               <span
                 className={FormStyles.link}
                 onClick={() => this.handleToggleSubmissionTrashModal(true)}
@@ -228,7 +204,6 @@ class ActionScreen extends React.Component {
 }
 
 ActionScreen.propTypes = {
-  donors: PropTypes.arrayOf(PropTypes.object).isRequired,
   action: PropTypes.object.isRequired,
   donations: PropTypes.object.isRequired,
   actionKey: PropTypes.number.isRequired,
@@ -240,20 +215,16 @@ ActionScreen.propTypes = {
 const mapStateToProps = (state, props) => {
   const { actionKey } = props
   let action = {}
-  let donors = []
-  const donations = { donations: [] }
+  let donations = []
 
   const reduxAction = state.getter[`accountAction_${actionKey}`]
   const status = reduxAction && reduxAction.status
   try {
     action = prepareInitialActionValues(reduxAction.data || {})
-    donations.donations = action.donations.map(d => prepareInitialDonationValues(d))
-  } catch (e) {}
-  try {
-    donors = state.getter.donors.data.results || []
+    donations = [...action.donations]
   } catch (e) {}
 
-  return { action, donations, donors, status }
+  return { action, donations, status }
 }
 
 const mapDispatchToProps = (dispatch) => {

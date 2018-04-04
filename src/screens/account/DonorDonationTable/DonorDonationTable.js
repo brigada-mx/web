@@ -3,13 +3,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ReactTable from 'react-table'
-import Checkbox from 'material-ui/Checkbox'
 import Toggle from 'material-ui/Toggle'
-import { Link } from 'react-router-dom'
+import Checkbox from 'material-ui/Checkbox'
+import { withRouter, Link } from 'react-router-dom'
 import '!style-loader!css-loader!react-table/react-table.css'
 
 import { tokenMatch } from 'tools/string'
-import Styles from './DonationTable.css'
+import Styles from './DonorDonationTable.css'
 
 
 const pageSizeOptions = [5, 10, 20, 50]
@@ -18,7 +18,7 @@ const defaultFilterMethod = (filter, row) => {
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
 }
 
-const DonationTable = ({ donations, onToggleApproved, onRowClicked }) => {
+const DonorDonationTable = ({ donations, onToggleApproved, history }) => {
   const columns = [
     {
       Header: 'ID',
@@ -26,10 +26,10 @@ const DonationTable = ({ donations, onToggleApproved, onRowClicked }) => {
     },
     {
       Header: 'Org',
-      accessor: 'donor.id',
+      accessor: 'action.organization.id',
       Cell: (props) => {
-        const { id, name } = props.original.donor
-        return <Link className={Styles.link} to={`/donadores/${id}`}>{name}</Link>
+        const { id, name } = props.original.action.organization
+        return <Link className={Styles.link} to={`/organizaciones/${id}`}>{name}</Link>
       },
     },
     {
@@ -46,11 +46,11 @@ const DonationTable = ({ donations, onToggleApproved, onRowClicked }) => {
       Cell: props => props.original.desc,
     },
     {
-      Header: '¿Aprobada por donador?',
-      accessor: 'approved_by_donor',
+      Header: '¿Aprobada por org?',
+      accessor: 'approved_by_org',
       Cell: props => (<Checkbox
         disabled
-        checked={props.original.approved_by_donor}
+        checked={props.original.approved_by_org}
         labelPosition="left"
       />),
     },
@@ -58,9 +58,9 @@ const DonationTable = ({ donations, onToggleApproved, onRowClicked }) => {
   if (onToggleApproved) {
     columns.push({
       Header: '¿Aprobar?',
-      accessor: 'approved_by_org',
+      accessor: 'approved_by_donor',
       Cell: props => (<Toggle
-        toggled={props.original.approved_by_org}
+        toggled={props.original.approved_by_donor}
         onToggle={(e, toggled) => onToggleApproved(props.original.id, toggled)}
       />),
     })
@@ -81,24 +81,24 @@ const DonationTable = ({ donations, onToggleApproved, onRowClicked }) => {
       getTdProps={(state, rowInfo, column) => {
         const { id } = column
         const handleRowClicked = (e, handleOriginal) => {
-          if (id !== 'approved_by_org' && id !== 'donor.id' && rowInfo) {
-            onRowClicked(rowInfo.original.id)
+          if (id !== 'approved_by_donor' && id !== 'action.organization.id' && rowInfo) {
+            history.push(`/donador/donaciones/${rowInfo.original.id}`)
           }
           if (handleOriginal) handleOriginal()
         }
         return {
           onClick: handleRowClicked,
-          style: !['approved_by_org', 'donor.id'].includes(id) ? { cursor: 'pointer' } : {},
+          style: !['approved_by_donor', 'action.organization.id'].includes(id) ? { cursor: 'pointer' } : {},
         }
       }}
     />
   )
 }
 
-DonationTable.propTypes = {
+DonorDonationTable.propTypes = {
   donations: PropTypes.arrayOf(PropTypes.object).isRequired,
   onToggleApproved: PropTypes.func,
-  onRowClicked: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
-export default DonationTable
+export default withRouter(DonorDonationTable)

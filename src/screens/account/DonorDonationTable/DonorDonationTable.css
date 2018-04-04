@@ -1,0 +1,9 @@
+.link {
+  color: #3DC59F;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  text-decoration: none;
+  display: table;
+  cursor: pointer;
+  transition: all .15s linear;
+}

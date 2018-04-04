@@ -9,8 +9,8 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
-import DonationTable from 'screens/account/DonationTable'
-import { CreateDonationForm, prepareDonationBody } from 'screens/account/DonorDonationForm'
+import DonorDonationTable from 'screens/account/DonorDonationTable'
+import { CreateDonationForm, prepareDonationBody } from 'screens/account/DonationForm'
 import FormStyles from 'src/Form.css'
 import DonorForm from './DonorForm'
 
@@ -100,7 +100,7 @@ class DonorHomeScreen extends React.Component {
             </div>
           </div>
           {donations.length > 0 &&
-            <DonationTable donations={donations} onToggleApproved={this.handleToggleApproved} />
+            <DonorDonationTable donations={donations} onToggleApproved={this.handleToggleApproved} />
           }
         </div>
 

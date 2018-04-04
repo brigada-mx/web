@@ -8,7 +8,7 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import WithSideNav from 'components/WithSideNav'
 import BackButton from 'components/BackButton'
-import { UpdateDonationForm, prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonorDonationForm'
+import { UpdateDonationForm, prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationForm'
 import FormStyles from 'src/Form.css'
 import Styles from './DonationScreen.css'
 

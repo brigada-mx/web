@@ -1,0 +1,6 @@
+{
+  "name": "DonorDonationTable",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./DonorDonationTable.js"
+}
