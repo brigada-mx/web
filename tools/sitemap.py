@@ -10,7 +10,7 @@ import requests
 
 SITEMAP_TEMPLATE = """<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-<loc>https://app.brigada.mx/organizaciones</loc>
+<loc>https://app.brigada.mx/reconstructores</loc>
 </url>
 <url>
 <loc>https://app.brigada.mx/cuenta</loc>
@@ -25,7 +25,7 @@ URL_TEMPLATE = """<url>
 
 
 def org_url(pk):
-    return f'https://app.brigada.mx/organizaciones/{pk}'
+    return f'https://app.brigada.mx/reconstructores/{pk}'
 
 
 def generate_sitemap(urls):

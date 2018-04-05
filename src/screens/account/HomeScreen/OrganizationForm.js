@@ -91,7 +91,7 @@ OrganizationForm.propTypes = {
 const validate = ({ name, desc, year_established: year }) => {
   const errors = {}
   if (!name) errors.name = 'Agrega el nombre'
-  if (!desc) errors.desc = 'Agrega la descripción de tu organización'
+  if (!desc) errors.desc = 'Agrega la descripción de tu grupo'
   if (!year || year.toString().length !== 4) errors.year_established = 'Ingresa un año válido'
   return errors
 }

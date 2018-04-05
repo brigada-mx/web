@@ -62,7 +62,7 @@ class HomeScreen extends React.Component {
       return
     }
     this.loadOrganization()
-    this.props.snackbar('Actualizaste tu organización', 'success')
+    this.props.snackbar('Actualizaste tu grupo', 'success')
   }
 
   handleSubmitContact = async ({ zip, city, state, street, locality, ...rest }) => {
@@ -160,7 +160,7 @@ class HomeScreen extends React.Component {
     const content = (
       <div>
         <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>Organización</div>
+          <div className={FormStyles.sectionHeader}>Reconstructor</div>
           <OrganizationForm onSubmit={this.handleSubmitOrganization} enableReinitialize />
         </div>
 

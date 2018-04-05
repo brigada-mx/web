@@ -22,10 +22,10 @@ const OrganizationBreadcrumb = ({ name, sector, onChangeFilter }) => {
 
   return (
     <div className={Styles.breadcrumbLinks}>
-      <span className={Styles.orgList}><Link to="/organizaciones">Organizaciones</Link></span>
+      <span className={Styles.orgList}><Link to="/reconstructores">Reconstructores</Link></span>
       <span className={Styles.sector}>
         <Link
-          to={{ pathname: '/organizaciones' }}
+          to={{ pathname: '/reconstructores' }}
           onClick={handleClick}
         >
           {labelBySector[sector]}

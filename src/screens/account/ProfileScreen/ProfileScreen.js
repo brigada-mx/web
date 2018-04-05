@@ -74,7 +74,7 @@ class Profile extends React.Component {
       return
     }
     this.loadOrganization()
-    this.props.snackbar('Cambiaste la llave secreta de tu organización', 'success')
+    this.props.snackbar('Cambiaste la llave secreta de tu grupo', 'success')
   }
 
   render() {
@@ -113,7 +113,7 @@ class Profile extends React.Component {
             open={this.state.resetKeyOpen}
             onRequestClose={this.handleResetKeyClose}
           >
-            {'Si cambias tu llave secreta, tendrás que mandar la nueva llave a todas las personas que suben fotos a tu organización.'}
+            {'Si cambias tu llave secreta, tendrás que mandar la nueva llave a todas las personas que suben fotos a tu grupo.'}
           </Dialog>
         </div>
       </WithSideNav>

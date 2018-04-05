@@ -364,7 +364,7 @@ class LocalityScreenView extends React.Component {
               <span className={Styles.vizCount}>{actions.length}</span>
             </div>
             <div className={Styles.vizHeader}>
-              <span className={Styles.vizLabel}>ORGANIZACIONES<br />COMPROMETIDAS</span>
+              <span className={Styles.vizLabel}>RECONSTRUCTORES<br />COMPROMETIDOS</span>
               <span className={Styles.vizCount}>{Object.keys(orgs).length}</span>
             </div>
             <div className={Styles.vizHeader}>

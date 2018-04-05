@@ -33,7 +33,7 @@ const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => 
   }
 
   const platformLink = () => {
-    if (orgId) return `/organizaciones/${orgId}`
+    if (orgId) return `/reconstructores/${orgId}`
     return '/'
   }
 

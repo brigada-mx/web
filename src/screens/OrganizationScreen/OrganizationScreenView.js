@@ -177,7 +177,7 @@ class OrganizationScreenView extends React.Component {
 
   render() {
     const { organization: { loading, data, error, status } } = this.props
-    if (status === 404) return <Redirect to="/organizaciones" />
+    if (status === 404) return <Redirect to="/reconstructores" />
     if (loading || !data) return <LoadingIndicatorCircle />
 
     this.setDocumentMeta(data.name, data.desc)

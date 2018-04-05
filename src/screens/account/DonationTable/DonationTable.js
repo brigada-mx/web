@@ -41,11 +41,6 @@ const DonationTable = ({ donations, onToggleApproved, onRowClicked }) => {
       accessor: 'received_date',
     },
     {
-      Header: 'Descripción',
-      accessor: 'desc',
-      Cell: props => props.original.desc,
-    },
-    {
       Header: '¿Aprobada por donador?',
       accessor: 'approved_by_donor',
       Cell: props => (<Checkbox

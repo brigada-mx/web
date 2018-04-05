@@ -73,15 +73,6 @@ class Fields extends React.Component {
           />
         </div>
         <div className={FormStyles.row}>
-          <TextField
-            floatingLabelText="Descripción"
-            className={FormStyles.wideInput}
-            name="desc"
-            multiLine
-            rows={3}
-          />
-        </div>
-        <div className={FormStyles.row}>
           <div className={FormStyles.toggle}>
             <Toggle
               label="¿Aprobada por tí?"

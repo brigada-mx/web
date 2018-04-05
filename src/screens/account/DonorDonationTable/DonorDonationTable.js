@@ -29,7 +29,7 @@ const DonorDonationTable = ({ donations, onToggleApproved, history }) => {
       accessor: 'action.organization.id',
       Cell: (props) => {
         const { id, name } = props.original.action.organization
-        return <Link className={Styles.link} to={`/organizaciones/${id}`}>{name}</Link>
+        return <Link className={Styles.link} to={`/reconstructores/${id}`}>{name}</Link>
       },
     },
     {
@@ -39,11 +39,6 @@ const DonorDonationTable = ({ donations, onToggleApproved, history }) => {
     {
       Header: 'Fecha recibida',
       accessor: 'received_date',
-    },
-    {
-      Header: 'Descripción',
-      accessor: 'desc',
-      Cell: props => props.original.desc,
     },
     {
       Header: '¿Aprobada por org?',

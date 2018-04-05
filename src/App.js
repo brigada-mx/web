@@ -98,16 +98,23 @@ const App = () => {
             <ModalSelector />
 
             <Route exact path="/" component={Nav} />
-            <Route path="/(comunidades|organizaciones)" component={Nav} />
+            <Route path="/(comunidades|reconstructores)" component={Nav} />
             <Route path="/cuenta" component={AccountNav} />
             <Route path="/donador" component={DonorNav} />
 
             <Switch>
+              <Redirect exact from="/organizaciones" to="/reconstructores" />
+              <Route
+                exact
+                path="/organizaciones/:id"
+                render={({ match }) => <Redirect to={`/reconstructores/${match.params.id}`} />}
+              />
+
               <Route exact path="/" component={MapScreen} />
               <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
 
-              <Route exact path="/organizaciones" component={OrganizationListScreen} />
-              <Route exact path="/organizaciones/:id" component={OrganizationScreenWrapper} />
+              <Route exact path="/reconstructores" component={OrganizationListScreen} />
+              <Route exact path="/reconstructores/:id" component={OrganizationScreenWrapper} />
 
               <Route path="/establecer" component={SetPasswordWithTokenScreenWrapper} />
               <Route exact path="/crear/cuenta" component={CreateAccountScreenWrapper} />

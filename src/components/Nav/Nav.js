@@ -29,7 +29,7 @@ const NavLinks = ({
 
   const orgIsActive = (match, location) => {
     const { pathname } = location
-    return pathname.startsWith('/organizaciones')
+    return pathname.startsWith('/reconstructores')
   }
 
   const openChat = () => {
@@ -51,7 +51,7 @@ const NavLinks = ({
   return (
     <React.Fragment>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">Comunidades</NavLink>
-      <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/organizaciones">Organizaciones</NavLink>
+      <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/reconstructores">Reconstructores</NavLink>
       <a href="http://brigada.mx/nosotros">Nosotros</a>
       <Link onClick={openChat} className={classNameLink} to="#">Soporte</Link>
       {loginButton()}

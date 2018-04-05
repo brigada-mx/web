@@ -110,7 +110,7 @@ class ActionListItem extends React.PureComponent {
 
     const organizationLink = () => {
       return (
-        <Link className={Styles.link} onClick={e => e.stopPropagation()} to={{ pathname: `/organizaciones/${orgId}` }}>
+        <Link className={Styles.link} onClick={e => e.stopPropagation()} to={{ pathname: `/reconstructores/${orgId}` }}>
           {orgName}
         </Link>
       )

@@ -35,7 +35,7 @@ class OrganizationList extends React.PureComponent {
       return (
         <OrganizationListItem
           key={id}
-          to={`/organizaciones/${id}`}
+          to={`/reconstructores/${id}`}
           organization={o}
           focused={id === focusedId}
           {...rest}
@@ -72,9 +72,9 @@ class OrganizationListScreenView extends React.Component {
   }
 
   componentDidMount() {
-    document.title = 'Organizaciones - Brigada'
+    document.title = 'Reconstructores - Brigada'
     this.props.history.replace({
-      pathname: '/organizaciones',
+      pathname: '/reconstructores',
       state: {},
     })
     this._fitBounds = this.defaultFitBounds()

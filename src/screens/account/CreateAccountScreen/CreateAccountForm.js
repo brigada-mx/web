@@ -52,7 +52,7 @@ const CreateAccountForm = ({ handleSubmit, submitting }) => {
         <TextField
           className={FormStyles.wideInput}
           name="name"
-          hintText="¿Cómo se llama tu organización?"
+          hintText="¿Cómo se llama tu grupo?"
         />
       </div>
       <div className={FormStyles.dropdown}>
