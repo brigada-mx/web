@@ -14,8 +14,6 @@ import { localStorage } from 'tools/storage'
 import SnackBar from 'components/SnackBar'
 import Nav from 'components/Nav'
 import ModalSelector from 'components/Modal/ModalSelector'
-import AccountNav from 'components/AccountNav'
-import DonorNav from 'components/DonorNav'
 import LiveChat from 'components/LiveChat'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
@@ -23,13 +21,19 @@ import OrganizationListScreen from 'screens/OrganizationListScreen'
 import OrganizationScreen from 'screens/OrganizationScreen'
 import SetPasswordWithTokenScreen from 'screens/account/SetPasswordWithTokenScreen'
 import CreateAccountScreen from 'screens/account/CreateAccountScreen'
+import DonorListScreen from 'screens/DonorListScreen'
+import DonorScreen from 'screens/DonorScreen'
+
 import protectedScreen from 'screens/account/ProtectedScreen'
+import AccountNav from 'components/AccountNav'
+import DonorNav from 'components/DonorNav'
 import ActionScreen from 'screens/account/ActionScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
 import DonorProfileScreen from 'screens/account/ProfileScreen/DonorProfileScreen'
 import HomeScreen from 'screens/account/HomeScreen'
 import DonorHomeScreen from 'screens/account/DonorHomeScreen'
 import DonationScreen from 'screens/account/DonationScreen'
+
 import env from 'src/env'
 import Styles from 'src/Global.css'
 
@@ -40,6 +44,10 @@ const LocalityScreenWrapper = ({ match }) => {
 
 const OrganizationScreenWrapper = ({ match }) => {
   return <OrganizationScreen id={Number.parseInt(match.params.id, 10)} />
+}
+
+const DonorScreenWrapper = ({ match }) => {
+  return <DonorScreen id={Number.parseInt(match.params.id, 10)} />
 }
 
 const ActionScreenWrapper = ({ match }) => {
@@ -98,7 +106,7 @@ const App = () => {
             <ModalSelector />
 
             <Route exact path="/" component={Nav} />
-            <Route path="/(comunidades|reconstructores)" component={Nav} />
+            <Route path="/(comunidades|reconstructores|donadores)" component={Nav} />
             <Route path="/cuenta" component={AccountNav} />
             <Route path="/donador" component={DonorNav} />
 
@@ -115,6 +123,9 @@ const App = () => {
 
               <Route exact path="/reconstructores" component={OrganizationListScreen} />
               <Route exact path="/reconstructores/:id" component={OrganizationScreenWrapper} />
+
+              <Route exact path="/donadores" component={DonorListScreen} />
+              <Route exact path="/donadores/:id" component={DonorScreenWrapper} />
 
               <Route path="/establecer" component={SetPasswordWithTokenScreenWrapper} />
               <Route exact path="/crear/cuenta" component={CreateAccountScreenWrapper} />

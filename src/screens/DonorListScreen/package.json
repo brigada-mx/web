@@ -1,0 +1,6 @@
+{
+  "name": "DonorListScreen",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./DonorListScreen.js"
+}

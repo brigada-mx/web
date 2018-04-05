@@ -44,6 +44,15 @@ class Service {
     return sendToApi(`/organizations/${id}/`)
   }
 
+  getDonors = async (page_size = 1000) => {
+    const params = { page_size }
+    return sendToApi('/donors/', { params })
+  }
+
+  getDonor = async (id) => {
+    return sendToApi(`/donors/${id}/`)
+  }
+
   getAction = async (id) => {
     return sendToApi(`/actions/${id}/`)
   }

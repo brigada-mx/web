@@ -18,7 +18,7 @@ const NavLinks = ({
   activeStyle = {},
   onHideDrawer,
   modal,
-  livechat
+  livechat,
 }) => {
   const selected = { color: colors.brandGreen }
 
@@ -30,6 +30,11 @@ const NavLinks = ({
   const orgIsActive = (match, location) => {
     const { pathname } = location
     return pathname.startsWith('/reconstructores')
+  }
+
+  const donorIsActive = (match, location) => {
+    const { pathname } = location
+    return pathname.startsWith('/donadores')
   }
 
   const openChat = () => {
@@ -52,6 +57,7 @@ const NavLinks = ({
     <React.Fragment>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">Comunidades</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/reconstructores">Reconstructores</NavLink>
+      <NavLink onClick={onHideDrawer} className={classNameLink} isActive={donorIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/donadores">Donadores</NavLink>
       <a href="http://brigada.mx/nosotros">Nosotros</a>
       <Link onClick={openChat} className={classNameLink} to="#">Soporte</Link>
       {loginButton()}
