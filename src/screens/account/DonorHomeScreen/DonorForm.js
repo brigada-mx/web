@@ -1,11 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
+import MenuItem from 'material-ui/MenuItem'
 
-import { TextField } from 'components/Fields'
+import { sectors } from 'src/choices'
+import { TextField, SelectField } from 'components/Fields'
 import FormStyles from 'src/Form.css'
 
 
@@ -19,9 +20,19 @@ const DonorForm = ({ handleSubmit, submitting }) => {
             name="name"
           />
           <TextField
-            floatingLabelText="Sitio web"
-            name="website"
+            floatingLabelText="Año establecido"
+            type="number"
+            normalize={(value) => { return value ? parseInt(value, 10) : null }}
+            name="year_established"
           />
+          <SelectField
+            floatingLabelText="Sector"
+            name="sector"
+          >
+            {sectors.map(
+              ({ value, label }) => <MenuItem key={value} value={value} primaryText={label} />
+            )}
+          </SelectField>
         </div>
         <div className={FormStyles.row}>
           <TextField
@@ -51,11 +62,12 @@ DonorForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = ({ name, desc, website }) => {
+const validate = ({ name, desc, year_established: year, sector }) => {
   const errors = {}
   if (!name) errors.name = 'Agrega el nombre'
   if (!desc) errors.desc = 'Agrega la descripción de donador'
-  if (!website) errors.desc = 'Agrega el sitio web de donador'
+  if (!year || year.toString().length !== 4) errors.year_established = 'Ingresa un año válido'
+  if (!sector) errors.sector = 'Agrega el sector'
   return errors
 }
 

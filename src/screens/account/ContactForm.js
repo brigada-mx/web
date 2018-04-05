@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
@@ -9,7 +10,6 @@ import flattenObject from 'tools/flatten'
 import { TextField, SelectField } from 'components/Fields'
 import { validateEmail } from 'tools/string'
 import { states } from 'src/choices'
-import Styles from './OrganizationForm.css'
 import FormStyles from 'src/Form.css'
 
 
@@ -77,21 +77,23 @@ const ContactForm = ({ handleSubmit, submitting }) => {
 
 ContactForm.propTypes = {
   ...rxfPropTypes,
+  type: PropTypes.oneOf(['org', 'donor']).isRequired,
 }
 
 const validate = ({ email, phone }) => {
   const errors = {}
-  if (!validateEmail(email)) return { email: 'Se requiere un email válido' }
+  if (!validateEmail(email)) errors.email = 'Se requiere un email válido'
   if (!phone) errors.phone = 'Agrega un teléfono'
   return errors
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, { type }) => {
   try {
-    return { initialValues: flattenObject(state.getter.accountOrganization.data.contact || {}) }
+    const getterKey = { org: 'accountOrganization', donor: 'donorDonor' }[type]
+    return { initialValues: flattenObject(state.getter[getterKey].data.contact || {}) }
   } catch (e) {
     return { initialValues: {} }
   }
 }
 
-export default connect(mapStateToProps, null)(reduxForm({ form: 'accountContact', validate })(ContactForm))
+export default connect(mapStateToProps, null)(reduxForm({ validate })(ContactForm))

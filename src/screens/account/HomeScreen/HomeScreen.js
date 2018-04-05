@@ -17,8 +17,8 @@ import SubmissionTable from 'screens/account/SubmissionTable'
 import ActionTable from 'screens/account/ActionTable'
 import ActionTrash from 'screens/account/ActionTrash'
 import SubmissionTrash from 'screens/account/SubmissionTrash'
+import ContactForm from 'screens/account/ContactForm'
 import OrganizationForm from './OrganizationForm'
-import ContactForm from './ContactForm'
 
 
 const initialActionValues = { published: true }
@@ -167,7 +167,12 @@ class HomeScreen extends React.Component {
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>Contacto</div>
           <div className={FormStyles.formContainerLeft}>
-            <ContactForm onSubmit={this.handleSubmitContact} enableReinitialize />
+            <ContactForm
+              form="accountContact"
+              onSubmit={this.handleSubmitContact}
+              enableReinitialize
+              type="org"
+            />
           </div>
         </div>
 

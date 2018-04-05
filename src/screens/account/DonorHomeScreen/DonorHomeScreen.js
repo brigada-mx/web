@@ -11,6 +11,7 @@ import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
 import DonorDonationTable from 'screens/account/DonorDonationTable'
 import { CreateDonationForm, prepareDonationBody } from 'screens/account/DonorDonationForm'
+import ContactForm from 'screens/account/ContactForm'
 import FormStyles from 'src/Form.css'
 import DonorForm from './DonorForm'
 
@@ -49,6 +50,19 @@ class DonorHomeScreen extends React.Component {
     this.props.snackbar('Actualizaste información de donador', 'success')
   }
 
+  handleSubmitContact = async ({ zip, city, state, street, locality, ...rest }) => {
+    const { data } = await service.donorUpdateDonor({ contact: {
+      ...rest,
+      address: { zip, city, state, street, locality },
+    } })
+    if (!data) {
+      this.props.snackbar('Hubo un error', 'error')
+      return
+    }
+    this.loadDonor()
+    this.props.snackbar('Actualizaste tus datos de contacto', 'success')
+  }
+
   handleToggleApproved = async (id, approved) => {
     const { data } = await service.donorUpdateDonation(id, { approved_by_donor: approved })
     if (!data) {
@@ -84,6 +98,18 @@ class DonorHomeScreen extends React.Component {
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>Donador</div>
           <DonorForm onSubmit={this.handleSubmitDonor} enableReinitialize />
+        </div>
+
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>Contacto</div>
+          <div className={FormStyles.formContainerLeft}>
+            <ContactForm
+              form="donorContact"
+              onSubmit={this.handleSubmitContact}
+              enableReinitialize
+              type="donor"
+            />
+          </div>
         </div>
 
         <div className={FormStyles.card}>
