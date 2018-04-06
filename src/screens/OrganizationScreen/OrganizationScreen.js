@@ -21,6 +21,11 @@ class OrganizationScreen extends React.Component {
     getBackoffComponent(this, 'organization', () => service.getOrganization(id))
   }
 
+  componentWillReceiveProps({ id }) {
+    if (id === this.props.id) return
+    getBackoffComponent(this, 'organization', () => service.getOrganization(id))
+  }
+
   componentWillUnmount() {
     this._mounted = false
   }

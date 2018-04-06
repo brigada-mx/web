@@ -63,10 +63,10 @@ class ActionListItem extends React.PureComponent {
         if (a.received_date < b.received_date) return 1
         if (a.received_date > b.received_date) return -1
         return 0
-      }).map(({ amount, donor: { name } }, i) => {
+      }).map(({ amount, donor: { id, name } }, i) => {
         return (
           <tr key={i}>
-            <th>{name}</th>
+            <th><Link className={Styles.blackLink}to={`/donadores/${id}`}>{name}</Link></th>
             <th>{fmtBudgetPlain(amount)}</th>
           </tr>
         )
@@ -208,7 +208,7 @@ class ActionListItem extends React.PureComponent {
         {(desc && focused) &&
           <React.Fragment>
             <div className={Styles.cardBottom}>
-              {screen !== 'donor' && getDonations()}
+              {getDonations()}
               {dates()}
             </div>
           </React.Fragment>

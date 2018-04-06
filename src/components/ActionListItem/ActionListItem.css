@@ -32,6 +32,15 @@
   display: table;
 }
 
+.blackLink {
+  color: unset;
+  font-family: 'nunito-sans', sans-serif;
+  line-height: 16px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  display: table;
+}
+
 .greyLink {
   font-family: 'nunito-sans', sans-serif;
   font-size: 12px;

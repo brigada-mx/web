@@ -25,6 +25,12 @@ class DonorScreen extends React.Component {
     getBackoffComponent(this, 'donations', () => service.getDonorDonations(id))
   }
 
+  componentWillReceiveProps({ id }) {
+    if (id === this.props.id) return
+    getBackoffComponent(this, 'donor', () => service.getDonor(id))
+    getBackoffComponent(this, 'donations', () => service.getDonorDonations(id))
+  }
+
   componentWillUnmount() {
     this._mounted = false
   }
