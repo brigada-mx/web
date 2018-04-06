@@ -48,17 +48,17 @@ class DonorListScreenView extends React.Component {
         Cell: props => sectorByValue[props.original.sector] || 'No disponible',
       },
       {
+        Header: 'Monto donado',
+        accessor: 'metrics.total_donated',
+        Cell: props => fmtBudget(props.original.metrics.total_donated),
+      },
+      {
         Header: 'Reconstructores financiados',
         accessor: 'metrics.org_count',
       },
       {
         Header: 'Proy. financiados',
         accessor: 'metrics.action_count',
-      },
-      {
-        Header: 'Monto donado',
-        accessor: 'metrics.total_donated',
-        Cell: props => fmtBudget(props.original.metrics.total_donated),
       },
     ]
 

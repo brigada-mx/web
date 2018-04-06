@@ -32,6 +32,17 @@
   display: table;
 }
 
+.greyLink {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: grey2;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  display: table;
+}
+
 .donors {
   opacity: 0.4;
   color: #0F0F0F;
@@ -41,7 +52,7 @@
   display: inline-block;
 }
 
-.donorsDivider {
+.metaDivider {
   opacity: 0.4;
   color: #0F0F0F;
   margin-left: 10px;

@@ -5,6 +5,7 @@ import { withRouter, Redirect } from 'react-router-dom'
 import { Sticky, StickyContainer } from 'react-sticky'
 
 import LocalityDamageMap from 'components/LocalityDamageMap'
+import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import Carousel from 'components/Carousel'
 import ActionList from 'components/ActionList'
 import PhoneBox from 'components/PhoneBox'
@@ -22,6 +23,7 @@ class DonorScreenView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      popup: {},
       focused: null,
       carousel: {},
     }
@@ -52,6 +54,15 @@ class DonorScreenView extends React.Component {
 
   handleClickFeature = (feature) => {
     this.props.history.push(`/comunidades/${feature.properties.id}`)
+  }
+
+  handleEnterFeature = (feature) => {
+    const locality = JSON.parse(feature.properties.locality)
+    this.setState({ popup: { locality } })
+  }
+
+  handleLeaveFeature = () => {
+    this.setState({ popup: {} })
   }
 
   handleClickPhotos = (item) => {
@@ -138,6 +149,7 @@ class DonorScreenView extends React.Component {
     })
 
     const fitBounds = fitBoundsFromCoords(coords)
+    const { popup } = this.state
     return (
       <div className={Styles.opsMap}>
         <MapErrorBoundary>
@@ -145,7 +157,14 @@ class DonorScreenView extends React.Component {
             dragPan={window.innerWidth >= 980}
             zoomControl={false}
             features={features}
+            popup={popup ? <LocalityPopup
+              locality={popup.locality}
+              screen="donor"
+              onlyLocality
+            /> : null}
             onClickFeature={this.handleClickFeature}
+            onEnterFeature={this.handleEnterFeature}
+            onLeaveFeature={this.handleLeaveFeature}
             fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
           />
         </MapErrorBoundary>
@@ -278,7 +297,7 @@ class DonorScreenView extends React.Component {
                 </div>
                 <div className="col-lg-12 col-md-12 col-sm-4 col-xs-4 gutter">
                   <div className={Styles.ops}>
-                    <p className={Styles.subtitle}>¿Dónde hemos donado?</p>
+                    <p className={Styles.subtitle}>¿Dónde donamos?</p>
                     {this.renderMap(actions)}
                   </div>
                 </div>

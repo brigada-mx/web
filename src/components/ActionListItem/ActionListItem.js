@@ -50,10 +50,7 @@ class ActionListItem extends React.PureComponent {
         return { donor, amount: amountByDonor[donor] }
       }), d => -d.amount)
       return (
-        <React.Fragment>
-          <span className={`${Styles.link} ${Styles.donorsDivider} `}>/</span>
-          <span className={`${Styles.link} ${Styles.donors}`}>Financiado por {donors.map(d => d.donor).join(', ')}</span>
-        </React.Fragment>
+        <span className={`${Styles.link} ${Styles.donors}`}>Financiado por {donors.map(d => d.donor).join(', ')}</span>
       )
     }
 
@@ -110,7 +107,11 @@ class ActionListItem extends React.PureComponent {
 
     const organizationLink = () => {
       return (
-        <Link className={Styles.link} onClick={e => e.stopPropagation()} to={{ pathname: `/reconstructores/${orgId}` }}>
+        <Link
+          className={screen !== 'donor' ? Styles.link : Styles.greyLink}
+          onClick={e => e.stopPropagation()}
+          to={{ pathname: `/reconstructores/${orgId}` }}
+        >
           {orgName}
         </Link>
       )
@@ -162,6 +163,7 @@ class ActionListItem extends React.PureComponent {
     const classNames = [Styles.listItem]
     if (focused) classNames.push(Styles.listItemFocused)
 
+    const donors = getDonors()
     return (
       <div
         className={classNames.join(' ')}
@@ -173,14 +175,19 @@ class ActionListItem extends React.PureComponent {
           <div className={Styles.summaryContainer}>
             <div className={Styles.textContainer}>
               <div className={Styles.metadata}>
-                {screen === 'loc' && organizationLink()}
-                {screen === 'org' && localityLink()}
-                {screen !== 'donor' && getDonors()}
+                {screen !== 'donor' &&
+                  <React.Fragment>
+                    {screen === 'org' && localityLink()}
+                    {screen === 'loc' && organizationLink()}
+                    {donors && <span className={`${Styles.link} ${Styles.metaDivider} `}>/</span>}
+                    {donors}
+                  </React.Fragment>
+                }
                 {screen === 'donor' &&
                   <React.Fragment>
-                    {organizationLink()}
-                    <span className={`${Styles.link} ${Styles.donorsDivider} `}>/</span>
                     {localityLink()}
+                    <span className={`${Styles.link} ${Styles.metaDivider} `}>/</span>
+                    {organizationLink()}
                   </React.Fragment>
                 }
               </div>

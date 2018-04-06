@@ -7,10 +7,18 @@ import { fmtNum, fmtBudget } from 'tools/string'
 import Styles from './LocalityPopup.css'
 
 
-const LocalityPopup = ({ locality, organization, screen }) => {
+const LocalityPopup = ({ locality, organization, screen, onlyLocality = false}) => {
   if (!locality) return null
   const { state_name: stateName, name, location: { lat, lng } } = locality
   const { habit, notHabit, destroyed, total, margGrade } = locality.meta
+
+  if (onlyLocality) {
+    return (
+      <Popup offset={12} coordinates={[lng, lat]}>
+        <span className={Styles.header}>{name}</span>
+      </Popup>
+    )
+  }
 
   if (screen === 'loc') {
     return (
@@ -92,7 +100,8 @@ const LocalityPopup = ({ locality, organization, screen }) => {
 LocalityPopup.propTypes = {
   locality: PropTypes.object,
   organization: PropTypes.object,
-  screen: PropTypes.oneOf(['org', 'loc']).isRequired,
+  screen: PropTypes.oneOf(['org', 'loc', 'donor']).isRequired,
+  onlyLocality: PropTypes.bool,
 }
 
 export default LocalityPopup

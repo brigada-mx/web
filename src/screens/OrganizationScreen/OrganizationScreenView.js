@@ -58,10 +58,8 @@ class OrganizationScreenView extends React.Component {
   }
 
   handleEnterFeature = (feature) => {
-    const { data } = this.props.organization
-    if (!data) return
     const locality = JSON.parse(feature.properties.locality)
-    this.setState({ popup: { locality, organization: data } })
+    this.setState({ popup: { locality } })
   }
 
   handleLeaveFeature = () => {
@@ -162,8 +160,8 @@ class OrganizationScreenView extends React.Component {
             features={features}
             popup={popup ? <LocalityPopup
               locality={popup.locality}
-              organization={popup.organization}
               screen="org"
+              onlyLocality
             /> : null}
             onClickFeature={this.handleClickFeature}
             onEnterFeature={this.handleEnterFeature}
