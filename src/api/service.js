@@ -16,6 +16,11 @@ class Service {
     return sendToApi('/actions/', { params })
   }
 
+  getDonorDonations = async (donor_id, page_size = 250) => {
+    const params = { donor_id, page_size }
+    return sendToApi('/donations/', { params })
+  }
+
   getLocalityEstablishments = async (locality_id, page_size = 250) => {
     const params = { locality_id, page_size, is_categorized: true }
     return sendToApi('/establishments/', { params })

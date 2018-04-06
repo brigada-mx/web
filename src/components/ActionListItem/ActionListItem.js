@@ -29,7 +29,7 @@ class ActionListItem extends React.PureComponent {
       target,
       progress = 0,
       budget,
-      donations,
+      donations = [],
       start_date: startDate,
       end_date: endDate,
       organization: { id: orgId, name: orgName },
@@ -175,7 +175,14 @@ class ActionListItem extends React.PureComponent {
               <div className={Styles.metadata}>
                 {screen === 'loc' && organizationLink()}
                 {screen === 'org' && localityLink()}
-                {getDonors()}
+                {screen !== 'donor' && getDonors()}
+                {screen === 'donor' &&
+                  <React.Fragment>
+                    {organizationLink()}
+                    <span className={`${Styles.link} ${Styles.donorsDivider} `}>/</span>
+                    {localityLink()}
+                  </React.Fragment>
+                }
               </div>
               <div className={Styles.header}>{getProjectType(actionType)}</div>
               <div className={Styles.fieldsContainer}>
@@ -194,7 +201,7 @@ class ActionListItem extends React.PureComponent {
         {(desc && focused) &&
           <React.Fragment>
             <div className={Styles.cardBottom}>
-              {getDonations()}
+              {screen !== 'donor' && getDonations()}
               {dates()}
             </div>
           </React.Fragment>
@@ -206,7 +213,7 @@ class ActionListItem extends React.PureComponent {
 
 ActionListItem.propTypes = {
   action: PropTypes.object.isRequired,
-  screen: PropTypes.oneOf(['org', 'loc']).isRequired,
+  screen: PropTypes.oneOf(['org', 'loc', 'donor']).isRequired,
   focused: PropTypes.bool,
   onClickPhotos: PropTypes.func,
   onMouseEnter: PropTypes.func,

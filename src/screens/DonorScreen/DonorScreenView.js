@@ -5,7 +5,6 @@ import { withRouter, Redirect } from 'react-router-dom'
 import { Sticky, StickyContainer } from 'react-sticky'
 
 import LocalityDamageMap from 'components/LocalityDamageMap'
-import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import Carousel from 'components/Carousel'
 import ActionList from 'components/ActionList'
 import PhoneBox from 'components/PhoneBox'
@@ -23,23 +22,22 @@ class DonorScreenView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      popup: {},
       focused: null,
       carousel: {},
     }
   }
 
   componentWillUpdate(nextProps) {
-    const { data } = nextProps.donor
-    if (!this.props.donor.data && data) {
-      const [focused] = data.actions
+    const { data } = nextProps.donations
+    if (!this.props.donations.data && data && data.results.length) {
+      const focused = { ...data.results[0].action }
       this.setState({ focused })
     }
   }
 
   setDocumentMeta = (name, description) => {
     if (this._documentTitle) return
-    const title = `${name} - Brigada`
+    const title = `${name} - Donador Brigada`
     document.title = title
     this._documentTitle = title
 
@@ -54,17 +52,6 @@ class DonorScreenView extends React.Component {
 
   handleClickFeature = (feature) => {
     this.props.history.push(`/comunidades/${feature.properties.id}`)
-  }
-
-  handleEnterFeature = (feature) => {
-    const { data } = this.props.donor
-    if (!data) return
-    const locality = JSON.parse(feature.properties.locality)
-    this.setState({ popup: { locality, donor: data } })
-  }
-
-  handleLeaveFeature = () => {
-    this.setState({ popup: {} })
   }
 
   handleClickPhotos = (item) => {
@@ -151,7 +138,6 @@ class DonorScreenView extends React.Component {
     })
 
     const fitBounds = fitBoundsFromCoords(coords)
-    const { popup } = this.state
     return (
       <div className={Styles.opsMap}>
         <MapErrorBoundary>
@@ -159,14 +145,7 @@ class DonorScreenView extends React.Component {
             dragPan={window.innerWidth >= 980}
             zoomControl={false}
             features={features}
-            popup={popup ? <LocalityPopup
-              locality={popup.locality}
-              donor={popup.donor}
-              screen="donor"
-            /> : null}
             onClickFeature={this.handleClickFeature}
-            onEnterFeature={this.handleEnterFeature}
-            onLeaveFeature={this.handleLeaveFeature}
             fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
           />
         </MapErrorBoundary>
@@ -175,21 +154,29 @@ class DonorScreenView extends React.Component {
   }
 
   render() {
-    const { donor: { loading, data, error, status } } = this.props
-    if (status === 404) return <Redirect to="/reconstructores" />
-    if (loading || !data) return <LoadingIndicatorCircle />
+    const {
+      donor: { loading, data, status },
+      donations: { loading: donationsLoading, data: donationsData },
+    } = this.props
+    if (status === 404) return <Redirect to="/donadores" />
+    if (loading || !data || donationsLoading || !donationsData) return <LoadingIndicatorCircle />
 
     this.setDocumentMeta(data.name, data.desc)
     const {
-      actions,
+      metrics,
       contact: { email, phone, website, address, person_responsible: person },
       desc,
       name,
       sector,
       year_established: established,
-      image_count: numPhotos,
       id,
     } = data
+
+    const actions = Object.values(donationsData.results.reduce((obj, d) => {
+      obj[d.action.id] = { ...d.action } // eslint-disable-line no-param-reassign
+      return obj
+    }, {}))
+
     const { focused } = this.state
 
     const actionMap = (
@@ -200,8 +187,6 @@ class DonorScreenView extends React.Component {
         onEnterFeature={this.handleEnterActionFeature}
       />
     )
-
-    const budget = actions.reduce((sum, action) => sum + (action.budget || 0), 0)
 
     return (
       <React.Fragment>
@@ -245,19 +230,19 @@ class DonorScreenView extends React.Component {
               </div>
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
-                  <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
-                    <span className={Styles.metricLabel}>Inversión<br />estimada</span>
+                  <div className={metrics.total_donated > 0 ? Styles.metric : Styles.emptyMetric}>
+                    <span className={Styles.metricLabel}>Donaciones<br />estimadas</span>
                     <span className={Styles.metricValue}>
-                      {fmtBudget(budget)}
+                      {fmtBudget(metrics.total_donated)}
                     </span>
                   </div>
                   <div className={Styles.metric}>
-                    <span className={Styles.metricLabel}>Proyectos<br />registrados</span>
-                    <span className={Styles.metricValue}>{actions.length}</span>
+                    <span className={Styles.metricLabel}>Reconstructores<br />apoyados</span>
+                    <span className={Styles.metricValue}>{metrics.org_count}</span>
                   </div>
                   <div className={Styles.metric}>
-                    <span className={Styles.metricLabel}>Fotos<br />capturadas</span>
-                    <span className={Styles.metricValue}>{numPhotos}</span>
+                    <span className={Styles.metricLabel}>Proyectos<br />apoyados</span>
+                    <span className={Styles.metricValue}>{metrics.action_count}</span>
                   </div>
                 </div>
               </div>
@@ -293,7 +278,7 @@ class DonorScreenView extends React.Component {
                 </div>
                 <div className="col-lg-12 col-md-12 col-sm-4 col-xs-4 gutter">
                   <div className={Styles.ops}>
-                    <p className={Styles.subtitle}>¿Dónde operamos?</p>
+                    <p className={Styles.subtitle}>¿Dónde hemos donado?</p>
                     {this.renderMap(actions)}
                   </div>
                 </div>
@@ -336,6 +321,7 @@ class DonorScreenView extends React.Component {
 
 DonorScreenView.propTypes = {
   donor: PropTypes.object.isRequired,
+  donations: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 }
 

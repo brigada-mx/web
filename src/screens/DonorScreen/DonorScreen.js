@@ -12,6 +12,9 @@ class DonorScreen extends React.Component {
       donor: {
         loading: true,
       },
+      donations: {
+        loading: true,
+      },
     }
   }
 
@@ -19,6 +22,7 @@ class DonorScreen extends React.Component {
     this._mounted = true
     const { id } = this.props
     getBackoffComponent(this, 'donor', () => service.getDonor(id))
+    getBackoffComponent(this, 'donations', () => service.getDonorDonations(id))
   }
 
   componentWillUnmount() {
