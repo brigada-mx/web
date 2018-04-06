@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
@@ -6,11 +7,11 @@ import RaisedButton from 'material-ui/RaisedButton'
 import MenuItem from 'material-ui/MenuItem'
 
 import { sectors } from 'src/choices'
-import { TextField, SelectField } from 'components/Fields'
+import { TextField, SelectField, Toggle } from 'components/Fields'
 import FormStyles from 'src/Form.css'
 
 
-const DonorForm = ({ handleSubmit, submitting }) => {
+const DonorForm = ({ handleSubmit, submitting, donating = false }) => {
   return (
     <React.Fragment>
       <div className={FormStyles.formContainerLeft}>
@@ -43,6 +44,24 @@ const DonorForm = ({ handleSubmit, submitting }) => {
             rows={3}
           />
         </div>
+        <div>
+          <Toggle
+            label="Estamos dando donaciones"
+            className={FormStyles.toggle}
+            name="donating"
+          />
+        </div>
+        {donating ? (
+          <div className={FormStyles.row}>
+            <TextField
+              floatingLabelText="Describe el tipo de proyecto al que dan donaciones"
+              className={FormStyles.wideInput}
+              name="donating_desc"
+              multiLine
+              rows={3}
+            />
+          </div>
+        ) : null}
         <div className={FormStyles.row}>
           <RaisedButton
             backgroundColor="#3DC59F"
@@ -60,6 +79,7 @@ const DonorForm = ({ handleSubmit, submitting }) => {
 
 DonorForm.propTypes = {
   ...rxfPropTypes,
+  donating: PropTypes.bool,
 }
 
 const validate = ({ name, desc, year_established: year, sector }) => {
@@ -73,7 +93,8 @@ const validate = ({ name, desc, year_established: year, sector }) => {
 
 const mapStateToProps = (state) => {
   try {
-    return { initialValues: state.getter.donorDonor.data || {} }
+    const { donating } = state.form.donorDonor.values
+    return { initialValues: state.getter.donorDonor.data || {}, donating }
   } catch (e) {
     return { initialValues: {} }
   }

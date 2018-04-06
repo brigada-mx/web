@@ -9,6 +9,7 @@ import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import Carousel from 'components/Carousel'
 import ActionList from 'components/ActionList'
 import PhoneBox from 'components/PhoneBox'
+import HelpWanted from 'components/HelpWanted'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import MapErrorBoundary from 'components/MapErrorBoundary'
@@ -16,7 +17,6 @@ import { addProtocol, emailLink, fmtBudget } from 'tools/string'
 import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
 import { sectorByValue } from 'src/choices'
 import OrganizationBreadcrumb from './OrganizationBreadcrumb'
-import HelpWanted from './HelpWanted'
 import Styles from './OrganizationScreenView.css'
 
 
@@ -278,7 +278,6 @@ class OrganizationScreenView extends React.Component {
                     {phone && <PhoneBox phone={phone} name={person} />}
                     {email &&
                       <a
-                        target="_blank"
                         className={`${Styles.button} ${Styles.email}`}
                         href={emailLink(email)}
                         onClick={() => fireGaEvent('email')}
@@ -303,7 +302,7 @@ class OrganizationScreenView extends React.Component {
           </div>
         </div>
 
-        <HelpWanted help={help} helpDesc={helpDesc} organizationId={id} email={email} />
+        <HelpWanted help={help} helpDesc={helpDesc} groupId={id} email={email} type="volunteer" />
 
         <StickyContainer className={`${!help ? Styles.actionsContainer : ''} row`}>
           <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>

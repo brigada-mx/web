@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import RaisedButton from 'material-ui/RaisedButton'
+import ReactGA from 'react-ga'
 
 import Modal from 'components/Modal'
 import { emailLink } from 'tools/string'
@@ -27,8 +28,14 @@ class HelpWanted extends React.Component {
   }
 
   render() {
-    const { help, helpDesc = '', organizationId, email } = this.props
+    const { help, helpDesc = '', groupId, email, type } = this.props
     const { modal } = this.state
+
+    const title = { volunteer: 'Buscamos voluntarios', donation: 'Estamos dando donaciones' }[type]
+    const emailLinkText = {
+      volunteer: 'Me interesa ser voluntario',
+      donation: 'Me interesa conseguir apoyo para mi proyecto',
+    }[type]
 
     if (!help) return null
     return (
@@ -37,14 +44,19 @@ class HelpWanted extends React.Component {
           <Modal
             contentClassName={Styles.modalContainer}
             onClose={this.handleClose}
-            gaName={`volunteer/${organizationId}`}
+            gaName={`${type}/${groupId}`}
           >
             <div className={Styles.modalContent}>
-              <span className={Styles.helpTitle}>Buscamos voluntarios</span>
+              <span className={Styles.helpTitle}>{title}</span>
               <p className={Styles.helpText}>{helpDesc}</p>
               <div className={FormStyles.buttonContainer}>
                 {email && <RaisedButton
-                  containerElement={<a href={emailLink(email, 'Me interesa ser voluntario')} target="_blank" />}
+                  containerElement={
+                    <ReactGA.OutboundLink
+                      eventLabel={`${type}Email/${groupId}`}
+                      to={emailLink(email, emailLinkText)}
+                    />
+                  }
                   backgroundColor="#3DC59F"
                   labelColor="#ffffff"
                   className={FormStyles.primaryButton}
@@ -56,7 +68,7 @@ class HelpWanted extends React.Component {
         }
 
         <div className={Styles.helpContainer}>
-          <span className={Styles.infoText}>Buscamos voluntarios</span>
+          <span className={Styles.infoText}>{title}</span>
           <span
             className={`${GlobalStyles.link} ${Styles.linkText}`}
             onClick={this.handleClick}
@@ -73,7 +85,8 @@ HelpWanted.propTypes = {
   help: PropTypes.bool,
   email: PropTypes.string,
   helpDesc: PropTypes.string,
-  organizationId: PropTypes.number.isRequired,
+  groupId: PropTypes.number.isRequired,
+  type: PropTypes.oneOf(['volunteer', 'donation']).isRequired,
 }
 
 export default HelpWanted
