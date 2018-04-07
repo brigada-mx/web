@@ -46,7 +46,7 @@ const DonorForm = ({ handleSubmit, submitting, donating = false }) => {
         </div>
         <div>
           <Toggle
-            label="Estamos dando donaciones"
+            label="Queremos financiar nuevos proyectos"
             className={FormStyles.toggle}
             name="donating"
           />
@@ -54,7 +54,7 @@ const DonorForm = ({ handleSubmit, submitting, donating = false }) => {
         {donating ? (
           <div className={FormStyles.row}>
             <TextField
-              floatingLabelText="Describe el tipo de proyecto al que dan donaciones"
+              floatingLabelText="Describe el tipo de proyecto al que quieren financiar"
               className={FormStyles.wideInput}
               name="donating_desc"
               multiLine

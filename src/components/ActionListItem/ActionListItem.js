@@ -105,14 +105,14 @@ class ActionListItem extends React.PureComponent {
       )
     }
 
-    const organizationLink = () => {
+    const organizationLink = (prefix = '') => {
       return (
         <Link
           className={screen !== 'donor' ? Styles.link : Styles.greyLink}
           onClick={e => e.stopPropagation()}
           to={{ pathname: `/reconstructores/${orgId}` }}
         >
-          {orgName}
+          {`${prefix}${orgName}`}
         </Link>
       )
     }
@@ -187,7 +187,7 @@ class ActionListItem extends React.PureComponent {
                   <React.Fragment>
                     {localityLink()}
                     <span className={`${Styles.link} ${Styles.metaDivider} `}>/</span>
-                    {organizationLink()}
+                    {organizationLink('Realizado por ')}
                   </React.Fragment>
                 }
               </div>
