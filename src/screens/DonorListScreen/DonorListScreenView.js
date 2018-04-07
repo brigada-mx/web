@@ -14,6 +14,15 @@ import Styles from './DonorListScreenView.css'
 class DonorListScreenView extends React.Component {
   componentDidMount() {
     document.title = 'Donadores - Brigada'
+    window.addEventListener('orientationchange', this.orientationChange)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('orientationchange', this.orientationChange)
+  }
+
+  orientationChange = () => {
+    this.setState({ orientation: screen.orientation.angle })
   }
 
   renderAddress = (address = {}) => {
@@ -38,29 +47,33 @@ class DonorListScreenView extends React.Component {
         accessor: 'name',
       },
       {
-        Header: 'Ubicación',
-        accessor: 'contact.address',
-        Cell: props => this.renderAddress(props.original.contact.address) || 'No disponible',
-      },
-      {
-        Header: 'Sector',
-        accessor: 'sector',
-        Cell: props => sectorByValue[props.original.sector] || 'No disponible',
-      },
-      {
         Header: 'Monto donado',
         accessor: 'metrics.total_donated',
         Cell: props => fmtBudget(props.original.metrics.total_donated),
       },
-      {
-        Header: 'Reconstructores',
-        accessor: 'metrics.org_count',
-      },
-      {
+    ]
+    if (window.innerWidth >= 768) {
+      columns.splice(1, 0, {
         Header: 'Proyectos',
         accessor: 'metrics.action_count',
-      },
-    ]
+      })
+      columns.splice(1, 0, {
+        Header: 'Reconstructores',
+        accessor: 'metrics.org_count',
+      })
+    }
+    if (window.innerWidth >= 980) {
+      columns.splice(1, 0, {
+        Header: 'Sector',
+        accessor: 'sector',
+        Cell: props => sectorByValue[props.original.sector] || 'No disponible',
+      })
+      columns.splice(1, 0, {
+        Header: 'Ubicación',
+        accessor: 'contact.address',
+        Cell: props => this.renderAddress(props.original.contact.address) || 'No disponible',
+      })
+    }
 
     return (
       <div className={Styles.tableWrapper}>
