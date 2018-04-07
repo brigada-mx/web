@@ -5,12 +5,12 @@ import { connect } from 'react-redux'
 
 import * as Actions from 'src/actions'
 import service from 'api/service'
-import CreateAccountForm from './CreateAccountForm'
+import DonorCreateAccountForm, { prepareDonorBody } from './DonorCreateAccountForm'
 
 
 const DonorCreateAccountScreen = ({ snackbar, modal, className = '' }) => {
   const handleSubmit = async ({ email, ...rest }) => {
-    const { data, status } = await service.createAccount({ email, ...rest })
+    const { data, status } = await service.donorCreateAccount(prepareDonorBody({ email, ...rest }))
     if (data) {
       modal('accountCreated', { email, type: 'donor' })
       return
@@ -20,8 +20,8 @@ const DonorCreateAccountScreen = ({ snackbar, modal, className = '' }) => {
     else snackbar('Checa tu conexión', 'error')
   }
 
-  if (className) return <div className={className}><CreateAccountForm onSubmit={handleSubmit} /></div>
-  return <CreateAccountForm onSubmit={handleSubmit} />
+  if (className) return <div className={className}><DonorCreateAccountForm onSubmit={handleSubmit} /></div>
+  return <DonorCreateAccountForm onSubmit={handleSubmit} />
 }
 
 DonorCreateAccountScreen.propTypes = {

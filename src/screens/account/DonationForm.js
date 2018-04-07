@@ -8,7 +8,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 import AutoCompleteMui from 'material-ui/AutoComplete'
 
 import { TextField, Toggle, DatePicker, AutoComplete, Checkbox } from 'components/Fields'
-import { tokenMatch } from 'tools/string'
 import service, { getBackoff } from 'api/service'
 import ConfirmButton from 'components/ConfirmButton'
 import FormStyles from 'src/Form.css'
@@ -17,11 +16,6 @@ import FormStyles from 'src/Form.css'
 class Fields extends React.Component {
   componentDidMount() {
     getBackoff(service.getDonorsMini, { key: 'miniDonors' })
-  }
-
-  filter = (searchText, key) => {
-    if (!searchText || searchText.length < 5) return false
-    return tokenMatch(key, searchText)
   }
 
   render() {

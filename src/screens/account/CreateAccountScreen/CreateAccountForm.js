@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'

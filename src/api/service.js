@@ -74,7 +74,7 @@ class Service {
 
   // ORGANIZATION ACCOUNT PUBLIC ENDPOINTS
   createAccount = async (body) => {
-    return sendToApiAuth('/account/organizations/', { method: 'POST', body })
+    return sendToApi('/account/organizations/', { method: 'POST', body })
   }
 
   sendSetPasswordEmail = async (email) => {
@@ -181,7 +181,7 @@ class Service {
 
   // DONOR ACCOUNT PUBLIC ENDPOINTS
   donorCreateAccount = async (body) => {
-    return sendToApiAuth('/donor_account/donors/', { method: 'POST', body })
+    return sendToApi('/donor_account/donors/', { method: 'POST', body })
   }
 
   donorSendSetPasswordEmail = async (email) => {
