@@ -15,14 +15,13 @@
 }
 
 .big a {
-  font-family: 'nunito-sans-800', sans-serif;
+  font-family: 'nunito-sans-700', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 11px;
-  letter-spacing: .8px;
+  font-size: 13px;
+  letter-spacing: .35px;
   margin-left: 27px;
   text-decoration: none;
-  text-transform: uppercase;
   padding: 28px 0 26px 0;
   display: inline-block;
   color: #5A5A5D;

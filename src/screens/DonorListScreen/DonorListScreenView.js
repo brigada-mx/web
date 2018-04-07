@@ -53,11 +53,11 @@ class DonorListScreenView extends React.Component {
         Cell: props => fmtBudget(props.original.metrics.total_donated),
       },
       {
-        Header: 'Reconstructores financiados',
+        Header: 'Reconstructores',
         accessor: 'metrics.org_count',
       },
       {
-        Header: 'Proy. financiados',
+        Header: 'Proyectos',
         accessor: 'metrics.action_count',
       },
     ]
@@ -67,11 +67,11 @@ class DonorListScreenView extends React.Component {
         <ReactTable
           showPagination={false}
           showPageSizeOptions={false}
-          className="-highlight"
+          className="donorTable"
           defaultPageSize={donors.length}
           data={donors}
           columns={columns}
-          getTdProps={(state, rowInfo, column) => {
+          getTrProps={(state, rowInfo, column) => {
             const handleRowClicked = (e, handleOriginal) => {
               history.push(`/donadores/${rowInfo.original.id}`)
               if (handleOriginal) handleOriginal()

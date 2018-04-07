@@ -1,0 +1,93 @@
+.helpContainer {
+  font-family: 'nunito-sans-300', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #F2F2F4;
+  border-bottom: 1px solid #F2F2F4;
+  margin-top: 54px;
+}
+
+.helpTitle {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 24px;
+  color: #141418;
+  letter-spacing: 0;
+  line-height: 30px;
+}
+
+.helpText {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 15px;
+  color: #141418;
+  letter-spacing: 0.6px;
+  line-height: 30px;
+  margin: 24px 0 4px 0;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.modalContainer {
+  width: 28%;
+  padding: 95px 55px;
+  overflow-y: scroll;
+}
+
+.infoText {
+  opacity: 0.8;
+  font-family: 'nunito-sans-600', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  color: #141418;
+  letter-spacing: 1.26px;
+  text-align: center;
+  line-height: 20px;
+  margin-top: 23px;
+}
+
+.linkText {
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 18px;
+  color: #3DC587;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 32px;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .modalContainer {
+    width: 38%;
+  }
+}
+
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+
+  .modalContainer {
+    width: 42%;
+  }
+
+  .helpContainer {
+    margin-top: 48px;
+  }
+
+}
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+
+  .modalContainer {
+    width: 90%;
+  }
+
+  .helpContainer {
+    margin-top: 0px;
+  }
+
+}

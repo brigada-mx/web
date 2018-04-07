@@ -9,5 +9,24 @@
 }
 
 .tableWrapper {
-  margin: 65px 0 100px 0;
+  padding: 15px 11px 100px 11px;
+  height: 100%;
+  background-color: #F6F8FA;
+  box-shadow: inset 0px 10px 30px 0px rgba(37, 38, 50, 0.04);
+}
+
+.tableWrapper .ReactTable .rt-thead.-header {
+  box-shadow: none !important;
+}
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .tableWrapper {
+    padding: 15px 8px 100px 8px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .tableWrapper {
+    padding: 14px 0px 100px 0px;
+  }
 }

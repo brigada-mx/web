@@ -7,3 +7,51 @@
 .ReactTable .-pagination {
   height: 40px !important;
 }
+
+.donorTable.ReactTable {
+  border: none;
+  .rt-tbody {
+    box-shadow: none;
+    font-family: 'nunito-sans-200', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.6px;
+    color: #141418;
+  }
+  .rt-thead.-header {
+    font-family: 'roboto-500', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.52px;
+    color: #141418;
+    background-color: white;
+    margin-bottom: 3px;
+    box-shadow: none;
+  }
+  .rt-thead.-header .rt-tr {
+    padding: 23px 0 20px 15px;
+  }
+  .rt-thead .rt-tr {
+    text-align: left;
+  }
+  .rt-tbody .rt-tr-group {
+    background-color: white;
+    margin-bottom: 3px;
+    border-bottom: none;
+  }
+  .rt-tbody .rt-tr {
+    padding: 19px 0 20px 11px;
+    transition: all .15s linear;
+    &:hover {
+      // background: rgba(0,0,0,0.01);
+      color: #13A68C;
+    }
+  }
+  .rt-thead .rt-th, .rt-thead .rt-td, .rt-tbody .rt-td {
+    border-right: none;
+  }
+  .rt-thead .rt-th.-sort-asc, .ReactTable .rt-thead .rt-td.-sort-asc {
+    box-shadow: none;
+  }
+  .rt-thead .rt-th.-sort-desc, .ReactTable .rt-thead .rt-td.-sort-desc {
+    box-shadow: none;
+  }
+}
