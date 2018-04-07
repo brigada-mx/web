@@ -8,11 +8,11 @@ import service from 'api/service'
 import CreateAccountForm from './CreateAccountForm'
 
 
-const CreateAccountScreen = ({ snackbar, modal, className = '' }) => {
+const DonorCreateAccountScreen = ({ snackbar, modal, className = '' }) => {
   const handleSubmit = async ({ email, ...rest }) => {
     const { data, status } = await service.createAccount({ email, ...rest })
     if (data) {
-      modal('accountCreated', { email, type: 'org' })
+      modal('accountCreated', { email, type: 'donor' })
       return
     }
 
@@ -24,7 +24,7 @@ const CreateAccountScreen = ({ snackbar, modal, className = '' }) => {
   return <CreateAccountForm onSubmit={handleSubmit} />
 }
 
-CreateAccountScreen.propTypes = {
+DonorCreateAccountScreen.propTypes = {
   snackbar: PropTypes.func.isRequired,
   modal: PropTypes.func.isRequired,
   className: PropTypes.string,
@@ -38,4 +38,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(CreateAccountScreen)
+export default connect(null, mapDispatchToProps)(DonorCreateAccountScreen)

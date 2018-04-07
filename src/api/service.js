@@ -73,6 +73,10 @@ class Service {
   }
 
   // ORGANIZATION ACCOUNT PUBLIC ENDPOINTS
+  createAccount = async (body) => {
+    return sendToApiAuth('/account/organizations/', { method: 'POST', body })
+  }
+
   sendSetPasswordEmail = async (email) => {
     return sendToApi('/account/send_set_password_email/', { method: 'POST', body: { email } })
   }
@@ -129,10 +133,6 @@ class Service {
     return sendToApiAuth('org', `/account/actions_by_key/${key}/`)
   }
 
-  createAccount = async (body) => {
-    return sendToApiAuth('org', '/account/organizations/', { method: 'POST', body })
-  }
-
   accountResetKey = async () => {
     return sendToApiAuth('org', '/account/organization/reset_key/', { method: 'POST' })
   }
@@ -180,6 +180,10 @@ class Service {
   }
 
   // DONOR ACCOUNT PUBLIC ENDPOINTS
+  donorCreateAccount = async (body) => {
+    return sendToApiAuth('/donor_account/donors/', { method: 'POST', body })
+  }
+
   donorSendSetPasswordEmail = async (email) => {
     return sendToApi('/donor_account/send_set_password_email/', { method: 'POST', body: { email } })
   }

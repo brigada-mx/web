@@ -26,7 +26,8 @@ const LoginForm = ({ handleSubmit, submitting, modal, closeModal, type }) => {
   }
 
   const handleCreateAccount = () => {
-    modal('createAccount')
+    if (type === 'org') modal('createAccount')
+    if (type === 'donor') modal('donorCreateAccount')
   }
 
   const handleKeyDown = (e) => {
@@ -67,7 +68,7 @@ const LoginForm = ({ handleSubmit, submitting, modal, closeModal, type }) => {
           {type === 'org' && <Link className={`${Styles.link} ${GlobalStyles.link}`} onClick={closeModal} to="/donador">Soy donador</Link>}
           {type === 'donor' && <Link className={`${Styles.link} ${GlobalStyles.link}`} onClick={closeModal} to="/cuenta">Soy reconstructor</Link>}
           <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleForgotPassword}>Olvidé mi contraseña</span>
-          {type === 'org' && <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleCreateAccount}>Crear una cuenta</span>}
+          <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleCreateAccount}>Crear una cuenta</span>
         </div>
       </div>
     </form>
