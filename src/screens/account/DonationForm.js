@@ -115,13 +115,6 @@ const mapStateToProps = (state, { id: donationId }) => {
   } catch (e) {}
   try {
     if (donationId === undefined) ({ has_user } = state.form.orgNewDonation.values.donor)
-    else {
-      let { donor } = state.form[`accountUpdateDonation_${donationId}`].values
-      if (donor.has_user === undefined) {
-        donor = _.find(donors, d => d.id === donor.value)
-      }
-      ({ has_user } = donor)
-    }
   } catch (e) {}
 
   return { donors, has_user }
