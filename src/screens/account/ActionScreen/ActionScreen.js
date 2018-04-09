@@ -285,6 +285,7 @@ class ActionScreen extends React.Component {
               form={`accountUpdateDonation_${donationId}`}
               enableReinitialize
               onDelete={() => this.handleDeleteDonation(donationId)}
+              id={donationId}
             />
           </Modal>
         }

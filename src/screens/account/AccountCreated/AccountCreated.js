@@ -27,7 +27,7 @@ const AccountCreated = ({ email, type }) => {
           Por razones de seguridad, no puedes entrar a tu cuenta hasta que el equipo de Brigada verifique tu identificación. Tipicamente este proceso tarda menos de un día.
         </p>
         <p className={Styles.formText}>
-          Te mandaremos otro email en cuanto terminemos la verificación.
+          Te avisaremos por email en cuanto terminemos la verificación.
         </p>
       </div>
     )

@@ -1,6 +1,8 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import _ from 'lodash'
 import moment from 'moment'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
@@ -19,10 +21,11 @@ class Fields extends React.Component {
   }
 
   render() {
-    const { donors } = this.props
+    const { donors, has_user: donorHasUser, id: donationId } = this.props
+
     const dataSource = donors.map((d) => {
-      const { id, name } = d
-      return { text: name, value: id }
+      const { id, name, has_user } = d
+      return { text: name, value: id, has_user }
     })
     const formatDatePicker = value => value || null
     const formatAutoComplete = (value) => {
@@ -52,6 +55,16 @@ class Fields extends React.Component {
             normalize={normalizeAutoComplete}
           />
         </div>
+        {(!donorHasUser && donationId === undefined) &&
+          <div className={FormStyles.row}>
+            <TextField
+              className={FormStyles.wideInput}
+              name="contact_email"
+              hintText="Email de contacto para donador"
+              autoCapitalize="off"
+            />
+          </div>
+        }
         <div className={FormStyles.row}>
           <TextField
             type="number"
@@ -89,14 +102,29 @@ class Fields extends React.Component {
 
 Fields.propTypes = {
   donors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  has_user: PropTypes.bool,
+  id: PropTypes.number,
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, { id: donationId }) => {
+  let donors = []
+  let has_user = true
+
   try {
-    return { donors: state.getter.miniDonors.data.results }
-  } catch (e) {
-    return { donors: [] }
-  }
+    donors = state.getter.miniDonors.data.results
+  } catch (e) {}
+  try {
+    if (donationId === undefined) ({ has_user } = state.form.orgNewDonation.values.donor)
+    else {
+      let { donor } = state.form[`accountUpdateDonation_${donationId}`].values
+      if (donor.has_user === undefined) {
+        donor = _.find(donors, d => d.id === donor.value)
+      }
+      ({ has_user } = donor)
+    }
+  } catch (e) {}
+
+  return { donors, has_user }
 }
 
 const ReduxFields = connect(mapStateToProps, null)(Fields)
@@ -123,10 +151,10 @@ CreateForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const UpdateForm = ({ handleSubmit, submitting, onDelete }) => {
+const UpdateForm = ({ handleSubmit, submitting, onDelete, id }) => {
   return (
     <React.Fragment>
-      <ReduxFields />
+      <ReduxFields id={id} />
       <div className={FormStyles.row}>
         <RaisedButton
           backgroundColor="#3DC59F"
@@ -150,15 +178,17 @@ const UpdateForm = ({ handleSubmit, submitting, onDelete }) => {
 UpdateForm.propTypes = {
   ...rxfPropTypes,
   onDelete: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
 }
 
-const validate = ({ id, amount, donor }) => {
+const validate = ({ id, amount, donor, contact_email }) => {
   const errors = {}
   if (id) {
     if (!donor || !donor.value) errors.donor = 'Escoge un donador de la lista'
   } else if (!donor || (!donor.value && !donor.text)) {
     errors.donor = 'Escoge un donador de la lista, o ingresa un nuevo donador'
   }
+  if (donor && !donor.has_user && !contact_email) errors.contact_email = 'Agrega un email de contacto para este donador'
   if (amount < 0) errors.amount = 'Agrega un monto positivo'
   return errors
 }
