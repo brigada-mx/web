@@ -64,6 +64,16 @@ class DonorListScreenView extends React.Component {
     }
     if (window.innerWidth >= 980) {
       columns.splice(1, 0, {
+        Header: 'Donando a nuevos proyectos',
+        accessor: 'donating',
+        Cell: (props) => { return props.original.donating ? 'Sí' : 'No' },
+      })
+      columns.splice(1, 0, {
+        Header: 'Verificado',
+        accessor: 'has_user',
+        Cell: (props) => { return props.original.has_user ? 'Sí' : 'No' },
+      })
+      columns.splice(1, 0, {
         Header: 'Sector',
         accessor: 'sector',
         Cell: props => sectorByValue[props.original.sector] || 'No disponible',
