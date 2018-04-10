@@ -6,8 +6,8 @@ import * as Actions from 'src/actions'
 import { stringify } from './queryString'
 
 
-const toQueryString = (params) => {
-  const s = stringify(params)
+const toQs = (params, opts) => {
+  const s = stringify(params, opts)
   return s ? `?${s}` : ''
 }
 
@@ -40,7 +40,7 @@ const _sendToApi = async (
     _url = replaceProtocol(_url, env.urlProtocol)
   }
 
-  return fetch(`${_url}${toQueryString(params)}`, options)
+  return fetch(`${_url}${toQs(params)}`, options)
 }
 
 /**
@@ -81,4 +81,4 @@ const sendToApiAuth = async (type, url, params = {}) => {
 }
 
 export default sendToApi
-export { sendToApiAuth }
+export { sendToApiAuth, toQs }

@@ -5,9 +5,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
-import * as Actions from 'src/actions'
 import service, { getBackoffComponent } from 'api/service'
-import FilterHeader from 'components/FilterHeader'
+import FilterHeader, { parseFilterQueryParams } from 'components/FilterHeader'
 import SearchInput from 'components/SearchInput'
 import LocalityListItem from 'components/LocalityListItem'
 import LocalityDamageMap from 'components/LocalityDamageMap'
@@ -84,6 +83,7 @@ class MapScreen extends React.Component {
       filtersVisible: false,
     }
     this.handleLocalitySearchKeyUp = _.debounce(this.handleLocalitySearchKeyUp, 150)
+    this.filterFields = ['state', 'muni', 'marg', 'numActions']
   }
 
   componentDidMount() {
@@ -137,22 +137,6 @@ class MapScreen extends React.Component {
     } else {
       this.setState({ filtered, layerFilter })
     }
-  }
-
-  handleStateChange = (v) => {
-    this.props.onChangeFilter('valState', v)
-  }
-
-  handleMuniChange = (v) => {
-    this.props.onChangeFilter('valMuni', v)
-  }
-
-  handleMargChange = (v) => {
-    this.props.onChangeFilter('valMarg', v)
-  }
-
-  handleNumActionsChange = (v) => {
-    this.props.onChangeFilter('valNumActions', v)
   }
 
   handleLocalitySearchKeyUp = (locSearch) => {
@@ -242,12 +226,9 @@ class MapScreen extends React.Component {
     const filter = (style = {}) => {
       return (
         <FilterHeader
+          fields={this.filterFields}
           style={style}
           localities={data.results || []}
-          onStateChange={this.handleStateChange}
-          onMuniChange={this.handleMuniChange}
-          onMargChange={this.handleMargChange}
-          onNumActionsChange={this.handleNumActionsChange}
           valState={valState}
           valMuni={valMuni}
           valMarg={valMarg}
@@ -325,25 +306,13 @@ MapScreen.propTypes = {
   valMuni: PropTypes.array.isRequired,
   valMarg: PropTypes.array.isRequired,
   valNumActions: PropTypes.array.isRequired,
-  onChangeFilter: PropTypes.func.isRequired,
 }
 
-MapScreen.defaultProps = {
-  valState: [],
-  valMuni: [],
-  valMarg: [],
-  valNumActions: [],
-}
-
-const mapStateToProps = (state) => {
-  const { valState, valMuni, valMarg, valNumActions } = state.filter.localities
+const mapStateToProps = (state, { location }) => {
+  const {
+    valState = [], valMuni = [], valMarg = [], valNumActions = [],
+  } = parseFilterQueryParams(location)
   return { valState, valMuni, valMarg, valNumActions }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onChangeFilter: (prop, values) => Actions.filterLocalities(dispatch, { prop, values }),
-  }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MapScreen))
+export default withRouter(connect(mapStateToProps, null)(MapScreen))

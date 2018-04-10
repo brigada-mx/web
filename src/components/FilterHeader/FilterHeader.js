@@ -3,9 +3,12 @@ import PropTypes from 'prop-types'
 
 import _ from 'lodash'
 import Select from 'react-select'
+import { withRouter } from 'react-router-dom'
 import '!style-loader!css-loader!react-select/dist/react-select.css'
 
 import MultiSelect from 'components/MultiSelect'
+import { parseQs } from 'tools/string'
+import { toQs } from 'api/request'
 import { projectTypeByValue } from 'src/choices'
 import Styles from './FilterHeader.css'
 
@@ -18,7 +21,7 @@ const margOptions = [
   { value: 'muy_bajo', label: 'Muy bajo' },
 ]
 
-const acceptingHelpOptions = [{ value: true, label: 'Sí' }, { value: false, label: 'No' }]
+const acceptingHelpOptions = [{ value: 'true', label: 'Sí' }, { value: 'false', label: 'No' }]
 
 const numActionsOptions = [
   { value: '0', label: '0' },
@@ -34,26 +37,44 @@ const sectorOptions = [
   { value: 'religious', label: 'Religioso' },
 ]
 
+export const parseFilterQueryParams = (location) => {
+  const fieldByParam = {
+    est: 'valState',
+    mun: 'valMuni',
+    rez_soc: 'valMarg',
+    num_pro: 'valNumActions',
+    sec: 'valSector',
+    tip_pro: 'valActionType',
+    vol: 'valAcceptingHelp',
+  }
+  const obj = parseQs(location.search)
+  const fields = {}
+
+  for (const param of ['est', 'mun', 'rez_soc', 'num_pro', 'sec', 'tip_pro', 'vol']) {
+    if (param in obj) {
+      fields[fieldByParam[param]] = obj[param].split(',').map((value) => { return { value } })
+    }
+  }
+  return fields
+}
+
 class FilterHeader extends React.Component {
-  componentWillUpdate(nextProps) {
-    const { valState, valMuni, onStateChange, onMuniChange } = this.props
-    if (valState.length === 0 && nextProps.valState.length > 0
-      && valMuni.length > 0) onMuniChange([])
-    if (valMuni.length === 0 && nextProps.valMuni.length > 0
-      && valState.length > 0) onStateChange([])
+  handleChangeValues = (values, field) => {
+    const { history, location } = this.props
+    const obj = parseQs(location.search)
+
+    if (field === 'est' && !obj.est && obj.mun) obj.mun = undefined
+    if (field === 'mun' && !obj.mun && obj.est) obj.est = undefined
+    obj[field] = values.map(v => v.value).join(',') || undefined
+
+    history.replace({ pathname: location.pathname, search: toQs(obj, { encode: false }) })
   }
 
   render() {
     const {
-      onStateChange,
-      onMuniChange,
-      onMargChange,
-      onNumActionsChange,
-      onSectorChange,
-      onActionTypeChange,
-      onAcceptingHelpChange,
-      localities,
-      actions,
+      localities = [],
+      actions = [],
+      style = {},
       valState,
       valMuni,
       valMarg,
@@ -61,7 +82,6 @@ class FilterHeader extends React.Component {
       valSector,
       valActionType,
       valAcceptingHelp,
-      style = {},
     } = this.props
 
     const shortenState = (name) => {
@@ -108,7 +128,7 @@ class FilterHeader extends React.Component {
     const selectsLarge = () => {
       return (
         <React.Fragment>
-          <MultiSelect
+          {valState && <MultiSelect
             multi
             joinValues
             noResultsText="Cero resultados"
@@ -119,11 +139,11 @@ class FilterHeader extends React.Component {
             value={valState}
             placeholder="Estado"
             multiLabel="Estado"
-            onChange={onStateChange}
+            onChange={values => this.handleChangeValues(values, 'est')}
             options={stateOptions()}
-          />
+          />}
 
-          <MultiSelect
+          {valMuni && <MultiSelect
             multi
             noResultsText="Cero resultados"
             clearable={false}
@@ -133,9 +153,9 @@ class FilterHeader extends React.Component {
             value={valMuni}
             placeholder="Municipio"
             multiLabel="Municipio"
-            onChange={onMuniChange}
+            onChange={values => this.handleChangeValues(values, 'mun')}
             options={muniOptions()}
-          />
+          />}
 
           {valMarg && <MultiSelect
             multi
@@ -147,7 +167,7 @@ class FilterHeader extends React.Component {
             value={valMarg}
             placeholder="Rezago social"
             multiLabel="Rezago"
-            onChange={onMargChange}
+            onChange={values => this.handleChangeValues(values, 'rez_soc')}
             options={margOptions}
           />}
 
@@ -161,7 +181,7 @@ class FilterHeader extends React.Component {
             value={valNumActions}
             placeholder="Total de proyectos"
             multiLabel="Proyectos"
-            onChange={onNumActionsChange}
+            onChange={values => this.handleChangeValues(values, 'num_pro')}
             options={numActionsOptions}
           />}
 
@@ -175,11 +195,11 @@ class FilterHeader extends React.Component {
             value={valSector}
             placeholder="Sector"
             multiLabel="Sector"
-            onChange={onSectorChange}
+            onChange={values => this.handleChangeValues(values, 'sec')}
             options={sectorOptions}
           />}
 
-          {(valActionType && actions) && <MultiSelect
+          {valActionType && <MultiSelect
             multi
             noResultsText="Cero resultados"
             clearable={false}
@@ -189,7 +209,7 @@ class FilterHeader extends React.Component {
             value={valActionType}
             placeholder="Tipo de proyecto"
             multiLabel="Tipo"
-            onChange={onActionTypeChange}
+            onChange={values => this.handleChangeValues(values, 'tip_pro')}
             options={actionTypeOptions()}
           />}
 
@@ -202,7 +222,7 @@ class FilterHeader extends React.Component {
             value={valAcceptingHelp}
             placeholder="Voluntariado"
             multiLabel="Voluntariado"
-            onChange={onAcceptingHelpChange}
+            onChange={values => this.handleChangeValues(values, 'vol')}
             options={acceptingHelpOptions}
           />}
         </React.Fragment>
@@ -227,7 +247,7 @@ class FilterHeader extends React.Component {
                 className={Styles.filter}
                 value={valMarg}
                 placeholder=""
-                onChange={onMargChange}
+                onChange={values => this.handleChangeValues(values, 'rez_soc')}
                 options={margOptions}
               />
             </React.Fragment>
@@ -246,7 +266,7 @@ class FilterHeader extends React.Component {
                 className={Styles.filter}
                 value={valNumActions}
                 placeholder=""
-                onChange={onNumActionsChange}
+                onChange={values => this.handleChangeValues(values, 'num_pro')}
                 options={numActionsOptions}
               />
             </React.Fragment>
@@ -267,13 +287,13 @@ class FilterHeader extends React.Component {
                 className={Styles.filter}
                 value={valSector}
                 placeholder=""
-                onChange={onSectorChange}
+                onChange={values => this.handleChangeValues(values, 'sec')}
                 options={sectorOptions}
               />
             </React.Fragment>
           }
 
-          {(valActionType && actions) &&
+          {valActionType &&
             <React.Fragment>
               <span className={Styles.title}>Tipo de proyecto</span>
               <Select
@@ -286,7 +306,7 @@ class FilterHeader extends React.Component {
                 className={Styles.filter}
                 value={valActionType}
                 placeholder=""
-                onChange={onActionTypeChange}
+                onChange={values => this.handleChangeValues(values, 'tip_pro')}
                 options={actionTypeOptions()}
               />
             </React.Fragment>
@@ -304,42 +324,50 @@ class FilterHeader extends React.Component {
                 className={Styles.filter}
                 value={valAcceptingHelp}
                 placeholder=""
-                onChange={onAcceptingHelpChange}
+                onChange={values => this.handleChangeValues(values, 'vol')}
                 options={acceptingHelpOptions}
               />
             </React.Fragment>
           }
 
-          <span className={Styles.title}>Estado</span>
-          <Select
-            multi
-            joinValues
-            noResultsText="Cero resultados"
-            clearable={false}
-            closeOnSelect={false}
-            removeSelected={false}
-            searchable={false}
-            className={Styles.filter}
-            value={valState}
-            placeholder=""
-            onChange={onStateChange}
-            options={stateOptions()}
-          />
+          {valState &&
+            <React.Fragment>
+              <span className={Styles.title}>Estado</span>
+              <Select
+                multi
+                joinValues
+                noResultsText="Cero resultados"
+                clearable={false}
+                closeOnSelect={false}
+                removeSelected={false}
+                searchable={false}
+                className={Styles.filter}
+                value={valState}
+                placeholder=""
+                onChange={values => this.handleChangeValues(values, 'est')}
+                options={stateOptions()}
+              />
+            </React.Fragment>
+          }
 
-          <span className={Styles.title}>Municipio</span>
-          <Select
-            multi
-            noResultsText="Cero resultados"
-            clearable={false}
-            closeOnSelect={false}
-            removeSelected={false}
-            searchable={false}
-            className={Styles.filter}
-            value={valMuni}
-            placeholder=""
-            onChange={onMuniChange}
-            options={muniOptions()}
-          />
+          {valMuni &&
+            <React.Fragment>
+              <span className={Styles.title}>Municipio</span>
+              <Select
+                multi
+                noResultsText="Cero resultados"
+                clearable={false}
+                closeOnSelect={false}
+                removeSelected={false}
+                searchable={false}
+                className={Styles.filter}
+                value={valMuni}
+                placeholder=""
+                onChange={values => this.handleChangeValues(values, 'mun')}
+                options={muniOptions()}
+              />
+            </React.Fragment>
+          }
         </React.Fragment>
       )
     }
@@ -358,23 +386,18 @@ class FilterHeader extends React.Component {
 }
 
 FilterHeader.propTypes = {
-  onStateChange: PropTypes.func.isRequired,
-  onMuniChange: PropTypes.func.isRequired,
-  onMargChange: PropTypes.func,
-  onNumActionsChange: PropTypes.func,
-  onSectorChange: PropTypes.func,
-  onActionTypeChange: PropTypes.func,
-  onAcceptingHelpChange: PropTypes.func,
-  localities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  localities: PropTypes.arrayOf(PropTypes.object),
   actions: PropTypes.arrayOf(PropTypes.object),
-  valState: PropTypes.arrayOf(PropTypes.any),
-  valMuni: PropTypes.arrayOf(PropTypes.any),
-  valMarg: PropTypes.arrayOf(PropTypes.any),
-  valNumActions: PropTypes.arrayOf(PropTypes.any),
-  valSector: PropTypes.arrayOf(PropTypes.any),
-  valActionType: PropTypes.arrayOf(PropTypes.any),
-  valAcceptingHelp: PropTypes.arrayOf(PropTypes.any),
   style: PropTypes.object,
+  valState: PropTypes.arrayOf(PropTypes.object),
+  valMuni: PropTypes.arrayOf(PropTypes.object),
+  valMarg: PropTypes.arrayOf(PropTypes.object),
+  valNumActions: PropTypes.arrayOf(PropTypes.object),
+  valSector: PropTypes.arrayOf(PropTypes.object),
+  valActionType: PropTypes.arrayOf(PropTypes.object),
+  valAcceptingHelp: PropTypes.arrayOf(PropTypes.object),
 }
 
-export default FilterHeader
+export default withRouter(FilterHeader)
