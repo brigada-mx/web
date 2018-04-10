@@ -5,8 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
-import * as Actions from 'src/actions'
-import FilterHeader from 'components/FilterHeader'
+import FilterHeader, { parseFilterQueryParams } from 'components/FilterHeader'
 import SearchInput from 'components/SearchInput'
 import OrganizationListItem from 'components/OrganizationListItem'
 import LocalityDamageMap from 'components/LocalityDamageMap'
@@ -105,26 +104,6 @@ class OrganizationListScreenView extends React.Component {
     this.setState(state)
   }
 
-  handleStateChange = (v) => {
-    this.props.onChangeFilter('valState', v)
-  }
-
-  handleMuniChange = (v) => {
-    this.props.onChangeFilter('valMuni', v)
-  }
-
-  handleSectorChange = (v) => {
-    this.props.onChangeFilter('valSector', v)
-  }
-
-  handleActionTypeChange = (v) => {
-    this.props.onChangeFilter('valActionType', v)
-  }
-
-  handleAcceptingHelpChange = (v) => {
-    this.props.onChangeFilter('valAcceptingHelp', v)
-  }
-
   handleOrganizationSearchKeyUp = (organizationSearch) => {
     this.setState({ organizationSearch })
   }
@@ -159,6 +138,7 @@ class OrganizationListScreenView extends React.Component {
     const { organizationSearch } = this.state
     const { valState, valMuni, valSector, valActionType, valAcceptingHelp } = this.props
 
+
     return results.filter((o) => {
       const { name, desc, actionCvegeos } = o
 
@@ -170,7 +150,7 @@ class OrganizationListScreenView extends React.Component {
       const sectors = valSector.map(v => v.value)
       const matchesSector = sectors.length === 0 || sectors.some(v => o.sector === v)
 
-      const helps = valAcceptingHelp.map(v => v.value)
+      const helps = valAcceptingHelp.map(v => ({ true: true, false: false }[v.value]))
       const matchesHelp = helps.length === 0 || helps.some(v => o.accepting_help === v)
 
       const actionTypes = valActionType.map(v => v.value)
@@ -244,11 +224,6 @@ class OrganizationListScreenView extends React.Component {
           style={style}
           localities={this.getLocalitiesFromOrgs(this.props.organizations)}
           actions={orgData ? [].concat(...orgData.results.map(o => o.actions)) : []}
-          onStateChange={this.handleStateChange}
-          onMuniChange={this.handleMuniChange}
-          onSectorChange={this.handleSectorChange}
-          onActionTypeChange={this.handleActionTypeChange}
-          onAcceptingHelpChange={this.handleAcceptingHelpChange}
           valState={valState}
           valMuni={valMuni}
           valSector={valSector}
@@ -339,7 +314,6 @@ OrganizationListScreenView.propTypes = {
   valSector: PropTypes.array.isRequired,
   valActionType: PropTypes.array.isRequired,
   valAcceptingHelp: PropTypes.array.isRequired,
-  onChangeFilter: PropTypes.func.isRequired,
 }
 
 OrganizationListScreenView.defaultProps = {
@@ -350,21 +324,11 @@ OrganizationListScreenView.defaultProps = {
   valAcceptingHelp: [],
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, { location }) => {
   const {
-    valState,
-    valMuni,
-    valSector,
-    valActionType,
-    valAcceptingHelp,
-  } = state.filter.organizations
+    valState, valMuni, valSector, valActionType, valAcceptingHelp,
+  } = parseFilterQueryParams(location)
   return { valState, valMuni, valSector, valActionType, valAcceptingHelp }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onChangeFilter: (prop, values) => Actions.filterOrganizations(dispatch, { prop, values }),
-  }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrganizationListScreenView))
+export default withRouter(connect(mapStateToProps, null)(OrganizationListScreenView))

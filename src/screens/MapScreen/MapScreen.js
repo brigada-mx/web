@@ -308,10 +308,15 @@ MapScreen.propTypes = {
   valNumActions: PropTypes.array.isRequired,
 }
 
+MapScreen.defaultProps = {
+  valState: [],
+  valMuni: [],
+  valMarg: [],
+  valNumActions: [],
+}
+
 const mapStateToProps = (state, { location }) => {
-  const {
-    valState = [], valMuni = [], valMarg = [], valNumActions = [],
-  } = parseFilterQueryParams(location)
+  const { valState, valMuni, valMarg, valNumActions } = parseFilterQueryParams(location)
   return { valState, valMuni, valMarg, valNumActions }
 }
 
