@@ -21,13 +21,10 @@ const AccountCreated = ({ email, type }) => {
       <div className={Styles.container}>
         <span className={FormStyles.formHeader}>¡Gracias por registrarte!</span>
         <p className={Styles.formText}>
-          Hemos enviado un correo a {email} para que actives tu cuenta.
+          Por razones de seguridad, donadores no pueden entrar a su cuenta hasta que el equipo de Brigada verifique su identificación. Tipicamente este proceso tarda menos de un día.
         </p>
         <p className={Styles.formText}>
-          Por razones de seguridad, no puedes entrar a tu cuenta hasta que el equipo de Brigada verifique tu identificación. Tipicamente este proceso tarda menos de un día.
-        </p>
-        <p className={Styles.formText}>
-          Te avisaremos por email en cuanto terminemos la verificación.
+          En cuanto terminemos la verificación, te mandaremos un correo a {email} para que actives tu cuenta.
         </p>
       </div>
     )

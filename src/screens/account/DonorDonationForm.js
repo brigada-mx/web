@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { TextField, Toggle, DatePicker, AutoComplete, Checkbox } from 'components/Fields'
+import { getProjectType } from 'src/choices'
 import { tokenMatch } from 'tools/string'
 import service, { getBackoff } from 'api/service'
 import ConfirmButton from 'components/ConfirmButton'
@@ -33,7 +34,8 @@ class Fields extends React.Component {
         locality: { municipality_name: muniName, name },
         organization: { name: orgName },
       } = a
-      return { text: `${key}, ${orgName}, ${type} - ${name}, ${muniName}`, value: id }
+      const friendlyType = getProjectType(type)
+      return { text: `${key}, ${orgName}, ${friendlyType} - ${name}, ${muniName}`, value: id }
     })
     const formatDatePicker = value => value || null
     const formatAutoComplete = (value) => {
@@ -191,10 +193,11 @@ export const prepareInitialDonationValues = (values) => {
       organization: { name: orgName },
     },
   } = values
+  const friendlyType = getProjectType(type)
   return {
     ...values,
     received_date: date && moment(date).toDate(),
-    action: { text: `${key}, ${orgName}, ${type} - ${name}, ${muniName}`, value: id }
+    action: { text: `${key}, ${orgName}, ${friendlyType} - ${name}, ${muniName}`, value: id }
   }
 }
 
