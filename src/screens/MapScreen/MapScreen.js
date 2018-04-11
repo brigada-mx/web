@@ -89,10 +89,6 @@ class MapScreen extends React.Component {
   componentDidMount() {
     document.title = 'Brigada'
     this._mounted = true
-    this.props.history.replace({
-      pathname: '/',
-      state: {},
-    })
 
     getBackoffComponent(this, 'localities', service.getLocalities, ({ data }) => {
       if (!data) return

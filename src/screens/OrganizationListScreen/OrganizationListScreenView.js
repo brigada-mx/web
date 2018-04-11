@@ -70,10 +70,6 @@ class OrganizationListScreenView extends React.Component {
 
   componentDidMount() {
     document.title = 'Reconstructores - Brigada'
-    this.props.history.replace({
-      pathname: '/reconstructores',
-      state: {},
-    })
     this._fitBounds = this.defaultFitBounds()
   }
 
