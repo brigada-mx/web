@@ -31,7 +31,7 @@ class HelpWanted extends React.Component {
     const { help, helpDesc = '', groupId, email, type } = this.props
     const { modal } = this.state
 
-    const title = { volunteer: 'Buscamos voluntarios', donation: 'Queremos financiar nuevos proyectos' }[type]
+    const title = { volunteer: 'Buscamos voluntarios', donation: 'Estamos financiando nuevos proyectos' }[type]
     const emailLinkText = {
       volunteer: 'Me interesa ser voluntario',
       donation: 'Me interesa conseguir apoyo para mi proyecto',

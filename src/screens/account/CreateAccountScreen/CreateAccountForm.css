@@ -11,3 +11,20 @@
 .inputGroup {
   margin-bottom: 15px;
 }
+
+.formHeader {
+  font-family: 'roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 24px;
+  color: #2B2B2B;
+  letter-spacing: 0;
+  text-align: left;
+  line-height: 24px;
+  margin-bottom: 15px;
+}
+
+.dropdown {
+  margin-top: -10px;
+  margin-bottom: 30px;
+}

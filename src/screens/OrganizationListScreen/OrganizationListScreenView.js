@@ -81,6 +81,7 @@ class OrganizationListScreenView extends React.Component {
     if (!data || data.results.length === 0) return
     const organizations = this.filterOrganizations(data.results)
     const [focused] = organizations
+    if (!this.state.focused && !focused) return
 
     const state = {}
 

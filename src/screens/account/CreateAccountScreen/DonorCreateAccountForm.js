@@ -51,7 +51,37 @@ class DonorCreateAccountForm extends React.Component {
         onKeyDown={this.handleKeyDown}
       >
         <span className={FormStyles.formLogo} />
-        <span className={FormStyles.formHeader}>Registro para donador</span>
+        <span className={Styles.formHeader}>Registro para donador</span>
+
+        <div>
+          <AutoComplete
+            className={FormStyles.wideInput}
+            floatingLabelText="¿Cómo se llama tu organización?"
+            name="donor"
+            dataSource={dataSource}
+            fullWidth
+            filter={AutoCompleteMui.fuzzyFilter}
+            format={formatAutoComplete}
+            normalize={normalizeAutoComplete}
+          />
+        </div>
+        <div className={Styles.dropdown}>
+          <SelectField floatingLabelText="¿A qué sector pertenece?" className={FormStyles.wideInput} name="sector">
+            <MenuItem value="civil" primaryText="Civil" />
+            <MenuItem value="public" primaryText="Público" />
+            <MenuItem value="private" primaryText="Privado" />
+            <MenuItem value="religious" primaryText="Religioso" />
+          </SelectField>
+        </div>
+
+        <div>
+          <TextField
+            className={FormStyles.wideInput}
+            name="email"
+            hintText="Email"
+            autoCapitalize="off"
+          />
+        </div>
         <div>
           <TextField
             className={FormStyles.wideInput}
@@ -66,34 +96,7 @@ class DonorCreateAccountForm extends React.Component {
             hintText="Apellido"
           />
         </div>
-        <div className={Styles.inputGroup}>
-          <TextField
-            className={FormStyles.wideInput}
-            name="email"
-            hintText="Email"
-            autoCapitalize="off"
-          />
-        </div>
-        <div className={Styles.inputGroup}>
-          <AutoComplete
-            className={FormStyles.wideInput}
-            floatingLabelText="¿Cómo se llama tu grupo?"
-            name="donor"
-            dataSource={dataSource}
-            fullWidth
-            filter={AutoCompleteMui.fuzzyFilter}
-            format={formatAutoComplete}
-            normalize={normalizeAutoComplete}
-          />
-        </div>
-        <div className={FormStyles.dropdown}>
-          <SelectField floatingLabelText="¿A qué sector pertenece?" className={FormStyles.wideInput} name="sector">
-            <MenuItem value="civil" primaryText="Civil" />
-            <MenuItem value="public" primaryText="Público" />
-            <MenuItem value="private" primaryText="Privado" />
-            <MenuItem value="religious" primaryText="Religioso" />
-          </SelectField>
-        </div>
+
         <div className={FormStyles.buttonContainer}>
           <RaisedButton className={FormStyles.primaryButton} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="REGISTRAR" onClick={handleSubmit} />
         </div>

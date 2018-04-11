@@ -52,7 +52,7 @@ class DonorListScreenView extends React.Component {
         Cell: props => fmtBudget(props.original.metrics.total_donated),
       },
     ]
-    if (window.innerWidth >= 768) {
+    if (window.innerWidth >= 600) {
       columns.splice(1, 0, {
         Header: 'Proyectos',
         accessor: 'metrics.action_count',
@@ -64,24 +64,14 @@ class DonorListScreenView extends React.Component {
     }
     if (window.innerWidth >= 980) {
       columns.splice(1, 0, {
-        Header: 'Donando a nuevos proyectos',
+        Header: 'Convocatoria abierta',
         accessor: 'donating',
         Cell: (props) => { return props.original.donating ? 'Sí' : 'No' },
-      })
-      columns.splice(1, 0, {
-        Header: 'Verificado',
-        accessor: 'has_user',
-        Cell: (props) => { return props.original.has_user ? 'Sí' : 'No' },
       })
       columns.splice(1, 0, {
         Header: 'Sector',
         accessor: 'sector',
         Cell: props => sectorByValue[props.original.sector] || 'No disponible',
-      })
-      columns.splice(1, 0, {
-        Header: 'Ubicación',
-        accessor: 'contact.address',
-        Cell: props => this.renderAddress(props.original.contact.address) || 'No disponible',
       })
     }
 
