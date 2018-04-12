@@ -20,6 +20,7 @@ const projectTypes = [
   { label: 'Patrimonio histórico y cultural', value: 'cultural_sites' },
   { label: 'Planeación urbana o rural', value: 'urban_rural_planning' },
   { label: 'Planos arquitectónicos', value: 'architecture_plans' },
+  { label: 'Política pública', value: 'public_policy' },
   { label: 'Reactivación económica', value: 'local_economy' },
   { label: 'Rendición de cuentas', value: 'accountability' },
   { label: 'Reparación de vivienda', value: 'house_repair' },
