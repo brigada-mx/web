@@ -21,10 +21,11 @@ class DiscourseLoginScreen extends React.Component {
     const { type } = this.state
 
     const params = parseQs(window.location.search)
-    const fGetTokenByType = { org: service.token, donor: service.donorToken }
-    const { data } = await fGetTokenByType[type](email, password)
+    const { sso, sig } = params
+
+    const { data } = await service.discourseLogin(email, password, sso, sig, type)
     if (data) {
-      window.location.replace('https://foro.brigada.mx/session/sso_login?sso=PAYLOAD&sig=SIG')
+      window.location.replace(`https://foro.brigada.mx/session/sso_login?sso=${data.sso}&sig=${data.sig}`)
     } else {
       this.props.snackbar('No reconocemos este email/contraseña', 'error')
     }

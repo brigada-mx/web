@@ -72,6 +72,13 @@ class Service {
     return sendToApi('/actions_mini/', { params })
   }
 
+  // DISCOURSE
+  discourseLogin = async (email, password, sso, sig, user_type) => {
+    return sendToApi('/discourse/login/', {
+      method: 'POST', body: { email, password, sso, sig, user_type },
+    })
+  }
+
   // ORGANIZATION ACCOUNT PUBLIC ENDPOINTS
   createAccount = async (body) => {
     return sendToApi('/account/organizations/', { method: 'POST', body })
