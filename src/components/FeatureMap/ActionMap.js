@@ -48,7 +48,7 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
       const { lat, lng } = s.location
       features.push({
         type: 'Feature',
-        properties: { action: a, selected: a.id === selectedId },
+        properties: { action: a, selected: a.id === selectedId, lng, lat, actionId: a.id },
         geometry: {
           type: 'Point',
           coordinates: [lng, lat],

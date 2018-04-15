@@ -152,8 +152,7 @@ class LocalityScreenView extends React.Component {
   }
 
   handleClickActionFeature = (feature) => {
-    const actionId = JSON.parse(feature.properties.action).id
-    const [lng, lat] = feature.geometry.coordinates
+    const { actionId, lat, lng } = feature.properties
     this.setState({ carousel: { actionId, lat, lng } })
   }
 
