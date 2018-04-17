@@ -106,9 +106,6 @@
   .search {
     right: 6.5%;
   }
-  .container {
-    height: calc(100vh - 349px);
-  }
   .orgsContainer {
     background-color: white;
     overflow: scroll;
@@ -120,6 +117,9 @@
   }
   .shadow {
     box-shadow: unset;
+  }
+  .mapContainer {
+    height: calc(100vh - 349px);
   }
   .mapContainer:before {
     content: '';
@@ -136,8 +136,11 @@
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
-  .container {
-    height: calc(100% - 283px);
+  .flexOverflowTwo {
+    height: calc(100vh - 283px);
+  }
+  .mapContainer {
+    height: 100%;
   }
   .orgsContainer {
     background-color: white;
