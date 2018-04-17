@@ -5,6 +5,18 @@
   margin-top: 26px;
 }
 
-.link:first-of-type {
+.link {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #3DC59F;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  text-decoration: none;
+  display: table;
+  cursor: pointer;
+  transition: all .15s linear;
+}
+
+.link {
   margin-right: 20px;
 }

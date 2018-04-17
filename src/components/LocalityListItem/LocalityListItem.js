@@ -17,6 +17,7 @@ const abbreviationByStateName = {
   'chiapas': 'CS',
   'chihuahua': 'CH',
   'coahuila': 'CO',
+  'coahuila de zaragoza': 'CO',
   'colima': 'CL',
   'ciudad de méxico': 'DF',
   'durango': 'DG',

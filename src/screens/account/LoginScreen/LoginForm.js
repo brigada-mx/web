@@ -11,11 +11,12 @@ import { store } from 'src/App'
 import { TextField } from 'components/Fields'
 import { validateEmail } from 'tools/string'
 import FormStyles from 'src/Form.css'
-import GlobalStyles from 'src/Global.css'
 import Styles from './LoginForm.css'
 
 
-const LoginForm = ({ handleSubmit, submitting, modal, closeModal, type }) => {
+const LoginForm = (
+  { handleSubmit, submitting, modal, closeModal, type, discourse, changeType }
+) => {
   const handleForgotPassword = () => {
     try {
       const { email } = store.getState().form.login.values
@@ -37,14 +38,32 @@ const LoginForm = ({ handleSubmit, submitting, modal, closeModal, type }) => {
     }
   }
 
+  const links = () => {
+    if (discourse) {
+      if (type === 'org') return <span className={Styles.link} onClick={() => changeType('donor')}>Soy donador</span>
+      return <span className={Styles.link} onClick={() => changeType('org')}>Soy reconstructor</span>
+    }
+
+    if (type === 'org') return <Link className={Styles.link} onClick={closeModal} to="/donador">Soy donador</Link>
+    return <Link className={Styles.link} onClick={closeModal} to="/cuenta">Soy reconstructor</Link>
+  }
+
+  const header = () => {
+    if (discourse) {
+      if (type === 'org') return <span className={FormStyles.formHeader}>Ingresar al foro</span>
+      if (type === 'donor') return <span className={FormStyles.formHeader}>Ingresar al foro con tu cuenta de donador</span>
+    }
+    if (type === 'org') return <span className={FormStyles.formHeader}>Ingresar a tu cuenta</span>
+    if (type === 'donor') return <span className={FormStyles.formHeader}>Ingresar a tu cuenta de donador</span>
+  }
+
   return (
     <form
       className={FormStyles.formContainer}
       onKeyDown={handleKeyDown}
     >
       <span className={FormStyles.formLogo} />
-      {type === 'org' && <span className={FormStyles.formHeader}>Ingresar a tu cuenta</span>}
-      {type === 'donor' && <span className={FormStyles.formHeader}>Ingresar a tu cuenta de donador</span>}
+      {header()}
       <div className={FormStyles.row}>
         <TextField
           name="email"
@@ -65,10 +84,9 @@ const LoginForm = ({ handleSubmit, submitting, modal, closeModal, type }) => {
         <RaisedButton className={FormStyles.primaryButton} backgroundColor="#3DC59F" labelColor="#ffffff" disabled={submitting} label="INGRESAR" onClick={handleSubmit} />
 
         <div className={Styles.linkContainer}>
-          {type === 'org' && <Link className={`${Styles.link} ${GlobalStyles.link}`} onClick={closeModal} to="/donador">Soy donador</Link>}
-          {type === 'donor' && <Link className={`${Styles.link} ${GlobalStyles.link}`} onClick={closeModal} to="/cuenta">Soy reconstructor</Link>}
-          <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleForgotPassword}>Olvidé mi contraseña</span>
-          <span className={`${Styles.link} ${GlobalStyles.link}`} onClick={handleCreateAccount}>Crear una cuenta</span>
+          {links()}
+          <span className={Styles.link} onClick={handleForgotPassword}>Olvidé mi contraseña</span>
+          <span className={Styles.link} onClick={handleCreateAccount}>Crear una cuenta</span>
         </div>
       </div>
     </form>
@@ -80,6 +98,12 @@ LoginForm.propTypes = {
   modal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['org', 'donor']).isRequired,
+  discourse: PropTypes.bool,
+  changeType: PropTypes.func,
+}
+
+LoginForm.defaultProps = {
+  discourse: false,
 }
 
 const validate = ({ email, password }) => {

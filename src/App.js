@@ -25,6 +25,7 @@ import DonorListScreen from 'screens/DonorListScreen'
 import DonorScreen from 'screens/DonorScreen'
 
 import protectedScreen from 'screens/account/ProtectedScreen'
+import DiscourseLoginScreen from 'screens/account/LoginScreen/DiscourseLoginScreen'
 import AccountNav from 'components/AccountNav'
 import DonorNav from 'components/DonorNav'
 import ActionScreen from 'screens/account/ActionScreen'
@@ -35,7 +36,7 @@ import DonorHomeScreen from 'screens/account/DonorHomeScreen'
 import DonationScreen from 'screens/account/DonationScreen'
 
 import env from 'src/env'
-import Styles from 'src/Global.css'
+import GlobalStyles from 'src/Global.css'
 
 
 const LocalityScreenWrapper = ({ match }) => {
@@ -54,16 +55,20 @@ const ActionScreenWrapper = ({ match }) => {
   return <ActionScreen actionKey={Number.parseInt(match.params.key, 10)} />
 }
 
+const DonationScreenWrapper = ({ match }) => {
+  return <DonationScreen id={Number.parseInt(match.params.id, 10)} />
+}
+
 const SetPasswordWithTokenScreenWrapper = () => {
-  return <SetPasswordWithTokenScreen className={Styles.modalScreenWrapper} />
+  return <SetPasswordWithTokenScreen className={GlobalStyles.modalScreenWrapper} />
 }
 
 const CreateAccountScreenWrapper = () => {
-  return <CreateAccountScreen className={Styles.modalScreenWrapper} />
+  return <CreateAccountScreen className={GlobalStyles.modalScreenWrapper} />
 }
 
-const DonationScreenWrapper = ({ match }) => {
-  return <DonationScreen id={Number.parseInt(match.params.id, 10)} />
+const DiscourseLoginScreenWrapper = () => {
+  return <DiscourseLoginScreen type="discourse" className={GlobalStyles.modalScreenWrapper} />
 }
 
 const appReducer = combineReducers({
@@ -110,6 +115,7 @@ const App = () => {
             <Route path="/cuenta" component={AccountNav} />
             <Route path="/donador" component={DonorNav} />
 
+
             <Switch>
               <Redirect exact from="/organizaciones" to="/reconstructores" />
               <Route
@@ -127,6 +133,7 @@ const App = () => {
               <Route exact path="/donadores" component={DonorListScreen} />
               <Route exact path="/donadores/:id" component={DonorScreenWrapper} />
 
+              <Route exact path="/foro/sso" component={DiscourseLoginScreenWrapper} />
               <Route path="/establecer" component={SetPasswordWithTokenScreenWrapper} />
               <Route exact path="/crear/cuenta" component={CreateAccountScreenWrapper} />
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen, 'org')} />
