@@ -84,6 +84,8 @@
 
 .mapContainer {
   position: relative;
+  height: 100%;
+  overflow: hidden;
 }
 
 .loader {
@@ -91,6 +93,12 @@
   z-index: 4;
   left: 50vw;
   top: 20vh;
+}
+
+@media screen and (min-width: 980px) {
+  .flexOverflow {
+    height: 100%;
+  }
 }
 
 

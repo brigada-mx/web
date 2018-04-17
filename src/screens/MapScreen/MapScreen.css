@@ -99,6 +99,12 @@
   top: 20vh;
 }
 
+@media screen and (min-width: 980px) {
+  .flexOverflow {
+    height: 100%;
+  }
+}
+
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .search {
     right: 6.5%;

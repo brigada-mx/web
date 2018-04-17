@@ -264,7 +264,7 @@ class OrganizationListScreenView extends React.Component {
         }
 
         <div className={`${Styles.container} row`}>
-          <div className="col-lg-6 col-md-6 col-sm-8 col-xs-4 gutter last-sm last-xs">
+          <div className={`${Styles.flexOverflow} col-lg-6 col-md-6 col-sm-8 col-xs-4 gutter last-sm last-xs`}>
             {orgLoading && <LoadingIndicatorCircle className={Styles.loader} />}
             {!orgLoading &&
               <OrganizationList

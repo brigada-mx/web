@@ -259,7 +259,7 @@ class MapScreen extends React.Component {
         }
 
         <div className={`${Styles.container} row`}>
-          <div className="col-lg-3 col-md-3 col-sm-8 col-xs-4 gutter last-sm last-xs">
+          <div className={`${Styles.flexOverflow} col-lg-3 col-md-3 col-sm-8 col-xs-4 gutter last-sm last-xs`}>
             {loading && <LoadingIndicatorCircle className={Styles.loader} />}
             {!loading &&
               <LocalityList
