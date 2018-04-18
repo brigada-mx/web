@@ -49,10 +49,7 @@ const LoginForm = (
   }
 
   const header = () => {
-    if (discourse) {
-      if (type === 'org') return <span className={FormStyles.formHeader}>Ingresar al foro</span>
-      if (type === 'donor') return <span className={FormStyles.formHeader}>Ingresar al foro con tu cuenta de donador</span>
-    }
+    if (discourse) return <span className={FormStyles.formHeader}>Ingresar al foro</span>
     if (type === 'org') return <span className={FormStyles.formHeader}>Ingresar a tu cuenta</span>
     if (type === 'donor') return <span className={FormStyles.formHeader}>Ingresar a tu cuenta de donador</span>
   }
