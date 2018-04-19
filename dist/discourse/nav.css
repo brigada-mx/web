@@ -48,6 +48,10 @@ a.brigada-link:hover {
   color: #3DC587;
 }
 
+a.brigada-forum-link {
+  color: #3DC587 !important;
+}
+
 a.brigada-button {
   border: 1px solid #5A5A5D;
   padding: 9px 0 8px 0;

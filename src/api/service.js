@@ -88,8 +88,8 @@ class Service {
     return sendToApi('/account/send_set_password_email/', { method: 'POST', body: { email } })
   }
 
-  setPasswordWithToken = async (token, password) => {
-    return sendToApi('/account/set_password_with_token/', { method: 'POST', body: { token, password } })
+  setPasswordWithToken = async (token, password, created) => {
+    return sendToApi('/account/set_password_with_token/', { method: 'POST', body: { token, password, created } })
   }
 
   token = async (email, password) => {
@@ -195,8 +195,8 @@ class Service {
     return sendToApi('/donor_account/send_set_password_email/', { method: 'POST', body: { email } })
   }
 
-  donorSetPasswordWithToken = async (token, password) => {
-    return sendToApi('/donor_account/set_password_with_token/', { method: 'POST', body: { token, password } })
+  donorSetPasswordWithToken = async (token, password, created) => {
+    return sendToApi('/donor_account/set_password_with_token/', { method: 'POST', body: { token, password, created } })
   }
 
   donorToken = async (email, password) => {

@@ -59,7 +59,7 @@ const ReduxForm = reduxForm({ form: 'setPasswordWithToken', validate })(Form)
 const SetPasswordWithTokenScreen = ({ history, location, snackbar, onLogin, className = '' }) => {
   const handleSubmit = async ({ password }) => {
     const params = parseQs(location.search)
-    const { token = '', email = '', type = 'org' } = params
+    const { token = '', email = '', type = 'org', created = false } = params
 
     const fSetPasswordByType = {
       org: service.setPasswordWithToken,
@@ -68,7 +68,7 @@ const SetPasswordWithTokenScreen = ({ history, location, snackbar, onLogin, clas
     const fGetTokenByType = { org: service.token, donor: service.donorToken }
     const accountUrlByType = { org: '/cuenta', donor: '/donador' }
 
-    const { data } = await fSetPasswordByType[type](token, password)
+    const { data } = await fSetPasswordByType[type](token, password, created === 'true')
     if (!data) {
       snackbar('El email que te mandamos ya no es válido, pide otro', 'error')
       return
@@ -79,7 +79,8 @@ const SetPasswordWithTokenScreen = ({ history, location, snackbar, onLogin, clas
     if (loginData) onLogin({ ...loginData, email }, type)
 
     history.push(accountUrlByType[type])
-    snackbar('Cambiaste tu contraseña', 'success')
+    if (created === 'true') snackbar('¡Activaste tu cuenta! Checa tu email para programar tu capacitación virtual.', 'success', 6000)
+    else snackbar('Cambiaste tu contraseña', 'success')
   }
 
   if (className) return <div className={className}><ReduxForm onSubmit={handleSubmit} /></div>
@@ -97,7 +98,7 @@ SetPasswordWithTokenScreen.propTypes = {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: (auth, type) => Actions.authSet(dispatch, { auth, type }),
-    snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
+    snackbar: (message, status, duration) => Actions.snackbar(dispatch, { message, status, duration }),
   }
 }
 
