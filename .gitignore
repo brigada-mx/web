@@ -1,10 +1,22 @@
-bundle.js
+# generated
 .sass-cache
+bundle.js
 node_modules
-dist/*.css
-sandbox/*
-.DS_Store
-requester.pyr
-src/data/*
 sitemap.xml
 stats.json
+dist/*.css
+
+# sandbox
+sandbox/
+
+# os x
+.DS_Store
+
+# requester
+requester.pyr
+
+# data
+src/data/*
+
+# env
+.secret-key
