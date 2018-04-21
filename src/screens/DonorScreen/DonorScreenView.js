@@ -13,7 +13,7 @@ import HelpWanted from 'components/HelpWanted'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import MapErrorBoundary from 'components/MapErrorBoundary'
-import { addProtocol, emailLink, fmtBudget } from 'tools/string'
+import { addProtocol, emailLink, fmtBudget, renderLinks } from 'tools/string'
 import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
 import { sectorByValue } from 'src/choices'
 import DonorBreadcrumb from './DonorBreadcrumb'
@@ -247,7 +247,8 @@ class DonorScreenView extends React.Component {
                 </div>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
-                <span className={Styles.mission}>{desc}</span>
+                {renderLinks(desc, Styles.mission)}
+              }
               </div>
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>

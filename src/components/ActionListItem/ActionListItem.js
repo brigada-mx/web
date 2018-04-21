@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
-import { fmtNum, fmtBudgetPlain, thumborUrl } from 'tools/string'
+import { fmtNum, fmtBudgetPlain, thumborUrl, renderLinks } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
 import { getProjectType } from 'src/choices'
 import Styles from './ActionListItem.css'
@@ -203,7 +203,7 @@ class ActionListItem extends React.PureComponent {
 
             {renderThumbnails()}
           </div>
-          <div className={Styles.description}>{desc}</div>
+          <div className={Styles.description}>{renderLinks(desc)}</div>
         </div>
         {(desc && focused) &&
           <React.Fragment>

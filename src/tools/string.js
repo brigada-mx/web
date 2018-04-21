@@ -1,4 +1,7 @@
+import React from 'react'
+
 import _ from 'lodash'
+import urlRegex from 'url-regex'
 
 import env from 'src/env'
 
@@ -137,4 +140,28 @@ export const getTextWidth = (text, font) => {
   context.font = font
   const metrics = context.measureText(text)
   return metrics.width
+}
+
+export const renderLinks = (text, className = '') => {
+  let remaining = text
+  const parts = []
+  while (true) { // eslint-disable-line no-constant-condition
+    const match = urlRegex().exec(remaining)
+    if (match === null) {
+      parts.push(remaining)
+      break
+    }
+    parts.push(remaining.substring(0, match.index))
+    let s = match[0]
+    while ([',', '.', ':', ';'].includes(s.slice(-1))) {
+      s = s.slice(0, -1)
+    }
+    parts.push(<a href={addProtocol(s)}>{s}</a>)
+    remaining = remaining.substring(match.index + s.length)
+  }
+  return (
+    <span className={className}>
+      {parts.map((p, i) => <React.Fragment key={i}>{p}</React.Fragment>)}
+    </span>
+  )
 }
