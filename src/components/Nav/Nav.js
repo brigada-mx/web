@@ -58,7 +58,7 @@ const NavLinks = ({
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">Comunidades</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/reconstructores">Reconstructores</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={donorIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/donadores">Donadores</NavLink>
-      <a href="http://brigada.mx/nosotros">Nosotros</a>
+      <a href="http://foro.brigada.mx">Foro</a>
       <Link onClick={openChat} className={classNameLink} to="#">Soporte</Link>
       {loginButton()}
     </React.Fragment>

@@ -1,7 +1,6 @@
 * {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 .brigada-container {
   display: flex;
@@ -12,26 +11,22 @@
   border-bottom: 1px solid #F2F2F4;
   height: 65px;
   padding-left: 25px;
-  padding-right: 25px;
-}
+  padding-right: 25px; }
 
 .brigada-row {
   display: flex;
   flex-direction: row;
-  align-items: center;
-}
+  align-items: center; }
 
 .brigada-container a img {
-  transition: all .15s linear;
-}
+  transition: all .15s linear; }
 
 .brigada-container a:hover img {
-  opacity: 0.8;
-}
+  opacity: 0.8; }
 
 a.brigada-link {
-  font-family: 'nunito-sans', sans-serif;
-  font-weight: 500;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 700;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 13px;
@@ -41,31 +36,24 @@ a.brigada-link {
   padding: 28px 0 26px 0;
   display: inline-block;
   color: #5A5A5D;
-  transition: all .15s linear;
-}
+  transition: all .15s linear; }
 
 a.brigada-link:hover {
-  color: #3DC587;
-}
+  color: #3DC587; }
 
 a.brigada-forum-link {
-  color: #3DC587 !important;
-}
+  color: #3DC587 !important; }
 
 a.brigada-button {
   border: 1px solid #5A5A5D;
   padding: 9px 0 8px 0;
   width: 110px;
   text-align: center;
-  color: #5A5A5D;
-}
+  color: #5A5A5D; }
 
 a.brigada-button:hover {
-  border: 1px solid #3DC587;
-}
+  border: 1px solid #3DC587; }
 
 @media screen and (max-width: 979px) {
   .brigada-hide-small {
-    display: none;
-  }
-}
+    display: none; } }
