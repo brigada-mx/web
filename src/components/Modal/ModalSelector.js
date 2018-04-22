@@ -8,6 +8,7 @@ import PasswordEmailScreen from 'screens/account/PasswordEmailScreen'
 import CreateAccountScreen from 'screens/account/CreateAccountScreen'
 import DonorCreateAccountScreen from 'screens/account/CreateAccountScreen/DonorCreateAccountScreen'
 import AccountCreated from 'screens/account/AccountCreated'
+import AccountVerified from 'screens/account/AccountCreated/AccountVerified'
 import Modal from './Modal'
 import Styles from './Modal.css'
 
@@ -18,6 +19,7 @@ const componentByName = {
   createAccount: CreateAccountScreen,
   donorCreateAccount: DonorCreateAccountScreen,
   accountCreated: AccountCreated,
+  accountVerified: AccountVerified,
 }
 
 const ModalSelector = (props) => {
