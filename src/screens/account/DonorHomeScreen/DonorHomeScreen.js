@@ -66,11 +66,11 @@ class DonorHomeScreen extends React.Component {
   handleToggleApproved = async (id, approved) => {
     const { data } = await service.donorUpdateDonation(id, { approved_by_donor: approved })
     if (!data) {
-      this.props.snackbar(`Hubo un error, no se pudo ${approved ? 'aprobar' : 'ocultar'} esta donación`, 'error')
+      this.props.snackbar(`Hubo un error, no se pudo ${approved ? 'aprobar' : 'ocultar'} este donativo`, 'error')
       return
     }
     this.loadDonations()
-    const message = approved ? `Aprobaste donación ${id}` : `Ocultaste donación ${id}`
+    const message = approved ? `Aprobaste donativo ${id}` : `Ocultaste donativo ${id}`
     this.props.snackbar(message, 'success')
   }
 
@@ -82,7 +82,7 @@ class DonorHomeScreen extends React.Component {
     }
     this.props.resetDonation()
     this.loadDonations()
-    this.props.snackbar('Agregaste una nueva donación', 'success')
+    this.props.snackbar('Agregaste un nuevo donativo', 'success')
     this.handleToggleCreateDonationModal(false)
   }
 
@@ -96,12 +96,12 @@ class DonorHomeScreen extends React.Component {
     return (
       <WithSideNav>
         <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>Donador</div>
+          <div className={FormStyles.sectionHeader}>Mi organización</div>
           <DonorForm onSubmit={this.handleSubmitDonor} enableReinitialize />
         </div>
 
         <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>Contacto</div>
+          <div className={FormStyles.sectionHeader}>Nuestro contacto</div>
           <div className={FormStyles.formContainerLeft}>
             <ContactForm
               form="donorContact"
@@ -114,7 +114,7 @@ class DonorHomeScreen extends React.Component {
 
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>
-            <span>Donaciones</span>
+            <span>Nuestros donativos</span>
             <div>
               <RaisedButton
                 backgroundColor="#3DC59F"
@@ -139,7 +139,7 @@ class DonorHomeScreen extends React.Component {
             onClose={() => this.handleToggleCreateDonationModal(false)}
             gaName="donorCreateDonationModal"
           >
-            <div className={FormStyles.sectionHeader}>Agregar donación</div>
+            <div className={FormStyles.sectionHeader}>Agregar donativo</div>
             <CreateDonationForm
               onSubmit={this.handleCreateDonation}
               initialValues={initialDonationValues}

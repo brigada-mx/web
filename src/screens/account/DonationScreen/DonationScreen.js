@@ -15,7 +15,7 @@ import Styles from './DonationScreen.css'
 
 class DonationScreen extends React.Component {
   componentDidMount() {
-    document.title = `Donación ${this.props.id} - Brigada`
+    document.title = `Donativo ${this.props.id} - Brigada`
     this.loadDonation()
   }
 

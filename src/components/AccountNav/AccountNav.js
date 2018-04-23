@@ -82,7 +82,7 @@ const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => 
   return (
     <AppBar
       className={Styles.nav}
-      title="Mi Cuenta"
+      title="Mi cuenta"
       onTitleClick={handleHomeClick}
       showMenuIconButton={false}
       titleStyle={{ cursor: 'pointer' }}

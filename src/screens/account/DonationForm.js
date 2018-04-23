@@ -74,7 +74,7 @@ class Fields extends React.Component {
             normalize={(value) => { return value ? parseInt(value, 10) : null }}
           />
           <DatePicker
-            floatingLabelText="Fecha cuando se recibió donación"
+            floatingLabelText="Fecha cuando se recibió el donativo"
             name="received_date"
             format={formatDatePicker}
           />

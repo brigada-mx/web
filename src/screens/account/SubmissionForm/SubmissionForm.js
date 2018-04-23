@@ -55,7 +55,7 @@ const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, actionSearch = 
         <RaisedButton
           className={FormStyles.button}
           disabled={submitting}
-          label="ACTUALIZAR"
+          label="GUARDAR"
           onClick={handleSubmit}
         />
         <ConfirmButton

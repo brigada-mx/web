@@ -130,7 +130,7 @@ class ActionScreen extends React.Component {
     this.props.resetDonation()
     this.loadAction()
     this.handleToggleCreateDonationModal(false)
-    this.props.snackbar('Agregaste una nueva donación', 'success')
+    this.props.snackbar('Agregaste un nuevo donativo', 'success')
   }
 
   handleUpdateDonation = async (id, body) => {
@@ -140,7 +140,7 @@ class ActionScreen extends React.Component {
       return
     }
     this.loadAction()
-    this.props.snackbar(`Modificaste donación ${id}`, 'success')
+    this.props.snackbar(`Modificaste donativo ${id}`, 'success')
   }
 
   handleDeleteDonation = async (id) => {
@@ -152,17 +152,17 @@ class ActionScreen extends React.Component {
     }
     this.loadAction()
     this.handleUpdateDonationModalClose()
-    snackbar(`Borraste donación ${id}`, 'success')
+    snackbar(`Borraste donativo ${id}`, 'success')
   }
 
   handleToggleDonationApproved = async (id, approved) => {
     const { data } = await service.accountUpdateDonation(id, { approved_by_org: approved })
     if (!data) {
-      this.props.snackbar(`Hubo un error, no se pudo ${approved ? 'aprobar' : 'ocultar'} esta donación`, 'error')
+      this.props.snackbar(`Hubo un error, no se pudo ${approved ? 'aprobar' : 'ocultar'} este donativo`, 'error')
       return
     }
     this.loadAction()
-    const message = approved ? `Aprobaste donación ${id}` : `Ocultaste donación ${id}`
+    const message = approved ? `Aprobaste donativo ${id}` : `Ocultaste donativo ${id}`
     this.props.snackbar(message, 'success')
   }
 
@@ -200,7 +200,7 @@ class ActionScreen extends React.Component {
 
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>
-            <span>Donaciones</span>
+            <span>Donativos</span>
             <div>
               <RaisedButton
                 backgroundColor="#3DC59F"
@@ -265,7 +265,7 @@ class ActionScreen extends React.Component {
             onClose={() => this.handleToggleCreateDonationModal(false)}
             gaName="orgCreateDonationModal"
           >
-            <div className={FormStyles.sectionHeader}>Agregar donación</div>
+            <div className={FormStyles.sectionHeader}>Agregar donativo</div>
             <CreateDonationForm
               onSubmit={this.handleCreateDonation}
               initialValues={initialDonationValues}

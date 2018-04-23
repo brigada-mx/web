@@ -75,7 +75,7 @@ const DonorNav = ({ history, location, onLogout, livechat, token, donorId }) => 
   return (
     <AppBar
       className={Styles.nav}
-      title="Mi Cuenta"
+      title="Mi cuenta"
       onTitleClick={handleHomeClick}
       showMenuIconButton={false}
       titleStyle={{ cursor: 'pointer' }}

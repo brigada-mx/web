@@ -74,7 +74,7 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues, help = fals
             labelColor="#ffffff"
             className={FormStyles.primaryButton}
             disabled={submitting}
-            label="ACTUALIZAR"
+            label="GUARDAR"
             onClick={handleSubmit}
           />
         </div>

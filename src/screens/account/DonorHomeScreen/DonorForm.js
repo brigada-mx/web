@@ -68,7 +68,7 @@ const DonorForm = ({ handleSubmit, submitting, donating = false }) => {
             labelColor="#ffffff"
             className={FormStyles.primaryButton}
             disabled={submitting}
-            label="ACTUALIZAR"
+            label="GUARDAR"
             onClick={handleSubmit}
           />
         </div>

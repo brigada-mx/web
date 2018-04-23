@@ -24,7 +24,7 @@ const UserForm = ({ handleSubmit, submitting }) => {
           labelColor="#ffffff"
           className={FormStyles.primaryButton}
           disabled={submitting}
-          label="ACTUALIZAR"
+          label="GUARDAR"
           onClick={handleSubmit}
         />
       </div>
