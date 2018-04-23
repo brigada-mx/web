@@ -48,8 +48,8 @@ const NavLinks = ({
 
   const loginButton = () => {
     const className = `${classNameLink} ${Styles.button}`
-    if (orgToken) return <Link onClick={onHideDrawer} className={className} to="/cuenta">Mi Cuenta</Link>
-    if (donorToken) return <Link onClick={onHideDrawer} className={className} to="/donador">Mi Cuenta</Link>
+    if (orgToken) return <Link onClick={onHideDrawer} className={className} to="/cuenta">Mi cuenta</Link>
+    if (donorToken) return <Link onClick={onHideDrawer} className={className} to="/donador">Mi cuenta</Link>
     return <a onClick={handleClickLogin} className={className}>Login</a>
   }
 
