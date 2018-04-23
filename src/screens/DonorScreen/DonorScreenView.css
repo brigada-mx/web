@@ -106,6 +106,38 @@ a:hover {
   margin-top: -13px;
 }
 
+.verifyButton {
+  width: 250px;
+  height: 40px;
+  background-color: #3DC59F;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verifyButton:hover {
+  background-color: #13A68C;
+  cursor: pointer;
+}
+
+.unverifiedLabel
+{
+  color: #9F9F9F;
+  background-image: url('assets/img/circle-checkmark.svg');
+  background-repeat: no-repeat;
+  padding-left: 33px;
+  display: block;
+}
+
+.verifiedLabel
+{
+  background-image: url('assets/img/circle-checkmark-accent.svg');
+  background-repeat: no-repeat;
+  padding-left: 33px;
+  display: block;
+}
+
 .website {
   background-image: url('assets/img/website.svg');
 }

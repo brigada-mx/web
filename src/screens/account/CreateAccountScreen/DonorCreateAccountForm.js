@@ -129,6 +129,7 @@ const mapStateToProps = (state) => {
 }
 
 const validate = ({ first_name: firstName, surnames, email, donor, sector }) => {
+  console.log(donor)
   const errors = {}
   if (!firstName) errors.first_name = 'Ingresa tu nombre'
   if (!surnames) errors.surnames = 'Ingresa apellidos'

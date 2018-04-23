@@ -18,7 +18,7 @@ const AccountVerified = ({ type }) => {
       <p className={Styles.formText}>{text}</p>
       <p className={Styles.formText}>Pero todavía falta un paso para convertirte en usuario experto: <ReactGA.OutboundLink eventLabel="scheduleTraining" to="https://calendly.com/brigada/capacitacion" target="_blank">tomar una capacitación virtual</ReactGA.OutboundLink>.</p>
       <p className={Styles.formText}>
-        Dale clic en el link para agendar tu capacitación. También te hemos mandado un correo con este link.
+        Dale clic en el link para agendar tu capacitación.
       </p>
     </div>
   )

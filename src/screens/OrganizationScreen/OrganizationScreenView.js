@@ -228,15 +228,17 @@ class OrganizationScreenView extends React.Component {
                         </a>
                       </span>
                     }
-                    {!website && <span className={Styles.fieldValue}>No disponible</span>}
+                    {!website && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
                   </div>
                   <div className={Styles.fieldContainer}>
                     <span className={Styles.fieldLabel}>SECTOR</span>
-                    <span className={Styles.fieldValue}>{sectorByValue[sector] || sector}</span>
+                    {sector && <span className={Styles.fieldValue}>{sectorByValue[sector] || sector}</span>}
+                    {!sector && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
                   </div>
                   <div className={Styles.fieldContainer}>
                     <span className={Styles.fieldLabel}>ESTABLECIDA</span>
-                    <span className={Styles.fieldValue}>{established}</span>
+                    {established && <span className={Styles.fieldValue}>{established}</span>}
+                    {!established && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
                   </div>
                 </div>
               </div>

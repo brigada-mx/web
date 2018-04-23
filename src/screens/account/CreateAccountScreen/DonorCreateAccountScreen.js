@@ -8,7 +8,7 @@ import service from 'api/service'
 import DonorCreateAccountForm, { prepareDonorBody } from './DonorCreateAccountForm'
 
 
-const DonorCreateAccountScreen = ({ snackbar, modal, className = '' }) => {
+const DonorCreateAccountScreen = ({ snackbar, modal, className = '', initialValues }) => {
   const handleSubmit = async ({ email, ...rest }) => {
     const { data, status } = await service.donorCreateAccount(prepareDonorBody({ email, ...rest }))
     if (data) {
@@ -20,14 +20,21 @@ const DonorCreateAccountScreen = ({ snackbar, modal, className = '' }) => {
     else snackbar('Checa tu conexión', 'error')
   }
 
-  if (className) return <div className={className}><DonorCreateAccountForm onSubmit={handleSubmit} /></div>
-  return <DonorCreateAccountForm onSubmit={handleSubmit} />
+  if (className) {
+    return (
+      <div className={className}>
+        <DonorCreateAccountForm onSubmit={handleSubmit} initialValues={initialValues} />
+      </div>
+    )
+  }
+  return <DonorCreateAccountForm onSubmit={handleSubmit} initialValues={initialValues} />
 }
 
 DonorCreateAccountScreen.propTypes = {
   snackbar: PropTypes.func.isRequired,
   modal: PropTypes.func.isRequired,
   className: PropTypes.string,
+  initialValues: PropTypes.object,
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -20,7 +20,7 @@ class PhoneBox extends React.Component {
   }
 
   render() {
-    let { phone, name } = this.props
+    const { phone, name } = this.props
     const text = name && name.length > phone.length ? name : phone
     const textWidth = getTextWidth(text, 'roboto-700 13px')
     const { focused } = this.state

@@ -1,17 +1,41 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import _ from 'lodash'
 import ReactTable from 'react-table'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import '!style-loader!css-loader!react-table/react-table.css'
 
+import * as Actions from 'src/actions'
 import { sectorByValue } from 'src/choices'
-import { fmtBudget } from 'tools/string'
+import { fmtBudget, tokenMatch } from 'tools/string'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
+import SearchInput from 'components/SearchInput'
 import Styles from './DonorListScreenView.css'
 
 
+const defaultSorted = [
+  {
+    id: 'has_user',
+    desc: true,
+  },
+  {
+    id: 'metrics.total_donated',
+    desc: true,
+  },
+]
+
 class DonorListScreenView extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      search: '',
+      verifiedInfo: false,
+    }
+    this.handleSearchKeyUp = _.debounce(this.handleSearchKeyUp, 150)
+  }
+
   componentDidMount() {
     document.title = 'Donadores - Brigada'
     window.addEventListener('orientationchange', this.orientationChange)
@@ -33,9 +57,18 @@ class DonorListScreenView extends React.Component {
     return parts.join(', ')
   }
 
+  handleSearchKeyUp = (search) => {
+    this.setState({ search })
+  }
+
+  setVerifiedInfo = (verifiedInfo) => {
+    this.setState({ verifiedInfo })
+  }
+
   render() {
     const { donors: { data: donorData, loading: donorLoading, error: donorError } } = this.props
-    const { history } = this.props
+    const { modal, history } = this.props
+    const { search, verifiedInfo } = this.state
 
     const donors = donorData ? donorData.results : []
 
@@ -73,29 +106,69 @@ class DonorListScreenView extends React.Component {
         accessor: 'sector',
         Cell: props => sectorByValue[props.original.sector] || 'No disponible',
       })
+      columns.push({
+        Header: () => (
+          <div className={Styles.box}>
+            {verifiedInfo &&
+              <div className={Styles.tooltip}>¿Tiene este donador un usario o no?</div>
+            }
+            <span>Estatus</span>
+            <span
+              className={Styles.verifiedInfo}
+              onMouseEnter={() => this.setVerifiedInfo(true)}
+              onMouseLeave={() => this.setVerifiedInfo(false)}
+            >
+              ?
+            </span>
+          </div>
+        ),
+        accessor: 'has_user',
+        Cell: (props) => {
+          const src = props.original.has_user ? 'assets/img/circle-checkmark-accent.svg' : 'assets/img/circle-checkmark.svg'
+          const alt = props.original.has_user ? 'Sí' : 'No'
+          return <img src={src} alt={alt} height="30" />
+        },
+      })
     }
 
+    const filtered = donors.filter((d) => {
+      if (!search) return true
+      return tokenMatch(d.name, search)
+    })
+
     return (
-      <div className={Styles.tableWrapper}>
-        <ReactTable
-          showPagination={false}
-          showPageSizeOptions={false}
-          className="donorTable"
-          defaultPageSize={donors.length}
-          data={donors}
-          columns={columns}
-          getTrProps={(state, rowInfo, column) => {
-            const handleRowClicked = (e, handleOriginal) => {
-              history.push(`/donadores/${rowInfo.original.id}`)
-              if (handleOriginal) handleOriginal()
-            }
-            return {
-              onClick: handleRowClicked,
-              style: { cursor: 'pointer' },
-            }
-          }}
-        />
-      </div>
+      <React.Fragment>
+        <div className={`${Styles.searchContainer} row middle between wrapper`}>
+          <span
+            className={Styles.createAccountButton}
+            onClick={() => modal('donorCreateAccount')}
+          >
+            Crear tu cuenta
+          </span>
+          <SearchInput numResults={filtered.length} onKeyUp={this.handleSearchKeyUp} />
+        </div>
+        <div className={Styles.tableWrapper}>
+          <ReactTable
+            showPagination={false}
+            showPageSizeOptions={false}
+            className="donorTable"
+            defaultPageSize={donors.length}
+            data={filtered}
+            columns={columns}
+            getTrProps={(state, rowInfo, column) => {
+              const handleRowClicked = (e, handleOriginal) => {
+                history.push(`/donadores/${rowInfo.original.id}`)
+                if (handleOriginal) handleOriginal()
+              }
+              return {
+                onClick: handleRowClicked,
+                style: { cursor: 'pointer' },
+              }
+            }}
+            defaultSorted={defaultSorted}
+          />
+        </div>
+      </React.Fragment>
     )
   }
 }
@@ -103,6 +176,13 @@ class DonorListScreenView extends React.Component {
 DonorListScreenView.propTypes = {
   donors: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  modal: PropTypes.func.isRequired,
 }
 
-export default withRouter(DonorListScreenView)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(DonorListScreenView))

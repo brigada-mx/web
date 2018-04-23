@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 
 import { withRouter, Redirect } from 'react-router-dom'
 import { Sticky, StickyContainer } from 'react-sticky'
+import { connect } from 'react-redux'
 
+import * as Actions from 'src/actions'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import Carousel from 'components/Carousel'
@@ -176,6 +178,7 @@ class DonorScreenView extends React.Component {
     const {
       donor: { loading, data, status },
       donations: { loading: donationsLoading, data: donationsData },
+      modal,
     } = this.props
     if (status === 404) return <Redirect to="/donadores" />
     if (loading || !data || donationsLoading || !donationsData) return <LoadingIndicatorCircle />
@@ -187,10 +190,10 @@ class DonorScreenView extends React.Component {
       desc,
       name,
       sector,
-      year_established: established,
       donating,
       donating_desc: donatingDesc,
       id,
+      has_user: donorHasUser,
     } = data
 
     const actions = Object.values(donationsData.results.reduce((obj, d) => {
@@ -209,6 +212,41 @@ class DonorScreenView extends React.Component {
       />
     )
 
+    const contactButtons = () => {
+      if (donorHasUser) {
+        return (
+          <div className={Styles.buttonsContainer}>
+            {website &&
+              <a
+                target="_blank"
+                className={`${Styles.button} ${Styles.website}`}
+                href={addProtocol(website)}
+                onClick={() => fireGaEvent('donorWebsite')}
+              />
+            }
+            {phone && <PhoneBox phone={phone} name={person} />}
+            {email &&
+              <a
+                className={`${Styles.button} ${Styles.email}`}
+                href={emailLink(email)}
+                onClick={() => fireGaEvent('donorEmail')}
+              />
+            }
+          </div>
+        )
+      }
+      return (
+        <div
+          onClick={() => modal(
+            'donorCreateAccount', { initialValues: { donor: { text: name, value: id } } }
+          )}
+          className={Styles.verifyButton}
+        >
+          Asumir control de este perfil
+        </div>
+      )
+    }
+
     return (
       <React.Fragment>
         <div className="wrapper-lg wrapper-md wrapper-sm">
@@ -222,6 +260,14 @@ class DonorScreenView extends React.Component {
               <div className="col-lg-8 col-md-9 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.summaryContainer}>
                   <div className={Styles.fieldContainer}>
+                    <span className={Styles.fieldLabel}>ESTATUS</span>
+                    <span
+                      className={`${Styles.fieldValue} ${donorHasUser ? Styles.verifiedLabel : Styles.unverifiedLabel}`}
+                    >
+                      {donorHasUser ? 'Verificado' : 'No verificado'}
+                    </span>
+                  </div>
+                  <div className={Styles.fieldContainer}>
                     <span className={Styles.fieldLabel}>WEB</span>
                     {website &&
                       <span className={`${Styles.fieldValue} ${Styles.ellipsis}`}>
@@ -234,21 +280,17 @@ class DonorScreenView extends React.Component {
                         </a>
                       </span>
                     }
-                    {!website && <span className={Styles.fieldValue}>No disponible</span>}
+                    {!website && <span style={{ color: '#9F9F9F' }} className={Styles.fieldValue}>No disponible</span>}
                   </div>
                   <div className={Styles.fieldContainer}>
                     <span className={Styles.fieldLabel}>SECTOR</span>
-                    <span className={Styles.fieldValue}>{sectorByValue[sector] || sector}</span>
-                  </div>
-                  <div className={Styles.fieldContainer}>
-                    <span className={Styles.fieldLabel}>ESTABLECIDA</span>
-                    <span className={Styles.fieldValue}>{established}</span>
+                    {sector && <span className={Styles.fieldValue}>{sectorByValue[sector] || sector}</span>}
+                    {!sector && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
                   </div>
                 </div>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
                 {renderLinks(desc, Styles.mission)}
-              }
               </div>
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
@@ -272,31 +314,16 @@ class DonorScreenView extends React.Component {
             <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-1 col-sm-8 sm-gutter col-xs-4 xs-gutter">
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-xs-4 center-xs gutter">
-                  <div className={Styles.buttonsContainer}>
-                    {website &&
-                      <a
-                        target="_blank"
-                        className={`${Styles.button} ${Styles.website}`}
-                        href={addProtocol(website)}
-                        onClick={() => fireGaEvent('donorWebsite')}
-                      />
-                    }
-                    {phone && <PhoneBox phone={phone} name={person} />}
-                    {email &&
-                      <a
-                        className={`${Styles.button} ${Styles.email}`}
-                        href={emailLink(email)}
-                        onClick={() => fireGaEvent('donorEmail')}
-                      />
-                    }
-                  </div>
+                  {contactButtons()}
                 </div>
-                <div className="col-lg-12 col-md-12 col-sm-3 col-xs-4 gutter">
-                  <div className={Styles.hq}>
-                    <p className={Styles.subtitle}>¿Dónde estamos?</p>
-                    {address && this.renderAddress(address)}
+                {donorHasUser &&
+                  <div className="col-lg-12 col-md-12 col-sm-3 col-xs-4 gutter">
+                    <div className={Styles.hq}>
+                      <p className={Styles.subtitle}>¿Dónde estamos?</p>
+                      {address && this.renderAddress(address)}
+                    </div>
                   </div>
-                </div>
+                }
                 <div className="col-lg-12 col-md-12 col-sm-4 col-xs-4 gutter">
                   <div className={Styles.ops}>
                     <p className={Styles.subtitle}>¿Dónde donamos?</p>
@@ -352,6 +379,13 @@ DonorScreenView.propTypes = {
   donor: PropTypes.object.isRequired,
   donations: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  modal: PropTypes.func.isRequired,
 }
 
-export default withRouter(DonorScreenView)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(DonorScreenView))
