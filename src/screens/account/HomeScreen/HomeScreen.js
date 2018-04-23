@@ -160,12 +160,12 @@ class HomeScreen extends React.Component {
     const content = (
       <div>
         <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>Reconstructor</div>
+          <div className={FormStyles.sectionHeader}>Mi organización</div>
           <OrganizationForm onSubmit={this.handleSubmitOrganization} enableReinitialize />
         </div>
 
         <div className={FormStyles.card}>
-          <div className={FormStyles.sectionHeader}>Contacto</div>
+          <div className={FormStyles.sectionHeader}>Nuestro contacto</div>
           <div className={FormStyles.formContainerLeft}>
             <ContactForm
               form="accountContact"
@@ -178,7 +178,7 @@ class HomeScreen extends React.Component {
 
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>
-            <span>Proyectos</span>
+            <span>Nuestros proyectos</span>
             <div>
               <span
                 className={FormStyles.link}

@@ -163,7 +163,7 @@ const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, ...rest }) => {
           labelColor="#ffffff"
           className={FormStyles.primaryButton}
           disabled={submitting}
-          label="ACTUALIZAR"
+          label="GUARDAR"
           onClick={handleSubmit}
         />
         <ConfirmButton
