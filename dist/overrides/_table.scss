@@ -53,8 +53,12 @@
   }
   .rt-thead .rt-th.-sort-asc, .ReactTable .rt-thead .rt-td.-sort-asc {
     box-shadow: none;
+    background: no-repeat url('assets/img/dropdown-arrow-accent-flip.svg');
+    background-position: right 50px center;
   }
   .rt-thead .rt-th.-sort-desc, .ReactTable .rt-thead .rt-td.-sort-desc {
     box-shadow: none;
+    background: no-repeat url('assets/img/dropdown-arrow-accent.svg');
+    background-position: right 50px center;
   }
 }

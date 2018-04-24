@@ -143,6 +143,7 @@ a:hover {
   font-size: 18px;
   color: #141418;
   line-height: 32px;
+  display: flex;
 }
 
 .metricsContainer {
@@ -208,7 +209,7 @@ a:hover {
     margin-bottom: 22px;
   }
   .mission {
-    margin-bottom: 39px;
+    margin-bottom: 40px;
   }
   .buttonsContainer {
     margin-bottom: 37px;
@@ -242,7 +243,7 @@ a:hover {
     margin-bottom: 22px;
   }
   .mission {
-    margin-bottom: 39px;
+    margin-bottom: 40px;
   }
   .buttonsContainer {
     margin-bottom: 37px;
@@ -280,7 +281,7 @@ a:hover {
     margin-bottom: 22px;
   }
   .mission {
-    margin-bottom: 39px;
+    margin-bottom: 40px;
   }
   .buttonsContainer {
     position: absolute;
@@ -345,7 +346,7 @@ a:hover {
   }
   .mission {
     padding: 0 16px;
-    margin-bottom: 39px;
+    margin-bottom: 40px;
   }
   .buttonsContainer {
     width: 100%;
