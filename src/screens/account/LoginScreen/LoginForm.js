@@ -27,8 +27,7 @@ const LoginForm = (
   }
 
   const handleCreateAccount = () => {
-    if (type === 'org') modal('createAccount')
-    if (type === 'donor') modal('donorCreateAccount')
+    modal('chooseAccountType', { type })
   }
 
   const handleKeyDown = (e) => {

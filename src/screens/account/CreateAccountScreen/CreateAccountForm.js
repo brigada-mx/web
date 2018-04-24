@@ -24,7 +24,7 @@ const CreateAccountForm = ({ handleSubmit, submitting }) => {
       onKeyDown={handleKeyDown}
     >
       <span className={FormStyles.formLogo} />
-      <span className={FormStyles.formHeader}>Registro para Brigada</span>
+      <span className={FormStyles.formHeader}>Registro para reconstructor</span>
       <div>
         <TextField
           className={FormStyles.wideInput}

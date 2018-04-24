@@ -1,7 +1,6 @@
 @value colors: "src/colors.css";
 @value brandOffWhite, brandGreen, grey6, grey2, strongShadow from colors;
 
-
 .listItem {
   box-sizing: border-box;
   background-color: white;
