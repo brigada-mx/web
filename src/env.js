@@ -13,4 +13,4 @@ const common = {
   thumborUrl: 'https://d1usq577esam6j.cloudfront.net',
 }
 
-export default { ...common, ...env }
+export default { ...common, ...env, gitHashRelease: process.env.CUSTOM_GIT_COMMIT_HASH }

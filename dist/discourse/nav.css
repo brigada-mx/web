@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0; }
 
+/* remove the above on deployment */
 .brigada-container {
   display: flex;
   flex-direction: row;

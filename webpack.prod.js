@@ -19,5 +19,8 @@ module.exports = merge(common, {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
+    new webpack.DefinePlugin({
+      'process.env.CUSTOM_GIT_COMMIT_HASH': JSON.stringify(process.env.CUSTOM_GIT_COMMIT_HASH),
+    }),
   ],
 })

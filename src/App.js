@@ -90,7 +90,10 @@ const store = createStore(rootReducer, initialStore)
 ReactGA.initialize('UA-108487748-1', { testMode: env.env === 'dev' })
 
 if (env.env === 'prod') {
-  Raven.config('https://3036725f3ff84d689133e21736eaca9a@sentry.io/306469').install()
+  Raven.config(
+    'https://3036725f3ff84d689133e21736eaca9a@sentry.io/306469',
+    { release: env.gitHashRelease },
+  ).install()
 }
 
 const gaLogPageView = () => {
