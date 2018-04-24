@@ -24,7 +24,7 @@
 .brigada-container a:hover img {
   opacity: 0.8; }
 
-a.brigada-link {
+a.brigada-link, span.brigada-link {
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
@@ -36,9 +36,10 @@ a.brigada-link {
   padding: 28px 0 26px 0;
   display: inline-block;
   color: #5A5A5D;
-  transition: all .15s linear; }
+  transition: all .15s linear;
+  cursor: pointer; }
 
-a.brigada-link:hover {
+a.brigada-link:hover, span.brigada-link:hover {
   color: #3DC587; }
 
 a.brigada-forum-link {

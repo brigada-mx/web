@@ -15,8 +15,23 @@
       <a class="brigada-link" href="https://app.brigada.mx/donadores">Donadores</a>
     </span>
     <a class="brigada-link brigada-forum-link" href="https://foro.brigada.mx">Foro</a>
+    <span id="livechat-support-button" class="brigada-link">Soporte</span>
 
     <a href="https://app.brigada.mx/cuenta" class="brigada-button brigada-link">Mi cuenta</a>
   </div>
 
 </nav>
+
+<!-- place this code in </body> section -->
+<script type="text/javascript">
+  document.getElementById('livechat-support-button').onclick = function (e) {
+    e.preventDefault()
+    window.__lc = window.__lc || {};
+    window.__lc.license = 9592725;
+    (function() {
+      var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+      lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+    })();
+  }
+</script>
