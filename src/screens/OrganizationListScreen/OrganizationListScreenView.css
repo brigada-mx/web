@@ -136,11 +136,8 @@
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
-  .flexOverflowTwo {
-    height: calc(100vh - 283px);
-  }
-  .mapContainer {
-    height: 100%;
+  .container {
+    height: calc(100% - 283px);
   }
   .orgsContainer {
     background-color: white;

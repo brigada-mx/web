@@ -1,1 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path fill="#3DC59F" d="M25 42c-9.4 0-17-7.6-17-17S15.6 8 25 8s17 7.6 17 17-7.6 17-17 17zm0-32c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15-6.7-15-15-15z"/><path fill="#3DC59F" d="M23 32.4l-8.7-8.7 1.4-1.4 7.3 7.3 11.3-11.3 1.4 1.4z"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>:: check</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Donantes-Index-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Donantes_index" transform="translate(-1350.000000, -215.000000)">
+            <g id="//-donantes" transform="translate(11.000000, 159.000000)">
+                <g id="::-table">
+                    <g id="::-line" transform="translate(0.000000, 31.000000)">
+                        <g id="::-checks" transform="translate(1339.000000, 25.000000)">
+                            <g id="::-check">
+                                <circle id="Oval" stroke="#3DC587" cx="9.5" cy="9.5" r="9"></circle>
+                                <path d="M8,4 L12,4 L12,5 L8,5 L8,13 L7,13 L7,4 L8,4 Z" id="Rectangle-5" fill="#3DC59F" transform="translate(9.500000, 8.500000) rotate(-136.000000) translate(-9.500000, -8.500000) "></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

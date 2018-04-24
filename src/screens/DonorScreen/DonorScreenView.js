@@ -242,7 +242,7 @@ class DonorScreenView extends React.Component {
           )}
           className={Styles.verifyButton}
         >
-          Asumir control de este perfil
+          Encárgate de este perfil
         </div>
       )
     }
@@ -260,7 +260,7 @@ class DonorScreenView extends React.Component {
               <div className="col-lg-8 col-md-9 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.summaryContainer}>
                   <div className={Styles.fieldContainer}>
-                    <span className={Styles.fieldLabel}>ESTATUS</span>
+                    <span className={Styles.fieldLabel}>Estatus</span>
                     <span
                       className={`${Styles.fieldValue} ${donorHasUser ? Styles.verifiedLabel : Styles.unverifiedLabel}`}
                     >
@@ -268,7 +268,7 @@ class DonorScreenView extends React.Component {
                     </span>
                   </div>
                   <div className={Styles.fieldContainer}>
-                    <span className={Styles.fieldLabel}>WEB</span>
+                    <span className={Styles.fieldLabel}>Web</span>
                     {website &&
                       <span className={`${Styles.fieldValue} ${Styles.ellipsis}`}>
                         <a
@@ -283,7 +283,7 @@ class DonorScreenView extends React.Component {
                     {!website && <span style={{ color: '#9F9F9F' }} className={Styles.fieldValue}>No disponible</span>}
                   </div>
                   <div className={Styles.fieldContainer}>
-                    <span className={Styles.fieldLabel}>SECTOR</span>
+                    <span className={Styles.fieldLabel}>Sector</span>
                     {sector && <span className={Styles.fieldValue}>{sectorByValue[sector] || sector}</span>}
                     {!sector && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
                   </div>

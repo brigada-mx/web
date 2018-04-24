@@ -61,11 +61,12 @@ a:hover {
 }
 
 .fieldLabel {
-  font-family: 'nunito-sans-800', sans-serif;
-  font-size: 11px;
-  color: #9F9F9F;
-  letter-spacing: 0.8px;
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 13px;
+  color: #0F0F0F;
+  letter-spacing: 0.35px;
   line-height: 16px;
+  opacity: 0.4;
 }
 
 .fieldValue {

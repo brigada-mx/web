@@ -22,12 +22,16 @@
     font-size: 13px;
     letter-spacing: 0.52px;
     color: #141418;
-    background-color: white;
-    margin-bottom: 3px;
     box-shadow: none;
   }
   .rt-thead.-header .rt-tr {
-    padding: 23px 0 20px 15px;
+    padding: 23px 0 15px 15px;
+  }
+  .rt-thead.-header .rt-th {
+    padding: 5px 0px;
+  }
+  .rt-thead .rt-resizable-header:last-child, .rt-thead .rt-resizable-header-content {
+    overflow: unset;
   }
   .rt-thead .rt-tr {
     text-align: left;
@@ -38,10 +42,9 @@
     border-bottom: none;
   }
   .rt-tbody .rt-tr {
-    padding: 19px 0 20px 11px;
+    padding: 22px 0 17px 11px;
     transition: all .15s linear;
     &:hover {
-      // background: rgba(0,0,0,0.01);
       color: #13A68C;
     }
   }

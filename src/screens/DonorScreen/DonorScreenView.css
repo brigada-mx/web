@@ -61,11 +61,12 @@ a:hover {
 }
 
 .fieldLabel {
-  font-family: 'nunito-sans-800', sans-serif;
-  font-size: 11px;
-  color: #9F9F9F;
-  letter-spacing: 0.8px;
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 13px;
+  color: #0F0F0F;
+  letter-spacing: 0.35px;
   line-height: 16px;
+  opacity: 0.4;
 }
 
 .fieldValue {
@@ -107,13 +108,19 @@ a:hover {
 }
 
 .verifyButton {
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 13px;
+  color: #ffffff;
+  letter-spacing: 0.35px;
   width: 250px;
-  height: 40px;
+  height: 48px;
   background-color: #3DC59F;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 11px;
+  transition: all .15s linear;
 }
 
 .verifyButton:hover {
@@ -121,21 +128,32 @@ a:hover {
   cursor: pointer;
 }
 
-.unverifiedLabel
-{
+.unverifiedLabel {
   color: #9F9F9F;
-  background-image: url('assets/img/circle-checkmark.svg');
-  background-repeat: no-repeat;
-  padding-left: 33px;
-  display: block;
+  display: inline-flex;
 }
 
-.verifiedLabel
-{
+.unverifiedLabel:before {
+  content: "";
+  background-image: url('assets/img/circle-checkmark.svg');
+  background-repeat: no-repeat;
+  width: 19px;
+  height: 19px;
+  margin: 6px 5px 0 0;
+}
+
+.verifiedLabel {
+  color: #9F9F9F;
+  display: inline-flex;
+}
+
+.verifiedLabel:before {
+  content: "";
   background-image: url('assets/img/circle-checkmark-accent.svg');
   background-repeat: no-repeat;
-  padding-left: 33px;
-  display: block;
+  width: 19px;
+  height: 19px;
+  margin: 6px 5px 0 0;
 }
 
 .website {
@@ -278,6 +296,10 @@ a:hover {
   .buttonsContainer {
     margin-bottom: 37px;
   }
+  .verifyButton {
+    width: 222px;
+    height: 48px;
+  }
   .button {
     width: 72px;
     height: 72px;
@@ -312,6 +334,13 @@ a:hover {
   }
   .mission {
     margin-bottom: 39px;
+  }
+  .verifyButton {
+    width: 222px;
+    height: 48px;
+    position: absolute;
+    top: 92px;
+    right: 19px;
   }
   .buttonsContainer {
     position: absolute;
@@ -383,6 +412,26 @@ a:hover {
     justify-content: space-between;
     border-top: 1px solid #F2F2F4;
     border-bottom: 1px solid #F2F2F4;
+  }
+  .verifyButton {
+    font-family: 'work-sans-300', sans-serif;
+    font-size: 18px;
+    width: 100%;
+    letter-spacing: 0;
+    line-height: 32px;
+    padding: 25px 0 25px 0;
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid #F2F2F4;
+    border-bottom: 1px solid #F2F2F4;
+    background-color: white;
+    color: #3DC59F;
+  }
+  .verifyButton:hover {
+    background-color: white;
+    color: #13A68C;
   }
   .button {
     width: 72px;

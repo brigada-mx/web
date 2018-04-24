@@ -108,9 +108,9 @@ class DonorListScreenView extends React.Component {
       })
       columns.push({
         Header: () => (
-          <div className={Styles.box}>
+          <div>
             {verifiedInfo &&
-              <div className={Styles.tooltip}>¿Tiene este donador un usario o no?</div>
+              <div className={Styles.tooltip}>¿El donador ha verificado su información?</div>
             }
             <span>Estatus</span>
             <span
@@ -118,7 +118,6 @@ class DonorListScreenView extends React.Component {
               onMouseEnter={() => this.setVerifiedInfo(true)}
               onMouseLeave={() => this.setVerifiedInfo(false)}
             >
-              ?
             </span>
           </div>
         ),
@@ -126,7 +125,7 @@ class DonorListScreenView extends React.Component {
         Cell: (props) => {
           const src = props.original.has_user ? 'assets/img/circle-checkmark-accent.svg' : 'assets/img/circle-checkmark.svg'
           const alt = props.original.has_user ? 'Sí' : 'No'
-          return <img src={src} alt={alt} height="30" />
+          return <img src={src} alt={alt} height="19px" className={Styles.checkmark} />
         },
       })
     }
@@ -140,7 +139,7 @@ class DonorListScreenView extends React.Component {
       <React.Fragment>
         <div className={`${Styles.searchContainer} row middle between wrapper`}>
           <span
-            className={Styles.createAccountButton}
+            className={Styles.cta}
             onClick={() => modal('donorCreateAccount')}
           >
             Crear tu cuenta
