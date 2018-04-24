@@ -142,11 +142,11 @@ export const getTextWidth = (text, font) => {
   return metrics.width
 }
 
-export const renderLinks = (text, className = '') => {
+export const renderLinks = (text) => {
   let remaining = text
   const parts = []
   while (true) { // eslint-disable-line no-constant-condition
-    const match = urlRegex().exec(remaining)
+    const match = urlRegex({strict: false}).exec(remaining)
     if (match === null) {
       parts.push(remaining)
       break
@@ -159,9 +159,5 @@ export const renderLinks = (text, className = '') => {
     parts.push(<a href={addProtocol(s)}>{s}</a>)
     remaining = remaining.substring(match.index + s.length)
   }
-  return (
-    <span className={className}>
-      {parts.map((p, i) => <React.Fragment key={i}>{p}</React.Fragment>)}
-    </span>
-  )
+  return parts.map((p, i) => <React.Fragment key={i}>{p}</React.Fragment>)
 }

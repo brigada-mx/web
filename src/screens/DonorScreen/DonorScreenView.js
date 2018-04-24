@@ -290,7 +290,7 @@ class DonorScreenView extends React.Component {
                 </div>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
-                {renderLinks(desc, Styles.mission)}
+                <p className={Styles.mission}>{renderLinks(desc)}</p>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
