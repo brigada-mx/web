@@ -146,7 +146,7 @@ class DonorListScreenView extends React.Component {
             showPagination={false}
             showPageSizeOptions={false}
             className="donorTable"
-            defaultPageSize={donors.length}
+            pageSize={filtered.length}
             data={filtered}
             columns={columns}
             getTrProps={(state, rowInfo, column) => {
