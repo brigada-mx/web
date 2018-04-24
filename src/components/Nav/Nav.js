@@ -53,12 +53,17 @@ const NavLinks = ({
     return <a onClick={handleClickLogin} className={className}>Login</a>
   }
 
+  const forumButton = () => {
+    if (orgToken || donorToken) return <a href="http://foro.brigada.mx/session/sso">Foro</a>
+    return <a href="http://foro.brigada.mx">Foro</a>
+  }
+
   return (
     <React.Fragment>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">Comunidades</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/reconstructores">Reconstructores</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={donorIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/donadores">Donadores</NavLink>
-      <a href="http://foro.brigada.mx">Foro</a>
+      {forumButton()}
       <Link onClick={openChat} className={classNameLink} to="#">Soporte</Link>
       {loginButton()}
     </React.Fragment>

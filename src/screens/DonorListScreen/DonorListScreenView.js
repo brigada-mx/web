@@ -101,11 +101,6 @@ class DonorListScreenView extends React.Component {
         accessor: 'donating',
         Cell: (props) => { return props.original.donating ? 'Sí' : 'No' },
       })
-      columns.splice(1, 0, {
-        Header: 'Sector',
-        accessor: 'sector',
-        Cell: props => sectorByValue[props.original.sector] || 'No disponible',
-      })
       columns.push({
         Header: () => (
           <div>

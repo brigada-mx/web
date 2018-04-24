@@ -73,10 +73,18 @@ class Service {
   }
 
   // DISCOURSE
-  discourseLogin = async (email, password, sso, sig, user_type) => {
+  discourseLogin = async (email, password, sso, sig) => {
     return sendToApi('/discourse/login/', {
-      method: 'POST', body: { email, password, sso, sig, user_type },
+      method: 'POST', body: { email, password, sso, sig },
     })
+  }
+
+  accountDiscourseLogin = async (sso, sig) => {
+    return sendToApiAuth('org', '/discourse/authenticated_login/', { method: 'POST', body: { sso, sig } })
+  }
+
+  donorDiscourseLogin = async (sso, sig) => {
+    return sendToApiAuth('donor', '/discourse/authenticated_login/', { method: 'POST', body: { sso, sig } })
   }
 
   // ORGANIZATION ACCOUNT PUBLIC ENDPOINTS
