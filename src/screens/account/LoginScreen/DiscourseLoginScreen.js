@@ -24,7 +24,6 @@ class DiscourseLoginScreen extends React.Component {
     const params = parseQs(window.location.search)
     const { sso, sig } = params
 
-    console.log(orgToken, donorToken)
     let data
     if (orgToken) {
       ({ data } = await service.accountDiscourseLogin(sso, sig))

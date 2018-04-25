@@ -332,7 +332,6 @@ class LocalityScreenView extends React.Component {
     if (loading || !data) return <LoadingIndicatorCircle />
 
     const { results: actions } = data
-    console.log(actions)
     const { focused } = this.state
 
     let budget = 0
