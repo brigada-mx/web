@@ -10,7 +10,7 @@ import Styles from './AccountCreated.css'
 const AccountVerified = ({ type }) => {
   const text = {
     org: 'Ya puedes documentar los proyectos de tu organización.',
-    donor: 'Ya puedes crear, aprobar y ocultar las donaciones de tu organización.',
+    donor: 'Ya puedes crear, aprobar y ocultar los donativos de tu organización.',
   }[type]
   return (
     <div className={Styles.container}>

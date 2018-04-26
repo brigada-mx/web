@@ -34,7 +34,7 @@ class DonationScreen extends React.Component {
       return
     }
     this.loadDonation()
-    this.props.snackbar('Actualizaste tu donación', 'success')
+    this.props.snackbar('Actualizaste tu donativo', 'success')
   }
 
   handleDeleteDonation = async () => {
@@ -43,7 +43,7 @@ class DonationScreen extends React.Component {
       this.props.snackbar('Hubo un error', 'error')
       return
     }
-    this.props.snackbar(`Borraste donación ${this.props.id}`, 'success')
+    this.props.snackbar(`Borraste donativo ${this.props.id}`, 'success')
     this.props.history.push('/donador')
   }
 

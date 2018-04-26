@@ -77,7 +77,7 @@ const DonorDonationTable = ({ donations, onToggleApproved, history }) => {
         const { id } = column
         const handleRowClicked = (e, handleOriginal) => {
           if (id !== 'approved_by_donor' && id !== 'action.organization.id' && rowInfo) {
-            history.push(`/donador/donaciones/${rowInfo.original.id}`)
+            history.push(`/donador/donativos/${rowInfo.original.id}`)
           }
           if (handleOriginal) handleOriginal()
         }

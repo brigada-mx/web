@@ -146,7 +146,7 @@ const App = () => {
 
               <Route exact path="/donador" component={protectedScreen(DonorHomeScreen, 'donor')} />
               <Route exact path="/donador/perfil" component={protectedScreen(DonorProfileScreen, 'donor')} />
-              <Route exact path="/donador/donaciones/:id" component={protectedScreen(DonationScreenWrapper, 'donor')} />
+              <Route exact path="/donador/donativos/:id" component={protectedScreen(DonationScreenWrapper, 'donor')} />
 
               <Redirect from="/cuenta" to="/cuenta" />
               <Redirect from="/donador" to="/donador" />

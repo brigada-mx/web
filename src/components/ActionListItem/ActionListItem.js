@@ -74,7 +74,7 @@ class ActionListItem extends React.PureComponent {
 
       return (
         <div className={Styles.donationContainer}>
-          <span className={Styles.label}>DONACIONES (MXN): </span>
+          <span className={Styles.label}>DONATIVOS (MXN): </span>
           <table className={Styles.donations}>
             <tbody>{rows}</tbody>
           </table>

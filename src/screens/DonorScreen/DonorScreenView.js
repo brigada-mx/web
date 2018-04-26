@@ -295,7 +295,7 @@ class DonorScreenView extends React.Component {
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
                   <div className={metrics.total_donated > 0 ? Styles.metric : Styles.emptyMetric}>
-                    <span className={Styles.metricLabel}>Donaciones<br />estimadas</span>
+                    <span className={Styles.metricLabel}>Donativos<br />estimados</span>
                     <span className={Styles.metricValue}>
                       {fmtBudget(metrics.total_donated)}
                     </span>
