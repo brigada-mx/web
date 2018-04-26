@@ -182,7 +182,6 @@ const validate = ({ id, amount, donor, contact_email }) => {
     errors.donor = 'Escoge un donador de la lista, o ingresa un nuevo donador'
   }
   if (donor && !donor.has_user && !contact_email) errors.contact_email = 'Agrega un email de contacto para este donador'
-  if (amount < 0) errors.amount = 'Agrega un monto positivo'
   return errors
 }
 

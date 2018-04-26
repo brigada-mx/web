@@ -2,13 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service from 'api/service'
+import { parseQs } from 'tools/string'
 import DonorCreateAccountForm, { prepareDonorBody } from './DonorCreateAccountForm'
 
 
-const DonorCreateAccountScreen = ({ snackbar, modal, className = '', initialValues }) => {
+const DonorCreateAccountScreen = ({ snackbar, modal, className = '', initialValues, location }) => {
   const handleSubmit = async ({ email, ...rest }) => {
     const { data, status } = await service.donorCreateAccount(prepareDonorBody({ email, ...rest }))
     if (data) {
@@ -20,14 +22,24 @@ const DonorCreateAccountScreen = ({ snackbar, modal, className = '', initialValu
     else snackbar('Checa tu conexión', 'error')
   }
 
+  const obj = parseQs(location.search)
+  const { name, id } = obj
+  let _initialValues = initialValues
+  if (name && id !== undefined) {
+    _initialValues = {
+      ...initialValues,
+      donor: { text: decodeURI(name), value: Number.parseInt(id, 10) },
+    }
+  }
+
   if (className) {
     return (
       <div className={className}>
-        <DonorCreateAccountForm onSubmit={handleSubmit} initialValues={initialValues} />
+        <DonorCreateAccountForm onSubmit={handleSubmit} initialValues={_initialValues} />
       </div>
     )
   }
-  return <DonorCreateAccountForm onSubmit={handleSubmit} initialValues={initialValues} />
+  return <DonorCreateAccountForm onSubmit={handleSubmit} initialValues={_initialValues} />
 }
 
 DonorCreateAccountScreen.propTypes = {
@@ -35,6 +47,7 @@ DonorCreateAccountScreen.propTypes = {
   modal: PropTypes.func.isRequired,
   className: PropTypes.string,
   initialValues: PropTypes.object,
+  location: PropTypes.object.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -45,4 +58,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(DonorCreateAccountScreen)
+export default withRouter(connect(null, mapDispatchToProps)(DonorCreateAccountScreen))

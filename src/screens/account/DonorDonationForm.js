@@ -168,7 +168,6 @@ UpdateForm.propTypes = {
 const validate = ({ action, amount }) => {
   const errors = {}
   if (!action || !action.value) errors.action = 'Escoge un proyecto de la lista'
-  if (amount < 0) errors.amount = 'Agrega un monto positivo'
   return errors
 }
 
