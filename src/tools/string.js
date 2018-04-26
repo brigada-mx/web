@@ -2,6 +2,7 @@ import React from 'react'
 
 import _ from 'lodash'
 import urlRegex from 'url-regex'
+import { Link } from 'react-router-dom'
 
 import env from 'src/env'
 
@@ -142,11 +143,14 @@ export const getTextWidth = (text, font) => {
   return metrics.width
 }
 
-export const renderLinks = (text) => {
+export const _renderLinks = (text, type) => {
   let remaining = text
   const parts = []
   while (true) { // eslint-disable-line no-constant-condition
-    const match = urlRegex({strict: false}).exec(remaining)
+    let match
+    if (type === 'email') match = /\S+@\S+\.\S+/.exec(remaining)
+    else match = urlRegex({ strict: false }).exec(remaining)
+
     if (match === null) {
       parts.push(remaining)
       break
@@ -156,8 +160,25 @@ export const renderLinks = (text) => {
     while ([',', '.', ':', ';'].includes(s.slice(-1))) {
       s = s.slice(0, -1)
     }
-    parts.push(<a href={addProtocol(s)}>{s}</a>)
+
+    if (type === 'email') parts.push(<a href={`mailto:${s}`}>{s}</a>)
+    else {
+      const url = addProtocol(s)
+      const parsed = getLocation(url)
+      const { host, pathname, search } = parsed
+      if (host === env.siteHost) parts.push(<Link to={`${pathname || '/'}${search}`}>{s}</Link>)
+      else parts.push(<a href={url} target="_blank">{s}</a>)
+    }
     remaining = remaining.substring(match.index + s.length)
   }
+  return parts
+}
+
+export const renderLinks = (text) => {
+  const emailParts = _renderLinks(text, 'email')
+  const parts = [].concat(...emailParts.map((p) => {
+    if (typeof p === 'string') return _renderLinks(p)
+    return [p]
+  }))
   return parts.map((p, i) => <React.Fragment key={i}>{p}</React.Fragment>)
 }

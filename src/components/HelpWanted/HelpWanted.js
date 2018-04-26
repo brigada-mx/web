@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import ReactGA from 'react-ga'
 
 import Modal from 'components/Modal'
-import { emailLink } from 'tools/string'
+import { emailLink, renderLinks } from 'tools/string'
 import FormStyles from 'src/Form.css'
 import GlobalStyles from 'src/Global.css'
 import Styles from './HelpWanted.css'
@@ -48,7 +48,7 @@ class HelpWanted extends React.Component {
           >
             <div className={Styles.modalContent}>
               <span className={Styles.helpTitle}>{title}</span>
-              <p className={Styles.helpText}>{helpDesc}</p>
+              <p className={Styles.helpText}>{renderLinks(helpDesc)}</p>
               <div className={FormStyles.buttonContainer}>
                 {email && <RaisedButton
                   containerElement={

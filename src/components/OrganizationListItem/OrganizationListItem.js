@@ -51,7 +51,7 @@ class OrganizationListItem extends React.PureComponent {
         </div>
         <div className={Styles.metricsContainer}>
           <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
-            <span className={Styles.label}>Inversión<br />estimada</span>
+            <span className={Styles.label}>Inversión<br />comprometida</span>
             <span className={Styles.value}>{fmtBudget(budget)}</span>
           </div>
           <div className={Styles.metric}>

@@ -248,7 +248,7 @@ class OrganizationScreenView extends React.Component {
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
                   <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
-                    <span className={Styles.metricLabel}>Inversión<br />estimada</span>
+                    <span className={Styles.metricLabel}>Inversión<br />comprometida</span>
                     <span className={Styles.metricValue}>
                       {fmtBudget(budget)}
                     </span>

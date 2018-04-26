@@ -66,7 +66,7 @@ class ActionListItem extends React.PureComponent {
       }).map(({ amount, donor: { id, name } }, i) => {
         return (
           <tr key={i}>
-            <th><Link className={Styles.donorLink}to={`/donadores/${id}`}>{name}</Link></th>
+            <th><Link className={Styles.donorLink} to={`/donadores/${id}`}>{name}</Link></th>
             <th>{fmtBudgetPlain(amount)}</th>
           </tr>
         )
