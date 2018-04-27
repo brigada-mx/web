@@ -24,6 +24,7 @@ import ChooseAccountTypeScreen from 'screens/account/CreateAccountScreen/ChooseA
 import DonorListScreen from 'screens/DonorListScreen'
 import DonorScreen from 'screens/DonorScreen'
 import DonorCreateAccountScreen from 'screens/account/CreateAccountScreen/DonorCreateAccountScreen'
+import CreateAccountScreen from 'screens/account/CreateAccountScreen'
 
 import protectedScreen from 'screens/account/ProtectedScreen'
 import DiscourseLoginScreen from 'screens/account/LoginScreen/DiscourseLoginScreen'
@@ -66,6 +67,10 @@ const SetPasswordWithTokenScreenWrapper = () => {
 
 const ChooseAccountTypeScreenWrapper = () => {
   return <ChooseAccountTypeScreen className={GlobalStyles.modalScreenWrapper} />
+}
+
+const CreateAccountScreenWrapper = () => {
+  return <CreateAccountScreen className={GlobalStyles.modalScreenWrapper} />
 }
 
 const DonorCreateAccountScreenWrapper = () => {
@@ -144,6 +149,7 @@ const App = () => {
               <Route exact path="/foro/sso" component={DiscourseLoginScreenWrapper} />
               <Route path="/establecer" component={SetPasswordWithTokenScreenWrapper} />
               <Route exact path="/crear/cuenta" component={ChooseAccountTypeScreenWrapper} />
+              <Route exact path="/crear/cuenta/reconstructor" component={CreateAccountScreenWrapper} />
               <Route exact path="/crear/cuenta/donador" component={DonorCreateAccountScreenWrapper} />
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen, 'org')} />
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen, 'org')} />

@@ -149,6 +149,7 @@ class DonorListScreenView extends React.Component {
             pageSize={filtered.length}
             data={filtered}
             columns={columns}
+            noDataText=""
             getTrProps={(state, rowInfo, column) => {
               const handleRowClicked = (e, handleOriginal) => {
                 history.push(`/donadores/${rowInfo.original.id}`)

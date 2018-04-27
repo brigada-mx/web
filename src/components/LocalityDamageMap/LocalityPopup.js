@@ -7,7 +7,7 @@ import { fmtNum, fmtBudget } from 'tools/string'
 import Styles from './LocalityPopup.css'
 
 
-const LocalityPopup = ({ locality, organization, screen, onlyLocality = false}) => {
+const LocalityPopup = ({ locality, organization, screen, onlyLocality = false }) => {
   if (!locality) return null
   const { state_name: stateName, name, location: { lat, lng } } = locality
   const { habit, notHabit, destroyed, total, margGrade } = locality.meta
