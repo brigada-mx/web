@@ -27,7 +27,7 @@ class DonorCreateAccountForm extends React.Component {
   }
 
   render() {
-    const { handleSubmit, submitting, donors } = this.props
+    const { handleSubmit, submitting, donors, donorDisabled, donorName } = this.props
     const dataSource = donors.map((d) => {
       const { id, name } = d
       return { text: name, value: id }
@@ -51,20 +51,22 @@ class DonorCreateAccountForm extends React.Component {
         onKeyDown={this.handleKeyDown}
       >
         <span className={FormStyles.formLogo} />
-        <span className={Styles.formHeader}>Registro para donador</span>
+        <span className={Styles.formHeader}>Registro para {donorName || 'donador'}</span>
 
-        <div>
-          <AutoComplete
-            className={FormStyles.wideInput}
-            floatingLabelText="¿Cómo se llama tu organización?"
-            name="donor"
-            dataSource={dataSource}
-            fullWidth
-            filter={AutoCompleteMui.fuzzyFilter}
-            format={formatAutoComplete}
-            normalize={normalizeAutoComplete}
-          />
-        </div>
+        {!donorDisabled &&
+          <div>
+            <AutoComplete
+              className={FormStyles.wideInput}
+              floatingLabelText="¿Cómo se llama tu organización?"
+              name="donor"
+              dataSource={dataSource}
+              fullWidth
+              filter={AutoCompleteMui.fuzzyFilter}
+              format={formatAutoComplete}
+              normalize={normalizeAutoComplete}
+            />
+          </div>
+        }
         <div className={Styles.dropdown}>
           <SelectField floatingLabelText="¿A qué sector pertenece?" className={FormStyles.wideInput} name="sector">
             <MenuItem value="civil" primaryText="Civil" />
@@ -108,6 +110,12 @@ class DonorCreateAccountForm extends React.Component {
 DonorCreateAccountForm.propTypes = {
   ...rxfPropTypes,
   donors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  donorDisabled: PropTypes.bool,
+  donorName: PropTypes.string,
+}
+
+DonorCreateAccountForm.defaultProps = {
+  donorDisabled: false,
 }
 
 export const prepareDonorBody = (body) => {

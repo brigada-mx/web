@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import AutoCompleteMui from 'material-ui/AutoComplete'
 
 import { TextField, Toggle, DatePicker, AutoComplete, Checkbox } from 'components/Fields'
+import { validateEmail } from 'tools/string'
 import service, { getBackoff } from 'api/service'
 import ConfirmButton from 'components/ConfirmButton'
 import FormStyles from 'src/Form.css'
@@ -181,7 +182,9 @@ const validate = ({ id, amount, donor, contact_email }) => {
   } else if (!donor || (!donor.value && !donor.text)) {
     errors.donor = 'Escoge un donador de la lista, o ingresa un nuevo donador'
   }
-  if (donor && !donor.has_user && !contact_email) errors.contact_email = 'Agrega un email de contacto para este donador'
+  if (donor && !donor.has_user && !validateEmail(contact_email)) {
+    errors.contact_email = 'Agrega un email de contacto válido para este donador'
+  }
   return errors
 }
 

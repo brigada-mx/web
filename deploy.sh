@@ -16,4 +16,4 @@ aws s3 cp dist/google2056132fa8ef12ca.html s3://${bucketname} --acl public-read
 
 aws cloudfront create-invalidation --distribution-id E26AO23800RE7C --paths '/*'
 
-curl -d '{"app_type":"web", "git_hash":"'`git rev-parse HEAD`'"}' -H "Content-Type: application/json" -H "Authorization: Bearer `cat .secret-key`" -X POST https://api.brigada.mx/api/internal/app_versions/
+curl -d '{"app_type":"web", "git_hash":"'`git rev-parse HEAD`'"}' -H "Content-Type: application/json" -H "Authorization: Bearer `cat .internal-auth-key`" -X POST https://api.brigada.mx/api/internal/app_versions/

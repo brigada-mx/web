@@ -10,9 +10,12 @@ import { parseQs } from 'tools/string'
 import DonorCreateAccountForm, { prepareDonorBody } from './DonorCreateAccountForm'
 
 
-const DonorCreateAccountScreen = ({ snackbar, modal, className = '', initialValues, location }) => {
+const DonorCreateAccountScreen = ({
+  snackbar, modal, className = '', initialValues, location, donorId, donorName,
+}) => {
   const handleSubmit = async ({ email, ...rest }) => {
-    const { data, status } = await service.donorCreateAccount(prepareDonorBody({ email, ...rest }))
+    const body = donorId !== undefined ? { email, donor_id: donorId, ...rest } : prepareDonorBody({ email, ...rest })
+    const { data, status } = await service.donorCreateAccount(body)
     if (data) {
       modal('accountCreated', { email, type: 'donor' })
       return
@@ -32,14 +35,17 @@ const DonorCreateAccountScreen = ({ snackbar, modal, className = '', initialValu
     }
   }
 
-  if (className) {
-    return (
-      <div className={className}>
-        <DonorCreateAccountForm onSubmit={handleSubmit} initialValues={_initialValues} />
-      </div>
-    )
-  }
-  return <DonorCreateAccountForm onSubmit={handleSubmit} initialValues={_initialValues} />
+  const form = (
+    <DonorCreateAccountForm
+      onSubmit={handleSubmit}
+      initialValues={_initialValues}
+      donorDisabled={donorId !== undefined}
+      donorName={donorName}
+    />
+  )
+
+  if (className) return <div className={className}>{form}</div>
+  return form
 }
 
 DonorCreateAccountScreen.propTypes = {
@@ -48,6 +54,8 @@ DonorCreateAccountScreen.propTypes = {
   className: PropTypes.string,
   initialValues: PropTypes.object,
   location: PropTypes.object.isRequired,
+  donorId: PropTypes.number,
+  donorName: PropTypes.string,
 }
 
 const mapDispatchToProps = (dispatch) => {

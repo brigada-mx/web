@@ -237,9 +237,7 @@ class DonorScreenView extends React.Component {
       }
       return (
         <div
-          onClick={() => modal(
-            'donorCreateAccount', { initialValues: { donor: { text: name, value: id } } }
-          )}
+          onClick={() => modal('donorCreateAccount', { donorName: name, donorId: id })}
           className={Styles.verifyButton}
         >
           Encárgate de este perfil

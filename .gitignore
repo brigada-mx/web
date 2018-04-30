@@ -19,4 +19,4 @@ requester.pyr
 src/data/*
 
 # env
-.secret-key
+.internal-auth-key
