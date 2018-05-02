@@ -10,6 +10,9 @@
 
 .donorTable.ReactTable {
   border: none;
+  .rt-table {
+    overflow: hidden;
+  }
   .rt-tbody {
     box-shadow: none;
     font-family: 'nunito-sans-200', sans-serif;
