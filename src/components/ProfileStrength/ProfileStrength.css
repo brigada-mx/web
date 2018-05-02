@@ -1,67 +1,43 @@
 @value colors: "src/colors.css";
-@value brandGreen, grey2, shadow from colors;
+@value brandGreen, grey2, brandOffWhite from colors;
 
-.container {
-  position: sticky;
+.container > div {
+  background-color: brandOffWhite;
+  border-radius: 1px;
+  margin-top: 2px;
+  padding: 25px 20px;
+  box-sizing: border-box;
+  width: 90%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  bottom: 0;
-  background-color: #ffffff;
-  border-bottom: 1px solid #F2F2F4;
-  width: 100vw;
-  z-index: 10;
-  height: 70px;
-  box-shadow: 0px 0px 80px 0px rgba(37, 38, 50, 0.10);
+}
+
+.top {
+  color: grey2;
+  font-size: 13px;
+  letter-spacing: 0.52px;
+  line-height: 12px;
 }
 
 .barContainer {
-  width: 70vw;
-  padding-top: 8px;
+  width: 70px;
 }
 
-.bar {
-  margin-top: 6px;
+.middle {
+  color: #141418;
+}
+
+.bottom {
+  font-family: 'nunito-sans-400', sans-serif;
+  color: grey2;
+  font-size: 11px;
+  letter-spacing: 0.52px;
+  line-height: 13px;
 }
 
 .strength {
-  font-family: 'roboto-700', sans-serif;
-  font-size: 13px;
-  color: #141418;
-  letter-spacing: 0.52px;
-  line-height: 12px;
-}
-
-.nextTask {
-  font-family: 'roboto-700', sans-serif;
-  margin-left: 7px;
-  opacity: 0.3;
-  font-size: 13px;
-  color: #141418;
-  letter-spacing: 0.52px;
-  line-height: 12px;
-}
-
-.button {
-  font-family: 'nunito-sans-600', sans-serif;
-  font-size: 13px;
-  color: #3DC587;
-  letter-spacing: 0.35px;
-  text-align: center;
-  line-height: 16px;
-  text-decoration: none;
-  border: 1px solid brandGreen;
-  padding: 12px 0 10px 0;
-  width: 144px;
-  text-align: center;
-}
-
-/* Button: */
-
-
-.button:hover {
-  border: 1px solid brandGreen;
+  margin-top: 12px;
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {

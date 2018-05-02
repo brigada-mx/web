@@ -37,24 +37,17 @@ class ProfileStrengthPublic extends React.Component {
       },
     } = profile
 
-    const tasks = [email, desc, contact, actions, submissions, donations, help, post]
-    const commands = [
-      'agrega tu email',
-      'completa la descripción de tu organización',
-      'agrega el teléfono y la dirección de tu organización',
-      'agrega un proyecto',
-      'agrega fotos a tus proyectos',
-      'documenta los donativos que has recibido',
-      'agrega oportunidades de voluntariado',
-      'postea en el foro',
+    const tasks = [
+      { value: email, label: 'agrega tu email' },
+      { value: desc, label: 'completa la descripción de tu organización' },
+      { value: contact, label: 'agrega el teléfono y la dirección de tu organización' },
+      { value: actions, label: 'agrega un proyecto' },
+      { value: submissions, label: 'agrega fotos a tus proyectos' },
+      { value: donations, label: 'documenta los donativos que has recibido' },
+      { value: help, label: 'agrega oportunidades de voluntariado' },
+      { value: post, label: 'postea en el foro' },
     ]
-    let index
-    for (let i = 0; i < tasks.length; i += 1) {
-      if (!tasks[i]) {
-        index = i
-        break
-      }
-    }
+    const task = tasks.find(t => t.value === false)
 
     return (
       <div className={`${Styles.container} wrapper animated slideInUp delay-800`}>
@@ -62,8 +55,8 @@ class ProfileStrengthPublic extends React.Component {
           <span className={Styles.strength}>
             La fuerza de tu perfil es del {Math.round(100 * ratio)}%.
           </span>
-          {index !== undefined &&
-            <span className={Styles.nextTask}>Para incrementarla, {commands[index]}.</span>
+          {task &&
+            <span className={Styles.nextTask}>Para incrementarla, {task.label}.</span>
           }
           <MetricsBar value={ratio} max={1} className={Styles.bar} />
         </div>

@@ -1,5 +1,5 @@
 @value colors: "src/colors.css";
-@value brandGreen, grey2, shadow from colors;
+@value brandGreen, grey2 from colors;
 
 .container {
   position: sticky;

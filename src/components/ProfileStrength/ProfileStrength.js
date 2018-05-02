@@ -2,12 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import CircularProgressbar from 'react-circular-progressbar'
+import '!style-loader!css-loader!react-circular-progressbar/dist/styles.css'
 
-import MetricsBar from 'components/MetricsBar'
 import service, { getBackoff } from 'api/service'
 import Styles from './ProfileStrength.css'
 
+
+const barStyles = {
+  trail: { stroke: '#CACCD5' },
+  path: { stroke: '#3DC587' },
+  text: { stroke: '#3DC587', fontSize: '1.7em' },
+}
 
 class ProfileStrength extends React.Component {
   constructor(props) {
@@ -48,26 +54,25 @@ class ProfileStrength extends React.Component {
       'agrega oportunidades de voluntariado',
       'postea en el foro',
     ]
-    let index
-    for (let i = 0; i < tasks.length; i += 1) {
-      if (!tasks[i]) {
-        index = i
-        break
-      }
-    }
 
     return (
-      <div className={`${Styles.container} wrapper row middle between animated slideInUp delay-800`}>
-        <div className={Styles.barContainer}>
-          <span className={Styles.strength}>
-            La fuerza de tu perfil es del {Math.round(100 * ratio)}%.
-          </span>
-          {index !== undefined &&
-            <span className={Styles.nextTask}>Para incrementarla, {commands[index]}.</span>
-          }
-          <MetricsBar value={ratio} max={1} className={Styles.bar} />
+      <div className={Styles.container}>
+        <div className={Styles.top}>
+          <div className={Styles.barContainer}>
+            <CircularProgressbar
+              percentage={Math.round(100 * ratio)}
+              strokeWidth={4}
+              initialAnimation
+              styles={barStyles}
+            />
+          </div>
+          <span className={Styles.strength}>FUERZA DE TU PERFIL</span>
         </div>
-        <Link className={Styles.button} to="/cuenta">Editar tu perfil</Link>
+        <div className={Styles.middle}>
+        </div>
+        <div className={Styles.bottom}>
+          Perfiles al 100% tienen 4 veces la probabilidad de atraer voluntarios o donativos.
+        </div>
       </div>
     )
   }

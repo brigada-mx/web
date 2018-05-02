@@ -11,6 +11,7 @@ import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
+import ProfileStrength from 'components/ProfileStrength'
 import FormStyles from 'src/Form.css'
 import { CreateActionForm, prepareActionBody } from 'screens/account/ActionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
@@ -256,7 +257,7 @@ class HomeScreen extends React.Component {
         }
       </div>
     )
-    return <WithSideNav>{content}</WithSideNav>
+    return <WithSideNav navComponents={<ProfileStrength />}>{content}</WithSideNav>
   }
 }
 
