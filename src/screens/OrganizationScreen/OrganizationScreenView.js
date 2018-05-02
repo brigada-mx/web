@@ -13,7 +13,7 @@ import HelpWanted from 'components/HelpWanted'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import MapErrorBoundary from 'components/MapErrorBoundary'
-import ProfileStrength from 'components/ProfileStrength'
+import ProfileStrengthPublic from 'components/ProfileStrength/ProfileStrengthPublic'
 import { addProtocol, emailLink, fmtBudget, renderLinks } from 'tools/string'
 import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
 import { sectorByValue } from 'src/choices'
@@ -332,7 +332,7 @@ class OrganizationScreenView extends React.Component {
           </div>
         </StickyContainer>
 
-        {this.props.myOrganization && <ProfileStrength />}
+        {this.props.myOrganization && <ProfileStrengthPublic />}
         {this.renderCarousel()}
       </React.Fragment>
     )
