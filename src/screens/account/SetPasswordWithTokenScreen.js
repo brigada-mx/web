@@ -82,8 +82,9 @@ const SetPasswordWithTokenScreen = ({
     const accountUrlByType = { org: `/reconstructores/${id}`, donor: '/donador' }
 
     history.push(accountUrlByType[type])
-    if (created === 'true' && type === 'donor') modal('accountVerified', { type })
-    else snackbar('Cambiaste tu contraseña', 'success')
+    if (created === 'true') {
+      if (type === 'donor') modal('accountVerified', { type })
+    } else snackbar('Cambiaste tu contraseña', 'success')
   }
 
   if (className) return <div className={className}><ReduxForm onSubmit={handleSubmit} /></div>
