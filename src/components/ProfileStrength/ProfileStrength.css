@@ -2,7 +2,6 @@
 @value brandGreen, grey2, shadow from colors;
 
 .container {
-  padding: 20px 30px 15px 30px;
   position: sticky;
   display: flex;
   flex-direction: row;
@@ -13,35 +12,60 @@
   border-bottom: 1px solid #F2F2F4;
   width: 100vw;
   z-index: 10;
+  height: 70px;
+  box-shadow: 0px 0px 80px 0px rgba(37, 38, 50, 0.10);
 }
 
 .barContainer {
-  width: 60vw;
+  width: 70vw;
+  padding-top: 8px;
 }
 
 .bar {
-  margin-top: 10px;
+  margin-top: 6px;
 }
 
 .strength {
-  font-family: 'roboto-600', sans-serif;
+  font-family: 'roboto-700', sans-serif;
+  font-size: 13px;
+  color: #141418;
+  letter-spacing: 0.52px;
+  line-height: 12px;
 }
 
 .nextTask {
-  font-family: 'roboto-600', sans-serif;
-  color: grey2;
+  font-family: 'roboto-700', sans-serif;
   margin-left: 7px;
+  opacity: 0.3;
+  font-size: 13px;
+  color: #141418;
+  letter-spacing: 0.52px;
+  line-height: 12px;
 }
 
 .button {
-  text-decoration: none;
-  color: brandGreen !important;
-  border: 1px solid brandGreen;
-  padding: 12px 15px 10px 15px;
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 13px;
+  color: #3DC587;
+  letter-spacing: 0.35px;
   text-align: center;
-  color: #5A5A5D;
+  line-height: 16px;
+  text-decoration: none;
+  border: 1px solid brandGreen;
+  padding: 12px 0 10px 0;
+  width: 144px;
+  text-align: center;
 }
+
+/* Button: */
+
 
 .button:hover {
   border: 1px solid brandGreen;
+}
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+  .container {
+    display: none !important;
+  }
 }

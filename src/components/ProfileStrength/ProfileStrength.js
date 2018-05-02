@@ -57,7 +57,7 @@ class ProfileStrength extends React.Component {
     }
 
     return (
-      <div className={Styles.container}>
+      <div className={`${Styles.container} wrapper row middle between animated slideInUp delay-800`}>
         <div className={Styles.barContainer}>
           <span className={Styles.strength}>
             La fuerza de tu perfil es del {Math.round(100 * ratio)}%.
