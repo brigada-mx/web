@@ -128,7 +128,6 @@ const App = () => {
             <Route path="/cuenta" component={AccountNav} />
             <Route path="/donador" component={DonorNav} />
 
-
             <Switch>
               <Redirect exact from="/organizaciones" to="/reconstructores" />
               <Route

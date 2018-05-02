@@ -1,0 +1,47 @@
+@value colors: "src/colors.css";
+@value brandGreen, grey2, shadow from colors;
+
+.container {
+  padding: 20px 30px 15px 30px;
+  position: sticky;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  bottom: 0;
+  background-color: #ffffff;
+  border-bottom: 1px solid #F2F2F4;
+  width: 100vw;
+  z-index: 10;
+}
+
+.barContainer {
+  width: 60vw;
+}
+
+.bar {
+  margin-top: 10px;
+}
+
+.strength {
+  font-family: 'roboto-600', sans-serif;
+}
+
+.nextTask {
+  font-family: 'roboto-600', sans-serif;
+  color: grey2;
+  margin-left: 7px;
+}
+
+.button {
+  text-decoration: none;
+  color: brandGreen !important;
+  border: 1px solid brandGreen;
+  padding: 12px 15px 10px 15px;
+  text-align: center;
+  color: #5A5A5D;
+}
+
+.button:hover {
+  border: 1px solid brandGreen;
+}

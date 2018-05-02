@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { connect } from 'react-redux'
+
 import service, { getBackoffComponent } from 'api/service'
 import OrganizationScreenView from './OrganizationScreenView'
 
@@ -31,12 +33,18 @@ class OrganizationScreen extends React.Component {
   }
 
   render() {
-    return <OrganizationScreenView {...this.state} />
+    return <OrganizationScreenView {...this.state} myOrganization={this.props.myOrganization} />
   }
 }
 
 OrganizationScreen.propTypes = {
   id: PropTypes.number.isRequired,
+  myOrganization: PropTypes.bool.isRequired,
 }
 
-export default OrganizationScreen
+const mapStateToProps = (state, { id }) => {
+  const { token, organization_id: authOrgId } = state.auth.org || {}
+  return { myOrganization: Boolean(token && authOrgId === id) }
+}
+
+export default connect(mapStateToProps, null)(OrganizationScreen)
