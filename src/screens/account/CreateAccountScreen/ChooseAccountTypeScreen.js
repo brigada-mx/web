@@ -20,6 +20,10 @@ const labelStyle = {
   color: '#CACCD5',
 }
 
+const greenIconStyle = {
+  fill: '#3DC59F',
+}
+
 class ChooseAccountTypeScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -53,18 +57,20 @@ class ChooseAccountTypeScreen extends React.Component {
         <span className={FormStyles.formHeader}>Registro para Brigada</span>
         <p className={Styles.question}>¿Con qué tipo de cuenta te quieres dar de alta?</p>
 
-        <RadioButtonGroup name="type" defaultSelected={this.props.type} onChange={this.handleChange}>
+        <RadioButtonGroup name="type" defaultSelected={this.props.type} onChange={this.handleChange} className={Styles.radioButtonGroup}>
           <RadioButton
             value="org"
             label="Reconstructor: Trabajamos directamente en las comunidades afectadas por los sismos"
             style={buttonStyle}
             labelStyle={labelStyle}
+            iconStyle={greenIconStyle}
           />
           <RadioButton
             value="donor"
             label="Donador: Financiamos proyectos en las comunidades afectadas"
             style={buttonStyle}
             labelStyle={labelStyle}
+            iconStyle={greenIconStyle}
           />
         </RadioButtonGroup>
 

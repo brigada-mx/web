@@ -1,5 +1,5 @@
 .selectorContent {
-  width: 28%;
+  width: 35%;
 }
 
 .container {
@@ -53,13 +53,13 @@
 
 @media screen and (max-width: 1439px) and (min-width: 980px) {
   .selectorContent {
-    width: 38%;
+    width: 45%;
   }
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .selectorContent {
-    width: 42%;
+    width: 48%;
   }
 }
 
