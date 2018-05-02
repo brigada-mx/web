@@ -57,7 +57,7 @@ const validate = ({ password, confirmPassword }) => {
 const ReduxForm = reduxForm({ form: 'setPasswordWithToken', validate })(Form)
 
 const SetPasswordWithTokenScreen = ({
-  history, location, snackbar, onLogin, modal, className = ''
+  history, location, snackbar, onLogin, modal, className = '',
 }) => {
   const handleSubmit = async ({ password }) => {
     const params = parseQs(location.search)
@@ -68,7 +68,6 @@ const SetPasswordWithTokenScreen = ({
       donor: service.donorSetPasswordWithToken,
     }
     const fGetTokenByType = { org: service.token, donor: service.donorToken }
-    const accountUrlByType = { org: '/cuenta', donor: '/donador' }
 
     const { data } = await fSetPasswordByType[type](token, password, created === 'true')
     if (!data) {
@@ -79,12 +78,12 @@ const SetPasswordWithTokenScreen = ({
     // log user in to site
     const { data: loginData } = await fGetTokenByType[type](email, password)
     if (loginData) onLogin({ ...loginData, email }, type)
+    const id = type === 'org' ? loginData.organization_id : loginData.donor_id
+    const accountUrlByType = { org: `/reconstructores/${id}`, donor: '/donador' }
 
     history.push(accountUrlByType[type])
-    if (created === 'true') {
-      snackbar('¡Activaste tu cuenta!', 'success', 5000)
-      modal('accountVerified', { type })
-    } else snackbar('Cambiaste tu contraseña', 'success')
+    if (created === 'true' && type === 'donor') modal('accountVerified', { type })
+    else snackbar('Cambiaste tu contraseña', 'success')
   }
 
   if (className) return <div className={className}><ReduxForm onSubmit={handleSubmit} /></div>
