@@ -9,9 +9,15 @@
  */
 
 .animated {
-  animation-duration: 1s;
+  animation-duration: .5s;
   animation-fill-mode: both;
 }
+
+.delay-800 {
+  -webkit-animation-delay: 0.8s;
+  animation-delay: 0.8s;
+}
+
 
 .animated.infinite {
   animation-iteration-count: infinite;
