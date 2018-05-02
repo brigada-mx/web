@@ -44,6 +44,10 @@ class HomeScreen extends React.Component {
     this.loadSubmissions()
   }
 
+  loadProfileStrength = () => {
+    getBackoff(service.accountGetProfileStrength, { key: 'profileStrength' })
+  }
+
   loadOrganization = () => {
     getBackoff(service.accountGetOrganization, { key: 'accountOrganization' })
   }
@@ -63,6 +67,7 @@ class HomeScreen extends React.Component {
       return
     }
     this.loadOrganization()
+    this.loadProfileStrength()
     this.props.snackbar('Actualizaste tu grupo', 'success')
   }
 
@@ -76,6 +81,7 @@ class HomeScreen extends React.Component {
       return
     }
     this.loadOrganization()
+    this.loadProfileStrength()
     this.props.snackbar('Actualizaste tus datos de contacto', 'success')
   }
 
@@ -87,6 +93,7 @@ class HomeScreen extends React.Component {
     }
     this.props.resetAction()
     this.loadActions()
+    this.loadProfileStrength()
     this.props.snackbar('Agregaste un nuevo proyecto', 'success')
     this.handleToggleCreateActionModal(false)
   }
@@ -108,6 +115,7 @@ class HomeScreen extends React.Component {
       return
     }
     this.loadActions()
+    this.loadProfileStrength()
     const message = published ? `Publicaste proyecto ${key}` : `Ocultaste proyecto ${key}`
     this.props.snackbar(message, 'success')
   }
@@ -119,6 +127,7 @@ class HomeScreen extends React.Component {
       return
     }
     this.loadSubmissions()
+    this.loadProfileStrength()
     this.props.snackbar('Mandaste estas fotos al basurero', 'success')
   }
 
@@ -129,6 +138,7 @@ class HomeScreen extends React.Component {
       return
     }
     this.loadSubmissions()
+    this.loadProfileStrength()
     const action = _.find(this.props.actions, a => a.id === actionId)
     const message = `Asignaste estas fotos a proyecto ${action && action.key}`
     this.props.snackbar(message, 'success')
@@ -148,10 +158,12 @@ class HomeScreen extends React.Component {
 
   handleRestoreAction = () => {
     this.loadActions()
+    this.loadProfileStrength()
   }
 
   handleRestoreSubmission = () => {
     this.loadSubmissions()
+    this.loadProfileStrength()
   }
 
   render() {

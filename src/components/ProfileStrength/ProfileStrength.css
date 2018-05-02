@@ -20,10 +20,6 @@
   line-height: 12px;
 }
 
-.barContainer {
-  width: 70px;
-}
-
 .middle {
   color: #141418;
 }
@@ -36,8 +32,16 @@
   line-height: 13px;
 }
 
+.barContainer {
+  width: 70px;
+}
+
 .strength {
   margin-top: 12px;
+}
+
+.desc {
+  color: grey2;
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
