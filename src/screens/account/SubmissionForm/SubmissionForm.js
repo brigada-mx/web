@@ -26,7 +26,7 @@ const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, actionSearch = 
 
   return (
     <React.Fragment>
-      <div>
+      <div className={FormStyles.row}>
         <SelectField
           className={FormStyles.wideInput}
           floatingLabelText="Proyecto"
@@ -37,8 +37,9 @@ const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, actionSearch = 
           })}
         </SelectField>
       </div>
-      <div>
+      <div className={FormStyles.row}>
         <TextField
+          className={FormStyles.wideInput}
           floatingLabelText="Descripción"
           name="description"
           multiLine

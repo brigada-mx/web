@@ -2,6 +2,7 @@
   flex: 1;
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 .navSticky {
@@ -25,4 +26,25 @@
 .content {
   flex: 3;
   margin-top: 50px;
+  width: 100%;
+}
+
+.content > div {
+  width: 100%;
+}
+
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .nav {
+    flex: 1;
+  }
+  .content {
+    flex: 1.5;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .nav {
+    display: none;
+  }
 }

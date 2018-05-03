@@ -54,6 +54,7 @@
 .field {
   margin-right: 15px;
   margin-bottom: 2px;
+  width: 33.3% !important;
 }
 
 .dropdown {
@@ -150,10 +151,15 @@
 
 @media screen and (max-width: 767px) {
   .row {
-    display: unset;
-    flex-direction: unset;
+    flex-direction: column;
+    align-items: start;
   }
-
+  .field {
+    width: 100% !important;
+  }
+  .card {
+    margin: 0 25px 25px 25px;
+  }
   .wideInput {
     margin-left: unset;
     width: unset;

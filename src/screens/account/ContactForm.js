@@ -16,7 +16,7 @@ import FormStyles from 'src/Form.css'
 const ContactForm = ({ handleSubmit, submitting }) => {
   return (
     <React.Fragment>
-      <div>
+      <div className={FormStyles.row}>
         <TextField
           floatingLabelText="Persona responsable"
           name="person_responsible"

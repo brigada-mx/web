@@ -24,46 +24,46 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history }) => {
     {
       Header: 'Clave',
       accessor: 'key',
-    },
-    {
-      Header: 'Localidad',
-      accessor: 'locality.name',
+      maxWidth: 80,
     },
     {
       Header: 'Tipo',
       accessor: 'action_type',
       Cell: props => projectTypeByValue[props.original.action_type] || props.original.action_type,
     },
-    {
-      Header: 'Meta',
-      accessor: 'target',
-    },
-    {
-      Header: 'Unidad',
-      accessor: 'unit_of_measurement',
-    },
-    {
-      Header: 'Presupuesto',
-      accessor: 'budget',
-    },
-    {
+  ]
+  if (window.innerWidth >= 980) {
+    columns.splice(2, 0, {
       Header: 'Inicio',
       accessor: 'start_date',
-    },
-  ]
-  if (onTogglePublished) {
+      maxWidth: 130,
+    })
+    columns.splice(2, 0, {
+      Header: 'Presupuesto',
+      accessor: 'budget',
+      maxWidth: 140,
+    })
+    columns.splice(2, 0, {
+      Header: 'Localidad',
+      accessor: 'locality.name',
+    })
+  }
+
+  if (onTogglePublished && window.innerWidth >= 980) {
     columns.push({
       Header: '¿Publicar?',
       accessor: 'published',
+      maxWidth: 120,
       Cell: props => (<Toggle
         toggled={props.original.published}
         onToggle={(e, toggled) => onTogglePublished(props.original.id, props.original.key, toggled)}
       />),
     })
   }
-  if (onRestore) {
+  if (onRestore && window.innerWidth >= 980) {
     columns.push({
       Header: '¿Restaurar?',
+      maxWidth: 120,
       Cell: props => (<RaisedButton
         className={FormStyles.button}
         label="RESTAURAR"
@@ -74,13 +74,16 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history }) => {
 
   let pageSize = 5
   if (actions.length > 5) pageSize = 10
-  if (actions.length > 10) pageSize = 20
+  if (actions.length > 10) pageSize = 15
+  if (actions.length > 15) pageSize = 20
+  if (actions.length > 20) pageSize = 25
+  if (actions.length > 25) pageSize = 30
 
   return (
     <ReactTable
       className="-highlight"
-      pageSizeOptions={pageSizeOptions}
       defaultPageSize={pageSize}
+      showPagination={false}
       data={actions}
       columns={columns}
       defaultFilterMethod={defaultFilterMethod}
