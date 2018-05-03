@@ -5,6 +5,7 @@ import getter from './getter'
 import snackbar from './snackbar'
 import livechat from './livechat'
 import modal from './modal'
+import youtube from './youtube'
 
 export default {
   drawer,
@@ -14,4 +15,5 @@ export default {
   snackbar,
   livechat,
   modal,
+  youtube,
 }

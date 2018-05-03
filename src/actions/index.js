@@ -60,3 +60,10 @@ export async function modal(dispatch, modalName, props = {}) {
     payload: { modalName, ...props },
   })
 }
+
+export async function youtubeTimestamp(dispatch, { videoId, timestamp }) {
+  dispatch({
+    type: 'YOUTUBE_TIMESTAMP',
+    payload: { videoId, timestamp },
+  })
+}
