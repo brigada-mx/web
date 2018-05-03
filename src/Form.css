@@ -134,9 +134,8 @@
 }
 
 .card {
-  box-shadow: 0 15px 50px rgba(0,0,0,0.1);
-  width: 70vw;
-  margin-bottom: 60px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  margin: 0px 25px 25px 0;
   padding: 30px;
 }
 
