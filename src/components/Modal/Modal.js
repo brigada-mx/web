@@ -34,11 +34,13 @@ class Modal extends React.Component {
   }
 
   render() {
-    const { children, contentClassName = '', buttonClassName = '' } = this.props
+    const {
+      children, transparent = false, contentClassName = '', buttonClassName = '',
+    } = this.props
     return ReactDOM.createPortal(
       <div className={Styles.container}>
         <div className={Styles.overlay} />
-        <div className={`${Styles.content} ${contentClassName}`}>
+        <div className={`${transparent ? Styles.contentTransparent : Styles.content} ${contentClassName}`}>
           <span className={`${Styles.closeButton} ${buttonClassName}`} onClick={this.handleClose} />
           {children}
         </div>
@@ -50,6 +52,7 @@ class Modal extends React.Component {
 
 Modal.propTypes = {
   children: PropTypes.any,
+  transparent: PropTypes.bool,
   onClose: PropTypes.func,
   closeModal: PropTypes.func.isRequired,
   contentClassName: PropTypes.string,

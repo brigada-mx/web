@@ -6,6 +6,7 @@ import Checkbox from 'material-ui/Checkbox'
 import CircularProgressbar from 'react-circular-progressbar'
 import '!style-loader!css-loader!react-circular-progressbar/dist/styles.css'
 
+import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import Styles from './ProfileStrength.css'
 
@@ -22,21 +23,30 @@ class ExpandableTask extends React.Component {
     this.setState({ open: !this.state.open })
   }
 
+  openVideoModal = () => {
+    this.props.modal('youTubeVideo', { modalTransparent: true, videoId: this.props.videoId })
+  }
+
   render() {
-    const { value, label, desc } = this.props
+    const { value, label, videoId, durationString } = this.props
     const { open } = this.state
     const checkbox = (
-      <Checkbox
-        label={label}
-        checked={value}
-      />
-    )
-    if (!open) return <div onClick={this.toggleOpen}>{checkbox}</div>
-    return (
       <div onClick={this.toggleOpen}>
-        {checkbox}
-        <div className={Styles.desc}>{desc}</div>
+        <Checkbox
+          label={label}
+          checked={value}
+        />
       </div>
+    )
+    if (!open || !videoId) return checkbox
+    return (
+      <React.Fragment>
+        {checkbox}
+        <div className={Styles.tutorial} onClick={this.openVideoModal}>
+          <div className={Styles.tutorialIcon} />
+          <span className={Styles.tutorialMeta}>Tutorial {durationString ? `(${durationString})` : ''}</span>
+        </div>
+      </React.Fragment>
     )
   }
 }
@@ -45,12 +55,22 @@ ExpandableTask.propTypes = {
   value: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   open: PropTypes.bool,
-  desc: PropTypes.string,
+  videoId: PropTypes.string,
+  durationString: PropTypes.string,
+  modal: PropTypes.func.isRequired,
 }
 
 ExpandableTask.defaultProps = {
   open: false,
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
+  }
+}
+
+const ReduxExpandableTask = connect(null, mapDispatchToProps)(ExpandableTask)
 
 const barStyles = {
   trail: { stroke: '#CACCD5' },
@@ -84,42 +104,50 @@ class ProfileStrength extends React.Component {
       {
         value: email,
         label: 'Agregar email',
-        desc: 'Agregar email',
+        videoId: 'lxq938kqIss',
+        durationString: '0:36',
       },
       {
         value: desc,
         label: 'Completar descripción',
-        desc: 'Completar descripción',
+        videoId: 'lxq938kqIss',
+        durationString: '0:36',
       },
       {
         value: contact,
         label: 'Agregar datos de contacto',
-        desc: 'Agregar datos de contacto',
+        videoId: 'lxq938kqIss',
+        durationString: '0:36',
       },
       {
         value: actions,
         label: 'Agregar un proyecto',
-        desc: 'Agregar un proyecto',
+        videoId: 'lxq938kqIss',
+        durationString: '0:36',
       },
       {
         value: submissions,
         label: 'Capturar fotos',
-        desc: 'Capturar fotos',
+        videoId: 'lxq938kqIss',
+        durationString: '0:36',
       },
       {
         value: donations,
         label: 'Documentar donativos',
-        desc: 'Documentar donativos',
+        videoId: 'lxq938kqIss',
+        durationString: '0:36',
       },
       {
         value: help,
         label: 'Atraer voluntarios',
-        desc: 'Atraer voluntarios',
+        videoId: 'lxq938kqIss',
+        durationString: '0:36',
       },
       {
         value: post,
         label: 'Postear en el foro',
-        desc: 'Postear en el foro',
+        videoId: 'lxq938kqIss',
+        durationString: '0:36',
       },
     ]
     for (const task of tasks) {
@@ -143,10 +171,10 @@ class ProfileStrength extends React.Component {
           <span className={Styles.strength}>FUERZA DE TU PERFIL</span>
         </div>
         <div className={Styles.middle}>
-          {tasks.map((t, i) => <ExpandableTask key={i} {...t} />)}
+          {tasks.map((t, i) => <ReduxExpandableTask key={i} {...t} />)}
         </div>
         <div className={Styles.bottom}>
-          Perfiles al 100% tienen 4 veces la probabilidad de atraer voluntarios o donativos.
+          Perfiles al 100% tienen 6 veces la probabilidad de atraer voluntarios o donativos.
         </div>
       </div>
     )

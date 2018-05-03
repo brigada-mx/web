@@ -35,6 +35,18 @@
   box-sizing: border-box;
 }
 
+.contentTransparent {
+  width: 100% !important;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  overflow: scroll;
+  border-radius: 2px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+}
+
 .closeButton {
   background: no-repeat url("assets/img/close-modal.svg") top right;
   background-size: 14px 14px;

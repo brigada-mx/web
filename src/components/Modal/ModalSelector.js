@@ -10,6 +10,7 @@ import DonorCreateAccountScreen from 'screens/account/CreateAccountScreen/DonorC
 import ChooseAccountTypeScreen from 'screens/account/CreateAccountScreen/ChooseAccountTypeScreen'
 import AccountCreated from 'screens/account/AccountCreated'
 import AccountVerified from 'screens/account/AccountCreated/AccountVerified'
+import YouTubeVideo from 'components/YouTubeVideo'
 import Modal from './Modal'
 import Styles from './Modal.css'
 
@@ -22,18 +23,24 @@ const componentByName = {
   donorCreateAccount: DonorCreateAccountScreen,
   accountCreated: AccountCreated,
   accountVerified: AccountVerified,
+  youTubeVideo: YouTubeVideo,
 }
 
 const ModalSelector = (props) => {
-  const { modalName, ...rest } = props
+  const { modalName, modalTransparent = false, ...rest } = props
   const Component = componentByName[modalName]
   if (!Component) return null
 
-  return <Modal contentClassName={Styles.selectorContent}><Component {...rest} /></Modal>
+  return (
+    <Modal contentClassName={Styles.selectorContent} transparent={modalTransparent}>
+      <Component {...rest} />
+    </Modal>
+  )
 }
 
 ModalSelector.propTypes = {
   modalName: PropTypes.string,
+  modalTransparent: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => {

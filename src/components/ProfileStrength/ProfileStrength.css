@@ -40,8 +40,29 @@
   margin-top: 12px;
 }
 
-.desc {
+.tutorial {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tutorial:hover {
+  cursor: pointer;
+}
+
+.tutorialIcon {
+  background-color: white;
+  height: 20px;
+  width: 30px;
+  border-radius: 2px;
+  margin-right: 8px;
+}
+
+.tutorialMeta {
   color: grey2;
+  font-size: 11px;
+  letter-spacing: 0.52px;
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {

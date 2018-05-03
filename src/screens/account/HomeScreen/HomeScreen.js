@@ -269,7 +269,7 @@ class HomeScreen extends React.Component {
         }
       </div>
     )
-    return <WithSideNav navComponents={<ProfileStrength />}>{content}</WithSideNav>
+    return <WithSideNav sticky={false} navComponents={<ProfileStrength />}>{content}</WithSideNav>
   }
 }
 
