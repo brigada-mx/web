@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { connect } from 'react-redux'
+
 import service, { getBackoffComponent } from 'api/service'
 import DonorScreenView from './DonorScreenView'
 
@@ -36,12 +38,18 @@ class DonorScreen extends React.Component {
   }
 
   render() {
-    return <DonorScreenView {...this.state} />
+    return <DonorScreenView {...this.state} myDonor={this.props.myDonor} />
   }
 }
 
 DonorScreen.propTypes = {
   id: PropTypes.number.isRequired,
+  myDonor: PropTypes.bool.isRequired,
 }
 
-export default DonorScreen
+const mapStateToProps = (state, { id }) => {
+  const { token, donor_id: authDonorId } = state.auth.donor || {}
+  return { myDonor: Boolean(token && authDonorId === id) }
+}
+
+export default connect(mapStateToProps, null)(DonorScreen)

@@ -16,9 +16,9 @@ const barStyles = {
   text: { stroke: '#3DC587', fontSize: '1.7em' },
 }
 
-class ProfileStrength extends React.Component {
+class DonorProfileStrength extends React.Component {
   componentDidMount() {
-    getBackoff(service.accountGetProfileStrength, { key: 'profileStrength' })
+    getBackoff(service.donorGetProfileStrength, { key: 'donorProfileStrength' })
   }
 
   render() {
@@ -27,14 +27,12 @@ class ProfileStrength extends React.Component {
     const {
       ratio,
       status_by_category: {
-        accepting_help: help,
-        actions,
         contact_email: email,
         contact_full: contact,
         desc,
-        discourse_post: post,
+        donating,
         donations,
-        submissions,
+        discourse_post: post,
       },
     } = profile
 
@@ -56,26 +54,14 @@ class ProfileStrength extends React.Component {
         durationString: '0:22',
       },
       {
-        value: actions,
-        label: 'Agregar un proyecto',
-        videoId: 'lxq938kqIss',
-        durationString: '1:25',
-      },
-      {
-        value: submissions,
-        label: 'Capturar fotos',
-        videoId: 'lxq938kqIss',
-        durationString: '1:45',
-      },
-      {
         value: donations,
         label: 'Documentar donativos',
         videoId: 'lxq938kqIss',
         durationString: '0:36',
       },
       {
-        value: help,
-        label: 'Atraer voluntarios',
+        value: donating,
+        label: 'Abrir convocatoria',
         videoId: 'lxq938kqIss',
         durationString: '0:25',
       },
@@ -109,24 +95,21 @@ class ProfileStrength extends React.Component {
         <div className={Styles.middle}>
           {tasks.map((t, i) => <ExpandableTask key={i} {...t} />)}
         </div>
-        <div className={Styles.bottom}>
-          Perfiles al 100% tienen 6 veces la probabilidad de atraer voluntarios o donativos.
-        </div>
       </div>
     )
   }
 }
 
-ProfileStrength.propTypes = {
+DonorProfileStrength.propTypes = {
   profile: PropTypes.object,
 }
 
 const mapStateToProps = (state) => {
   try {
-    return { profile: state.getter.profileStrength.data }
+    return { profile: state.getter.donorProfileStrength.data }
   } catch (e) {
     return {}
   }
 }
 
-export default connect(mapStateToProps, null)(ProfileStrength)
+export default connect(mapStateToProps, null)(DonorProfileStrength)

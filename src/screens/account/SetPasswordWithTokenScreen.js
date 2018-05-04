@@ -57,7 +57,7 @@ const validate = ({ password, confirmPassword }) => {
 const ReduxForm = reduxForm({ form: 'setPasswordWithToken', validate })(Form)
 
 const SetPasswordWithTokenScreen = ({
-  history, location, snackbar, onLogin, modal, className = '',
+  history, location, snackbar, onLogin, className = '',
 }) => {
   const handleSubmit = async ({ password }) => {
     const params = parseQs(location.search)
@@ -79,12 +79,10 @@ const SetPasswordWithTokenScreen = ({
     const { data: loginData } = await fGetTokenByType[type](email, password)
     if (loginData) onLogin({ ...loginData, email }, type)
     const id = type === 'org' ? loginData.organization_id : loginData.donor_id
-    const accountUrlByType = { org: `/reconstructores/${id}`, donor: '/donador' }
+    const accountUrlByType = { org: `/reconstructores/${id}`, donor: `/donadores/${id}` }
 
     history.push(accountUrlByType[type])
-    if (created === 'true') {
-      if (type === 'donor') modal('accountVerified', { type })
-    } else snackbar('Cambiaste tu contraseña', 'success')
+    if (!created) snackbar('Cambiaste tu contraseña', 'success')
   }
 
   if (className) return <div className={className}><ReduxForm onSubmit={handleSubmit} /></div>
@@ -96,7 +94,6 @@ SetPasswordWithTokenScreen.propTypes = {
   location: PropTypes.object.isRequired,
   snackbar: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
-  modal: PropTypes.func.isRequired,
   className: PropTypes.string,
 }
 
@@ -104,7 +101,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: (auth, type) => Actions.authSet(dispatch, { auth, type }),
     snackbar: (message, status, duration) => Actions.snackbar(dispatch, { message, status, duration }),
-    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
   }
 }
 

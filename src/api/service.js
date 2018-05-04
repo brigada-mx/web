@@ -232,6 +232,10 @@ class Service {
     return sendToApiAuth('donor', '/donor_account/me/', { method: 'PUT', body })
   }
 
+  donorGetProfileStrength = async () => {
+    return sendToApiAuth('donor', '/donor_account/profile_strength/')
+  }
+
   donorGetDonor = async () => {
     return sendToApiAuth('donor', '/donor_account/donor/')
   }

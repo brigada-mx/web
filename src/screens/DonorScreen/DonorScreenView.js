@@ -15,6 +15,7 @@ import HelpWanted from 'components/HelpWanted'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import MapErrorBoundary from 'components/MapErrorBoundary'
+import DonorProfileStrengthPublic from 'components/ProfileStrength/DonorProfileStrengthPublic'
 import { addProtocol, emailLink, fmtBudget, renderLinks } from 'tools/string'
 import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
 import { sectorByValue } from 'src/choices'
@@ -367,6 +368,7 @@ class DonorScreenView extends React.Component {
           </div>
         </StickyContainer>
 
+        {this.props.myDonor && <DonorProfileStrengthPublic />}
         {this.renderCarousel()}
       </React.Fragment>
     )
@@ -375,6 +377,7 @@ class DonorScreenView extends React.Component {
 
 DonorScreenView.propTypes = {
   donor: PropTypes.object.isRequired,
+  myDonor: PropTypes.bool.isRequired,
   donations: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   modal: PropTypes.func.isRequired,

@@ -9,6 +9,7 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
+import DonorProfileStrength from 'components/ProfileStrength/DonorProfileStrength'
 import DonorDonationTable from 'screens/account/DonorDonationTable'
 import { CreateDonationForm, prepareDonationBody } from 'screens/account/DonorDonationForm'
 import ContactForm from 'screens/account/ContactForm'
@@ -32,6 +33,10 @@ class DonorHomeScreen extends React.Component {
     this.loadDonations()
   }
 
+  loadProfileStrength = () => {
+    getBackoff(service.donorGetProfileStrength, { key: 'donorProfileStrength' })
+  }
+
   loadDonor = () => {
     getBackoff(service.donorGetDonor, { key: 'donorDonor' })
   }
@@ -47,6 +52,7 @@ class DonorHomeScreen extends React.Component {
       return
     }
     this.loadDonor()
+    this.loadProfileStrength()
     this.props.snackbar('Actualizaste información de donador', 'success')
   }
 
@@ -60,6 +66,7 @@ class DonorHomeScreen extends React.Component {
       return
     }
     this.loadDonor()
+    this.loadProfileStrength()
     this.props.snackbar('Actualizaste tus datos de contacto', 'success')
   }
 
@@ -82,6 +89,7 @@ class DonorHomeScreen extends React.Component {
     }
     this.props.resetDonation()
     this.loadDonations()
+    this.loadProfileStrength()
     this.props.snackbar('Agregaste un nuevo donativo', 'success')
     this.handleToggleCreateDonationModal(false)
   }
@@ -149,7 +157,7 @@ class DonorHomeScreen extends React.Component {
         }
       </div>
     )
-    return <WithSideNav>{content}</WithSideNav>
+    return <WithSideNav sticky={false} navComponents={<DonorProfileStrength />}>{content}</WithSideNav>
   }
 }
 
