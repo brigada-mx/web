@@ -44,32 +44,32 @@ class DonorProfileStrength extends React.Component {
       {
         value: desc,
         label: 'Completar descripción',
-        videoId: 'lxq938kqIss',
-        durationString: '0:25',
+        videoId: 'SXGlY1LuFAY',
+        durationString: '0:51',
       },
       {
         value: contact,
         label: 'Agregar datos de contacto',
-        videoId: 'lxq938kqIss',
-        durationString: '0:22',
+        videoId: 'C8lC_Ujyaj4',
+        durationString: '1:04',
       },
       {
         value: donations,
         label: 'Documentar donativos',
-        videoId: 'lxq938kqIss',
-        durationString: '0:36',
+        videoId: 'uvuFrvaaUVU',
+        durationString: '1:29',
       },
       {
         value: donating,
         label: 'Abrir convocatoria',
-        videoId: 'lxq938kqIss',
-        durationString: '0:25',
+        videoId: 'y6LJx6-J3xw',
+        durationString: '0:50',
       },
       {
         value: post,
         label: 'Postear en el foro',
-        videoId: 'lxq938kqIss',
-        durationString: '0:35',
+        videoId: '823KA-GAvl4',
+        durationString: '0:51',
       },
     ]
     for (const task of tasks) {
