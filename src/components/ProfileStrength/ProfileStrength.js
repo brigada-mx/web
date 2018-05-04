@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import Checkbox from 'material-ui/Checkbox'
 import CircularProgressbar from 'react-circular-progressbar'
 import '!style-loader!css-loader!react-circular-progressbar/dist/styles.css'
 
@@ -31,11 +30,9 @@ class ExpandableTask extends React.Component {
     const { value, label, videoId, durationString } = this.props
     const { open } = this.state
     const checkbox = (
-      <div onClick={this.toggleOpen}>
-        <Checkbox
-          label={label}
-          checked={value}
-        />
+      <div className={open ? Styles.open : Styles.closed} onClick={this.toggleOpen}>
+        <span className={`${Styles.checkbox} ${value ? Styles.done : Styles.notDone}`} />
+        <span className={Styles.taskLabel}>{label}</span>
       </div>
     )
     if (!open || !videoId) return checkbox

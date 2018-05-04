@@ -1,5 +1,5 @@
 @value colors: "src/colors.css";
-@value brandGreen, grey2, brandOffWhite from colors;
+@value grey2, brandOffWhite from colors;
 
 .container > div {
   background-color: brandOffWhite;
@@ -22,12 +22,40 @@
   align-items: left;
 }
 
-.middle label {
-  font-family: 'nunito-sans', sans-serif !important;
-  font-size: 16px !important;
-  color: #141418 !important;
-  letter-spacing: 0 !important;
-  line-height: 28px !important;
+.taskLabel {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 16px;
+  color: #141418;
+  letter-spacing: 0;
+  line-height: 28px;
+}
+
+.open {
+  display: flex;
+  align-items: center;
+}
+
+.closed {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  display: inline-flex;
+  margin-right: 16px;
+  transition: all .15s linear;
+  margin-bottom: 2px;
+}
+
+.done {
+  background-color: #3DC59F;
+}
+
+.notDone {
+  border: 1px solid #3DC59F;
 }
 
 .bottom {
@@ -70,7 +98,18 @@
   height: 20px;
   width: 30px;
   border-radius: 2px;
-  margin-right: 8px;
+  margin: 0 8px 0 32px;
+}
+
+.tutorialIcon:after {
+  position: absolute;
+  z-index: 3;
+  content: '';
+  margin: 6px 0 0 13px;
+  border-width: 4px;
+  transform: rotate(-90deg);
+  border-style: solid;
+  border-color: #3DC59F transparent transparent transparent;
 }
 
 .tutorialMeta {
