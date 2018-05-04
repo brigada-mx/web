@@ -14,7 +14,7 @@
 }
 
 .overlay {
-  background-color: rgba(76, 86, 97, 0.7);
+  background-color: rgba(76, 86, 97, 0.85);
   position: fixed;
   top: 0;
   left: 0;
@@ -37,6 +37,7 @@
 
 .contentTransparent {
   width: 100% !important;
+  height: 100%;
   position: relative;
   z-index: 10;
   display: flex;
@@ -48,19 +49,20 @@
 }
 
 .closeButton {
-  background: no-repeat url("assets/img/close-modal.svg") top right;
+  background: no-repeat url("assets/img/close-gallery.svg") top right;
   background-size: 14px 14px;
-  width: 30px;
-  height: 30px;
+  width: 73px;
+  height: 73px;
   position: absolute;
   top: 30px;
   right: 30px;
-  color: black;
   cursor: pointer;
+  z-index: 11;
+  opacity: 1.0;
 }
 
 .closeButton:hover {
-  opacity: 1.0;
+  opacity: 0.7;
 }
 
 @media screen and (max-width: 1439px) and (min-width: 980px) {

@@ -4,7 +4,6 @@
 .container > div {
   background-color: brandOffWhite;
   margin: 0 25px 2px 0;
-  padding: 30px 20px;
   display: flex;
   flex-direction: column;
 }
@@ -15,11 +14,13 @@
   letter-spacing: 0.52px;
   line-height: 12px;
   align-items: center;
+  padding: 30px 20px;
 }
 
 .middle {
   color: #141418;
   align-items: left;
+  padding: 15px 20px 25px 20px;
 }
 
 .taskLabel {
@@ -89,7 +90,7 @@
   letter-spacing: 0.2px;
   line-height: 16px;
   align-items: left;
-  opacity:
+  padding: 25px 20px 31px 20px;
 }
 
 .barContainer {

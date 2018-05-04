@@ -12,8 +12,8 @@ import Styles from './ProfileStrength.css'
 
 const barStyles = {
   trail: { stroke: '#CACCD5' },
-  path: { stroke: '#3DC587' },
-  text: { stroke: '#3DC587', fontSize: '1.7em' },
+  path: { stroke: '#3DC59F' },
+  text: { stroke: '#3DC59F', fontSize: '1.7em' },
 }
 
 class ProfileStrength extends React.Component {
