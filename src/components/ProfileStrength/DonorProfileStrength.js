@@ -44,8 +44,8 @@ class DonorProfileStrength extends React.Component {
       {
         value: desc,
         label: 'Completar descripción',
-        videoId: 'SXGlY1LuFAY',
-        durationString: '0:51',
+        videoId: 'dk8ixgfgD10',
+        durationString: '0:47',
       },
       {
         value: contact,
