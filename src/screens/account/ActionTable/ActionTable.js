@@ -13,7 +13,6 @@ import { projectTypeByValue } from 'src/choices'
 import FormStyles from 'src/Form.css'
 
 
-const pageSizeOptions = [5, 10, 20, 50]
 const defaultFilterMethod = (filter, row) => {
   const id = filter.pivotId || filter.id
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
@@ -72,20 +71,14 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history }) => {
     })
   }
 
-  let pageSize = 5
-  if (actions.length > 5) pageSize = 10
-  if (actions.length > 10) pageSize = 15
-  if (actions.length > 15) pageSize = 20
-  if (actions.length > 20) pageSize = 25
-  if (actions.length > 25) pageSize = 30
-
   return (
     <ReactTable
       className="-highlight"
-      defaultPageSize={pageSize}
+      pageSize={actions.length}
       showPagination={false}
       data={actions}
       columns={columns}
+      noDataText=""
       defaultFilterMethod={defaultFilterMethod}
       getTdProps={(state, rowInfo, column) => {
         const { id } = column

@@ -12,7 +12,6 @@ import { tokenMatch } from 'tools/string'
 import Styles from './DonationTable.css'
 
 
-const pageSizeOptions = [5, 10, 20, 50]
 const defaultFilterMethod = (filter, row) => {
   const id = filter.pivotId || filter.id
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
@@ -61,15 +60,11 @@ const DonationTable = ({ donations, onToggleApproved, onRowClicked }) => {
     })
   }
 
-  let pageSize = 5
-  if (donations.length > 5) pageSize = 10
-  if (donations.length > 10) pageSize = 20
-
   return (
     <ReactTable
       className="-highlight"
-      pageSizeOptions={pageSizeOptions}
-      defaultPageSize={pageSize}
+      pageSize={donations.length}
+      showPagination={false}
       data={donations}
       columns={columns}
       defaultFilterMethod={defaultFilterMethod}

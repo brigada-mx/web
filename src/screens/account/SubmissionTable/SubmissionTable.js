@@ -15,7 +15,6 @@ import SubmissionActionSelect from './SubmissionActionSelect'
 import Styles from './SubmissionTable.css'
 
 
-const pageSizeOptions = [5, 10, 20, 50]
 const defaultFilterMethod = (filter, row) => {
   const id = filter.pivotId || filter.id
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
@@ -101,15 +100,13 @@ const SubmissionTable = ({
     })
   }
 
-  let pageSize = 5
-  if (submissions.length > 5) pageSize = 10
-  if (submissions.length > 10) pageSize = 20
+  const maxPageSize = 20
 
   return (
     <ReactTable
       className="-highlight"
-      pageSizeOptions={pageSizeOptions}
-      defaultPageSize={pageSize}
+      pageSize={Math.min(submissions.length, maxPageSize)}
+      showPagination={submissions.length > maxPageSize}
       data={submissions}
       columns={columns}
       defaultFilterMethod={defaultFilterMethod}

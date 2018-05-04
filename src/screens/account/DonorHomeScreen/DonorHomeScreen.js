@@ -93,8 +93,8 @@ class DonorHomeScreen extends React.Component {
   render() {
     const { donations } = this.props
     const { createDonationModal } = this.state
-    return (
-      <WithSideNav>
+    const content = (
+      <div>
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>Mi organización</div>
           <DonorForm onSubmit={this.handleSubmitDonor} enableReinitialize />
@@ -147,8 +147,9 @@ class DonorHomeScreen extends React.Component {
             />
           </Modal>
         }
-      </WithSideNav>
+      </div>
     )
+    return <WithSideNav>{content}</WithSideNav>
   }
 }
 
