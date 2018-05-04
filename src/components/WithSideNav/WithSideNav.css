@@ -33,6 +33,14 @@
   width: 100%;
 }
 
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .nav {
+    flex: 1;
+  }
+  .content {
+    flex: 2.5;
+  }
+}
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .nav {

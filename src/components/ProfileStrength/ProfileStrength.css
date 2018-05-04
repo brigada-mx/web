@@ -28,16 +28,33 @@
   color: #141418;
   letter-spacing: 0;
   line-height: 28px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.open {
+.open, .closed {
   display: flex;
   align-items: center;
+  cursor: pointer;
+  margin-top: 10px;
+  position: relative;
 }
 
-.closed {
-  display: flex;
-  align-items: center;
+.open:after, .closed:after {
+  content: "";
+  background: no-repeat url("assets/img/dropdown-arrow.svg") right;
+  width: 7px;
+  height: 5px;
+  position: absolute;
+  right: 0;
+}
+
+.open:after {
+  transform: rotate(180deg);
+}
+
+.closed:first-of-type {
+  margin-top: 0px;
 }
 
 .checkbox {
@@ -86,7 +103,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 8px;
+  margin: 5px 0 6px 0;
 }
 
 .tutorial:hover {
