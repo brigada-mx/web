@@ -87,6 +87,8 @@ class Fields extends React.Component {
               name="approved_by_org"
             />
           </div>
+        </div>
+        <div className={FormStyles.row}>
           <div className={FormStyles.toggle}>
             <Checkbox
               label="¿Aprobada por donador?"

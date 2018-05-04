@@ -147,6 +147,7 @@
 .toggle {
   display: inline-flex;
   margin-top: 15px;
+  width: 70% !important;
 }
 
 @media screen and (max-width: 767px) {

@@ -138,9 +138,12 @@
 }
 
 .tutorialMeta {
-  color: grey2;
-  font-size: 11px;
-  letter-spacing: 0.52px;
+  font-family: 'nunito-sans', sans-serif;
+  color: #0F0F0F;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  opacity: 0.4;
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
