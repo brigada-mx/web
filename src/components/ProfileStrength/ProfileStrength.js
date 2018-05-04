@@ -29,12 +29,17 @@ class ExpandableTask extends React.Component {
   render() {
     const { value, label, videoId, durationString } = this.props
     const { open } = this.state
+
+    let classNames
+    if (videoId) classNames = open ? Styles.open : Styles.closed
+    else classNames = Styles.noVideo
     const checkbox = (
-      <div className={open ? Styles.open : Styles.closed} onClick={this.toggleOpen}>
+      <div className={classNames} onClick={this.toggleOpen}>
         <span className={`${Styles.checkbox} ${value ? Styles.done : Styles.notDone}`} />
         <span className={Styles.taskLabel}>{label}</span>
       </div>
     )
+
     if (!open || !videoId) return checkbox
     return (
       <React.Fragment>
@@ -101,8 +106,6 @@ class ProfileStrength extends React.Component {
       {
         value: email,
         label: 'Agregar email',
-        videoId: 'lxq938kqIss',
-        durationString: '0:36',
       },
       {
         value: desc,

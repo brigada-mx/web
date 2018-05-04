@@ -32,6 +32,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.noVideo {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  position: relative;
+}
+
 .open, .closed {
   display: flex;
   align-items: center;
