@@ -20,48 +20,49 @@ const zoomStyle = {
   borderRadius: 2,
 }
 
-const baseZoom = 6
-const layerPaint = {
-  'circle-radius': {
-    property: 'total',
-    stops: generateSizeStops([
-      [-1, 2],
-      [1, 3],
-      [3, 3.5],
-      [10, 4],
-      [30, 4.5],
-      [100, 5.5],
-      [300, 7],
-      [600, 10],
-      [1000, 13],
-      [2000, 16],
-      [3000, 20],
-      [4000, 25],
-      [7000, 30],
-      [10000, 35],
-      [15000, 40],
-    ], baseZoom),
-  },
-  'circle-color': {
-    property: 'total',
-    stops: [
-      [-1, colors.unknown],
-      [0, colors.low],
-      [40, colors.medium],
-      [250, colors.high],
-      [1250, colors.severe],
-    ],
-  },
-  'circle-opacity': 0.75,
-}
-
 class LocalityDamageMap extends React.Component {
   constructor(props) {
     super(props)
-    this._initialZoom = [baseZoom]
+    const _initialZoom = props.initialZoom || 6
+    this._initialZoom = [_initialZoom]
     this._initialCoordinates = [-95.9042505, 17.1073688]
     this._fitBounds = props.fitBounds
     this._fitBoundsOptions = props.fitBoundsOptions || { padding: 20, maxZoom: 10 }
+
+    this._layerPaint = {
+      'circle-radius': {
+        property: 'total',
+        stops: generateSizeStops([
+          [-1, 2],
+          [1, 3],
+          [3, 3.5],
+          [10, 4],
+          [30, 4.5],
+          [100, 5.5],
+          [300, 7],
+          [600, 10],
+          [1000, 13],
+          [2000, 16],
+          [3000, 20],
+          [4000, 25],
+          [7000, 30],
+          [10000, 35],
+          [15000, 40],
+        ], _initialZoom),
+      },
+      'circle-color': {
+        property: 'total',
+        stops: [
+          [-1, colors.unknown],
+          [0, colors.low],
+          [40, colors.medium],
+          [250, colors.high],
+          [1250, colors.severe],
+        ],
+      },
+      'circle-opacity': 0.75,
+    }
+
     this._map = null
     this.Mapbox = ReactMapboxGl({
       accessToken,
@@ -136,7 +137,7 @@ class LocalityDamageMap extends React.Component {
           type="circle"
           sourceLayer={sourceLayer}
           filter={filter}
-          paint={layerPaint}
+          paint={this._layerPaint}
         />
       </Mapbox>
     )
@@ -156,6 +157,7 @@ LocalityDamageMap.propTypes = {
   onEnterFeature: PropTypes.func,
   onLeaveFeature: PropTypes.func,
   zoomControl: PropTypes.bool,
+  initialZoom: PropTypes.number,
 }
 
 LocalityDamageMap.defaultProps = {

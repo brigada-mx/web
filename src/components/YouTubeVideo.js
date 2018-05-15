@@ -12,7 +12,12 @@ class YouTubeVideo extends React.Component {
 
   componentWillUnmount() {
     const { player } = this.state
-    if (player) this.props.onUnmount(this.props.videoId, player.getCurrentTime())
+    if (player) {
+      const currentTime = player.getCurrentTime()
+      const duration = player.getDuration()
+      if (duration - currentTime < 5) this.props.onUnmount(this.props.videoId, 0)
+      else this.props.onUnmount(this.props.videoId, currentTime)
+    }
   }
 
   handleReady = (event) => {
@@ -29,6 +34,7 @@ class YouTubeVideo extends React.Component {
       playerVars: { // https://developers.google.com/youtube/player_parameters
         autoplay: 1,
         start: Math.floor(timestamp),
+        rel: 0, // don't show related videos when playback finishes
       },
     }
 

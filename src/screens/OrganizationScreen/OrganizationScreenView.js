@@ -149,7 +149,6 @@ class OrganizationScreenView extends React.Component {
       }
     })
 
-    const fitBounds = fitBoundsFromCoords(coords)
     const { popup } = this.state
     return (
       <div className={Styles.opsMap}>
@@ -166,7 +165,7 @@ class OrganizationScreenView extends React.Component {
             onClickFeature={this.handleClickFeature}
             onEnterFeature={this.handleEnterFeature}
             onLeaveFeature={this.handleLeaveFeature}
-            fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
+            initialZoom={4}
           />
         </MapErrorBoundary>
       </div>
