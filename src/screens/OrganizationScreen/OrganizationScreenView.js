@@ -15,7 +15,7 @@ import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicator
 import MapErrorBoundary from 'components/MapErrorBoundary'
 import ProfileStrengthPublic from 'components/ProfileStrength/ProfileStrengthPublic'
 import { addProtocol, emailLink, fmtBudget, renderLinks } from 'tools/string'
-import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
+import { itemFromScrollEvent, fireGaEvent } from 'tools/other'
 import { sectorByValue } from 'src/choices'
 import OrganizationBreadcrumb from './OrganizationBreadcrumb'
 import Styles from './OrganizationScreenView.css'
@@ -71,7 +71,7 @@ class OrganizationScreenView extends React.Component {
     this.setState({ carousel: { actionId: item.id } })
   }
 
-  handleClickListItem = (item) => {
+  handleMouseEnterItem = (item) => {
     this.setState({ focused: item })
   }
 
@@ -314,7 +314,7 @@ class OrganizationScreenView extends React.Component {
               onScroll={this.handleScroll}
               focusedId={focused && focused.id}
               onClickPhotos={this.handleClickPhotos}
-              onClickItem={this.handleClickListItem}
+              onMouseEnter={this.handleMouseEnterItem}
             />
           </div>
           <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">

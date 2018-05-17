@@ -2,10 +2,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
-import { fmtNum, fmtBudgetPlain, thumborUrl, renderLinks } from 'tools/string'
+import { fmtNum, thumborUrl, renderLinks } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
 import { getProjectType } from 'src/choices'
 import Styles from './ActionListItem.css'
@@ -20,18 +20,17 @@ class ActionListItem extends React.PureComponent {
       onClickPhotos,
       onMouseEnter,
       onMouseLeave,
-      onClickItem,
+      history,
     } = this.props
 
     const {
+      id,
       action_type: actionType,
       desc,
       target,
       progress = 0,
       budget,
       donations = [],
-      start_date: startDate,
-      end_date: endDate,
       organization: { id: orgId, name: orgName },
       locality: { id: locId, name: locName, municipality_name: muniName, state_name: stateName },
       unit_of_measurement: unit,
@@ -51,45 +50,6 @@ class ActionListItem extends React.PureComponent {
       }), d => -d.amount)
       return (
         <span className={`${Styles.link} ${Styles.donors}`}>Financiado por {donors.map(d => d.donor).join(', ')}</span>
-      )
-    }
-
-    const getDonations = () => {
-      if (donations.length === 0) return null
-
-      const rows = donations.sort((a, b) => {
-        if (!a.received_date) return 1
-        if (!b.received_date) return -1
-        if (a.received_date < b.received_date) return 1
-        if (a.received_date > b.received_date) return -1
-        return 0
-      }).map(({ amount, donor: { id, name } }, i) => {
-        return (
-          <tr key={i}>
-            <th><Link className={Styles.donorLink} to={`/donadores/${id}`}>{name}</Link></th>
-            <th>{fmtBudgetPlain(amount)}</th>
-          </tr>
-        )
-      })
-
-      return (
-        <div className={Styles.donationContainer}>
-          <span className={Styles.label}>DONATIVOS (MXN): </span>
-          <table className={Styles.donations}>
-            <tbody>{rows}</tbody>
-          </table>
-        </div>
-      )
-    }
-
-    const dates = () => {
-      return (
-        <div className={Styles.datesContainer}>
-          <span className={Styles.label}>FECHAS: </span>
-          <span className={Styles.dates}>
-            {(startDate || '?').replace(/-/g, '.')} - {(endDate || '?').replace(/-/g, '.')}
-          </span>
-        </div>
       )
     }
 
@@ -128,7 +88,7 @@ class ActionListItem extends React.PureComponent {
     const handleClickPhotos = onClickPhotos && (() => { onClickPhotos(action) })
     const handleMouseEnter = onMouseEnter && (() => { onMouseEnter(action) })
     const handleMouseLeave = onMouseLeave && (() => { onMouseLeave(action) })
-    const handleClickItem = onClickItem && (() => { onClickItem(action) })
+    const handleClickItem = () => history.push(`/proyectos/${id}`)
 
     const renderThumbnails = () => {
       const images = [].concat(...action.submissions.map(s => s.images))
@@ -205,14 +165,7 @@ class ActionListItem extends React.PureComponent {
           </div>
           <div className={Styles.description}>{renderLinks(desc)}</div>
         </div>
-        {(desc && focused) &&
-          <React.Fragment>
-            <div className={Styles.cardBottom}>
-              {getDonations()}
-              {dates()}
-            </div>
-          </React.Fragment>
-        }
+        {false && <div className={Styles.cardBottom} />}
       </div>
     )
   }
@@ -225,11 +178,11 @@ ActionListItem.propTypes = {
   onClickPhotos: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
-  onClickItem: PropTypes.func,
+  history: PropTypes.object.isRequired,
 }
 
 ActionListItem.defaultProps = {
   focused: false,
 }
 
-export default ActionListItem
+export default withRouter(ActionListItem)

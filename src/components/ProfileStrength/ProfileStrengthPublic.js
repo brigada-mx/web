@@ -55,7 +55,7 @@ class ProfileStrengthPublic extends React.Component {
           <span className={Styles.strength}>
             La fuerza de tu perfil es del {Math.round(100 * ratio)}%.
           </span>
-          {task &&
+          {task && ratio < 1 &&
             <span className={Styles.nextTask}>Para incrementarla, {task.label}.</span>
           }
           <MetricsBar value={ratio} max={1} className={Styles.bar} />

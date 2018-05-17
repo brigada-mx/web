@@ -19,6 +19,7 @@ import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
 import OrganizationScreen from 'screens/OrganizationScreen'
+import ActionScreen from 'screens/ActionScreen'
 import SetPasswordWithTokenScreen from 'screens/account/SetPasswordWithTokenScreen'
 import ChooseAccountTypeScreen from 'screens/account/CreateAccountScreen/ChooseAccountTypeScreen'
 import DonorListScreen from 'screens/DonorListScreen'
@@ -30,7 +31,7 @@ import protectedScreen from 'screens/account/ProtectedScreen'
 import DiscourseLoginScreen from 'screens/account/LoginScreen/DiscourseLoginScreen'
 import AccountNav from 'components/AccountNav'
 import DonorNav from 'components/DonorNav'
-import ActionScreen from 'screens/account/ActionScreen'
+import AccountActionScreen from 'screens/account/ActionScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
 import DonorProfileScreen from 'screens/account/ProfileScreen/DonorProfileScreen'
 import HomeScreen from 'screens/account/HomeScreen'
@@ -54,7 +55,11 @@ const DonorScreenWrapper = ({ match }) => {
 }
 
 const ActionScreenWrapper = ({ match }) => {
-  return <ActionScreen actionKey={Number.parseInt(match.params.key, 10)} />
+  return <ActionScreen id={Number.parseInt(match.params.id, 10)} />
+}
+
+const AccountActionScreenWrapper = ({ match }) => {
+  return <AccountActionScreen actionKey={Number.parseInt(match.params.key, 10)} />
 }
 
 const DonationScreenWrapper = ({ match }) => {
@@ -141,6 +146,7 @@ const App = () => {
 
               <Route exact path="/reconstructores" component={OrganizationListScreen} />
               <Route exact path="/reconstructores/:id" component={OrganizationScreenWrapper} />
+              <Route exact path="/proyectos/:id" component={ActionScreenWrapper} />
 
               <Route exact path="/donadores" component={DonorListScreen} />
               <Route exact path="/donadores/:id" component={DonorScreenWrapper} />
@@ -152,8 +158,7 @@ const App = () => {
               <Route exact path="/crear/cuenta/donador" component={DonorCreateAccountScreenWrapper} />
               <Route exact path="/cuenta" component={protectedScreen(HomeScreen, 'org')} />
               <Route exact path="/cuenta/perfil" component={protectedScreen(ProfileScreen, 'org')} />
-              <Route exact path="/cuenta/fotos" component={protectedScreen(ActionScreen, 'org')} />
-              <Route exact path="/cuenta/proyectos/:key" component={protectedScreen(ActionScreenWrapper, 'org')} />
+              <Route exact path="/cuenta/proyectos/:key" component={protectedScreen(AccountActionScreenWrapper, 'org')} />
 
               <Route exact path="/donador" component={protectedScreen(DonorHomeScreen, 'donor')} />
               <Route exact path="/donador/perfil" component={protectedScreen(DonorProfileScreen, 'donor')} />

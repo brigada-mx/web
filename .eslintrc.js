@@ -16,7 +16,7 @@ module.exports = {
     "camelcase": 1,
     "function-paren-newline": 0,
     "object-curly-newline": [2, { "consistent": true }],
-    "max-len": [2, { "ignoreStrings": true, "ignoreTemplateLiterals": true, "ignoreTrailingComments": true, "ignoreComments": true, "tabWidth": 2, "code": 100 }],
+    "max-len": [2, { "ignoreStrings": true, "ignoreTemplateLiterals": true, "ignoreTrailingComments": true, "ignoreComments": true, "tabWidth": 2, "code": 120 }],
     "arrow-body-style": 0,
     "indent": [2, 2],
     "quotes": [2, "single"],

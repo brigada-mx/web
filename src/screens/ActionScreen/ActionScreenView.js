@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 
 import { withRouter, Redirect } from 'react-router-dom'
 import { Sticky, StickyContainer } from 'react-sticky'
-import { connect } from 'react-redux'
 
-import * as Actions from 'src/actions'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import Carousel from 'components/Carousel'
@@ -15,15 +13,14 @@ import HelpWanted from 'components/HelpWanted'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import MapErrorBoundary from 'components/MapErrorBoundary'
-import DonorProfileStrengthPublic from 'components/ProfileStrength/DonorProfileStrengthPublic'
 import { addProtocol, emailLink, fmtBudget, renderLinks } from 'tools/string'
-import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
+import { itemFromScrollEvent, fireGaEvent } from 'tools/other'
 import { sectorByValue } from 'src/choices'
-import DonorBreadcrumb from './DonorBreadcrumb'
-import Styles from './DonorScreenView.css'
+import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
+import Styles from './ActionScreenView.css'
 
 
-class DonorScreenView extends React.Component {
+class ActionScreenView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -33,17 +30,9 @@ class DonorScreenView extends React.Component {
     }
   }
 
-  componentWillUpdate(nextProps) {
-    const { data } = nextProps.donations
-    if (!this.props.donations.data && data && data.results.length) {
-      const focused = { ...data.results[0].action }
-      this.setState({ focused })
-    }
-  }
-
   setDocumentMeta = (name, description) => {
     if (this._documentTitle) return
-    const title = `${name} - Donador Brigada`
+    const title = `${name} - Brigada`
     document.title = title
     this._documentTitle = title
 
@@ -151,7 +140,6 @@ class DonorScreenView extends React.Component {
       }
     })
 
-    const fitBounds = fitBoundsFromCoords(coords)
     const { popup } = this.state
     return (
       <div className={Styles.opsMap}>
@@ -162,13 +150,13 @@ class DonorScreenView extends React.Component {
             features={features}
             popup={popup ? <LocalityPopup
               locality={popup.locality}
-              screen="donor"
+              screen="org"
               onlyLocality
             /> : null}
             onClickFeature={this.handleClickFeature}
             onEnterFeature={this.handleEnterFeature}
             onLeaveFeature={this.handleLeaveFeature}
-            fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
+            initialZoom={4}
           />
         </MapErrorBoundary>
       </div>
@@ -176,32 +164,23 @@ class DonorScreenView extends React.Component {
   }
 
   render() {
-    const {
-      donor: { loading, data, status },
-      donations: { loading: donationsLoading, data: donationsData },
-      modal,
-    } = this.props
-    if (status === 404) return <Redirect to="/donadores" />
-    if (loading || !data || donationsLoading || !donationsData) return <LoadingIndicatorCircle />
+    const { action: { loading, data, status } } = this.props
+    if (status === 404) return <Redirect to="/reconstructores" />
+    if (loading || !data) return <LoadingIndicatorCircle />
 
     this.setDocumentMeta(data.name, data.desc)
     const {
-      metrics,
+      actions,
       contact: { email, phone, website, address, person_responsible: person },
       desc,
       name,
       sector,
-      donating,
-      donating_desc: donatingDesc,
+      year_established: established,
+      image_count: numPhotos,
+      accepting_help: help,
+      help_desc: helpDesc,
       id,
-      has_user: donorHasUser,
     } = data
-
-    const actions = Object.values(donationsData.results.reduce((obj, d) => {
-      obj[d.action.id] = { ...d.action } // eslint-disable-line no-param-reassign
-      return obj
-    }, {}))
-
     const { focused } = this.state
 
     const actionMap = (
@@ -213,43 +192,12 @@ class DonorScreenView extends React.Component {
       />
     )
 
-    const contactButtons = () => {
-      if (donorHasUser) {
-        return (
-          <div className={Styles.buttonsContainer}>
-            {website &&
-              <a
-                target="_blank"
-                className={`${Styles.button} ${Styles.website}`}
-                href={addProtocol(website)}
-                onClick={() => fireGaEvent('donorWebsite')}
-              />
-            }
-            {phone && <PhoneBox phone={phone} name={person} />}
-            {email &&
-              <a
-                className={`${Styles.button} ${Styles.email}`}
-                href={emailLink(email)}
-                onClick={() => fireGaEvent('donorEmail')}
-              />
-            }
-          </div>
-        )
-      }
-      return (
-        <div
-          onClick={() => modal('donorCreateAccount', { donorName: name, donorId: id })}
-          className={Styles.verifyButton}
-        >
-          Encárgate de este perfil
-        </div>
-      )
-    }
+    const budget = actions.reduce((sum, action) => sum + (action.budget || 0), 0)
 
     return (
       <React.Fragment>
         <div className="wrapper-lg wrapper-md wrapper-sm">
-          <DonorBreadcrumb name={name} />
+          <OrganizationBreadcrumb name={name} sector={sector} />
 
           <div className="row">
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
@@ -259,32 +207,29 @@ class DonorScreenView extends React.Component {
               <div className="col-lg-8 col-md-9 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.summaryContainer}>
                   <div className={Styles.fieldContainer}>
-                    <span className={Styles.fieldLabel}>Estatus</span>
-                    <span
-                      className={`${Styles.fieldValue} ${donorHasUser ? Styles.verifiedLabel : Styles.unverifiedLabel}`}
-                    >
-                      {donorHasUser ? 'Verificado' : 'No verificado'}
-                    </span>
-                  </div>
-                  <div className={Styles.fieldContainer}>
-                    <span className={Styles.fieldLabel}>Web</span>
+                    <span className={Styles.fieldLabel}>WEB</span>
                     {website &&
                       <span className={`${Styles.fieldValue} ${Styles.ellipsis}`}>
                         <a
                           target="_blank"
                           href={addProtocol(website)}
-                          onClick={() => fireGaEvent('donorWebsite')}
+                          onClick={() => fireGaEvent('website')}
                         >
                           {website}
                         </a>
                       </span>
                     }
-                    {!website && <span style={{ color: '#9F9F9F' }} className={Styles.fieldValue}>No disponible</span>}
+                    {!website && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
                   </div>
                   <div className={Styles.fieldContainer}>
-                    <span className={Styles.fieldLabel}>Sector</span>
+                    <span className={Styles.fieldLabel}>SECTOR</span>
                     {sector && <span className={Styles.fieldValue}>{sectorByValue[sector] || sector}</span>}
                     {!sector && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
+                  </div>
+                  <div className={Styles.fieldContainer}>
+                    <span className={Styles.fieldLabel}>ESTABLECIDA</span>
+                    {established && <span className={Styles.fieldValue}>{established}</span>}
+                    {!established && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
                   </div>
                 </div>
               </div>
@@ -293,19 +238,19 @@ class DonorScreenView extends React.Component {
               </div>
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
-                  <div className={metrics.total_donated > 0 ? Styles.metric : Styles.emptyMetric}>
-                    <span className={Styles.metricLabel}>Donativos<br />comprometidos</span>
+                  <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
+                    <span className={Styles.metricLabel}>Inversión<br />comprometida</span>
                     <span className={Styles.metricValue}>
-                      {fmtBudget(metrics.total_donated)}
+                      {fmtBudget(budget)}
                     </span>
                   </div>
                   <div className={Styles.metric}>
-                    <span className={Styles.metricLabel}>Reconstructores<br />apoyados</span>
-                    <span className={Styles.metricValue}>{metrics.org_count}</span>
+                    <span className={Styles.metricLabel}>Proyectos<br />registrados</span>
+                    <span className={Styles.metricValue}>{actions.length}</span>
                   </div>
                   <div className={Styles.metric}>
-                    <span className={Styles.metricLabel}>Proyectos<br />apoyados</span>
-                    <span className={Styles.metricValue}>{metrics.action_count}</span>
+                    <span className={Styles.metricLabel}>Fotos<br />capturadas</span>
+                    <span className={Styles.metricValue}>{numPhotos}</span>
                   </div>
                 </div>
               </div>
@@ -313,19 +258,34 @@ class DonorScreenView extends React.Component {
             <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-1 col-sm-8 sm-gutter col-xs-4 xs-gutter">
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-xs-4 center-xs gutter">
-                  {contactButtons()}
-                </div>
-                {donorHasUser &&
-                  <div className="col-lg-12 col-md-12 col-sm-3 col-xs-4 gutter">
-                    <div className={Styles.hq}>
-                      <p className={Styles.subtitle}>¿Dónde estamos?</p>
-                      {address && this.renderAddress(address)}
-                    </div>
+                  <div className={Styles.buttonsContainer}>
+                    {website &&
+                      <a
+                        target="_blank"
+                        className={`${Styles.button} ${Styles.website}`}
+                        href={addProtocol(website)}
+                        onClick={() => fireGaEvent('website')}
+                      />
+                    }
+                    {phone && <PhoneBox phone={phone} name={person} />}
+                    {email &&
+                      <a
+                        className={`${Styles.button} ${Styles.email}`}
+                        href={emailLink(email)}
+                        onClick={() => fireGaEvent('email')}
+                      />
+                    }
                   </div>
-                }
+                </div>
+                <div className="col-lg-12 col-md-12 col-sm-3 col-xs-4 gutter">
+                  <div className={Styles.hq}>
+                    <p className={Styles.subtitle}>¿Dónde estamos?</p>
+                    {address && this.renderAddress(address)}
+                  </div>
+                </div>
                 <div className="col-lg-12 col-md-12 col-sm-4 col-xs-4 gutter">
                   <div className={Styles.ops}>
-                    <p className={Styles.subtitle}>¿Dónde donamos?</p>
+                    <p className={Styles.subtitle}>¿Dónde operamos?</p>
                     {this.renderMap(actions)}
                   </div>
                 </div>
@@ -334,18 +294,12 @@ class DonorScreenView extends React.Component {
           </div>
         </div>
 
-        <HelpWanted
-          help={donating}
-          helpDesc={donatingDesc}
-          groupId={id}
-          email={email}
-          type="donation"
-        />
+        <HelpWanted help={help} helpDesc={helpDesc} groupId={id} email={email} type="volunteer" />
 
-        <StickyContainer className={`${Styles.actionsContainer} row`}>
+        <StickyContainer className={`${!help ? Styles.actionsContainer : ''} row`}>
           <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
             <ActionList
-              screen="donor"
+              screen="org"
               containerStyle={Styles.cardsContainer}
               actions={actions}
               onScroll={this.handleScroll}
@@ -368,25 +322,16 @@ class DonorScreenView extends React.Component {
           </div>
         </StickyContainer>
 
-        {this.props.myDonor && <DonorProfileStrengthPublic />}
         {this.renderCarousel()}
       </React.Fragment>
     )
   }
 }
 
-DonorScreenView.propTypes = {
-  donor: PropTypes.object.isRequired,
-  myDonor: PropTypes.bool.isRequired,
-  donations: PropTypes.object.isRequired,
+ActionScreenView.propTypes = {
+  action: PropTypes.object.isRequired,
+  myAction: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
-  modal: PropTypes.func.isRequired,
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
-  }
-}
-
-export default withRouter(connect(null, mapDispatchToProps)(DonorScreenView))
+export default withRouter(ActionScreenView)

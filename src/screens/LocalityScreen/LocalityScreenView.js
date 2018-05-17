@@ -142,7 +142,7 @@ class LocalityScreenView extends React.Component {
     this.setState({ carousel: { actionId: item.id } })
   }
 
-  handleClickListItem = (item) => {
+  handleMouseEnterItem = (item) => {
     this.setState({ focused: item })
   }
 
@@ -396,7 +396,7 @@ class LocalityScreenView extends React.Component {
               onScroll={this.handleScroll}
               focusedId={focused && focused.id}
               onClickPhotos={this.handleClickPhotos}
-              onClickItem={this.handleClickListItem}
+              onMouseEnter={this.handleMouseEnterItem}
             />
           </div>
           <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
