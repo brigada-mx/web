@@ -1,22 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter, Redirect, Link } from 'react-router-dom'
 import { Sticky, StickyContainer } from 'react-sticky'
 
 import LocalityDamageMap from 'components/LocalityDamageMap'
-import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import Carousel from 'components/Carousel'
-import ActionList from 'components/ActionList'
-import PhoneBox from 'components/PhoneBox'
-import HelpWanted from 'components/HelpWanted'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import MapErrorBoundary from 'components/MapErrorBoundary'
-import { addProtocol, emailLink, fmtBudget, renderLinks } from 'tools/string'
-import { itemFromScrollEvent, fireGaEvent } from 'tools/other'
-import { sectorByValue } from 'src/choices'
+import { fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
+import { fireGaEvent } from 'tools/other'
+import { projectTypeByValue } from 'src/choices'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
+import PhotoGallery from './PhotoGallery'
 import Styles from './ActionScreenView.css'
 
 
@@ -24,15 +21,13 @@ class ActionScreenView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      popup: {},
-      focused: null,
       carousel: {},
     }
   }
 
-  setDocumentMeta = (name, description) => {
+  setDocumentMeta = (projectType, name, description) => {
     if (this._documentTitle) return
-    const title = `${name} - Brigada`
+    const title = `${projectType}, ${name} - Brigada`
     document.title = title
     this._documentTitle = title
 
@@ -49,34 +44,22 @@ class ActionScreenView extends React.Component {
     this.props.history.push(`/comunidades/${feature.properties.id}`)
   }
 
-  handleEnterFeature = (feature) => {
-    const locality = JSON.parse(feature.properties.locality)
-    this.setState({ popup: { locality } })
-  }
-
-  handleLeaveFeature = () => {
-    this.setState({ popup: {} })
-  }
-
-  handleClickPhotos = (item) => {
-    this.setState({ carousel: { actionId: item.id } })
+  handleClickItem = (item) => {
+    const { action: { data } } = this.props
+    if (!data) return
+    this.setState({ carousel: { actionId: data.id } })
   }
 
   handleMouseEnterItem = (item) => {
     this.setState({ focused: item })
   }
 
-  handleScroll = (e, actions) => {
-    if (window.innerWidth >= 980) return
-    this.setState({ focused: itemFromScrollEvent(e, actions) })
-  }
-
-  handleClickActionFeature = (feature) => {
+  handleClickItemFeature = (feature) => {
     const { actionId, lat, lng } = feature.properties
     this.setState({ carousel: { actionId, lat, lng } })
   }
 
-  handleEnterActionFeature = (feature) => {
+  handleEnterItemFeature = (feature) => {
     this.setState({ focused: JSON.parse(feature.properties.action) })
   }
 
@@ -93,54 +76,19 @@ class ActionScreenView extends React.Component {
     )
   }
 
-  renderAddress = (address) => {
-    const { street, locality, city, state, zip } = address
-    let stateZip = null
-    if (state && zip) stateZip = <li>{state}, {zip}</li>
-    else if (state) stateZip = <li>{state}</li>
-    else if (zip) stateZip = <li>{zip}</li>
-
-    return (
-      <ul className={Styles.addressFields}>
-        {street && <li>{street}</li>}
-        {locality && <li>{locality}</li>}
-        {city && <li>{city}</li>}
-        {stateZip}
-      </ul>
-    )
-  }
-
-  renderMap = (actions) => {
-    const coords = []
-    const features = actions.map((action) => {
-      const {
-        location: { lat, lng },
-        meta: { total },
-        cvegeo,
-        id,
-        state_name: stateName,
-        municipality_name: muniName,
-        name,
-      } = action.locality
-      coords.push(action.locality.location)
-
-      return {
+  renderMap = (action) => {
+    const { location: { lat, lng }, meta: { total }, id } = action.locality
+    const features = [
+      {
         type: 'Feature',
-        properties: {
-          cvegeo,
-          id,
-          total,
-          fullName: `${stateName}, ${muniName}, ${name}`,
-          locality: action.locality,
-        },
+        properties: { id, total, locality: action.locality },
         geometry: {
           type: 'Point',
           coordinates: [lng, lat],
         },
-      }
-    })
+      },
+    ]
 
-    const { popup } = this.state
     return (
       <div className={Styles.opsMap}>
         <MapErrorBoundary>
@@ -148,14 +96,7 @@ class ActionScreenView extends React.Component {
             dragPan={window.innerWidth >= 980}
             zoomControl={false}
             features={features}
-            popup={popup ? <LocalityPopup
-              locality={popup.locality}
-              screen="org"
-              onlyLocality
-            /> : null}
             onClickFeature={this.handleClickFeature}
-            onEnterFeature={this.handleEnterFeature}
-            onLeaveFeature={this.handleLeaveFeature}
             initialZoom={4}
           />
         </MapErrorBoundary>
@@ -168,85 +109,106 @@ class ActionScreenView extends React.Component {
     if (status === 404) return <Redirect to="/reconstructores" />
     if (loading || !data) return <LoadingIndicatorCircle />
 
-    this.setDocumentMeta(data.name, data.desc)
     const {
-      actions,
-      contact: { email, phone, website, address, person_responsible: person },
-      desc,
-      name,
-      sector,
-      year_established: established,
+      organization: { sector, name, id: organizationId },
       image_count: numPhotos,
-      accepting_help: help,
-      help_desc: helpDesc,
+      donations,
+      locality: { meta: { margGrade, total }, name: localityName, state_name: stateName },
+      submissions,
+      action_type: actionType,
+      start_date: startDate,
+      end_date: endDate,
+      target,
+      progress,
+      unit_of_measurement: unit,
+      budget = 0,
+      desc,
       id,
     } = data
+
+    const projectType = projectTypeByValue[actionType] || actionType
+
+    this.setDocumentMeta(projectType, name, desc)
     const { focused } = this.state
+
+    const dates = () => {
+      return (
+        <div className={Styles.datesContainer}>
+          <span className={Styles.label}>FECHAS</span>
+          <span className={Styles.dates}>
+            {(startDate || '?').replace(/-/g, '.')} - {(endDate || '?').replace(/-/g, '.')}
+          </span>
+        </div>
+      )
+    }
+
+    const getProgress = () => {
+      return (
+        <div className={Styles.datesContainer}>
+          <span className={Styles.label}>AVANCE</span>
+          <span className={Styles.dates}>{`${progress} de ${target} ${unit}`.toLowerCase()}</span>
+        </div>
+      )
+    }
+
+    const getDonations = () => {
+      if (donations.length === 0) return null
+
+      const rows = donations.sort((a, b) => {
+        if (!a.received_date) return 1
+        if (!b.received_date) return -1
+        if (a.received_date < b.received_date) return 1
+        if (a.received_date > b.received_date) return -1
+        return 0
+      }).map(({ amount, donor: { id: donorId, name: donorName } }, i) => {
+        return (
+          <tr key={i}>
+            <th><Link className={Styles.donorLink} to={`/donadores/${donorId}`}>{donorName}</Link></th>
+            <th>{fmtBudgetPlain(amount)}</th>
+          </tr>
+        )
+      })
+
+      return (
+        <div className={Styles.donationContainer}>
+          <span className={Styles.label}>DONATIVOS (MXN)</span>
+          <table className={Styles.donations}>
+            <tbody>{rows}</tbody>
+          </table>
+        </div>
+      )
+    }
 
     const actionMap = (
       <ActionMap
-        actions={actions}
+        actions={[data]}
         selectedId={focused && focused.id}
-        onClickFeature={this.handleClickActionFeature}
-        onEnterFeature={this.handleEnterActionFeature}
+        onClickFeature={this.handleClickItemFeature}
+        onEnterFeature={this.handleEnterItemFeature}
       />
     )
-
-    const budget = actions.reduce((sum, action) => sum + (action.budget || 0), 0)
 
     return (
       <React.Fragment>
         <div className="wrapper-lg wrapper-md wrapper-sm">
-          <OrganizationBreadcrumb name={name} sector={sector} />
+          <OrganizationBreadcrumb name={name} sector={sector} id={organizationId} projectType={projectType} />
 
           <div className="row">
+
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
               <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
-                <div className={Styles.name}>{name}</div>
+                <div className={Styles.name}>{projectType}</div>
               </div>
-              <div className="col-lg-8 col-md-9 col-sm-6 col-xs-4 gutter">
-                <div className={Styles.summaryContainer}>
-                  <div className={Styles.fieldContainer}>
-                    <span className={Styles.fieldLabel}>WEB</span>
-                    {website &&
-                      <span className={`${Styles.fieldValue} ${Styles.ellipsis}`}>
-                        <a
-                          target="_blank"
-                          href={addProtocol(website)}
-                          onClick={() => fireGaEvent('website')}
-                        >
-                          {website}
-                        </a>
-                      </span>
-                    }
-                    {!website && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
-                  </div>
-                  <div className={Styles.fieldContainer}>
-                    <span className={Styles.fieldLabel}>SECTOR</span>
-                    {sector && <span className={Styles.fieldValue}>{sectorByValue[sector] || sector}</span>}
-                    {!sector && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
-                  </div>
-                  <div className={Styles.fieldContainer}>
-                    <span className={Styles.fieldLabel}>ESTABLECIDA</span>
-                    {established && <span className={Styles.fieldValue}>{established}</span>}
-                    {!established && <span className={Styles.fieldValue} style={{ color: '#9F9F9F' }}>No disponible</span>}
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
-                <p className={Styles.mission}>{renderLinks(desc)}</p>
-              </div>
+
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
                   <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
                     <span className={Styles.metricLabel}>Inversión<br />comprometida</span>
-                    <span className={Styles.metricValue}>
-                      {fmtBudget(budget)}
-                    </span>
+                    <span className={Styles.metricValue}>{fmtBudget(budget)}</span>
                   </div>
                   <div className={Styles.metric}>
-                    <span className={Styles.metricLabel}>Proyectos<br />registrados</span>
-                    <span className={Styles.metricValue}>{actions.length}</span>
+                    <span className={Styles.metricLabel}>Donativos<br />documentados</span>
+                    <span className={Styles.metricValue}>{donations.length}</span>
                   </div>
                   <div className={Styles.metric}>
                     <span className={Styles.metricLabel}>Fotos<br />capturadas</span>
@@ -254,57 +216,52 @@ class ActionScreenView extends React.Component {
                   </div>
                 </div>
               </div>
+
+              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
+                <p className={Styles.mission}>{renderLinks(desc)}</p>
+              </div>
+
+              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter row">
+                {getDonations()}
+                {getProgress()}
+                {dates()}
+              </div>
             </div>
+
             <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-1 col-sm-8 sm-gutter col-xs-4 xs-gutter">
               <div className="row">
-                <div className="col-lg-12 col-md-12 col-xs-4 center-xs gutter">
-                  <div className={Styles.buttonsContainer}>
-                    {website &&
-                      <a
-                        target="_blank"
-                        className={`${Styles.button} ${Styles.website}`}
-                        href={addProtocol(website)}
-                        onClick={() => fireGaEvent('website')}
-                      />
-                    }
-                    {phone && <PhoneBox phone={phone} name={person} />}
-                    {email &&
-                      <a
-                        className={`${Styles.button} ${Styles.email}`}
-                        href={emailLink(email)}
-                        onClick={() => fireGaEvent('email')}
-                      />
-                    }
-                  </div>
-                </div>
-                <div className="col-lg-12 col-md-12 col-sm-3 col-xs-4 gutter">
-                  <div className={Styles.hq}>
-                    <p className={Styles.subtitle}>¿Dónde estamos?</p>
-                    {address && this.renderAddress(address)}
-                  </div>
-                </div>
                 <div className="col-lg-12 col-md-12 col-sm-4 col-xs-4 gutter">
                   <div className={Styles.ops}>
-                    <p className={Styles.subtitle}>¿Dónde operamos?</p>
-                    {this.renderMap(actions)}
+                    <p className={Styles.subtitle}>{`${localityName}, ${stateName}`}</p>
+                    {this.renderMap(data)}
                   </div>
                 </div>
               </div>
+
+              <div className={`${Styles.mapMeta} row middle between`}>
+                <div>
+                  <div>{total}</div>
+                  <div>VIVIENDAS DAÑADAS</div>
+                </div>
+
+                <div>
+                  <div>{margGrade}</div>
+                  <div>REZAGO SOCIAL</div>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
 
-        <HelpWanted help={help} helpDesc={helpDesc} groupId={id} email={email} type="volunteer" />
-
-        <StickyContainer className={`${!help ? Styles.actionsContainer : ''} row`}>
+        <StickyContainer className={`${Styles.actionsContainer} row`}>
           <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
-            <ActionList
+            <PhotoGallery
               screen="org"
               containerStyle={Styles.cardsContainer}
-              actions={actions}
-              onScroll={this.handleScroll}
+              submissions={submissions}
               focusedId={focused && focused.id}
-              onClickPhotos={this.handleClickPhotos}
+              onClickItem={this.handleClickItem}
               onMouseEnter={this.handleMouseEnterItem}
             />
           </div>

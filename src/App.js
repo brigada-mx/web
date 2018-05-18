@@ -129,7 +129,7 @@ const App = () => {
             <ModalSelector />
 
             <Route exact path="/" component={Nav} />
-            <Route path="/(comunidades|reconstructores|donadores)" component={Nav} />
+            <Route path="/(comunidades|reconstructores|donadores|proyectos)" component={Nav} />
             <Route path="/cuenta" component={AccountNav} />
             <Route path="/donador" component={DonorNav} />
 

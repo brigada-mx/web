@@ -6,6 +6,75 @@ a:hover {
   color: #13A68C;
 }
 
+.label {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #0F0F0F;
+  opacity: 0.4;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  text-transform: uppercase;
+  text-align: right;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 45%;
+}
+
+.donations {
+  font-family: 'nunito-sans-300', sans-serif;
+  font-size: 12px;
+  color: #141418;
+  line-height: 21px;
+  letter-spacing: 0.4px;
+  margin-top: 5px;
+  border-collapse: separate;
+  width: 100%;
+  text-align: left;
+}
+
+.donations th:first-of-type {
+  margin-right: 22px;
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.donationContainer {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 30%;
+  margin-right: 45px;
+}
+
+.donationContainer .label {
+  width: 100%;
+  text-align: left;
+}
+
+.donorLink {
+  color: unset;
+  font-family: 'nunito-sans', sans-serif;
+  line-height: 16px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  display: table;
+}
+
+.datesContainer {
+}
+
+.dates {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #141418;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  margin-bottom: 10px;
+}
+
 .name {
   font-family: 'nunito-sans-200', sans-serif;
   font-size: 48px;
@@ -34,6 +103,10 @@ a:hover {
   letter-spacing: 0.35px;
   line-height: 16px;
   opacity: 0.4;
+}
+
+.mapMeta {
+  margin-top: 20px;
 }
 
 .fieldValue {
@@ -422,5 +495,20 @@ a:hover {
   }
   .cardsContainer {
     padding: 18px 16px 0 16px;
+  }
+  .label {
+    text-align: left;
+  }
+  .donationContainer {
+    width: 100%;
+    margin-right: 0px;
+  }
+  .datesContainer {
+    display: flex;
+    margin-top: 16px;
+  }
+  .datesContainer .label {
+    width: unset;
+    margin-right: 6px;
   }
 }

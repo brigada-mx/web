@@ -31,15 +31,6 @@
   display: table;
 }
 
-.donorLink {
-  color: unset;
-  font-family: 'nunito-sans', sans-serif;
-  line-height: 16px;
-  margin-bottom: 6px;
-  text-decoration: none;
-  display: table;
-}
-
 .greyLink {
   font-family: 'nunito-sans', sans-serif;
   font-size: 12px;
@@ -85,39 +76,6 @@
   display: flex;
   padding: 31px 27px 36px 27px;
   background-color: #F8F9FB;
-}
-
-.donationContainer {
-  display: inline-flex;
-  flex-direction: column;
-  min-width: 30%;
-  margin-right: 45px;
-}
-
-.donationContainer .label {
-  width: 100%;
-  text-align: left;
-}
-
-.donations {
-  font-family: 'nunito-sans-300', sans-serif;
-  font-size: 12px;
-  color: #141418;
-  line-height: 21px;
-  letter-spacing: 0.4px;
-  margin-top: 5px;
-  border-collapse: separate;
-  width: 100%;
-  text-align: left;
-}
-
-.donations th:first-of-type {
-  margin-right: 22px;
-  width: 80%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  display: block;
 }
 
 .summaryContainer {
@@ -202,18 +160,6 @@
   letter-spacing: 0.6px;
   line-height: 30px;
   margin: 14px 0 22px 0;
-}
-
-.datesContainer {
-}
-
-.dates {
-  font-family: 'nunito-sans', sans-serif;
-  font-size: 12px;
-  color: #141418;
-  letter-spacing: 0.4px;
-  line-height: 16px;
-  margin-bottom: 10px;
 }
 
 .emptyThumbnail {
@@ -361,18 +307,6 @@
   }
   .cardBottom {
     flex-direction: column;
-  }
-  .donationContainer {
-    width: 100%;
-    margin-right: 0px;
-  }
-  .datesContainer {
-    display: flex;
-    margin-top: 16px;
-  }
-  .datesContainer .label {
-    width: unset;
-    margin-right: 6px;
   }
   .label {
     text-align: left;

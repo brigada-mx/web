@@ -206,13 +206,14 @@ class OrganizationScreenView extends React.Component {
     return (
       <React.Fragment>
         <div className="wrapper-lg wrapper-md wrapper-sm">
-          <OrganizationBreadcrumb name={name} sector={sector} />
+          <OrganizationBreadcrumb name={name} sector={sector} id={id} />
 
           <div className="row">
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
               <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.name}>{name}</div>
               </div>
+
               <div className="col-lg-8 col-md-9 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.summaryContainer}>
                   <div className={Styles.fieldContainer}>
@@ -242,9 +243,11 @@ class OrganizationScreenView extends React.Component {
                   </div>
                 </div>
               </div>
+
               <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
                 <p className={Styles.mission}>{renderLinks(desc)}</p>
               </div>
+
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
                   <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
@@ -264,6 +267,7 @@ class OrganizationScreenView extends React.Component {
                 </div>
               </div>
             </div>
+
             <div className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-1 col-sm-8 sm-gutter col-xs-4 xs-gutter">
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-xs-4 center-xs gutter">
@@ -300,6 +304,7 @@ class OrganizationScreenView extends React.Component {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 

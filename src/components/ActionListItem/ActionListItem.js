@@ -85,7 +85,10 @@ class ActionListItem extends React.PureComponent {
       )
     }
 
-    const handleClickPhotos = onClickPhotos && (() => { onClickPhotos(action) })
+    const handleClickPhotos = onClickPhotos && ((e) => {
+      e.stopPropagation()
+      onClickPhotos(action)
+    })
     const handleMouseEnter = onMouseEnter && (() => { onMouseEnter(action) })
     const handleMouseLeave = onMouseLeave && (() => { onMouseLeave(action) })
     const handleClickItem = () => history.push(`/proyectos/${id}`)

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import Styles from './OrganizationScreenView.css'
 
 
-const OrganizationBreadcrumb = ({ name, sector }) => {
+const OrganizationBreadcrumb = ({ name, sector, id, projectType }) => {
   const labelBySector = {
     civil: 'Civil',
     public: 'Público',
@@ -21,8 +21,9 @@ const OrganizationBreadcrumb = ({ name, sector }) => {
         <Link to={`/reconstructores?sec=${sector}`}>{labelBySector[sector]}</Link>
       </span>
       <span className={Styles.orgDetail}>
-        <Link to="#">{name}</Link>
+        <Link to={`/reconstructores/${id}`}>{name}</Link>
       </span>
+      {projectType && <span className={Styles.orgDetail}><Link to="#">{projectType}</Link></span>}
     </div>
   )
 }
@@ -30,6 +31,8 @@ const OrganizationBreadcrumb = ({ name, sector }) => {
 OrganizationBreadcrumb.propTypes = {
   name: PropTypes.string.isRequired,
   sector: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  projectType: PropTypes.string,
 }
 
 export default OrganizationBreadcrumb
