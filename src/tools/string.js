@@ -115,9 +115,7 @@ export const getLocation = (href) => {
   }
 }
 
-export const thumborUrl = (
-  { url, rotate: r = 0 }, width, height, { crop = false, rotate = true } = {}
-) => {
+export const thumborUrl = ({ url, rotate: r = 0 }, width, height, { crop = false, rotate = true } = {}) => {
   const clean = addProtocol(url)
   const parsed = getLocation(clean)
   const rotateFilter = rotate ? `/filters:rotate(${-r * 90})` : ''
@@ -128,7 +126,7 @@ export const googleMapsUrl = (lat, lng) => {
   return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
 }
 
-export const imageStyleObject = ({ rotate = 0, hidden, datetime }) => {
+export const imageStyleObject = ({ rotate = 0, hidden }) => {
   return {
     transform: `rotate(${rotate * 90}deg)`,
     opacity: hidden ? 0.3 : 1,
