@@ -10,7 +10,7 @@ import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import MapErrorBoundary from 'components/MapErrorBoundary'
 import { fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
-import { fireGaEvent } from 'tools/other'
+import { fireGaEvent, transparencyLevel } from 'tools/other'
 import { projectTypeByValue } from 'src/choices'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
 import PhotoGallery from './PhotoGallery'
@@ -105,7 +105,7 @@ class ActionScreenView extends React.Component {
   }
 
   render() {
-    const { action: { loading, data, status } } = this.props
+    const { action: { loading, data, status }, myAction } = this.props
     if (status === 404) return <Redirect to="/reconstructores" />
     if (loading || !data) return <LoadingIndicatorCircle />
 
@@ -123,7 +123,7 @@ class ActionScreenView extends React.Component {
       unit_of_measurement: unit,
       budget = 0,
       desc,
-      id,
+      key,
     } = data
 
     const projectType = projectTypeByValue[actionType] || actionType
@@ -188,6 +188,9 @@ class ActionScreenView extends React.Component {
       />
     )
 
+    const { level: transLevel, label: transLabel } = transparencyLevel(data)
+    const transparencyStyles = [Styles.lowTransparency, Styles.midTransparency, Styles.highTransparency]
+
     return (
       <React.Fragment>
         <div className="wrapper-lg wrapper-md wrapper-sm">
@@ -196,6 +199,12 @@ class ActionScreenView extends React.Component {
           <div className="row">
 
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
+              <div className={`${Styles.transparency} col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter`}>
+                <span className={transparencyStyles[transLevel]} />
+                <span>{`PROYECTO ${transLabel}`.toUpperCase()}</span>
+                {(myAction) && <Link to={`/cuenta/proyectos/${key}`}>{transLevel < 2 ? 'MEJORAR' : 'EDITAR'}</Link>}
+              </div>
+
               <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.name}>{projectType}</div>
               </div>

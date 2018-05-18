@@ -48,7 +48,7 @@ class PhotoGallery extends React.Component {
           const group = groupByMonth[month]
           return (
             <div key={month}>
-              <span>{moment(month).format('MMMM \'YY')}</span>
+              <div className={Styles.groupLabel}>{moment(month).format('MMMM \'YY')}</div>
               <Gallery photos={group} />
             </div>
           )

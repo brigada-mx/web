@@ -6,6 +6,23 @@ a:hover {
   color: #13A68C;
 }
 
+.lowTransparency {
+
+}
+
+.midTransparency {
+
+}
+
+.highTransparency {
+
+}
+
+.transparency {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
 .label {
   font-family: 'nunito-sans', sans-serif;
   font-size: 12px;

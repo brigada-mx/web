@@ -43,6 +43,29 @@ export const dmgGrade = (locality) => {
   return 'unknown'
 }
 
+export const transparencyScore = (action) => {
+  const {
+    image_count: numPhotos,
+    donations,
+    budget = 0,
+    target = null,
+    progress = null,
+  } = action
+
+  return (numPhotos ** 0.6) * (1 + (
+    (donations.length > 0 ? 2 : 0) +
+    (budget > 0 ? 1 : 0) +
+    (target !== null && progress !== null ? 1 : 0)
+  ) / 3)
+}
+
+export const transparencyLevel = (action) => {
+  const score = transparencyScore(action)
+  if (score < 5) return { label: 'poco transparente', level: 0 }
+  if (score < 10) return { label: 'semi-transparente', level: 1 }
+  return { label: 'transparente', level: 2 }
+}
+
 export const metaByDmgGrade = (grade) => {
   const lookup = {
     severe: { label: 'MUY GRAVE', labelFem: 'MUY GRAVE', color: colors.severe },
