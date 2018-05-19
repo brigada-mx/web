@@ -10,7 +10,7 @@ import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import MapErrorBoundary from 'components/MapErrorBoundary'
 import { fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
-import { fireGaEvent, transparencyLevel } from 'tools/other'
+import { transparencyLevel } from 'tools/other'
 import { projectTypeByValue } from 'src/choices'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
 import PhotoGallery from './PhotoGallery'
@@ -46,17 +46,14 @@ class ActionScreenView extends React.Component {
     this.setState({ carousel: { initialUrl: photo.url } })
   }
 
-  handleMouseEnterItem = (item) => {
-    this.setState({ focused: item })
+  handleMouseEnterItem = (e, { photo }) => {
+    const { location: { lat: selectedLat, lng: selectedLng } } = photo
+    this.setState({ selectedLat, selectedLng })
   }
 
   handleClickItemFeature = (feature) => {
     const { lat, lng } = feature.properties
     this.setState({ carousel: { lat, lng } })
-  }
-
-  handleEnterItemFeature = (feature) => {
-    this.setState({ focused: JSON.parse(feature.properties.action) })
   }
 
   handleCarouselClose = () => {
@@ -126,7 +123,6 @@ class ActionScreenView extends React.Component {
     const projectType = projectTypeByValue[actionType] || actionType
 
     this.setDocumentMeta(projectType, name, desc)
-    const { focused } = this.state
 
     const dates = () => {
       return (
@@ -179,7 +175,8 @@ class ActionScreenView extends React.Component {
     const actionMap = (
       <ActionMap
         actions={[data]}
-        selectedId={focused && focused.id}
+        selectedLat={this.state.selectedLat}
+        selectedLng={this.state.selectedLng}
         onClickFeature={this.handleClickItemFeature}
         onEnterFeature={this.handleEnterItemFeature}
       />
@@ -265,18 +262,17 @@ class ActionScreenView extends React.Component {
             <PhotoGallery
               submissions={submissions}
               onClickItem={this.handleClickItem}
+              onMouseEnterItem={this.handleMouseEnterItem}
             />
           </div>
           <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
             <Sticky>
-              {
-                ({ style }) => {
-                  return actionMap &&
-                    <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>
-                      {actionMap}
-                    </div>
-                }
-              }
+              {({ style }) => {
+                return actionMap &&
+                  <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>
+                    {actionMap}
+                  </div>
+              }}
             </Sticky>
           </div>
         </StickyContainer>

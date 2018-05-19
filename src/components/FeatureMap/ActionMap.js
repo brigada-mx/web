@@ -1,24 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { fitBoundsFromCoords } from 'tools/other'
+import { fitBoundsFromCoords, distanceKmBetweenCoords } from 'tools/other'
 import FeatureMap from './FeatureMap'
 import ActionLegend from './ActionLegend'
 
 
+const maxMetersGroupSubmissions = 50
 const maxFeatures = 1000
 const layer = {
   id: 'features',
   type: 'circle',
   source: 'features',
   paint: {
-    'circle-color': '#3DC59F',
-    'circle-opacity': {
+    'circle-color': {
       property: 'selected',
       type: 'categorical',
       stops: [
-        [true, 1],
-        [false, 1],
+        [true, '#288968'],
+        [false, '#3DC59F'],
       ],
     },
     'circle-radius': {
@@ -31,24 +31,33 @@ const layer = {
     },
   },
 }
-const fitBoundsOptions = { padding: 50, maxZoom: 10 }
+const fitBoundsOptions = { padding: 50, maxZoom: 11 }
 
-const ActionMap = ({ actions, selectedId, ...rest }) => {
-  const selected = actions.filter(a => a.id === selectedId)
-  const notSelected = actions.filter(a => a.id !== selectedId)
+const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, ...rest }) => {
+  const selectedActions = actions.filter(a => a.id === selectedId)
+  const notSelectedActions = actions.filter(a => a.id !== selectedId)
   const features = []
   const locations = []
 
-  for (const a of selected.concat(notSelected)) {
+  for (const a of selectedActions.concat(notSelectedActions)) {
     for (const s of a.submissions) {
       if (!s.location) continue
-      locations.push(s.location) // fitBounds from all locations, but limit number of features
+      if (s.images.length === 0) continue // don't add submissions with no files
       if (features.length >= maxFeatures) continue
 
+      locations.push(s.location) // fitBounds from all locations, but limit number of features
+
       const { lat, lng } = s.location
+      let selected = a.id === selectedId
+      if (!selected && lat !== undefined && lng !== undefined
+        && selectedLat !== undefined && selectedLng !== undefined
+      ) {
+        selected = distanceKmBetweenCoords(lat, lng, selectedLat, selectedLng) * 1000 < maxMetersGroupSubmissions
+      }
+
       features.push({
         type: 'Feature',
-        properties: { action: a, selected: a.id === selectedId, lng, lat, actionId: a.id },
+        properties: { action: a, selected, lng, lat, actionId: a.id },
         geometry: {
           type: 'Point',
           coordinates: [lng, lat],
@@ -78,6 +87,8 @@ const ActionMap = ({ actions, selectedId, ...rest }) => {
 ActionMap.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedId: PropTypes.number,
+  selectedLat: PropTypes.number,
+  selectedLng: PropTypes.number,
   legend: PropTypes.string,
 }
 

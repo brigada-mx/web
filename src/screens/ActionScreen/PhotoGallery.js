@@ -5,25 +5,28 @@ import Gallery from 'react-photo-gallery'
 import moment from 'moment'
 
 import { thumborUrl } from 'tools/string'
+import Photo from './Photo'
 import Styles from './PhotoGallery.css'
 
 
 class PhotoGallery extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
-
   render() {
-    const { submissions, onClickItem } = this.props
+    const { submissions, onClickItem, onMouseEnterItem } = this.props
     const photos = [].concat(...submissions.map((s) => {
-      const { images, submitted } = s
+      const { images, submitted, location } = s
       return images.filter(
         i => i.width !== undefined && i.height !== undefined
-      ).map(
-        (i) => { return { ...i, src: thumborUrl(i, 480, 480), submitted, alt: 'No encontrado' } }
-      ).sort((a, b) => {
+      ).map((i) => {
+        return {
+          ...i,
+          onMouseEnter: onMouseEnterItem,
+          src: thumborUrl(i, 480, 480),
+          alt: s.description,
+          title: s.description,
+          submitted,
+          location,
+        }
+      }).sort((a, b) => {
         if (a.submitted < b.submitted) return -1
         if (a.submitted > b.submitted) return 1
         return 0
@@ -49,7 +52,12 @@ class PhotoGallery extends React.Component {
           return (
             <div key={month}>
               <div className={Styles.groupLabel}>{moment(month).format('MMMM \'YY')}</div>
-              <Gallery margin={8} photos={group} onClick={onClickItem} />
+              <Gallery
+                margin={8}
+                photos={group}
+                onClick={onClickItem}
+                ImageComponent={Photo}
+              />
             </div>
           )
         })}
@@ -60,7 +68,8 @@ class PhotoGallery extends React.Component {
 
 PhotoGallery.propTypes = {
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onClickItem: PropTypes.func.isRequired,
+  onClickItem: PropTypes.func,
+  onMouseEnterItem: PropTypes.func,
 }
 
 export default PhotoGallery

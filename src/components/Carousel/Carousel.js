@@ -126,10 +126,6 @@ class CarouselView extends React.Component {
     document.removeEventListener('keydown', this.handleKeyDown)
   }
 
-  componentWillUpdate(nextProps) {
-    // if (this.props.photos !== nextProps.photos) this.setState({ index: 0 })
-  }
-
   handleKeyDown = (e) => {
     try {
       if (e.keyCode === 27) this.props.onClose() // 8 is keyCode for delete key
