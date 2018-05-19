@@ -20,9 +20,7 @@ import Styles from './ActionScreenView.css'
 class ActionScreenView extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      carousel: {},
-    }
+    this.state = {}
   }
 
   setDocumentMeta = (projectType, name, description) => {
@@ -44,10 +42,8 @@ class ActionScreenView extends React.Component {
     this.props.history.push(`/comunidades/${feature.properties.id}`)
   }
 
-  handleClickItem = (item) => {
-    const { action: { data } } = this.props
-    if (!data) return
-    this.setState({ carousel: { actionId: data.id } })
+  handleClickItem = (e, { photo }) => {
+    this.setState({ carousel: { initialUrl: photo.url } })
   }
 
   handleMouseEnterItem = (item) => {
@@ -55,8 +51,8 @@ class ActionScreenView extends React.Component {
   }
 
   handleClickItemFeature = (feature) => {
-    const { actionId, lat, lng } = feature.properties
-    this.setState({ carousel: { actionId, lat, lng } })
+    const { lat, lng } = feature.properties
+    this.setState({ carousel: { lat, lng } })
   }
 
   handleEnterItemFeature = (feature) => {
@@ -64,15 +60,16 @@ class ActionScreenView extends React.Component {
   }
 
   handleCarouselClose = () => {
-    this.setState({ carousel: {} })
+    this.setState({ carousel: undefined })
   }
 
   renderCarousel = () => {
-    const { actionId, lat, lng } = this.state.carousel
-    if (actionId === undefined) return null
+    const { action: { data } } = this.props
+    if (!data || !this.state.carousel) return null
+    const { lat, lng, initialUrl } = this.state.carousel
 
     return (
-      <Carousel onClose={this.handleCarouselClose} actionId={actionId} lat={lat} lng={lng} />
+      <Carousel onClose={this.handleCarouselClose} actionId={data.id} lat={lat} lng={lng} initialUrl={initialUrl} />
     )
   }
 
@@ -266,12 +263,8 @@ class ActionScreenView extends React.Component {
         <StickyContainer className={`${Styles.actionsContainer} row`}>
           <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
             <PhotoGallery
-              screen="org"
-              containerStyle={Styles.cardsContainer}
               submissions={submissions}
-              focusedId={focused && focused.id}
               onClickItem={this.handleClickItem}
-              onMouseEnter={this.handleMouseEnterItem}
             />
           </div>
           <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">

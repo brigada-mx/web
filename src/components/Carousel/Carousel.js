@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import _ from 'lodash'
 import { connect } from 'react-redux'
 import Swiper from 'react-id-swiper'
 import ReactGA from 'react-ga'
@@ -87,10 +88,15 @@ const mapDispatchToProps = (dispatch) => {
 class CarouselView extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      index: 0,
-    }
-    this.swiperParams = {
+
+    const { photos, initialUrl } = props
+    let index = 0
+    if (initialUrl) index = _.findIndex(photos, p => p.image.url === initialUrl)
+    if (index === -1) index = 0
+
+    this.state = { index }
+    this.swiperProps = {
+      initialSlide: index,
       slidesPerView: 1.85,
       spaceBetween: 100,
       centeredSlides: true,
@@ -121,7 +127,7 @@ class CarouselView extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (this.props.photos !== nextProps.photos) this.setState({ index: 0 })
+    // if (this.props.photos !== nextProps.photos) this.setState({ index: 0 })
   }
 
   handleKeyDown = (e) => {
@@ -164,7 +170,7 @@ class CarouselView extends React.Component {
         </div>
         <span className={Styles.closeButton} onClick={onClose} />
         <Swiper
-          {...this.swiperParams}
+          {...this.swiperProps}
           ref={this.setSwiperRef}
         >
           {panes}
@@ -177,6 +183,7 @@ class CarouselView extends React.Component {
 CarouselView.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.object).isRequired,
   onClose: PropTypes.func.isRequired,
+  initialUrl: PropTypes.string,
   loading: PropTypes.bool,
 }
 

@@ -16,7 +16,7 @@ class PhotoGallery extends React.Component {
   }
 
   render() {
-    const { submissions } = this.props
+    const { submissions, onClickItem } = this.props
     const photos = [].concat(...submissions.map((s) => {
       const { images, submitted } = s
       return images.filter(
@@ -49,7 +49,7 @@ class PhotoGallery extends React.Component {
           return (
             <div key={month}>
               <div className={Styles.groupLabel}>{moment(month).format('MMMM \'YY')}</div>
-              <Gallery photos={group} />
+              <Gallery margin={8} photos={group} onClick={onClickItem} />
             </div>
           )
         })}
@@ -60,6 +60,7 @@ class PhotoGallery extends React.Component {
 
 PhotoGallery.propTypes = {
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onClickItem: PropTypes.func.isRequired,
 }
 
 export default PhotoGallery
