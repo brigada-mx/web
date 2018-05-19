@@ -9,9 +9,7 @@ import ActionLegend from './ActionLegend'
 const maxMetersGroupSubmissions = 50
 const maxFeatures = 1000
 const layer = {
-  id: 'features',
   type: 'circle',
-  source: 'features',
   paint: {
     'circle-color': {
       property: 'selected',
@@ -33,7 +31,7 @@ const layer = {
 }
 const fitBoundsOptions = { padding: 50, maxZoom: 11 }
 
-const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, ...rest }) => {
+const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, sourceId = 'actions', ...rest }) => {
   const selectedActions = actions.filter(a => a.id === selectedId)
   const notSelectedActions = actions.filter(a => a.id !== selectedId)
   const features = []
@@ -73,12 +71,13 @@ const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, ...rest }) =
       {...rest}
       interactive={locations.length > 0}
       initialZoom={locations.length > 0 ? 13 : 5.5}
-      zoom={locations.length > 0}
+      zoomControl={locations.length > 0}
       disableKeyboard
       fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
       fitBoundsOptions={fitBoundsOptions}
       features={features}
       layer={layer}
+      sourceId={sourceId}
       legend={<ActionLegend />}
     />
   )
@@ -86,6 +85,7 @@ const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, ...rest }) =
 
 ActionMap.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  sourceId: PropTypes.string,
   selectedId: PropTypes.number,
   selectedLat: PropTypes.number,
   selectedLng: PropTypes.number,

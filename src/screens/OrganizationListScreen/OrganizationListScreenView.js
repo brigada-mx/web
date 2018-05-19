@@ -12,7 +12,6 @@ import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import LocalityLegend from 'components/LocalityDamageMap/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import MapErrorBoundary from 'components/MapErrorBoundary'
 import { tokenMatch } from 'tools/string'
 import { localStorage } from 'tools/storage'
 import { fitBoundsFromCoords, itemFromScrollEvent, dmgGrade } from 'tools/other'
@@ -278,23 +277,21 @@ class OrganizationListScreenView extends React.Component {
           </div>
           <div className={`${Styles.flexOverflowTwo} col-lg-6 col-md-6 col-sm-8 col-xs-4`}>
             <div className={Styles.mapContainer}>
-              <MapErrorBoundary>
-                <LocalityDamageMap
-                  features={features}
-                  popup={popup ? <LocalityPopup
-                    locality={popup.locality}
-                    organization={popup.organization}
-                    screen="org"
-                  /> : null}
-                  onClickFeature={this.handleClickFeature}
-                  onEnterFeature={this.handleEnterFeature}
-                  onLeaveFeature={this.handleLeaveFeature}
-                  fitBounds={this.state.fitBounds.length > 0 ? this.state.fitBounds : undefined}
-                />
-                <div className="sm-hidden xs-hidden">
-                  <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" /><LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
-                </div>
-              </MapErrorBoundary>
+              <LocalityDamageMap
+                features={features}
+                popup={popup ? <LocalityPopup
+                  locality={popup.locality}
+                  organization={popup.organization}
+                  screen="org"
+                /> : null}
+                onClickFeature={this.handleClickFeature}
+                onEnterFeature={this.handleEnterFeature}
+                onLeaveFeature={this.handleLeaveFeature}
+                fitBounds={this.state.fitBounds.length > 0 ? this.state.fitBounds : undefined}
+              />
+              <div className="sm-hidden xs-hidden">
+                <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" /><LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
+              </div>
             </div>
           </div>
         </div>

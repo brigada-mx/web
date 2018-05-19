@@ -8,7 +8,6 @@ import LocalityDamageMap from 'components/LocalityDamageMap'
 import Carousel from 'components/Carousel'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import MapErrorBoundary from 'components/MapErrorBoundary'
 import { fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
 import { transparencyLevel } from 'tools/other'
 import { projectTypeByValue } from 'src/choices'
@@ -85,15 +84,13 @@ class ActionScreenView extends React.Component {
 
     return (
       <div className={Styles.opsMap}>
-        <MapErrorBoundary>
-          <LocalityDamageMap
-            dragPan={window.innerWidth >= 980}
-            zoomControl={false}
-            features={features}
-            onClickFeature={this.handleClickFeature}
-            initialZoom={4}
-          />
-        </MapErrorBoundary>
+        <LocalityDamageMap
+          dragPan={window.innerWidth >= 980}
+          zoomControl={false}
+          features={features}
+          onClickFeature={this.handleClickFeature}
+          initialZoom={4}
+        />
       </div>
     )
   }

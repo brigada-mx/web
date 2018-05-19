@@ -1,10 +1,16 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+
+import _ from 'lodash'
 
 const imgWithClick = { cursor: 'pointer' }
 
 
-class Photo extends PureComponent {
+class Photo extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(this.props, nextProps)
+  }
+
   handleClick = (event) => {
     const { onClick, index, photo } = this.props
     onClick(event, { photo, index })
@@ -36,8 +42,6 @@ export const photoPropType = PropTypes.shape({
   onMouseEnter: PropTypes.func,
   alt: PropTypes.string,
   title: PropTypes.string,
-  srcSet: PropTypes.array,
-  sizes: PropTypes.array,
 })
 
 Photo.propTypes = {

@@ -13,7 +13,6 @@ import LocalityDamageMap from 'components/LocalityDamageMap'
 import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import LocalityLegend from 'components/LocalityDamageMap/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import MapErrorBoundary from 'components/MapErrorBoundary'
 import { tokenMatch } from 'tools/string'
 import { dmgGrade, fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
 import { localStorage } from 'tools/storage'
@@ -273,21 +272,19 @@ class MapScreen extends React.Component {
           </div>
           <div className={`${Styles.flexOverflowTwo} col-lg-9 col-md-9 col-sm-8 col-xs-4`}>
             <div className={Styles.mapContainer}>
-              <MapErrorBoundary>
-                <LocalityDamageMap
-                  filter={layerFilter}
-                  popup={popup ? <LocalityPopup locality={popup} screen="loc" /> : null}
-                  sourceOptions={sourceOptions}
-                  sourceLayer={sourceLayer}
-                  onClickFeature={this.handleClickFeature}
-                  onEnterFeature={this.handleEnterFeature}
-                  onLeaveFeature={this.handleLeaveFeature}
-                  fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
-                />
-                <div className="sm-hidden xs-hidden">
-                  <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />
-                </div>
-              </MapErrorBoundary>
+              <LocalityDamageMap
+                filter={layerFilter}
+                popup={popup ? <LocalityPopup locality={popup} screen="loc" /> : null}
+                sourceOptions={sourceOptions}
+                sourceLayer={sourceLayer}
+                onClickFeature={this.handleClickFeature}
+                onEnterFeature={this.handleEnterFeature}
+                onLeaveFeature={this.handleLeaveFeature}
+                fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
+              />
+              <div className="sm-hidden xs-hidden">
+                <LocalityLegend localities={filtered} legendTitle="Nivel de daño" />
+              </div>
             </div>
           </div>
         </div>

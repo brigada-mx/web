@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl'
+import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
 import _ from 'lodash'
 
 import env from 'src/env'
@@ -26,10 +26,6 @@ class FeatureMap extends React.Component {
     this._initialCoordinates = props.coordinates || [-95.9042505, 17.1073688]
     this._fitBounds = props.fitBounds
     this._fitBoundsOptions = props.fitBoundsOptions || { padding: 20, maxZoom: 10 }
-    this._loaded = false
-    this.state = {
-      map: null,
-    }
     this.Mapbox = ReactMapboxGl({
       accessToken,
       scrollZoom: false,
@@ -39,56 +35,51 @@ class FeatureMap extends React.Component {
     })
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    const { map } = nextState
-    if (!map) return
-
-    const { features = [] } = nextProps
-    if (this._loaded && _.isEqual(features, this.props.features)) return
-    this._loaded = true
-
-    map.getSource('features').setData({
-      type: 'FeatureCollection',
-      features,
-    })
-  }
-
   handleMapLoaded = (map) => {
-    const { onClickFeature, onEnterFeature, onLeaveFeature } = this.props
-
-    map.addSource('features', {
-      type: 'geojson',
-      data: {
-        type: 'FeatureCollection',
-        features: [],
-      },
-    })
-
-    map.addLayer(this.props.layer)
-
-    map.on('click', 'features', (e) => {
+    const { onClickFeature, onEnterFeature, onLeaveFeature, sourceId } = this.props
+    map.on('click', sourceId, (e) => {
       onClickFeature(e.features[0])
     })
 
-    map.on('mousemove', 'features', (e) => {
+    map.on('mousemove', sourceId, (e) => {
       // change the cursor style as a ui indicator
       map.getCanvas().style.cursor = 'pointer' // eslint-disable-line no-param-reassign
       onEnterFeature(e.features[0])
     })
 
-    map.on('mouseleave', 'features', () => {
+    map.on('mouseleave', sourceId, () => {
       map.getCanvas().style.cursor = '' // eslint-disable-line no-param-reassign
       onLeaveFeature()
     })
-
-    this.setState({ map })
   }
 
   render() {
-    const { popup, legend, fitBounds, zoom } = this.props
-    if (!_.isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
     const { Mapbox } = this
     if (!Mapbox) return null
+
+    const {
+      popup,
+      legend,
+      fitBounds,
+      zoomControl,
+      features,
+      layer,
+      sourceOptions,
+      sourceLayer,
+      filter,
+      sourceId,
+    } = this.props
+
+    if (!_.isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
+    const featureSourceOptions = {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features,
+      },
+    }
+
+    const { type, paint } = layer
 
     return (
       <MapErrorBoundary>
@@ -107,7 +98,19 @@ class FeatureMap extends React.Component {
         >
           {popup}
           {legend}
-          {zoom && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
+          {zoomControl && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
+          <Source
+            id={sourceId}
+            geoJsonSource={features ? featureSourceOptions : sourceOptions}
+          />
+          <Layer
+            id={sourceId}
+            sourceId={sourceId}
+            sourceLayer={sourceLayer}
+            filter={filter}
+            type={type}
+            paint={paint}
+          />
         </Mapbox>
       </MapErrorBoundary>
     )
@@ -115,14 +118,18 @@ class FeatureMap extends React.Component {
 }
 
 FeatureMap.propTypes = {
-  zoom: PropTypes.bool,
+  sourceId: PropTypes.string,
+  zoomControl: PropTypes.bool,
   dragPan: PropTypes.bool,
   interactive: PropTypes.bool,
   initialZoom: PropTypes.number,
   disableKeyboard: PropTypes.bool,
   coordinates: PropTypes.arrayOf(PropTypes.number),
-  features: PropTypes.arrayOf(PropTypes.object).isRequired,
+  features: PropTypes.arrayOf(PropTypes.object),
+  sourceLayer: PropTypes.string,
+  sourceOptions: PropTypes.object,
   layer: PropTypes.object.isRequired,
+  filter: PropTypes.arrayOf(PropTypes.any),
   fitBounds: PropTypes.arrayOf(PropTypes.array),
   fitBoundsOptions: PropTypes.object,
   popup: PropTypes.any,
@@ -133,7 +140,8 @@ FeatureMap.propTypes = {
 }
 
 FeatureMap.defaultProps = {
-  zoom: true,
+  sourceId: 'features',
+  zoomControl: true,
   interactive: true,
   dragPan: true,
   disableKeyboard: false,

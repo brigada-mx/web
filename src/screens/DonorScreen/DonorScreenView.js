@@ -14,7 +14,6 @@ import PhoneBox from 'components/PhoneBox'
 import HelpWanted from 'components/HelpWanted'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import MapErrorBoundary from 'components/MapErrorBoundary'
 import DonorProfileStrengthPublic from 'components/ProfileStrength/DonorProfileStrengthPublic'
 import { addProtocol, emailLink, fmtBudget, renderLinks } from 'tools/string'
 import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
@@ -155,22 +154,20 @@ class DonorScreenView extends React.Component {
     const { popup } = this.state
     return (
       <div className={Styles.opsMap}>
-        <MapErrorBoundary>
-          <LocalityDamageMap
-            dragPan={window.innerWidth >= 980}
-            zoomControl={false}
-            features={features}
-            popup={popup ? <LocalityPopup
-              locality={popup.locality}
-              screen="donor"
-              onlyLocality
-            /> : null}
-            onClickFeature={this.handleClickFeature}
-            onEnterFeature={this.handleEnterFeature}
-            onLeaveFeature={this.handleLeaveFeature}
-            fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
-          />
-        </MapErrorBoundary>
+        <LocalityDamageMap
+          dragPan={window.innerWidth >= 980}
+          zoomControl={false}
+          features={features}
+          popup={popup ? <LocalityPopup
+            locality={popup.locality}
+            screen="donor"
+            onlyLocality
+          /> : null}
+          onClickFeature={this.handleClickFeature}
+          onEnterFeature={this.handleEnterFeature}
+          onLeaveFeature={this.handleLeaveFeature}
+          fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
+        />
       </div>
     )
   }

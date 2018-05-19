@@ -77,9 +77,7 @@ DmgBarChart.propTypes = {
 const establishmentMapInitialZoom = 13
 
 const establishmentMapLayer = {
-  id: 'features',
   type: 'circle',
-  source: 'features',
   paint: {
     'circle-color': {
       property: 'group',
@@ -314,6 +312,7 @@ class LocalityScreenView extends React.Component {
         <FeatureMap
           dragPan={window.innerWidth >= 980}
           initialZoom={establishmentMapInitialZoom}
+          sourceId="establishments"
           features={features}
           layer={establishmentMapLayer}
           coordinates={[lng, lat]}
@@ -403,12 +402,17 @@ class LocalityScreenView extends React.Component {
             <Sticky>
               {
                 ({ style }) => {
-                  return actionMap && <div style={{
-                    ...style,
-                    height: '100vh',
-                    width: '100%',
-                    overflow: 'auto',
-                  }}>{actionMap}</div>
+                  return actionMap &&
+                    <div
+                      style={{
+                        ...style,
+                        height: '100vh',
+                        width: '100%',
+                        overflow: 'auto',
+                      }}
+                    >
+                      {actionMap}
+                    </div>
                 }
               }
             </Sticky>
