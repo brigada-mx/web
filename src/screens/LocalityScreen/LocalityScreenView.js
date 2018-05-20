@@ -98,21 +98,19 @@ const establishmentMapLayer = {
 }
 
 class LocalityScreenView extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      popup: null,
-      focused: null,
-      carousel: {},
-    }
+  state = {
+    popup: null,
+    focused: null,
+    carousel: {},
   }
 
-  componentWillUpdate(nextProps) {
-    const { data } = nextProps.actions
-    if (!this.props.actions.data && data) {
+  static getDerivedStateFromProps({ actions }, { focused: _focused }) {
+    const { data } = actions
+    if (!_focused && data) {
       const [focused] = data.results
-      this.setState({ focused })
+      return { focused }
     }
+    return null
   }
 
   setDocumentTitle = (name) => {
@@ -122,18 +120,12 @@ class LocalityScreenView extends React.Component {
     this._documentTitle = title
   }
 
-  handleClickFeature = (feature) => {
-  }
-
   handleEnterFeature = (feature) => {
-    clearTimeout(this._timer)
     this.setState({ popup: JSON.parse(feature.properties.f) })
   }
 
-  handleLeaveFeature = (feature) => {
-    this._timer = setTimeout(() => {
-      this.setState({ popup: null })
-    }, 200)
+  handleLeaveFeature = () => {
+    this.setState({ popup: null })
   }
 
   handleClickPhotos = (item) => {
@@ -316,7 +308,6 @@ class LocalityScreenView extends React.Component {
           features={features}
           layer={establishmentMapLayer}
           coordinates={[lng, lat]}
-          onClickFeature={this.handleClickFeature}
           onEnterFeature={this.handleEnterFeature}
           onLeaveFeature={this.handleLeaveFeature}
           popup={popup ? <EstablishmentPopup establishment={popup} /> : null}

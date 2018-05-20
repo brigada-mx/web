@@ -23,21 +23,19 @@ import Styles from './DonorScreenView.css'
 
 
 class DonorScreenView extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      popup: {},
-      focused: null,
-      carousel: {},
-    }
+  state = {
+    popup: {},
+    focused: null,
+    carousel: {},
   }
 
-  componentWillUpdate(nextProps) {
-    const { data } = nextProps.donations
-    if (!this.props.donations.data && data && data.results.length) {
+  static getDerivedStateFromProps({ donations }, { focused: _focused }) {
+    const { data } = donations
+    if (!_focused && data && data.results.length) {
       const focused = { ...data.results[0].action }
-      this.setState({ focused })
+      return { focused }
     }
+    return null
   }
 
   setDocumentMeta = (name, description) => {

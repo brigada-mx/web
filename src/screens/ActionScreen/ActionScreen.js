@@ -8,14 +8,7 @@ import ActionScreenView from './ActionScreenView'
 
 
 class ActionScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      action: {
-        loading: true,
-      },
-    }
-  }
+  state = { action: { loading: true } }
 
   componentDidMount() {
     this._mounted = true
@@ -23,9 +16,8 @@ class ActionScreen extends React.Component {
     getBackoffComponent(this, 'action', () => service.getAction(id))
   }
 
-  componentWillReceiveProps({ id }) {
-    if (id === this.props.id) return
-    getBackoffComponent(this, 'action', () => service.getAction(id))
+  componentDidUpdate({ id }) {
+    if (id !== this.props.id) getBackoffComponent(this, 'action', () => service.getAction(this.props.id))
   }
 
   componentWillUnmount() {

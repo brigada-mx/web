@@ -24,9 +24,10 @@ class CarouselContainer extends React.Component {
     getBackoff(() => service.getAction(actionId), { onResponse: this.handleResponse })
   }
 
-  componentWillUpdate(nextProps) {
-    if (this.props.actionId === nextProps.actionId) return
-    getBackoff(() => service.getAction(nextProps.actionId), { onResponse: this.handleResponse })
+  componentDidUpdate({ actionId }) {
+    if (actionId !== this.props.actionId) {
+      getBackoff(() => service.getAction(this.props.actionId), { onResponse: this.handleResponse })
+    }
   }
 
   handleResponse = ({ data }) => {

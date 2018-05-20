@@ -8,16 +8,13 @@ import DonorScreenView from './DonorScreenView'
 
 
 class DonorScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      donor: {
-        loading: true,
-      },
-      donations: {
-        loading: true,
-      },
-    }
+  state = {
+    donor: {
+      loading: true,
+    },
+    donations: {
+      loading: true,
+    },
   }
 
   componentDidMount() {
@@ -27,10 +24,11 @@ class DonorScreen extends React.Component {
     getBackoffComponent(this, 'donations', () => service.getDonorDonations(id))
   }
 
-  componentWillReceiveProps({ id }) {
-    if (id === this.props.id) return
-    getBackoffComponent(this, 'donor', () => service.getDonor(id))
-    getBackoffComponent(this, 'donations', () => service.getDonorDonations(id))
+  componentDidUpdate({ id }) {
+    if (id !== this.props.id) {
+      getBackoffComponent(this, 'donor', () => service.getDonor(this.props.id))
+      getBackoffComponent(this, 'donations', () => service.getDonorDonations(this.props.id))
+    }
   }
 
   componentWillUnmount() {

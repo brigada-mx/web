@@ -21,21 +21,19 @@ import Styles from './OrganizationScreenView.css'
 
 
 class OrganizationScreenView extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      popup: {},
-      focused: null,
-      carousel: {},
-    }
+  state = {
+    popup: {},
+    focused: null,
+    carousel: {},
   }
 
-  componentWillUpdate(nextProps) {
-    const { data } = nextProps.organization
-    if (!this.props.organization.data && data) {
+  static getDerivedStateFromProps({ organization }, { focused: _focused }) {
+    const { data } = organization
+    if (!_focused && data) {
       const [focused] = data.actions
-      this.setState({ focused })
+      return { focused }
     }
+    return null
   }
 
   setDocumentMeta = (name, description) => {

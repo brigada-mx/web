@@ -8,13 +8,10 @@ import OrganizationScreenView from './OrganizationScreenView'
 
 
 class OrganizationScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      organization: {
-        loading: true,
-      },
-    }
+  state = {
+    organization: {
+      loading: true,
+    },
   }
 
   componentDidMount() {
@@ -23,9 +20,8 @@ class OrganizationScreen extends React.Component {
     getBackoffComponent(this, 'organization', () => service.getOrganization(id))
   }
 
-  componentWillReceiveProps({ id }) {
-    if (id === this.props.id) return
-    getBackoffComponent(this, 'organization', () => service.getOrganization(id))
+  componentDidUpdate({ id }) {
+    if (id !== this.props.id) getBackoffComponent(this, 'organization', () => service.getOrganization(this.props.id))
   }
 
   componentWillUnmount() {
