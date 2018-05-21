@@ -147,7 +147,9 @@ class LocalityScreenView extends React.Component {
   }
 
   handleEnterActionFeature = (feature) => {
-    this.setState({ focused: JSON.parse(feature.properties.action) })
+    const newFocused = JSON.parse(feature.properties.action)
+    if (this.state.focused && this.state.focused.id === newFocused.id) return
+    this.setState({ focused: newFocused })
   }
 
   handleCarouselClose = () => {
@@ -391,21 +393,9 @@ class LocalityScreenView extends React.Component {
           </div>
           <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
             <Sticky>
-              {
-                ({ style }) => {
-                  return actionMap &&
-                    <div
-                      style={{
-                        ...style,
-                        height: '100vh',
-                        width: '100%',
-                        overflow: 'auto',
-                      }}
-                    >
-                      {actionMap}
-                    </div>
-                }
-              }
+              {({ style }) => {
+                return <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>{actionMap}</div>
+              }}
             </Sticky>
           </div>
         </StickyContainer>

@@ -41,9 +41,7 @@ const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, sourceId = '
     for (const s of a.submissions) {
       if (!s.location) continue
       if (s.images.length === 0) continue // don't add submissions with no files
-      if (features.length >= maxFeatures) continue
-
-      locations.push(s.location) // fitBounds from all locations, but limit number of features
+      locations.push(s.location)
 
       const { lat, lng } = s.location
       let selected = a.id === selectedId
@@ -75,7 +73,7 @@ const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, sourceId = '
       disableKeyboard
       fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
       fitBoundsOptions={fitBoundsOptions}
-      features={features}
+      features={features.splice(0, maxFeatures)}
       layer={layer}
       sourceId={sourceId}
       legend={<ActionLegend />}

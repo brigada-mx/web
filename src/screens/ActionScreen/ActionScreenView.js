@@ -265,10 +265,7 @@ class ActionScreenView extends React.Component {
           <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
             <Sticky>
               {({ style }) => {
-                return actionMap &&
-                  <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>
-                    {actionMap}
-                  </div>
+                return <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>{actionMap}</div>
               }}
             </Sticky>
           </div>
