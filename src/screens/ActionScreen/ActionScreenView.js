@@ -175,7 +175,6 @@ class ActionScreenView extends React.Component {
         selectedLat={this.state.selectedLat}
         selectedLng={this.state.selectedLng}
         onClickFeature={this.handleClickItemFeature}
-        onEnterFeature={this.handleEnterItemFeature}
       />
     )
 

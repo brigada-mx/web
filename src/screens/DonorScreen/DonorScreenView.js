@@ -25,7 +25,7 @@ import Styles from './DonorScreenView.css'
 class DonorScreenView extends React.Component {
   state = {
     popup: {},
-    focused: null,
+    focused: {},
     carousel: {},
   }
 
@@ -85,9 +85,9 @@ class DonorScreenView extends React.Component {
   }
 
   handleEnterActionFeature = (feature) => {
-    const newFocused = JSON.parse(feature.properties.action)
-    if (this.state.focused && this.state.focused.id === newFocused.id) return
-    this.setState({ focused: newFocused })
+    const { actionId: id } = feature.properties
+    if (this.state.focused.id === id) return
+    this.setState({ focused: { id } })
   }
 
   handleCarouselClose = () => {
@@ -204,7 +204,7 @@ class DonorScreenView extends React.Component {
     const actionMap = (
       <ActionMap
         actions={actions}
-        selectedId={focused && focused.id}
+        selectedId={focused.id}
         onClickFeature={this.handleClickActionFeature}
         onEnterFeature={this.handleEnterActionFeature}
       />
@@ -346,7 +346,7 @@ class DonorScreenView extends React.Component {
               containerStyle={Styles.cardsContainer}
               actions={actions}
               onScroll={this.handleScroll}
-              focusedId={focused && focused.id}
+              focusedId={focused.id}
               onClickPhotos={this.handleClickPhotos}
               onMouseEnter={this.handleMouseEnterItem}
             />

@@ -53,7 +53,7 @@ const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, sourceId = '
 
       features.push({
         type: 'Feature',
-        properties: { action: a, selected, lng, lat, actionId: a.id },
+        properties: { selected, lng, lat, actionId: a.id }, // avoid using object properties, ESPECIALLY large objects
         geometry: {
           type: 'Point',
           coordinates: [lng, lat],
