@@ -11,6 +11,7 @@ import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicator
 import { fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
 import { transparencyLevel } from 'tools/other'
 import { projectTypeByValue } from 'src/choices'
+import ActionStrengthPublic from 'components/Strength/ActionStrengthPublic'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
 import PhotoGallery from './PhotoGallery'
 import Styles from './ActionScreenView.css'
@@ -96,7 +97,7 @@ class ActionScreenView extends React.Component {
   }
 
   render() {
-    const { action: { loading, data, status }, myAction } = this.props
+    const { action: { loading, data, status } } = this.props
     if (status === 404) return <Redirect to="/reconstructores" />
     if (loading || !data) return <LoadingIndicatorCircle />
 
@@ -114,7 +115,6 @@ class ActionScreenView extends React.Component {
       unit_of_measurement: unit,
       budget = 0,
       desc,
-      key,
     } = data
 
     const projectType = projectTypeByValue[actionType] || actionType
@@ -192,7 +192,6 @@ class ActionScreenView extends React.Component {
               <div className={`${Styles.transparency} col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter`}>
                 <span className={transparencyStyles[transLevel]} />
                 <span>{`PROYECTO ${transLabel}`.toUpperCase()}</span>
-                {(myAction) && <Link to={`/cuenta/proyectos/${key}`}>{transLevel < 2 ? 'MEJORAR' : 'EDITAR'}</Link>}
               </div>
 
               <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
@@ -270,6 +269,7 @@ class ActionScreenView extends React.Component {
           </div>
         </StickyContainer>
 
+        {this.props.myAction && <ActionStrengthPublic actionId={data.id} actionKey={data.key} />}
         {this.renderCarousel()}
       </React.Fragment>
     )

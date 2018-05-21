@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import * as Actions from 'src/actions'
-import Styles from './ProfileStrength.css'
+import Styles from './Strength.css'
 
 
 class ExpandableTask extends React.Component {

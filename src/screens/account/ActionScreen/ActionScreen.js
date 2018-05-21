@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { reset } from 'redux-form'
 import { connect } from 'react-redux'
-import { withRouter, Redirect } from 'react-router-dom'
+import { Link, withRouter, Redirect } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import * as Actions from 'src/actions'
@@ -184,6 +184,7 @@ class ActionScreen extends React.Component {
         {action.id &&
           <div className={FormStyles.card}>
             <div className={FormStyles.sectionHeader}>{getProjectType(action.action_type)}</div>
+            <Link className={Styles.link} to={`/proyectos/${action.id}`}>Ver proyecto</Link>
             <div className={FormStyles.formContainerLeft}>
               <UpdateActionForm
                 onSubmit={this.handleUpdateAction}

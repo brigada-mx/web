@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 import MetricsBar from 'components/MetricsBar'
 import service, { getBackoff } from 'api/service'
-import Styles from './ProfileStrengthPublic.css'
+import Styles from './StrengthPublic.css'
 
 
 class DonorProfileStrengthPublic extends React.Component {

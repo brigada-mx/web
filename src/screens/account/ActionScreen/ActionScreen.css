@@ -1,0 +1,10 @@
+.link {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 13px;
+  color: #3DC59F;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  display: table;
+}

@@ -7,7 +7,7 @@ import '!style-loader!css-loader!react-circular-progressbar/dist/styles.css'
 
 import service, { getBackoff } from 'api/service'
 import ExpandableTask from './ExpandableTask'
-import Styles from './ProfileStrength.css'
+import Styles from './Strength.css'
 
 
 const barStyles = {
