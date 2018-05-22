@@ -10,12 +10,6 @@ import Styles from './StrengthPublic.css'
 
 
 class ActionStrengthPublic extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
-
   componentDidMount() {
     const { actionId } = this.props
     getBackoff(() => { return service.accountGetActionStrength(actionId) }, { key: `actionStrength_${actionId}` })
@@ -51,7 +45,7 @@ class ActionStrengthPublic extends React.Component {
     return (
       <div className={`${Styles.container} wrapper animated slideInUp delay-800`}>
         <div className={Styles.barContainer}>
-          <span className={Styles.profile}>
+          <span className={Styles.strength}>
             El score de transparencia de este proyecto es del {Math.round(100 * ratio)}%.
           </span>
           {task && ratio < 1 &&

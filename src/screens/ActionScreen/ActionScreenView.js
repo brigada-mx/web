@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { connect } from 'react-redux'
 import { withRouter, Redirect, Link } from 'react-router-dom'
 import { Sticky, StickyContainer } from 'react-sticky'
 
@@ -8,8 +9,8 @@ import LocalityDamageMap from 'components/LocalityDamageMap'
 import Carousel from 'components/Carousel'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
+import ActionTransparencyLevel from 'components/Strength/ActionTransparencyLevel'
 import { fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
-import { transparencyLevel } from 'tools/other'
 import { projectTypeByValue } from 'src/choices'
 import ActionStrengthPublic from 'components/Strength/ActionStrengthPublic'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
@@ -97,7 +98,7 @@ class ActionScreenView extends React.Component {
   }
 
   render() {
-    const { action: { loading, data, status } } = this.props
+    const { action: { loading, data, status }, strength } = this.props
     if (status === 404) return <Redirect to="/reconstructores" />
     if (loading || !data) return <LoadingIndicatorCircle />
 
@@ -178,9 +179,6 @@ class ActionScreenView extends React.Component {
       />
     )
 
-    const { level: transLevel, label: transLabel } = transparencyLevel(data)
-    const transparencyStyles = [Styles.lowTransparency, Styles.midTransparency, Styles.highTransparency]
-
     return (
       <React.Fragment>
         <div className="wrapper-lg wrapper-md wrapper-sm">
@@ -189,10 +187,7 @@ class ActionScreenView extends React.Component {
           <div className="row">
 
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
-              <div className={`${Styles.transparency} col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter`}>
-                <span className={transparencyStyles[transLevel]} />
-                <span>{`PROYECTO ${transLabel}`.toUpperCase()}</span>
-              </div>
+              {strength && <ActionTransparencyLevel strength={strength} />}
 
               <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.name}>{projectType}</div>
@@ -280,6 +275,15 @@ ActionScreenView.propTypes = {
   action: PropTypes.object.isRequired,
   myAction: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
+  strength: PropTypes.object,
 }
 
-export default withRouter(ActionScreenView)
+const mapStateToProps = (state, { action }) => {
+  try {
+    return { strength: state.getter[`actionStrength_${action.data.id}`].data }
+  } catch (e) {
+    return {}
+  }
+}
+
+export default withRouter(connect(mapStateToProps, null)(ActionScreenView))

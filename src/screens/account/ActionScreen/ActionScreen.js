@@ -13,6 +13,7 @@ import { cleanAccentedChars } from 'tools/string'
 import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
 import BackButton from 'components/BackButton'
+import ActionStrength from 'components/Strength/ActionStrength'
 import { UpdateActionForm, prepareActionBody, prepareInitialActionValues } from 'screens/account/ActionForm'
 import { CreateDonationForm, UpdateDonationForm,
   prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationForm'
@@ -49,6 +50,11 @@ class ActionScreen extends React.Component {
   loadAction = () => {
     const { actionKey } = this.props
     getBackoff(() => { return service.accountGetAction(actionKey) }, { key: `accountAction_${actionKey}` })
+
+    const { id } = this.props.action
+    if (id !== undefined) {
+      getBackoff(() => { return service.accountGetActionStrength(id) }, { key: `actionStrength_${id}` })
+    }
   }
 
   handleUpdateAction = async (body) => {
@@ -292,7 +298,22 @@ class ActionScreen extends React.Component {
         }
       </div>
     )
-    return <WithSideNav navComponents={<BackButton to="/cuenta" />}>{content}</WithSideNav>
+
+    return (
+      <WithSideNav
+        navComponents={
+          <React.Fragment>
+            <BackButton to="/cuenta" />
+            {action.id &&
+              <div style={{ marginTop: 15 }}>
+                <ActionStrength actionId={action.id} />
+              </div>
+            }
+          </React.Fragment>
+        }
+      >{content}
+      </WithSideNav>
+    )
   }
 }
 

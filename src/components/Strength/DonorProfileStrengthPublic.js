@@ -10,12 +10,6 @@ import Styles from './StrengthPublic.css'
 
 
 class DonorProfileStrengthPublic extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
-
   componentDidMount() {
     getBackoff(service.donorGetProfileStrength, { key: 'donorProfileStrength' })
   }
