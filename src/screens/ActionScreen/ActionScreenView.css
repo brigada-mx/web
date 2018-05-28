@@ -73,7 +73,7 @@ a:hover {
   letter-spacing: 0.4px;
   line-height: 21px;
   text-decoration: none;
-  margin-right: 3px;
+  margin-right: 4px;
 }
 
 .donationAmt {
@@ -426,6 +426,9 @@ a:hover {
   .hq .subtitle {
     margin-bottom: 11px;
   }
+  .ops {
+    margin-top: 40px;
+  }
   .opsMap {
     width: 370px;
     height: 128px;
@@ -433,8 +436,8 @@ a:hover {
   .actionsContainer {
     margin-top: 55px;
   }
-  .cardsContainer {
-    padding: 26px 20px 0 20px;
+  .actionListContainer {
+    padding: 0 20px 0 20px;
   }
 }
 
@@ -452,7 +455,7 @@ a:hover {
     max-width: 25%;
   }
   .breadcrumbLinks .orgDetail {
-    max-width: 50%;
+    max-width: 50% !important;
   }
   .name {
     padding: 0 16px;
@@ -569,6 +572,10 @@ a:hover {
     margin-bottom: 27px;
     padding: 0 16px;
   }
+  .ops .title {
+    padding: 0 16px;
+    margin: 17px 0 0 0;
+  }
   .ops .subtitle {
     padding: 0 16px;
   }
@@ -576,17 +583,19 @@ a:hover {
     width: 100%;
     height: 160px;
   }
-  .cardsContainer {
-    padding: 18px 16px 0 16px;
+  .actionListContainer {
+    padding: 0 16px 0 16px;
   }
   .label {
     text-align: left;
   }
   .donationContainer {
+    margin-left: 16px;
     width: 100%;
     margin-right: 0px;
   }
   .datesContainer {
+    margin-left: 16px;
     display: flex;
     margin-top: 16px;
   }

@@ -10,7 +10,7 @@ import Carousel from 'components/Carousel'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import ActionTransparencyLevel from 'components/Strength/ActionTransparencyLevel'
-import { fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
+import { fmtNum, fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
 import { projectTypeByValue } from 'src/choices'
 import ActionStrengthPublic from 'components/Strength/ActionStrengthPublic'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
@@ -137,13 +137,20 @@ class ActionScreenView extends React.Component {
       return (
         <div className={Styles.datesContainer}>
           <span className={Styles.label}>AVANCE</span>
-          <span className={Styles.dates}>{`${progress} de ${target} ${unit}`.toLowerCase()}</span>
+          <span className={Styles.dates}>{`${fmtNum(progress)} de ${target} ${unit}`.toLowerCase()}</span>
         </div>
       )
     }
 
     const getDonations = () => {
-      if (donations.length === 0) return null
+      if (donations.length === 0) {
+        return (
+          <div className={Styles.donationContainer}>
+            <span className={Styles.label}>DONATIVOS (MXN)</span>
+            <span className={Styles.dates}>No disponible</span>
+          </div>
+        )
+      }
 
       const rows = donations.sort((a, b) => {
         if (!a.received_date) return 1
@@ -212,7 +219,7 @@ class ActionScreenView extends React.Component {
                 </div>
               </div>
 
-              <div className="col-lg-10 col-md-12 col-sm-8 col-xs-4 gutter between row">
+              <div className="col-lg-10 col-md-10 col-sm-7 col-xs-4 between-lg between-md between-sm row">
                 {getDonations()}
                 {getProgress()}
                 {dates()}
@@ -227,7 +234,7 @@ class ActionScreenView extends React.Component {
                     <p className={Styles.subtitle}>{`${localityName}, ${stateName}`}</p>
                     {this.renderMap(data)}
                   </div>
-                  <div className={`${Styles.mapMeta} middle between`}>
+                  <div className={`${Styles.mapMeta} middle between xs-hidden`}>
                     <div>
                       <p className={Styles.mapValue}>{margGrade}</p>
                       <p className={Styles.mapLabel}>REZAGO<br/>SOCIAL</p>
@@ -247,7 +254,7 @@ class ActionScreenView extends React.Component {
         </div>
 
         <StickyContainer className={`${Styles.actionsContainer} row`}>
-          <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
+          <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 col-xs-4`}>
             <PhotoGallery
               submissions={submissions}
               onClickItem={this.handleClickItem}

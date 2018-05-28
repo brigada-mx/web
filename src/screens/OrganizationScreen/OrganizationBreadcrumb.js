@@ -23,7 +23,7 @@ const OrganizationBreadcrumb = ({ name, sector, id, projectType }) => {
       <span className={Styles.orgDetail}>
         <Link to={`/reconstructores/${id}`}>{name}</Link>
       </span>
-      {projectType && <span className={Styles.orgDetail}><Link to="#">{projectType}</Link></span>}
+      {projectType && <span className={Styles.projectType}><Link to="#">{projectType}</Link></span>}
     </div>
   )
 }

@@ -166,7 +166,7 @@ class ActionListItem extends React.PureComponent {
 
             {renderThumbnails()}
           </div>
-          <div className={Styles.description}>{renderLinks(desc)}</div>
+
         </div>
         {false && <div className={Styles.cardBottom} />}
       </div>
