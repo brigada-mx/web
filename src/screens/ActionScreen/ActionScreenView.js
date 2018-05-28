@@ -187,7 +187,6 @@ class ActionScreenView extends React.Component {
           <div className="row">
 
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
-              {strength && <ActionTransparencyLevel strength={strength} />}
 
               <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.name}>{projectType}</div>

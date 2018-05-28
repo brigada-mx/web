@@ -43,7 +43,6 @@ const Photo = (props) => {
           </div>
         </div>
         <span className={Styles.description}>{description}</span>
-        <a href={image.url}>Descargar</a>
       </div>
     </div>
   )

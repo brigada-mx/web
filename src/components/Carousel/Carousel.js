@@ -158,6 +158,10 @@ class CarouselView extends React.Component {
       }
       return <div key={p.image.url}><Photo {...p} lazyLoad /></div>
     })
+
+    const photo = photos[this.state.index]
+    const downloadLink = photo && <a href={photo.image.url}>Descargar</a>
+
     return (
       <div className={Styles.container}>
         <div className={Styles.progressContainer}>
@@ -166,6 +170,7 @@ class CarouselView extends React.Component {
           <span className={Styles.total}>{panes.length}</span>
         </div>
         <span className={Styles.closeButton} onClick={onClose} />
+        {downloadLink}
         <Swiper
           {...this.swiperProps}
           ref={this.setSwiperRef}
