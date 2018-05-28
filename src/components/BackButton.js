@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Link } from 'react-router-dom'
-import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import BackIcon from 'material-ui/svg-icons/navigation/arrow-back'
 
 
 const BackButton = ({ to }) => {
   return (
-    <RaisedButton
+    <FlatButton
       containerElement={<Link to={to} />}
       label="REGRESAR"
       icon={<BackIcon />}
