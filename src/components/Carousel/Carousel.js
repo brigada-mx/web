@@ -160,7 +160,7 @@ class CarouselView extends React.Component {
     })
 
     const photo = photos[this.state.index]
-    const downloadLink = photo && <a href={photo.image.url}>Descargar</a>
+    const downloadLink = photo && <a className={Styles.download} href={photo.image.url}>Descargar</a>
 
     return (
       <div className={Styles.container}>
