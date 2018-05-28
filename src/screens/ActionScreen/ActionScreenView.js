@@ -208,11 +208,11 @@ class ActionScreenView extends React.Component {
                     <span className={Styles.metricLabel}>Inversión<br />comprometida</span>
                     <span className={Styles.metricValue}>{fmtBudget(budget)}</span>
                   </div>
-                  <div className={Styles.metric}>
+                  <div className={donations.length > 0 ? Styles.metric : Styles.emptyMetric}>
                     <span className={Styles.metricLabel}>Donativos<br />documentados</span>
                     <span className={Styles.metricValue}>{donations.length}</span>
                   </div>
-                  <div className={Styles.metric}>
+                  <div className={numPhotos > 0 ? Styles.metric : Styles.emptyMetric}>
                     <span className={Styles.metricLabel}>Fotos<br />capturadas</span>
                     <span className={Styles.metricValue}>{numPhotos}</span>
                   </div>
@@ -236,12 +236,14 @@ class ActionScreenView extends React.Component {
                   </div>
                   <div className={`${Styles.mapMeta} middle between xs-hidden`}>
                     <div>
-                      <p className={Styles.mapValue}>{margGrade}</p>
-                      <p className={Styles.mapLabel}>REZAGO<br/>SOCIAL</p>
+                      <p className={Styles.mapValue}>{margGrade || 'Sin datos'}</p>
+                      <p className={Styles.mapLabel}>REZAGO<br />SOCIAL</p>
                     </div>
                     <div>
-                      <p className={Styles.mapValue}>{total}</p>
-                      <p className={Styles.mapLabel}>VIVIENDAS<br/>DAÑADAS</p>
+                      <p className={Styles.mapValue}>
+                        {total === null || total === undefined ? 'Sin datos' : total}
+                      </p>
+                      <p className={Styles.mapLabel}>VIVIENDAS<br />DAÑADAS</p>
                     </div>
                   </div>
                 </div>

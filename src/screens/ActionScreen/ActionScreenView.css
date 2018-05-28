@@ -179,40 +179,9 @@ a:hover {
   text-overflow: ellipsis;
 }
 
-.ellipsis {
-  transition: all .15s linear;
-  -webkit-text-fill-color: #3DC587;
-}
-
-.ellipsis:hover {
-  -webkit-text-fill-color: #13A68C;
-}
-
 .fieldValue a {
   color: #3DC587;
   text-decoration: none;
-}
-
-.button {
-  display: inline-flex;
-  width: 80px;
-  height: 80px;
-  background-color: #3DC59F;
-  background-repeat: no-repeat;
-  background-position: center;
-  text-decoration: none;
-}
-
-.buttonsContainer {
-  margin-top: -13px;
-}
-
-.website {
-  background-image: url('assets/img/website.svg');
-}
-
-.email {
-  background-image: url('assets/img/email.svg');
 }
 
 .opsMap {
@@ -247,14 +216,6 @@ a:hover {
   color: #141418;
   letter-spacing: 0;
   line-height: 32px;
-}
-
-.addressFields {
-  font-family: 'nunito-sans-200', sans-serif;
-  font-size: 15px;
-  color: #6F6F6F;
-  letter-spacing: 0.6px;
-  line-height: 30px;
 }
 
 .mission {
@@ -342,12 +303,18 @@ a:hover {
   .ops {
     margin-top: 27px;
   }
+  .ops .subtitle {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 70%;
+  }
   .opsMap {
     width: 250px;
     height: 250px;
   }
-  .website {
-    margin-right: 6px;
+  .donationContainer {
+    margin-bottom: 38px;
   }
   .actionsContainer {
     margin-top: 100px;
@@ -377,11 +344,14 @@ a:hover {
   .button:hover {
     background-color: #13A68C;
   }
-  .website {
-    margin-right: 6px;
-  }
   .ops {
     margin-top: 27px;
+  }
+  .ops .subtitle {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 70%;
   }
   .opsMap {
     width: 222px;
@@ -417,14 +387,8 @@ a:hover {
   .button:hover {
     background-color: #13A68C;
   }
-  .website {
-    margin-right: 6px;
-  }
   .metricsContainer {
     margin-bottom: 47px;
-  }
-  .hq .subtitle {
-    margin-bottom: 11px;
   }
   .ops {
     margin-top: 40px;
@@ -564,13 +528,6 @@ a:hover {
     order: 1;
     margin: 2px 0 0 0;
     text-align: center;
-  }
-  .hq .subtitle {
-    margin-bottom: 11px;
-  }
-  .hq {
-    margin-bottom: 27px;
-    padding: 0 16px;
   }
   .ops .title {
     padding: 0 16px;
