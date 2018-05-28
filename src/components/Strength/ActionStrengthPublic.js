@@ -34,9 +34,9 @@ class ActionStrengthPublic extends React.Component {
     const tasks = [
       { value: desc, label: 'completa la descripción del proyecto' },
       { value: dates, label: 'agrega fechas de principio y fin del proyecto' },
-      { value: progress, label: 'agrega la unidad de medida, la meta y el avance' },
+      { value: progress, label: 'agrega las unidades de medida' },
       { value: budget, label: 'agrega el presupuesto de este proyecto' },
-      { value: images, label: 'agrega fotos o videos a este proyecto' },
+      { value: images, label: 'agrega fotos a este proyecto' },
       { value: donations, label: 'agrega un donativo' },
       { value: verifiedDonations, label: 'agrega un donativo verificado' },
     ]

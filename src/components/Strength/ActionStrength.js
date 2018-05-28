@@ -50,7 +50,7 @@ class ProfileStrength extends React.Component {
       },
       {
         value: progress,
-        label: 'Agregar unidad de medida, meta y avance',
+        label: 'Agregar unidades de medida',
       },
       {
         value: budget,
@@ -58,7 +58,7 @@ class ProfileStrength extends React.Component {
       },
       {
         value: images > 0,
-        label: 'Agregar fotos/videos',
+        label: 'Agregar fotos',
       },
       {
         value: donations > 0,
@@ -86,8 +86,8 @@ class ProfileStrength extends React.Component {
               initialAnimation
               styles={barStyles}
             />
-            {strength && <span className={Styles.strength}><ActionTransparencyLevel strength={strength} /></span>}
           </div>
+          {strength && <span className={Styles.strength}><ActionTransparencyLevel strength={strength} /></span>}
         </div>
         <div className={Styles.middle}>
           {tasks.map((t, i) => <ExpandableTask key={i} {...t} />)}

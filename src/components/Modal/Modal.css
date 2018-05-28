@@ -48,8 +48,12 @@
   justify-content: center;
 }
 
-.closeButton {
+.contentTransparent .closeButton {
   background: no-repeat url("assets/img/close-gallery.svg") top right;
+}
+
+.closeButton {
+  background: no-repeat url("assets/img/close-modal.svg") top right;
   background-size: 14px 14px;
   width: 73px;
   height: 73px;

@@ -10,7 +10,7 @@ import Carousel from 'components/Carousel'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import ActionTransparencyLevel from 'components/Strength/ActionTransparencyLevel'
-import { fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
+import { fmtNum, fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
 import { projectTypeByValue } from 'src/choices'
 import ActionStrengthPublic from 'components/Strength/ActionStrengthPublic'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
@@ -137,13 +137,20 @@ class ActionScreenView extends React.Component {
       return (
         <div className={Styles.datesContainer}>
           <span className={Styles.label}>AVANCE</span>
-          <span className={Styles.dates}>{`${progress} de ${target} ${unit}`.toLowerCase()}</span>
+          <span className={Styles.dates}>{`${fmtNum(progress)} de ${target} ${unit}`.toLowerCase()}</span>
         </div>
       )
     }
 
     const getDonations = () => {
-      if (donations.length === 0) return null
+      if (donations.length === 0) {
+        return (
+          <div className={Styles.donationContainer}>
+            <span className={Styles.label}>DONATIVOS (MXN)</span>
+            <span className={Styles.dates}>No disponible</span>
+          </div>
+        )
+      }
 
       const rows = donations.sort((a, b) => {
         if (!a.received_date) return 1
@@ -153,19 +160,17 @@ class ActionScreenView extends React.Component {
         return 0
       }).map(({ amount, donor: { id: donorId, name: donorName } }, i) => {
         return (
-          <tr key={i}>
-            <th><Link className={Styles.donorLink} to={`/donadores/${donorId}`}>{donorName}</Link></th>
-            <th>{fmtBudgetPlain(amount)}</th>
-          </tr>
+          <div key={i} className={Styles.donation}>
+            <Link className={Styles.donorLink} to={`/donadores/${donorId}`}>{donorName}:</Link>
+            <span className={Styles.donationAmt}>{fmtBudgetPlain(amount)}</span>
+          </div>
         )
       })
 
       return (
         <div className={Styles.donationContainer}>
           <span className={Styles.label}>DONATIVOS (MXN)</span>
-          <table className={Styles.donations}>
-            <tbody>{rows}</tbody>
-          </table>
+          {rows}
         </div>
       )
     }
@@ -192,28 +197,28 @@ class ActionScreenView extends React.Component {
                 <div className={Styles.name}>{projectType}</div>
               </div>
 
+              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
+                <p className={Styles.mission}>{renderLinks(desc)}</p>
+              </div>
+
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
                   <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
                     <span className={Styles.metricLabel}>Inversión<br />comprometida</span>
                     <span className={Styles.metricValue}>{fmtBudget(budget)}</span>
                   </div>
-                  <div className={Styles.metric}>
+                  <div className={donations.length > 0 ? Styles.metric : Styles.emptyMetric}>
                     <span className={Styles.metricLabel}>Donativos<br />documentados</span>
                     <span className={Styles.metricValue}>{donations.length}</span>
                   </div>
-                  <div className={Styles.metric}>
+                  <div className={numPhotos > 0 ? Styles.metric : Styles.emptyMetric}>
                     <span className={Styles.metricLabel}>Fotos<br />capturadas</span>
                     <span className={Styles.metricValue}>{numPhotos}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
-                <p className={Styles.mission}>{renderLinks(desc)}</p>
-              </div>
-
-              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter row">
+              <div className="col-lg-10 col-md-10 col-sm-7 col-xs-4 between-lg between-md between-sm row">
                 {getDonations()}
                 {getProgress()}
                 {dates()}
@@ -224,30 +229,33 @@ class ActionScreenView extends React.Component {
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-4 col-xs-4 gutter">
                   <div className={Styles.ops}>
+                    <p className={Styles.title}>Comunidad beneficiada</p>
                     <p className={Styles.subtitle}>{`${localityName}, ${stateName}`}</p>
                     {this.renderMap(data)}
+                  </div>
+                  <div className={`${Styles.mapMeta} middle between xs-hidden`}>
+                    <div>
+                      <p className={Styles.mapValue}>{margGrade || 'Sin datos'}</p>
+                      <p className={Styles.mapLabel}>REZAGO<br />SOCIAL</p>
+                    </div>
+                    <div>
+                      <p className={Styles.mapValue}>
+                        {total === null || total === undefined ? 'Sin datos' : total}
+                      </p>
+                      <p className={Styles.mapLabel}>VIVIENDAS<br />DAÑADAS</p>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className={`${Styles.mapMeta} row middle between`}>
-                <div>
-                  <div>{total}</div>
-                  <div>VIVIENDAS DAÑADAS</div>
-                </div>
 
-                <div>
-                  <div>{margGrade}</div>
-                  <div>REZAGO SOCIAL</div>
-                </div>
-              </div>
             </div>
 
           </div>
         </div>
 
         <StickyContainer className={`${Styles.actionsContainer} row`}>
-          <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
+          <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 col-xs-4`}>
             <PhotoGallery
               submissions={submissions}
               onClickItem={this.handleClickItem}

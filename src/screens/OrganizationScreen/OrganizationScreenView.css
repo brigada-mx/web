@@ -331,6 +331,9 @@ a:hover {
   .breadcrumbLinks .orgDetail {
     max-width: 50%;
   }
+  .breadcrumbLinks .projectType {
+    max-width: 25%;
+  }
   .name {
     padding: 0 16px;
   }
