@@ -28,7 +28,7 @@ class ActionListItem extends React.PureComponent {
       action_type: actionType,
       desc,
       target,
-      progress = 0,
+      progress,
       budget,
       donations = [],
       organization: { id: orgId, name: orgName },

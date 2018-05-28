@@ -106,7 +106,7 @@ class LocalityScreenView extends React.Component {
 
   static getDerivedStateFromProps({ actions }, { focused: _focused }) {
     const { data } = actions
-    if (!_focused && data) {
+    if (_focused.id === undefined && data) {
       const [focused] = data.results
       return { focused }
     }
@@ -312,7 +312,7 @@ class LocalityScreenView extends React.Component {
           coordinates={[lng, lat]}
           onEnterFeature={this.handleEnterFeature}
           onLeaveFeature={this.handleLeaveFeature}
-          popup={popup ? <EstablishmentPopup establishment={popup} /> : null}
+          popup={popup && <EstablishmentPopup establishment={popup} />}
           legend={<EstablishmentLegend establishments={data.results} />}
         />
       </div>

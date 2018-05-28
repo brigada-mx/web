@@ -24,14 +24,14 @@ import Styles from './DonorScreenView.css'
 
 class DonorScreenView extends React.Component {
   state = {
-    popup: {},
+    popup: null,
     focused: {},
     carousel: {},
   }
 
   static getDerivedStateFromProps({ donations }, { focused: _focused }) {
     const { data } = donations
-    if (!_focused && data && data.results.length) {
+    if (_focused.id === undefined && data && data.results.length) {
       const focused = { ...data.results[0].action }
       return { focused }
     }
@@ -63,7 +63,7 @@ class DonorScreenView extends React.Component {
   }
 
   handleLeaveFeature = () => {
-    this.setState({ popup: {} })
+    this.setState({ popup: null })
   }
 
   handleClickPhotos = (item) => {
@@ -158,11 +158,7 @@ class DonorScreenView extends React.Component {
           dragPan={window.innerWidth >= 980}
           zoomControl={false}
           features={features}
-          popup={popup ? <LocalityPopup
-            locality={popup.locality}
-            screen="donor"
-            onlyLocality
-          /> : null}
+          popup={popup && <LocalityPopup locality={popup.locality} screen="donor" onlyLocality />}
           onClickFeature={this.handleClickFeature}
           onEnterFeature={this.handleEnterFeature}
           onLeaveFeature={this.handleLeaveFeature}
@@ -339,26 +335,28 @@ class DonorScreenView extends React.Component {
           type="donation"
         />
 
-        <StickyContainer className={`${Styles.actionsContainer} row`}>
-          <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
-            <ActionList
-              screen="donor"
-              containerStyle={Styles.cardsContainer}
-              actions={actions}
-              onScroll={this.handleScroll}
-              focusedId={focused.id}
-              onClickPhotos={this.handleClickPhotos}
-              onMouseEnter={this.handleMouseEnterItem}
-            />
-          </div>
-          <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
-            <Sticky>
-              {({ style }) => {
-                return <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>{actionMap}</div>
-              }}
-            </Sticky>
-          </div>
-        </StickyContainer>
+        {actions.length > 0 &&
+          <StickyContainer className={`${Styles.actionsContainer} row`}>
+            <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
+              <ActionList
+                screen="donor"
+                containerStyle={Styles.cardsContainer}
+                actions={actions}
+                onScroll={this.handleScroll}
+                focusedId={focused.id}
+                onClickPhotos={this.handleClickPhotos}
+                onMouseEnter={this.handleMouseEnterItem}
+              />
+            </div>
+            <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
+              <Sticky>
+                {({ style }) => {
+                  return <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>{actionMap}</div>
+                }}
+              </Sticky>
+            </div>
+          </StickyContainer>
+        }
 
         {this.props.myDonor && <DonorProfileStrengthPublic />}
         {this.renderCarousel()}

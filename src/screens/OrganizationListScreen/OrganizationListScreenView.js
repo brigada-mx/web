@@ -53,7 +53,7 @@ class OrganizationListScreenView extends React.Component {
     super(props)
 
     this.state = {
-      popup: {},
+      popup: null,
       focused: null,
       fitBounds: this.defaultFitBounds(),
       organizationSearch: '',
@@ -114,7 +114,7 @@ class OrganizationListScreenView extends React.Component {
   }
 
   handleLeaveFeature = () => {
-    this.setState({ popup: {} })
+    this.setState({ popup: null })
   }
 
   handleEnterListItem = (item) => {
@@ -132,7 +132,7 @@ class OrganizationListScreenView extends React.Component {
 
   filterOrganizations = (results) => {
     const { organizationSearch } = this.state
-    const { valState, valMuni, valSector, valActionType, valAcceptingHelp } = this.props
+    const { valState, valMuni, valSector, valActionType } = this.props
 
 
     return results.filter((o) => {
@@ -146,9 +146,6 @@ class OrganizationListScreenView extends React.Component {
       const sectors = valSector.map(v => v.value)
       const matchesSector = sectors.length === 0 || sectors.some(v => o.sector === v)
 
-      const helps = valAcceptingHelp.map(v => ({ true: true, false: false }[v.value]))
-      const matchesHelp = helps.length === 0 || helps.some(v => o.accepting_help === v)
-
       const actionTypes = valActionType.map(v => v.value)
       let matchesActionType = actionTypes.length === 0
       for (const action of o.actions) {
@@ -158,7 +155,7 @@ class OrganizationListScreenView extends React.Component {
         }
       }
 
-      return matchesSearch && matchesCvegeo && matchesSector && matchesActionType && matchesHelp
+      return matchesSearch && matchesCvegeo && matchesSector && matchesActionType
     })
   }
 
@@ -203,7 +200,7 @@ class OrganizationListScreenView extends React.Component {
 
   render() {
     const { organizations: { data: orgData, loading: orgLoading, error: orgError } } = this.props
-    const { valState, valMuni, valSector, valActionType, valAcceptingHelp } = this.props
+    const { valState, valMuni, valSector, valActionType } = this.props
     const { popup, focused, filtersVisible } = this.state
 
     const organizations = this.filterOrganizations(orgData ? orgData.results : [])
@@ -224,7 +221,6 @@ class OrganizationListScreenView extends React.Component {
           valMuni={valMuni}
           valSector={valSector}
           valActionType={valActionType}
-          valAcceptingHelp={valAcceptingHelp}
         />
       )
     }
@@ -279,11 +275,11 @@ class OrganizationListScreenView extends React.Component {
             <div className={Styles.mapContainer}>
               <LocalityDamageMap
                 features={features}
-                popup={popup ? <LocalityPopup
+                popup={popup && <LocalityPopup
                   locality={popup.locality}
                   organization={popup.organization}
                   screen="org"
-                /> : null}
+                />}
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
@@ -307,7 +303,6 @@ OrganizationListScreenView.propTypes = {
   valMuni: PropTypes.array.isRequired,
   valSector: PropTypes.array.isRequired,
   valActionType: PropTypes.array.isRequired,
-  valAcceptingHelp: PropTypes.array.isRequired,
 }
 
 OrganizationListScreenView.defaultProps = {
@@ -315,14 +310,11 @@ OrganizationListScreenView.defaultProps = {
   valMuni: [],
   valSector: [],
   valActionType: [],
-  valAcceptingHelp: [],
 }
 
 const mapStateToProps = (state, { location }) => {
-  const {
-    valState, valMuni, valSector, valActionType, valAcceptingHelp,
-  } = parseFilterQueryParams(location)
-  return { valState, valMuni, valSector, valActionType, valAcceptingHelp }
+  const { valState, valMuni, valSector, valActionType } = parseFilterQueryParams(location)
+  return { valState, valMuni, valSector, valActionType }
 }
 
 export default withRouter(connect(mapStateToProps, null)(OrganizationListScreenView))

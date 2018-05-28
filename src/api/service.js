@@ -72,6 +72,14 @@ class Service {
     return sendToApi('/actions_mini/', { params })
   }
 
+  getOpportunity = async (id) => {
+    return sendToApi(`/volunteer_opportunities/${id}/`)
+  }
+
+  createVolunteerApplication = async (body) => {
+    return sendToApi('/volunteer_applications/', { method: 'POST', body })
+  }
+
   // DISCOURSE
   discourseLogin = async (email, password, sso, sig) => {
     return sendToApi('/discourse/login/', {
@@ -302,12 +310,13 @@ export const getBackoff = async (...args) => {
 export const getBackoffComponent = async (...args) => {
   let count = 0
   let delay = 1000
-  const inner = async (self, stateKey, getter, onResponse) => {
+  const inner = async (self, getter, { stateKey, key, onResponse }) => {
     let response = await getter()
     if (onResponse) {
       const modified = onResponse(response)
       if (modified) response = modified
     }
+    if (key) Actions.getter(store.dispatch, { response, key })
     const { data, error, exception, status } = response
 
     if (data) self.setState({ [stateKey]: { loading: false, data, error: undefined, status } })

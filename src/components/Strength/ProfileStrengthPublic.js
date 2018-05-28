@@ -20,7 +20,7 @@ class ProfileStrengthPublic extends React.Component {
     const {
       ratio,
       status_by_category: {
-        accepting_help: help,
+        volunteers,
         actions,
         contact_email: email,
         contact_full: contact,
@@ -38,7 +38,7 @@ class ProfileStrengthPublic extends React.Component {
       { value: actions, label: 'agrega un proyecto' },
       { value: submissions, label: 'agrega fotos a tus proyectos' },
       { value: donations, label: 'documenta los donativos que has recibido' },
-      { value: help, label: 'agrega oportunidades de voluntariado' },
+      { value: volunteers, label: 'agrega oportunidades de voluntariado' },
       { value: post, label: 'postea en el foro' },
     ]
     const task = tasks.find(t => t.value === false)

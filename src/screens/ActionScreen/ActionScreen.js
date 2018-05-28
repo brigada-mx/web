@@ -13,11 +13,13 @@ class ActionScreen extends React.Component {
   componentDidMount() {
     this._mounted = true
     const { id } = this.props
-    getBackoffComponent(this, 'action', () => service.getAction(id))
+    getBackoffComponent(this, () => service.getAction(id), { stateKey: 'action', key: `action_${id}` })
   }
 
   componentDidUpdate({ id }) {
-    if (id !== this.props.id) getBackoffComponent(this, 'action', () => service.getAction(this.props.id))
+    if (id !== this.props.id) {
+      getBackoffComponent(this, () => service.getAction(id), { stateKey: 'action', key: `action_${id}` })
+    }
   }
 
   componentWillUnmount() {

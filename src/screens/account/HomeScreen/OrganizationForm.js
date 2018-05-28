@@ -1,19 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import MenuItem from 'material-ui/MenuItem'
 
-import { TextField, SelectField, Toggle } from 'components/Fields'
+import { TextField, SelectField } from 'components/Fields'
 import { sectors } from 'src/choices'
 import { normalizeTransparencyScore } from 'tools/other'
 import FormStyles from 'src/Form.css'
 import Styles from './OrganizationForm.css'
 
 
-const OrganizationForm = ({ handleSubmit, submitting, initialValues, help = false }) => {
+const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
   const { secret_key: key, score } = initialValues
   const normalizedScore = Number(normalizeTransparencyScore(score || 0)).toFixed(1)
   return (
@@ -50,24 +49,6 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues, help = fals
             rows={3}
           />
         </div>
-        <div>
-          <Toggle
-            label="Estamos buscando voluntarios"
-            className={FormStyles.toggle}
-            name="accepting_help"
-          />
-        </div>
-        {help ? (
-          <div className={FormStyles.row}>
-            <TextField
-              floatingLabelText="Describe el perfil de voluntario que están buscando"
-              className={FormStyles.wideInput}
-              name="help_desc"
-              multiLine
-              rows={3}
-            />
-          </div>
-        ) : null}
         <div className={FormStyles.row}>
           <RaisedButton
             backgroundColor="#3DC59F"
@@ -85,7 +66,6 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues, help = fals
 
 OrganizationForm.propTypes = {
   ...rxfPropTypes,
-  help: PropTypes.bool,
 }
 
 const validate = ({ name, desc, year_established: year }) => {
@@ -98,8 +78,7 @@ const validate = ({ name, desc, year_established: year }) => {
 
 const mapStateToProps = (state) => {
   try {
-    const { accepting_help: help } = state.form.accountOrganization.values
-    return { initialValues: state.getter.accountOrganization.data || {}, help }
+    return { initialValues: state.getter.accountOrganization.data || {} }
   } catch (e) {
     return { initialValues: {} }
   }

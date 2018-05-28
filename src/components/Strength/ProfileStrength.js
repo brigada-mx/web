@@ -27,7 +27,7 @@ class ProfileStrength extends React.Component {
     const {
       ratio,
       status_by_category: {
-        accepting_help: help,
+        volunteers,
         actions,
         contact_email: email,
         contact_full: contact,
@@ -74,7 +74,7 @@ class ProfileStrength extends React.Component {
         durationString: '1:47',
       },
       {
-        value: help,
+        value: volunteers,
         label: 'Atraer voluntarios',
         videoId: 'SUi0vUFee1Y',
         durationString: '0:58',

@@ -21,8 +21,6 @@ const margOptions = [
   { value: 'muy_bajo', label: 'Muy bajo' },
 ]
 
-const acceptingHelpOptions = [{ value: 'true', label: 'Sí' }, { value: 'false', label: 'No' }]
-
 const numActionsOptions = [
   { value: '0', label: '0' },
   { value: '1', label: '1-9' },
@@ -45,7 +43,6 @@ export const parseFilterQueryParams = (location) => {
     num_pro: 'valNumActions',
     sec: 'valSector',
     tip_pro: 'valActionType',
-    vol: 'valAcceptingHelp',
   }
   const obj = parseQs(location.search)
   const fields = {}
@@ -81,7 +78,6 @@ class FilterHeader extends React.Component {
       valNumActions,
       valSector,
       valActionType,
-      valAcceptingHelp,
     } = this.props
 
     const shortenState = (name) => {
@@ -212,19 +208,6 @@ class FilterHeader extends React.Component {
             onChange={values => this.handleChangeValues(values, 'tip_pro')}
             options={actionTypeOptions()}
           />}
-
-          {valAcceptingHelp && <MultiSelect
-            multi
-            clearable={false}
-            closeOnSelect={false}
-            removeSelected={false}
-            className={`${Styles.filter} ${Styles.volunteerFilter}`}
-            value={valAcceptingHelp}
-            placeholder="Voluntariado"
-            multiLabel="Voluntariado"
-            onChange={values => this.handleChangeValues(values, 'vol')}
-            options={acceptingHelpOptions}
-          />}
         </React.Fragment>
       )
     }
@@ -312,24 +295,6 @@ class FilterHeader extends React.Component {
             </React.Fragment>
           }
 
-          {valAcceptingHelp &&
-            <React.Fragment>
-              <span className={Styles.title}>Voluntariado</span>
-              <Select
-                multi
-                clearable={false}
-                closeOnSelect={false}
-                removeSelected={false}
-                searchable={false}
-                className={Styles.filter}
-                value={valAcceptingHelp}
-                placeholder=""
-                onChange={values => this.handleChangeValues(values, 'vol')}
-                options={acceptingHelpOptions}
-              />
-            </React.Fragment>
-          }
-
           {valState &&
             <React.Fragment>
               <span className={Styles.title}>Estado</span>
@@ -397,7 +362,6 @@ FilterHeader.propTypes = {
   valNumActions: PropTypes.arrayOf(PropTypes.object),
   valSector: PropTypes.arrayOf(PropTypes.object),
   valActionType: PropTypes.arrayOf(PropTypes.object),
-  valAcceptingHelp: PropTypes.arrayOf(PropTypes.object),
 }
 
 export default withRouter(FilterHeader)

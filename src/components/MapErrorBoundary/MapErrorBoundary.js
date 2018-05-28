@@ -1,6 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { connect } from 'react-redux'
+
+import * as Actions from 'src/actions'
+import isMobile from 'tools/isMobile'
 import Styles from './MapErrorBoundary.css'
 
 
@@ -14,14 +18,34 @@ class MapErrorBoundary extends React.Component {
     this.setState({ hasError: true })
   }
 
+  openVideoModal = (videoId) => {
+    this.props.modal('youTubeVideo', { modalTransparent: true, videoId })
+  }
+
   render() {
     if (this.state.hasError) {
+      let mobile = false
+      try {
+        mobile = isMobile()
+      } catch (e) {}
+
+      if (mobile) {
+        return (
+          <div className={Styles.container}>
+            <span>No se pudo cargar el mapa.</span>
+            <span>Por favor intenta abrir la página con otro navegador. Si no funciona <a className={Styles.link} href="mailto:eduardo@brigada.mx" target="_blank">favor de contactarnos</a>.</span>
+          </div>
+        )
+      }
+
       return (
         <div className={Styles.container}>
           <span>
-            En ciertos dispositivos, Chrome no es capaz de cargar este mapa.
+            Tu navegador no puede cargar el mapa, pero normalmente es fácil de arreglar.
           </span>
-          <span>Intenta abrir la página en Firefox, Safari o Edge. Si no funciona <a href="mailto:eduardo@brigada.mx" target="_blank">favor de contactarnos</a>.</span>
+          <span className={Styles.link} onClick={() => this.openVideoModal('wzRyByw2t9c')}>Estoy usando Chrome.</span>
+          <span className={Styles.link} onClick={() => this.openVideoModal('wzRyByw2t9c')}>Estoy usando Safari.</span>
+          <span>Si esto no funciona, por favor intenta abrir la página con otro navegador, como Firefox o Edge.</span>
         </div>
       )
     }
@@ -31,6 +55,13 @@ class MapErrorBoundary extends React.Component {
 
 MapErrorBoundary.propTypes = {
   children: PropTypes.any,
+  modal: PropTypes.func.isRequired,
 }
 
-export default MapErrorBoundary
+const mapDispatchToProps = (dispatch) => {
+  return {
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(MapErrorBoundary)

@@ -9,12 +9,12 @@ import LocalityDamageMap from 'components/LocalityDamageMap'
 import Carousel from 'components/Carousel'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import ActionTransparencyLevel from 'components/Strength/ActionTransparencyLevel'
 import { fmtNum, fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
 import { projectTypeByValue } from 'src/choices'
 import ActionStrengthPublic from 'components/Strength/ActionStrengthPublic'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
 import PhotoGallery from './PhotoGallery'
+import CTAButton from './CTAButton'
 import Styles from './ActionScreenView.css'
 
 
@@ -118,6 +118,7 @@ class ActionScreenView extends React.Component {
       desc,
     } = data
 
+    const images = [].concat(...submissions.map(s => s.images))
     const projectType = projectTypeByValue[actionType] || actionType
 
     this.setDocumentMeta(projectType, name, desc)
@@ -137,7 +138,7 @@ class ActionScreenView extends React.Component {
       return (
         <div className={Styles.datesContainer}>
           <span className={Styles.label}>AVANCE</span>
-          <span className={Styles.dates}>{`${fmtNum(progress)} de ${target} ${unit}`.toLowerCase()}</span>
+          <span className={Styles.dates}>{`${fmtNum(progress)} de ${fmtNum(target)} ${unit}`.toLowerCase()}</span>
         </div>
       )
     }
@@ -254,22 +255,34 @@ class ActionScreenView extends React.Component {
           </div>
         </div>
 
-        <StickyContainer className={`${Styles.actionsContainer} row`}>
-          <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 col-xs-4`}>
-            <PhotoGallery
-              submissions={submissions}
-              onClickItem={this.handleClickItem}
-              onMouseEnterItem={this.handleMouseEnterItem}
+        {data.opportunities.length > 0 &&
+          <div className={Styles.ctaContainer}>
+            <CTAButton
+              actionId={data.id}
+              type="volunteer"
+              opportunities={data.opportunities}
             />
           </div>
-          <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
-            <Sticky>
-              {({ style }) => {
-                return <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>{actionMap}</div>
-              }}
-            </Sticky>
-          </div>
-        </StickyContainer>
+        }
+
+        {images.length > 0 &&
+          <StickyContainer className={`${Styles.actionsContainer} row`}>
+            <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
+              <PhotoGallery
+                submissions={submissions}
+                onClickItem={this.handleClickItem}
+                onMouseEnterItem={this.handleMouseEnterItem}
+              />
+            </div>
+            <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
+              <Sticky>
+                {({ style }) => {
+                  return <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>{actionMap}</div>
+                }}
+              </Sticky>
+            </div>
+          </StickyContainer>
+        }
 
         {this.props.myAction && <ActionStrengthPublic actionId={data.id} actionKey={data.key} />}
         {this.renderCarousel()}

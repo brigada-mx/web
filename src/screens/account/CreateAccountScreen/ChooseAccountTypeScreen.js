@@ -7,7 +7,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 
 import * as Actions from 'src/actions'
 import FormStyles from 'src/Form.css'
-import Styles from './CreateAccountTypeScreen.css'
+import Styles from './ChooseAccountTypeScreen.css'
 
 
 const buttonStyle = {

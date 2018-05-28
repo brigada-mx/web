@@ -9,7 +9,6 @@ import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import Carousel from 'components/Carousel'
 import ActionList from 'components/ActionList'
 import PhoneBox from 'components/PhoneBox'
-import HelpWanted from 'components/HelpWanted'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import ProfileStrengthPublic from 'components/Strength/ProfileStrengthPublic'
@@ -22,14 +21,14 @@ import Styles from './OrganizationScreenView.css'
 
 class OrganizationScreenView extends React.Component {
   state = {
-    popup: {},
+    popup: null,
     focused: {},
     carousel: {},
   }
 
   static getDerivedStateFromProps({ organization }, { focused: _focused }) {
     const { data } = organization
-    if (!_focused && data) {
+    if (_focused.id === undefined && data) {
       const [focused] = data.actions
       return { focused }
     }
@@ -61,7 +60,7 @@ class OrganizationScreenView extends React.Component {
   }
 
   handleLeaveFeature = () => {
-    this.setState({ popup: {} })
+    this.setState({ popup: null })
   }
 
   handleClickPhotos = (item) => {
@@ -155,11 +154,7 @@ class OrganizationScreenView extends React.Component {
           dragPan={window.innerWidth >= 980}
           zoomControl={false}
           features={features}
-          popup={popup ? <LocalityPopup
-            locality={popup.locality}
-            screen="org"
-            onlyLocality
-          /> : null}
+          popup={popup && <LocalityPopup locality={popup.locality} screen="org" onlyLocality />}
           onClickFeature={this.handleClickFeature}
           onEnterFeature={this.handleEnterFeature}
           onLeaveFeature={this.handleLeaveFeature}
@@ -183,8 +178,6 @@ class OrganizationScreenView extends React.Component {
       sector,
       year_established: established,
       image_count: numPhotos,
-      accepting_help: help,
-      help_desc: helpDesc,
       id,
     } = data
     const { focused } = this.state
@@ -305,28 +298,28 @@ class OrganizationScreenView extends React.Component {
           </div>
         </div>
 
-        <HelpWanted help={help} helpDesc={helpDesc} groupId={id} email={email} type="volunteer" />
-
-        <StickyContainer className={`${!help ? Styles.actionsContainer : ''} row`}>
-          <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
-            <ActionList
-              screen="org"
-              containerStyle={Styles.cardsContainer}
-              actions={actions}
-              onScroll={this.handleScroll}
-              focusedId={focused.id}
-              onClickPhotos={this.handleClickPhotos}
-              onMouseEnter={this.handleMouseEnterItem}
-            />
-          </div>
-          <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
-            <Sticky>
-              {({ style }) => {
-                return <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>{actionMap}</div>
-              }}
-            </Sticky>
-          </div>
-        </StickyContainer>
+        {actions.length > 0 &&
+          <StickyContainer className={`${Styles.actionsContainer} row`}>
+            <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
+              <ActionList
+                screen="org"
+                containerStyle={Styles.cardsContainer}
+                actions={actions}
+                onScroll={this.handleScroll}
+                focusedId={focused.id}
+                onClickPhotos={this.handleClickPhotos}
+                onMouseEnter={this.handleMouseEnterItem}
+              />
+            </div>
+            <div className="col-lg-5 col-md-5 sm-hidden xs-hidden">
+              <Sticky>
+                {({ style }) => {
+                  return <div style={{ ...style, height: '100vh', width: '100%', overflow: 'auto' }}>{actionMap}</div>
+                }}
+              </Sticky>
+            </div>
+          </StickyContainer>
+        }
 
         {this.props.myOrganization && <ProfileStrengthPublic />}
         {this.renderCarousel()}

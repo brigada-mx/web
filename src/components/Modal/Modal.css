@@ -2,6 +2,10 @@
   width: 35%;
 }
 
+.selectorContentWide {
+  width: 55%;
+}
+
 .container {
   display: flex;
   position: fixed;
@@ -73,16 +77,25 @@
   .selectorContent {
     width: 45%;
   }
+  .selectorContentWide {
+    width: 65%;
+  }
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
   .selectorContent {
     width: 48%;
   }
+  .selectorContentWide {
+    width: 75%;
+  }
 }
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .selectorContent {
+    width: 90%;
+  }
+  .selectorContentWide {
     width: 90%;
   }
 }

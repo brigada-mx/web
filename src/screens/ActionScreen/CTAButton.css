@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #F6F8FA;
+  cursor: pointer;
+}
+
+.progress {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.posting {
+  margin-right: 15px;
+}
+
+.button {
+  margin-top: 10px;
+  font-size: 20px;
+}

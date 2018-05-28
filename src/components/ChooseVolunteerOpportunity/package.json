@@ -1,0 +1,6 @@
+{
+  "name": "ChooseVolunteerOpportunity",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ChooseVolunteerOpportunity.js"
+}

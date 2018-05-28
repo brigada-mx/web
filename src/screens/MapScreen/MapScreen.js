@@ -89,18 +89,21 @@ class MapScreen extends React.Component {
     document.title = 'Brigada'
     this._mounted = true
 
-    getBackoffComponent(this, 'localities', service.getLocalities, ({ data }) => {
-      if (!data) return
-      const localityByCvegeo = {}
-      const coords = []
-      data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
-        coords.push(r.location)
-        localityByCvegeo[r.cvegeo] = r
-        return { ...r, dmgGrade: dmgGrade(r) }
-      })
-      const fitBounds = fitBoundsFromCoords(coords)
-      localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
-      this.setState({ localityByCvegeo })
+    getBackoffComponent(this, service.getLocalities, {
+      stateKey: 'localities',
+      onResponse: ({ data }) => {
+        if (!data) return
+        const localityByCvegeo = {}
+        const coords = []
+        data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
+          coords.push(r.location)
+          localityByCvegeo[r.cvegeo] = r
+          return { ...r, dmgGrade: dmgGrade(r) }
+        })
+        const fitBounds = fitBoundsFromCoords(coords)
+        localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
+        this.setState({ localityByCvegeo })
+      },
     })
   }
 
@@ -210,7 +213,7 @@ class MapScreen extends React.Component {
   render() {
     const {
       popup,
-      localities: { data = {}, loading, error },
+      localities: { data = {}, loading },
       filtered,
       layerFilter,
       fitBounds,

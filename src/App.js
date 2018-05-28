@@ -24,6 +24,7 @@ import SetPasswordWithTokenScreen from 'screens/account/SetPasswordWithTokenScre
 import ChooseAccountTypeScreen from 'screens/account/CreateAccountScreen/ChooseAccountTypeScreen'
 import DonorListScreen from 'screens/DonorListScreen'
 import DonorScreen from 'screens/DonorScreen'
+import VolunteerOpportunityScreen from 'screens/VolunteerOpportunityScreen'
 import DonorCreateAccountScreen from 'screens/account/CreateAccountScreen/DonorCreateAccountScreen'
 import CreateAccountScreen from 'screens/account/CreateAccountScreen'
 
@@ -64,6 +65,15 @@ const AccountActionScreenWrapper = ({ match }) => {
 
 const DonationScreenWrapper = ({ match }) => {
   return <DonationScreen id={Number.parseInt(match.params.id, 10)} />
+}
+
+const VolunteerOpportunityScreenWrapper = ({ match }) => {
+  return (
+    <VolunteerOpportunityScreen
+      id={Number.parseInt(match.params.id, 10)}
+      className={GlobalStyles.modalScreenWrapper}
+    />
+  )
 }
 
 const SetPasswordWithTokenScreenWrapper = () => {
@@ -150,6 +160,8 @@ const App = () => {
 
               <Route exact path="/donadores" component={DonorListScreen} />
               <Route exact path="/donadores/:id" component={DonorScreenWrapper} />
+
+              <Route exact path="/voluntariado/:id" component={VolunteerOpportunityScreenWrapper} />
 
               <Route exact path="/foro/sso" component={DiscourseLoginScreenWrapper} />
               <Route path="/establecer" component={SetPasswordWithTokenScreenWrapper} />

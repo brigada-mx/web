@@ -23,3 +23,12 @@ CloudFront also __gzips__ assets, which greatly reduces bundle size and initial 
 
 ## Optimize Bundle Size
 Run `NODE_ENV=production webpack --config webpack.prod.js --json > stats.json` to generate a `stats.json` file, and upload it [here](https://chrisbateman.github.io/webpack-visualizer/) for a sweet sunburst chart.
+
+
+## Mapbox and WebGL
+[WebGL must be enabled](https://support.biodigital.com/hc/en-us/articles/218322977-How-to-turn-on-WebGL-in-my-browser) for Mapbox to run.
+
+- Chrome: Go to <chrome://settings/>, click on __Advanced__, and make sure __Use hardware acceleration when available__ is enabled.
+- Safari: __Preferences > Security > Allow WebGL__
+- Firefox: Should work
+- IE: Should work for IE 11+
