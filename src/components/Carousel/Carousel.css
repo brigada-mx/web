@@ -21,6 +21,27 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.download {
+  opacity: 0.3;
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #FFFFFF;
+  letter-spacing: 1.26px;
+  line-height: 20px;
+  text-decoration: none;
+  position: absolute;
+  z-index: 5;
+  left: 20px;
+  bottom: 20px;
+}
+
+.download:hover {
+  opacity: 1.0;
+  color: #FFFFFF;
+}
+
 .divider {
   opacity: 0.3;
   margin: 0 14px;
