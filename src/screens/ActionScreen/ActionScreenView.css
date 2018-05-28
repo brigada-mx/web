@@ -294,12 +294,6 @@ a:hover {
   .mission {
     margin-bottom: 36px;
   }
-  .buttonsContainer {
-    margin-bottom: 37px;
-  }
-  .button:hover {
-    background-color: #13A68C;
-  }
   .ops {
     margin-top: 27px;
   }
@@ -334,16 +328,6 @@ a:hover {
   .mission {
     margin-bottom: 40px;
   }
-  .buttonsContainer {
-    margin-bottom: 37px;
-  }
-  .button {
-    width: 72px;
-    height: 72px;
-  }
-  .button:hover {
-    background-color: #13A68C;
-  }
   .ops {
     margin-top: 27px;
   }
@@ -374,18 +358,6 @@ a:hover {
   }
   .mission {
     margin-bottom: 40px;
-  }
-  .buttonsContainer {
-    position: absolute;
-    top: 102px;
-    right: 19px;
-  }
-  .button {
-    width: 72px;
-    height: 72px;
-  }
-  .button:hover {
-    background-color: #13A68C;
   }
   .metricsContainer {
     margin-bottom: 47px;
@@ -436,47 +408,6 @@ a:hover {
   .mission {
     padding: 0 16px;
     margin-bottom: 40px;
-  }
-  .buttonsContainer {
-    width: 100%;
-    padding: 25px 20% 52px 20%;
-    margin-bottom: 35px;
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px solid #F2F2F4;
-    border-bottom: 1px solid #F2F2F4;
-  }
-  .button {
-    width: 72px;
-    height: 52px;
-    background-color: white;
-  }
-  .button:after {
-    position: relative;
-    top: 100%;
-    margin: 0 auto;
-  }
-  .website {
-    background-image: url('assets/img/website-dark.svg');
-  }
-  .website:after {
-    content: 'Web';
-    font-family: 'nunito-sans', sans-serif;
-    font-size: 12px;
-    color: #3DC59F;
-    letter-spacing: 0.4px;
-    line-height: 16px;
-  }
-  .email {
-    background-image: url('assets/img/email-dark.svg');
-  }
-  .email:after {
-    content: 'Correo';
-    font-family: 'nunito-sans', sans-serif;
-    font-size: 12px;
-    color: #3DC59F;
-    letter-spacing: 0.4px;
-    line-height: 16px;
   }
   .metricsContainer {
     padding-top: 23px;
