@@ -153,19 +153,17 @@ class ActionScreenView extends React.Component {
         return 0
       }).map(({ amount, donor: { id: donorId, name: donorName } }, i) => {
         return (
-          <tr key={i}>
-            <th><Link className={Styles.donorLink} to={`/donadores/${donorId}`}>{donorName}</Link></th>
-            <th>{fmtBudgetPlain(amount)}</th>
-          </tr>
+          <div key={i} className={Styles.donation}>
+            <Link className={Styles.donorLink} to={`/donadores/${donorId}`}>{donorName}:</Link>
+            <span className={Styles.donationAmt}>{fmtBudgetPlain(amount)}</span>
+          </div>
         )
       })
 
       return (
         <div className={Styles.donationContainer}>
           <span className={Styles.label}>DONATIVOS (MXN)</span>
-          <table className={Styles.donations}>
-            <tbody>{rows}</tbody>
-          </table>
+          {rows}
         </div>
       )
     }
@@ -193,6 +191,10 @@ class ActionScreenView extends React.Component {
                 <div className={Styles.name}>{projectType}</div>
               </div>
 
+              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
+                <p className={Styles.mission}>{renderLinks(desc)}</p>
+              </div>
+
               <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
                   <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
@@ -210,11 +212,7 @@ class ActionScreenView extends React.Component {
                 </div>
               </div>
 
-              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
-                <p className={Styles.mission}>{renderLinks(desc)}</p>
-              </div>
-
-              <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter row">
+              <div className="col-lg-10 col-md-12 col-sm-8 col-xs-4 gutter between row">
                 {getDonations()}
                 {getProgress()}
                 {dates()}
@@ -225,23 +223,24 @@ class ActionScreenView extends React.Component {
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-4 col-xs-4 gutter">
                   <div className={Styles.ops}>
+                    <p className={Styles.title}>Comunidad beneficiada</p>
                     <p className={Styles.subtitle}>{`${localityName}, ${stateName}`}</p>
                     {this.renderMap(data)}
+                  </div>
+                  <div className={`${Styles.mapMeta} middle between`}>
+                    <div>
+                      <p className={Styles.mapValue}>{margGrade}</p>
+                      <p className={Styles.mapLabel}>REZAGO<br/>SOCIAL</p>
+                    </div>
+                    <div>
+                      <p className={Styles.mapValue}>{total}</p>
+                      <p className={Styles.mapLabel}>VIVIENDAS<br/>DAÑADAS</p>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className={`${Styles.mapMeta} row middle between`}>
-                <div>
-                  <div>{total}</div>
-                  <div>VIVIENDAS DAÑADAS</div>
-                </div>
 
-                <div>
-                  <div>{margGrade}</div>
-                  <div>REZAGO SOCIAL</div>
-                </div>
-              </div>
             </div>
 
           </div>

@@ -1,4 +1,9 @@
 .groupLabel {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  font-family: 'nunito-sans-500', sans-serif;
+  font-size: 12px;
+  color: #141418;
+  letter-spacing: 0.4px;
+  line-height: 21px;
+  text-transform: capitalize;
+  margin: 27px 0 13px 8px;
 }
