@@ -126,7 +126,7 @@ class ActionScreenView extends React.Component {
     const dates = () => {
       return (
         <div className={Styles.datesContainer}>
-          <span className={Styles.label}>FECHAS</span>
+          <span className={Styles.label}>FECHAS:</span>
           <span className={Styles.dates}>
             {(startDate || '?').replace(/-/g, '.')} - {(endDate || '?').replace(/-/g, '.')}
           </span>
@@ -137,7 +137,7 @@ class ActionScreenView extends React.Component {
     const getProgress = () => {
       return (
         <div className={Styles.datesContainer}>
-          <span className={Styles.label}>AVANCE</span>
+          <span className={Styles.label}>AVANCE:</span>
           <span className={Styles.dates}>{`${fmtNum(progress)} de ${fmtNum(target)} ${unit}`.toLowerCase()}</span>
         </div>
       )
@@ -147,7 +147,7 @@ class ActionScreenView extends React.Component {
       if (donations.length === 0) {
         return (
           <div className={Styles.donationContainer}>
-            <span className={Styles.label}>DONATIVOS (MXN)</span>
+            <span className={Styles.label}>DONATIVOS (MXN):</span>
             <span className={Styles.dates}>No disponible</span>
           </div>
         )
@@ -170,7 +170,7 @@ class ActionScreenView extends React.Component {
 
       return (
         <div className={Styles.donationContainer}>
-          <span className={Styles.label}>DONATIVOS (MXN)</span>
+          <span className={Styles.label}>DONATIVOS (MXN):</span>
           {rows}
         </div>
       )
@@ -196,13 +196,16 @@ class ActionScreenView extends React.Component {
 
               <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
                 <div className={Styles.name}>{projectType}</div>
+                <span className={Styles.orgName}>
+                  Realizado por&nbsp;<Link to={`/reconstructores/${organizationId}`}>{name}</Link>
+                </span>
               </div>
 
               <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
                 <p className={Styles.mission}>{renderLinks(desc)}</p>
               </div>
 
-              <div className="col-lg-12 col-md-12 col-sm-7 col-xs-4 xs-gutter">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-4 xs-gutter">
                 <div className={Styles.metricsContainer}>
                   <div className={budget > 0 ? Styles.metric : Styles.emptyMetric}>
                     <span className={Styles.metricLabel}>Inversión<br />comprometida</span>
@@ -219,10 +222,12 @@ class ActionScreenView extends React.Component {
                 </div>
               </div>
 
-              <div className="col-lg-10 col-md-10 col-sm-7 col-xs-4 between-lg between-md between-sm row">
-                {getDonations()}
-                {getProgress()}
-                {dates()}
+              <div className="col-lg-12 col-md-10 col-sm-12 col-xs-4 row">
+                <div className={Styles.projectMeta}>
+                  {getDonations()}
+                  {getProgress()}
+                  {dates()}
+                </div>
               </div>
             </div>
 
@@ -230,7 +235,7 @@ class ActionScreenView extends React.Component {
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-4 col-xs-4 gutter">
                   <div className={Styles.ops}>
-                    <p className={Styles.title}>Comunidad beneficiada</p>
+                    <p className={Styles.title}>Comunidad beneficiada:</p>
                     <p className={Styles.subtitle}>{`${localityName}, ${stateName}`}</p>
                     {this.renderMap(data)}
                   </div>
