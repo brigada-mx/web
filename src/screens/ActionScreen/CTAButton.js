@@ -20,13 +20,7 @@ const CTAButton = ({ actionId, type, onClick, modal, opportunities }) => {
     const postings = opportunities.map((o, i) => <span key={i} className={Styles.posting}>{o.position}</span>)
     return (
       <div className={Styles.container} onClick={handleClick}>
-        <div className={Styles.progress}>
-          <span>Faltan {max - value} voluntarios</span>
-          <MetricsBar value={value} max={max} />
-        </div>
-        <div>
-          {postings}
-        </div>
+        <span className={Styles.need}>Faltan {max - value} voluntarios</span>
         <span className={Styles.button}>Postular</span>
       </div>
     )

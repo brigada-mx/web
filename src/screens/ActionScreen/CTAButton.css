@@ -2,24 +2,37 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 20px;
+  padding: 25px 0 23px 0;
   justify-content: center;
   align-items: center;
-  border: 2px solid #F6F8FA;
   cursor: pointer;
 }
 
-.progress {
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.posting {
-  margin-right: 15px;
+.need {
+  opacity: 0.8;
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 14px;
+  color: #141418;
+  letter-spacing: 1.26px;
+  text-align: center;
+  line-height: 20px;
 }
 
 .button {
-  margin-top: 10px;
-  font-size: 20px;
+  font-family: 'nunito-sans-700';
+  font-size: 13px;
+  color: #FFFFFF;
+  letter-spacing: 0.35px;
+  text-align: center;
+  line-height: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #3DC59F;
+  padding: 12px 46px;
+  margin-top: 11px;
+  transition: all .15s linear;
+}
+
+.button:hover {
+  background-color: #13A68C;
 }

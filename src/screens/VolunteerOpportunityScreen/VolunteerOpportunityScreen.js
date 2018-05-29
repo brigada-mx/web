@@ -77,12 +77,14 @@ class VolunteerOpportunityScreen extends React.Component {
     const content = (
       <div className={Styles.container}>
         <div className={Styles.left}>
-          <div>{position}</div>
-          <div>{detailedDesc}</div>
-          <div>Objetivos de voluntariado</div>
-          <div>{desc}</div>
-          <div>Habilidades requeridas</div>
-          {skills.map((s, i) => <div key={i}>{s}</div>)}
+          <span className={Styles.position}>{position}</span>
+          <span className={Styles.text}>{detailedDesc}</span>
+          <span className={Styles.title}>Objetivos de voluntariado</span>
+          <span className={Styles.text}>{desc}</span>
+          <span className={Styles.title}>Habilidades requeridas</span>
+          <ul className={Styles.list}>
+            {skills.map((s, i) => <li className={Styles.item} key={i}>{s}</li>)}
+          </ul>
           <RaisedButton
             backgroundColor="#3DC59F"
             labelColor="#ffffff"
@@ -91,6 +93,8 @@ class VolunteerOpportunityScreen extends React.Component {
             onClick={this.handleOpportunityClick}
           />
         </div>
+
+        <div className={Styles.rightTemp} />
 
         <div className={Styles.right}>
           <div>{anywhere ? 'Desde cualquier lugar' : place}</div>

@@ -19,7 +19,9 @@ a:hover {
 }
 
 .ctaContainer {
-  margin-top: 15px;
+  margin-top: 60px;
+  border-top: 1px solid #E1E7ED;
+  border-bottom: 1px solid #E1E7ED;
 }
 
 .transparency {
@@ -57,7 +59,6 @@ a:hover {
 .donationContainer {
   display: inline-flex;
   flex-direction: column;
-  margin-right: 45px;
 }
 
 .donationContainer .label {
@@ -126,7 +127,23 @@ a:hover {
   color: #141418;
   letter-spacing: -0.1px;
   line-height: 62px;
-  margin-bottom: 19px;
+  margin-bottom: 30px;
+}
+
+.orgName {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #AAAAAA;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  text-transform: uppercase;
+  display: flex;
+  margin-bottom: 31px;
+}
+
+.orgName a {
+  text-decoration: none;
+  color: #3DC587;
 }
 
 .summaryContainer {
@@ -148,6 +165,12 @@ a:hover {
   letter-spacing: 0.35px;
   line-height: 16px;
   opacity: 0.4;
+}
+
+.projectMeta {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .mapMeta {
@@ -314,9 +337,6 @@ a:hover {
   .donationContainer {
     margin-bottom: 38px;
   }
-  .actionsContainer {
-    margin-top: 100px;
-  }
   .cardsContainer {
     padding: 21px 0 0 25px;
   }
@@ -345,9 +365,6 @@ a:hover {
     width: 222px;
     height: 250px;
   }
-  .actionsContainer {
-    margin-top: 55px;
-  }
   .cardsContainer {
     padding: 21px 0 0 25px;
   }
@@ -373,8 +390,9 @@ a:hover {
     width: 370px;
     height: 128px;
   }
-  .actionsContainer {
-    margin-top: 55px;
+  .projectMeta {
+    padding-bottom: 46px;
+    border-bottom: 1px solid #E1E7ED;
   }
   .actionListContainer {
     padding: 0 20px 0 20px;
@@ -400,6 +418,9 @@ a:hover {
   .name {
     padding: 0 16px;
   }
+  .orgName {
+    padding: 0 16px;
+  }
   .summaryContainer {
     padding: 0 16px;
     margin-bottom: 0px;
@@ -415,8 +436,8 @@ a:hover {
   }
   .metricsContainer {
     padding-top: 23px;
-    margin-bottom: 47px;
-    border-top: 1px solid #F2F2F4;
+    margin-bottom: 15px;
+    border-top: 1px solid #E1E7ED;
     align-items: baseline;
   }
   .metric {
@@ -466,20 +487,25 @@ a:hover {
   }
   .ops .title {
     padding: 0 16px;
-    margin: 17px 0 0 0;
+    margin: 17px 0 10px 0;
   }
   .ops .subtitle {
     padding: 0 16px;
+    margin-bottom: 8px;
   }
   .opsMap {
-    width: 100%;
-    height: 160px;
+    width: calc(100% - 32px);
+    height: 250px;
+    margin: 0 auto;
   }
   .actionListContainer {
     padding: 0 16px 0 16px;
   }
   .label {
     text-align: left;
+  }
+  .projectMeta {
+    display: none;
   }
   .donationContainer {
     margin-left: 16px;
@@ -494,5 +520,8 @@ a:hover {
   .datesContainer .label {
     width: unset;
     margin-right: 6px;
+  }
+  .ctaContainer {
+    margin-top: 35px;
   }
 }
