@@ -2,7 +2,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
 import moment from 'moment'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
@@ -177,7 +176,7 @@ UpdateForm.propTypes = {
   id: PropTypes.number.isRequired,
 }
 
-const validate = ({ id, amount, donor, contact_email }) => {
+const validate = ({ id, donor, contact_email }) => {
   const errors = {}
   if (id) {
     if (!donor || !donor.value) errors.donor = 'Escoge un donador de la lista'

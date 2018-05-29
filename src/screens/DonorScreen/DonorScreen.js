@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import _ from 'lodash'
 import { connect } from 'react-redux'
 
 import service, { getBackoffComponent } from 'api/service'
@@ -17,18 +18,26 @@ class DonorScreen extends React.Component {
     },
   }
 
+  loadData = (id) => {
+    getBackoffComponent(this, () => service.getDonor(id), { stateKey: 'donor' })
+    getBackoffComponent(this, () => service.getDonorDonations(id), {
+      stateKey: 'donations',
+      onResponse: ({ data }) => {
+        if (!data) return
+        data.results = _.sortBy(data.results, d => -d.action.score) // eslint-disable-line no-param-reassign
+        return { data } // eslint-disable-line consistent-return
+      },
+    })
+  }
+
   componentDidMount() {
     this._mounted = true
     const { id } = this.props
-    getBackoffComponent(this, () => service.getDonor(id), { stateKey: 'donor' })
-    getBackoffComponent(this, () => service.getDonorDonations(id), { stateKey: 'donations' })
+    this.loadData(id)
   }
 
   componentDidUpdate({ id }) {
-    if (id !== this.props.id) {
-      getBackoffComponent(this, () => service.getDonor(this.props.id), { stateKey: 'donor' })
-      getBackoffComponent(this, () => service.getDonorDonations(this.props.id), { stateKey: 'donations' })
-    }
+    if (id !== this.props.id) this.loadData(this.props.id)
   }
 
   componentWillUnmount() {

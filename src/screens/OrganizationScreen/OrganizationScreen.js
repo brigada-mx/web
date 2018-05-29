@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import _ from 'lodash'
 import { connect } from 'react-redux'
 
 import service, { getBackoffComponent } from 'api/service'
@@ -17,7 +18,14 @@ class OrganizationScreen extends React.Component {
   componentDidMount() {
     this._mounted = true
     const { id } = this.props
-    getBackoffComponent(this, () => service.getOrganization(id), { stateKey: 'organization' })
+    getBackoffComponent(this, () => service.getOrganization(id), {
+      stateKey: 'organization',
+      onResponse: ({ data }) => {
+        if (!data) return
+        data.actions = _.sortBy(data.actions, a => -a.score) // eslint-disable-line no-param-reassign
+        return { data } // eslint-disable-line consistent-return
+      },
+    })
   }
 
   componentDidUpdate({ id }) {

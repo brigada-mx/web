@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
-
 import ActionListItem from 'components/ActionListItem'
 
 
@@ -13,7 +11,7 @@ class ActionList extends React.PureComponent {
 
   render() {
     const { actions, focusedId, containerStyle = '', ...rest } = this.props
-    const items = _.sortBy(actions, a => -a.score).map((a) => {
+    const items = actions.map((a) => {
       return (
         <ActionListItem
           key={a.id}
