@@ -30,12 +30,16 @@ class ChooseVolunteerOpportunity extends React.Component {
 
     const options = action.opportunities.map((o, i) => {
       const { id, position } = o
-      return <div className={Styles.link} key={i} onClick={() => this.handleOpportunityClick(id)}>{position}</div>
+      return (
+        <li className={Styles.link} key={i} onClick={() => this.handleOpportunityClick(id)}>{position}</li>
+      )
     })
     return (
       <React.Fragment>
         <div className={Styles.header}>¿Cuál oportunidad te interesa?</div>
-        {options}
+        <ul className={Styles.list}>
+          {options}
+        </ul>
       </React.Fragment>
     )
   }
