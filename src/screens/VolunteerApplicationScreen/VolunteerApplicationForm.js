@@ -87,7 +87,7 @@ const validate = ({ first_name: firstName, surnames, email, phone, age, reason_w
   if (!age) errors.age = 'Agrega tu edad'
 
   if (!reason) errors.reason_why = 'Explica porqué te emociona esta oportunidad'
-  else if (reason.length > 280) errors.reason_why = 'Limita tu explicación a 280 caracteres'
+  else if (reason.length > 500) errors.reason_why = 'Limita tu explicación a 500 caracteres'
   return errors
 }
 

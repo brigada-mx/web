@@ -1,3 +1,14 @@
+const volunteerLocations = [
+  { value: 'anywhere', label: 'Desde cualquier lugar' },
+  { value: 'in_locality', label: 'En la comunidad afectada' },
+  { value: 'other', label: 'Otro(s) lugar(es)' },
+]
+
+const volunteerLocationByValue = volunteerLocations.reduce((obj, { value, label }) => {
+  obj[value] = label // eslint-disable-line no-param-reassign
+  return obj
+}, {})
+
 const projectTypes = [
   { label: 'Administración y operación', value: 'administration' },
   { label: 'Apoyo emocional', value: 'emotional_support' },
@@ -53,4 +64,13 @@ const sectorByValue = sectors.reduce((obj, { value, label }) => {
 
 const states = ['Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Coahuila', 'Colima', 'Chiapas', 'Chihuahua', 'Ciudad de México', 'Durango', 'Guanajuato', 'Guerrero', 'Hidalgo', 'Jalisco', 'Estado de México', 'Michoacán', 'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas']
 
-export { projectTypes, projectTypeByValue, getProjectType, sectors, sectorByValue, states }
+export {
+  projectTypes,
+  projectTypeByValue,
+  getProjectType,
+  sectors,
+  sectorByValue,
+  states,
+  volunteerLocationByValue,
+  volunteerLocations,
+}

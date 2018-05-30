@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom'
 import * as Actions from 'src/actions'
 import FormStyles from 'src/Form.css'
 import service, { getBackoff } from 'api/service'
-import { getProjectType } from 'src/choices'
+import { getProjectType, volunteerLocationByValue } from 'src/choices'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import Styles from './VolunteerOpportunityScreen.css'
@@ -64,7 +64,7 @@ class VolunteerOpportunityScreen extends React.Component {
     if (!opportunity) return <LoadingIndicatorCircle />
     const {
       position, desc, target, required_skills: skills, start_date: startDate, end_date: endDate,
-      location_desc: place, from_anywhere: anywhere, food_included: food, transport_included: transport,
+      location_desc: place, location, food_included: food, transport_included: transport,
       action: {
         action_type: type, organization: { name: orgName }, locality: { name, state_name: stateName }, locality,
       },
@@ -97,7 +97,7 @@ class VolunteerOpportunityScreen extends React.Component {
         <div className={Styles.rightTemp} />
 
         <div className={Styles.right}>
-          <div>{anywhere ? 'Desde cualquier lugar' : place}</div>
+          <div>{location === 'other' ? place : volunteerLocationByValue[location]}</div>
           <div>{start} - {end}</div>
           <div>{transport ? 'Transporte incluido' : 'Transporte no incluido'}</div>
           <div>{food ? 'Comida incluida' : 'Comida no incluida'}</div>

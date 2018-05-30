@@ -30,7 +30,7 @@ import Styles from './ActionScreen.css'
 
 
 const initialDonationValues = { approved_by_donor: false, approved_by_org: true }
-const initialOpportunityValues = { from_anywhere: false, published: true }
+const initialOpportunityValues = { location: 'anywhere', published: true }
 
 class ActionScreen extends React.Component {
   constructor(props) {
