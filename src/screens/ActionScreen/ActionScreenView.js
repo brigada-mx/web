@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter, Redirect, Link } from 'react-router-dom'
 import { Sticky, StickyContainer } from 'react-sticky'
 
+import * as Actions from 'src/actions'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import Carousel from 'components/Carousel'
 import ActionMap from 'components/FeatureMap/ActionMap'
@@ -98,7 +99,7 @@ class ActionScreenView extends React.Component {
   }
 
   render() {
-    const { action: { loading, data, status }, strength } = this.props
+    const { action: { loading, data, status }, modal, strength } = this.props
     if (status === 404) return <Redirect to="/reconstructores" />
     if (loading || !data) return <LoadingIndicatorCircle />
 
@@ -260,15 +261,20 @@ class ActionScreenView extends React.Component {
           </div>
         </div>
 
-        {data.opportunities.length > 0 &&
-          <div className={Styles.ctaContainer}>
+        <div className={Styles.ctaContainer}>
+          {data.opportunities.length > 0 &&
             <CTAButton
               actionId={data.id}
               type="volunteer"
               opportunities={data.opportunities}
+              onClick={(actionId, type) => modal(`cta_${type}`, { actionId })}
             />
-          </div>
-        }
+          }
+          <CTAButton
+            actionId={data.id}
+            type="share"
+          />
+        </div>
 
         {images.length > 0 &&
           <StickyContainer className={`${Styles.actionsContainer} row`}>
@@ -300,6 +306,7 @@ ActionScreenView.propTypes = {
   action: PropTypes.object.isRequired,
   myAction: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
+  modal: PropTypes.func.isRequired,
   strength: PropTypes.object,
 }
 
@@ -311,4 +318,10 @@ const mapStateToProps = (state, { action }) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, null)(ActionScreenView))
+const mapDispatchToProps = (dispatch) => {
+  return {
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ActionScreenView))

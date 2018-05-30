@@ -33,6 +33,14 @@
   transition: all .15s linear;
 }
 
+.link {
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #FFFFFF !important;
+}
+
 .button:hover {
   background-color: #13A68C;
 }
