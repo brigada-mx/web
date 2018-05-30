@@ -196,6 +196,14 @@ class Service {
     return sendToApiAuth('org', `/account/donations/${id}/`, { method: 'DELETE' })
   }
 
+  accountCreateOpportunity = async (body) => {
+    return sendToApiAuth('org', '/account/volunteer_opportunities/', { method: 'POST', body })
+  }
+
+  accountUpdateOpportunity = async (id, body) => {
+    return sendToApiAuth('org', `/account/volunteer_opportunities/${id}/`, { method: 'PUT', body })
+  }
+
   accountArchiveAction = async (id, archived) => {
     const body = { archived }
     return sendToApiAuth('org', `/account/actions/${id}/archive/`, { method: 'POST', body })
