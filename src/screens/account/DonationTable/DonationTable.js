@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
+import pure from 'recompose/pure'
 
 import ReactTable from 'react-table'
 import Checkbox from 'material-ui/Checkbox'
@@ -91,4 +92,4 @@ DonationTable.propTypes = {
   onToggleApproved: PropTypes.func,
 }
 
-export default DonationTable
+export default pure(DonationTable)

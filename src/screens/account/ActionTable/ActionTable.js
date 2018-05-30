@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
+import pure from 'recompose/pure'
 
 import ReactTable from 'react-table'
 import Toggle from 'material-ui/Toggle'
@@ -104,4 +105,4 @@ ActionTable.propTypes = {
   history: PropTypes.object.isRequired,
 }
 
-export default withRouter(ActionTable)
+export default withRouter(pure(ActionTable))

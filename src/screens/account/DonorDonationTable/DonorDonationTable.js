@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
+import pure from 'recompose/pure'
 
 import ReactTable from 'react-table'
 import Toggle from 'material-ui/Toggle'
@@ -91,4 +92,4 @@ DonorDonationTable.propTypes = {
   history: PropTypes.object.isRequired,
 }
 
-export default withRouter(DonorDonationTable)
+export default withRouter(pure(DonorDonationTable))

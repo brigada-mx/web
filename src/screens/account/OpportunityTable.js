@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
+import pure from 'recompose/pure'
 
 import ReactTable from 'react-table'
 import Toggle from 'material-ui/Toggle'
@@ -75,4 +76,4 @@ OpportunityTable.propTypes = {
   onTogglePublished: PropTypes.func,
 }
 
-export default OpportunityTable
+export default pure(OpportunityTable)

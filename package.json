@@ -27,6 +27,7 @@
     "react-table": "^6.8.0",
     "react-youtube": "^7.6.0",
     "recharts": "^1.0.0-beta.9",
+    "recompose": "^0.27.1",
     "redux": "^3.7.2",
     "redux-form": "^7.2.3",
     "redux-form-material-ui": "^4.3.3",

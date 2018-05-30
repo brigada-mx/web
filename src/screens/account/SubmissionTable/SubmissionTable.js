@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
+import pure from 'recompose/pure'
 
 import moment from 'moment'
 import ReactTable from 'react-table'
@@ -132,4 +133,4 @@ SubmissionTable.propTypes = {
   onDelete: PropTypes.func,
 }
 
-export default SubmissionTable
+export default pure(SubmissionTable)

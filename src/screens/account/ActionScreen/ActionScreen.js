@@ -226,9 +226,8 @@ class ActionScreen extends React.Component {
   }
 
   render() {
-    const { action, donations, opportunities, status } = this.props
+    const { action, donations, opportunities, submissions, status } = this.props
     if (status === 404) return <Redirect to="/cuenta" />
-    const { submissions = [] } = action
     const {
       submissionId,
       donationId,
@@ -429,6 +428,7 @@ ActionScreen.propTypes = {
   action: PropTypes.object.isRequired,
   donations: PropTypes.arrayOf(PropTypes.object).isRequired,
   opportunities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   actionKey: PropTypes.number.isRequired,
   snackbar: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
@@ -442,16 +442,16 @@ const mapStateToProps = (state, props) => {
   let action = {}
   let donations = []
   let opportunities = []
+  let submissions = []
 
   const reduxAction = state.getter[`accountAction_${actionKey}`]
   const status = reduxAction && reduxAction.status
   try {
-    action = prepareInitialActionValues(reduxAction.data || {})
-    donations = [...action.donations]
-    opportunities = [...action.opportunities]
+    action = prepareInitialActionValues(reduxAction.data || {});
+    ({ donations, opportunities, submissions } = action)
   } catch (e) {}
 
-  return { action, donations, opportunities, status }
+  return { action, donations, opportunities, submissions, status }
 }
 
 const mapDispatchToProps = (dispatch) => {
