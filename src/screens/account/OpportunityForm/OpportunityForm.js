@@ -5,12 +5,13 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
-import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
+import { RadioButton } from 'material-ui/RadioButton'
 
 import { volunteerLocations } from 'src/choices'
-import { TextField, Toggle, DatePicker, SelectField } from 'components/Fields'
+import { TextField, Toggle, DatePicker, RadioButtonGroup } from 'components/Fields'
 import FormStyles from 'src/Form.css'
+import Styles from './OpportunityForm.css'
 
 
 const Fields = ({ location }) => {
@@ -68,44 +69,48 @@ const Fields = ({ location }) => {
           normalize={(value) => { return value ? parseInt(value, 10) : null }}
         />
       </div>
-      <div className={FormStyles.row}>
-        <SelectField
-          className={FormStyles.wideInput}
-          floatingLabelText="¿Dónde van a trabajar los voluntarios?"
-          name="location"
-        >
-          {volunteerLocations.map(({ value, label }) => {
-            return <MenuItem key={value} value={value} primaryText={label} />
-          })}
-        </SelectField>
-      </div>
-      {location === 'other' &&
+
+      <div className={Styles.section}>
+        <div className={Styles.sectionHeader}>¿Dónde van a trabajar los voluntarios?</div>
         <div className={FormStyles.row}>
-          <TextField
-            floatingLabelText="Describe el o los lugares"
-            className={FormStyles.wideInput}
-            name="location_desc"
-          />
+          <RadioButtonGroup
+            className={`${FormStyles.radioButtonGroup} ${Styles.row}`}
+            name="location"
+          >
+            {volunteerLocations.map(({ value, label }) => {
+              return <RadioButton key={value} value={value} label={label} />
+            })}
+          </RadioButtonGroup>
         </div>
-      }
-      {location !== 'anywhere' &&
-        <React.Fragment>
-          <div className={FormStyles.row}>
-            <div className={FormStyles.toggle}>
-              <Toggle
-                label="¿Transporte incluido?"
-                name="transport_included"
-              />
-            </div>
-            <div className={FormStyles.toggle}>
-              <Toggle
-                label="¿Comida incluida?"
-                name="food_included"
-              />
-            </div>
+        {location === 'other' &&
+          <div className={Styles.row}>
+            <TextField
+              floatingLabelText="Describe el o los lugares"
+              className={FormStyles.wideInput}
+              name="location_desc"
+            />
           </div>
-        </React.Fragment>
-      }
+        }
+        {location !== 'anywhere' &&
+          <React.Fragment>
+            <div className={Styles.row}>
+              <div className={FormStyles.toggle}>
+                <Toggle
+                  label="¿Transporte incluido?"
+                  name="transport_included"
+                />
+              </div>
+              <div className={FormStyles.toggle}>
+                <Toggle
+                  label="¿Comida incluida?"
+                  name="food_included"
+                />
+              </div>
+            </div>
+          </React.Fragment>
+        }
+      </div>
+
       <div className={FormStyles.row}>
         <div className={FormStyles.toggle}>
           <Toggle
@@ -182,7 +187,10 @@ const validate = ({ position, desc, required_skills, target, location, location_
   else if (required_skills.split(',').some(s => s.length > 50)) errors.required_skills = 'Limita las habilidades a 50 caracteres'
 
   if (target === null || target === undefined) errors.target = 'Agrega el número de voluntarios que están buscando'
-  if (location === 'other' && !locDesc) errors.location_desc = 'Agrega la descripción de el o los lugares'
+  if (location === 'other') {
+    if (!locDesc) errors.location_desc = 'Agrega la descripción de el o los lugares'
+    else if (locDesc.length > 200) errors.location_desc = 'Limita la descripción a 200 caracteres'
+  }
   return errors
 }
 

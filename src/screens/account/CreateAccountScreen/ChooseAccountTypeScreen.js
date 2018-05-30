@@ -57,7 +57,7 @@ class ChooseAccountTypeScreen extends React.Component {
         <span className={FormStyles.formHeader}>Registro para Brigada</span>
         <p className={Styles.question}>¿Con qué tipo de cuenta te quieres dar de alta?</p>
 
-        <RadioButtonGroup name="type" defaultSelected={this.props.type} onChange={this.handleChange} className={Styles.radioButtonGroup}>
+        <RadioButtonGroup name="type" defaultSelected={this.props.type} onChange={this.handleChange} className={FormStyles.radioButtonGroup}>
           <RadioButton
             value="org"
             label="Reconstructor: Trabajamos directamente en las comunidades afectadas por los sismos"

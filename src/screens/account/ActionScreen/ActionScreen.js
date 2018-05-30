@@ -243,7 +243,7 @@ class ActionScreen extends React.Component {
 
     const content = (
       <div>
-        {action.id &&
+        {action.id !== undefined &&
           <div className={FormStyles.card}>
             <div className={FormStyles.sectionHeader}>{getProjectType(action.action_type)}</div>
             <Link className={Styles.link} to={`/proyectos/${action.id}`}>Ver proyecto</Link>
@@ -304,6 +304,15 @@ class ActionScreen extends React.Component {
             />
           }
         </div>
+
+        {opportunities.length > 0 && action.id !== undefined &&
+          <div className={FormStyles.card}>
+            <div className={FormStyles.sectionHeader}>
+              <span>Candidatos de voluntariado</span>
+            </div>
+            <ApplicationTable actionId={action.id} />
+          </div>
+        }
 
         {submissions.length > 0 &&
           <div className={FormStyles.card}>
@@ -402,7 +411,6 @@ class ActionScreen extends React.Component {
               enableReinitialize
               id={opportunityId}
             />
-            <ApplicationTable opportunityId={opportunityId} />
           </Modal>
         }
       </div>
@@ -413,7 +421,7 @@ class ActionScreen extends React.Component {
         navComponents={
           <React.Fragment>
             <BackButton to="/cuenta" />
-            {action.id &&
+            {action.id !== undefined &&
               <div style={{ marginTop: 15 }}>
                 <ActionStrength actionId={action.id} />
               </div>

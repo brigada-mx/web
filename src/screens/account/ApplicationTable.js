@@ -10,8 +10,8 @@ import service, { getBackoff } from 'api/service'
 import ReactTable from 'react-table'
 import '!style-loader!css-loader!react-table/react-table.css'
 
-import { tokenMatch } from 'tools/string'
-import FormStyles from 'src/Form.css'
+import { tokenMatch, emailLink } from 'tools/string'
+import GlobalStyles from 'src/Global.css'
 
 
 const defaultFilterMethod = (filter, row) => {
@@ -22,12 +22,12 @@ const defaultFilterMethod = (filter, row) => {
 const ApplicationTable = ({ applications }) => {
   const columns = [
     {
-      Header: 'Nombre completo',
-      accessor: 'user.full_name',
+      Header: 'Puesto',
+      accessor: 'position',
     },
     {
-      Header: 'Edad',
-      accessor: 'user.age',
+      Header: 'Nombre completo',
+      accessor: 'user.full_name',
     },
     {
       Header: 'Teléfono',
@@ -36,15 +36,16 @@ const ApplicationTable = ({ applications }) => {
     {
       Header: 'Email',
       accessor: 'user.email',
+      Cell: props => <a className={GlobalStyles.linkRaw} href={emailLink(props.original.user.email)}>{props.original.user.email}</a>, // eslint-disable-line max-len
     },
     {
-      Header: 'Fecha de creación',
+      Header: 'Fecha',
       accessor: 'created',
-      Cell: props => <span>{moment(props.original.created).format('h:mma, DD MMMM YYYY')}</span>,
+      Cell: props => <span>{moment(props.original.created).format('DD MMMM YYYY')}</span>,
     },
   ]
 
-  const maxPageSize = 20
+  const maxPageSize = 10
 
   return (
     <ReactTable
@@ -66,30 +67,30 @@ const PureApplicationTable = pure(ApplicationTable)
 
 class ApplicationTableWrapper extends React.Component {
   componentDidMount() {
-    const { opportunityId } = this.props
-    getBackoff(() => service.accountGetOpportunity(opportunityId), { key: `accountOpportunity_${opportunityId}` })
+    const { actionId } = this.props
+    getBackoff(() => service.accountGetOpportunities(actionId), { key: `accountOpportunities_${actionId}` })
   }
 
   render() {
-    const { opportunity } = this.props
-    if (!opportunity || opportunity.applications.length === 0) return null
-    return (
-      <React.Fragment>
-        <div className={`${FormStyles.sectionHeader} ${FormStyles.sectionDivider}`}>Aplicaciones</div>
-        <PureApplicationTable applications={opportunity.applications} />
-      </React.Fragment>
-    )
+    const { opportunities } = this.props
+    if (!opportunities) return null
+    const applications = [].concat(...opportunities.map(
+      o => o.applications.map((a) => { return { ...a, position: o.position, opportunityId: o.id } })
+    ))
+    if (applications.length === 0) return null
+
+    return <PureApplicationTable applications={applications} />
   }
 }
 
 ApplicationTableWrapper.propTypes = {
-  opportunityId: PropTypes.number.isRequired,
-  opportunity: PropTypes.object,
+  actionId: PropTypes.number.isRequired,
+  opportunities: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
-const mapStateToProps = (state, { opportunityId }) => {
+const mapStateToProps = (state, { actionId }) => {
   try {
-    return { opportunity: state.getter[`accountOpportunity_${opportunityId}`].data }
+    return { opportunities: state.getter[`accountOpportunities_${actionId}`].data.results }
   } catch (e) {
     return {}
   }

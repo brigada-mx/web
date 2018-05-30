@@ -11,17 +11,6 @@
   cursor: pointer;
 }
 
-.radioButtonGroup label {
-  font-family: 'roboto', sans-serif !important;
-  font-size: 16px !important;
-  color: #000000 !important;
-  line-height: 24px !important;
-}
-
-.radioButtonGroup div {
-  margin-left: 0px !important;
-}
-
 .question {
   font-size: 20px;
   font-family: 'roboto', sans-serif;

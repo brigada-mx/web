@@ -25,6 +25,19 @@
   color: #13A68C;
 }
 
+.linkRaw {
+  color: #3DC59F;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  display: table;
+  cursor: pointer;
+  transition: all .15s linear;
+}
+
+.linkRaw:hover {
+  color: #13A68C;
+}
+
 @media screen and (max-width: 1439px) and (min-width: 980px) {
   .modalScreenWrapper {
     width: 40vw;

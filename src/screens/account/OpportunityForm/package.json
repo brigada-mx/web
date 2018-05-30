@@ -1,0 +1,6 @@
+{
+  "name": "OpportunityForm",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./OpportunityForm.js"
+}

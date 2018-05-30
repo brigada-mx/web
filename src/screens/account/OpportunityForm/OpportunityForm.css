@@ -1,0 +1,16 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.sectionHeader {
+  margin-top: 45px;
+  margin-bottom: 15px;
+  font-family: 'roboto-700', sans-serif;
+}
+
+.section {
+  margin-bottom: 40px;
+}

@@ -200,6 +200,11 @@ class Service {
     return sendToApiAuth('org', `/account/volunteer_opportunities/${id}`)
   }
 
+  accountGetOpportunities = async (action_id, page_size = 500) => {
+    const params = { action_id, page_size }
+    return sendToApiAuth('org', '/account/volunteer_opportunities/', { params })
+  }
+
   accountCreateOpportunity = async (body) => {
     return sendToApiAuth('org', '/account/volunteer_opportunities/', { method: 'POST', body })
   }
