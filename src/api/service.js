@@ -196,6 +196,10 @@ class Service {
     return sendToApiAuth('org', `/account/donations/${id}/`, { method: 'DELETE' })
   }
 
+  accountGetOpportunity = async (id) => {
+    return sendToApiAuth('org', `/account/volunteer_opportunities/${id}`)
+  }
+
   accountCreateOpportunity = async (body) => {
     return sendToApiAuth('org', '/account/volunteer_opportunities/', { method: 'POST', body })
   }

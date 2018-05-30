@@ -21,6 +21,7 @@ import { CreateOpportunityForm, UpdateOpportunityForm,
   prepareOpportunityBody, prepareInitialOpportunityValues } from 'screens/account/OpportunityForm'
 import DonationTable from 'screens/account/DonationTable'
 import OpportunityTable from 'screens/account/OpportunityTable'
+import ApplicationTable from 'screens/account/ApplicationTable'
 import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
 import SubmissionTrash from 'screens/account/SubmissionTrash'
@@ -401,6 +402,7 @@ class ActionScreen extends React.Component {
               enableReinitialize
               id={opportunityId}
             />
+            <ApplicationTable opportunityId={opportunityId} />
           </Modal>
         }
       </div>

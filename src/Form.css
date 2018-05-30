@@ -77,6 +77,10 @@
   margin-bottom: 20px;
 }
 
+.sectionDivider {
+  margin-top: 50px;
+}
+
 .row {
   display: flex;
   flex-direction: row;
