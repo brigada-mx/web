@@ -7,8 +7,8 @@
   align-items: center;
 }
 
-.container:first-of-type {
-  border-right: 1px solid #E1E7ED;
+.container:nth-of-type(2) {
+  border-left: 1px solid #E1E7ED;
 }
 
 .need {
@@ -44,6 +44,8 @@
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .container {
     padding: 60px 0 64px 0;
-    border-bottom: 1px solid #E1E7ED;
+  }
+  .container:nth-of-type(2) {
+    border-top: 1px solid #E1E7ED;
   }
 }
