@@ -7,6 +7,10 @@
   align-items: center;
 }
 
+.container:first-of-type {
+  border-right: 1px solid #E1E7ED;
+}
+
 .need {
   opacity: 0.8;
   font-family: 'nunito-sans-600', sans-serif;
@@ -35,4 +39,11 @@
 
 .button:hover {
   background-color: #13A68C;
+}
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+  .container {
+    padding: 60px 0 64px 0;
+    border-bottom: 1px solid #E1E7ED;
+  }
 }

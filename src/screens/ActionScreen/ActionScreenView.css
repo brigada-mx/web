@@ -525,5 +525,6 @@ a:hover {
   }
   .ctaContainer {
     margin-top: 35px;
+    flex-direction: column;
   }
 }
