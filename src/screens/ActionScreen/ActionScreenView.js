@@ -13,9 +13,10 @@ import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicator
 import { fmtNum, fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
 import { projectTypeByValue } from 'src/choices'
 import ActionStrengthPublic from 'components/Strength/ActionStrengthPublic'
+import VolunteerButton from 'components/CTA/VolunteerButton'
+import FacebookButton from 'components/CTA/FacebookButton'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
 import PhotoGallery from './PhotoGallery'
-import CTAButton from './CTAButton'
 import Styles from './ActionScreenView.css'
 
 
@@ -189,7 +190,7 @@ class ActionScreenView extends React.Component {
     return (
       <React.Fragment>
         <div className="wrapper-lg wrapper-md wrapper-sm">
-          <OrganizationBreadcrumb name={name} sector={sector} id={organizationId} projectType={projectType} />
+          <OrganizationBreadcrumb name={name} sector={sector} id={organizationId} projectType={actionType} />
 
           <div className="row">
 
@@ -263,16 +264,14 @@ class ActionScreenView extends React.Component {
 
         <div className={Styles.ctaContainer}>
           {data.opportunities.length > 0 &&
-            <CTAButton
+            <VolunteerButton
               actionId={data.id}
-              type="volunteer"
               opportunities={data.opportunities}
-              onClick={(actionId, type) => modal(`cta_${type}`, { actionId })}
+              onClick={actionId => modal('ctaVolunteer', { actionId })}
             />
           }
-          <CTAButton
+          <FacebookButton
             actionId={data.id}
-            type="share"
           />
         </div>
 

@@ -9,6 +9,7 @@ module.exports = {
     "Headers": true,
     "fetch": true,
     "window": true,
+    "FB": true,
   },
   "rules": {
     "one-var": 0,

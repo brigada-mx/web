@@ -7,11 +7,12 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
-import FormStyles from 'src/Form.css'
 import service, { getBackoff } from 'api/service'
 import { getProjectType, volunteerLocationByValue } from 'src/choices'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
+import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
+import FormStyles from 'src/Form.css'
 import Styles from './VolunteerOpportunityScreen.css'
 
 
@@ -66,7 +67,11 @@ class VolunteerOpportunityScreen extends React.Component {
       position, desc, target, required_skills: skills, start_date: startDate, end_date: endDate,
       location_desc: place, location, food_included: food, transport_included: transport,
       action: {
-        action_type: type, organization: { name: orgName }, locality: { name, state_name: stateName }, locality,
+        id: actionId,
+        action_type: type,
+        organization: { name: orgName, sector, id: organizationId },
+        locality: { name, state_name: stateName },
+        locality,
       },
     } = opportunity
 
@@ -118,8 +123,20 @@ class VolunteerOpportunityScreen extends React.Component {
         </div>
       </div>
     )
-    if (className) return <div className={className}>{content}</div>
-    return content
+
+    const breadcrumb = (
+      <OrganizationBreadcrumb
+        name={name}
+        sector={sector}
+        id={organizationId}
+        projectType={type}
+        actionId={actionId}
+        position={position}
+      />
+    )
+
+    if (className) return <div className={className}>{breadcrumb}{content}</div>
+    return <React.Fragment>{breadcrumb}{content}</React.Fragment>
   }
 }
 

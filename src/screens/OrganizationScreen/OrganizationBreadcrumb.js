@@ -2,28 +2,35 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Link } from 'react-router-dom'
+import { sectorByValue, projectTypeByValue } from 'src/choices'
 
 import Styles from './OrganizationScreenView.css'
 
 
-const OrganizationBreadcrumb = ({ name, sector, id, projectType }) => {
-  const labelBySector = {
-    civil: 'Civil',
-    public: 'Público',
-    private: 'Privado',
-    religious: 'Religioso',
+const OrganizationBreadcrumb = ({ name, sector, id, projectType, actionId, position }) => {
+  const optionalLinks = () => {
+    if (!projectType) return null
+    if (!position) {
+      return <span className={Styles.projectType}><Link to="#">{projectTypeByValue[projectType] || projectType}</Link></span>
+    }
+    return (
+      <React.Fragment>
+        <span className={Styles.projectType}><Link to={`/proyectos/${actionId}`}>{projectTypeByValue[projectType] || projectType}</Link></span>
+        <span className={Styles.projectType}><Link to="#">{position}</Link></span>
+      </React.Fragment>
+    )
   }
 
   return (
     <div className={Styles.breadcrumbLinks}>
       <span className={Styles.orgList}><Link to="/reconstructores">Reconstructores</Link></span>
       <span className={Styles.sector}>
-        <Link to={`/reconstructores?sec=${sector}`}>{labelBySector[sector]}</Link>
+        <Link to={`/reconstructores?sec=${sector}`}>{sectorByValue[sector] || sector}</Link>
       </span>
       <span className={Styles.orgDetail}>
         <Link to={`/reconstructores/${id}`}>{name}</Link>
       </span>
-      {projectType && <span className={Styles.projectType}><Link to="#">{projectType}</Link></span>}
+      {optionalLinks()}
     </div>
   )
 }
@@ -33,6 +40,8 @@ OrganizationBreadcrumb.propTypes = {
   sector: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   projectType: PropTypes.string,
+  actionId: PropTypes.number,
+  position: PropTypes.string,
 }
 
 export default OrganizationBreadcrumb

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import * as Actions from 'src/actions'
+import { localStorage } from 'tools/storage'
 import service from 'api/service'
 import VolunteerApplicationForm from './VolunteerApplicationForm'
 
@@ -12,6 +13,7 @@ const VolunteerApplicationScreen = ({ snackbar, modal, className = '', position,
   const handleSubmit = async (body) => {
     const { data, status } = await service.createVolunteerApplication({ ...body, opportunity_id: id })
     if (data) {
+      localStorage.setItem('719s:brigadaUser', JSON.stringify(data.user))
       modal('volunteerApplicationCreated', { position, name, modalWide: true })
       return
     }
@@ -20,8 +22,10 @@ const VolunteerApplicationScreen = ({ snackbar, modal, className = '', position,
     else snackbar('Checa tu conexión', 'error')
   }
 
-  if (!className) return <VolunteerApplicationForm position={position} onSubmit={handleSubmit} />
-  return <div className={className}><VolunteerApplicationForm position={position} onSubmit={handleSubmit} /></div>
+  const user = JSON.parse(localStorage.getItem('719s:brigadaUser')) || {}
+  const form = <VolunteerApplicationForm initialValues={user} position={position} onSubmit={handleSubmit} />
+  if (!className) return form
+  return <div className={className}>{form}</div>
 }
 
 VolunteerApplicationScreen.propTypes = {

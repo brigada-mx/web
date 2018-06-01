@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
@@ -16,23 +17,24 @@ class ChooseVolunteerOpportunity extends React.Component {
   }
 
   handleOpportunityClick = (id) => {
-    this.props.modal('volunteerOpportunity', { id, modalWide: true })
+    const { history, closeModal } = this.props
+    history.push(`/voluntariado/${id}`)
+    closeModal()
   }
 
   render() {
-    const { action } = this.props
+    const { action, history, closeModal } = this.props
     if (!action) return <LoadingIndicatorCircle />
     if (action.opportunities.length === 0) return <LoadingIndicatorCircle />
     if (action.opportunities.length === 1) {
-      this.props.modal('volunteerOpportunity', { id: action.opportunities[0].id, modalWide: true })
+      history.push(`/voluntariado/${action.opportunities[0].id}`)
+      closeModal()
       return null
     }
 
     const options = action.opportunities.map((o, i) => {
       const { id, position } = o
-      return (
-        <li className={Styles.link} key={i} onClick={() => this.handleOpportunityClick(id)}>{position}</li>
-      )
+      return <li className={Styles.link} key={i} onClick={() => this.handleOpportunityClick(id)}>{position}</li>
     })
     return (
       <React.Fragment>
@@ -47,7 +49,8 @@ class ChooseVolunteerOpportunity extends React.Component {
 
 ChooseVolunteerOpportunity.propTypes = {
   actionId: PropTypes.number.isRequired,
-  modal: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  closeModal: PropTypes.func.isRequired,
   action: PropTypes.object,
 }
 
@@ -61,8 +64,8 @@ const mapStateToProps = (state, { actionId }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
+    closeModal: () => Actions.modal(dispatch, ''),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChooseVolunteerOpportunity)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChooseVolunteerOpportunity))
