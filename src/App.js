@@ -68,12 +68,7 @@ const DonationScreenWrapper = ({ match }) => {
 }
 
 const VolunteerOpportunityScreenWrapper = ({ match }) => {
-  return (
-    <VolunteerOpportunityScreen
-      id={Number.parseInt(match.params.id, 10)}
-      className={GlobalStyles.modalScreenWrapper}
-    />
-  )
+  return <VolunteerOpportunityScreen id={Number.parseInt(match.params.id, 10)} />
 }
 
 const SetPasswordWithTokenScreenWrapper = () => {

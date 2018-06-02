@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import moment from 'moment'
-import RaisedButton from 'material-ui/RaisedButton'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -69,7 +68,7 @@ class VolunteerOpportunityScreen extends React.Component {
       action: {
         id: actionId,
         action_type: type,
-        organization: { name: orgName, sector, id: organizationId },
+        organization: { sector, name: orgName, id: organizationId },
         locality: { name, state_name: stateName },
         locality,
       },
@@ -79,64 +78,75 @@ class VolunteerOpportunityScreen extends React.Component {
     const start = startDate ? moment(startDate).format('MMMM YYYY') : '?'
     const end = endDate ? moment(endDate).format('MMMM YYYY') : '?'
 
-    const content = (
-      <div className={Styles.container}>
-        <div className={Styles.left}>
-          <span className={Styles.position}>{position}</span>
-          <span className={Styles.text}>{detailedDesc}</span>
-          <span className={Styles.title}>Objetivos de voluntariado</span>
-          <span className={Styles.text}>{desc}</span>
-          <span className={Styles.title}>Habilidades requeridas</span>
-          <ul className={Styles.list}>
-            {skills.map((s, i) => <li className={Styles.item} key={i}>{s}</li>)}
-          </ul>
-          <RaisedButton
-            backgroundColor="#3DC59F"
-            labelColor="#ffffff"
-            className={FormStyles.primaryButton}
-            label="POSTULAR"
-            onClick={this.handleOpportunityClick}
-          />
-        </div>
-
-        <div className={Styles.rightTemp} />
-
-        <div className={Styles.right}>
-          <div>{location === 'other' ? place : volunteerLocationByValue[location]}</div>
-          <div>{start} - {end}</div>
-          <div>{transport ? 'Transporte incluido' : 'Transporte no incluido'}</div>
-          <div>{food ? 'Comida incluida' : 'Comida no incluida'}</div>
-
-          <p className={Styles.subtitle}>{`${name}, ${stateName}`}</p>
-          {this.renderMap(locality)}
-          <div className={`${Styles.mapMeta} row middle between`}>
-            <div>
-              <div>{locality.meta.total}</div>
-              <div>VIVIENDAS DAÑADAS</div>
-            </div>
-
-            <div>
-              <div>{locality.meta.margGrade}</div>
-              <div>REZAGO SOCIAL</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-
     const breadcrumb = (
       <OrganizationBreadcrumb
-        name={name}
+        name={orgName}
         sector={sector}
         id={organizationId}
         projectType={type}
-        actionId={actionId}
         position={position}
       />
     )
 
-    if (className) return <div className={className}>{breadcrumb}{content}</div>
-    return <React.Fragment>{breadcrumb}{content}</React.Fragment>
+    const content = (
+
+      <div>
+        <div className="wrapper-lg wrapper-md wrapper-sm">
+          {breadcrumb}
+          <div className="row wrapper-xs">
+            <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-6 col-sm-8 sm-gutter col-xs-4 xs-gutter">
+              <span className={Styles.position}>{position}</span>
+              <span className={Styles.text}>{detailedDesc}</span>
+              <span className={Styles.title}>Objetivos de voluntariado</span>
+              <span className={Styles.text}>{desc}</span>
+              <span className={Styles.title}>Habilidades requeridas</span>
+              <ul className={Styles.list}>
+                {skills.map((s, i) => <li className={`${Styles.item} ${Styles.checkmark}`} key={i}>{s}</li>)}
+              </ul>
+              <a className={`${Styles.button} sm-hidden xs-hidden`} onClick={this.handleOpportunityClick}>Postular</a>
+            </div>
+            <div className="col-lg-offset-2 col-lg-3 col-md-offset-2 col-md-3 col-sm-8 sm-gutter col-xs-4 xs-gutter">
+              <div className="row">
+                <div className="col-lg-12 col-md-12 col-sm-3 col-xs-4 gutter">
+                  <span className={`${Styles.title} ${Styles.details}`}>Detalles</span>
+                  <ul className={Styles.list}>
+                    <li className={`${Styles.item} ${Styles.location}`}>{location === 'other' ? place : volunteerLocationByValue[location]}</li>
+                    <li className={`${Styles.item} ${Styles.dates}`}>{start} - {end}</li>
+                    <li className={`${Styles.item} ${Styles.transport}`}>{transport ? 'Transporte incluido' : 'Transporte no incluido'}</li>
+                    <li className={`${Styles.item} ${Styles.food}`}>{food ? 'Comida incluida' : 'Comida no incluida'}</li>
+                  </ul>
+                </div>
+
+                <div className="col-lg-12 col-md-12 col-sm-offset-1 col-sm-4 col-xs-4 gutter">
+                  <span className={`${Styles.title} ${Styles.mapTitle}`}>Comunidad beneficiada</span>
+                  <span className={`${Styles.item} ${Styles.community}`}>{`${name}, ${stateName}`}</span>
+                  {this.renderMap(locality)}
+                  <div className={`${Styles.mapMeta} middle between xs-hidden`}>
+                    <div>
+                      <p className={Styles.mapValue}>{locality.meta.total}</p>
+                      <p className={Styles.mapLabel}>VIVIENDAS<br />DAÑADAS</p>
+                    </div>
+                    <div>
+                      <p className={Styles.mapValue}>{locality.meta.margGrade}</p>
+                      <p className={Styles.mapLabel}>REZAGO<br />SOCIAL</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={Styles.spacer} />
+        </div>
+        <div className={`${Styles.sticky} lg-hidden md-hidden`}>
+          <a className={`${Styles.button}`} onClick={this.handleOpportunityClick}>Postular</a>
+        </div>
+      </div>
+
+
+    )
+
+    if (className) return <div className={className}>{content}</div>
+    return <React.Fragment>{content}</React.Fragment>
   }
 }
 

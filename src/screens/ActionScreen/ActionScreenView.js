@@ -243,14 +243,14 @@ class ActionScreenView extends React.Component {
                   </div>
                   <div className={`${Styles.mapMeta} middle between xs-hidden`}>
                     <div>
-                      <p className={Styles.mapValue}>{margGrade || 'Sin datos'}</p>
-                      <p className={Styles.mapLabel}>REZAGO<br />SOCIAL</p>
-                    </div>
-                    <div>
                       <p className={Styles.mapValue}>
                         {total === null || total === undefined ? 'Sin datos' : total}
                       </p>
                       <p className={Styles.mapLabel}>VIVIENDAS<br />DAÑADAS</p>
+                    </div>
+                    <div>
+                      <p className={Styles.mapValue}>{margGrade || 'Sin datos'}</p>
+                      <p className={Styles.mapLabel}>REZAGO<br />SOCIAL</p>
                     </div>
                   </div>
                 </div>

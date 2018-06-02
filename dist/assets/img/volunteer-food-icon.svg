@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="16px" viewBox="0 0 11 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>Fill 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Volunteering" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="volunteer-detail---desktop" transform="translate(-1065.000000, -408.000000)" fill="#3DC587">
+            <g id="::-habilidades" transform="translate(1063.000000, 266.000000)">
+                <g id="::-lista" transform="translate(0.000000, 15.000000)">
+                    <g id="::-item" transform="translate(2.000000, 106.000000)">
+                        <path d="M3,27.45 L3,37 L2,37 L2,27.45 C0.583,27.21 0,25.986 0,24.5 L0,21.5 L0,21.002 L1,21.002 L1,21.5 L1,24.5 C1,25.43 1.139,26.278 2,26.501 L2,21.002 L3,21 L3,26.429 C3.861,26.206 4,25.43 4,24.5 L4,21.5 L4,21.002 L5,21.002 L5,21.5 L5,24.5 C5,25.986 4.417,27.21 3,27.45 M8,22.653 L8,29 L10.071,29 C10.055,28.139 9.942,26.832 9.488,25.533 C9.122,24.484 8.521,23.445 8,22.653 M11.002,29.735 L11,29.735 L11,30 L8,30 L8,37 L7,37 L7,30 L7,29 L7,21.269 L6.997,21.266 L7,21.265 L7,21 L8,21 L8,21.061 C8.263,21.367 9.669,23.055 10.302,24.867 C11.118,27.203 11.002,29.735 11.002,29.735" id="Fill-1"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

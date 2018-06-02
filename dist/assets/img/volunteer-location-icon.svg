@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="15px" viewBox="0 0 11 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>Fill 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Volunteering" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="volunteer-detail---desktop" transform="translate(-1066.000000, -303.000000)" fill="#3DC587">
+            <g id="::-habilidades" transform="translate(1063.000000, 266.000000)">
+                <g id="::-lista" transform="translate(0.000000, 15.000000)">
+                    <g id="::-item" transform="translate(3.000000, 0.000000)">
+                        <path d="M7,27.501 C7,26.672 6.329,26.002 5.5,26.002 C4.671,26.002 4,26.672 4,27.501 C4,28.329 4.671,29.001 5.5,29.001 C6.329,29.001 7,28.329 7,27.501 M3,27.501 C3,26.121 4.119,25.001 5.5,25.001 C6.88,25.001 8,26.121 8,27.501 C8,28.882 6.88,30.001 5.5,30.001 C4.119,30.001 3,28.882 3,27.501 M5.5,23 C3.015,23 1,25.1 1,27.688 C1,30.276 5.5,35.5 5.5,35.5 C5.5,35.5 10,30.276 10,27.688 C10,25.1 7.985,23 5.5,23 M6.336,36 L8.5,36 C8.776,36 9,36.225 9,36.5 C9,36.777 8.776,37 8.5,37 L2.5,37 C2.224,37 2,36.777 2,36.5 C2,36.225 2.224,36 2.5,36 L4.664,36 C3.125,34.105 0,29.968 0,27.625 C0,24.519 2.462,22 5.5,22 C8.538,22 11,24.519 11,27.625 C11,29.968 7.875,34.105 6.336,36" id="Fill-1"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

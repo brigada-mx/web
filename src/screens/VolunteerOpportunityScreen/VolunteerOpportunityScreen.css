@@ -19,46 +19,77 @@
 
 .position {
   font-family: 'nunito-sans-200', sans-serif;
-  font-size: 28px;
+  font-size: 48px;
   color: #141418;
-  letter-spacing: 0;
-  line-height: 30px;
+  letter-spacing: -0.1px;
+  line-height: 62px;
   display: flex;
-  margin-bottom: 11px;
+  margin-bottom: 5px;
 }
 
 .text {
-  font-family: 'nunito-sans-200', sans-serif;
-  font-size: 15px;
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 18px;
   color: #141418;
-  letter-spacing: 0.6px;
-  line-height: 22px;
+  letter-spacing: 0;
+  line-height: 32px;
   display: flex;
-  margin-bottom: 34px;
 }
 
 .list {
-  list-style: inside;
-  margin: 3px 0 40px 2px;
+  padding-top: 6px;
+  list-style-type: none;
+}
+
+.checkmark {
+  background: url('assets/img/volunteer-checkmark-icon.svg') 0px 5px no-repeat transparent;
+  padding-left: 30px;
+}
+
+.location {
+  background: url('assets/img/volunteer-location-icon.svg') 2px 3px no-repeat transparent;
+  padding-left: 28px;
+}
+
+.dates {
+  background: url('assets/img/volunteer-dates-icon.svg') 0px 3px no-repeat transparent;
+  padding-left: 28px;
+}
+
+.transport {
+  background: url('assets/img/volunteer-transport-icon.svg') 0px 4px no-repeat transparent;
+  padding-left: 28px;
+}
+
+.food {
+  background: url('assets/img/volunteer-food-icon.svg') 2px 4px no-repeat transparent;
+  padding: 0 0 4px 28px;
 }
 
 .item {
-  font-family: 'nunito-sans-200', sans-serif;
-  font-size: 15px;
+  opacity: 0.8;
+  font-family: 'roboto-300', sans-serif;
+  font-size: 14px;
   color: #141418;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.56px;
   line-height: 22px;
+  vertical-align: middle;
+}
+
+.item:not(:last-of-type) {
+  margin-bottom: 14px;
 }
 
 .title {
-  opacity: 0.8;
-  font-family: 'nunito-sans-600', sans-serif;
-  font-size: 14px;
+  font-family: 'roboto-500', sans-serif;
+  font-size: 18px;
   color: #141418;
-  letter-spacing: 1.26px;
-  line-height: 20px;
+  letter-spacing: 0.22px;
+  line-height: 18px;
   display: flex;
+  margin: 36px 0 11px 0;
 }
+
 
 .opsMap {
   background-color: #EFEFEF;
@@ -69,14 +100,125 @@
   height: 250px;
 }
 
-.subtitle {
-  font-family: 'nunito-sans-600', sans-serif;
-  font-size: 14px;
-  color: #434346;
-  letter-spacing: 1.26px;
-  line-height: 20px;
+.community {
+  display: inline-flex;
+  margin-top: 4px;
 }
 
 .mapMeta {
   margin-top: 20px;
+  width: 150px;
 }
+
+.details {
+  padding-top: 39px;
+}
+
+.mapValue {
+  font-family: 'roboto-500', sans-serif;
+  font-size: 15px;
+  color: #141418;
+  letter-spacing: 0.18px;
+  line-height: 18px;
+  margin-bottom: 3px;
+}
+
+.mapLabel {
+  opacity: 0.4;
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 11px;
+  color: #0F0F0F;
+  letter-spacing: 0.37px;
+  line-height: 16px;
+}
+
+.button {
+  display: inline-flex;
+  cursor: pointer;
+  font-family: 'nunito-sans-700';
+  font-size: 13px;
+  color: #FFFFFF;
+  letter-spacing: 0.35px;
+  text-align: center;
+  line-height: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #3DC59F;
+  padding: 16px 119px;
+  margin-top: 42px;
+  transition: all .15s linear;
+}
+
+.button:hover {
+  color: #FFFFFF;
+  background-color: #13A68C;
+}
+
+.spacer {
+  display: flex;
+  margin-bottom: 104px;
+}
+
+@media screen and (max-width: 1439px) and (min-width: 980px) {
+  .opsMap {
+    width: 222px;
+    height: 250px;
+  }
+}
+
+@media screen and (max-width: 979px) and (min-width: 768px) {
+  .sticky {
+    display: flex;
+    z-index: 2;
+    flex-direction: row;
+    position: sticky;
+    bottom: 0;
+    justify-content: center;
+    background-color: white;
+    box-shadow: 0 0 80px 0 rgba(37,38,50,0.10);
+  }
+  .button {
+    margin: 11px 0;
+  }
+  .mapTitle {
+    margin-top: -129px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .position {
+    font-size: 38px;
+    letter-spacing: -0.08px;
+    line-height: 52px;
+    margin-bottom: 15px;
+  }
+  .details {
+    padding-top: 0px;
+  }
+  .orgList {
+    display: none;
+  }
+  .sector:before {
+    display: none;
+  }
+  .sticky {
+    display: flex;
+    z-index: 2;
+    flex-direction: row;
+    position: sticky;
+    bottom: 0;
+    justify-content: center;
+    background-color: white;
+    box-shadow: 0 0 80px 0 rgba(37,38,50,0.10);
+  }
+  .button {
+    margin: 11px 0;
+  }
+  .opsMap {
+    width: 100%;
+  }
+  .spacer {
+    margin-bottom: 44px;
+  }
+}
+
