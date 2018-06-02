@@ -54,6 +54,7 @@
 .dates {
   background: url('assets/img/volunteer-dates-icon.svg') 0px 3px no-repeat transparent;
   padding-left: 28px;
+  text-transform: capitalize;
 }
 
 .transport {
