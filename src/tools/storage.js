@@ -23,6 +23,16 @@ class ShimStorage {
     delete this._data[key]
   }
 
+  mergeObject(key: string, obj): void {
+    const item = this._data[key]
+    if (item) {
+      const _obj = JSON.parse(item)
+      this._data[key] = JSON.stringify({ ..._obj, ...obj })
+    } else {
+      this._data[key] = JSON.stringify(obj)
+    }
+  }
+
   clear(): void {
     this._data = {}
   }
@@ -45,8 +55,6 @@ function hasStorage(storage) {
   }
 }
 
-export const localStorage =
-  hasStorage(window.localStorage) ? window.localStorage : new ShimStorage()
+export const localStorage = hasStorage(window.localStorage) ? window.localStorage : new ShimStorage()
 
-export const sessionStorage =
-  hasStorage(window.sessionStorage) ? window.sessionStorage : new ShimStorage()
+export const sessionStorage = hasStorage(window.sessionStorage) ? window.sessionStorage : new ShimStorage()

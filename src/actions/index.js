@@ -24,6 +24,15 @@ export async function authSet(dispatch, { auth, type = 'org' }) {
   })
 }
 
+export async function authMerge(dispatch, { auth, type = 'org' }) {
+  localStorage.mergeObject(`719s:auth-${type}`, auth)
+
+  dispatch({
+    type: 'AUTH_MERGE',
+    payload: { auth, type },
+  })
+}
+
 export async function authUnset(dispatch, { type = 'org' }) {
   localStorage.removeItem(`719s:auth-${type}`)
 

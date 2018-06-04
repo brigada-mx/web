@@ -14,6 +14,8 @@ import YouTubeVideo from 'components/YouTubeVideo'
 import ChooseVolunteerOpportunity from 'components/ChooseVolunteerOpportunity'
 import VolunteerApplicationScreen from 'screens/VolunteerApplicationScreen'
 import VolunteerApplicationCreated from 'screens/VolunteerApplicationScreen/VolunteerApplicationCreated'
+import ShareUserScreen from 'screens/ShareUserScreen'
+import ShareUserCreated from 'screens/ShareUserScreen/ShareUserCreated'
 import Modal from './Modal'
 import Styles from './Modal.css'
 
@@ -30,6 +32,8 @@ const componentByName = {
   ctaVolunteer: ChooseVolunteerOpportunity,
   volunteerApplication: VolunteerApplicationScreen,
   volunteerApplicationCreated: VolunteerApplicationCreated,
+  shareUser: ShareUserScreen,
+  shareUserCreated: ShareUserCreated,
 }
 
 const ModalSelector = (props) => {

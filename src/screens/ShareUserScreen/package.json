@@ -1,0 +1,6 @@
+{
+  "name": "ShareUserScreen",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ShareUserScreen.js"
+}

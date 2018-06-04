@@ -5,33 +5,35 @@ import { connect } from 'react-redux'
 
 import * as Actions from 'src/actions'
 import service from 'api/service'
-import VolunteerApplicationForm from './VolunteerApplicationForm'
+import ShareUserForm from './ShareUserForm'
 
 
-const VolunteerApplicationScreen = ({ snackbar, modal, className = '', position, id, name, onLogin, brigada }) => {
+const ShareUserScreen = ({ snackbar, modal, className = '', shareId, onLogin, brigada }) => {
   const handleSubmit = async (body) => {
-    const { data, status } = await service.createVolunteerApplication({ ...body, opportunity_id: id })
-    if (data) {
-      onLogin(data.user)
-      modal('volunteerApplicationCreated', { position, name, modalWide: true })
+    const { data, exception } = await service.createBrigadaUser(body)
+    if (exception) {
+      snackbar('Checa tu conexión', 'error')
       return
     }
+    if (data) onLogin(data.user)
 
-    if (status === 400) snackbar('Hubo un error', 'error')
-    else snackbar('Checa tu conexión', 'error')
+    const { data: shareData, exception: shareException } = await service.shareSetUser(body.email, shareId)
+    if (shareException) {
+      snackbar('Checa tu conexión', 'error')
+      return
+    }
+    if (shareData) modal('shareUserCreated', { modalWide: true })
   }
 
-  const form = <VolunteerApplicationForm initialValues={brigada} position={position} onSubmit={handleSubmit} />
+  const form = <ShareUserForm initialValues={brigada} onSubmit={handleSubmit} />
   if (!className) return form
   return <div className={className}>{form}</div>
 }
 
-VolunteerApplicationScreen.propTypes = {
+ShareUserScreen.propTypes = {
   snackbar: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
-  position: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  shareId: PropTypes.number.isRequired,
   brigada: PropTypes.object.isRequired,
   modal: PropTypes.func.isRequired,
   className: PropTypes.string,
@@ -50,4 +52,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(VolunteerApplicationScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(ShareUserScreen)

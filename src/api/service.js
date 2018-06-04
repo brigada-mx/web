@@ -76,8 +76,26 @@ class Service {
     return sendToApi(`/volunteer_opportunities/${id}/`)
   }
 
+  getActionShare = async (actionId) => {
+    return sendToApi(`/action_share/${actionId}/`)
+  }
+
+  // VOLUNTEER PUBLIC ENDPOINTS
   createVolunteerApplication = async (body) => {
     return sendToApi('/volunteer_applications/', { method: 'POST', body })
+  }
+
+  createBrigadaUser = async (body) => {
+    return sendToApi('/brigada_users/', { method: 'POST', body })
+  }
+
+  createShare = async (body) => {
+    return sendToApi('/shares/', { method: 'POST', body })
+  }
+
+  shareSetUser = async (email, share_id) => {
+    const body = { email, share_id }
+    return sendToApi('/share_set_user/', { method: 'POST', body })
   }
 
   // DISCOURSE

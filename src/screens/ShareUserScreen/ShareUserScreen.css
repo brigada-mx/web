@@ -1,0 +1,11 @@
+.inputGroup {
+  margin-bottom: 15px;
+}
+
+.formText {
+  font-family: 'roboto', sans-serif;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: rgba(0,0,0,0.54);
+  line-height: 24px;
+}
