@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import * as Actions from 'src/actions'
-import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import service, { getBackoff } from 'api/service'
 import { thumborUrl } from 'tools/string'
 import env from 'src/env'
@@ -26,7 +25,7 @@ class FacebookButton extends React.Component {
       method: 'share',
       href: `${env.siteUrl}/proyectos/${actionId}`,
     }, async (response) => {
-      // if (response.error_message) return
+      if (response.error_message) return
 
       const { data } = await service.createShare({ action: actionId })
       if (!data) return
@@ -47,25 +46,47 @@ class FacebookButton extends React.Component {
     if (this._ogMeta || !this.props.share) return
     this._ogMeta = true
 
-    const { share: { image, action_id: actionId } } = this.props
+    const {
+      share: {
+        image,
+        action: {
+          id: actionId,
+          locality: { name, state_name: stateName, meta: { total } },
+          organization: { name: orgName },
+        },
+      },
+    } = this.props
+
     const metaTags = document.getElementsByTagName('meta')
     for (const meta of metaTags) {
-      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:title') meta.content = 'Ayuda X a X'
-      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:description') meta.content = 'X está haciendo X en X y necesita su ayuda para difundir Y. Ve más sobre su proyecto aquí.'
-      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:url') meta.content = `${env.siteUrl}/proyectos/${actionId}`
-      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:image') meta.content = thumborUrl(image, 1280, 1280)
+      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:title') {
+        meta.content = `Apoya el proyecto de ${orgName} en ${stateName}`
+      }
+      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:description') {
+        meta.content = `Se dañaron ${total} viviendas en ${name}, ${stateName}. Súmate a la reconstrucción.`
+      }
+      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:url') {
+        meta.content = `${env.siteUrl}/proyectos/${actionId}`
+      }
+      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:image') {
+        meta.content = thumborUrl(image, 1280, 1280)
+      }
     }
   }
 
   render() {
-    if (!this.props.share) return <LoadingIndicatorCircle />
     this.setOgMeta()
-    const { share: { progress, target } } = this.props
+    const { share } = this.props
+    const handleClick = share ? this.handleClick : () => {}
 
     return (
       <div className={Styles.container}>
-        <span className={Styles.need}>Faltan {target - progress} shares para llegar a {target}</span>
-        <span className={Styles.button} onClick={this.handleClick}>Compartir</span>
+        {share &&
+          <span className={Styles.need}>
+            Faltan {share.target - share.progress} shares para llegar a {share.target}
+          </span>
+        }
+        <span className={Styles.button} onClick={handleClick}>Compartir</span>
       </div>
     )
   }
