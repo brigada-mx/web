@@ -75,7 +75,7 @@ class VolunteerOpportunityScreen extends React.Component {
 
     const detailedDesc = (
       <span>
-        <Link className={Styles.link} to={`/reconstructores/${organizationId}`}>{orgName}</Link> busca {target} voluntari@{target !== 1 ? 's' : ''} para un proyecto de <Link className={Styles.link} to={`/proyectos/${actionId}`}>{getProjectType(type)}</Link> en <Link className={Styles.link} to={`/comunidades/${localityId}`}>{name}, {stateName}.</Link>
+        <Link className={Styles.link} to={`/reconstructores/${organizationId}`}>{orgName}</Link> busca {target} voluntari@{target !== 1 ? 's' : ''} para un proyecto de <Link className={Styles.link} to={`/proyectos/${actionId}`}>{getProjectType(type)}</Link> en <Link className={Styles.link} to={`/comunidades/${localityId}`}>{name}, {stateName}</Link>.
       </span>
     )
     const start = startDate ? moment(startDate).format('MMMM YYYY') : '?'
