@@ -74,8 +74,10 @@
 
 .cardBottom {
   display: flex;
-  padding: 31px 27px 36px 27px;
-  background-color: #F8F9FB;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 18px 27px 18px 27px;
+  background-color: #FCF9FB;
 }
 
 .summaryContainer {
@@ -122,6 +124,34 @@
 
 .bar {
   width: 52%;
+}
+
+.bottomLabel {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #0F0F0F;
+  opacity: 0.4;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.bottomBar {
+  width: 40%;
+}
+
+.ctaButton {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #3DC59F;
+}
+
+.ctaButton:hover {
+  color: #13A68C;
 }
 
 .goalfieldsContainer {

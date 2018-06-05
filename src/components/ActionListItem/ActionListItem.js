@@ -2,10 +2,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import _ from 'lodash'
 
-import { fmtNum, thumborUrl, renderLinks } from 'tools/string'
+import * as Actions from 'src/actions'
+import { fmtNum, thumborUrl } from 'tools/string'
 import MetricsBar from 'components/MetricsBar'
 import { getProjectType } from 'src/choices'
 import Styles from './ActionListItem.css'
@@ -21,16 +23,17 @@ class ActionListItem extends React.PureComponent {
       onMouseEnter,
       onMouseLeave,
       history,
+      modal,
     } = this.props
 
     const {
       id,
       action_type: actionType,
-      desc,
       target,
       progress,
       budget,
       donations = [],
+      opportunities = [],
       organization: { id: orgId, name: orgName },
       locality: { id: locId, name: locName, municipality_name: muniName, state_name: stateName },
       unit_of_measurement: unit,
@@ -82,6 +85,26 @@ class ActionListItem extends React.PureComponent {
         <Link className={Styles.link} onClick={e => e.stopPropagation()} to={{ pathname: `/comunidades/${locId}` }}>
           {locName}, {muniName}, {stateName}
         </Link>
+      )
+    }
+
+    const getCta = () => {
+      if (opportunities.length === 0) return null
+
+      const handleClickVolunteer = () => {
+        modal('ctaVolunteer', { actionId: action.id })
+      }
+
+      const value = opportunities.reduce((sum, o) => sum + (o.progress || 0), 0)
+      const max = opportunities.reduce((sum, o) => sum + (o.target || 0), 0)
+      return (
+        <div className={Styles.cardBottom}>
+          <span className={Styles.bottomLabel}>
+            Faltan {fmtNum(max - value)} voluntarios
+          </span>
+          <span className={Styles.bottomBar}><MetricsBar value={value} max={max} /></span>
+          <span className={Styles.ctaButton} onClick={handleClickVolunteer}>Postular</span>
+        </div>
       )
     }
 
@@ -168,7 +191,7 @@ class ActionListItem extends React.PureComponent {
           </div>
 
         </div>
-        {false && <div className={Styles.cardBottom} />}
+        {getCta()}
       </div>
     )
   }
@@ -182,10 +205,17 @@ ActionListItem.propTypes = {
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   history: PropTypes.object.isRequired,
+  modal: PropTypes.func.isRequired,
 }
 
 ActionListItem.defaultProps = {
   focused: false,
 }
 
-export default withRouter(ActionListItem)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(ActionListItem))
