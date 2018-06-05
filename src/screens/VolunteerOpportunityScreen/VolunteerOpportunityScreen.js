@@ -18,6 +18,7 @@ class VolunteerOpportunityScreen extends React.Component {
   componentDidMount() {
     const { id } = this.props
     getBackoff(() => service.getOpportunity(id), { key: `opportunity_${id}` })
+    window.scrollTo(0, 0)
   }
 
   handleOpportunityClick = () => {
