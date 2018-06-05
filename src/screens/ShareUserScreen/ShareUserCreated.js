@@ -5,23 +5,20 @@ import FormStyles from 'src/Form.css'
 import Styles from './ShareUserScreen.css'
 
 
-const VolunteerApplicationCreated = ({ updates = false, className }) => {
+const ShareUserCreated = ({ className, userCreated = true }) => {
   const content = (
     <React.Fragment>
-      <p className={FormStyles.formHeader}>¡Éxito!</p>
-      <p className={Styles.formText}>Compartiste este proyecto.</p>
-      {updates &&
-        <p className={Styles.formText}>Te mandaremos actualizaciones a su estado.</p>
-      }
+      <p className={FormStyles.formHeader}>{userCreated ? '¡Éxito!' : '¡Gracias por compartir!'}</p>
+      <p className={Styles.formText}>Estaremos en contacto con actualizaciones sobre este proyecto.</p>
     </React.Fragment>
   )
   if (!className) return content
   return <div className={className}>{content}</div>
 }
 
-VolunteerApplicationCreated.propTypes = {
-  updates: PropTypes.bool,
+ShareUserCreated.propTypes = {
   className: PropTypes.string,
+  userCreated: PropTypes.bool,
 }
 
-export default VolunteerApplicationCreated
+export default ShareUserCreated

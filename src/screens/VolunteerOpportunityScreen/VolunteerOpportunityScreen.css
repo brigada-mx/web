@@ -3,6 +3,13 @@
   flex-direction: row;
 }
 
+.link {
+  font-family: 'nunito-sans', sans-serif;
+  color: #141418;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .left {
   flex: 2;
   margin-right: 20px;

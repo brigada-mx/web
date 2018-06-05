@@ -9,7 +9,7 @@ import FormStyles from 'src/Form.css'
 import Styles from './ShareUserScreen.css'
 
 
-const ShareUserForm = ({ handleSubmit, submitting, position }) => {
+const ShareUserForm = ({ handleSubmit, submitting }) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && e.shiftKey === false) {
       e.preventDefault()
@@ -23,7 +23,8 @@ const ShareUserForm = ({ handleSubmit, submitting, position }) => {
       onKeyDown={handleKeyDown}
     >
       <span className={FormStyles.formLogo} />
-      <span className={FormStyles.formHeader}>{position}</span>
+      <span className={FormStyles.formHeader}>¡Gracias por compartir!</span>
+      <span className={FormStyles.formText}>Deja tus datos para recibir actualizaciones de este proyecto.</span>
       <div>
         <TextField
           name="first_name"

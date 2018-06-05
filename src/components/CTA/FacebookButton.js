@@ -26,14 +26,17 @@ class FacebookButton extends React.Component {
       method: 'share',
       href: `${env.siteUrl}/proyectos/${actionId}`,
     }, async (response) => {
-      if (response.error_message) return
+      // if (response.error_message) return
 
       const { data } = await service.createShare({ action: actionId })
       if (!data) return
 
       if (brigada.email) {
-        const { data: shareData } = await service.shareSetUser(brigada.email, data.id)
-        if (shareData) snackbar('Gracias por compartir este proyecto', 'success')
+        const { exception } = await service.shareSetUser(brigada.email, data.id)
+        if (!exception) {
+          snackbar('Gracias por compartir este proyecto', 'success')
+          modal('shareUserCreated', { shareId: data.id, userCreated: false })
+        }
       } else {
         modal('shareUser', { shareId: data.id })
       }

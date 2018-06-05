@@ -102,9 +102,9 @@ const rootReducer = (state, action) => {
 }
 
 const initialStore = { auth: {
-  org: JSON.parse(localStorage.getItem('719s:auth-org')) || {},
-  donor: JSON.parse(localStorage.getItem('719s:auth-donor')) || {},
-  brigada: JSON.parse(localStorage.getItem('719s:auth-brigada')) || {},
+  org: JSON.parse(localStorage.getItem('719s:auth-org') || '{}'),
+  donor: JSON.parse(localStorage.getItem('719s:auth-donor') || '{}'),
+  brigada: JSON.parse(localStorage.getItem('719s:auth-brigada') || '{}'),
 } }
 const store = createStore(rootReducer, initialStore)
 

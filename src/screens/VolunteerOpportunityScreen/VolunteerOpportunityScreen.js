@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
@@ -11,7 +11,6 @@ import { getProjectType, volunteerLocationByValue } from 'src/choices'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
-import FormStyles from 'src/Form.css'
 import Styles from './VolunteerOpportunityScreen.css'
 
 
@@ -69,12 +68,16 @@ class VolunteerOpportunityScreen extends React.Component {
         id: actionId,
         action_type: type,
         organization: { sector, name: orgName, id: organizationId },
-        locality: { name, state_name: stateName },
+        locality: { name, state_name: stateName, id: localityId },
         locality,
       },
     } = opportunity
 
-    const detailedDesc = `${orgName} busca ${target} voluntari@${target !== 1 ? 's' : ''} para un proyecto de ${getProjectType(type)} en ${name}, ${stateName}.`
+    const detailedDesc = (
+      <span>
+        <Link className={Styles.link} to={`/reconstructores/${organizationId}`}>{orgName}</Link> busca {target} voluntari@{target !== 1 ? 's' : ''} para un proyecto de <Link className={Styles.link} to={`/proyectos/${actionId}`}>{getProjectType(type)}</Link> en <Link className={Styles.link} to={`/comunidades/${localityId}`}>{name}, {stateName}.</Link>
+      </span>
+    )
     const start = startDate ? moment(startDate).format('MMMM YYYY') : '?'
     const end = endDate ? moment(endDate).format('MMMM YYYY') : '?'
 
@@ -83,6 +86,7 @@ class VolunteerOpportunityScreen extends React.Component {
         name={orgName}
         sector={sector}
         id={organizationId}
+        actionId={actionId}
         projectType={type}
         position={position}
       />

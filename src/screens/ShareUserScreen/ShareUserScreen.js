@@ -10,19 +10,19 @@ import ShareUserForm from './ShareUserForm'
 
 const ShareUserScreen = ({ snackbar, modal, className = '', shareId, onLogin, brigada }) => {
   const handleSubmit = async (body) => {
-    const { data, exception } = await service.createBrigadaUser(body)
+    const { exception } = await service.createBrigadaUser(body)
     if (exception) {
       snackbar('Checa tu conexión', 'error')
       return
     }
-    if (data) onLogin(data.user)
+    onLogin(body)
 
-    const { data: shareData, exception: shareException } = await service.shareSetUser(body.email, shareId)
+    const { exception: shareException } = await service.shareSetUser(body.email, shareId)
     if (shareException) {
       snackbar('Checa tu conexión', 'error')
       return
     }
-    if (shareData) modal('shareUserCreated', { modalWide: true })
+    modal('shareUserCreated', { modalWide: true })
   }
 
   const form = <ShareUserForm initialValues={brigada} onSubmit={handleSubmit} />
@@ -48,7 +48,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     snackbar: (message, status, duration) => Actions.snackbar(dispatch, { message, status, duration }),
     modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
-    onLogin: auth => Actions.authSet(dispatch, { auth, type: 'brigada' }),
+    onLogin: auth => Actions.authMerge(dispatch, { auth, type: 'brigada' }),
   }
 }
 
