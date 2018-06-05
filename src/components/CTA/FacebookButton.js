@@ -17,13 +17,29 @@ class FacebookButton extends React.Component {
   }
 
   handleClick = () => {
-    if (!window.FB) return
+    const { brigada, modal, snackbar, share } = this.props
+    if (!window.FB || !share) return
 
-    const { actionId, brigada, modal, snackbar } = this.props
+    const {
+      image,
+      action: {
+        id: actionId,
+        locality: { name, state_name: stateName, meta: { total } },
+        organization: { name: orgName },
+      },
+    } = share
 
     FB.ui({
-      method: 'share',
-      href: `${env.siteUrl}/proyectos/${actionId}`,
+      method: 'share_open_graph',
+      action_type: 'og.shares',
+      action_properties: JSON.stringify({
+        object: {
+          'og:url': `${env.siteUrl}/proyectos/${actionId}`,
+          'og:title': `Apoya el proyecto de ${orgName} en ${stateName}`,
+          'og:description': `Se dañaron ${total} viviendas en ${name}, ${stateName}. Súmate a la reconstrucción.`,
+          'og:image': image.url ? thumborUrl(image, 1280, 1280) : 'http://brigada.mx/assets/img/footer.jpg',
+        },
+      }),
     }, async (response) => {
       if (response.error_message) return
 
@@ -42,40 +58,7 @@ class FacebookButton extends React.Component {
     })
   }
 
-  setOgMeta = () => {
-    if (this._ogMeta || !this.props.share) return
-    this._ogMeta = true
-
-    const {
-      share: {
-        image,
-        action: {
-          id: actionId,
-          locality: { name, state_name: stateName, meta: { total } },
-          organization: { name: orgName },
-        },
-      },
-    } = this.props
-
-    const metaTags = document.getElementsByTagName('meta')
-    for (const meta of metaTags) {
-      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:title') {
-        meta.content = `Apoya el proyecto de ${orgName} en ${stateName}`
-      }
-      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:description') {
-        meta.content = `Se dañaron ${total} viviendas en ${name}, ${stateName}. Súmate a la reconstrucción.`
-      }
-      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:url') {
-        meta.content = `${env.siteUrl}/proyectos/${actionId}`
-      }
-      if (meta.getAttribute('property') && meta.getAttribute('property').toLowerCase() === 'og:image') {
-        meta.content = thumborUrl(image, 1280, 1280)
-      }
-    }
-  }
-
   render() {
-    this.setOgMeta()
     const { share } = this.props
     const handleClick = share ? this.handleClick : () => {}
 
