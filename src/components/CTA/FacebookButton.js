@@ -12,8 +12,8 @@ import Styles from './Button.css'
 
 class FacebookButton extends React.Component {
   componentDidMount() {
-    const { actionId } = this.props
-    getBackoff(() => service.getActionShare(actionId), { key: `actionShares_${actionId}` })
+    const { actionId, brigada } = this.props
+    getBackoff(() => service.getActionShare(actionId, brigada.email), { key: `actionShares_${actionId}` })
   }
 
   handleClick = () => {
@@ -27,20 +27,10 @@ class FacebookButton extends React.Component {
         locality: { name, state_name: stateName, meta: { total } },
         organization: { name: orgName },
       },
+      already_shared: shared,
     } = share
 
-    FB.ui({
-      method: 'share_open_graph',
-      action_type: 'og.shares',
-      action_properties: JSON.stringify({
-        object: {
-          'og:url': `${env.siteUrl}/proyectos/${actionId}`,
-          'og:title': `Apoya el proyecto de ${orgName} en ${stateName}`,
-          'og:description': `Se dañaron ${total} viviendas en ${name}, ${stateName}. Súmate a la reconstrucción.`,
-          'og:image': image.url ? thumborUrl(image, 1280, 1280) : 'http://brigada.mx/assets/img/footer.jpg',
-        },
-      }),
-    }, async (response) => {
+    const onShare = shared ? () => {} : async (response) => {
       if (response.error_message) return
 
       const { data } = await service.createShare({ action: actionId })
@@ -55,21 +45,34 @@ class FacebookButton extends React.Component {
       } else {
         modal('shareUser', { shareId: data.id })
       }
-    })
+    }
+
+    FB.ui({
+      method: 'share_open_graph',
+      action_type: 'og.shares',
+      action_properties: JSON.stringify({
+        object: {
+          'og:url': `${env.siteUrl}/proyectos/${actionId}`,
+          'og:title': `Apoya el proyecto de ${orgName} en ${stateName}`,
+          'og:description': `Se dañaron ${total} viviendas en ${name}, ${stateName}. Súmate a la reconstrucción.`,
+          'og:image': image.url ? thumborUrl(image, 1280, 1280) : 'http://brigada.mx/assets/img/footer.jpg',
+        },
+      }),
+    }, onShare)
   }
 
   render() {
     const { share } = this.props
-    const handleClick = share ? this.handleClick : () => {}
+    if (!share) return <span className={Styles.button}>Compartir</span>
 
+    const { target, progress, already_shared: shared } = share
+    const buttonText = shared ? 'Ya compartiste este proyecto' : 'Compartir'
     return (
       <div className={Styles.container}>
-        {share &&
-          <span className={Styles.need}>
-            Faltan {share.target - share.progress} shares para llegar a {share.target}
-          </span>
-        }
-        <span className={Styles.button} onClick={handleClick}>Compartir</span>
+        <span className={Styles.need}>
+          Faltan {target - progress} shares para llegar a {target}
+        </span>
+        <span className={Styles.button} onClick={this.handleClick}>{buttonText}</span>
       </div>
     )
   }

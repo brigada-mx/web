@@ -76,8 +76,9 @@ class Service {
     return sendToApi(`/volunteer_opportunities/${id}/`)
   }
 
-  getActionShare = async (actionId) => {
-    return sendToApi(`/action_share/${actionId}/`)
+  getActionShare = async (actionId, email = '') => {
+    const params = { email }
+    return sendToApi(`/action_share/${actionId}/`, { params })
   }
 
   // VOLUNTEER PUBLIC ENDPOINTS
