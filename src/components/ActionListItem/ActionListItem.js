@@ -104,7 +104,9 @@ class ActionListItem extends React.PureComponent {
             <span className={Styles.bottomLabel}>
               Falta{remaining !== 1 ? 'n' : ''} {fmtNum(remaining)} voluntario{remaining !== 1 ? 's' : ''}
             </span>
-            <span className={Styles.bottomBar}><MetricsBar classNameNotDone={Styles.notDone} value={value} max={max} /></span>
+            <span className={Styles.bottomBar}>
+              <MetricsBar classNameNotDone={Styles.notDone} value={value} max={max} />
+            </span>
           </div>
           <span className={Styles.ctaButton} onClick={handleClickVolunteer}>Postular</span>
         </div>
