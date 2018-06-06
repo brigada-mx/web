@@ -15,9 +15,10 @@ class VolunteerButton extends React.Component {
 
     const value = opportunities.reduce((sum, o) => sum + (o.progress || 0), 0)
     const max = opportunities.reduce((sum, o) => sum + (o.target || 0), 0)
+    const remaining = max - value
     return (
       <div className={Styles.container}>
-        <span className={Styles.need}>Buscamos {max - value} voluntarios</span>
+        <span className={Styles.need}>Buscamos {remaining} voluntario{remaining !== 1 ? 's' : ''}</span>
         <span className={Styles.button} onClick={this.handleClick}>Postular</span>
       </div>
     )

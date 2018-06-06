@@ -28,7 +28,7 @@ class OrganizationScreenView extends React.Component {
 
   static getDerivedStateFromProps({ organization }, { focused: _focused }) {
     const { data } = organization
-    if (_focused.id === undefined && data) {
+    if (_focused.id === undefined && data && data.actions.length) {
       const [focused] = data.actions
       return { focused }
     }

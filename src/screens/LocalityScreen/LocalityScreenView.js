@@ -106,7 +106,7 @@ class LocalityScreenView extends React.Component {
 
   static getDerivedStateFromProps({ actions }, { focused: _focused }) {
     const { data } = actions
-    if (_focused.id === undefined && data) {
+    if (_focused.id === undefined && data && data.results.length) {
       const [focused] = data.results
       return { focused }
     }

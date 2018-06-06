@@ -67,10 +67,11 @@ class FacebookButton extends React.Component {
 
     const { target, progress, already_shared: shared } = share
     const buttonText = shared ? '¡Gracias por compartir!' : 'Compartir'
+    const remaining = target - progress
     return (
       <div className={Styles.container}>
         <span className={Styles.need}>
-          Necesitamos {target - progress} shares en Facebook
+          Necesitamos {remaining} share{remaining !== 1 ? 's' : ''} en Facebook
         </span>
         <span className={Styles.button} onClick={this.handleClick}>{buttonText}</span>
       </div>
