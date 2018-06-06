@@ -76,8 +76,8 @@ class ProfileStrength extends React.Component {
       {
         value: volunteers,
         label: 'Atraer voluntarios',
-        videoId: 'SUi0vUFee1Y',
-        durationString: '0:58',
+        videoId: '2fwchR0sshI',
+        durationString: '2:36',
       },
       {
         value: post,
