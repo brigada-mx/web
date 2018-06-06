@@ -183,11 +183,11 @@ a:hover {
 }
 
 .actionListContainer {
-  background-color: #F6F8FA;
+  background-color: #eceff3;
 }
 
 .cardsContainer {
-  background-color: #F6F8FA;
+  background-color: #eceff3;
   display: flex;
   flex-direction: column;
 }

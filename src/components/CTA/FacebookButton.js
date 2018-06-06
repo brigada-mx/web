@@ -70,7 +70,7 @@ class FacebookButton extends React.Component {
     return (
       <div className={Styles.container}>
         <span className={Styles.need}>
-          Faltan {target - progress} shares para llegar a {target}
+          Necesitamos {target - progress} shares en Facebook
         </span>
         <span className={Styles.button} onClick={this.handleClick}>{buttonText}</span>
       </div>

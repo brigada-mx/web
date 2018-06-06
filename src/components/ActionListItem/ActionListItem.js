@@ -60,10 +60,10 @@ class ActionListItem extends React.PureComponent {
       if (!target) return null
       return (
         <div className={Styles.goalProgress}>
-          <span className={Styles.label}>
-            {fmtNum(progress)} DE {fmtNum(target)} {unit && <span>{unit}</span>}
+          <span className={Styles.label}>AVANCE:&nbsp;</span>
+          <span className={Styles.value}>
+            {fmtNum(progress)} {unit && <span className={Styles.lowercase}>{unit}</span>} de {fmtNum(target)}
           </span>
-          <span className={Styles.bar}><MetricsBar value={progress} max={target} /></span>
         </div>
       )
     }
@@ -99,10 +99,12 @@ class ActionListItem extends React.PureComponent {
       const max = opportunities.reduce((sum, o) => sum + (o.target || 0), 0)
       return (
         <div className={Styles.cardBottom}>
-          <span className={Styles.bottomLabel}>
-            Faltan {fmtNum(max - value)} voluntarios
-          </span>
-          <span className={Styles.bottomBar}><MetricsBar value={value} max={max} /></span>
+          <div className={Styles.cardBottomLeft}>
+            <span className={Styles.bottomLabel}>
+              Faltan {fmtNum(max - value)} voluntarios
+            </span>
+            <span className={Styles.bottomBar}><MetricsBar classNameNotDone={Styles.notDone} value={value} max={max} /></span>
+          </div>
           <span className={Styles.ctaButton} onClick={handleClickVolunteer}>Postular</span>
         </div>
       )

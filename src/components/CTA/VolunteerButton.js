@@ -17,7 +17,7 @@ class VolunteerButton extends React.Component {
     const max = opportunities.reduce((sum, o) => sum + (o.target || 0), 0)
     return (
       <div className={Styles.container}>
-        <span className={Styles.need}>Faltan {max - value} voluntarios para llegar a {max}</span>
+        <span className={Styles.need}>Buscamos {max - value} voluntarios</span>
         <span className={Styles.button} onClick={this.handleClick}>Postular</span>
       </div>
     )
