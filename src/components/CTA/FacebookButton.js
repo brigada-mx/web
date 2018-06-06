@@ -66,7 +66,7 @@ class FacebookButton extends React.Component {
     if (!share) return <span className={Styles.button}>Compartir</span>
 
     const { target, progress, already_shared: shared } = share
-    const buttonText = shared ? 'Ya compartiste este proyecto' : 'Compartir'
+    const buttonText = shared ? '¡Gracias por compartir!' : 'Compartir'
     return (
       <div className={Styles.container}>
         <span className={Styles.need}>
