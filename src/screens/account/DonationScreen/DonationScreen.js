@@ -10,7 +10,6 @@ import WithSideNav from 'components/WithSideNav'
 import BackButton from 'components/BackButton'
 import { UpdateDonationForm, prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonorDonationForm'
 import FormStyles from 'src/Form.css'
-import Styles from './DonationScreen.css'
 
 
 class DonationScreen extends React.Component {

@@ -199,6 +199,10 @@ class Service {
     return sendToApiAuth('org', `/account/actions/${id}/`, { method: 'PUT', body })
   }
 
+  accountCreateSubmission = async (actionId, body) => {
+    return sendToApiAuth('org', '/account/submissions/', { method: 'POST', body: { ...body, action: actionId } })
+  }
+
   accountUpdateSubmission = async (id, body) => {
     return sendToApiAuth('org', `/account/submissions/${id}/`, { method: 'PUT', body })
   }

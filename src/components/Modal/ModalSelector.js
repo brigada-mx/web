@@ -8,6 +8,7 @@ import PasswordEmailScreen from 'screens/account/PasswordEmailScreen'
 import CreateAccountScreen from 'screens/account/CreateAccountScreen'
 import DonorCreateAccountScreen from 'screens/account/CreateAccountScreen/DonorCreateAccountScreen'
 import ChooseAccountTypeScreen from 'screens/account/CreateAccountScreen/ChooseAccountTypeScreen'
+import CreateSubmissionScreen from 'screens/account/CreateSubmissionScreen'
 import AccountCreated from 'screens/account/AccountCreated'
 import AccountVerified from 'screens/account/AccountCreated/AccountVerified'
 import YouTubeVideo from 'components/YouTubeVideo'
@@ -34,6 +35,7 @@ const componentByName = {
   volunteerApplicationCreated: VolunteerApplicationCreated,
   shareUser: ShareUserScreen,
   shareUserCreated: ShareUserCreated,
+  createSubmission: CreateSubmissionScreen,
 }
 
 const ModalSelector = (props) => {

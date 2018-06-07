@@ -85,7 +85,7 @@ class ApplicationTableWrapper extends React.Component {
 
 ApplicationTableWrapper.propTypes = {
   actionId: PropTypes.number.isRequired,
-  opportunities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  opportunities: PropTypes.arrayOf(PropTypes.object),
 }
 
 const mapStateToProps = (state, { actionId }) => {

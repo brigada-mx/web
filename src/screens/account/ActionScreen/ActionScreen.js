@@ -134,6 +134,12 @@ class ActionScreen extends React.Component {
     this.setState({ opportunityId: undefined })
   }
 
+  handleToggleCreateSubmissionModal = () => {
+    const { modal, action } = this.props
+    if (action.key === undefined) return
+    modal('createSubmission', { actionKey: action.key })
+  }
+
   handleDeleteAction = async () => {
     const { data } = await service.accountArchiveAction(this.props.action.id, true)
     if (!data) {
@@ -318,12 +324,21 @@ class ActionScreen extends React.Component {
           <div className={FormStyles.card}>
             <div className={FormStyles.sectionHeader}>
               <span>Fotos</span>
-              <span
-                className={FormStyles.link}
-                onClick={() => this.handleToggleSubmissionTrashModal(true)}
-              >
-                Basurero
-              </span>
+              <div>
+                <span
+                  className={FormStyles.link}
+                  onClick={() => this.handleToggleSubmissionTrashModal(true)}
+                >
+                  Basurero
+                </span>
+                <RaisedButton
+                  backgroundColor="#3DC59F"
+                  labelColor="#ffffff"
+                  className={FormStyles.primaryButton}
+                  label="AGREGAR"
+                  onClick={() => this.handleToggleCreateSubmissionModal(true)}
+                />
+              </div>
             </div>
             <SubmissionTable
               submissions={submissions}
@@ -440,6 +455,7 @@ ActionScreen.propTypes = {
   opportunities: PropTypes.arrayOf(PropTypes.object).isRequired,
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   actionKey: PropTypes.number.isRequired,
+  modal: PropTypes.func.isRequired,
   snackbar: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   status: PropTypes.number,
@@ -466,6 +482,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
     snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
     resetDonation: () => dispatch(reset('orgNewDonation')),
     resetOpportunity: () => dispatch(reset('accountNewOpportunity')),
