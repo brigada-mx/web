@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import { fmtBudget, truncate } from 'tools/string'
+import { getProjectType } from 'src/choices'
 import Styles from './OrganizationListItem.css'
 
 
@@ -45,7 +46,7 @@ class OrganizationListItem extends React.PureComponent {
         <div className={Styles.descriptionContainer}>
           <span className={Styles.name}>{name}</span>
           <div className={`${Styles.tagContainer} lg-hidden md-hidden`}>
-            {count.slice(0, 3).map((t, i) => <span key={i} className={Styles.tag}>{t.tag}</span>)}
+            {count.slice(0, 3).map((t, i) => <span key={i} className={Styles.tag}>{getProjectType(t.tag)}</span>)}
           </div>
           <span className={Styles.desc}>{truncate(desc, 154)}</span>
         </div>
