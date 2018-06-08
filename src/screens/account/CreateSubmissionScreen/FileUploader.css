@@ -38,10 +38,25 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 
 .preview {
   height: 70px;
   width: auto;
   max-width: 140px;
+}
+
+.abortButton {
+  background: no-repeat url("assets/img/close-modal.svg") top right;
+  background-size: 14px 14px;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 11;
+  opacity: 1.0;
+  color: black;
 }

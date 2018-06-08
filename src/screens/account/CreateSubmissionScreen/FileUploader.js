@@ -132,6 +132,10 @@ class FileUploader extends React.Component {
     )
   }
 
+  handleCancel = (index) => {
+    this._files[index].xhr.abort()
+  }
+
   render() {
     const { disabled = false } = this.props
     const { active } = this.state
@@ -158,7 +162,7 @@ class FileUploader extends React.Component {
         </span>
 
         <div className={Styles.previewListContainer}>
-          {this._files.map(f => <FileUploadPreview {...f.meta} />)}
+          {this._files.map((f, i) => <FileUploadPreview key={i} {...f.meta} onCancel={() => this.handleCancel(i)} />)}
         </div>
 
         <div>
@@ -168,7 +172,10 @@ class FileUploader extends React.Component {
             className={FormStyles.primaryButton}
             label="SUBIR"
             onClick={this.handleSubmit}
-            disabled={disabled || this._files.length === 0 || this._files.some(f => f.meta.status === 'uploading')}
+            disabled={disabled
+              || this._files.some(f => f.meta.status === 'uploading')
+              || !this._files.some(f => f.meta.status === 'done')
+            }
           />
         </div>
       </div>
