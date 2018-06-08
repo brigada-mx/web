@@ -1,10 +1,35 @@
 .dropzone {
-  min-height: 50vh;
-  border: 2px dashed;
-  border-radius: 10px;
+  max-height: 40vh;
   width: 80%;
+  overflow: scroll;
   font-family: 'roboto', sans-serif;
-  padding: 20px;
+  margin: 0 auto 30px auto;
+}
+
+.dropzoneContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}
+
+.largeText {
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 22px;
+  color: #141418;
+  letter-spacing: 0;
+  line-height: 32px;
+  margin-bottom: 10px;
+}
+
+.smallText {
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 18px;
+  color: #141418;
+  letter-spacing: 0;
+  line-height: 32px;
+  margin-bottom: 20px;
 }
 
 .active {
@@ -20,11 +45,33 @@
 }
 
 .inputLabel {
-  border: 1px solid #ccc;
+  font-family: 'nunito-sans-700', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 13px;
+  color: #3DC59F;
+  letter-spacing: 0.35px;
+  text-align: center;
+  line-height: 16px;
+  border: 1px solid #3DC59F;
   display: inline-block;
-  padding: 6px 12px;
+  padding: 13px 25px 11px 25px;
   cursor: pointer;
-  margin-left: 20px;
+  transition: all .15s linear;
+}
+
+.inputLabel:hover {
+  border: 1px solid #01886C;
+}
+
+.addFiles .inputLabel {
+  color: 000000;
+  opacity: 0.8;
+  border: 1px solid #141418;
+}
+
+.addFiles .inputLabel:hover {
+  border: 1px solid #4D4D4D;
 }
 
 .previewListContainer {
@@ -45,6 +92,10 @@
   height: 70px;
   width: auto;
   max-width: 140px;
+}
+
+.uploadButton {
+  margin-left: 10%;
 }
 
 .abortButton {

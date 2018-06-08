@@ -140,17 +140,13 @@ class FileUploader extends React.Component {
     const { disabled = false } = this.props
     const { active } = this.state
 
-    return (
-      <div
-        className={`${Styles.dropzone} ${active ? Styles.active : Styles.inactive}`}
-        onDragEnter={this.handleDragEnter}
-        onDragOver={this.handleDragOver}
-        onDragLeave={this.handleDragLeave}
-        onDrop={this.handleDrop}
-      >
-        <span>
-          Arrastra hasta {maxFiles} imágenes...
-          <label htmlFor="fileUploaderInputId" className={Styles.inputLabel}>Escoger</label>
+    const chooseFiles = (add = false) => {
+      return (
+        <React.Fragment>
+          <label
+            htmlFor="fileUploaderInputId"
+            className={Styles.inputLabel}>{add ? 'Agregar' : 'Escoger archivos'}
+          </label>
           <input
             id="fileUploaderInputId"
             className={Styles.input}
@@ -159,17 +155,39 @@ class FileUploader extends React.Component {
             accept="image/*"
             onChange={e => this.handleFiles(Array.from(e.target.files))}
           />
-        </span>
+        </React.Fragment>
+      )
+    }
 
-        <div className={Styles.previewListContainer}>
-          {this._files.map((f, i) => <FileUploadPreview key={i} {...f.meta} onCancel={() => this.handleCancel(i)} />)}
+    return (
+      <React.Fragment>
+        <div
+          className={`${Styles.dropzone} ${active ? Styles.active : Styles.inactive}`}
+          onDragEnter={this.handleDragEnter}
+          onDragOver={this.handleDragOver}
+          onDragLeave={this.handleDragLeave}
+          onDrop={this.handleDrop}
+        >
+          {this._files.length === 0 &&
+            <div className={Styles.dropzoneContent}>
+              <span className={Styles.largeText}>Arrastra hasta {maxFiles} imágenes</span>
+              <span className={Styles.smallText}>- o puedes -</span>
+              {chooseFiles(false)}
+            </div>
+          }
+
+          <div className={Styles.previewListContainer}>
+            {this._files.map((f, i) => <FileUploadPreview key={i} {...f.meta} onCancel={() => this.handleCancel(i)} />)}
+          </div>
+          {this._files.length > 0 && <div className={Styles.addFiles}>{chooseFiles(true)}</div>}
+
         </div>
 
-        <div>
+        {this._files.length > 0 &&
           <RaisedButton
             backgroundColor="#3DC59F"
             labelColor="#ffffff"
-            className={FormStyles.primaryButton}
+            className={`${FormStyles.primaryButton} ${Styles.uploadButton}`}
             label="SUBIR"
             onClick={this.handleSubmit}
             disabled={disabled
@@ -177,8 +195,9 @@ class FileUploader extends React.Component {
               || !this._files.some(f => f.meta.status === 'done')
             }
           />
-        </div>
-      </div>
+        }
+
+      </React.Fragment>
     )
   }
 }

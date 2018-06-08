@@ -128,7 +128,7 @@ class DonorHomeScreen extends React.Component {
                 backgroundColor="#3DC59F"
                 labelColor="#ffffff"
                 className={FormStyles.primaryButton}
-                label="AGREGAR"
+                label="Agregar"
                 onClick={() => this.handleToggleCreateDonationModal(true)}
               />
             </div>

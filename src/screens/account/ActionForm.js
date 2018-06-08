@@ -141,7 +141,7 @@ const CreateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
           labelColor="#ffffff"
           className={FormStyles.primaryButton}
           disabled={submitting}
-          label="AGREGAR"
+          label="Agregar"
           onClick={handleSubmit}
         />
       </div>

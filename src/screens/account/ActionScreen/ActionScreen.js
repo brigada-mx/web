@@ -137,7 +137,7 @@ class ActionScreen extends React.Component {
   handleToggleCreateSubmissionModal = () => {
     const { modal, action } = this.props
     if (action.key === undefined) return
-    modal('createSubmission', { actionKey: action.key })
+    modal('createSubmission', { actionKey: action.key, modalWide: true })
   }
 
   handleDeleteAction = async () => {
@@ -275,7 +275,7 @@ class ActionScreen extends React.Component {
                 backgroundColor="#3DC59F"
                 labelColor="#ffffff"
                 className={FormStyles.primaryButton}
-                label="AGREGAR"
+                label="Agregar"
                 onClick={() => this.handleToggleCreateDonationModal(true)}
               />
             </div>
