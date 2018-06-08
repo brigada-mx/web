@@ -36,11 +36,15 @@ class CreateSubmissionScreen extends React.Component {
     this.props.snackbar('Agregaste estas fotos', 'success')
   }
 
+  handleSubmitFiles = (files) => {
+    console.log(files)
+  }
+
   render() {
     const { step } = this.state
     const { action } = this.props
     if (!action) return <LoadingIndicatorCircle />
-    if (step === 'files') return <FileUploader />
+    if (step === 'files') return <FileUploader onSubmit={this.handleSubmitFiles} />
     return null
   }
 }

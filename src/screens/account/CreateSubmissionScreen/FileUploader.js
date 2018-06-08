@@ -2,11 +2,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import RaisedButton from 'material-ui/RaisedButton'
+
 import service from 'api/service'
+import FormStyles from 'src/Form.css'
 import Styles from './FileUploader.css'
 
 
-const maxSizeBytes = 10 * 1000 * 1000
+const maxSizeBytes = 10 * 1024 * 1024
+const maxFiles = 10
 
 class FileUploader extends React.Component {
   constructor(props) {
@@ -45,15 +49,23 @@ class FileUploader extends React.Component {
     this.handleFiles(_files)
   }
 
+  // expects an array of File objects
   handleFiles = (files) => {
     files.forEach(this.handleFile)
   }
 
   handleFile = (file) => {
     const { name, size, type } = file
+    if (!type.startsWith('image/')) return
+    if (this._files.length >= maxFiles) return
+
     const fileWithMeta = { file, meta: { name, size, type, status: 'uploading', percent: 0 } }
     this._files.push(fileWithMeta)
-    if (!type.startsWith('image/') || size > maxSizeBytes) return
+
+    if (size > maxSizeBytes) {
+      fileWithMeta.meta.status = 'error_file_size'
+      return
+    }
     this.previewFile(fileWithMeta)
     this.uploadFile(fileWithMeta)
   }
@@ -68,7 +80,7 @@ class FileUploader extends React.Component {
   }
 
   uploadFile = async (fileWithMeta) => {
-    const { file, meta: { name, size } } = fileWithMeta
+    const { file, meta: { name } } = fileWithMeta
     const { data } = await service.getUploadUrl(name)
     if (!data) {
       fileWithMeta.meta.status = 'error_upload_url'
@@ -91,11 +103,15 @@ class FileUploader extends React.Component {
     })
 
     xhr.addEventListener('readystatechange', (e) => {
-      if (xhr.readyState === 4 && xhr.status < 400) {
+      if (xhr.readyState !== 4) return // `readyState` of 4 corresponds to `XMLHttpRequest.DONE`
+      if (xhr.status === 0) {
+        fileWithMeta.meta.status = 'aborted'
+        this.forceUpdate()
+      } else if (xhr.status < 400) {
         fileWithMeta.meta.percent = 100
         fileWithMeta.meta.status = 'done'
         this.forceUpdate()
-      } else if (xhr.readyState === 4 && xhr.status >= 400) {
+      } else {
         fileWithMeta.meta.status = 'error_upload'
         this.forceUpdate()
       }
@@ -106,15 +122,18 @@ class FileUploader extends React.Component {
     }
     formData.append('file', file)
     xhr.send(formData)
+    fileWithMeta.xhr = xhr
+  }
+
+  handleSubmit = () => {
+    this.props.onSubmit(
+      this._files.map(f => f.meta).filter(f => f.status === 'done')
+    )
   }
 
   render() {
+    const { disabled = false } = this.props
     const { active } = this.state
-    console.log(this._files)
-    if (this._files.length) {
-      console.log(this._files[0].meta.percent)
-      console.log(this._files[0].meta.status)
-    }
 
     return (
       <div
@@ -124,13 +143,36 @@ class FileUploader extends React.Component {
         onDragLeave={this.handleDragLeave}
         onDrop={this.handleDrop}
       >
-        Arrastra imágenes aquí, o dale clic al botón.
+        <span>Arrastra hasta {maxFiles} imágenes aquí, o use el botón.</span>
+
+        <label htmlFor="fileUploaderInputId" className={Styles.inputLabel}>Escoger imágenes</label>
+        <input
+          id="fileUploaderInputId"
+          className={Styles.input}
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={e => this.handleFiles(Array.from(e.target.files))}
+        />
+
+        <div>
+          <RaisedButton
+            backgroundColor="#3DC59F"
+            labelColor="#ffffff"
+            className={FormStyles.primaryButton}
+            label="SUBIR"
+            onClick={this.handleSubmit}
+            disabled={disabled || this._files.some(f => f.meta.status === 'uploading')}
+          />
+        </div>
       </div>
     )
   }
 }
 
 FileUploader.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 }
 
 export default FileUploader
