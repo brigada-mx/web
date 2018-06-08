@@ -38,15 +38,17 @@ const componentByName = {
   createSubmission: CreateSubmissionScreen,
 }
 
-const ModalSelector = (props) => {
-  const { modalName, modalTransparent = false, modalWide = false, ...rest } = props
+const ModalSelector = (
+  { modalName, modalClassName = '', modalTransparent = false, modalWide = false, modalPadded = true, ...rest }
+) => {
   const Component = componentByName[modalName]
   if (!Component) return null
 
   return (
     <Modal
-      contentClassName={modalWide ? Styles.selectorContentWide : Styles.selectorContent}
+      contentClassName={modalClassName || modalWide ? Styles.selectorContentWide : Styles.selectorContent}
       transparent={modalTransparent}
+      padded={modalPadded}
     >
       <Component {...rest} />
     </Modal>
@@ -57,6 +59,7 @@ ModalSelector.propTypes = {
   modalName: PropTypes.string,
   modalClassName: PropTypes.string,
   modalTransparent: PropTypes.bool,
+  modalPadded: PropTypes.bool,
   modalWide: PropTypes.bool,
 }
 

@@ -35,12 +35,12 @@ class Modal extends React.Component {
 
   render() {
     const {
-      children, transparent = false, contentClassName = '', buttonClassName = '',
+      children, transparent = false, contentClassName = '', buttonClassName = '', padded = true,
     } = this.props
     return ReactDOM.createPortal(
       <div className={Styles.container}>
         <div className={Styles.overlay} />
-        <div className={`${transparent ? Styles.contentTransparent : Styles.content} ${contentClassName}`}>
+        <div className={`${transparent ? Styles.contentTransparent : Styles.content} ${contentClassName} ${padded ? Styles.contentPadded : ''}`}>
           <span className={`${Styles.closeButton} ${buttonClassName}`} onClick={this.handleClose} />
           {children}
         </div>
@@ -53,6 +53,7 @@ class Modal extends React.Component {
 Modal.propTypes = {
   children: PropTypes.any,
   transparent: PropTypes.bool,
+  padded: PropTypes.bool,
   onClose: PropTypes.func,
   closeModal: PropTypes.func.isRequired,
   contentClassName: PropTypes.string,
