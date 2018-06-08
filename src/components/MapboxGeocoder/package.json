@@ -1,0 +1,6 @@
+{
+  "name": "MapboxGeocoder",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MapboxGeocoder.js"
+}

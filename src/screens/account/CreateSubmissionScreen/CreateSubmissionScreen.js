@@ -6,9 +6,9 @@ import { withRouter, Redirect } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
+import FileUploader from 'components/FileUploader'
 import service, { getBackoff } from 'api/service'
 import FormStyles from 'src/Form.css'
-import FileUploader from './FileUploader'
 import Styles from './CreateSubmissionScreen.css'
 
 

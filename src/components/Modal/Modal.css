@@ -34,9 +34,12 @@
   display: block;
   overflow: scroll;
   background-color: white;
-  padding: 40px 40px 100px 40px;
   border-radius: 2px;
   box-sizing: border-box;
+}
+
+.contentPadded {
+  padding: 40px 40px 100px 40px;
 }
 
 .contentTransparent {
