@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import service from 'api/service'
 import FormStyles from 'src/Form.css'
+import FileUploadPreview from './FileUploadPreview'
 import Styles from './FileUploader.css'
 
 
@@ -143,17 +144,22 @@ class FileUploader extends React.Component {
         onDragLeave={this.handleDragLeave}
         onDrop={this.handleDrop}
       >
-        <span>Arrastra hasta {maxFiles} imágenes aquí, o use el botón.</span>
+        <span>
+          Arrastra hasta {maxFiles} imágenes...
+          <label htmlFor="fileUploaderInputId" className={Styles.inputLabel}>Escoger</label>
+          <input
+            id="fileUploaderInputId"
+            className={Styles.input}
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={e => this.handleFiles(Array.from(e.target.files))}
+          />
+        </span>
 
-        <label htmlFor="fileUploaderInputId" className={Styles.inputLabel}>Escoger imágenes</label>
-        <input
-          id="fileUploaderInputId"
-          className={Styles.input}
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={e => this.handleFiles(Array.from(e.target.files))}
-        />
+        <div className={Styles.previewListContainer}>
+          {this._files.map(f => <FileUploadPreview {...f.meta} />)}
+        </div>
 
         <div>
           <RaisedButton
@@ -162,7 +168,7 @@ class FileUploader extends React.Component {
             className={FormStyles.primaryButton}
             label="SUBIR"
             onClick={this.handleSubmit}
-            disabled={disabled || this._files.some(f => f.meta.status === 'uploading')}
+            disabled={disabled || this._files.length === 0 || this._files.some(f => f.meta.status === 'uploading')}
           />
         </div>
       </div>

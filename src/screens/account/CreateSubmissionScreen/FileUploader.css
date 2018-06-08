@@ -24,5 +24,24 @@
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
-  margin: 10px 0px;
+  margin-left: 20px;
+}
+
+.previewListContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.previewContainer {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.preview {
+  height: 70px;
+  width: auto;
+  max-width: 140px;
 }
