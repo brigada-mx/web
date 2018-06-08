@@ -250,6 +250,11 @@ class Service {
     return sendToApiAuth('org', `/account/submissions/${id}/image/`, { method: 'PUT', body })
   }
 
+  getUploadUrl = async (filename) => {
+    const body = { filename }
+    return sendToApiAuth('org', '/files/upload_url/', { method: 'POST', body })
+  }
+
   // DONOR ACCOUNT PUBLIC ENDPOINTS
   donorCreateAccount = async (body) => {
     return sendToApi('/donor_account/donors/', { method: 'POST', body })

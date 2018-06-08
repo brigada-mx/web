@@ -10,6 +10,10 @@ module.exports = {
     "fetch": true,
     "window": true,
     "FB": true,
+    "FB": true,
+    "FileReader": true,
+    "XMLHttpRequest": true,
+    "FormData": true,
   },
   "rules": {
     "one-var": 0,

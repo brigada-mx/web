@@ -1,0 +1,16 @@
+.dropzone {
+  min-height: 50vh;
+  border: 2px dashed;
+  border-radius: 10px;
+  width: 80%;
+  font-family: 'roboto', sans-serif;
+  padding: 20px;
+}
+
+.active {
+  border-color: #3DC587;
+}
+
+.inactive {
+  border-color: #CACCD5;
+}

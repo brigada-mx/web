@@ -7,13 +7,16 @@ import { withRouter, Redirect } from 'react-router-dom'
 import * as Actions from 'src/actions'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import service, { getBackoff } from 'api/service'
-import WithSideNav from 'components/WithSideNav'
-import BackButton from 'components/BackButton'
 import FormStyles from 'src/Form.css'
+import FileUploader from './FileUploader'
 import Styles from './CreateSubmissionScreen.css'
 
 
 class CreateSubmissionScreen extends React.Component {
+  state = {
+    step: 'files',
+  }
+
   componentDidMount() {
     this.loadAction()
   }
@@ -34,8 +37,10 @@ class CreateSubmissionScreen extends React.Component {
   }
 
   render() {
+    const { step } = this.state
     const { action } = this.props
     if (!action) return <LoadingIndicatorCircle />
+    if (step === 'files') return <FileUploader />
     return null
   }
 }
