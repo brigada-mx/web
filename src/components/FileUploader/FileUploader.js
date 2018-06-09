@@ -20,6 +20,7 @@ class FileUploader extends React.Component {
       active: false,
     }
     this._files = []
+    this.dropzone = React.createRef()
   }
 
   handleDragEnter = (e) => {
@@ -69,6 +70,12 @@ class FileUploader extends React.Component {
     }
     this.previewFile(fileWithMeta)
     this.uploadFile(fileWithMeta)
+    this.forceUpdate()
+    setTimeout(this.scrollToBottom, 500)
+  }
+
+  scrollToBottom = () => {
+    this.dropzone.current.scrollTop = this.dropzone.current.scrollHeight
   }
 
   previewFile = (fileWithMeta) => {
@@ -145,7 +152,9 @@ class FileUploader extends React.Component {
         <React.Fragment>
           <label
             htmlFor="fileUploaderInputId"
-            className={Styles.inputLabel}>{add ? 'Agregar' : 'Escoger archivos'}
+            className={Styles.inputLabel}
+          >
+            {add ? 'Agregar' : 'Escoger archivos'}
           </label>
           <input
             id="fileUploaderInputId"
@@ -167,6 +176,7 @@ class FileUploader extends React.Component {
           onDragOver={this.handleDragOver}
           onDragLeave={this.handleDragLeave}
           onDrop={this.handleDrop}
+          ref={this.dropzone}
         >
           {this._files.length === 0 &&
             <div className={Styles.dropzoneContent}>
@@ -196,7 +206,6 @@ class FileUploader extends React.Component {
             }
           />
         }
-
       </React.Fragment>
     )
   }
