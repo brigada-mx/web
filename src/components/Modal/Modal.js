@@ -16,13 +16,13 @@ class Modal extends React.Component {
     ReactGA.modalview(`${window.location.pathname}/_/${this.props.gaName || ''}`)
     document.addEventListener('keydown', this.handleKeyDown)
     const main = document.getElementById('app')
-    main.classList.add('brigadaModalOpen')
+    if (main) main.classList.add('brigadaModalOpen')
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown)
     const main = document.getElementById('app')
-    main.classList.remove('brigadaModalOpen')
+    if (main) main.classList.remove('brigadaModalOpen')
   }
 
   handleKeyDown = (e) => {
