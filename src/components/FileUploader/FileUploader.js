@@ -178,23 +178,25 @@ class FileUploader extends React.Component {
 
           <div className={Styles.previewListContainer}>
             {this._files.map((f, i) => <FileUploadPreview key={i} {...f.meta} onCancel={() => this.handleCancel(i)} />)}
+            {this._files.length > 0 && <div className={Styles.addFiles}>{chooseFiles(true)}</div>}
           </div>
-          {this._files.length > 0 && <div className={Styles.addFiles}>{chooseFiles(true)}</div>}
 
         </div>
 
         {this._files.length > 0 &&
-          <RaisedButton
-            backgroundColor="#3DC59F"
-            labelColor="#ffffff"
-            className={`${FormStyles.primaryButton} ${Styles.uploadButton}`}
-            label="SUBIR"
-            onClick={this.handleSubmit}
-            disabled={disabled
-              || this._files.some(f => f.meta.status === 'uploading')
-              || !this._files.some(f => f.meta.status === 'done')
-            }
-          />
+          <div className={Styles.buttonContainer}>
+            <RaisedButton
+              backgroundColor="#3DC59F"
+              labelColor="#ffffff"
+              className={FormStyles.primaryButton}
+              label="SUBIR"
+              onClick={this.handleSubmit}
+              disabled={disabled
+                || this._files.some(f => f.meta.status === 'uploading')
+                || !this._files.some(f => f.meta.status === 'done')
+              }
+            />
+          </div>
         }
 
       </React.Fragment>
