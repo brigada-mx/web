@@ -1,10 +1,9 @@
 .dropzone {
   height: 60vh;
   max-width: 100%;
-  padding: 0 5%;
   overflow: scroll;
   font-family: 'roboto', sans-serif;
-  margin: 40px auto 0 auto;
+  margin: 0 auto;
 }
 
 .dropzoneContent {
@@ -66,6 +65,7 @@
 }
 
 .addFiles {
+  padding-left: 5%;
   margin-bottom: 20px;
 }
 
@@ -80,10 +80,11 @@
 }
 
 .previewListContainer {
-  width: 90%;
+  margin-top: 40px;
 }
 
 .previewContainer {
+  padding: 0 13% 0 5%;
   margin-bottom: 20px;
   display: flex;
   flex-direction: row;
