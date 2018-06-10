@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import _ from 'lodash'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import service from 'api/service'
@@ -141,13 +142,17 @@ class FileUploader extends React.Component {
     )
   }
 
-  handleCancel = (index) => {
-    this._files[index].xhr.abort()
+  handleCancel = (_id) => {
+    const index = _.findIndex(this._files, f => f.meta.id === _id)
+    if (index !== -1) this._files[index].xhr.abort()
   }
 
-  handleRemove = (index) => {
-    this._files.splice(index, 1)
-    this.forceUpdate()
+  handleRemove = (_id) => {
+    const index = _.findIndex(this._files, f => f.meta.id === _id)
+    if (index !== -1) {
+      this._files.splice(index, 1)
+      this.forceUpdate()
+    }
   }
 
   render() {
@@ -175,13 +180,13 @@ class FileUploader extends React.Component {
       )
     }
 
-    const files = this._files.map((f, i) => {
+    const files = this._files.map((f) => {
       return (
         <FileUploadPreview
           key={f.meta.id}
           {...f.meta}
-          onCancel={() => this.handleCancel(i)}
-          onRemove={() => this.handleRemove(i)}
+          onCancel={() => this.handleCancel(f.meta.id)}
+          onRemove={() => this.handleRemove(f.meta.id)}
         />
       )
     })
