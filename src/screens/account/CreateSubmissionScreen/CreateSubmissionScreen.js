@@ -2,19 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { withRouter, Redirect } from 'react-router-dom'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import * as Actions from 'src/actions'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import FileUploader from 'components/FileUploader'
+import ChooseLocationMap from 'components/FeatureMap/ChooseLocationMap'
 import service, { getBackoff } from 'api/service'
 import FormStyles from 'src/Form.css'
 import Styles from './CreateSubmissionScreen.css'
 
 
 class CreateSubmissionScreen extends React.Component {
-  state = {
-    step: 'files',
+  state = { step: 'meta' }
+
+  static getDerivedStateFromProps({ action }, { location } = {}) {
+    if (action && !location) return { location: { ...action.locality.location } }
+    return null
   }
 
   componentDidMount() {
@@ -27,13 +31,23 @@ class CreateSubmissionScreen extends React.Component {
   }
 
   handleCreateSubmission = async (body) => {
-    const { data } = await service.accountCreateSubmission(prepareSubmissionBody(body))
+    const { snackbar, closeModal } = this.props
+    const { data } = await service.accountCreateSubmission(body)
     if (!data) {
-      this.props.snackbar('Hubo un error', 'error')
+      snackbar('Hubo un error', 'error')
       return
     }
     this.loadAction()
-    this.props.snackbar('Agregaste estas fotos', 'success')
+    closeModal()
+    snackbar('Agregaste estas fotos', 'success')
+  }
+
+  handleSubmitMeta = () => {
+    this.setState({ step: 'files' })
+  }
+
+  handleLocationChange = ({ lat, lng }) => {
+    this.setState({ location: { lat, lng } })
   }
 
   handleSubmitFiles = (files) => {
@@ -44,6 +58,25 @@ class CreateSubmissionScreen extends React.Component {
     const { step } = this.state
     const { action } = this.props
     if (!action) return <LoadingIndicatorCircle />
+
+    const { locality: { location: { lat, lng } } } = action
+
+    const meta = (
+      <React.Fragment>
+        <ChooseLocationMap onLocationChange={this.handleLocationChange} coordinates={[lng, lat]} />
+        <div className={Styles.buttonContainer}>
+          <RaisedButton
+            backgroundColor="#3DC59F"
+            labelColor="#ffffff"
+            className={FormStyles.primaryButton}
+            label="SEGUIR"
+            onClick={this.handleSubmitMeta}
+            disabled={false}
+          />
+        </div>
+      </React.Fragment>
+    )
+    if (step === 'meta') return meta
     if (step === 'files') return <FileUploader onSubmit={this.handleSubmitFiles} />
     return null
   }
@@ -53,6 +86,7 @@ CreateSubmissionScreen.propTypes = {
   action: PropTypes.object,
   actionKey: PropTypes.number.isRequired,
   snackbar: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state, props) => {
@@ -67,7 +101,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     snackbar: (message, status) => Actions.snackbar(dispatch, { message, status }),
+    closeModal: () => Actions.modal(dispatch, ''),
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateSubmissionScreen))
+export default connect(mapStateToProps, mapDispatchToProps)(CreateSubmissionScreen)
