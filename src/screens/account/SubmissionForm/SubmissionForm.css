@@ -32,6 +32,21 @@
   margin-right: 20px;
 }
 
+.locationButton {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 15px;
+  color: #3DC59F;
+  letter-spacing: 0.6px;
+  text-align: right;
+  line-height: 30px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.locationButton:hover {
+  color: #13A68C;
+}
+
 @media screen and (max-width: 979px) {
   .thumbnailsContainer {
     margin: 80px 0px 40px 40px;

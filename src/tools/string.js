@@ -7,6 +7,11 @@ import { Link } from 'react-router-dom'
 import env from 'src/env'
 
 
+export const roundTo = (number, places = 0) => {
+  const multiplier = 10 ** places
+  return Math.round(number * multiplier) / multiplier
+}
+
 export const validateEmail = (email) => {
   const re = /\S+@\S+\.\S+/
   return re.test(email)

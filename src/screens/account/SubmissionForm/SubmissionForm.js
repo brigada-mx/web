@@ -10,19 +10,22 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { projectTypeByValue } from 'src/choices'
 import ConfirmButton from 'components/ConfirmButton'
+import { roundTo } from 'tools/string'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
-import { TextField, Toggle, SelectField } from 'components/Fields'
+import { TextField, Toggle, SelectField, DatePicker } from 'components/Fields'
 import FormStyles from 'src/Form.css'
 import Styles from './SubmissionForm.css'
 import EditableImage from './EditableImage'
 
 
-const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [] }) => {
+const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [], location }) => {
   const actions = actionSearch.map((a) => {
     const { id, key, action_type: type, desc } = a
     return { label: `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`, value: id }
   })
   actions.unshift({ value: null, label: 'Ninguno' })
+
+  const formatDatePicker = value => value || null
 
   return (
     <React.Fragment>
@@ -45,6 +48,19 @@ const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [] }) =
           multiLine
           rows={3}
         />
+      </div>
+      <div className={FormStyles.row}>
+        <DatePicker
+          floatingLabelText="Fecha cuando se tomaron las fotos"
+          name="submitted"
+          format={formatDatePicker}
+        />
+        {location &&
+          <React.Fragment>
+            <span>{`Ubicación: ${roundTo(location.lat, 5)}, ${roundTo(location.lng, 5)}`}</span>
+            <span className={Styles.locationButton}>Editar</span>
+          </React.Fragment>
+        }
       </div>
       <div className={FormStyles.toggle}>
         <Toggle
@@ -74,13 +90,21 @@ UpdateForm.propTypes = {
   ...rxfPropTypes,
   onDelete: PropTypes.func.isRequired,
   actionSearch: PropTypes.arrayOf(PropTypes.object).isRequired,
+  location: PropTypes.object,
 }
 
-const validate = ({ action }) => {
+const validate = () => {
   return {}
 }
 
-export const prepareSubmissionBody = (body) => {
+export const prepareInitialValues = ({ submitted, ...rest }) => {
+  return {
+    ...rest,
+    submitted: submitted && new Date(submitted),
+  }
+}
+
+export const prepareBody = (body) => {
   const { action_id: id, description } = body
   return {
     ...body,
@@ -119,7 +143,7 @@ class SubmissionFormWrapper extends React.Component {
   }
 
   handleSubmit = async (values) => {
-    const body = prepareSubmissionBody(values)
+    const body = prepareBody(values)
     const { data } = await service.accountUpdateSubmission(this.props.submissionId, body)
     if (!data) {
       this.props.snackbar('Hubo un error', 'error')
@@ -165,7 +189,8 @@ class SubmissionFormWrapper extends React.Component {
         <div className={FormStyles.formContainerLeft}>
           <ReduxUpdateForm
             onSubmit={this.handleSubmit}
-            initialValues={submission}
+            initialValues={prepareInitialValues(submission)}
+            location={submission.location}
             actionSearch={actions}
             form={`accountUpdateSubmission_${submissionId}`}
             onDelete={this.handleDelete}
