@@ -10,15 +10,7 @@ import Styles from './Carousel.css'
 
 moment.locale('es')
 
-const Photo = (props) => {
-  const {
-    lazyLoad,
-    description,
-    location,
-    submitted,
-    image,
-  } = props
-
+const Photo = ({ lazyLoad, description, location, submitted, image }) => {
   const { lat, lng } = location || {}
   let latLng = null
   if (lat) {

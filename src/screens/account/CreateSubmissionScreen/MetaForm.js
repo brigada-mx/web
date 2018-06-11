@@ -3,16 +3,25 @@ import React from 'react'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import { TextField } from 'components/Fields'
+import { TextField, DatePicker } from 'components/Fields'
 import FormStyles from 'src/Form.css'
 import Styles from './CreateSubmissionScreen.css'
 
 
 const MetaForm = ({ handleSubmit, submitting }) => {
+  const formatDatePicker = value => value || null
+
   return (
     <React.Fragment>
       <div className={Styles.description}>
         <TextField name="desc" hintText="Descripción de las fotos" className={FormStyles.wideInput} />
+      </div>
+      <div className={FormStyles.row}>
+        <DatePicker
+          floatingLabelText="Fecha cuando se tomaron las fotos"
+          name="submitted"
+          format={formatDatePicker}
+        />
       </div>
       <div className={FormStyles.row}>
         <RaisedButton

@@ -156,7 +156,7 @@ class FileUploader extends React.Component {
   }
 
   render() {
-    const { disabled = false } = this.props
+    const { disabled = false, instructions } = this.props
     const { active } = this.state
 
     const chooseFiles = (add = false) => {
@@ -203,7 +203,7 @@ class FileUploader extends React.Component {
         >
           {this._files.length === 0 &&
             <div className={Styles.dropzoneContent}>
-              <span className={Styles.largeText}>Arrastra hasta {maxFiles} imágenes</span>
+              <span className={Styles.largeText}>{instructions || `Arrastra hasta ${maxFiles} imágenes`}</span>
               <span className={Styles.smallText}>- o puedes -</span>
               {chooseFiles(false)}
             </div>
@@ -239,6 +239,7 @@ class FileUploader extends React.Component {
 FileUploader.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  instructions: PropTypes.string,
 }
 
 export default FileUploader

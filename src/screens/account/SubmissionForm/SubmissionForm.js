@@ -17,7 +17,7 @@ import Styles from './SubmissionForm.css'
 import EditableImage from './EditableImage'
 
 
-const UpdateForm = ({ handleSubmit, reset, submitting, onDelete, actionSearch = [] }) => {
+const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [] }) => {
   const actions = actionSearch.map((a) => {
     const { id, key, action_type: type, desc } = a
     return { label: `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`, value: id }

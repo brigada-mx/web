@@ -1,3 +1,7 @@
+.container {
+  padding: 40px;
+}
+
 .buttonContainer {
   border-top: 1px solid #E1E7ED;
   padding: 20px 5%;
@@ -7,18 +11,10 @@
   background-color: #EFEFEF;
   border: 1px solid #EFEFEF;
   box-sizing: border-box;
-  margin-top: 7px;
-}
-
-.mapContainer {
   width: 80%;
   height: 50vh;
 }
 
 .description {
   margin: 15px 0;
-}
-
-.metaContainer {
-  padding: 40px;
 }
