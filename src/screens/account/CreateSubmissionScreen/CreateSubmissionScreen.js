@@ -2,14 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import RaisedButton from 'material-ui/RaisedButton'
 
 import * as Actions from 'src/actions'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import FileUploader from 'components/FileUploader'
 import ChooseLocationMap from 'components/FeatureMap/ChooseLocationMap'
 import service, { getBackoff } from 'api/service'
-import FormStyles from 'src/Form.css'
+import TextLegend from 'components/FeatureMap/TextLegend'
+import MetaForm from './MetaForm'
 import Styles from './CreateSubmissionScreen.css'
 
 
@@ -30,9 +30,22 @@ class CreateSubmissionScreen extends React.Component {
     getBackoff(() => { return service.accountGetAction(actionKey) }, { key: `accountAction_${actionKey}` })
   }
 
-  handleCreateSubmission = async (body) => {
-    const { snackbar, closeModal } = this.props
-    const { data } = await service.accountCreateSubmission(body)
+  handleSubmitMeta = ({ desc }) => {
+    this.setState({ step: 'files', desc })
+  }
+
+  handleLocationChange = ({ lat, lng }) => {
+    this.setState({ location: { lat, lng } })
+  }
+
+  handleSubmitFiles = async (files) => {
+    const { action, snackbar, closeModal } = this.props
+    const { location: { lat, lng }, desc } = this.state
+    const images = files.map((f) => { return { url: f.url } })
+
+    const { data } = await service.accountCreateSubmission(action.id,
+      { desc, location: `${lat},${lng}`, images }
+    )
     if (!data) {
       snackbar('Hubo un error', 'error')
       return
@@ -40,18 +53,6 @@ class CreateSubmissionScreen extends React.Component {
     this.loadAction()
     closeModal()
     snackbar('Agregaste estas fotos', 'success')
-  }
-
-  handleSubmitMeta = () => {
-    this.setState({ step: 'files' })
-  }
-
-  handleLocationChange = ({ lat, lng }) => {
-    this.setState({ location: { lat, lng } })
-  }
-
-  handleSubmitFiles = (files) => {
-    console.log(files)
   }
 
   render() {
@@ -62,19 +63,16 @@ class CreateSubmissionScreen extends React.Component {
     const { locality: { location: { lat, lng } } } = action
 
     const meta = (
-      <React.Fragment>
-        <ChooseLocationMap onLocationChange={this.handleLocationChange} coordinates={[lng, lat]} />
-        <div className={Styles.buttonContainer}>
-          <RaisedButton
-            backgroundColor="#3DC59F"
-            labelColor="#ffffff"
-            className={FormStyles.primaryButton}
-            label="SEGUIR"
-            onClick={this.handleSubmitMeta}
-            disabled={false}
+      <div className={Styles.metaContainer}>
+        <div className={Styles.mapContainer}>
+          <ChooseLocationMap
+            onLocationChange={this.handleLocationChange}
+            coordinates={[lng, lat]}
+            legend={<TextLegend text="DALE CLIC PARA ESCOGER LA UBICACIÓN DE LAS FOTOS" />}
           />
         </div>
-      </React.Fragment>
+        <MetaForm onSubmit={this.handleSubmitMeta} enableReinitialize />
+      </div>
     )
     if (step === 'meta') return meta
     if (step === 'files') return <FileUploader onSubmit={this.handleSubmitFiles} />

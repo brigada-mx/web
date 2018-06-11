@@ -22,7 +22,7 @@ const layer = {
 class ChooseLocationMap extends React.Component {
   constructor(props) {
     super(props)
-    this._initialZoom = [props.initialZoom || 12]
+    this._initialZoom = [props.initialZoom || 13]
     this._initialCoordinates = props.coordinates
     this.Mapbox = ReactMapboxGl({
       accessToken,
