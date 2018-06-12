@@ -17,7 +17,7 @@ const barStyles = {
   text: { stroke: '#3DC59F', fontSize: '1.7em' },
 }
 
-class ProfileStrength extends React.Component {
+class ActionStrength extends React.Component {
   componentDidMount() {
     const { actionId } = this.props
     getBackoff(() => { return service.accountGetActionStrength(actionId) }, { key: `actionStrength_${actionId}` })
@@ -97,7 +97,7 @@ class ProfileStrength extends React.Component {
   }
 }
 
-ProfileStrength.propTypes = {
+ActionStrength.propTypes = {
   actionId: PropTypes.number.isRequired,
   strength: PropTypes.object,
 }
@@ -110,4 +110,4 @@ const mapStateToProps = (state, { actionId }) => {
   }
 }
 
-export default connect(mapStateToProps, null)(ProfileStrength)
+export default connect(mapStateToProps, null)(ActionStrength)

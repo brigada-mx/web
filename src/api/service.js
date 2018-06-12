@@ -153,7 +153,7 @@ class Service {
   }
 
   accountGetActionStrength = async (id) => {
-    return sendToApiAuth('org', `/account/action_strength/${id}`)
+    return sendToApiAuth('org', `/account/action_strength/${id}/`)
   }
 
   accountGetOrganization = async () => {
