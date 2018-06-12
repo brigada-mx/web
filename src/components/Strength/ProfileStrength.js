@@ -63,9 +63,9 @@ class ProfileStrength extends React.Component {
       },
       {
         value: submissions,
-        label: 'Capturar fotos',
-        videoId: 'wzRyByw2t9c',
-        durationString: '3:00',
+        label: 'Subir fotos',
+        videoId: '0qRxsa2WyVc',
+        durationString: '4:38',
       },
       {
         value: donations,

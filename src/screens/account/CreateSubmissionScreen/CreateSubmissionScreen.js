@@ -45,11 +45,11 @@ class CreateSubmissionScreen extends React.Component {
   }
 
   handleSubmitFiles = async (files) => {
-    const { action, snackbar, closeModal } = this.props
+    const { action: { id }, snackbar, closeModal } = this.props
     const { location: { lat, lng }, desc, submitted } = this.state.values
     const images = files.map((f) => { return { url: f.url } })
 
-    const { data } = await service.accountCreateSubmission(action.id,
+    const { data } = await service.accountCreateSubmission(id,
       { location: `${lat},${lng}`, desc, submitted, images }
     )
     if (!data) {
@@ -57,6 +57,7 @@ class CreateSubmissionScreen extends React.Component {
       return
     }
     this.loadAction()
+    getBackoff(() => { return service.accountGetActionStrength(id) }, { key: `actionStrength_${id}` })
     closeModal()
     snackbar('Agregaste estas fotos', 'success')
   }

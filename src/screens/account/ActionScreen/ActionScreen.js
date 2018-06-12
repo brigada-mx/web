@@ -320,33 +320,33 @@ class ActionScreen extends React.Component {
           </div>
         }
 
-        {submissions.length > 0 &&
-          <div className={FormStyles.card}>
-            <div className={FormStyles.sectionHeader}>
-              <span>Fotos</span>
-              <div>
-                <span
-                  className={FormStyles.link}
-                  onClick={() => this.handleToggleSubmissionTrashModal(true)}
-                >
-                  Basurero
-                </span>
-                <RaisedButton
-                  backgroundColor="#3DC59F"
-                  labelColor="#ffffff"
-                  className={FormStyles.primaryButton}
-                  label="AGREGAR"
-                  onClick={() => this.handleToggleCreateSubmissionModal(true)}
-                />
-              </div>
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>
+            <span>Fotos</span>
+            <div>
+              <span
+                className={FormStyles.link}
+                onClick={() => this.handleToggleSubmissionTrashModal(true)}
+              >
+                Basurero
+              </span>
+              <RaisedButton
+                backgroundColor="#3DC59F"
+                labelColor="#ffffff"
+                className={FormStyles.primaryButton}
+                label="AGREGAR"
+                onClick={() => this.handleToggleCreateSubmissionModal(true)}
+              />
             </div>
+          </div>
+          {submissions.length > 0 &&
             <SubmissionTable
               submissions={submissions}
               onTogglePublished={this.handleTogglePublishedSubmission}
               onRowClicked={this.handleRowClickedSubmission}
             />
-          </div>
-        }
+          }
+        </div>
 
         {submissionId !== undefined &&
           <Modal
