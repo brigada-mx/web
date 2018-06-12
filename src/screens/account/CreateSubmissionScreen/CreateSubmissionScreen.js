@@ -92,12 +92,7 @@ class CreateSubmissionScreen extends React.Component {
       </React.Fragment>
     )
 
-    const meta = (
-      <div className={Styles.container}>
-        <div className={Styles.largeText}>Paso 2: Completa información sobre las fotos</div>
-        <MetaForm onSubmit={this.handleSubmitMeta} enableReinitialize />
-      </div>
-    )
+    const meta = <MetaForm onSubmit={this.handleSubmitMeta} enableReinitialize />
 
     const files = <FileUploader onSubmit={this.handleSubmitFiles} instructions="Paso 3: Arrastra hasta 8 imágenes" />
 
