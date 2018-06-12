@@ -13,17 +13,20 @@ const MetaForm = ({ handleSubmit, submitting }) => {
 
   return (
     <React.Fragment>
-      <div className={Styles.description}>
-        <TextField name="desc" hintText="Descripción de las fotos" className={FormStyles.wideInput} />
+      <div className={Styles.container}>
+        <div className={Styles.largeText}>Paso 2: Completa información sobre las fotos</div>
+        <div className={Styles.description}>
+          <TextField name="desc" hintText="Descripción de las fotos" className={FormStyles.wideInput} />
+        </div>
+        <div className={FormStyles.row}>
+          <DatePicker
+            floatingLabelText="Fecha cuando se tomaron las fotos"
+            name="submitted"
+            format={formatDatePicker}
+          />
+        </div>
       </div>
-      <div className={FormStyles.row}>
-        <DatePicker
-          floatingLabelText="Fecha cuando se tomaron las fotos"
-          name="submitted"
-          format={formatDatePicker}
-        />
-      </div>
-      <div className={FormStyles.row}>
+      <div className={Styles.buttonContainer}>
         <RaisedButton
           backgroundColor="#3DC59F"
           labelColor="#ffffff"

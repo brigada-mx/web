@@ -211,7 +211,9 @@ class FileUploader extends React.Component {
 
           <div className={Styles.previewListContainer}>
             {files}
-            {this._files.length > 0 && <div className={Styles.addFiles}>{chooseFiles(true)}</div>}
+            {this._files.length > 0 && this._files.length < maxFiles &&
+              <div className={Styles.addFiles}>{chooseFiles(true)}</div>
+            }
           </div>
 
         </div>

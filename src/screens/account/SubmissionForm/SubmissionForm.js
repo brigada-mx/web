@@ -5,6 +5,7 @@ import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
 import { connect } from 'react-redux'
 import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
@@ -230,9 +231,7 @@ class SubmissionFormWrapper extends React.Component {
               label="GUARDAR"
               onClick={this.handleLocationSubmit}
             />
-            <RaisedButton
-              backgroundColor="#3DC59F"
-              labelColor="#ffffff"
+            <FlatButton
               className={Styles.locationBackButton}
               label="CANCELAR"
               onClick={this.handleLocationCancel}
