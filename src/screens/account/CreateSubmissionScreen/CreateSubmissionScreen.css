@@ -1,5 +1,17 @@
 .container {
-  padding: 40px;
+  height: 60vh;
+  max-width: 100%;
+  overflow: scroll;
+  padding: 5%;
+}
+
+.largeText {
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 22px;
+  color: #141418;
+  letter-spacing: 0;
+  line-height: 32px;
+  margin-bottom: 10px;
 }
 
 .buttonContainer {
@@ -12,7 +24,7 @@
   border: 1px solid #EFEFEF;
   box-sizing: border-box;
   width: 80%;
-  height: 50vh;
+  height: 85%;
 }
 
 .description {

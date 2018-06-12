@@ -69,16 +69,18 @@ class CreateSubmissionScreen extends React.Component {
     const { locality: { location: { lat, lng } } } = action
 
     const location = (
-      <div className={Styles.container}>
-        <div className={FormStyles.formHeader}>PASO 1: Escoge la ubicación de las fotos</div>
-        <div className={Styles.mapContainer}>
-          <ChooseLocationMap
-            onLocationChange={this.handleLocationChange}
-            coordinates={[lng, lat]}
-            legend={<TextLegend text="DALE CLIC PARA ESCOGER LA UBICACIÓN DE LAS FOTOS" />}
-          />
+      <React.Fragment>
+        <div className={Styles.container}>
+          <div className={Styles.largeText}>Paso 1: Indica dónde se tomaron las fotos</div>
+          <div className={Styles.mapContainer}>
+            <ChooseLocationMap
+              onLocationChange={this.handleLocationChange}
+              coordinates={[lng, lat]}
+              legend={<TextLegend text="UBICACIÓN DE LAS FOTOS" />}
+            />
+          </div>
         </div>
-        <div className={FormStyles.row}>
+        <div className={Styles.buttonContainer}>
           <RaisedButton
             backgroundColor="#3DC59F"
             labelColor="#ffffff"
@@ -87,12 +89,12 @@ class CreateSubmissionScreen extends React.Component {
             onClick={this.handleSubmitLocation}
           />
         </div>
-      </div>
+      </React.Fragment>
     )
 
     const meta = (
       <div className={Styles.container}>
-        <div className={FormStyles.formHeader}>PASO 2: Datos sobre las fotos</div>
+        <div className={Styles.largeText}>Paso 2: Completa información sobre las fotos</div>
         <MetaForm onSubmit={this.handleSubmitMeta} enableReinitialize />
       </div>
     )
