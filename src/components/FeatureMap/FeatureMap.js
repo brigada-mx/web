@@ -11,13 +11,7 @@ import Styles from './FeatureMap.css'
 
 const { mapbox: { accessToken } } = env
 
-const zoomStyle = {
-  position: 'absolute',
-  top: 26,
-  left: 26,
-  border: 'none',
-  borderRadius: 2,
-}
+const zoomStyle = { position: 'absolute', top: 26, left: 26, border: 'none', borderRadius: 2 }
 
 class FeatureMap extends React.Component {
   constructor(props) {

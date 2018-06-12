@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { fitBoundsFromCoords, distanceKmBetweenCoords } from 'tools/other'
 import FeatureMap from './FeatureMap'
-import ActionLegend from './ActionLegend'
+import TextLegend from './TextLegend'
 
 
 const maxMetersGroupSubmissions = 50
@@ -76,7 +76,7 @@ const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, sourceId = '
       features={features.splice(0, maxFeatures)}
       layer={layer}
       sourceId={sourceId}
-      legend={<ActionLegend />}
+      legend={<TextLegend text="FOTOS DE PROYECTOS" />}
     />
   )
 }

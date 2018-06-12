@@ -15,10 +15,18 @@ class Modal extends React.Component {
   componentDidMount() {
     ReactGA.modalview(`${window.location.pathname}/_/${this.props.gaName || ''}`)
     document.addEventListener('keydown', this.handleKeyDown)
+
+    this._scrollTop = document.body && document.body.scrollTop
+    const main = document.getElementById('app')
+    if (main) main.classList.add('brigadaModalOpen')
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown)
+
+    const main = document.getElementById('app')
+    if (main) main.classList.remove('brigadaModalOpen')
+    if (document.body) document.body.scrollTop = this._scrollTop || 0
   }
 
   handleKeyDown = (e) => {

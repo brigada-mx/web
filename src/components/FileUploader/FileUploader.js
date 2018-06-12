@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import _ from 'lodash'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import service from 'api/service'
@@ -10,8 +11,9 @@ import FileUploadPreview from './FileUploadPreview'
 import Styles from './FileUploader.css'
 
 
+let id = 0
 const maxSizeBytes = 10 * 1024 * 1024
-const maxFiles = 10
+const maxFiles = 8
 
 class FileUploader extends React.Component {
   constructor(props) {
@@ -61,8 +63,9 @@ class FileUploader extends React.Component {
     if (!type.startsWith('image/')) return
     if (this._files.length >= maxFiles) return
 
-    const fileWithMeta = { file, meta: { name, size, type, status: 'uploading', percent: 0 } }
+    const fileWithMeta = { file, meta: { name, size, type, status: 'uploading', percent: 0, id } }
     this._files.push(fileWithMeta)
+    id += 1
 
     if (size > maxSizeBytes) {
       fileWithMeta.meta.status = 'error_file_size'
@@ -139,8 +142,17 @@ class FileUploader extends React.Component {
     )
   }
 
-  handleCancel = (index) => {
-    this._files[index].xhr.abort()
+  handleCancel = (_id) => {
+    const index = _.findIndex(this._files, f => f.meta.id === _id)
+    if (index !== -1) this._files[index].xhr.abort()
+  }
+
+  handleRemove = (_id) => {
+    const index = _.findIndex(this._files, f => f.meta.id === _id)
+    if (index !== -1) {
+      this._files.splice(index, 1)
+      this.forceUpdate()
+    }
   }
 
   render() {
@@ -168,6 +180,17 @@ class FileUploader extends React.Component {
       )
     }
 
+    const files = this._files.map((f) => {
+      return (
+        <FileUploadPreview
+          key={f.meta.id}
+          {...f.meta}
+          onCancel={() => this.handleCancel(f.meta.id)}
+          onRemove={() => this.handleRemove(f.meta.id)}
+        />
+      )
+    })
+
     return (
       <React.Fragment>
         <div
@@ -187,7 +210,7 @@ class FileUploader extends React.Component {
           }
 
           <div className={Styles.previewListContainer}>
-            {this._files.map((f, i) => <FileUploadPreview key={i} {...f.meta} onCancel={() => this.handleCancel(i)} />)}
+            {files}
             {this._files.length > 0 && <div className={Styles.addFiles}>{chooseFiles(true)}</div>}
           </div>
 

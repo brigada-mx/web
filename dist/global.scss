@@ -12,6 +12,10 @@
   font-family: 'nunito-sans', sans-serif;
 }
 
+.brigadaModalOpen {
+  overflow: hidden !important;
+}
+
 @import 'reset';
 @import 'mixins';
 @import 'grid';
