@@ -41,9 +41,10 @@ MetaForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = ({ desc }) => {
+const validate = ({ desc, submitted }) => {
   const errors = {}
   if (!desc) errors.desc = 'Se requiere una descripción de estas fotos'
+  if (!submitted) errors.submitted = 'Agrega la fecha cuando se tomaron las fotos'
   return errors
 }
 

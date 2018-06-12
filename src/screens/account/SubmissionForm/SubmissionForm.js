@@ -9,16 +9,18 @@ import RaisedButton from 'material-ui/RaisedButton'
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { projectTypeByValue } from 'src/choices'
-import ConfirmButton from 'components/ConfirmButton'
 import { roundTo } from 'tools/string'
+import ConfirmButton from 'components/ConfirmButton'
+import TextLegend from 'components/FeatureMap/TextLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
+import ChooseLocationMap from 'components/FeatureMap/ChooseLocationMap'
 import { TextField, Toggle, SelectField, DatePicker } from 'components/Fields'
 import FormStyles from 'src/Form.css'
 import Styles from './SubmissionForm.css'
 import EditableImage from './EditableImage'
 
 
-const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [], location }) => {
+const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [], location, onLocationClick }) => {
   const actions = actionSearch.map((a) => {
     const { id, key, action_type: type, desc } = a
     return { label: `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`, value: id }
@@ -58,7 +60,7 @@ const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [], loc
         {location &&
           <React.Fragment>
             <span>{`Ubicación: ${roundTo(location.lat, 5)}, ${roundTo(location.lng, 5)}`}</span>
-            <span className={Styles.locationButton}>Editar</span>
+            <span className={Styles.locationButton} onClick={onLocationClick}>Editar</span>
           </React.Fragment>
         }
       </div>
@@ -90,11 +92,8 @@ UpdateForm.propTypes = {
   ...rxfPropTypes,
   onDelete: PropTypes.func.isRequired,
   actionSearch: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onLocationClick: PropTypes.func.isRequired,
   location: PropTypes.object,
-}
-
-const validate = () => {
-  return {}
 }
 
 export const prepareInitialValues = ({ submitted, ...rest }) => {
@@ -113,9 +112,18 @@ export const prepareBody = (body) => {
   }
 }
 
-const ReduxUpdateForm = reduxForm({ validate })(UpdateForm) // pass `form` arg when instantiating form
+const validate = () => {
+  return {}
+}
+
+const ReduxUpdateForm = reduxForm({ validate })(UpdateForm)
 
 class SubmissionFormWrapper extends React.Component {
+  state = {
+    editingLocation: false,
+    location: {},
+  }
+
   componentDidMount() {
     this.loadActionsForSearch()
     this.loadSubmission()
@@ -169,8 +177,28 @@ class SubmissionFormWrapper extends React.Component {
     this.loadSubmissionsForAction()
   }
 
+  handleLocationClick = () => {
+    this.setState({ editingLocation: true })
+  }
+
+  handleLocationChange = ({ lat, lng }) => {
+    this.setState({ location: { lat, lng } })
+  }
+
+  handleLocationSubmit = async () => {
+    const { location: { lat, lng } } = this.state
+    await this.handleSubmit({ location: `${lat},${lng}` })
+    this.setState({ editingLocation: false })
+  }
+
+  handleLocationCancel = () => {
+    this.setState({ editingLocation: false })
+  }
+
   render() {
     const { submission, actions, submissionId } = this.props
+    const { location } = submission
+    const { editingLocation } = this.state
     if (!submission.id) return <LoadingIndicatorCircle className={Styles.loader} />
 
     const thumbs = submission.images.map((image) => {
@@ -184,6 +212,36 @@ class SubmissionFormWrapper extends React.Component {
       )
     })
 
+    if (editingLocation && location) {
+      return (
+        <div className={FormStyles.formContainerLeft}>
+          <div className={Styles.mapContainer}>
+            <ChooseLocationMap
+              onLocationChange={this.handleLocationChange}
+              coordinates={[location.lng, location.lat]}
+              legend={<TextLegend text="DALE CLIC PARA ESCOGER LA UBICACIÓN DE LAS FOTOS" />}
+            />
+          </div>
+          <div className={FormStyles.row}>
+            <RaisedButton
+              backgroundColor="#3DC59F"
+              labelColor="#ffffff"
+              className={FormStyles.primaryButton}
+              label="GUARDAR"
+              onClick={this.handleLocationSubmit}
+            />
+            <RaisedButton
+              backgroundColor="#3DC59F"
+              labelColor="#ffffff"
+              className={Styles.locationBackButton}
+              label="CANCELAR"
+              onClick={this.handleLocationCancel}
+            />
+          </div>
+        </div>
+      )
+    }
+
     return (
       <React.Fragment>
         <div className={FormStyles.formContainerLeft}>
@@ -191,9 +249,11 @@ class SubmissionFormWrapper extends React.Component {
             onSubmit={this.handleSubmit}
             initialValues={prepareInitialValues(submission)}
             location={submission.location}
+            submissionId={submissionId}
             actionSearch={actions}
             form={`accountUpdateSubmission_${submissionId}`}
             onDelete={this.handleDelete}
+            onLocationClick={this.handleLocationClick}
             enableReinitialize
           />
         </div>

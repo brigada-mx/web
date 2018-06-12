@@ -32,6 +32,14 @@
   margin-right: 20px;
 }
 
+.mapContainer {
+  background-color: #EFEFEF;
+  border: 1px solid #EFEFEF;
+  box-sizing: border-box;
+  width: 80%;
+  height: 50vh;
+}
+
 .locationButton {
   font-family: 'nunito-sans', sans-serif;
   font-size: 15px;
@@ -45,6 +53,12 @@
 
 .locationButton:hover {
   color: #13A68C;
+}
+
+.locationBackButton {
+  border-radius: 2px;
+  box-shadow: unset !important;
+  margin-left: 20px;
 }
 
 @media screen and (max-width: 979px) {
