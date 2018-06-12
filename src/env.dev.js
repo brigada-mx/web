@@ -7,4 +7,7 @@ export const logging = {
   http: true,
 }
 
+export const google = {
+}
+
 export const env = 'dev'

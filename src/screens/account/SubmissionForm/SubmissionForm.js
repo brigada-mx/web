@@ -220,7 +220,7 @@ class SubmissionFormWrapper extends React.Component {
             <ChooseLocationMap
               onLocationChange={this.handleLocationChange}
               coordinates={[location.lng, location.lat]}
-              legend={<TextLegend text="DALE CLIC PARA ESCOGER LA UBICACIÓN DE LAS FOTOS" />}
+              legend={<TextLegend text="UBICACIÓN DE LAS FOTOS" />}
             />
           </div>
           <div className={FormStyles.row}>

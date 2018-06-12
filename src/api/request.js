@@ -16,6 +16,18 @@ const replaceProtocol = (url, protocol) => {
   return `${protocol}://${parts[1]}`
 }
 
+const _sendToUrl = async (url = '', { method = 'GET', body = {}, params = {}, headers = {} } = {}) => {
+  const options = {
+    method,
+    body: JSON.stringify(body), // `body` must be a string, not an object
+    headers: new Headers(headers),
+  }
+
+  if (['GET', 'HEAD'].indexOf(method) > -1) { delete options.body }
+
+  return fetch(`${url}${toQs(params)}`, options)
+}
+
 const _sendToApi = async (
   url = '', { method = 'GET', body = {}, params = {}, headers = {}, isRelative = true, token = '' } = {}
 ) => {
@@ -80,5 +92,18 @@ const sendToApiAuth = async (type, url, params = {}) => {
   }
 }
 
+const sendToUrl = async (url, params) => {
+  try {
+    const r = await _sendToUrl(url, params)
+    const { status } = r
+
+    const data = await r.json()
+    if (status >= 400) return { error: data, status }
+    return { data, status }
+  } catch (exception) {
+    return { exception }
+  }
+}
+
 export default sendToApi
-export { sendToApiAuth, toQs }
+export { sendToApiAuth, sendToUrl, toQs }
