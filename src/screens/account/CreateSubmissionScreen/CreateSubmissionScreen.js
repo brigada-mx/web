@@ -18,8 +18,8 @@ import Styles from './CreateSubmissionScreen.css'
 class CreateSubmissionScreen extends React.Component {
   state = { step: 'location', values: {} }
 
-  static getDerivedStateFromProps({ action }, { location } = {}) {
-    if (action && !location) return { location: { ...action.locality.location } }
+  static getDerivedStateFromProps({ action }, { values: { location } } = {}) {
+    if (action && !location) return { values: { location: { ...action.locality.location } } }
     return null
   }
 
