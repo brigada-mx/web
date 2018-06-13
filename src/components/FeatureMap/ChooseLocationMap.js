@@ -44,9 +44,20 @@ class ChooseLocationMap extends React.Component {
     })
   }
 
-  handleSelect = ({ lat, lng }) => {
+  handleSelect = ({ geometry: { location: { lat, lng } } }) => {
     this.props.onLocationChange({ lng, lat })
     this.setState({ coordinates: [lng, lat], centerCoordinates: [lng, lat] })
+  }
+
+  geocoderFilter = ({ value }) => {
+    try {
+      const { address_components: components } = value
+      const comp = components.find(c => c.types.includes('country'))
+      if (!comp) return true
+      return comp.long_name.toLowerCase() === 'mexico' || comp.short_name.toLowerCase() === 'mx'
+    } catch (e) {
+      return true
+    }
   }
 
   render() {
@@ -68,7 +79,12 @@ class ChooseLocationMap extends React.Component {
           }}
           onStyleLoad={this.handleMapLoaded}
         >
-          <GoogleGeocoder apiKey={apiKey} onSelect={this.handleSelect} numResults={5} />
+          <GoogleGeocoder
+            apiKey={apiKey}
+            onSelect={this.handleSelect}
+            numResults={5}
+            filter={this.geocoderFilter}
+          />
           {legend}
           {zoomControl && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
           <Layer {...layer}>

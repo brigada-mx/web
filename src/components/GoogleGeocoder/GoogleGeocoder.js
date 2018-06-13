@@ -18,9 +18,9 @@ class GoogleGeocoder extends React.Component {
   }
 
   // https://v0.material-ui.com/#/components/auto-complete
-  handleNewRequest = (chosenRequest, index) => {
+  handleSelect = (chosenItem, index) => {
     if (index === -1) return
-    this.props.onSelect(chosenRequest.value)
+    this.props.onSelect(chosenItem.value)
   }
 
   handleUpdateInput = async (search) => {
@@ -44,13 +44,13 @@ class GoogleGeocoder extends React.Component {
   }
 
   render() {
-    const { numResults, className } = this.props
+    const { numResults, className, filter } = this.props
 
     let dataSource = this.state.results.map((r) => {
-      const { formatted_address: address, geometry: { location } } = r
-      return { text: address, value: location }
+      return { text: r.formatted_address, value: r }
     })
     if (numResults) dataSource = dataSource.slice(0, numResults)
+    if (filter) dataSource = dataSource.filter(d => filter(d))
 
     return (
       <AutoComplete
@@ -58,7 +58,7 @@ class GoogleGeocoder extends React.Component {
         floatingLabelText="Buscar lugar"
         dataSource={dataSource}
         onUpdateInput={this.handleUpdateInput}
-        onNewRequest={this.handleNewRequest}
+        onNewRequest={this.handleSelect}
         filter={this.filter}
       />
     )
@@ -67,6 +67,7 @@ class GoogleGeocoder extends React.Component {
 
 GoogleGeocoder.propTypes = {
   onSelect: PropTypes.func.isRequired,
+  filter: PropTypes.func,
   numResults: PropTypes.number,
   apiKey: PropTypes.string,
   className: PropTypes.string,
