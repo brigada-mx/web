@@ -12,8 +12,6 @@ import Styles from './FileUploader.css'
 
 
 let id = 0
-const maxSizeBytes = 10 * 1024 * 1024
-const maxFiles = 8
 
 class FileUploader extends React.Component {
   constructor(props) {
@@ -34,13 +32,16 @@ class FileUploader extends React.Component {
   handleDragOver = (e) => {
     e.preventDefault()
     e.stopPropagation()
+    clearTimeout(this._timeoutId)
     this.setState({ active: true })
   }
 
   handleDragLeave = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    this.setState({ active: false })
+    // prevents repeated toggling of `active` state when file is dragged over children of uploader
+    // see: https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
+    this._timeoutId = setTimeout(() => this.setState({ active: false }), 150)
   }
 
   handleDrop = (e) => {
@@ -60,7 +61,8 @@ class FileUploader extends React.Component {
 
   handleFile = (file) => {
     const { name, size, type } = file
-    if (!type.startsWith('image/')) return
+    const { maxSizeBytes, maxFiles, allowedTypePrefixes } = this.props
+    if (allowedTypePrefixes && !allowedTypePrefixes.some(p => type.startsWith(p))) return
     if (this._files.length >= maxFiles) return
 
     const fileWithMeta = { file, meta: { name, size, type, status: 'uploading', percent: 0, id } }
@@ -156,7 +158,7 @@ class FileUploader extends React.Component {
   }
 
   render() {
-    const { disabled = false, instructions } = this.props
+    const { disabled = false, instructions, maxFiles } = this.props
     const { active } = this.state
 
     const chooseFiles = (add = false) => {
@@ -244,6 +246,14 @@ FileUploader.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   instructions: PropTypes.string,
+  maxSizeBytes: PropTypes.number,
+  maxFiles: PropTypes.number,
+  allowedTypePrefixes: PropTypes.arrayOf(PropTypes.string),
+}
+
+FileUploader.defaultProps = {
+  maxSizeBytes: 10 * 1024 * 1024,
+  maxFiles: 8,
 }
 
 export default FileUploader

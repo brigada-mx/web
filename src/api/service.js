@@ -179,6 +179,15 @@ class Service {
     return sendToApiAuth('org', `/account/submissions/${id}/`)
   }
 
+  accountGetTestimonials = async (archived = false, page_size = 250) => {
+    const params = { archived, page_size }
+    return sendToApiAuth('org', '/account/testimonials/', { params })
+  }
+
+  accountGetTestimonial = async (id) => {
+    return sendToApiAuth('org', `/account/testimonials/${id}/`)
+  }
+
   accountGetAction = async (key) => {
     return sendToApiAuth('org', `/account/actions_by_key/${key}/`)
   }
@@ -205,6 +214,14 @@ class Service {
 
   accountUpdateSubmission = async (id, body) => {
     return sendToApiAuth('org', `/account/submissions/${id}/`, { method: 'PUT', body })
+  }
+
+  accountCreateTestimonial = async (actionId, body) => {
+    return sendToApiAuth('org', '/account/testimonials/', { method: 'POST', body: { ...body, action: actionId } })
+  }
+
+  accountUpdateTestimonial = async (id, body) => {
+    return sendToApiAuth('org', `/account/testimonials/${id}/`, { method: 'PUT', body })
   }
 
   accountCreateDonation = async (body) => {

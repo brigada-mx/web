@@ -95,7 +95,15 @@ class CreateSubmissionScreen extends React.Component {
 
     const meta = <MetaForm onSubmit={this.handleSubmitMeta} enableReinitialize />
 
-    const files = <FileUploader onSubmit={this.handleSubmitFiles} instructions="Paso 3: Arrastra hasta 8 imágenes" />
+    const files = (
+      <FileUploader
+        onSubmit={this.handleSubmitFiles}
+        instructions="Paso 3: Arrastra hasta 8 imágenes"
+        maxSizeBytes={10 * 1024 * 1024}
+        maxFiles={8}
+        allowedTypePrefixes={['image/']}
+      />
+    )
 
     if (step === 'location') return location
     if (step === 'meta') return meta
