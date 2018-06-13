@@ -105,11 +105,12 @@ export const prepareInitialValues = ({ submitted, ...rest }) => {
 }
 
 export const prepareBody = (body) => {
-  const { action_id: id, description } = body
+  const { action_id: id, description, location } = body
   return {
     ...body,
     action: id,
     desc: description,
+    location: location ? `${location.lat},${location.lng}` : undefined,
   }
 }
 
@@ -122,7 +123,6 @@ const ReduxUpdateForm = reduxForm({ validate })(UpdateForm)
 class SubmissionFormWrapper extends React.Component {
   state = {
     editingLocation: false,
-    location: {},
   }
 
   componentDidMount() {
@@ -187,8 +187,7 @@ class SubmissionFormWrapper extends React.Component {
   }
 
   handleLocationSubmit = async () => {
-    const { location: { lat, lng } } = this.state
-    await this.handleSubmit({ location: `${lat},${lng}` })
+    await this.handleSubmit({ location: this.state.location })
     this.setState({ editingLocation: false })
   }
 
