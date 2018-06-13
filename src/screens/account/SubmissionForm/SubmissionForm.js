@@ -105,12 +105,11 @@ export const prepareInitialValues = ({ submitted, ...rest }) => {
 }
 
 export const prepareBody = (body) => {
-  const { action_id: id, description, location } = body
+  const { action_id: id, description } = body
   return {
     ...body,
     action: id,
     desc: description,
-    location: location ? `${location.lat},${location.lng}` : undefined,
   }
 }
 

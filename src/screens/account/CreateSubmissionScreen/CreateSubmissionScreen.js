@@ -46,11 +46,11 @@ class CreateSubmissionScreen extends React.Component {
 
   handleSubmitFiles = async (files) => {
     const { action: { id }, snackbar, closeModal } = this.props
-    const { location: { lat, lng }, desc, submitted } = this.state.values
+    const { location, desc, submitted } = this.state.values
     const images = files.map((f) => { return { url: f.url } })
 
     const { data } = await service.accountCreateSubmission(id,
-      { location: `${lat},${lng}`, desc, submitted, images }
+      { location, desc, submitted, images }
     )
     if (!data) {
       snackbar('Hubo un error', 'error')
