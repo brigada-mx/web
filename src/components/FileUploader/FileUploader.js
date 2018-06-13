@@ -158,7 +158,7 @@ class FileUploader extends React.Component {
   }
 
   render() {
-    const { disabled = false, instructions, maxFiles } = this.props
+    const { disabled = false, instructions, maxFiles, allowedTypeString } = this.props
     const { active } = this.state
 
     const chooseFiles = (add = false) => {
@@ -175,7 +175,7 @@ class FileUploader extends React.Component {
             className={Styles.input}
             type="file"
             multiple
-            accept="image/*"
+            accept={allowedTypeString || '*'}
             onChange={e => this.handleFiles(Array.from(e.target.files))}
           />
         </React.Fragment>
@@ -204,7 +204,7 @@ class FileUploader extends React.Component {
           ref={this.dropzone}
         >
           {this._files.length === 0 &&
-            <div className={Styles.dropzoneContent}>
+            <div className={Styles.dropzoneInstructions}>
               <span className={Styles.largeText}>{instructions || `Arrastra hasta ${maxFiles} imágenes`}</span>
               <span className={Styles.smallText}>- o puedes -</span>
               {chooseFiles(false)}
@@ -219,7 +219,6 @@ class FileUploader extends React.Component {
               }
             </div>
           }
-
         </div>
 
         {this._files.length > 0 &&
@@ -249,6 +248,7 @@ FileUploader.propTypes = {
   maxSizeBytes: PropTypes.number,
   maxFiles: PropTypes.number,
   allowedTypePrefixes: PropTypes.arrayOf(PropTypes.string),
+  allowedTypeString: PropTypes.string, // for input element when choosing files instead of dragging
 }
 
 FileUploader.defaultProps = {

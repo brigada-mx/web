@@ -12,10 +12,10 @@ import service, { getBackoff } from 'api/service'
 import TextLegend from 'components/FeatureMap/TextLegend'
 import FormStyles from 'src/Form.css'
 import MetaForm from './MetaForm'
-import Styles from './CreateSubmissionScreen.css'
+import Styles from './CreateTestimonialScreen.css'
 
 
-class CreateSubmissionScreen extends React.Component {
+class CreateTestimonialScreen extends React.Component {
   state = { step: 'location', values: {} }
 
   static getDerivedStateFromProps({ action }, { values: { location } } = {}) {
@@ -32,8 +32,11 @@ class CreateSubmissionScreen extends React.Component {
     getBackoff(() => { return service.accountGetAction(actionKey) }, { key: `accountAction_${actionKey}` })
   }
 
-  handleSubmitMeta = ({ desc, submitted }) => {
-    this.setState({ step: 'files', values: { ...this.state.values, desc, submitted } })
+  handleSubmitMeta = ({ desc, submitted, first_name, surnames, age }) => {
+    this.setState({
+      step: 'files',
+      values: { ...this.state.values, desc, submitted, recipient: { first_name, surnames, age } },
+    })
   }
 
   handleSubmitLocation = () => {
@@ -45,12 +48,12 @@ class CreateSubmissionScreen extends React.Component {
   }
 
   handleSubmitFiles = async (files) => {
+    if (files.length === 0) return
     const { action: { id }, snackbar, closeModal } = this.props
     const { location, desc, submitted } = this.state.values
-    const images = files.map((f) => { return { url: f.url } })
 
-    const { data } = await service.accountCreateSubmission(id,
-      { location, desc, submitted, images }
+    const { data } = await service.accountCreateTestimonial(id,
+      { location, desc, submitted, video: files[0].url }
     )
     if (!data) {
       snackbar('Hubo un error', 'error')
@@ -59,7 +62,7 @@ class CreateSubmissionScreen extends React.Component {
     this.loadAction()
     getBackoff(() => { return service.accountGetActionStrength(id) }, { key: `actionStrength_${id}` })
     closeModal()
-    snackbar('Agregaste estas fotos', 'success')
+    snackbar('Agregaste un testimonial', 'success')
   }
 
   render() {
@@ -72,12 +75,12 @@ class CreateSubmissionScreen extends React.Component {
     const location = (
       <React.Fragment>
         <div className={Styles.container}>
-          <div className={Styles.largeText}>Paso 1: Indica dónde se tomaron las fotos</div>
+          <div className={Styles.largeText}>Paso 1: Indica dónde se grabó el testimonial</div>
           <div className={Styles.mapContainer}>
             <ChooseLocationMap
               onLocationChange={this.handleLocationChange}
               coordinates={[lng, lat]}
-              legend={<TextLegend text="UBICACIÓN DE LAS FOTOS" />}
+              legend={<TextLegend text="UBICACIÓN DEL TESTIMONIAL" />}
             />
           </div>
         </div>
@@ -98,11 +101,11 @@ class CreateSubmissionScreen extends React.Component {
     const files = (
       <FileUploader
         onSubmit={this.handleSubmitFiles}
-        instructions="Paso 3: Arrastra hasta 8 imágenes"
-        maxSizeBytes={10 * 1024 * 1024}
-        maxFiles={8}
-        allowedTypePrefixes={['image/']}
-        allowedTypeString="image/*"
+        instructions="Paso 3: Arrastra un vídeo"
+        maxSizeBytes={100 * 1024 * 1024}
+        maxFiles={1}
+        allowedTypePrefixes={['video/']}
+        allowedTypeString="video/*"
       />
     )
 
@@ -113,7 +116,7 @@ class CreateSubmissionScreen extends React.Component {
   }
 }
 
-CreateSubmissionScreen.propTypes = {
+CreateTestimonialScreen.propTypes = {
   action: PropTypes.object,
   actionKey: PropTypes.number.isRequired,
   snackbar: PropTypes.func.isRequired,
@@ -136,4 +139,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSubmissionScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTestimonialScreen)

@@ -1,0 +1,42 @@
+.container {
+  height: 60vh;
+  max-width: 100%;
+  overflow: scroll;
+  padding: 5%;
+}
+
+.largeText {
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 22px;
+  color: #141418;
+  letter-spacing: 0;
+  line-height: 32px;
+  margin-bottom: 10px;
+}
+
+.mediumText {
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 20px;
+  color: #141418;
+  letter-spacing: 0;
+  line-height: 30px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.buttonContainer {
+  border-top: 1px solid #E1E7ED;
+  padding: 20px 5%;
+}
+
+.mapContainer {
+  background-color: #EFEFEF;
+  border: 1px solid #EFEFEF;
+  box-sizing: border-box;
+  width: 80%;
+  height: 85%;
+}
+
+.description {
+  margin: 15px 0;
+}

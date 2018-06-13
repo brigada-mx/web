@@ -8,12 +8,16 @@
   transition: all .15s linear;
 }
 
-.dropzoneContent {
+.dropzoneInstructions {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.previewListContainer {
+  margin-top: 40px;
 }
 
 .largeText {
@@ -76,10 +80,6 @@
 
 .addFiles .inputLabel:hover {
   border: 1px solid #4D4D4D;
-}
-
-.previewListContainer {
-  margin-top: 40px;
 }
 
 .previewContainer {
