@@ -14,7 +14,7 @@ const MetaForm = ({ handleSubmit, submitting }) => {
   return (
     <React.Fragment>
       <div className={Styles.container}>
-        <div className={Styles.largeText}>Paso 2: Completa información sobre el testimonial</div>
+        <div className={Styles.largeText}>Paso 2: Completa información sobre el testimonio</div>
         <div className={Styles.description}>
           <TextField
             name="desc"
@@ -38,19 +38,17 @@ const MetaForm = ({ handleSubmit, submitting }) => {
           />
           <TextField
             name="surnames"
-            hintText="Apellido"
+            hintText="Apellidos"
           />
         </div>
 
-        <div className={FormStyles.row}>
-          <TextField
-            type="number"
-            min="0"
-            floatingLabelText="¿Cuántos años tiene?"
-            name="age"
-            normalize={(value) => { return value ? parseInt(value, 10) : null }}
-          />
-        </div>
+        <TextField
+          type="number"
+          min="0"
+          floatingLabelText="¿Cuántos años tiene?"
+          name="age"
+          normalize={(value) => { return value ? parseInt(value, 10) : null }}
+        />
       </div>
       <div className={Styles.buttonContainer}>
         <RaisedButton
@@ -72,8 +70,8 @@ MetaForm.propTypes = {
 
 const validate = ({ desc, submitted, first_name: firstName, surnames, age }) => {
   const errors = {}
-  if (!desc) errors.desc = 'Se requiere una descripción del testimonial'
-  if (!submitted) errors.submitted = 'Agrega la fecha se grabó el vídeo'
+  if (!desc) errors.desc = 'Se requiere una descripción del testimonio'
+  if (!submitted) errors.submitted = 'Agrega la fecha cuándo se grabó el vídeo'
   if (!firstName) errors.first_name = 'Ingresa su nombre'
   if (!surnames) errors.surnames = 'Ingresa sus apellidos'
   if (!age) errors.age = 'Agrega su edad'

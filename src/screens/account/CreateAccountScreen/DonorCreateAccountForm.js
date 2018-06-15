@@ -95,7 +95,7 @@ class DonorCreateAccountForm extends React.Component {
           <TextField
             className={FormStyles.wideInput}
             name="surnames"
-            hintText="Apellido"
+            hintText="Apellidos"
           />
         </div>
 

@@ -50,10 +50,10 @@ class CreateTestimonialScreen extends React.Component {
   handleSubmitFiles = async (files) => {
     if (files.length === 0) return
     const { action: { id }, snackbar, closeModal } = this.props
-    const { location, desc, submitted } = this.state.values
+    const { location, desc, submitted, recipient } = this.state.values
 
     const { data } = await service.accountCreateTestimonial(id,
-      { location, desc, submitted, video: files[0].url }
+      { location, desc, submitted, recipient, video: { url: files[0].url } }
     )
     if (!data) {
       snackbar('Hubo un error', 'error')
@@ -62,7 +62,7 @@ class CreateTestimonialScreen extends React.Component {
     this.loadAction()
     getBackoff(() => { return service.accountGetActionStrength(id) }, { key: `actionStrength_${id}` })
     closeModal()
-    snackbar('Agregaste un testimonial', 'success')
+    snackbar('Agregaste un testimonio', 'success')
   }
 
   render() {
@@ -75,12 +75,12 @@ class CreateTestimonialScreen extends React.Component {
     const location = (
       <React.Fragment>
         <div className={Styles.container}>
-          <div className={Styles.largeText}>Paso 1: Indica dónde se grabó el testimonial</div>
+          <div className={Styles.largeText}>Paso 1: Indica dónde se grabó el testimonio</div>
           <div className={Styles.mapContainer}>
             <ChooseLocationMap
               onLocationChange={this.handleLocationChange}
               coordinates={[lng, lat]}
-              legend={<TextLegend text="UBICACIÓN DEL TESTIMONIAL" />}
+              legend={<TextLegend text="UBICACIÓN DEL TESTIMONIO" />}
             />
           </div>
         </div>
@@ -102,7 +102,8 @@ class CreateTestimonialScreen extends React.Component {
       <FileUploader
         onSubmit={this.handleSubmitFiles}
         instructions="Paso 3: Arrastra un vídeo"
-        maxSizeBytes={100 * 1024 * 1024}
+        subInstructions="120MB tamaño máximo"
+        maxSizeBytes={120 * 1024 * 1024}
         maxFiles={1}
         allowedTypePrefixes={['video/']}
         allowedTypeString="video/*"

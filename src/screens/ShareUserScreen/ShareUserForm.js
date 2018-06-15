@@ -32,7 +32,7 @@ const ShareUserForm = ({ handleSubmit, submitting }) => {
         />
         <TextField
           name="surnames"
-          hintText="Apellido"
+          hintText="Apellidos"
         />
       </div>
 

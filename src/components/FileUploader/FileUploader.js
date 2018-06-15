@@ -84,6 +84,9 @@ class FileUploader extends React.Component {
   }
 
   previewFile = (fileWithMeta) => {
+    const { meta: { type } } = fileWithMeta
+    if (!type.startsWith('image/')) return
+
     const reader = new FileReader()
     reader.readAsDataURL(fileWithMeta.file)
     reader.onloadend = () => {
@@ -158,7 +161,7 @@ class FileUploader extends React.Component {
   }
 
   render() {
-    const { disabled = false, instructions, maxFiles, allowedTypeString } = this.props
+    const { disabled = false, instructions, subInstructions, maxFiles, allowedTypeString } = this.props
     const { active } = this.state
 
     const chooseFiles = (add = false) => {
@@ -205,7 +208,10 @@ class FileUploader extends React.Component {
         >
           {this._files.length === 0 &&
             <div className={Styles.dropzoneInstructions}>
-              <span className={Styles.largeText}>{instructions || `Arrastra hasta ${maxFiles} imágenes`}</span>
+              <span className={Styles.largeText}>
+                {instructions || `Arrastra hasta ${maxFiles} archivo${maxFiles === 1 ? '' : 's'}`}
+              </span>
+              {subInstructions && <span className={Styles.smallText}>{subInstructions}</span>}
               <span className={Styles.smallText}>- o puedes -</span>
               {chooseFiles(false)}
             </div>
@@ -245,15 +251,11 @@ FileUploader.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   instructions: PropTypes.string,
-  maxSizeBytes: PropTypes.number,
-  maxFiles: PropTypes.number,
+  subInstructions: PropTypes.string,
+  maxSizeBytes: PropTypes.number.isRequired,
+  maxFiles: PropTypes.number.isRequired,
   allowedTypePrefixes: PropTypes.arrayOf(PropTypes.string),
   allowedTypeString: PropTypes.string, // for input element when choosing files instead of dragging
-}
-
-FileUploader.defaultProps = {
-  maxSizeBytes: 10 * 1024 * 1024,
-  maxFiles: 8,
 }
 
 export default FileUploader

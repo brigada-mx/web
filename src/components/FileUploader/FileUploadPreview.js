@@ -11,7 +11,8 @@ const FileUploadPreview = ({ name = '', percent = 0, size = 0, previewUrl, type,
 
   return (
     <div className={Styles.previewContainer}>
-      <img className={Styles.preview} src={previewUrl} alt={title} title={title} />
+      {previewUrl && <img className={Styles.preview} src={previewUrl} alt={title} title={title} />}
+      {!previewUrl && <span>{title}</span>}
       <div className={Styles.statusContainer}>
         <progress max={100} value={status === 'done' ? 100 : percent} />
         {status === 'uploading' && onCancel && <span className={Styles.abortButton} onClick={onCancel} />}

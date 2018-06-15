@@ -140,6 +140,12 @@ class ActionScreen extends React.Component {
     modal('createSubmission', { actionKey: action.key, modalPadded: false, modalWide: true })
   }
 
+  handleToggleCreateTestimonialModal = () => {
+    const { modal, action } = this.props
+    if (action.key === undefined) return
+    modal('createTestimonial', { actionKey: action.key, modalPadded: false, modalWide: true })
+  }
+
   handleDeleteAction = async () => {
     const { data } = await service.accountArchiveAction(this.props.action.id, true)
     if (!data) {
@@ -322,6 +328,21 @@ class ActionScreen extends React.Component {
 
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>
+            <span>Testimonios</span>
+            <div>
+              <RaisedButton
+                backgroundColor="#3DC59F"
+                labelColor="#ffffff"
+                className={FormStyles.primaryButton}
+                label="AGREGAR"
+                onClick={this.handleToggleCreateTestimonialModal}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className={FormStyles.card}>
+          <div className={FormStyles.sectionHeader}>
             <span>Fotos</span>
             <div>
               <span
@@ -335,7 +356,7 @@ class ActionScreen extends React.Component {
                 labelColor="#ffffff"
                 className={FormStyles.primaryButton}
                 label="AGREGAR"
-                onClick={() => this.handleToggleCreateSubmissionModal(true)}
+                onClick={this.handleToggleCreateSubmissionModal}
               />
             </div>
           </div>

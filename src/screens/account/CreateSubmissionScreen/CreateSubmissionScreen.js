@@ -99,6 +99,7 @@ class CreateSubmissionScreen extends React.Component {
       <FileUploader
         onSubmit={this.handleSubmitFiles}
         instructions="Paso 3: Arrastra hasta 8 imágenes"
+        subInstructions="10MB tamaño máximo"
         maxSizeBytes={10 * 1024 * 1024}
         maxFiles={8}
         allowedTypePrefixes={['image/']}

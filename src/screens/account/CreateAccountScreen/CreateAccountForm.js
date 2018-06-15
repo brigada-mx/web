@@ -36,7 +36,7 @@ const CreateAccountForm = ({ handleSubmit, submitting }) => {
         <TextField
           className={FormStyles.wideInput}
           name="surnames"
-          hintText="Apellido"
+          hintText="Apellidos"
         />
       </div>
       <div className={Styles.inputGroup}>

@@ -31,7 +31,7 @@ const VolunteerApplicationForm = ({ handleSubmit, submitting, position }) => {
         />
         <TextField
           name="surnames"
-          hintText="Apellido"
+          hintText="Apellidos"
         />
       </div>
 
