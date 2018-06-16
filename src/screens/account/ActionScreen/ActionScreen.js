@@ -25,7 +25,7 @@ import ApplicationTable from 'screens/account/ApplicationTable'
 import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
 import SubmissionTrash from 'screens/account/SubmissionTrash'
-// import TestimonialForm from 'screens/account/TestimonialForm'
+import TestimonialForm from 'screens/account/TestimonialForm'
 import TestimonialTable from 'screens/account/TestimonialTable'
 import { getProjectType } from 'src/choices'
 import FormStyles from 'src/Form.css'
@@ -410,7 +410,7 @@ class ActionScreen extends React.Component {
             onClose={this.handleSubmissionModalClose}
             gaName={`submission/${submissionId}`}
           >
-            <SubmissionForm submissionId={submissionId} />
+            <SubmissionForm submissionId={submissionId} onChange={this.loadAction} />
           </Modal>
         }
 
@@ -420,7 +420,7 @@ class ActionScreen extends React.Component {
             onClose={this.handleTestimonialModalClose}
             gaName={`testimonial/${testimonialId}`}
           >
-            <TestimonialForm testimonialId={testimonialId} />
+            <TestimonialForm testimonialId={testimonialId} onChange={this.loadAction} />
           </Modal>
         }
 

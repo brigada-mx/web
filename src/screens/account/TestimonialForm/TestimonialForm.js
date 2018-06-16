@@ -11,17 +11,15 @@ import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { projectTypeByValue } from 'src/choices'
 import { roundTo } from 'tools/string'
-import ConfirmButton from 'components/ConfirmButton'
 import TextLegend from 'components/FeatureMap/TextLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import ChooseLocationMap from 'components/FeatureMap/ChooseLocationMap'
 import { TextField, Toggle, SelectField, DatePicker } from 'components/Fields'
 import FormStyles from 'src/Form.css'
-import Styles from './SubmissionForm.css'
-import EditableImage from './EditableImage'
+import Styles from './TestimonialForm.css'
 
 
-const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [], location, onLocationClick }) => {
+const UpdateForm = ({ handleSubmit, submitting, actionSearch = [], location, onLocationClick }) => {
   const actions = actionSearch.map((a) => {
     const { id, key, action_type: type, desc } = a
     return { label: `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`, value: id }
@@ -46,14 +44,14 @@ const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [], loc
         <TextField
           className={FormStyles.wideInput}
           floatingLabelText="Descripción"
-          name="description"
+          name="desc"
           multiLine
           rows={3}
         />
       </div>
       <div className={FormStyles.row}>
         <DatePicker
-          floatingLabelText="Fecha cuando se tomaron las fotos"
+          floatingLabelText="Fecha cuando se grabó el vídeo"
           name="submitted"
           format={formatDatePicker}
         />
@@ -64,6 +62,24 @@ const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [], loc
           </React.Fragment>
         }
       </div>
+      <div className={FormStyles.row}>
+        <TextField
+          name="first_name"
+          hintText="Nombre de persona beneficiada"
+        />
+        <TextField
+          name="surnames"
+          hintText="Apellidos de persona beneficiada"
+        />
+      </div>
+
+      <TextField
+        type="number"
+        min="0"
+        floatingLabelText="¿Cuántos años tiene?"
+        name="age"
+        normalize={(value) => { return value ? parseInt(value, 10) : null }}
+      />
       <div className={FormStyles.toggle}>
         <Toggle
           label="¿Publicado?"
@@ -77,12 +93,6 @@ const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [], loc
           label="GUARDAR"
           onClick={handleSubmit}
         />
-        <ConfirmButton
-          className={FormStyles.button}
-          disabled={submitting}
-          text="Borrar"
-          onConfirm={onDelete}
-        />
       </div>
     </React.Fragment>
   )
@@ -90,84 +100,76 @@ const UpdateForm = ({ handleSubmit, submitting, onDelete, actionSearch = [], loc
 
 UpdateForm.propTypes = {
   ...rxfPropTypes,
-  onDelete: PropTypes.func.isRequired,
   actionSearch: PropTypes.arrayOf(PropTypes.object).isRequired,
   onLocationClick: PropTypes.func.isRequired,
   location: PropTypes.object,
 }
 
-export const prepareInitialValues = ({ submitted, ...rest }) => {
+export const prepareInitialValues = ({ submitted, recipient: { first_name, surnames, age }, ...rest }) => {
   return {
     ...rest,
+    first_name,
+    surnames,
+    age,
     submitted: submitted && new Date(submitted),
   }
 }
 
-export const prepareBody = (body) => {
-  const { action_id: id, description } = body
-  return {
-    ...body,
+export const prepareBody = (body, includeRecipient = true) => {
+  const { action_id: id, first_name, surnames, age, ...rest } = body
+  const prepared = {
+    ...rest,
     action: id,
-    desc: description,
   }
+  if (includeRecipient) prepared.recipient = { first_name, surnames, age }
+  return prepared
 }
 
-const validate = ({ description, submitted }) => {
+const validate = ({ desc, submitted, first_name: name, surnames, age }) => {
   const errors = {}
-  if (!description) errors.description = 'Agrega una descripción de estas fotos'
-  if (!submitted) errors.submitted = 'Agrega la fecha cuando se tomaron las fotos'
+  if (!desc) errors.desc = 'Agrega una descripción de este testimonio'
+  if (!submitted) errors.submitted = 'Agrega la fecha cuando se grabó el testimonio'
+  if (!name) errors.first_name = 'Agrega el nombre de la persona beneficiada'
+  if (!surnames) errors.surnames = 'Agrega los apellidos de la persona beneficiada'
+  if (!age) errors.age = 'Agrega la edad de la persona beneficiada'
   return errors
 }
 
 const ReduxUpdateForm = reduxForm({ validate })(UpdateForm)
 
-class SubmissionFormWrapper extends React.Component {
+class TestimonialFormWrapper extends React.Component {
   state = {
     editingLocation: false,
   }
 
   componentDidMount() {
     this.loadActionsForSearch()
-    this.loadSubmission()
+    this.loadTestimonial()
   }
 
   loadActionsForSearch = () => {
     getBackoff(service.accountGetActionsMinimal, { key: 'accountActionsMinimal' })
   }
 
-  loadSubmission = () => {
-    const { submissionId } = this.props
+  loadTestimonial = () => {
+    const { testimonialId } = this.props
     getBackoff(
-      () => { return service.accountGetSubmission(submissionId) },
-      { key: `accountSubmission_${submissionId}` }
+      () => { return service.accountGetTestimonial(testimonialId) },
+      { key: `accountTestimonial_${testimonialId}` }
     )
   }
 
-  handleSubmit = async (values) => {
-    const body = prepareBody(values)
-    const { data } = await service.accountUpdateSubmission(this.props.submissionId, body)
+  handleSubmit = async (values, includeRecipient = true) => {
+    const { snackbar, onChange } = this.props
+    const body = prepareBody(values, includeRecipient)
+    const { data } = await service.accountUpdateTestimonial(this.props.testimonialId, body)
     if (!data) {
-      this.props.snackbar('Hubo un error', 'error')
+      snackbar('Hubo un error', 'error')
       return
     }
-    this.loadSubmission()
-    if (this.props.onChange) this.props.onChange()
-    this.props.snackbar('Actualizaste estas fotos', 'success')
-  }
-
-  handleDelete = async () => {
-    const { data } = await service.accountArchiveSubmission(this.props.submissionId, true)
-    if (!data) {
-      this.props.snackbar('Hubo un error', 'error')
-      return
-    }
-    if (this.props.onChange) this.props.onChange()
-    this.props.snackbar('Mandaste estas fotos al basurero', 'success')
-  }
-
-  handleUpdatePhoto = () => {
-    this.loadSubmission()
-    if (this.props.onChange) this.props.onChange()
+    this.loadTestimonial()
+    if (onChange) onChange()
+    this.props.snackbar('Actualizaste este testimonio', 'success')
   }
 
   handleLocationClick = () => {
@@ -179,7 +181,7 @@ class SubmissionFormWrapper extends React.Component {
   }
 
   handleLocationSubmit = async () => {
-    await this.handleSubmit({ location: this.state.location })
+    await this.handleSubmit({ location: this.state.location }, false)
     this.setState({ editingLocation: false })
   }
 
@@ -188,21 +190,10 @@ class SubmissionFormWrapper extends React.Component {
   }
 
   render() {
-    const { submission, actions, submissionId } = this.props
-    const { location } = submission
+    const { testimonial, actions, testimonialId } = this.props
+    const { location } = testimonial
     const { editingLocation } = this.state
-    if (!submission.id) return <LoadingIndicatorCircle className={Styles.loader} />
-
-    const thumbs = submission.images.map((image) => {
-      return (
-        <EditableImage
-          onUpdate={this.handleUpdatePhoto}
-          key={image.url}
-          image={image}
-          submissionId={submissionId}
-        />
-      )
-    })
+    if (!testimonial.id) return <LoadingIndicatorCircle className={Styles.loader} />
 
     if (editingLocation && location) {
       return (
@@ -237,37 +228,35 @@ class SubmissionFormWrapper extends React.Component {
         <div className={FormStyles.formContainerLeft}>
           <ReduxUpdateForm
             onSubmit={this.handleSubmit}
-            initialValues={prepareInitialValues(submission)}
-            location={submission.location}
-            submissionId={submissionId}
+            initialValues={prepareInitialValues(testimonial)}
+            location={testimonial.location}
+            testimonialId={testimonialId}
             actionSearch={actions}
-            form={`accountUpdateSubmission_${submissionId}`}
-            onDelete={this.handleDelete}
+            form={`accountUpdateTestimonial_${testimonialId}`}
             onLocationClick={this.handleLocationClick}
             enableReinitialize
           />
         </div>
-        <div className={Styles.thumbnailsContainer}>{thumbs}</div>
       </React.Fragment>
     )
   }
 }
 
-SubmissionFormWrapper.propTypes = {
-  submissionId: PropTypes.number.isRequired,
-  submission: PropTypes.object.isRequired,
+TestimonialFormWrapper.propTypes = {
+  testimonialId: PropTypes.number.isRequired,
+  testimonial: PropTypes.object.isRequired,
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
   snackbar: PropTypes.func.isRequired,
   onChange: PropTypes.func,
 }
 
-const mapStateToProps = (state, { submissionId }) => {
-  let submission = {}
+const mapStateToProps = (state, { testimonialId }) => {
+  let testimonial = {}
   let actions = []
 
   try {
-    submission = { ...state.getter[`accountSubmission_${submissionId}`].data }
-    if (submission.action) submission.action_id = submission.action.id
+    testimonial = { ...state.getter[`accountTestimonial_${testimonialId}`].data }
+    if (testimonial.action) testimonial.action_id = testimonial.action.id
   } catch (e) {}
   try {
     actions = state.getter.accountActionsMinimal.data.results.sort((a, b) => {
@@ -277,7 +266,7 @@ const mapStateToProps = (state, { submissionId }) => {
     })
   } catch (e) {}
 
-  return { submission, actions }
+  return { testimonial, actions }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -286,4 +275,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubmissionFormWrapper)
+export default connect(mapStateToProps, mapDispatchToProps)(TestimonialFormWrapper)

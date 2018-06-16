@@ -49,17 +49,6 @@ class ChooseLocationMap extends React.Component {
     this.setState({ coordinates: [lng, lat], centerCoordinates: [lng, lat] })
   }
 
-  geocoderFilter = ({ value }) => {
-    try {
-      const { address_components: components } = value
-      const comp = components.find(c => c.types.includes('country'))
-      if (!comp) return true
-      return comp.long_name.toLowerCase() === 'mexico' || comp.short_name.toLowerCase() === 'mx'
-    } catch (e) {
-      return true
-    }
-  }
-
   render() {
     const { Mapbox } = this
     if (!Mapbox) return null
@@ -83,7 +72,6 @@ class ChooseLocationMap extends React.Component {
             apiKey={apiKey}
             onSelect={this.handleSelect}
             numResults={5}
-            filter={this.geocoderFilter}
           />
           {legend}
           {zoomControl && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}

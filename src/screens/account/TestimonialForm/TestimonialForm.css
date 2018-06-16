@@ -1,0 +1,34 @@
+.loader {
+  position: absolute;
+  left: 50vw;
+  top: 20vh;
+}
+
+.mapContainer {
+  background-color: #EFEFEF;
+  border: 1px solid #EFEFEF;
+  box-sizing: border-box;
+  width: 80%;
+  height: 50vh;
+}
+
+.locationButton {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 15px;
+  color: #3DC59F;
+  letter-spacing: 0.6px;
+  text-align: right;
+  line-height: 30px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.locationButton:hover {
+  color: #13A68C;
+}
+
+.locationBackButton {
+  border-radius: 2px;
+  box-shadow: unset !important;
+  margin-left: 20px;
+}

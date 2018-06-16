@@ -30,7 +30,7 @@ class GoogleGeocoder extends React.Component {
     }
 
     const { apiKey } = this.props
-    const params = { address: search }
+    const params = { address: search, language: 'es', region: 'mx' }
     if (apiKey) params.key = apiKey
 
     const { data } = await sendToUrl('https://maps.googleapis.com/maps/api/geocode/json', { params })
