@@ -59,6 +59,11 @@ class ActionScreenView extends React.Component {
     this.setState({ carousel: { lat, lng } })
   }
 
+  handleEnterItemFeature = (feature) => {
+    const { lat: selectedLat, lng: selectedLng } = feature.properties
+    this.setState({ selectedLat, selectedLng })
+  }
+
   handleCarouselClose = () => {
     this.setState({ carousel: undefined })
   }
@@ -100,7 +105,7 @@ class ActionScreenView extends React.Component {
   }
 
   render() {
-    const { action: { loading, data, status }, modal, strength } = this.props
+    const { action: { loading, data, status }, modal } = this.props
     if (status === 404) return <Redirect to="/reconstructores" />
     if (loading || !data) return <LoadingIndicatorCircle />
 
@@ -184,6 +189,7 @@ class ActionScreenView extends React.Component {
         selectedLat={this.state.selectedLat}
         selectedLng={this.state.selectedLng}
         onClickFeature={this.handleClickItemFeature}
+        onEnterFeature={this.handleEnterItemFeature}
       />
     )
 
@@ -306,15 +312,6 @@ ActionScreenView.propTypes = {
   myAction: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
   modal: PropTypes.func.isRequired,
-  strength: PropTypes.object,
-}
-
-const mapStateToProps = (state, { action }) => {
-  try {
-    return { strength: state.getter[`actionStrength_${action.data.id}`].data }
-  } catch (e) {
-    return {}
-  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -323,4 +320,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ActionScreenView))
+export default withRouter(connect(null, mapDispatchToProps)(ActionScreenView))
