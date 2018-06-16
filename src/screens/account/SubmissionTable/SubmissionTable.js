@@ -9,10 +9,10 @@ import Toggle from 'material-ui/Toggle'
 import RaisedButton from 'material-ui/RaisedButton'
 import '!style-loader!css-loader!react-table/react-table.css'
 
-import ConfirmButton from 'components/ConfirmButton'
 import { tokenMatch, thumborUrl, imageStyleObject } from 'tools/string'
+import ConfirmButton from 'components/ConfirmButton'
+import ActionSelect from 'screens/account/ActionSelect'
 import FormStyles from 'src/Form.css'
-import SubmissionActionSelect from './SubmissionActionSelect'
 import Styles from './SubmissionTable.css'
 
 
@@ -93,7 +93,7 @@ const SubmissionTable = ({
     columns.splice(3, 0, {
       Header: 'Proyecto',
       accessor: 'action_id',
-      Cell: props => (<SubmissionActionSelect
+      Cell: props => (<ActionSelect
         value={props.original.action_id}
         onChange={(event, key, payload) => onChangeAction(props.original.id, payload)}
         getterKey="accountActions"

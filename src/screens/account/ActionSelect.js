@@ -8,7 +8,7 @@ import SelectField from 'material-ui/SelectField'
 import { projectTypeByValue } from 'src/choices'
 
 
-const SubmissionActionSelect = ({ actions, onChange, value }) => {
+const ActionSelect = ({ actions, onChange, value }) => {
   const items = actions.map((a) => {
     const { id, key, action_type: type, desc } = a
     return { label: `${key} — ${projectTypeByValue[type] || '?'} — ${desc}`, value: id }
@@ -19,14 +19,14 @@ const SubmissionActionSelect = ({ actions, onChange, value }) => {
       value={value}
       onChange={onChange}
     >
-      {items.map(({ value, label }) => {
-        return <MenuItem key={value} value={value} primaryText={label} />
+      {items.map(({ value: _value, label }) => {
+        return <MenuItem key={_value} value={_value} primaryText={label} />
       })}
     </SelectField>
   )
 }
 
-SubmissionActionSelect.propTypes = {
+ActionSelect.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.number,
@@ -46,4 +46,4 @@ const mapStateToProps = (state, { getterKey = 'accountActionsMinimal' }) => {
   }
 }
 
-export default connect(mapStateToProps, null)(SubmissionActionSelect)
+export default connect(mapStateToProps, null)(ActionSelect)

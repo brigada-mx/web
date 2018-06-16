@@ -1,0 +1,16 @@
+.thumbnail {
+  width: 96px;
+  height: 72px;
+  box-sizing: border-box;
+  border: 1px solid #EFEFEF;
+  position: relative;
+  background-size: cover;
+  margin-right: 4px;
+  cursor: pointer;
+}
+
+.thumbnailContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

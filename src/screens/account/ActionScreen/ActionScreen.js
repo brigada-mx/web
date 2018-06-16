@@ -25,6 +25,8 @@ import ApplicationTable from 'screens/account/ApplicationTable'
 import SubmissionForm from 'screens/account/SubmissionForm'
 import SubmissionTable from 'screens/account/SubmissionTable'
 import SubmissionTrash from 'screens/account/SubmissionTrash'
+// import TestimonialForm from 'screens/account/TestimonialForm'
+import TestimonialTable from 'screens/account/TestimonialTable'
 import { getProjectType } from 'src/choices'
 import FormStyles from 'src/Form.css'
 import Styles from './ActionScreen.css'
@@ -39,6 +41,7 @@ class ActionScreen extends React.Component {
     this.state = {
       localitiesSearch: [],
       submissionId: undefined,
+      testimonialId: undefined,
       donationId: undefined,
       opportunityId: undefined,
       trashModal: false,
@@ -102,8 +105,31 @@ class ActionScreen extends React.Component {
     this.setState({ submissionId: id })
   }
 
-  handleModalClose = async () => {
+  handleSubmissionModalClose = async () => {
     this.setState({ submissionId: undefined })
+  }
+
+  handleTogglePublishedTestimonial = async (id, published) => {
+    const { data } = await service.accountUpdateTestimonial(id, { published })
+    if (!data) {
+      this.props.snackbar(`Hubo un error, no se pudo ${published ? 'publicar' : 'ocultar'} este testimonio`, 'error')
+      return
+    }
+    this.loadAction()
+    const message = published ? 'Publicaste este testimonio' : 'Ocultaste este testimonio'
+    this.props.snackbar(message, 'success')
+  }
+
+  handlePreviewTestimonial = async (videoId) => {
+    this.props.modal('youTubeVideo', { modalTransparent: true, videoId })
+  }
+
+  handleRowClickedTestimonial = (id) => {
+    this.setState({ testimonialId: id })
+  }
+
+  handleTestimonialModalClose = async () => {
+    this.setState({ testimonialId: undefined })
   }
 
   handleToggleSubmissionTrashModal = (open) => {
@@ -239,10 +265,11 @@ class ActionScreen extends React.Component {
   }
 
   render() {
-    const { action, donations, opportunities, submissions, status } = this.props
+    const { action, donations, opportunities, submissions, testimonials, status } = this.props
     if (status === 404) return <Redirect to="/cuenta" />
     const {
       submissionId,
+      testimonialId,
       donationId,
       opportunityId,
       localitiesSearch,
@@ -339,6 +366,14 @@ class ActionScreen extends React.Component {
               />
             </div>
           </div>
+          {testimonials.length > 0 &&
+            <TestimonialTable
+              testimonials={testimonials}
+              onPreview={this.handlePreviewTestimonial}
+              onTogglePublished={this.handleTogglePublishedTestimonial}
+              onRowClicked={this.handleRowClickedTestimonial}
+            />
+          }
         </div>
 
         <div className={FormStyles.card}>
@@ -372,10 +407,20 @@ class ActionScreen extends React.Component {
         {submissionId !== undefined &&
           <Modal
             contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
-            onClose={this.handleModalClose}
+            onClose={this.handleSubmissionModalClose}
             gaName={`submission/${submissionId}`}
           >
             <SubmissionForm submissionId={submissionId} />
+          </Modal>
+        }
+
+        {testimonialId !== undefined &&
+          <Modal
+            contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
+            onClose={this.handleTestimonialModalClose}
+            gaName={`testimonial/${testimonialId}`}
+          >
+            <TestimonialForm testimonialId={testimonialId} />
           </Modal>
         }
 
@@ -475,6 +520,7 @@ ActionScreen.propTypes = {
   donations: PropTypes.arrayOf(PropTypes.object).isRequired,
   opportunities: PropTypes.arrayOf(PropTypes.object).isRequired,
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  testimonials: PropTypes.arrayOf(PropTypes.object).isRequired,
   actionKey: PropTypes.number.isRequired,
   modal: PropTypes.func.isRequired,
   snackbar: PropTypes.func.isRequired,
@@ -490,15 +536,16 @@ const mapStateToProps = (state, props) => {
   let donations = []
   let opportunities = []
   let submissions = []
+  let testimonials = []
 
   const reduxAction = state.getter[`accountAction_${actionKey}`]
   const status = reduxAction && reduxAction.status
   try {
     action = prepareInitialActionValues(reduxAction.data || {});
-    ({ donations, opportunities, submissions } = action)
+    ({ donations, opportunities, submissions, testimonials } = action)
   } catch (e) {}
 
-  return { action, donations, opportunities, submissions, status }
+  return { action, donations, opportunities, submissions, testimonials, status }
 }
 
 const mapDispatchToProps = (dispatch) => {
