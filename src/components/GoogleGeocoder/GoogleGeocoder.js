@@ -55,7 +55,7 @@ class GoogleGeocoder extends React.Component {
     return (
       <AutoComplete
         className={className}
-        floatingLabelText="Buscar lugar"
+        floatingLabelText="Buscar lugar o dar click en el mapa"
         dataSource={dataSource}
         onUpdateInput={this.handleUpdateInput}
         onNewRequest={this.handleSelect}
