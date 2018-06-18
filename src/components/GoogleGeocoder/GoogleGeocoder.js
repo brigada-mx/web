@@ -60,6 +60,7 @@ class GoogleGeocoder extends React.Component {
         onUpdateInput={this.handleUpdateInput}
         onNewRequest={this.handleSelect}
         filter={this.filter}
+        fullWidth
       />
     )
   }
