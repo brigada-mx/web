@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 
 import _ from 'lodash'
 
-const imgWithClick = { cursor: 'pointer' }
+import Styles from './PhotoGallery.css'
 
+
+const imgWithClick = { cursor: 'pointer' }
 
 class Photo extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -24,9 +26,10 @@ class Photo extends React.Component {
   render() {
     const { photo, photo: { onMouseEnter }, onClick, margin } = this.props
     const imgStyle = { display: 'block', float: 'left', margin }
-    const { src, width, height, alt, title } = photo
+    const { src, width, height, alt, title, type } = photo
     return (
       <img
+        className={type === 'video' ? Styles.video : Styles.image}
         style={onClick ? { ...imgStyle, ...imgWithClick } : imgStyle}
         src={src}
         width={width}

@@ -53,33 +53,37 @@ class ChooseLocationMap extends React.Component {
     const { Mapbox } = this
     if (!Mapbox) return null
 
-    const { legend, zoomControl } = this.props
+    const { legend, zoomControl, className, geocoderClassName } = this.props
 
     return (
-      <MapErrorBoundary>
-        <Mapbox
-          style="mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk" // eslint-disable-line react/style-prop-object
-          zoom={this._initialZoom}
-          center={this.state.centerCoordinates}
-          containerStyle={{
-            height: '100%',
-            width: '100%',
-            position: 'relative',
-          }}
-          onStyleLoad={this.handleMapLoaded}
-        >
-          <GoogleGeocoder
-            apiKey={apiKey}
-            onSelect={this.handleSelect}
-            numResults={5}
-          />
-          {legend}
-          {zoomControl && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
-          <Layer {...layer}>
-            <Feature coordinates={this.state.coordinates} />
-          </Layer>
-        </Mapbox>
-      </MapErrorBoundary>
+      <React.Fragment>
+        <GoogleGeocoder
+          apiKey={apiKey}
+          onSelect={this.handleSelect}
+          numResults={5}
+          className={geocoderClassName}
+        />
+        <MapErrorBoundary>
+          <Mapbox
+            style="mapbox://styles/kylebebak/cj95wutp2hbr22smynacs9gnk" // eslint-disable-line react/style-prop-object
+            zoom={this._initialZoom}
+            center={this.state.centerCoordinates}
+            containerStyle={{
+              height: '100%',
+              width: '100%',
+              position: 'relative',
+            }}
+            className={className}
+            onStyleLoad={this.handleMapLoaded}
+          >
+            {legend}
+            {zoomControl && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
+            <Layer {...layer}>
+              <Feature coordinates={this.state.coordinates} />
+            </Layer>
+          </Mapbox>
+        </MapErrorBoundary>
+      </React.Fragment>
     )
   }
 }
@@ -91,6 +95,8 @@ ChooseLocationMap.propTypes = {
   dragPan: PropTypes.bool,
   initialZoom: PropTypes.number,
   legend: PropTypes.any,
+  className: PropTypes.string,
+  geocoderClassName: PropTypes.string,
 }
 
 ChooseLocationMap.defaultProps = {

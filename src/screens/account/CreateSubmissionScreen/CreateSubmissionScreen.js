@@ -73,13 +73,12 @@ class CreateSubmissionScreen extends React.Component {
       <React.Fragment>
         <div className={Styles.container}>
           <div className={Styles.largeText}>Paso 1: Indica dónde se tomaron las fotos</div>
-          <div className={Styles.mapContainer}>
-            <ChooseLocationMap
-              onLocationChange={this.handleLocationChange}
-              coordinates={[lng, lat]}
-              legend={<TextLegend text="UBICACIÓN DE LAS FOTOS" />}
-            />
-          </div>
+          <ChooseLocationMap
+            onLocationChange={this.handleLocationChange}
+            coordinates={[lng, lat]}
+            legend={<TextLegend text="UBICACIÓN DE LAS FOTOS" />}
+            className={Styles.mapContainer}
+          />
         </div>
         <div className={Styles.buttonContainer}>
           <RaisedButton

@@ -76,13 +76,12 @@ class CreateTestimonialScreen extends React.Component {
       <React.Fragment>
         <div className={Styles.container}>
           <div className={Styles.largeText}>Paso 1: Indica dónde se grabó el testimonio</div>
-          <div className={Styles.mapContainer}>
-            <ChooseLocationMap
-              onLocationChange={this.handleLocationChange}
-              coordinates={[lng, lat]}
-              legend={<TextLegend text="UBICACIÓN DEL TESTIMONIO" />}
-            />
-          </div>
+          <ChooseLocationMap
+            onLocationChange={this.handleLocationChange}
+            coordinates={[lng, lat]}
+            legend={<TextLegend text="UBICACIÓN DEL TESTIMONIO" />}
+            className={Styles.mapContainer}
+          />
         </div>
         <div className={Styles.buttonContainer}>
           <RaisedButton
