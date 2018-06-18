@@ -26,6 +26,7 @@ class ActionStrengthPublic extends React.Component {
         progress,
         budget,
         image_count: images,
+        testimonials,
         donations,
         verified_donations: verifiedDonations,
       },
@@ -37,6 +38,7 @@ class ActionStrengthPublic extends React.Component {
       { value: progress, label: 'agrega las unidades de medida' },
       { value: budget, label: 'agrega el presupuesto de este proyecto' },
       { value: images, label: 'agrega fotos a este proyecto' },
+      { value: testimonials, label: 'agrega testimonios de personas beneficiadas por este proyecto' },
       { value: donations, label: 'agrega un donativo' },
       { value: verifiedDonations, label: 'agrega un donativo verificado' },
     ]

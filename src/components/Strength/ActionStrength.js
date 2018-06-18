@@ -34,6 +34,7 @@ class ActionStrength extends React.Component {
         progress,
         budget,
         image_count: images,
+        testimonials,
         donations,
         verified_donations: verifiedDonations,
       },
@@ -59,6 +60,10 @@ class ActionStrength extends React.Component {
       {
         value: images > 0,
         label: 'Agregar fotos',
+      },
+      {
+        value: testimonials,
+        label: 'Agregar testimonios',
       },
       {
         value: donations > 0,

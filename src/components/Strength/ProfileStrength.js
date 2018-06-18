@@ -35,6 +35,7 @@ class ProfileStrength extends React.Component {
         discourse_post: post,
         donations,
         submissions,
+        testimonials,
       },
     } = profile
 
@@ -64,6 +65,12 @@ class ProfileStrength extends React.Component {
       {
         value: submissions,
         label: 'Subir fotos',
+        videoId: '0qRxsa2WyVc',
+        durationString: '4:38',
+      },
+      {
+        value: testimonials,
+        label: 'Subir testimonios',
         videoId: '0qRxsa2WyVc',
         durationString: '4:38',
       },

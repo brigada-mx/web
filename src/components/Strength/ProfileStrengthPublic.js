@@ -28,6 +28,7 @@ class ProfileStrengthPublic extends React.Component {
         discourse_post: post,
         donations,
         submissions,
+        testimonials,
       },
     } = profile
 
@@ -37,6 +38,7 @@ class ProfileStrengthPublic extends React.Component {
       { value: contact, label: 'agrega el teléfono y la dirección de tu organización' },
       { value: actions, label: 'agrega un proyecto' },
       { value: submissions, label: 'agrega fotos a tus proyectos' },
+      { value: testimonials, label: 'agrega testimonios de personas beneficiadas' },
       { value: donations, label: 'documenta los donativos que has recibido' },
       { value: volunteers, label: 'agrega oportunidades de voluntariado' },
       { value: post, label: 'postea en el foro' },
