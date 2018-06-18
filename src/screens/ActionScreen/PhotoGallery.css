@@ -8,6 +8,39 @@
   margin: 27px 0 13px 8px;
 }
 
-.video {
+.video, .image {
+  position: relative;
+  float: left;
+}
 
+.video img {
+  z-index: 1;
+  position: relative;
+  opacity: 0.55;
+}
+
+.video:before {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  margin: 4px;
+  cursor: pointer;
+  z-index: 1
+}
+
+.video:after {
+  position: absolute;
+  z-index: 3;
+  content: '';
+  margin: -13px -24px 0 0;
+  border-width: 17px 11px 17px 11px;
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
+  top: 50%;
+  right: 50%;
+  cursor: pointer;
 }

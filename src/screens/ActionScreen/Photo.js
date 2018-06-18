@@ -28,17 +28,21 @@ class Photo extends React.Component {
     const imgStyle = { display: 'block', float: 'left', margin }
     const { src, width, height, alt, title, type } = photo
     return (
-      <img
+      <div
         className={type === 'video' ? Styles.video : Styles.image}
-        style={onClick ? { ...imgStyle, ...imgWithClick } : imgStyle}
-        src={src}
-        width={width}
-        height={height}
-        alt={alt}
-        title={title}
+        style={{ width, height, margin }}
         onClick={onClick ? this.handleClick : undefined}
         onMouseEnter={onMouseEnter ? this.handleMouseEnter : undefined}
-      />
+      >
+        <img
+          style={onClick ? { ...imgStyle, ...imgWithClick } : imgStyle}
+          src={src}
+          width={width}
+          height={height}
+          alt={alt}
+          title={title}
+        />
+      </div>
     )
   }
 }
