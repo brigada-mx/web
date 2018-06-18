@@ -11,9 +11,9 @@ import Styles from './PhotoGallery.css'
 
 class PhotoGallery extends React.Component {
   render() {
-    const { submissions, onClickItem, onMouseEnterItem } = this.props
-    const photos = [].concat(...submissions.map((s) => {
-      const { images, submitted, location } = s
+    const { submissions, testimonials, onClickItem, onMouseEnterItem } = this.props
+    const _images = [].concat(...submissions.map((s) => {
+      const { images, submitted, location, description } = s
       return images.filter(
         i => i.width !== undefined && i.height !== undefined
       ).map((i) => {
@@ -21,17 +21,34 @@ class PhotoGallery extends React.Component {
           ...i,
           onMouseEnter: onMouseEnterItem,
           src: thumborUrl(i, 480, 480),
-          alt: s.description,
-          title: s.description,
+          alt: description,
+          title: description,
           submitted,
           location,
+          type: 'image',
         }
-      }).sort((a, b) => {
-        if (a.submitted < b.submitted) return -1
-        if (a.submitted > b.submitted) return 1
-        return 0
       })
     }))
+    const videos = testimonials.map((t) => {
+      const { video, submitted, location, description } = t
+      return {
+        ...video,
+        width: 480,
+        height: 360,
+        onMouseEnter: onMouseEnterItem,
+        src: video.url_thumbnail,
+        alt: description,
+        title: description,
+        submitted,
+        location,
+        type: 'video',
+      }
+    })
+    const photos = _images.concat(videos).sort((a, b) => {
+      if (a.submitted < b.submitted) return 1
+      if (a.submitted > b.submitted) return -1
+      return 0
+    })
 
     const groupByMonth = photos.reduce((obj, photo) => {
       const date = moment(photo.submitted)
@@ -69,6 +86,7 @@ class PhotoGallery extends React.Component {
 
 PhotoGallery.propTypes = {
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  testimonials: PropTypes.arrayOf(PropTypes.object).isRequired,
   onClickItem: PropTypes.func,
   onMouseEnterItem: PropTypes.func,
 }

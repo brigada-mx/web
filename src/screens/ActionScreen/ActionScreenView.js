@@ -45,8 +45,10 @@ class ActionScreenView extends React.Component {
     this.props.history.push(`/comunidades/${feature.properties.id}`)
   }
 
-  handleClickItem = (e, { photo }) => {
-    this.setState({ carousel: { initialUrl: photo.url } })
+  handleClickItem = (e, { photo: item }) => {
+    const { type, youtube_video_id: videoId } = item
+    if (type === 'image') this.setState({ carousel: { initialUrl: item.url } })
+    else if (type === 'video') this.props.modal('youTubeVideo', { modalTransparent: true, videoId })
   }
 
   handleMouseEnterItem = (e, { photo }) => {
@@ -61,6 +63,7 @@ class ActionScreenView extends React.Component {
 
   handleEnterItemFeature = (feature) => {
     const { lat: selectedLat, lng: selectedLng } = feature.properties
+    if (this.state.selectedLat === selectedLat && this.state.selectedLng === selectedLng) return
     this.setState({ selectedLat, selectedLng })
   }
 
@@ -115,6 +118,7 @@ class ActionScreenView extends React.Component {
       donations,
       locality: { meta: { margGrade, total }, name: localityName, state_name: stateName },
       submissions,
+      testimonials,
       action_type: actionType,
       start_date: startDate,
       end_date: endDate,
@@ -281,10 +285,11 @@ class ActionScreenView extends React.Component {
           />
         </div>
 
-        {images.length > 0 &&
+        {(images.length > 0 || testimonials.length > 0) &&
           <StickyContainer className={`${Styles.actionsContainer} row`}>
             <div className={`${Styles.actionListContainer} col-lg-7 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter`}>
               <PhotoGallery
+                testimonials={testimonials}
                 submissions={submissions}
                 onClickItem={this.handleClickItem}
                 onMouseEnterItem={this.handleMouseEnterItem}
