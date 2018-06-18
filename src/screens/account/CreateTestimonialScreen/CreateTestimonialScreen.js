@@ -32,10 +32,10 @@ class CreateTestimonialScreen extends React.Component {
     getBackoff(() => { return service.accountGetAction(actionKey) }, { key: `accountAction_${actionKey}` })
   }
 
-  handleSubmitMeta = ({ desc, submitted, first_name, surnames, age }) => {
+  handleSubmitMeta = ({ submitted, recipients }) => {
     this.setState({
       step: 'files',
-      values: { ...this.state.values, desc, submitted, recipient: { first_name, surnames, age } },
+      values: { ...this.state.values, submitted, recipients },
     })
   }
 
@@ -50,10 +50,10 @@ class CreateTestimonialScreen extends React.Component {
   handleSubmitFiles = async (files) => {
     if (files.length === 0) return
     const { action: { id }, snackbar, closeModal } = this.props
-    const { location, desc, submitted, recipient } = this.state.values
+    const { location, submitted, recipients } = this.state.values
 
     const { data } = await service.accountCreateTestimonial(id,
-      { location, desc, submitted, recipient, video: { url: files[0].url } }
+      { location, submitted, recipients, video: { url: files[0].url } }
     )
     if (!data) {
       snackbar('Hubo un error', 'error')

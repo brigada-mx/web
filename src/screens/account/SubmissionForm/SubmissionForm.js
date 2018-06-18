@@ -207,13 +207,12 @@ class SubmissionFormWrapper extends React.Component {
     if (editingLocation && location) {
       return (
         <div className={FormStyles.formContainerLeft}>
-          <div className={Styles.mapContainer}>
-            <ChooseLocationMap
-              onLocationChange={this.handleLocationChange}
-              coordinates={[location.lng, location.lat]}
-              legend={<TextLegend text="UBICACIÓN DE LAS FOTOS" />}
-            />
-          </div>
+          <ChooseLocationMap
+            className={Styles.mapContainer}
+            onLocationChange={this.handleLocationChange}
+            coordinates={[location.lng, location.lat]}
+            legend={<TextLegend text="UBICACIÓN DE LAS FOTOS" />}
+          />
           <div className={FormStyles.row}>
             <RaisedButton
               backgroundColor="#3DC59F"

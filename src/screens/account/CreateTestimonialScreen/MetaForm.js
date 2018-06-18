@@ -15,11 +15,11 @@ const MetaForm = ({ handleSubmit, submitting }) => {
     <React.Fragment>
       <div className={Styles.container}>
         <div className={Styles.largeText}>Paso 2: Completa información sobre el testimonio</div>
-        <div className={Styles.description}>
+        <div className={FormStyles.row}>
           <TextField
-            name="desc"
-            hintText="Descripción de la ayuda que recibió la persona"
             className={FormStyles.wideInput}
+            name="recipients"
+            hintText="Nombre(s) de las persona beneficiadas, separados por comas"
           />
         </div>
         <div className={FormStyles.row}>
@@ -29,26 +29,6 @@ const MetaForm = ({ handleSubmit, submitting }) => {
             format={formatDatePicker}
           />
         </div>
-
-        <div className={Styles.mediumText}>Agrega información sobre la persona beneficiada</div>
-        <div className={FormStyles.row}>
-          <TextField
-            name="first_name"
-            hintText="Nombre"
-          />
-          <TextField
-            name="surnames"
-            hintText="Apellidos"
-          />
-        </div>
-
-        <TextField
-          type="number"
-          min="0"
-          floatingLabelText="¿Cuántos años tiene?"
-          name="age"
-          normalize={(value) => { return value ? parseInt(value, 10) : null }}
-        />
       </div>
       <div className={Styles.buttonContainer}>
         <RaisedButton
@@ -68,13 +48,10 @@ MetaForm.propTypes = {
   ...rxfPropTypes,
 }
 
-const validate = ({ desc, submitted, first_name: firstName, surnames, age }) => {
+const validate = ({ submitted, recipients }) => {
   const errors = {}
-  if (!desc) errors.desc = 'Se requiere una descripción del testimonio'
   if (!submitted) errors.submitted = 'Agrega la fecha cuándo se grabó el vídeo'
-  if (!firstName) errors.first_name = 'Ingresa su nombre'
-  if (!surnames) errors.surnames = 'Ingresa sus apellidos'
-  if (!age) errors.age = 'Agrega su edad'
+  if (!recipients) errors.recipients = 'Agrega los nombre(s) de las personas beneficiadas, separados por comas'
   return errors
 }
 

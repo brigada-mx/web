@@ -14,16 +14,6 @@
   margin-bottom: 10px;
 }
 
-.mediumText {
-  font-family: 'work-sans-300', sans-serif;
-  font-size: 20px;
-  color: #141418;
-  letter-spacing: 0;
-  line-height: 30px;
-  margin-top: 25px;
-  margin-bottom: 15px;
-}
-
 .buttonContainer {
   border-top: 1px solid #E1E7ED;
   padding: 20px 5%;

@@ -41,15 +41,6 @@ const UpdateForm = ({ handleSubmit, submitting, actionSearch = [], location, onL
         </SelectField>
       </div>
       <div className={FormStyles.row}>
-        <TextField
-          className={FormStyles.wideInput}
-          floatingLabelText="Descripción"
-          name="desc"
-          multiLine
-          rows={3}
-        />
-      </div>
-      <div className={FormStyles.row}>
         <DatePicker
           floatingLabelText="Fecha cuando se grabó el vídeo"
           name="submitted"
@@ -64,22 +55,12 @@ const UpdateForm = ({ handleSubmit, submitting, actionSearch = [], location, onL
       </div>
       <div className={FormStyles.row}>
         <TextField
-          name="first_name"
-          hintText="Nombre de persona beneficiada"
-        />
-        <TextField
-          name="surnames"
-          hintText="Apellidos de persona beneficiada"
+          className={FormStyles.wideInput}
+          name="recipients"
+          hintText="Nombre(s) de las persona beneficiadas, separados por comas"
         />
       </div>
 
-      <TextField
-        type="number"
-        min="0"
-        floatingLabelText="¿Cuántos años tiene?"
-        name="age"
-        normalize={(value) => { return value ? parseInt(value, 10) : null }}
-      />
       <div className={FormStyles.toggle}>
         <Toggle
           label="¿Publicado?"
@@ -105,33 +86,25 @@ UpdateForm.propTypes = {
   location: PropTypes.object,
 }
 
-export const prepareInitialValues = ({ submitted, recipient: { first_name, surnames, age }, ...rest }) => {
+export const prepareInitialValues = ({ submitted, ...rest }) => {
   return {
     ...rest,
-    first_name,
-    surnames,
-    age,
     submitted: submitted && new Date(submitted),
   }
 }
 
-export const prepareBody = (body, includeRecipient = true) => {
-  const { action_id: id, first_name, surnames, age, ...rest } = body
-  const prepared = {
+export const prepareBody = (body) => {
+  const { action_id: id, ...rest } = body
+  return {
     ...rest,
     action: id,
   }
-  if (includeRecipient) prepared.recipient = { first_name, surnames, age }
-  return prepared
 }
 
-const validate = ({ desc, submitted, first_name: name, surnames, age }) => {
+const validate = ({ submitted, recipients }) => {
   const errors = {}
-  if (!desc) errors.desc = 'Agrega una descripción de este testimonio'
   if (!submitted) errors.submitted = 'Agrega la fecha cuando se grabó el testimonio'
-  if (!name) errors.first_name = 'Agrega el nombre de la persona beneficiada'
-  if (!surnames) errors.surnames = 'Agrega los apellidos de la persona beneficiada'
-  if (!age) errors.age = 'Agrega la edad de la persona beneficiada'
+  if (!recipients) errors.recipients = 'Agrega los nombre(s) de la personas beneficiadas, separados por comas'
   return errors
 }
 
@@ -159,9 +132,9 @@ class TestimonialFormWrapper extends React.Component {
     )
   }
 
-  handleSubmit = async (values, includeRecipient = true) => {
+  handleSubmit = async (values) => {
     const { snackbar, onChange } = this.props
-    const body = prepareBody(values, includeRecipient)
+    const body = prepareBody(values)
     const { data } = await service.accountUpdateTestimonial(this.props.testimonialId, body)
     if (!data) {
       snackbar('Hubo un error', 'error')
@@ -198,13 +171,12 @@ class TestimonialFormWrapper extends React.Component {
     if (editingLocation && location) {
       return (
         <div className={FormStyles.formContainerLeft}>
-          <div className={Styles.mapContainer}>
-            <ChooseLocationMap
-              onLocationChange={this.handleLocationChange}
-              coordinates={[location.lng, location.lat]}
-              legend={<TextLegend text="UBICACIÓN DE LAS FOTOS" />}
-            />
-          </div>
+          <ChooseLocationMap
+            className={Styles.mapContainer}
+            onLocationChange={this.handleLocationChange}
+            coordinates={[location.lng, location.lat]}
+            legend={<TextLegend text="UBICACIÓN DE LAS FOTOS" />}
+          />
           <div className={FormStyles.row}>
             <RaisedButton
               backgroundColor="#3DC59F"
