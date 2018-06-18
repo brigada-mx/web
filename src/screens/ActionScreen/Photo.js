@@ -24,10 +24,15 @@ class Photo extends React.Component {
   render() {
     const { photo, photo: { onMouseEnter }, onClick, margin } = this.props
     const imgStyle = { display: 'block', float: 'left', margin }
+    const { src, width, height, alt, title } = photo
     return (
       <img
         style={onClick ? { ...imgStyle, ...imgWithClick } : imgStyle}
-        {...photo}
+        src={src}
+        width={width}
+        height={height}
+        alt={alt}
+        title={title}
         onClick={onClick ? this.handleClick : undefined}
         onMouseEnter={onMouseEnter ? this.handleMouseEnter : undefined}
       />

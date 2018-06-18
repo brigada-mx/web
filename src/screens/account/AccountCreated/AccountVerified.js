@@ -16,7 +16,7 @@ const AccountVerified = ({ type }) => {
     <div className={Styles.container}>
       <span className={FormStyles.formHeader}>¡Gracias por verificar tu cuenta!</span>
       <p className={Styles.formText}>{text}</p>
-      <p className={Styles.formText}>Pero todavía falta un paso para convertirte en usuario experto: <ReactGA.OutboundLink eventLabel="scheduleTraining" to="https://calendly.com/brigada/capacitacion" target="_blank">tomar una capacitación virtual</ReactGA.OutboundLink>.</p>
+      <p className={Styles.formText}>Pero todavía falta un paso para convertirte en usuario experto: <ReactGA.OutboundLink eventLabel="scheduleTraining" to="https://calendly.com/brigada/capacitacion" target="_blank" rel="noopener noreferrer">tomar una capacitación virtual</ReactGA.OutboundLink>.</p>
       <p className={Styles.formText}>
         Dale clic en el link para agendar tu capacitación.
       </p>

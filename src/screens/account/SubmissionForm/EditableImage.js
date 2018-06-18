@@ -58,6 +58,7 @@ class EditableImage extends React.PureComponent {
           }}
           href={thumborUrl(image, 1280, 1280)}
           target="_blank"
+          rel="noopener noreferrer"
         />
         <div className={FormStyles.row}>
           <Toggle

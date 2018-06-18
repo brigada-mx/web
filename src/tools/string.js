@@ -170,7 +170,7 @@ export const _renderLinks = (text, type) => {
       const parsed = getLocation(url)
       const { host, pathname, search } = parsed
       if (host === env.siteHost) parts.push(<Link to={`${pathname || '/'}${search}`}>{s}</Link>)
-      else parts.push(<a href={url} target="_blank">{s}</a>)
+      else parts.push(<a href={url} target="_blank" rel="noopener noreferrer">{s}</a>)
     }
     remaining = remaining.substring(match.index + s.length)
   }

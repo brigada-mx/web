@@ -33,7 +33,7 @@ class MapErrorBoundary extends React.Component {
         return (
           <div className={Styles.container}>
             <span>No se pudo cargar el mapa.</span>
-            <span>Por favor intenta abrir la página con otro navegador. Si no funciona <a className={Styles.link} href="mailto:eduardo@brigada.mx" target="_blank">favor de contactarnos</a>.</span>
+            <span>Por favor intenta abrir la página con otro navegador. Si no funciona <a className={Styles.link} href="mailto:eduardo@brigada.mx" target="_blank" rel="noopener noreferrer">favor de contactarnos</a>.</span>
           </div>
         )
       }

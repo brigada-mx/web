@@ -18,7 +18,11 @@ const Photo = ({ lazyLoad, description, location, submitted, image }) => {
     const [lngsign, lngd, lngm, lngs] = toDegrees(lng)
     const latStr = `${latd}°${latm}'${lats}"${latsign >= 0 ? 'N' : 'S'}`
     const lngStr = `${lngd}°${lngm}'${lngs}"${lngsign >= 0 ? 'E' : 'W'}`
-    latLng = <a className={Styles.mapLink} target="_blank" href={googleMapsUrl(lat, lng)}>{`${latStr} ${lngStr}`}</a>
+    latLng = (
+      <a className={Styles.mapLink} target="_blank" rel="noopener noreferrer" href={googleMapsUrl(lat, lng)}>
+        {`${latStr} ${lngStr}`}
+      </a>
+    )
   }
 
   return (

@@ -50,7 +50,7 @@ const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => 
         label="Soporte"
       />
       <FlatButton
-        containerElement={<ReactGA.OutboundLink eventLabel="survey" to={env.surveyUrl} target="_blank" />}
+        containerElement={<ReactGA.OutboundLink eventLabel="survey" to={env.surveyUrl} target="_blank" rel="noopener noreferrer" />}
         className={Styles.button}
         label="Subir Fotos"
       />

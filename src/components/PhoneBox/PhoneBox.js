@@ -43,6 +43,7 @@ class PhoneBox extends React.Component {
     return (
       <a
         target="_blank"
+        rel="noopener noreferrer"
         className={`${Styles.box} ${Styles.phone}`}
         href={phoneLink(phone)}
         onClick={() => fireGaEvent('phone')}

@@ -212,6 +212,7 @@ class OrganizationScreenView extends React.Component {
                       <span className={`${Styles.fieldValue} ${Styles.ellipsis}`}>
                         <a
                           target="_blank"
+                          rel="noopener noreferrer"
                           href={addProtocol(website)}
                           onClick={() => fireGaEvent('website')}
                         >
@@ -265,6 +266,7 @@ class OrganizationScreenView extends React.Component {
                     {website &&
                       <a
                         target="_blank"
+                        rel="noopener noreferrer"
                         className={`${Styles.button} ${Styles.website}`}
                         href={addProtocol(website)}
                         onClick={() => fireGaEvent('website')}
