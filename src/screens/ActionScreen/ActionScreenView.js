@@ -57,8 +57,9 @@ class ActionScreenView extends React.Component {
   }
 
   handleClickItemFeature = (feature) => {
-    const { lat, lng } = feature.properties
-    this.setState({ carousel: { lat, lng } })
+    const { lat, lng, type, videoId } = feature.properties
+    if (type === 'image') this.setState({ carousel: { lat, lng } })
+    else if (type === 'video') this.props.modal('youTubeVideo', { modalTransparent: true, videoId })
   }
 
   handleEnterItemFeature = (feature) => {
@@ -190,6 +191,7 @@ class ActionScreenView extends React.Component {
     const actionMap = (
       <ActionMap
         actions={[data]}
+        includeTestimonials
         selectedLat={this.state.selectedLat}
         selectedLng={this.state.selectedLng}
         onClickFeature={this.handleClickItemFeature}

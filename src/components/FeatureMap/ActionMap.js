@@ -31,19 +31,24 @@ const layer = {
 }
 const fitBoundsOptions = { padding: 50, maxZoom: 11 }
 
-const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, sourceId = 'actions', ...rest }) => {
+const ActionMap = ({
+  actions, selectedId, selectedLat, selectedLng, sourceId = 'actions', includeTestimonials = false, ...rest
+}) => {
   const selectedActions = actions.filter(a => a.id === selectedId)
   const notSelectedActions = actions.filter(a => a.id !== selectedId)
   const features = []
   const locations = []
 
   for (const a of selectedActions.concat(notSelectedActions)) {
-    for (const s of a.submissions) {
-      if (!s.location) continue
-      if (s.images.length === 0) continue // don't add submissions with no files
-      locations.push(s.location)
+    const items = a.submissions.filter(
+      s => s.location && s.images.length > 0
+    ).concat(includeTestimonials ? a.testimonials : [])
 
-      const { lat, lng } = s.location
+    for (const item of items) {
+      const type = item.video ? 'video' : 'image'
+      locations.push(item.location)
+
+      const { lat, lng } = item.location
       let selected = a.id === selectedId
       if (!selected && lat !== undefined && lng !== undefined
         && selectedLat !== undefined && selectedLng !== undefined
@@ -51,9 +56,12 @@ const ActionMap = ({ actions, selectedId, selectedLat, selectedLng, sourceId = '
         selected = distanceKmBetweenCoords(lat, lng, selectedLat, selectedLng) * 1000 < maxMetersGroupSubmissions
       }
 
+      const properties = { selected, lng, lat, actionId: a.id, type }
+      if (type === 'video') properties.videoId = item.video.youtube_video_id
+
       features.push({
         type: 'Feature',
-        properties: { selected, lng, lat, actionId: a.id }, // avoid using object properties, ESPECIALLY large objects
+        properties, // avoid using object properties, ESPECIALLY large objects
         geometry: {
           type: 'Point',
           coordinates: [lng, lat],
@@ -88,6 +96,7 @@ ActionMap.propTypes = {
   selectedLat: PropTypes.number,
   selectedLng: PropTypes.number,
   legend: PropTypes.string,
+  includeTestimonials: PropTypes.bool,
 }
 
 export default ActionMap
