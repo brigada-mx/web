@@ -6,8 +6,6 @@ import _ from 'lodash'
 import Styles from './PhotoGallery.css'
 
 
-const imgWithClick = { cursor: 'pointer' }
-
 class Photo extends React.Component {
   shouldComponentUpdate(nextProps) {
     return !_.isEqual(this.props, nextProps)
@@ -25,7 +23,6 @@ class Photo extends React.Component {
 
   render() {
     const { photo, photo: { onMouseEnter }, onClick, margin } = this.props
-    const imgStyle = { display: 'block', float: 'left', margin }
     const { src, width, height, alt, title, type } = photo
     return (
       <div
@@ -35,7 +32,6 @@ class Photo extends React.Component {
         onMouseEnter={onMouseEnter ? this.handleMouseEnter : undefined}
       >
         <img
-          style={onClick ? { ...imgStyle, ...imgWithClick } : imgStyle}
           src={src}
           width={width}
           height={height}
