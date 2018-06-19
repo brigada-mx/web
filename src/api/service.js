@@ -81,6 +81,10 @@ class Service {
     return sendToApi(`/action_share/${actionId}/`, { params })
   }
 
+  getTestimonial = async (id) => {
+    return sendToApi(`/testimonials/${id}/`)
+  }
+
   // VOLUNTEER PUBLIC ENDPOINTS
   createVolunteerApplication = async (body) => {
     return sendToApi('/volunteer_applications/', { method: 'POST', body })
