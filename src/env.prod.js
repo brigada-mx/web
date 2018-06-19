@@ -8,7 +8,6 @@ export const logging = {
 }
 
 export const google = {
-  apiKey: 'AIzaSyB7U9_BLd5otn26YSYF9UzumlsU0ezBAw4',
 }
 
 export const env = 'prod'
