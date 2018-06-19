@@ -4,9 +4,6 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import AutoComplete from 'material-ui/AutoComplete'
 
-import { sendToUrl } from 'api/request'
-import Styles from './GoogleGeocoder.css'
-
 
 class GoogleGeocoder extends React.Component {
   constructor(props) {
@@ -17,6 +14,15 @@ class GoogleGeocoder extends React.Component {
     this.handleUpdateInput = _.debounce(this.handleUpdateInput, 200)
   }
 
+  componentDidMount() {
+    if (window.google) return
+    const script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.async = true
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${this.props.apiKey}`
+    document.head.appendChild(script)
+  }
+
   // https://v0.material-ui.com/#/components/auto-complete
   handleSelect = (chosenItem, index) => {
     if (index === -1) return
@@ -24,19 +30,18 @@ class GoogleGeocoder extends React.Component {
   }
 
   handleUpdateInput = async (search) => {
+    if (!window.google) return
+    if (!this._geocoder) this._geocoder = new google.maps.Geocoder()
+
     if (!search || search.length < 3) {
       this.setState({ results: [] })
       return
     }
 
-    const { apiKey } = this.props
-    const params = { address: search, language: 'es', region: 'mx' }
-    if (apiKey) params.key = apiKey
-
-    const { data } = await sendToUrl('https://maps.googleapis.com/maps/api/geocode/json', { params })
-    if (!data) return
-
-    this.setState({ results: data.results })
+    const params = { address: search, region: 'mx' }
+    this._geocoder.geocode(params, (results) => {
+      this.setState({ results })
+    })
   }
 
   filter = () => {

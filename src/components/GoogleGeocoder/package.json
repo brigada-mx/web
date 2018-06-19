@@ -1,6 +1,0 @@
-{
-  "name": "GoogleGeocoder",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./GoogleGeocoder.js"
-}

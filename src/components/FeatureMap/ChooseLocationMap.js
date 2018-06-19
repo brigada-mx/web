@@ -44,7 +44,9 @@ class ChooseLocationMap extends React.Component {
     })
   }
 
-  handleSelect = ({ geometry: { location: { lat, lng } } }) => {
+  handleSelect = ({ geometry: { location: { lat: _lat, lng: _lng } } }) => {
+    const lat = _lat()
+    const lng = _lng()
     this.props.onLocationChange({ lng, lat })
     this.setState({ coordinates: [lng, lat], centerCoordinates: [lng, lat] })
   }
