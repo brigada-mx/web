@@ -11,18 +11,13 @@ import '!style-loader!css-loader!react-table/react-table.css'
 import Styles from './TestimonialTable.css'
 
 
-const TestimonialTable = ({
-  testimonials,
-  onTogglePublished,
-  onPreview,
-  onRowClicked,
-}) => {
+const TestimonialTable = ({ testimonials, onTogglePublished, onPreview, onRowClicked }) => {
   const columns = [
     {
       Header: 'Vídeo',
       id: 'preview',
       Cell: (props) => {
-        const { video } = props.original
+        const { video, id } = props.original
         return (
           <div className={Styles.thumbnailContainer}>
             {!video.youtube_video_id && <span>En proceso...</span>}
@@ -33,7 +28,7 @@ const TestimonialTable = ({
                 style={{
                   backgroundImage: `url("${video.url_thumbnail}")`,
                 }}
-                onClick={() => { onPreview(video.youtube_video_id) }}
+                onClick={() => { onPreview(id) }}
               />
             }
           </div>

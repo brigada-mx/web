@@ -30,7 +30,7 @@ class PhotoGallery extends React.Component {
       })
     }))
     const videos = testimonials.map((t) => {
-      const { video, submitted, location, description } = t
+      const { id, video, submitted, location, description } = t
       return {
         ...video,
         width: 480,
@@ -42,6 +42,7 @@ class PhotoGallery extends React.Component {
         submitted,
         location,
         type: 'video',
+        id,
       }
     })
     const photos = _images.concat(videos).sort((a, b) => {

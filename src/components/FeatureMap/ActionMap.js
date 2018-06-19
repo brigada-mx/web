@@ -56,8 +56,7 @@ const ActionMap = ({
         selected = distanceKmBetweenCoords(lat, lng, selectedLat, selectedLng) * 1000 < maxMetersGroupSubmissions
       }
 
-      const properties = { selected, lng, lat, actionId: a.id, type }
-      if (type === 'video') properties.videoId = item.video.youtube_video_id
+      const properties = { selected, lng, lat, actionId: a.id, type, id: item.id }
 
       features.push({
         type: 'Feature',

@@ -311,6 +311,7 @@ MapScreen.defaultProps = {
   valNumActions: [],
 }
 
+// THIS IS AN ANTI-PATTERN, because it will rerender map screen on any change to redux store
 const mapStateToProps = (state, { location }) => {
   const { valState, valMuni, valMarg, valNumActions } = parseFilterQueryParams(location)
   return { valState, valMuni, valMarg, valNumActions }

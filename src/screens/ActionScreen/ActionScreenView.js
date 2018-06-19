@@ -48,11 +48,11 @@ class ActionScreenView extends React.Component {
 
   handleClickItem = (e, { photo: item }) => {
     const { history, location } = this.props
-    const { type, youtube_video_id: videoId } = item
+    const { type, id } = item
 
     if (type === 'image') this.setState({ carousel: { initialUrl: item.url } })
     else if (type === 'video') {
-      const params = { _mn: 'testimonial', _ms: videoId, _mt: 't' }
+      const params = { _mn: 'testimonial', _ms: id }
       history.push({ pathname: location.pathname, search: toQs(params, { encode: false }) })
     }
   }
@@ -63,9 +63,14 @@ class ActionScreenView extends React.Component {
   }
 
   handleClickItemFeature = (feature) => {
-    const { lat, lng, type, videoId } = feature.properties
+    const { history, location } = this.props
+    const { lat, lng, type, id } = feature.properties
+
     if (type === 'image') this.setState({ carousel: { lat, lng } })
-    else if (type === 'video') this.props.modal('youTubeVideo', { modalTransparent: true, videoId })
+    else if (type === 'video') {
+      const params = { _mn: 'testimonial', _ms: id }
+      history.push({ pathname: location.pathname, search: toQs(params, { encode: false }) })
+    }
   }
 
   handleEnterItemFeature = (feature) => {

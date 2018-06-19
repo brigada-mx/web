@@ -21,14 +21,7 @@ const defaultFilterMethod = (filter, row) => {
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
 }
 
-const SubmissionTable = ({
-  submissions,
-  onChangeAction,
-  onTogglePublished,
-  onRestore,
-  onRowClicked,
-  onDelete,
-}) => {
+const SubmissionTable = ({ submissions, onChangeAction, onTogglePublished, onRestore, onRowClicked, onDelete }) => {
   const columns = [
     {
       Header: 'Fotos',

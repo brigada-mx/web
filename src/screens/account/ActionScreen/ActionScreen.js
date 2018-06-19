@@ -121,9 +121,9 @@ class ActionScreen extends React.Component {
     this.props.snackbar(message, 'success')
   }
 
-  handlePreviewTestimonial = (videoId) => {
+  handlePreviewTestimonial = (id) => {
     const { history, action } = this.props
-    const params = { _mn: 'testimonial', _ms: videoId, _mt: 't' }
+    const params = { _mn: 'testimonial', _ms: id }
     history.push({ pathname: `/proyectos/${action.id}`, search: toQs(params, { encode: false }) })
   }
 

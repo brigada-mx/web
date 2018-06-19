@@ -312,6 +312,7 @@ OrganizationListScreenView.defaultProps = {
   valActionType: [],
 }
 
+// THIS IS AN ANTI-PATTERN, because it will rerender map screen on any change to redux store
 const mapStateToProps = (state, { location }) => {
   const { valState, valMuni, valSector, valActionType } = parseFilterQueryParams(location)
   return { valState, valMuni, valSector, valActionType }
