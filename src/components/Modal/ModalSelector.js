@@ -15,7 +15,7 @@ import CreateTestimonialScreen from 'screens/account/CreateTestimonialScreen'
 import AccountCreated from 'screens/account/AccountCreated'
 import AccountVerified from 'screens/account/AccountCreated/AccountVerified'
 import YouTubeVideo from 'components/YouTubeVideo'
-import TestimonialYouTubeVideo from 'components/TestimonialYouTubeVideo'
+import ModalQsYouTubeVideo from 'components/ModalQsYouTubeVideo'
 import ChooseVolunteerOpportunity from 'components/ChooseVolunteerOpportunity'
 import VolunteerApplicationScreen from 'screens/VolunteerApplicationScreen'
 import VolunteerApplicationCreated from 'screens/VolunteerApplicationScreen/VolunteerApplicationCreated'
@@ -42,7 +42,7 @@ const componentByName = {
   createSubmission: CreateSubmissionScreen,
   createTestimonial: CreateTestimonialScreen,
 
-  testimonial: TestimonialYouTubeVideo,
+  testimonial: ModalQsYouTubeVideo,
 }
 
 const ModalSelector = (
@@ -71,15 +71,18 @@ ModalSelector.propTypes = {
 }
 
 const mapStateToProps = (state, { location }) => {
-  const { _mn: modalName, _ms: modalPropsString, _mt, _mp, _mw } = parseQs(location.search)
-  return {
-    modalName,
-    modalPropsString,
-    modalTransparent: Boolean(_mt),
-    modalPadded: Boolean(_mp),
-    modalWide: Boolean(_mw),
-    ...state.modal,
+  // values in state container take precedence over values in query string
+  const { _mn, _ms, _mt, _mp, _mw } = parseQs(location.search)
+  const { modalName, ...rest } = state.modal
+  const props = {
+    modalName: modalName || _mn || '',
+    modalPropsString: _ms,
+    modalTransparent: _mt && Boolean(_mt),
+    modalPadded: _mp && Boolean(_mp),
+    modalWide: _mw && Boolean(_mw),
+    ...rest,
   }
+  return props
 }
 
 export default withRouter(connect(mapStateToProps, null)(ModalSelector))

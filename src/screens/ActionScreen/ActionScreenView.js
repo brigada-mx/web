@@ -6,6 +6,7 @@ import { withRouter, Redirect, Link } from 'react-router-dom'
 import { Sticky, StickyContainer } from 'react-sticky'
 
 import * as Actions from 'src/actions'
+import { toQs } from 'api/request'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import Carousel from 'components/Carousel'
 import ActionMap from 'components/FeatureMap/ActionMap'
@@ -46,9 +47,14 @@ class ActionScreenView extends React.Component {
   }
 
   handleClickItem = (e, { photo: item }) => {
+    const { history, location } = this.props
     const { type, youtube_video_id: videoId } = item
+
     if (type === 'image') this.setState({ carousel: { initialUrl: item.url } })
-    else if (type === 'video') this.props.modal('youTubeVideo', { modalTransparent: true, videoId })
+    else if (type === 'video') {
+      const params = { _mn: 'testimonial', _ms: videoId, _mt: 't' }
+      history.push({ pathname: location.pathname, search: toQs(params, { encode: false }) })
+    }
   }
 
   handleMouseEnterItem = (e, { photo }) => {
@@ -318,6 +324,7 @@ ActionScreenView.propTypes = {
   action: PropTypes.object.isRequired,
   myAction: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   modal: PropTypes.func.isRequired,
 }
 

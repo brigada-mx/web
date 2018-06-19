@@ -8,6 +8,7 @@ import { Link, withRouter, Redirect } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import * as Actions from 'src/actions'
+import { toQs } from 'api/request'
 import service, { getBackoff } from 'api/service'
 import { cleanAccentedChars } from 'tools/string'
 import Modal from 'components/Modal'
@@ -120,15 +121,17 @@ class ActionScreen extends React.Component {
     this.props.snackbar(message, 'success')
   }
 
-  handlePreviewTestimonial = async (videoId) => {
-    this.props.modal('youTubeVideo', { modalTransparent: true, videoId })
+  handlePreviewTestimonial = (videoId) => {
+    const { history, action } = this.props
+    const params = { _mn: 'testimonial', _ms: videoId, _mt: 't' }
+    history.push({ pathname: `/proyectos/${action.id}`, search: toQs(params, { encode: false }) })
   }
 
   handleRowClickedTestimonial = (id) => {
     this.setState({ testimonialId: id })
   }
 
-  handleTestimonialModalClose = async () => {
+  handleTestimonialModalClose = () => {
     this.setState({ testimonialId: undefined })
   }
 

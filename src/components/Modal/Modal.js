@@ -2,10 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
-import * as Actions from 'src/actions'
-import { connect } from 'react-redux'
 import ReactGA from 'react-ga'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
+import * as Actions from 'src/actions'
+import { parseQs } from 'tools/string'
+import { toQs } from 'api/request'
 import Styles from './Modal.css'
 
 
@@ -36,7 +39,16 @@ class Modal extends React.Component {
   }
 
   handleClose = () => {
-    const { closeModal, onClose } = this.props
+    const { closeModal, onClose, history, location } = this.props
+    const obj = parseQs(location.search)
+
+    delete obj._mn
+    delete obj._ms
+    delete obj._mt
+    delete obj._mp
+    delete obj._mw
+
+    history.replace({ pathname: location.pathname, search: toQs(obj, { encode: false }) })
     closeModal()
     if (onClose) onClose()
   }
@@ -59,6 +71,8 @@ class Modal extends React.Component {
 }
 
 Modal.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   children: PropTypes.any,
   transparent: PropTypes.bool,
   padded: PropTypes.bool,
@@ -76,4 +90,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Modal)
+export default withRouter(connect(null, mapDispatchToProps)(Modal))
