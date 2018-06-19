@@ -14,6 +14,7 @@ import { localStorage } from 'tools/storage'
 import SnackBar from 'components/SnackBar'
 import Nav from 'components/Nav'
 import ModalSelector from 'components/Modal/ModalSelector'
+import ModalQsSelector from 'components/Modal/ModalQsSelector'
 import LiveChat from 'components/LiveChat'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
@@ -133,6 +134,7 @@ const App = () => {
             <LiveChat />
             <SnackBar />
             <ModalSelector />
+            <ModalQsSelector />
 
             <Route exact path="/" component={Nav} />
             <Route path="/(comunidades|reconstructores|donadores|proyectos|voluntariado)" component={Nav} />

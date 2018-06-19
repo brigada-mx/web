@@ -2,9 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
-import { parseQs } from 'tools/string'
 import LoginScreen from 'screens/account/LoginScreen'
 import PasswordEmailScreen from 'screens/account/PasswordEmailScreen'
 import CreateAccountScreen from 'screens/account/CreateAccountScreen'
@@ -15,7 +13,6 @@ import CreateTestimonialScreen from 'screens/account/CreateTestimonialScreen'
 import AccountCreated from 'screens/account/AccountCreated'
 import AccountVerified from 'screens/account/AccountCreated/AccountVerified'
 import YouTubeVideo from 'components/YouTubeVideo'
-import ModalQsYouTubeVideo from 'components/ModalQsYouTubeVideo'
 import ChooseVolunteerOpportunity from 'components/ChooseVolunteerOpportunity'
 import VolunteerApplicationScreen from 'screens/VolunteerApplicationScreen'
 import VolunteerApplicationCreated from 'screens/VolunteerApplicationScreen/VolunteerApplicationCreated'
@@ -41,8 +38,6 @@ const componentByName = {
   shareUserCreated: ShareUserCreated,
   createSubmission: CreateSubmissionScreen,
   createTestimonial: CreateTestimonialScreen,
-
-  testimonial: ModalQsYouTubeVideo,
 }
 
 const ModalSelector = (
@@ -70,19 +65,8 @@ ModalSelector.propTypes = {
   modalWide: PropTypes.bool,
 }
 
-const mapStateToProps = (state, { location }) => {
-  // values in state container take precedence over values in query string
-  const { _mn, _ms, _mt, _mp, _mw } = parseQs(location.search)
-  const { modalName, ...rest } = state.modal
-  const props = {
-    modalName: modalName || _mn || '',
-    modalPropsString: _ms,
-    modalTransparent: _mt && Boolean(_mt),
-    modalPadded: _mp && Boolean(_mp),
-    modalWide: _mw && Boolean(_mw),
-    ...rest,
-  }
-  return props
+const mapStateToProps = (state) => {
+  return state.modal
 }
 
-export default withRouter(connect(mapStateToProps, null)(ModalSelector))
+export default connect(mapStateToProps, null)(ModalSelector)

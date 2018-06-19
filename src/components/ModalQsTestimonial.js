@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import YouTubeVideo from 'components/YouTubeVideo'
 
 
-const ModalQsWrapper = ({ modalPropsString }) => {
+const ModalQsTestimonial = ({ modalPropsString }) => {
   return <YouTubeVideo videoId={modalPropsString || '_'} />
 }
 
-ModalQsWrapper.propTypes = {
+ModalQsTestimonial.propTypes = {
   modalPropsString: PropTypes.string,
 }
 
-export default ModalQsWrapper
+export default ModalQsTestimonial

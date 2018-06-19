@@ -44,9 +44,6 @@ class Modal extends React.Component {
 
     delete obj._mn
     delete obj._ms
-    delete obj._mt
-    delete obj._mp
-    delete obj._mw
 
     history.replace({ pathname: location.pathname, search: toQs(obj, { encode: false }) })
     closeModal()
