@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import service, { getBackoff } from 'api/service'
@@ -11,14 +12,22 @@ class ModalQsTestimonial extends React.Component {
   componentDidMount() {
     this._mounted = true
 
-    const { modal, modalPropsString } = this.props
+    const { modal, modalPropsString, location } = this.props
     const id = Number.parseInt(modalPropsString, 10)
     if (Number.isNaN(id)) return
 
+    const errorModal = () => { modal('youTubeVideo', { modalTransparent: true, videoId: '_' }) }
+
     getBackoff(() => service.getTestimonial(id), {
       onResponse: ({ data, error }) => {
-        if (error) modal('youTubeVideo', { modalTransparent: true, videoId: '_' })
-        if (data) modal('youTubeVideo', { modalTransparent: true, videoId: data.video.youtube_video_id })
+        if (!this._mounted) return
+        if (error) errorModal()
+        if (data) {
+          const parts = location.pathname.split('/')
+          if (parts[1] !== 'proyectos') errorModal()
+          else if (Number.parseInt(parts[2], 10) !== data.action) errorModal()
+          else modal('youTubeVideo', { modalTransparent: true, videoId: data.video.youtube_video_id })
+        }
       },
     })
   }
@@ -35,6 +44,7 @@ class ModalQsTestimonial extends React.Component {
 ModalQsTestimonial.propTypes = {
   modal: PropTypes.func.isRequired,
   modalPropsString: PropTypes.string,
+  location: PropTypes.object.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -43,4 +53,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ModalQsTestimonial)
+export default withRouter(connect(null, mapDispatchToProps)(ModalQsTestimonial))
