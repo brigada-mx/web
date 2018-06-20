@@ -7,8 +7,4 @@ export const logging = {
   http: false,
 }
 
-export const google = {
-  apiKey: 'AIzaSyBAPo9-LRuETw6wPxGCLNU86IiqWbWIcic',
-}
-
 export const env = 'prod'

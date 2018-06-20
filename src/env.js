@@ -1,4 +1,5 @@
 const env = process.env.NODE_ENV === 'development' ? require('./env.dev') : require('./env.prod')
+const envLocal = process.env.NODE_ENV === 'development' ? require('./.env.local') : {}
 
 const common = {
   mapbox: {
@@ -11,6 +12,9 @@ const common = {
   },
   surveyUrl: 'https://ee.humanitarianresponse.info/x/#Yhgh',
   thumborUrl: 'https://d1usq577esam6j.cloudfront.net',
+  google: {
+    apiKey: 'AIzaSyBAPo9-LRuETw6wPxGCLNU86IiqWbWIcic',
+  },
 }
 
-export default { ...common, ...env, gitHashRelease: process.env.CUSTOM_GIT_COMMIT_HASH }
+export default { ...common, ...env, ...envLocal, gitHashRelease: process.env.CUSTOM_GIT_COMMIT_HASH }
