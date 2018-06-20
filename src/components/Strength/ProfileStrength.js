@@ -71,8 +71,8 @@ class ProfileStrength extends React.Component {
       {
         value: testimonials,
         label: 'Subir testimonios',
-        videoId: '0qRxsa2WyVc',
-        durationString: '4:38',
+        videoId: 'jJNS4gXUcTc',
+        durationString: '2:49',
       },
       {
         value: donations,

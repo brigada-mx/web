@@ -17,7 +17,7 @@ const modalRoot = document.getElementById('modal')
 class Modal extends React.Component {
   componentDidMount() {
     ReactGA.modalview(`${window.location.pathname}/_/${this.props.gaName || ''}`)
-    document.addEventListener('keydown', this.handleKeyDown)
+    if (this.props.cancelShortcut) document.addEventListener('keydown', this.handleKeyDown)
 
     this._scrollTop = document.body && document.body.scrollTop
     const main = document.getElementById('app')
@@ -73,6 +73,7 @@ Modal.propTypes = {
   children: PropTypes.any,
   transparent: PropTypes.bool,
   padded: PropTypes.bool,
+  cancelShortcut: PropTypes.bool,
   onClose: PropTypes.func,
   closeModal: PropTypes.func.isRequired,
   contentClassName: PropTypes.string,
@@ -80,6 +81,9 @@ Modal.propTypes = {
   gaName: PropTypes.string,
 }
 
+Modal.defaultProps = {
+  cancelShortcut: true,
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {

@@ -166,13 +166,17 @@ class ActionScreen extends React.Component {
   handleToggleCreateSubmissionModal = () => {
     const { modal, action } = this.props
     if (action.key === undefined) return
-    modal('createSubmission', { actionKey: action.key, modalPadded: false, modalWide: true })
+    modal('createSubmission',
+      { actionKey: action.key, modalPadded: false, modalWide: true, modalCancelShortcut: false }
+    )
   }
 
   handleToggleCreateTestimonialModal = () => {
     const { modal, action } = this.props
     if (action.key === undefined) return
-    modal('createTestimonial', { actionKey: action.key, modalPadded: false, modalWide: true })
+    modal('createTestimonial',
+      { actionKey: action.key, modalPadded: false, modalWide: true, modalCancelShortcut: false }
+    )
   }
 
   handleDeleteAction = async () => {

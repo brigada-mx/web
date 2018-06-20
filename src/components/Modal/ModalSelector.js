@@ -40,9 +40,15 @@ const componentByName = {
   createTestimonial: CreateTestimonialScreen,
 }
 
-const ModalSelector = (
-  { modalName, modalClassName = '', modalTransparent = false, modalWide = false, modalPadded = true, ...rest }
-) => {
+const ModalSelector = ({
+  modalName,
+  modalClassName = '',
+  modalTransparent = false,
+  modalWide = false,
+  modalPadded = true,
+  modalCancelShortcut = true,
+  ...rest
+}) => {
   const Component = componentByName[modalName]
   if (!Component) return null
 
@@ -51,6 +57,7 @@ const ModalSelector = (
       contentClassName={modalClassName || modalWide ? Styles.selectorContentWide : Styles.selectorContent}
       transparent={modalTransparent}
       padded={modalPadded}
+      cancelShortcut={modalCancelShortcut}
     >
       <Component {...rest} />
     </Modal>
@@ -63,6 +70,7 @@ ModalSelector.propTypes = {
   modalTransparent: PropTypes.bool,
   modalPadded: PropTypes.bool,
   modalWide: PropTypes.bool,
+  modalCancelShortcut: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => {
