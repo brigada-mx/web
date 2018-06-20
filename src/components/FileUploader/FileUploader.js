@@ -29,6 +29,12 @@ class FileUploader extends React.Component {
     this.setState({ active: true })
   }
 
+  componentWillUnmount() {
+    for (const file of this._files) {
+      if (file.meta.status === 'uploading') file.xhr.abort()
+    }
+  }
+
   handleDragOver = (e) => {
     e.preventDefault()
     e.stopPropagation()
