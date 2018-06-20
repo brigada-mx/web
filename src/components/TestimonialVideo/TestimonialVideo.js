@@ -19,7 +19,7 @@ const TestimonialVideo = ({ testimonial }) => {
         <span className={Styles.label}>{moment(submitted).format('h:mma, DD MMMM YYYY')}</span>
         <span className={Styles.label}>{latLng}</span>
       </div>
-      <span className={Styles.description}>Para {recipients}</span>
+      <span className={Styles.description}>Testimonio de {recipients}</span>
     </div>
   )
 }

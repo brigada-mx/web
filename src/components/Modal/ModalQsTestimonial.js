@@ -26,7 +26,7 @@ class ModalQsTestimonial extends React.Component {
           const parts = location.pathname.split('/')
           if (parts[1] !== 'proyectos') errorModal()
           else if (Number.parseInt(parts[2], 10) !== data.action) errorModal()
-          else modal('testimonialVideo', { modalTransparent: true, testimonial: data })
+          else modal('testimonialVideo', { modalTransparent: true, modalTransparentBackground: false, testimonial: data })
         }
       },
     })

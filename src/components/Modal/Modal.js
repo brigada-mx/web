@@ -52,11 +52,11 @@ class Modal extends React.Component {
 
   render() {
     const {
-      children, transparent = false, contentClassName = '', buttonClassName = '', padded = true,
+      children, transparent = false, contentClassName = '', buttonClassName = '', padded = true, transparentBackground,
     } = this.props
     return ReactDOM.createPortal(
       <div className={Styles.container}>
-        <div className={Styles.overlay} />
+        <div className={transparentBackground ? Styles.overlay : Styles.blackOverlay} />
         <div className={`${transparent ? Styles.contentTransparent : Styles.content} ${contentClassName} ${padded ? Styles.contentPadded : ''}`}>
           <span className={`${Styles.closeButton} ${buttonClassName}`} onClick={this.handleClose} />
           {children}
@@ -72,6 +72,7 @@ Modal.propTypes = {
   location: PropTypes.object.isRequired,
   children: PropTypes.any,
   transparent: PropTypes.bool,
+  transparentBackground: PropTypes.bool,
   padded: PropTypes.bool,
   cancelShortcut: PropTypes.bool,
   onClose: PropTypes.func,
@@ -83,6 +84,7 @@ Modal.propTypes = {
 
 Modal.defaultProps = {
   cancelShortcut: true,
+  transparentBackground: true,
 }
 
 const mapDispatchToProps = (dispatch) => {

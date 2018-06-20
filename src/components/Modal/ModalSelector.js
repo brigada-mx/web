@@ -46,6 +46,7 @@ const ModalSelector = ({
   modalName,
   modalClassName = '',
   modalTransparent = false,
+  modalTransparentBackground = true,
   modalWide = false,
   modalPadded = true,
   modalCancelShortcut = true,
@@ -58,6 +59,7 @@ const ModalSelector = ({
     <Modal
       contentClassName={modalClassName || modalWide ? Styles.selectorContentWide : Styles.selectorContent}
       transparent={modalTransparent}
+      transparentBackground={modalTransparentBackground}
       padded={modalPadded}
       cancelShortcut={modalCancelShortcut}
     >
@@ -70,6 +72,7 @@ ModalSelector.propTypes = {
   modalName: PropTypes.string,
   modalClassName: PropTypes.string,
   modalTransparent: PropTypes.bool,
+  modalTransparentBackground: PropTypes.bool,
   modalPadded: PropTypes.bool,
   modalWide: PropTypes.bool,
   modalCancelShortcut: PropTypes.bool,
