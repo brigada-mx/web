@@ -13,6 +13,7 @@ import CreateTestimonialScreen from 'screens/account/CreateTestimonialScreen'
 import AccountCreated from 'screens/account/AccountCreated'
 import AccountVerified from 'screens/account/AccountCreated/AccountVerified'
 import YouTubeVideo from 'components/YouTubeVideo'
+import TestimonialVideo from 'components/TestimonialVideo'
 import ChooseVolunteerOpportunity from 'components/ChooseVolunteerOpportunity'
 import VolunteerApplicationScreen from 'screens/VolunteerApplicationScreen'
 import VolunteerApplicationCreated from 'screens/VolunteerApplicationScreen/VolunteerApplicationCreated'
@@ -31,6 +32,7 @@ const componentByName = {
   accountCreated: AccountCreated,
   accountVerified: AccountVerified,
   youTubeVideo: YouTubeVideo,
+  testimonialVideo: TestimonialVideo,
   ctaVolunteer: ChooseVolunteerOpportunity,
   volunteerApplication: VolunteerApplicationScreen,
   volunteerApplicationCreated: VolunteerApplicationCreated,

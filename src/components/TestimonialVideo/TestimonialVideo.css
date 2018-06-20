@@ -1,0 +1,60 @@
+.labelContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 27px;
+  font-family: 'nunito-sans-600', sans-serif;
+  font-size: 14px;
+  color: #A5A5A5;
+  letter-spacing: 1.26px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.label:nth-of-type(1) {
+  max-width: 50%;
+}
+
+.label:nth-of-type(2) {
+  max-width: 40%;
+}
+
+.mapLink {
+  color: #A5A5A5;
+  text-decoration: none;
+  background: url("assets/img/location-icon.svg") no-repeat;
+  background-size: 12px 12px;
+  background-position-y: 3px;
+  padding-left: 23px;
+  display: inline-block;
+}
+
+.description {
+  margin-top: 12px;
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 14px;
+  color: #A5A5A5;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 767px) and (min-width: 0px) {
+  .labelContainer {
+    flex-direction: column;
+  }
+  .label {
+    max-width: 100%;
+  }
+  .description {
+    justify-content: flex-start;
+  }
+}

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
-import { toDegrees } from 'tools/other'
-import { thumborUrl, googleMapsUrl } from 'tools/string'
+import LatLngLink from 'components/LatLngLink'
+import { thumborUrl } from 'tools/string'
 import Styles from './Carousel.css'
 
 
@@ -12,18 +12,7 @@ moment.locale('es')
 
 const Photo = ({ lazyLoad, description, location, submitted, image }) => {
   const { lat, lng } = location || {}
-  let latLng = null
-  if (lat) {
-    const [latsign, latd, latm, lats] = toDegrees(lat)
-    const [lngsign, lngd, lngm, lngs] = toDegrees(lng)
-    const latStr = `${latd}°${latm}'${lats}"${latsign >= 0 ? 'N' : 'S'}`
-    const lngStr = `${lngd}°${lngm}'${lngs}"${lngsign >= 0 ? 'E' : 'W'}`
-    latLng = (
-      <a className={Styles.mapLink} target="_blank" rel="noopener noreferrer" href={googleMapsUrl(lat, lng)}>
-        {`${latStr} ${lngStr}`}
-      </a>
-    )
-  }
+  const latLng = lat !== undefined && <LatLngLink lat={lat} lng={lng} className={Styles.mapLink} />
 
   return (
     <div className={Styles.outerBox}>
