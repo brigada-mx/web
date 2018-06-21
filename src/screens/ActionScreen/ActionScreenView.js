@@ -16,8 +16,8 @@ import { projectTypeByValue } from 'src/choices'
 import ActionStrengthPublic from 'components/Strength/ActionStrengthPublic'
 import VolunteerButton from 'components/CTA/VolunteerButton'
 import FacebookButton from 'components/CTA/FacebookButton'
+import PhotoGallery from 'components/ActionPhotoGallery'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
-import PhotoGallery from './PhotoGallery'
 import Styles from './ActionScreenView.css'
 
 

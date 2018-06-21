@@ -11,7 +11,7 @@ import Styles from './PhotoGallery.css'
 
 class PhotoGallery extends React.Component {
   render() {
-    const { submissions, testimonials, onClickItem, onMouseEnterItem } = this.props
+    const { submissions, testimonials, onClickItem, onMouseEnterItem, columns } = this.props
     const _images = [].concat(...submissions.map((s) => {
       const { images, submitted, location, description } = s
       return images.filter(
@@ -71,7 +71,7 @@ class PhotoGallery extends React.Component {
             <div key={month}>
               <div className={Styles.groupLabel}>{moment(month).format('MMMM YYYY')}</div>
               <Gallery
-                columns={window.innerWidth >= 768 ? undefined : 2}
+                columns={window.innerWidth >= 768 ? columns : 2}
                 margin={4}
                 photos={group}
                 onClick={onClickItem}
@@ -89,6 +89,7 @@ PhotoGallery.propTypes = {
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   testimonials: PropTypes.arrayOf(PropTypes.object).isRequired,
   onClickItem: PropTypes.func,
+  columns: PropTypes.number,
   onMouseEnterItem: PropTypes.func,
 }
 

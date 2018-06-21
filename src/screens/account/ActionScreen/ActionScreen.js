@@ -166,7 +166,8 @@ class ActionScreen extends React.Component {
   handleToggleCreateSubmissionModal = () => {
     const { modal, action } = this.props
     if (action.key === undefined) return
-    modal('createSubmission',
+    modal(
+      'createSubmission',
       { actionKey: action.key, modalPadded: false, modalWide: true, modalCancelShortcut: false }
     )
   }
@@ -174,7 +175,8 @@ class ActionScreen extends React.Component {
   handleToggleCreateTestimonialModal = () => {
     const { modal, action } = this.props
     if (action.key === undefined) return
-    modal('createTestimonial',
+    modal(
+      'createTestimonial',
       { actionKey: action.key, modalPadded: false, modalWide: true, modalCancelShortcut: false }
     )
   }
@@ -460,11 +462,13 @@ class ActionScreen extends React.Component {
             contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
             onClose={() => this.handleToggleCreateOpportunityModal(false)}
             gaName="orgCreateOpportunityModal"
+            cancelShortcut={false}
           >
             <div className={FormStyles.sectionHeader}>Agregar oportunidad de voluntariado</div>
             <CreateOpportunityForm
               onSubmit={this.handleCreateOpportunity}
               initialValues={initialOpportunityValues}
+              action={action}
             />
           </Modal>
         }

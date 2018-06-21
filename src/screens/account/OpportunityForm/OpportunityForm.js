@@ -10,6 +10,7 @@ import { RadioButton } from 'material-ui/RadioButton'
 
 import { volunteerLocations } from 'src/choices'
 import { TextField, Toggle, DatePicker, RadioButtonGroup } from 'components/Fields'
+import PhotoGallery from 'components/ActionPhotoGallery'
 import FormStyles from 'src/Form.css'
 import Styles from './OpportunityForm.css'
 
@@ -110,15 +111,6 @@ const Fields = ({ location }) => {
           </React.Fragment>
         }
       </div>
-
-      <div className={FormStyles.row}>
-        <div className={FormStyles.toggle}>
-          <Toggle
-            label="¿Publicado?"
-            name="published"
-          />
-        </div>
-      </div>
     </React.Fragment>
   )
 }
@@ -127,7 +119,20 @@ Fields.propTypes = {
   location: PropTypes.string.isRequired,
 }
 
-const CreateForm = ({ handleSubmit, submitting, location = 'anywhere' }) => {
+const CreateForm = ({ handleSubmit, submitting, location = 'anywhere', onClickGalleryItem, action }) => {
+  const { testimonials, submissions } = action
+  let gallery = null
+  if (testimonials && submissions) {
+    const images = [].concat(...submissions.map(s => s.images))
+    gallery = (images.length > 0 || testimonials.length > 0) &&
+      <PhotoGallery
+        testimonials={testimonials}
+        submissions={submissions}
+        onClickItem={onClickGalleryItem}
+        columns={4}
+      />
+  }
+
   return (
     <React.Fragment>
       <Fields location={location} />
@@ -141,6 +146,7 @@ const CreateForm = ({ handleSubmit, submitting, location = 'anywhere' }) => {
           onClick={handleSubmit}
         />
       </div>
+      {gallery}
     </React.Fragment>
   )
 }
@@ -148,6 +154,8 @@ const CreateForm = ({ handleSubmit, submitting, location = 'anywhere' }) => {
 CreateForm.propTypes = {
   ...rxfPropTypes,
   location: PropTypes.string,
+  onClickGalleryItem: PropTypes.func.isRequired,
+  action: PropTypes.object.isRequired,
 }
 
 const UpdateForm = ({ handleSubmit, submitting, id, location = 'anywhere' }) => {
