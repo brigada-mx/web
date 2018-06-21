@@ -101,8 +101,8 @@ class CreateTestimonialScreen extends React.Component {
       <FileUploader
         onSubmit={this.handleSubmitFiles}
         instructions="Paso 3: Arrastra un vídeo"
-        subInstructions="180MB tamaño máximo"
-        maxSizeBytes={180 * 1024 * 1024}
+        subInstructions="240MB tamaño máximo"
+        maxSizeBytes={240 * 1024 * 1024}
         maxFiles={1}
         allowedTypePrefixes={['video/']}
         allowedTypeString="video/*"

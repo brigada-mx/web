@@ -8,6 +8,19 @@
   transition: all .15s linear;
 }
 
+.link {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 15px;
+  margin-top: 8px;
+  color: #3DC59F;
+  letter-spacing: 0.4px;
+  line-height: 16px;
+  text-decoration: none;
+  display: table;
+  cursor: pointer;
+  transition: all .15s linear;
+}
+
 .dropzoneInstructions {
   display: flex;
   flex-direction: column;
