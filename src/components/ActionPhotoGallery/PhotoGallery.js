@@ -48,6 +48,8 @@ class PhotoGallery extends React.Component {
     const photos = _images.concat(videos).sort((a, b) => {
       if (a.submitted < b.submitted) return 1
       if (a.submitted > b.submitted) return -1
+      if (a.src < b.src) return 1
+      if (a.src > b.src) return -1
       return 0
     })
 

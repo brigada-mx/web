@@ -64,6 +64,13 @@ class CarouselContainer extends React.Component {
         return distanceKmBetweenCoords(lat, lng, _lat, _lng) * 1000 < maxMetersGroupSubmissions
       })
     }
+    filtered = filtered.sort((a, b) => {
+      if (a.submitted < b.submitted) return 1
+      if (a.submitted > b.submitted) return -1
+      if (a.image.url < b.image.url) return 1
+      if (a.image.url > b.image.url) return -1
+      return 0
+    })
     return <CarouselView key={filtered.length} {...rest} photos={filtered} />
   }
 }
