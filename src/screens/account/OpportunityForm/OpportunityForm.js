@@ -123,7 +123,7 @@ const picker = (action) => {
   const images = [].concat(...submissions.map(s => s.images))
   const gallery = (images.length > 0 || testimonials.length > 0) &&
     <PhotoGalleryPicker
-      name="photo"
+      name="preview"
       testimonials={testimonials}
       submissions={submissions}
       columns={4}
@@ -182,7 +182,7 @@ UpdateForm.propTypes = {
   action: PropTypes.object.isRequired,
 }
 
-const validate = ({ position, desc, required_skills, target, location, location_desc: locDesc, photo }) => {
+const validate = ({ position, desc, required_skills, target, location, location_desc: locDesc, preview }) => {
   const errors = {}
   if (!position) errors.position = 'Agrega el nombre del puesto'
   else if (position.split(' ').filter(s => Boolean(s.trim())).length > 3) errors.position = 'Limita el nombre a 3 palabras'
@@ -199,7 +199,7 @@ const validate = ({ position, desc, required_skills, target, location, location_
     if (!locDesc) errors.location_desc = 'Agrega la descripción de el o los lugares'
     else if (locDesc.length > 200) errors.location_desc = 'Limita la descripción a 200 caracteres'
   }
-  if (!photo || photo && !photo.url) errors.photo = 'Escoge una foto o un vídeo'
+  if (!preview || !preview.url) errors.preview = 'Escoge una foto o un vídeo'
 
   return errors
 }
