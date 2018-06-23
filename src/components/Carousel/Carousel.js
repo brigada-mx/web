@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
 import { connect } from 'react-redux'
 import Swiper from 'react-id-swiper'
 import ReactGA from 'react-ga'
@@ -99,7 +98,7 @@ class CarouselView extends React.Component {
 
     const { photos, initialUrl } = props
     let index = 0
-    if (initialUrl) index = _.findIndex(photos, p => p.image.url === initialUrl)
+    if (initialUrl) index = photos.findIndex(p => p.image.url === initialUrl)
     if (index === -1) index = 0
 
     this.state = { index }

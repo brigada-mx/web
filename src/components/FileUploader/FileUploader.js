@@ -2,7 +2,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import service from 'api/service'
@@ -154,12 +153,12 @@ class FileUploader extends React.Component {
   }
 
   handleCancel = (_id) => {
-    const index = _.findIndex(this._files, f => f.meta.id === _id)
+    const index = this._files.findIndex(f => f.meta.id === _id)
     if (index !== -1) this._files[index].xhr.abort()
   }
 
   handleRemove = (_id) => {
-    const index = _.findIndex(this._files, f => f.meta.id === _id)
+    const index = this._files.findIndex(f => f.meta.id === _id)
     if (index !== -1) {
       this._files.splice(index, 1)
       this.forceUpdate()

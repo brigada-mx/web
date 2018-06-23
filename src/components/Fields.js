@@ -12,12 +12,13 @@ import {
   RadioButtonGroup as RadioButtonGroupInput,
 } from 'redux-form-material-ui'
 
+import PhotoGalleryPickerInput from 'components/ActionPhotoGallery/PhotoGalleryPicker'
 import Styles from 'src/Form.css'
 
 
-const fieldOf = (inputComponent) => {
+const fieldOf = (inputComponent, defaultStyle = true) => {
   const WrappedField = (props) => {
-    return <Field className={Styles.field} component={inputComponent} {...props} />
+    return <Field className={defaultStyle ? Styles.field : undefined} component={inputComponent} {...props} />
   }
   return WrappedField
 }
@@ -29,4 +30,5 @@ const Toggle = fieldOf(ToggleInput)
 const DatePicker = fieldOf(DatePickerInput)
 const AutoComplete = fieldOf(AutoCompleteInput)
 const RadioButtonGroup = fieldOf(RadioButtonGroupInput)
-export { TextField, SelectField, Checkbox, Toggle, DatePicker, AutoComplete, RadioButtonGroup }
+const PhotoGalleryPicker = fieldOf(PhotoGalleryPickerInput, false)
+export { TextField, SelectField, Checkbox, Toggle, DatePicker, AutoComplete, RadioButtonGroup, PhotoGalleryPicker }

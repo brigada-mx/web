@@ -23,10 +23,14 @@ class Photo extends React.Component {
 
   render() {
     const { photo, photo: { onMouseEnter }, onClick, margin } = this.props
-    const { src, width, height, alt, title, type } = photo
+    const { src, width, height, alt, title, type, selected = false } = photo
+
+    let className = type === 'video' ? Styles.video : Styles.image
+    if (selected) className = `${className} ${Styles.selected}`
+
     return (
       <div
-        className={type === 'video' ? Styles.video : Styles.image}
+        className={className}
         style={{ width, height, margin }}
         onClick={onClick ? this.handleClick : undefined}
         onMouseEnter={onMouseEnter ? this.handleMouseEnter : undefined}
@@ -47,6 +51,7 @@ export const photoPropType = PropTypes.shape({
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  selected: PropTypes.bool,
   onMouseEnter: PropTypes.func,
   alt: PropTypes.string,
   title: PropTypes.string,

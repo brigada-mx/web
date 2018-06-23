@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
 import Select from 'react-select'
 
 
@@ -17,7 +16,7 @@ const MultiSelect = ({ value, multiLabel, options, ...rest }) => {
         </div>
       )
     }
-    const option = _.find(options, o => o.value === v) || { label: '?' }
+    const option = options.find(o => o.value === v) || { label: '?' }
     return <span className="multi-select-one">{option.label}</span>
   }
 

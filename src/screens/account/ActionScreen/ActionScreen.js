@@ -286,8 +286,8 @@ class ActionScreen extends React.Component {
       createDonationModal,
       createOpportunityModal,
     } = this.state
-    const donation = _.find(donations, d => d.id === donationId)
-    const opportunity = _.find(opportunities, o => o.id === opportunityId)
+    const donation = donations.find(d => d.id === donationId)
+    const opportunity = opportunities.find(o => o.id === opportunityId)
 
     const content = (
       <div>
@@ -457,7 +457,7 @@ class ActionScreen extends React.Component {
           </Modal>
         }
 
-        {createOpportunityModal &&
+        {createOpportunityModal && action.id !== undefined &&
           <Modal
             contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
             onClose={() => this.handleToggleCreateOpportunityModal(false)}
@@ -490,7 +490,7 @@ class ActionScreen extends React.Component {
           </Modal>
         }
 
-        {opportunity &&
+        {opportunity && action.id !== undefined &&
           <Modal
             contentClassName={`${FormStyles.modal} ${FormStyles.formContainerLeft}`}
             onClose={this.handleUpdateOpportunityModalClose}
@@ -502,6 +502,7 @@ class ActionScreen extends React.Component {
               form={`accountUpdateOpportunity_${opportunityId}`}
               enableReinitialize
               id={opportunityId}
+              action={action}
             />
           </Modal>
         }

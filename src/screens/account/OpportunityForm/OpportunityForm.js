@@ -9,8 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { RadioButton } from 'material-ui/RadioButton'
 
 import { volunteerLocations } from 'src/choices'
-import { TextField, Toggle, DatePicker, RadioButtonGroup } from 'components/Fields'
-import PhotoGallery from 'components/ActionPhotoGallery'
+import { TextField, Toggle, DatePicker, RadioButtonGroup, PhotoGalleryPicker } from 'components/Fields'
 import FormStyles from 'src/Form.css'
 import Styles from './OpportunityForm.css'
 
@@ -119,23 +118,23 @@ Fields.propTypes = {
   location: PropTypes.string.isRequired,
 }
 
-const CreateForm = ({ handleSubmit, submitting, location = 'anywhere', onClickGalleryItem, action }) => {
+const picker = (action) => {
   const { testimonials, submissions } = action
-  let gallery = null
-  if (testimonials && submissions) {
-    const images = [].concat(...submissions.map(s => s.images))
-    gallery = (images.length > 0 || testimonials.length > 0) &&
-      <PhotoGallery
-        testimonials={testimonials}
-        submissions={submissions}
-        onClickItem={onClickGalleryItem}
-        columns={4}
-      />
-  }
+  const images = [].concat(...submissions.map(s => s.images))
+  const gallery = (images.length > 0 || testimonials.length > 0) &&
+    <PhotoGalleryPicker
+      name="photo"
+      testimonials={testimonials}
+      submissions={submissions}
+      columns={4}
+    />
+  return gallery || null
+}
 
+const CreateForm = ({ handleSubmit, submitting, location = 'anywhere', action }) => {
   return (
     <React.Fragment>
-      <Fields location={location} />
+      <Fields location={location} action={action} />
       <div className={FormStyles.row}>
         <RaisedButton
           backgroundColor="#3DC59F"
@@ -146,7 +145,7 @@ const CreateForm = ({ handleSubmit, submitting, location = 'anywhere', onClickGa
           onClick={handleSubmit}
         />
       </div>
-      {gallery}
+      {picker(action)}
     </React.Fragment>
   )
 }
@@ -154,14 +153,13 @@ const CreateForm = ({ handleSubmit, submitting, location = 'anywhere', onClickGa
 CreateForm.propTypes = {
   ...rxfPropTypes,
   location: PropTypes.string,
-  onClickGalleryItem: PropTypes.func.isRequired,
   action: PropTypes.object.isRequired,
 }
 
-const UpdateForm = ({ handleSubmit, submitting, id, location = 'anywhere' }) => {
+const UpdateForm = ({ handleSubmit, submitting, id, location = 'anywhere', action }) => {
   return (
     <React.Fragment>
-      <Fields location={location} id={id} />
+      <Fields location={location} id={id} action={action} />
       <div className={FormStyles.row}>
         <RaisedButton
           backgroundColor="#3DC59F"
@@ -172,6 +170,7 @@ const UpdateForm = ({ handleSubmit, submitting, id, location = 'anywhere' }) => 
           onClick={handleSubmit}
         />
       </div>
+      {picker(action)}
     </React.Fragment>
   )
 }
@@ -180,9 +179,10 @@ UpdateForm.propTypes = {
   ...rxfPropTypes,
   id: PropTypes.number.isRequired,
   location: PropTypes.string,
+  action: PropTypes.object.isRequired,
 }
 
-const validate = ({ position, desc, required_skills, target, location, location_desc: locDesc }) => {
+const validate = ({ position, desc, required_skills, target, location, location_desc: locDesc, photo }) => {
   const errors = {}
   if (!position) errors.position = 'Agrega el nombre del puesto'
   else if (position.split(' ').filter(s => Boolean(s.trim())).length > 3) errors.position = 'Limita el nombre a 3 palabras'
@@ -199,6 +199,8 @@ const validate = ({ position, desc, required_skills, target, location, location_
     if (!locDesc) errors.location_desc = 'Agrega la descripción de el o los lugares'
     else if (locDesc.length > 200) errors.location_desc = 'Limita la descripción a 200 caracteres'
   }
+  if (!photo || photo && !photo.url) errors.photo = 'Escoge una foto o un vídeo'
+
   return errors
 }
 
@@ -241,7 +243,4 @@ const mapStateToPropsUpdate = (state, { id }) => {
 const ReduxCreateForm = connect(mapStateToPropsCreate, null)(reduxForm({ form: 'accountNewOpportunity', validate })(CreateForm))
 const ReduxUpdateForm = connect(mapStateToPropsUpdate, null)(reduxForm({ validate })(UpdateForm)) // pass `form` arg when instantiating form
 
-export {
-  ReduxCreateForm as CreateOpportunityForm,
-  ReduxUpdateForm as UpdateOpportunityForm,
-}
+export { ReduxCreateForm as CreateOpportunityForm, ReduxUpdateForm as UpdateOpportunityForm }

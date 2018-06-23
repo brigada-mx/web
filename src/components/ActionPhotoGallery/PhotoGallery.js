@@ -9,11 +9,11 @@ import Photo from './Photo'
 import Styles from './PhotoGallery.css'
 
 
-class PhotoGallery extends React.Component {
+class PhotoGallery extends React.PureComponent {
   render() {
-    const { submissions, testimonials, onClickItem, onMouseEnterItem, columns } = this.props
+    const { submissions, selectedUrl, testimonials, onClickItem, onMouseEnterItem, columns } = this.props
     const _images = [].concat(...submissions.map((s) => {
-      const { images, submitted, location, description } = s
+      const { id, images, submitted, location, description } = s
       return images.filter(
         i => i.width !== undefined && i.height !== undefined
       ).map((i) => {
@@ -26,6 +26,7 @@ class PhotoGallery extends React.Component {
           submitted,
           location,
           type: 'image',
+          id,
         }
       })
     }))
@@ -52,6 +53,10 @@ class PhotoGallery extends React.Component {
       if (a.src > b.src) return -1
       return 0
     })
+    if (selectedUrl) {
+      const photo = photos.find(p => p.url === selectedUrl)
+      photo.selected = true
+    }
 
     const groupByMonth = photos.reduce((obj, photo) => {
       const date = moment(photo.submitted)
@@ -90,6 +95,7 @@ class PhotoGallery extends React.Component {
 PhotoGallery.propTypes = {
   submissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   testimonials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedUrl: PropTypes.string,
   onClickItem: PropTypes.func,
   columns: PropTypes.number,
   onMouseEnterItem: PropTypes.func,

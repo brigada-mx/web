@@ -132,16 +132,17 @@ class HomeScreen extends React.Component {
   }
 
   handleChangeSubmissionAction = async (id, actionId) => {
+    const { snackbar, actions } = this.props
     const { data } = await service.accountUpdateSubmission(id, { action: actionId })
     if (!data) {
-      this.props.snackbar('Hubo un error, no se pudo asignar estas fotos a un proyecto', 'error')
+      snackbar('Hubo un error, no se pudo asignar estas fotos a un proyecto', 'error')
       return
     }
     this.loadSubmissions()
     this.loadProfileStrength()
-    const action = _.find(this.props.actions, a => a.id === actionId)
+    const action = actions.find(a => a.id === actionId)
     const message = `Asignaste estas fotos a proyecto ${action && action.key}`
-    this.props.snackbar(message, 'success')
+    snackbar(message, 'success')
   }
 
   handleToggleCreateActionModal = (open) => {
