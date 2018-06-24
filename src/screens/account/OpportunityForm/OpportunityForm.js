@@ -199,7 +199,7 @@ const validate = ({ position, desc, required_skills, target, location, location_
     if (!locDesc) errors.location_desc = 'Agrega la descripción de el o los lugares'
     else if (locDesc.length > 200) errors.location_desc = 'Limita la descripción a 200 caracteres'
   }
-  if (!preview || !preview.url) errors.preview = 'Escoge una foto o un vídeo'
+  if (!preview || !preview.url) errors.preview = 'Escoge una foto o un vídeo para acompañar a esta oportunidad'
 
   return errors
 }

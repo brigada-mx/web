@@ -55,7 +55,7 @@ class PhotoGallery extends React.PureComponent {
     })
     if (selectedUrl) {
       const photo = photos.find(p => p.url === selectedUrl)
-      photo.selected = true
+      if (photo) photo.selected = true
     }
 
     const groupByMonth = photos.reduce((obj, photo) => {
