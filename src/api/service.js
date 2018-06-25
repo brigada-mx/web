@@ -76,6 +76,10 @@ class Service {
     return sendToApi(`/volunteer_opportunities/${id}/`)
   }
 
+  getOpportunities = async () => {
+    return sendToApi('/volunteer_opportunities/')
+  }
+
   getActionShare = async (actionId, email = '') => {
     const params = { email }
     return sendToApi(`/action_share/${actionId}/`, { params })

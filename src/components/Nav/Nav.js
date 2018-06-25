@@ -29,12 +29,17 @@ const NavLinks = ({
 
   const orgIsActive = (match, location) => {
     const { pathname } = location
-    return pathname.startsWith('/reconstructores')
+    return ['/reconstructores', '/proyectos', '/voluntariado'].some(s => pathname.startsWith(s))
   }
 
   const donorIsActive = (match, location) => {
     const { pathname } = location
     return pathname.startsWith('/donadores')
+  }
+
+  const volunteerIsActive = (match, location) => {
+    const { pathname } = location
+    return pathname.startsWith('/voluntarios')
   }
 
   const openChat = () => {
@@ -63,6 +68,7 @@ const NavLinks = ({
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">Comunidades</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/reconstructores">Reconstructores</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={donorIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/donadores">Donadores</NavLink>
+      <NavLink onClick={onHideDrawer} className={classNameLink} isActive={volunteerIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/voluntarios">Voluntarios</NavLink>
       {forumButton()}
       <Link onClick={openChat} className={classNameLink} to="#">Soporte</Link>
       {loginButton()}

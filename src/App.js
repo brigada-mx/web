@@ -21,18 +21,19 @@ import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
 import OrganizationScreen from 'screens/OrganizationScreen'
 import ActionScreen from 'screens/ActionScreen'
-import SetPasswordWithTokenScreen from 'screens/account/SetPasswordWithTokenScreen'
-import ChooseAccountTypeScreen from 'screens/account/CreateAccountScreen/ChooseAccountTypeScreen'
 import DonorListScreen from 'screens/DonorListScreen'
 import DonorScreen from 'screens/DonorScreen'
 import VolunteerOpportunityScreen from 'screens/VolunteerOpportunityScreen'
-import DonorCreateAccountScreen from 'screens/account/CreateAccountScreen/DonorCreateAccountScreen'
-import CreateAccountScreen from 'screens/account/CreateAccountScreen'
+import VolunteerOpportunityListScreen from 'screens/VolunteerOpportunityListScreen'
 
 import protectedScreen from 'screens/account/ProtectedScreen'
-import DiscourseLoginScreen from 'screens/account/LoginScreen/DiscourseLoginScreen'
 import AccountNav from 'components/AccountNav'
 import DonorNav from 'components/DonorNav'
+import DonorCreateAccountScreen from 'screens/account/CreateAccountScreen/DonorCreateAccountScreen'
+import CreateAccountScreen from 'screens/account/CreateAccountScreen'
+import SetPasswordWithTokenScreen from 'screens/account/SetPasswordWithTokenScreen'
+import ChooseAccountTypeScreen from 'screens/account/CreateAccountScreen/ChooseAccountTypeScreen'
+import DiscourseLoginScreen from 'screens/account/LoginScreen/DiscourseLoginScreen'
 import AccountActionScreen from 'screens/account/ActionScreen'
 import ProfileScreen from 'screens/account/ProfileScreen'
 import DonorProfileScreen from 'screens/account/ProfileScreen/DonorProfileScreen'
@@ -137,7 +138,7 @@ const App = () => {
             <ModalQsSelector />
 
             <Route exact path="/" component={Nav} />
-            <Route path="/(comunidades|reconstructores|donadores|proyectos|voluntariado)" component={Nav} />
+            <Route path="/(comunidades|reconstructores|donadores|proyectos|voluntariado|voluntarios)" component={Nav} />
             <Route path="/cuenta" component={AccountNav} />
             <Route path="/donador" component={DonorNav} />
 
@@ -151,6 +152,7 @@ const App = () => {
 
               <Route exact path="/" component={MapScreen} />
               <Route exact path="/comunidades/:id" component={LocalityScreenWrapper} />
+              <Route exact path="/voluntarios" component={VolunteerOpportunityListScreen} />
 
               <Route exact path="/reconstructores" component={OrganizationListScreen} />
               <Route exact path="/reconstructores/:id" component={OrganizationScreenWrapper} />
