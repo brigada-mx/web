@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ReactMapboxGl, { Layer, Source, ZoomControl } from 'react-mapbox-gl'
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 
 import env from 'src/env'
 import MapErrorBoundary from 'components/MapErrorBoundary'
@@ -64,7 +64,7 @@ class FeatureMap extends React.Component {
       sourceId,
     } = this.props
 
-    if (!_.isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
+    if (!isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
     const featureSourceOptions = {
       type: 'geojson',
       data: {

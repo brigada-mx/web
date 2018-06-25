@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 import { reset } from 'redux-form'
 import { connect } from 'react-redux'
 import { Link, withRouter, Redirect } from 'react-router-dom'
@@ -50,7 +50,7 @@ class ActionScreen extends React.Component {
       createOpportunityModal: false,
     }
 
-    this.handleLocalityChange = _.debounce(this.handleLocalityChange, 250)
+    this.handleLocalityChange = debounce(this.handleLocalityChange, 250)
   }
 
   componentDidMount() {

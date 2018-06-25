@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 import { reset } from 'redux-form'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -34,7 +34,7 @@ class HomeScreen extends React.Component {
       submissionTrashModal: false,
     }
 
-    this.handleLocalityChange = _.debounce(this.handleLocalityChange, 250)
+    this.handleLocalityChange = debounce(this.handleLocalityChange, 250)
   }
 
   componentDidMount() {

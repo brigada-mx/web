@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
+import uniqBy from 'lodash/uniqBy'
 import Select from 'react-select'
 import { withRouter } from 'react-router-dom'
 import '!style-loader!css-loader!react-select/dist/react-select.css'
@@ -86,7 +86,7 @@ class FilterHeader extends React.Component {
     }
 
     const stateOptions = () => {
-      const items = _.uniqBy(localities, l => l.cvegeo_state)
+      const items = uniqBy(localities, l => l.cvegeo_state)
 
       return items.sort((a, b) => {
         if (a.state_name < b.state_name) return -1
@@ -98,7 +98,7 @@ class FilterHeader extends React.Component {
     }
 
     const muniOptions = () => {
-      const items = _.uniqBy(localities, l => l.cvegeo_municipality)
+      const items = uniqBy(localities, l => l.cvegeo_municipality)
 
       return items.sort((a, b) => {
         if (a.municipality_name < b.municipality_name) return -1
@@ -110,7 +110,7 @@ class FilterHeader extends React.Component {
     }
 
     const actionTypeOptions = () => {
-      const items = _.uniqBy(actions, a => a.action_type)
+      const items = uniqBy(actions, a => a.action_type)
 
       return items.sort((a, b) => {
         if (a.action_type < b.action_type) return -1

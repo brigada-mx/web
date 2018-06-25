@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 
 import Styles from './PhotoGallery.css'
 
 
 class Photo extends React.Component {
   shouldComponentUpdate(nextProps) {
-    return !_.isEqual(this.props, nextProps)
+    return !isEqual(this.props, nextProps)
   }
 
   handleClick = (event) => {

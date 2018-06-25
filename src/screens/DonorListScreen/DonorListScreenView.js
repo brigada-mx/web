@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 import ReactTable from 'react-table'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -33,7 +33,7 @@ class DonorListScreenView extends React.Component {
       search: '',
       verifiedInfo: false,
     }
-    this.handleSearchKeyUp = _.debounce(this.handleSearchKeyUp, 150)
+    this.handleSearchKeyUp = debounce(this.handleSearchKeyUp, 150)
   }
 
   componentDidMount() {

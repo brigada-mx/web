@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 
 import FilterHeader, { parseFilterQueryParams } from 'components/FilterHeader'
 import SearchInput from 'components/SearchInput'
@@ -59,7 +59,7 @@ class OrganizationListScreenView extends React.Component {
       organizationSearch: '',
       filtersVisible: false,
     }
-    this.handleOrganizationSearchKeyUp = _.debounce(this.handleOrganizationSearchKeyUp, 150)
+    this.handleOrganizationSearchKeyUp = debounce(this.handleOrganizationSearchKeyUp, 150)
     this._fitBounds = this.defaultFitBounds()
   }
 
@@ -199,7 +199,7 @@ class OrganizationListScreenView extends React.Component {
   }
 
   render() {
-    const { organizations: { data: orgData, loading: orgLoading, error: orgError } } = this.props
+    const { organizations: { data: orgData, loading: orgLoading } } = this.props
     const { valState, valMuni, valSector, valActionType } = this.props
     const { popup, focused, filtersVisible } = this.state
 

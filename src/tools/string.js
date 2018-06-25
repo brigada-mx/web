@@ -1,6 +1,8 @@
 import React from 'react'
 
-import _ from 'lodash'
+import fromPairs from 'lodash/fromPairs'
+import partial from 'lodash/partial'
+import split from 'lodash/split'
 import urlRegex from 'url-regex'
 import { Link } from 'react-router-dom'
 
@@ -18,12 +20,8 @@ export const validateEmail = (email) => {
 }
 
 export const parseQs = (qs) => {
-  return _.chain(qs)
-    .replace('?', '')
-    .split('&')
-    .map(_.partial(_.split, _, '=', 2))
-    .fromPairs()
-    .value()
+  const parts = qs.replace('?', '').split('&').map(partial(split, partial.placeholder, '=', 2))
+  return fromPairs(parts)
 }
 
 export const toLowerWords = text => (text || '')

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import _ from 'lodash'
+import sortBy from 'lodash/sortBy'
 
 import * as Actions from 'src/actions'
 import { fmtNum, thumborUrl } from 'tools/string'
@@ -48,7 +48,7 @@ class ActionListItem extends React.PureComponent {
         if (name in amountByDonor) amountByDonor[name] += amount
         else amountByDonor[name] = amount
       }
-      const donors = _.sortBy(Object.keys(amountByDonor).map((donor) => {
+      const donors = sortBy(Object.keys(amountByDonor).map((donor) => {
         return { donor, amount: amountByDonor[donor] }
       }), d => -d.amount)
       return (

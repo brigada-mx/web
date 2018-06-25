@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 import AutoComplete from 'material-ui/AutoComplete'
 
 
@@ -11,7 +11,7 @@ class GoogleGeocoder extends React.Component {
     this.state = {
       results: [],
     }
-    this.handleUpdateInput = _.debounce(this.handleUpdateInput, 200)
+    this.handleUpdateInput = debounce(this.handleUpdateInput, 200)
   }
 
   componentDidMount() {

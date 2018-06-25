@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
+import sortBy from 'lodash/sortBy'
 
 import service, { getBackoffComponent } from 'api/service'
 import LocalityScreenView from './LocalityScreenView'
@@ -31,7 +31,7 @@ class LocalityScreen extends React.Component {
       stateKey: 'actions',
       onResponse: ({ data }) => {
         if (!data) return
-        data.results = _.sortBy(data.results, a => -a.score) // eslint-disable-line no-param-reassign
+        data.results = sortBy(data.results, a => -a.score) // eslint-disable-line no-param-reassign
         return { data } // eslint-disable-line consistent-return
       },
     })

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 
 import service, { getBackoffComponent } from 'api/service'
 import FilterHeader, { parseFilterQueryParams } from 'components/FilterHeader'
@@ -81,7 +81,7 @@ class MapScreen extends React.Component {
       locSearch: '',
       filtersVisible: false,
     }
-    this.handleLocalitySearchKeyUp = _.debounce(this.handleLocalitySearchKeyUp, 150)
+    this.handleLocalitySearchKeyUp = debounce(this.handleLocalitySearchKeyUp, 150)
     this.filterFields = ['state', 'muni', 'marg', 'numActions']
   }
 

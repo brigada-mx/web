@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import _ from 'lodash'
+import sortBy from 'lodash/sortBy'
 import { connect } from 'react-redux'
 
 import service, { getBackoffComponent } from 'api/service'
@@ -24,7 +24,7 @@ class DonorScreen extends React.Component {
       stateKey: 'donations',
       onResponse: ({ data }) => {
         if (!data) return
-        data.results = _.sortBy(data.results, d => -d.action.score) // eslint-disable-line no-param-reassign
+        data.results = sortBy(data.results, d => -d.action.score) // eslint-disable-line no-param-reassign
         return { data } // eslint-disable-line consistent-return
       },
     })

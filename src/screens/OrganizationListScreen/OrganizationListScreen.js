@@ -1,6 +1,6 @@
 import React from 'react'
 
-import _ from 'lodash'
+import sortBy from 'lodash/sortBy'
 
 import service, { getBackoffComponent } from 'api/service'
 import OrganizationListScreenView from './OrganizationListScreenView'
@@ -31,7 +31,7 @@ class OrganizationListScreen extends React.Component {
           }
           result.actionCvegeos = actionCvegeos
         }
-        const sorted = _.sortBy(data.results, o => -o.score).filter(o => o.desc !== '')
+        const sorted = sortBy(data.results, o => -o.score).filter(o => o.desc !== '')
         return { data: { results: sorted } } // eslint-disable-line consistent-return
       },
     })
