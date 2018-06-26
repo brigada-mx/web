@@ -10,9 +10,9 @@ const PhotoGalleryPicker = ({ input, meta, ...rest }) => {
   const { error, submitFailed } = meta
 
   const handleClickItem = (e, { photo: item }) => {
-    const { type, id, url, url_thumbnail, youtube_video_id } = item
+    const { type, id, url, src, youtube_video_id } = item
     if (value && value.url && value.url === url) onChange({})
-    else onChange({ type, id, url, url_thumbnail, youtube_video_id })
+    else onChange({ type, id, url, src, youtube_video_id })
   }
 
   const gallery = <PhotoGallery {...rest} onClickItem={handleClickItem} selectedUrl={value && value.url} />

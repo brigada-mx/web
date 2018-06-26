@@ -3,19 +3,72 @@ import PropTypes from 'prop-types'
 import lifecycle from 'recompose/lifecycle'
 
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
+import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import Styles from './VolunteerOpportunityListScreen.css'
 
 
-const VolunteerOpportunityListScreen = ({ opportunities }) => {
-  if (!opportunities) return <LoadingIndicatorCircle />
-  return null
+const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
+  const header = (
+    <React.Fragment>
+      <div className={Styles.header}>Ayuda a que personas damnificadas<br />reconstruyan sus vidas.</div>
+      <div className={Styles.subHeader}>Conoce un proyecto que necesita voluntarios. Todos son transparentes.</div>
+    </React.Fragment>
+  )
+  if (!opportunities) return <div className={Styles.container}>{header}<LoadingIndicatorCircle /></div>
+
+  const items = opportunities.map((o) => {
+    const {
+      id,
+      action: { organization: { orgName }, locality: { name, state_name: stateName } },
+      position,
+      target,
+      progress,
+      start_date: startDate,
+      end_date: endDate,
+      preview: { type, src, youtube_video_id: videoId } = {},
+    } = o
+
+    let image = <div className={Styles.emptyThumbnail} />
+    if (type === 'image' && src) {
+      const backgroundImage = `url("${src}")`
+      image = <div className={Styles.image} style={{ backgroundImage }} />
+    }
+    if (type === 'video' && src) {
+      const handleClickVideo = (e) => {
+        e.stopPropagation()
+        modal('youTubeVideo', { modalTransparent: true, videoId })
+      }
+      const backgroundImage = `url("${src}")`
+      image = <div onClick={handleClickVideo} className={Styles.video} style={{ backgroundImage }} />
+    }
+
+    const handleClick = () => {
+      history.push(`/voluntariado/${id}`)
+    }
+
+    return (
+      <div key={id} className={Styles.itemContainer} onClick={handleClick}>
+        {image}
+      </div>
+    )
+  })
+
+  return (
+    <div className={Styles.container}>
+      {header}
+      {items}
+    </div>
+  )
 }
 
 VolunteerOpportunityListScreen.propTypes = {
   opportunities: PropTypes.arrayOf(PropTypes.object),
+  history: PropTypes.object.isRequired,
+  modal: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -26,8 +79,14 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
+  }
+}
+
 export default lifecycle({
   componentDidMount() {
     getBackoff(service.getOpportunities, { key: 'opportunities' })
   },
-})(connect(mapStateToProps, null)(VolunteerOpportunityListScreen))
+})(withRouter(connect(mapStateToProps, mapDispatchToProps)(VolunteerOpportunityListScreen)))

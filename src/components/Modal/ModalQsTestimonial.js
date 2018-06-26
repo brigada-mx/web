@@ -16,7 +16,9 @@ class ModalQsTestimonial extends React.Component {
     const id = Number.parseInt(modalPropsString, 10)
     if (Number.isNaN(id)) return
 
-    const errorModal = () => { modal('youTubeVideo', { modalTransparent: true, videoId: '_' }) }
+    const errorModal = () => {
+      modal('youTubeVideo', { modalTransparent: true, modalTransparentBackground: false, videoId: '_' })
+    }
 
     getBackoff(() => service.getTestimonial(id), {
       onResponse: ({ data, error }) => {
