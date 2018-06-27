@@ -42,7 +42,7 @@ const OrganizationForm = ({ handleSubmit, submitting, initialValues }) => {
         </div>
         <div className={FormStyles.row}>
           <TextField
-            floatingLabelText="Descripción"
+            floatingLabelText="Misión de tu organización"
             className={FormStyles.wideInput}
             name="desc"
             multiLine
@@ -71,7 +71,7 @@ OrganizationForm.propTypes = {
 const validate = ({ name, desc, year_established: year }) => {
   const errors = {}
   if (!name) errors.name = 'Agrega el nombre'
-  if (!desc) errors.desc = 'Agrega la descripción de tu grupo'
+  if (!desc) errors.desc = 'Agrega la misión de tu grupo'
   if (!year || year.toString().length !== 4) errors.year_established = 'Ingresa un año válido'
   return errors
 }

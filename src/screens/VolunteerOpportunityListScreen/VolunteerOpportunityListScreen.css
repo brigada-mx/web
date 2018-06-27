@@ -19,6 +19,10 @@
 
 .itemContainer {
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  float: left;
 }
 
 .emptyThumbnail {
@@ -27,6 +31,7 @@
   background: no-repeat url("assets/img/empty-thumbnail.svg") center;
   background-size: 60px 91px;
   background-color: #EDF1F5;
+  float: left;
 }
 
 .video, .image {
@@ -63,4 +68,16 @@
   border-color: #ffffff transparent transparent transparent;
   top: 50%;
   left: 50%;
+}
+
+.message {
+  font-family: 'nunito-sans-200', sans-serif;
+  font-size: 16px;
+  color: #141418;
+  margin: 15px 20px;
+  height: 100px;
+}
+
+.bold {
+  font-family: 'nunito-sans-700', sans-serif;
 }

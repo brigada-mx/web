@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
+import pluralize from 'tools/pluralize'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import Styles from './VolunteerOpportunityListScreen.css'
 
@@ -23,12 +24,9 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
   const items = opportunities.map((o) => {
     const {
       id,
-      action: { organization: { orgName }, locality: { name, state_name: stateName } },
+      action: { organization: { name: orgName }, locality: { name: locName, state_name: stateName } },
       position,
       target,
-      progress,
-      start_date: startDate,
-      end_date: endDate,
       preview: { type, src, youtube_video_id: videoId } = {},
     } = o
 
@@ -46,6 +44,12 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
       image = <div onClick={handleClickVideo} className={Styles.video} style={{ backgroundImage }} />
     }
 
+    const message = (
+      <span>
+        <span className={Styles.bold}>{orgName}</span> busca {target} {target !== 1 ? pluralize(position.toLowerCase()) : position.toLowerCase()} en {locName}, {stateName}.
+      </span>
+    )
+
     const handleClick = () => {
       history.push(`/voluntariado/${id}`)
     }
@@ -53,6 +57,9 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
     return (
       <div key={id} className={Styles.itemContainer} onClick={handleClick}>
         {image}
+        <div className={Styles.message}>
+          {message}
+        </div>
       </div>
     )
   })

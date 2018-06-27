@@ -57,15 +57,8 @@ const Fields = ({ location }) => {
         <TextField
           type="number"
           min="0"
-          floatingLabelText="¿Cuántos voluntarios buscan en total?"
+          floatingLabelText="¿Cuántos voluntarios buscan?"
           name="target"
-          normalize={(value) => { return value ? parseInt(value, 10) : null }}
-        />
-        <TextField
-          type="number"
-          min="0"
-          floatingLabelText="¿Cuántos voluntarios han encontrado?"
-          name="progress"
           normalize={(value) => { return value ? parseInt(value, 10) : null }}
         />
       </div>

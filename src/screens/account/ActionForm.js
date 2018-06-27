@@ -63,7 +63,7 @@ const Fields = ({ update, onLocalityChange, localitiesSearch = [] }) => {
       </div>
       <div className={FormStyles.row}>
         <TextField
-          floatingLabelText="Descripción"
+          floatingLabelText="¿Qué problemática atiende el proyecto? ¿Qué resultados esperan lograr?"
           className={FormStyles.wideInput}
           name="desc"
           multiLine

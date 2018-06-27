@@ -33,7 +33,7 @@ class ActionStrengthPublic extends React.Component {
     } = strength
 
     const tasks = [
-      { value: desc, label: 'completa la descripción del proyecto' },
+      { value: desc, label: 'agrega las metas del proyecto' },
       { value: dates, label: 'agrega fechas de principio y fin del proyecto' },
       { value: progress, label: 'agrega las unidades de medida' },
       { value: budget, label: 'agrega el presupuesto de este proyecto' },

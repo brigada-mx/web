@@ -34,7 +34,7 @@ class ProfileStrengthPublic extends React.Component {
 
     const tasks = [
       { value: email, label: 'agrega tu email' },
-      { value: desc, label: 'completa la descripción de tu organización' },
+      { value: desc, label: 'agrega la misión de tu organización' },
       { value: contact, label: 'agrega el teléfono y la dirección de tu organización' },
       { value: actions, label: 'agrega un proyecto' },
       { value: submissions, label: 'agrega fotos a tus proyectos' },

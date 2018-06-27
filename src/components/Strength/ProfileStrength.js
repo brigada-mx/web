@@ -46,7 +46,7 @@ class ProfileStrength extends React.Component {
       },
       {
         value: desc,
-        label: 'Completar descripción',
+        label: 'Agregar misión',
         videoId: 'dk8ixgfgD10',
         durationString: '0:47',
       },

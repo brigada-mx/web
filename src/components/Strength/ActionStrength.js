@@ -43,7 +43,7 @@ class ActionStrength extends React.Component {
     const tasks = [
       {
         value: desc,
-        label: 'Completar descripción',
+        label: 'Agrega metas del proyecto',
       },
       {
         value: dates,
