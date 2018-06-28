@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
+import { fireGaEvent } from 'tools/other'
 import { thumborUrl } from 'tools/string'
 import env from 'src/env'
 import Styles from './Button.css'
@@ -17,6 +18,7 @@ class FacebookButton extends React.Component {
   }
 
   handleClick = () => {
+    fireGaEvent('facebookButton')
     const { brigada, modal, snackbar, share } = this.props
     if (!window.FB || !share) return
 

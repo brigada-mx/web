@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { fireGaEvent } from 'tools/other'
 import Styles from './Button.css'
 
 
 class VolunteerButton extends React.Component {
   handleClick = () => {
+    fireGaEvent('volunteerButton')
     const { actionId, onClick } = this.props
     if (onClick) onClick(actionId)
   }

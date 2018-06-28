@@ -67,9 +67,10 @@ export const fmtBudgetPlain = (b) => {
   return `$${b.toLocaleString()}`
 }
 
-export const fmtBudget = (b) => { // round to 1 decimal place
+export const fmtBudget = (b) => { // round to 1 or 0 decimal places
   if (!b) return '$'
   const millions = Math.round(b / 100000) / 10
+  if (millions >= 100) return `$${Math.round(millions)}M`
   if (millions) return `$${millions}M`
 
   const thousands = Math.round(b / 1000)

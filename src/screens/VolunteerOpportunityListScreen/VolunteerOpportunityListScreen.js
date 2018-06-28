@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
+import { fireGaEvent } from 'tools/other'
 import service, { getBackoff } from 'api/service'
 import pluralize from 'tools/pluralize'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
@@ -51,6 +52,7 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
     )
 
     const handleClick = () => {
+      fireGaEvent('volunteerOpportunityListScreenClicked', `oppId: ${id}, ${orgName}`)
       history.push(`/voluntariado/${id}`)
     }
 
