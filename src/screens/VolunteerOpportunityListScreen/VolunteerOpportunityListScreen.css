@@ -1,33 +1,59 @@
+@value colors: "src/colors.css";
+@value strongShadow from colors;
+
+.poppaBear {
+  position: relative;
+}
+
 .container {
-  margin: 70px 10%;
+  margin: 98px 10% 0 10%;
 }
 
 .header {
   font-family: 'nunito-sans-200', sans-serif;
-  font-size: 36px;
+  font-size: 48px;
   color: #141418;
-  line-height: 44px;
+  line-height: 62px;
   margin-bottom: 10px;
 }
 
 .subHeader {
-  font-family: 'nunito-sans-200', sans-serif;
-  font-size: 20px;
+  font-family: 'work-sans-300', sans-serif;
+  font-size: 22px;
+  line-height: 32px;
   color: #141418;
   margin-bottom: 40px;
 }
 
+.bg {
+  content: "";
+  width: 100%;
+  height: calc(100% - 162px);
+  background-color: #F3F5F7;
+  position: absolute;
+  left: 0;
+  top: 260px;
+  z-index: -1;
+  display: block;
+}
+
+
 .itemContainer {
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  width: 240px;
-  float: left;
+  width: 30%;
+  margin: 0 3% 56px 0;
+  transition: all .15s linear;
+}
+
+.itemContainer:hover {
+  box-shadow: 0 40px 100px 0 strongShadow;
 }
 
 .emptyThumbnail {
-  width: 240px;
-  height: 180px;
+  width: 100%;
+  height: 256px;
   background: no-repeat url("assets/img/empty-thumbnail.svg") center;
   background-size: 60px 91px;
   background-color: #EDF1F5;
@@ -35,8 +61,8 @@
 }
 
 .video, .image {
-  width: 240px;
-  height: 180px;
+  width: 100%;
+  height: 256px;
   position: relative;
   background-size: 100%;
   float: left;
@@ -71,13 +97,15 @@
 }
 
 .message {
-  font-family: 'nunito-sans-200', sans-serif;
+  font-family: 'work-sans-300', sans-serif;
   font-size: 16px;
   color: #141418;
-  margin: 15px 20px;
-  height: 100px;
+  padding: 20px 20px;
+  line-height: 25px;
+  background-color: white;
+  height: 75px;
 }
 
 .bold {
-  font-family: 'nunito-sans-700', sans-serif;
+  font-family: 'work-sans-500', sans-serif;
 }

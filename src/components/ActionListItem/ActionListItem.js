@@ -88,31 +88,6 @@ class ActionListItem extends React.PureComponent {
       )
     }
 
-    const getCta = () => {
-      if (opportunities.length === 0) return null
-
-      const handleClickVolunteer = () => {
-        modal('ctaVolunteer', { actionId: action.id })
-      }
-
-      const value = opportunities.reduce((sum, o) => sum + (o.progress || 0), 0)
-      const max = opportunities.reduce((sum, o) => sum + (o.target || 0), 0)
-      const remaining = max - value
-      return (
-        <div className={Styles.cardBottom}>
-          <div className={Styles.cardBottomLeft}>
-            <span className={Styles.bottomLabel}>
-              Falta{remaining !== 1 ? 'n' : ''} {fmtNum(remaining)} voluntario{remaining !== 1 ? 's' : ''}
-            </span>
-            <span className={Styles.bottomBar}>
-              <MetricsBar classNameNotDone={Styles.notDone} value={value} max={max} />
-            </span>
-          </div>
-          <span className={Styles.ctaButton} onClick={handleClickVolunteer}>Postular</span>
-        </div>
-      )
-    }
-
     const handleClickPhotos = onClickPhotos && ((e) => {
       e.stopPropagation()
       onClickPhotos(action)
@@ -196,7 +171,6 @@ class ActionListItem extends React.PureComponent {
           </div>
 
         </div>
-        {getCta()}
       </div>
     )
   }

@@ -17,10 +17,16 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
   const header = (
     <React.Fragment>
       <div className={Styles.header}>Ayuda a que personas damnificadas<br />reconstruyan sus vidas.</div>
-      <div className={Styles.subHeader}>Conoce un proyecto que necesita voluntarios. Todos son transparentes.</div>
+      <div className={Styles.subHeader}>Hazte voluntario de la reconstrucción.</div>
     </React.Fragment>
   )
-  if (!opportunities) return <div className={Styles.container}>{header}<LoadingIndicatorCircle /></div>
+  if (!opportunities) {
+    return (
+      <React.Fragment>
+        <div className={Styles.container}>{header}<LoadingIndicatorCircle /></div>
+      </React.Fragment>
+    )
+  }
 
   const items = opportunities.map((o) => {
     const {
@@ -67,9 +73,12 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
   })
 
   return (
-    <div className={Styles.container}>
-      {header}
-      {items}
+    <div className={Styles.poppaBear}>
+      <div className={Styles.container}>
+        {header}
+        {items}
+      </div>
+      <div className={Styles.bg} />
     </div>
   )
 }

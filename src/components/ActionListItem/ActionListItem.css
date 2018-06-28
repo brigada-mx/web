@@ -6,6 +6,7 @@
   background-color: white;
   margin-bottom: 16px;
   cursor: pointer;
+  transition: all .15s linear;
 }
 
 .listItemFocused {
@@ -70,14 +71,6 @@
 
 .cardTop {
   padding: 27px;
-}
-
-.cardBottom {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 18px 27px 15px 27px;
-  background-color: #F8F9FB;
 }
 
 .cardBottomLeft {
@@ -150,9 +143,6 @@
   margin-right: 12px;
 }
 
-.bottomBar {
-  width: 40%;
-}
 
 .ctaButton {
   font-family: 'nunito-sans', sans-serif;
@@ -351,8 +341,5 @@
   }
   .label {
     text-align: left;
-  }
-  .bottomBar {
-    width: 100%;
   }
 }

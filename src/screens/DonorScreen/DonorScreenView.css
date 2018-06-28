@@ -232,11 +232,11 @@ a:hover {
 }
 
 .actionListContainer {
-  background-color: #eceff3;
+  background-color: #F6F8FA;
 }
 
 .cardsContainer {
-  background-color: #eceff3;
+  background-color: #F6F8FA;
   display: flex;
   flex-direction: column;
 }
