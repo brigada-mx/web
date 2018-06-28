@@ -17,7 +17,7 @@ import service from 'api/service'
 import Styles from './AccountNav.css'
 
 
-const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => {
+const AccountNav = ({ history, location, onLogout, modal, token, orgId }) => {
   const handleHomeClick = () => {
     if (location.pathname !== '/cuenta') history.push('/cuenta')
   }
@@ -37,8 +37,9 @@ const AccountNav = ({ history, location, onLogout, livechat, token, orgId }) => 
     return '/'
   }
 
-  const openChat = () => {
-    livechat(true)
+  const openChat = (e) => {
+    e.preventDefault()
+    modal('support')
   }
 
   const menu = (
@@ -95,7 +96,7 @@ AccountNav.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   onLogout: PropTypes.func.isRequired,
-  livechat: PropTypes.func.isRequired,
+  modal: PropTypes.func.isRequired,
   token: PropTypes.string,
   orgId: PropTypes.number,
 }
@@ -108,7 +109,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogout: () => Actions.authUnset(dispatch, { type: 'org' }),
-    livechat: open => Actions.livechat(dispatch, { open }),
+    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
   }
 }
 

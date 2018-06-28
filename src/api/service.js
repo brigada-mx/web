@@ -11,6 +11,10 @@ class Service {
   }
 
   // PUBLIC ENDPOINTS
+  supportTicketCreate = async (body) => {
+    return sendToApi('/support_ticket_create/', { method: 'POST', body })
+  }
+
   getLocalityActions = async (locality_id, page_size = 250) => {
     const params = { locality_id, page_size }
     return sendToApi('/actions/', { params })

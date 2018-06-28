@@ -18,7 +18,6 @@ const NavLinks = ({
   activeStyle = {},
   onHideDrawer,
   modal,
-  livechat,
 }) => {
   const selected = { color: colors.brandGreen }
 
@@ -42,8 +41,10 @@ const NavLinks = ({
     return pathname.startsWith('/voluntarios')
   }
 
-  const openChat = () => {
-    livechat(true)
+  const handleClickSupport = (e) => {
+    e.preventDefault()
+    onHideDrawer()
+    modal('support')
   }
 
   const handleClickLogin = () => {
@@ -70,7 +71,7 @@ const NavLinks = ({
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={donorIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/donadores">Donadores</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={volunteerIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/voluntarios">Voluntarios</NavLink>
       {forumButton()}
-      <Link onClick={openChat} className={classNameLink} to="#">Soporte</Link>
+      <Link onClick={handleClickSupport} className={classNameLink} to="#">Soporte</Link>
       {loginButton()}
     </React.Fragment>
   )
@@ -78,7 +79,6 @@ const NavLinks = ({
 
 NavLinks.propTypes = {
   onHideDrawer: PropTypes.func.isRequired,
-  livechat: PropTypes.func.isRequired,
   modal: PropTypes.func.isRequired,
   orgToken: PropTypes.string,
   donorToken: PropTypes.string,
@@ -95,7 +95,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onHideDrawer: () => Actions.drawerToggle(dispatch, { visible: false }),
-    livechat: open => Actions.livechat(dispatch, { open }),
     modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
   }
 }
@@ -114,7 +113,7 @@ const Nav = () => {
             <ReduxNavLinks />
           </div>
           <Drawer classNameWrapper={`${Styles.small} lg-hidden md-hidden`}>
-            <ReduxNavLinks activeStyle={{ borderRight: '2px solid #3DC59F' }} classNameLink={Styles.burgerNavLinks} />
+            <ReduxNavLinks activeStyle={{ borderRight: '2px solid #3DC59F' }} />
           </Drawer>
         </div>
 

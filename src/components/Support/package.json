@@ -1,0 +1,6 @@
+{
+  "name": "Support",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Support.js"
+}

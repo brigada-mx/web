@@ -19,6 +19,7 @@ import VolunteerApplicationScreen from 'screens/VolunteerApplicationScreen'
 import VolunteerApplicationCreated from 'screens/VolunteerApplicationScreen/VolunteerApplicationCreated'
 import ShareUserScreen from 'screens/ShareUserScreen'
 import ShareUserCreated from 'screens/ShareUserScreen/ShareUserCreated'
+import Support from 'components/Support'
 import Modal from './Modal'
 import Styles from './Modal.css'
 
@@ -40,6 +41,7 @@ const componentByName = {
   shareUserCreated: ShareUserCreated,
   createSubmission: CreateSubmissionScreen,
   createTestimonial: CreateTestimonialScreen,
+  support: Support,
 }
 
 const ModalSelector = ({

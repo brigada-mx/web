@@ -15,7 +15,6 @@ import SnackBar from 'components/SnackBar'
 import Nav from 'components/Nav'
 import ModalSelector from 'components/Modal/ModalSelector'
 import ModalQsSelector from 'components/Modal/ModalQsSelector'
-import LiveChat from 'components/LiveChat'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
@@ -132,7 +131,6 @@ const App = () => {
         <Router>
           <div>
             <Route path="/" component={gaLogPageView} />
-            <LiveChat />
             <SnackBar />
             <ModalSelector />
             <ModalQsSelector />
