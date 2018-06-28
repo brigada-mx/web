@@ -286,7 +286,7 @@ class ActionScreenView extends React.Component {
         </div>
 
         <div className={Styles.ctaContainer}>
-          {data.opportunities.length > 0 &&
+          {data.opportunities.length > 0 && data.level >= 2 &&
             <VolunteerButton
               actionId={data.id}
               opportunities={data.opportunities}

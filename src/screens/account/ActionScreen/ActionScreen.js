@@ -10,7 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import * as Actions from 'src/actions'
 import { toQs } from 'api/request'
 import service, { getBackoff } from 'api/service'
-import { cleanAccentedChars } from 'tools/string'
+import { cleanAccentedChars, transparencyLabelByLevel } from 'tools/string'
 import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
 import BackButton from 'components/BackButton'
@@ -333,7 +333,12 @@ class ActionScreen extends React.Component {
 
         <div className={FormStyles.card}>
           <div className={FormStyles.sectionHeader}>
-            <span>Oportunidades de voluntariado</span>
+            <div>
+              <span>Oportunidades de voluntariado</span>
+              {action.level < 2
+                && <div className={Styles.warning}>Tu proyecto es {transparencyLabelByLevel(action.level)}. Oportunidades de voluntariado sólo aparecen en el sitio si su nivel es transparente.</div>
+              }
+            </div>
             <div>
               <RaisedButton
                 backgroundColor="#3DC59F"

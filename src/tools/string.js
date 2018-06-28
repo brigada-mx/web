@@ -196,3 +196,8 @@ export const formatBytes = (b) => {
 
   return `${n.toFixed(n >= 10 || l < 1 ? 0 : 1)}${units[l]}`
 }
+
+export const transparencyLabelByLevel = (level = 0) => { // in response from `accountGetActionStrength`
+  const labelByLevel = ['poco transparente', 'semi-transparente', 'transparente']
+  return labelByLevel[Math.min(level, labelByLevel.length)]
+}

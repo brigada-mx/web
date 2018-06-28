@@ -8,3 +8,11 @@
   text-decoration: none;
   display: table;
 }
+
+.warning {
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 13px;
+  color: #FF0000;
+  letter-spacing: 0.4px;
+  margin: 12px 20px 5px 0;
+}

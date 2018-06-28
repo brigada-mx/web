@@ -76,8 +76,9 @@ class Service {
     return sendToApi(`/volunteer_opportunities/${id}/`)
   }
 
-  getOpportunities = async () => {
-    return sendToApi('/volunteer_opportunities/')
+  getOpportunities = async (page_size = 250) => {
+    const params = { page_size, transparency_level: 2 }
+    return sendToApi('/volunteer_opportunities/', { params })
   }
 
   getActionShare = async (actionId, email = '') => {

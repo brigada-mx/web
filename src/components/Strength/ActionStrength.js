@@ -62,7 +62,7 @@ class ActionStrength extends React.Component {
         label: 'Agregar fotos',
       },
       {
-        value: testimonials,
+        value: testimonials > 0,
         label: 'Agregar testimonios',
       },
       {
