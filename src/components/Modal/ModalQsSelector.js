@@ -13,12 +13,28 @@ import ModalQsTestimonial from './ModalQsTestimonial'
  * Component that parses query string and dispatches a modal action, or renders a
  * component whose only responsibility is to dispatch a modal action.
  */
-const ModalQsSelector = ({ location, modal, closeModal }) => {
-  const { _mn: modalName, _ms: modalPropsString } = parseQs(location.search)
-  if (!modalName) closeModal()
-  if (modalName === 'testimonial') return <ModalQsTestimonial modalPropsString={modalPropsString} />
-  if (modalName === 'support') modal('support')
-  return null
+class ModalQsSelector extends React.Component {
+  componentDidMount() {
+    this.setModalRedux()
+  }
+
+  componentDidUpdate() {
+    this.setModalRedux()
+  }
+
+  setModalRedux = () => {
+    const { location, modal, closeModal } = this.props
+    const { _mn: modalName } = parseQs(location.search)
+    if (!modalName) closeModal()
+    if (modalName === 'support') modal('support')
+  }
+
+  render() {
+    const { location } = this.props
+    const { _mn: modalName, _ms: modalPropsString } = parseQs(location.search)
+    if (modalName === 'testimonial') return <ModalQsTestimonial modalPropsString={modalPropsString} />
+    return null
+  }
 }
 
 ModalQsSelector.propTypes = {
