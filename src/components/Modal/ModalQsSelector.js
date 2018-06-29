@@ -17,6 +17,7 @@ const ModalQsSelector = ({ location, modal, closeModal }) => {
   const { _mn: modalName, _ms: modalPropsString } = parseQs(location.search)
   if (!modalName) closeModal()
   if (modalName === 'testimonial') return <ModalQsTestimonial modalPropsString={modalPropsString} />
+  if (modalName === 'support') modal('support')
   return null
 }
 
