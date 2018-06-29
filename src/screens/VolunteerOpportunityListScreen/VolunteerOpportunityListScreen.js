@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import { fireGaEvent } from 'tools/other'
+import { truncate } from 'tools/string'
 import service, { getBackoff } from 'api/service'
 import pluralize from 'tools/pluralize'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
@@ -16,8 +17,9 @@ import Styles from './VolunteerOpportunityListScreen.css'
 const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
   const header = (
     <React.Fragment>
-      <div className={Styles.header}>Ayuda a que personas damnificadas<br />reconstruyan sus vidas.</div>
-      <div className={Styles.subHeader}>Hazte voluntario de la reconstrucción.</div>
+      <div className={`${Styles.header} sm-hidden xs-hidden`}>Ayuda a que familias damnificadas<br />reconstruyan sus vidas.</div>
+      <div className={`${Styles.header} lg-hidden md-hidden`}>Ayuda a que familias damnificadas reconstruyan sus vidas.</div>
+      <div className={Styles.subHeader}>Únete como voluntario de Brigada.</div>
     </React.Fragment>
   )
   if (!opportunities) {
@@ -51,10 +53,9 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
       image = <div onClick={handleClickVideo} className={Styles.video} style={{ backgroundImage }} />
     }
 
+    const messageText = `busca ${target} ${target !== 1 ? pluralize(position.toLowerCase()) : position.toLowerCase()} en ${locName}, ${stateName}.`
     const message = (
-      <span>
-        <span className={Styles.bold}>{orgName}</span> busca {target} {target !== 1 ? pluralize(position.toLowerCase()) : position.toLowerCase()} en {locName}, {stateName}.
-      </span>
+      <span><span className={Styles.bold}>{orgName}</span> {truncate(messageText, 100 - orgName.length)}</span>
     )
 
     const handleClick = () => {
@@ -63,7 +64,7 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
     }
 
     return (
-      <div key={id} className={Styles.itemContainer} onClick={handleClick}>
+      <div key={id} className={Styles.card} onClick={handleClick}>
         {image}
         <div className={Styles.message}>
           {message}
@@ -71,12 +72,23 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
       </div>
     )
   })
+  const cardsPerRow = 3
+  const remainder = opportunities.length % cardsPerRow
+  if (remainder) {
+    for (let c = 0; c < cardsPerRow - remainder; c += 1) {
+      items.push(
+        <div className={Styles.emptyCard} key={c} />
+      )
+    }
+  }
 
   return (
-    <div className={Styles.poppaBear}>
+    <div className={Styles.wrapper}>
       <div className={Styles.container}>
         {header}
-        {items}
+        <div className={Styles.cardContainer}>
+          {items}
+        </div>
       </div>
       <div className={Styles.bg} />
     </div>
