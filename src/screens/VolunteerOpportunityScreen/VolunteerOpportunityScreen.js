@@ -112,7 +112,7 @@ class VolunteerOpportunityScreen extends React.Component {
             </div>
             <div className="col-lg-offset-2 col-lg-3 col-md-offset-2 col-md-3 col-sm-8 sm-gutter col-xs-4 xs-gutter">
               <div className="row">
-                <div className="col-lg-12 col-md-12 col-sm-3 col-xs-4 gutter">
+                <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
                   <span className={`${Styles.title} ${Styles.details}`}>Detalles</span>
                   <ul className={Styles.list}>
                     <li className={`${Styles.item} ${Styles.location}`}>{location === 'other' ? place : volunteerLocationByValue[location]}</li>
@@ -122,7 +122,7 @@ class VolunteerOpportunityScreen extends React.Component {
                   </ul>
                 </div>
 
-                <div className="col-lg-12 col-md-12 col-sm-offset-1 col-sm-4 col-xs-4 gutter">
+                <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
                   <span className={`${Styles.title} ${Styles.mapTitle}`}>Comunidad beneficiada</span>
                   <span className={`${Styles.item} ${Styles.community}`}>{`${name}, ${stateName}`}</span>
                   {this.renderMap(locality)}
