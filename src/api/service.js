@@ -81,7 +81,7 @@ class Service {
   }
 
   getOpportunities = async (page_size = 250) => {
-    const params = { page_size, transparency_level: 2 }
+    const params = { page_size, transparency_level__gte: 2 }
     return sendToApi('/volunteer_opportunities/', { params })
   }
 
