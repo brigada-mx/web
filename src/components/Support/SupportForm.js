@@ -11,6 +11,7 @@ import FormStyles from 'src/Form.css'
 const SupportForm = ({ handleSubmit, submitting }) => {
   return (
     <React.Fragment>
+      <span className={FormStyles.formHeader}>Soporte</span>
       <div className={FormStyles.row}>
         <TextField
           className={FormStyles.wideInput}
