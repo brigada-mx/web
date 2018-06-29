@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
-import { fireGaEvent } from 'tools/other'
+import { fireGaEvent, setDocumentMeta } from 'tools/other'
 import { truncate } from 'tools/string'
 import service, { getBackoff } from 'api/service'
 import pluralize from 'tools/pluralize'
@@ -118,5 +118,6 @@ const mapDispatchToProps = (dispatch) => {
 export default lifecycle({
   componentDidMount() {
     getBackoff(service.getOpportunities, { key: 'opportunities' })
+    setDocumentMeta('Oportunidades de Voluntariado - Brigada', 'Ayuda a que familias damnificadas reconstruyan sus vidas. Únete como voluntario de Brigada.')
   },
 })(withRouter(connect(mapStateToProps, mapDispatchToProps)(VolunteerOpportunityListScreen)))

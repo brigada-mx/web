@@ -118,3 +118,29 @@ export const fireGaEvent = (category, action = null) => {
     action: action || window.location.pathname,
   })
 }
+
+export const setDocumentMeta = (title, description) => {
+  document.title = title
+
+  if (!description) return
+  const metaTags = document.getElementsByTagName('meta')
+  for (const meta of metaTags) {
+    if (meta.name.toLowerCase() === 'description') {
+      meta.content = description
+    }
+  }
+}
+
+export const setDocumentMetaThis = (_this, title, description) => {
+  if (_this._documentTitle) return
+  document.title = title
+  _this._documentTitle = title // eslint-disable-line no-param-reassign
+
+  if (!description) return
+  const metaTags = document.getElementsByTagName('meta')
+  for (const meta of metaTags) {
+    if (meta.name.toLowerCase() === 'description') {
+      meta.content = description
+    }
+  }
+}

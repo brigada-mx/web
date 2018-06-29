@@ -12,6 +12,7 @@ import Carousel from 'components/Carousel'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { fmtNum, fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
+import { setDocumentMetaThis } from 'tools/other'
 import { projectTypeByValue } from 'src/choices'
 import ActionStrengthPublic from 'components/Strength/ActionStrengthPublic'
 import VolunteerButton from 'components/CTA/VolunteerButton'
@@ -25,21 +26,6 @@ class ActionScreenView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-  }
-
-  setDocumentMeta = (projectType, name, description) => {
-    if (this._documentTitle) return
-    const title = `${projectType}, ${name} - Brigada`
-    document.title = title
-    this._documentTitle = title
-
-    if (!description) return
-    const metaTags = document.getElementsByTagName('meta')
-    for (const meta of metaTags) {
-      if (meta.name.toLowerCase() === 'description') {
-        meta.content = description
-      }
-    }
   }
 
   handleClickFeature = (feature) => {
@@ -144,7 +130,7 @@ class ActionScreenView extends React.Component {
     const images = [].concat(...submissions.map(s => s.images))
     const projectType = projectTypeByValue[actionType] || actionType
 
-    this.setDocumentMeta(projectType, name, desc)
+    setDocumentMetaThis(this, `${projectType}, ${name} - Brigada`, desc)
 
     const dates = () => {
       return (

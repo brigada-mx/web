@@ -13,7 +13,7 @@ import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import ProfileStrengthPublic from 'components/Strength/ProfileStrengthPublic'
 import { addProtocol, emailLink, fmtBudget, renderLinks } from 'tools/string'
-import { itemFromScrollEvent, fireGaEvent } from 'tools/other'
+import { itemFromScrollEvent, fireGaEvent, setDocumentMetaThis } from 'tools/other'
 import { sectorByValue } from 'src/choices'
 import OrganizationBreadcrumb from './OrganizationBreadcrumb'
 import Styles from './OrganizationScreenView.css'
@@ -33,21 +33,6 @@ class OrganizationScreenView extends React.Component {
       return { focused }
     }
     return null
-  }
-
-  setDocumentMeta = (name, description) => {
-    if (this._documentTitle) return
-    const title = `${name} - Brigada`
-    document.title = title
-    this._documentTitle = title
-
-    if (!description) return
-    const metaTags = document.getElementsByTagName('meta')
-    for (const meta of metaTags) {
-      if (meta.name.toLowerCase() === 'description') {
-        meta.content = description
-      }
-    }
   }
 
   handleClickFeature = (feature) => {
@@ -169,7 +154,8 @@ class OrganizationScreenView extends React.Component {
     if (status === 404) return <Redirect to="/reconstructores" />
     if (loading || !data) return <LoadingIndicatorCircle />
 
-    this.setDocumentMeta(data.name, data.desc)
+    setDocumentMetaThis(this, `${data.name} - Brigada`, data.desc)
+
     const {
       actions,
       contact: { email, phone, website, address, person_responsible: person },

@@ -8,6 +8,7 @@ import { withRouter, Link } from 'react-router-dom'
 import * as Actions from 'src/actions'
 import service, { getBackoff } from 'api/service'
 import { getProjectType, volunteerLocationByValue } from 'src/choices'
+import { setDocumentMetaThis } from 'tools/other'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import OrganizationBreadcrumb from 'screens/OrganizationScreen/OrganizationBreadcrumb'
@@ -62,6 +63,7 @@ class VolunteerOpportunityScreen extends React.Component {
   render() {
     const { opportunity, className } = this.props
     if (!opportunity) return <LoadingIndicatorCircle />
+
     const {
       position, desc, target, required_skills: skills, start_date: startDate, end_date: endDate,
       location_desc: place, location, food_included: food, transport_included: transport,
@@ -73,6 +75,12 @@ class VolunteerOpportunityScreen extends React.Component {
         locality,
       },
     } = opportunity
+
+    setDocumentMetaThis(
+      this,
+      `Voluntariado, ${orgName} - Brigada`,
+      `${orgName} busca ${target} voluntari@${target !== 1 ? 's' : ''} (${position}) para un proyecto de ${getProjectType(type)} en ${name}, ${stateName}`
+    )
 
     const detailedDesc = (
       <span>

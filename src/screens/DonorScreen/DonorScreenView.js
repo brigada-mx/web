@@ -16,7 +16,7 @@ import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import DonorProfileStrengthPublic from 'components/Strength/DonorProfileStrengthPublic'
 import { addProtocol, emailLink, fmtBudget, renderLinks } from 'tools/string'
-import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent } from 'tools/other'
+import { fitBoundsFromCoords, itemFromScrollEvent, fireGaEvent, setDocumentMetaThis } from 'tools/other'
 import { sectorByValue } from 'src/choices'
 import DonorBreadcrumb from './DonorBreadcrumb'
 import Styles from './DonorScreenView.css'
@@ -36,21 +36,6 @@ class DonorScreenView extends React.Component {
       return { focused }
     }
     return null
-  }
-
-  setDocumentMeta = (name, description) => {
-    if (this._documentTitle) return
-    const title = `${name} - Donador Brigada`
-    document.title = title
-    this._documentTitle = title
-
-    if (!description) return
-    const metaTags = document.getElementsByTagName('meta')
-    for (const meta of metaTags) {
-      if (meta.name.toLowerCase() === 'description') {
-        meta.content = description
-      }
-    }
   }
 
   handleClickFeature = (feature) => {
@@ -177,7 +162,8 @@ class DonorScreenView extends React.Component {
     if (status === 404) return <Redirect to="/donadores" />
     if (loading || !data || donationsLoading || !donationsData) return <LoadingIndicatorCircle />
 
-    this.setDocumentMeta(data.name, data.desc)
+    setDocumentMetaThis(this, `${data.name} - Donador Brigada`, data.desc)
+
     const {
       metrics,
       contact: { email, phone, website, address, person_responsible: person },
