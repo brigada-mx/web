@@ -153,17 +153,16 @@
 
 @media screen and (max-width: 767px) and (min-width: 0px) {
   .container {
-    margin: 98px 16px 0 16px;
+    margin: 76px 16px 0 16px;
   }
   .header {
     font-size: 38px;
     line-height: 52px;
     margin-bottom: 18px;
   }
-  .subheader {
+  .subHeader {
     font-size: 18px;
     line-height: 32px;
-    margin-bottom: 18px;
   }
   .bg {
     top: 390px;
