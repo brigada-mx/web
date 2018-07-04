@@ -1,0 +1,17 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+module.name_mapper='^src' -> '<PROJECT_ROOT>/src'
+module.name_mapper='^components' -> '<PROJECT_ROOT>/src/components'
+module.name_mapper='^screens' -> '<PROJECT_ROOT>/src/screens'
+module.name_mapper='^tools' -> '<PROJECT_ROOT>/src/tools'
+module.name_mapper='^api' -> '<PROJECT_ROOT>/src/api'
+module.name_mapper='^assets' -> '<PROJECT_ROOT>/dist/assets'
+
+[strict]

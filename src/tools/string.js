@@ -1,3 +1,4 @@
+/* @flow */
 import React from 'react'
 
 import fromPairs from 'lodash/fromPairs'
@@ -9,17 +10,17 @@ import { Link } from 'react-router-dom'
 import env from 'src/env'
 
 
-export const roundTo = (number, places = 0) => {
+export const roundTo = (number: number, places: number = 0): number => {
   const multiplier = 10 ** places
   return Math.round(number * multiplier) / multiplier
 }
 
-export const validateEmail = (email) => {
+export const validateEmail = (email: string): boolean => {
   const re = /\S+@\S+\.\S+/
   return re.test(email)
 }
 
-export const parseQs = (qs) => {
+export const parseQs = (qs: string): {} => {
   const parts = qs.replace('?', '').split('&').map(partial(split, partial.placeholder, '=', 2))
   return fromPairs(parts)
 }
