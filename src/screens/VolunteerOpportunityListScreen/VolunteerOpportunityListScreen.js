@@ -47,7 +47,10 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
     if (type === 'video' && src) {
       const handleClickVideo = (e) => {
         e.stopPropagation()
-        modal('youTubeVideo', { modalTransparent: true, videoId })
+        history.push(`/voluntariado/${id}`)
+        setTimeout(() => {
+          modal('youTubeVideo', { modalTransparent: true, videoId })
+        }, 500)
       }
       const backgroundImage = `url("${src}")`
       image = <div onClick={handleClickVideo} className={Styles.video} style={{ backgroundImage }} />
