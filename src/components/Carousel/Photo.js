@@ -1,5 +1,5 @@
+/* @flow */
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
@@ -10,7 +10,9 @@ import Styles from './Carousel.css'
 
 moment.locale('es')
 
-const Photo = ({ lazyLoad, description, location, submitted, image }) => {
+type Props = { lazyLoad?: boolean, description?: string, location?: Object, submitted: string, image: Object };
+
+const Photo = ({ lazyLoad, description, location, submitted, image }: Props) => {
   const { lat, lng } = location || {}
   const latLng = lat !== undefined && <LatLngLink lat={lat} lng={lng} className={Styles.mapLink} />
 
@@ -31,14 +33,6 @@ const Photo = ({ lazyLoad, description, location, submitted, image }) => {
       </div>
     </div>
   )
-}
-
-Photo.propTypes = {
-  lazyLoad: PropTypes.bool,
-  description: PropTypes.string,
-  location: PropTypes.object,
-  submitted: PropTypes.string.isRequired,
-  image: PropTypes.object.isRequired,
 }
 
 export default Photo

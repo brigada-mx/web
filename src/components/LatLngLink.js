@@ -1,11 +1,11 @@
+/* @flow */
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { toDegrees } from 'tools/other'
 import { googleMapsUrl } from 'tools/string'
 
 
-const LatLngLink = ({ lat, lng, className = '' }) => {
+const LatLngLink = ({ lat, lng, className = '' }: { lat: number, lng: number, className?: string }) => {
   const [latsign, latd, latm, lats] = toDegrees(lat)
   const [lngsign, lngd, lngm, lngs] = toDegrees(lng)
   const latStr = `${latd}°${latm}'${lats}"${latsign >= 0 ? 'N' : 'S'}`
@@ -15,12 +15,6 @@ const LatLngLink = ({ lat, lng, className = '' }) => {
       {`${latStr} ${lngStr}`}
     </a>
   )
-}
-
-LatLngLink.propTypes = {
-  lat: PropTypes.number.isRequired,
-  lng: PropTypes.number.isRequired,
-  className: PropTypes.string,
 }
 
 export default LatLngLink

@@ -25,13 +25,13 @@ export const parseQs = (qs: string): {} => {
   return fromPairs(parts)
 }
 
-export const toLowerWords = text => (text || '')
+export const toLowerWords = (text: string): Array<string> => (text || '')
   .toLowerCase()
   .replace(/[^\s0-9a-z]/gi, '')
   .split(/\s+/g)
   .filter(x => x.length > 0)
 
-export const cleanAccentedChars = (s) => {
+export const cleanAccentedChars = (s: string): string => {
   let _s = s.replace(/[áÁ]/g, 'a')
   _s = _s.replace(/[éÉ]/g, 'e')
   _s = _s.replace(/[íÍ]/g, 'i')
@@ -41,7 +41,7 @@ export const cleanAccentedChars = (s) => {
   return _s
 }
 
-export const tokenMatch = (h, n) => {
+export const tokenMatch = (h: string, n: string): boolean => {
   const needles = toLowerWords(cleanAccentedChars(n))
   const haystack = toLowerWords(cleanAccentedChars(h))
 
@@ -58,17 +58,17 @@ export const tokenMatch = (h, n) => {
   return true
 }
 
-export const fmtNum = (num) => {
+export const fmtNum = (num: number): string => {
   if (num === -1 || num === undefined || num === null || num === '') return '-'
   return num.toLocaleString()
 }
 
-export const fmtBudgetPlain = (b) => {
+export const fmtBudgetPlain = (b: ?number): string => {
   if (!b) return '$'
   return `$${b.toLocaleString()}`
 }
 
-export const fmtBudget = (b) => { // round to 1 or 0 decimal places
+export const fmtBudget = (b: ?number): string => { // round to 1 or 0 decimal places
   if (!b) return '$'
   const millions = Math.round(b / 100000) / 10
   if (millions >= 100) return `$${Math.round(millions)}M`
@@ -78,36 +78,45 @@ export const fmtBudget = (b) => { // round to 1 or 0 decimal places
   return `$${thousands}K`
 }
 
-export const cleanUrl = (url) => {
+export const cleanUrl = (url: string): string => {
   return url.replace(/["';<>]/g, '')
 }
 
-export const addProtocol = (url, protocol = 'http') => {
+export const addProtocol = (url: string, protocol: string = 'http'): string => {
   const clean = cleanUrl(url)
   if (clean.startsWith('http://') || clean.startsWith('https://')) return clean
   return `${protocol}://${clean}`
 }
 
-export const phoneLink = (phone) => {
+export const phoneLink = (phone: string): string => {
   const clean = cleanUrl(phone)
   return `tel:${clean.replace(/\s/g, '')}`
 }
 
-export const emailLink = (email, subject) => {
+export const emailLink = (email: string, subject: string): string => {
   const clean = cleanUrl(email)
   if (!subject) return `mailto:${clean}`
   return `mailto:${clean}?subject=${cleanUrl(subject)}`
 }
 
-export const truncate = (s, l) => {
+export const truncate = (s: string, l: number): string => {
   if (s.length > l) {
     return `${s.substring(0, l).trim()}…`
   }
   return s
 }
 
-export const getLocation = (href) => {
-  const match = href.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/)
+export const getLocation = (href: string): null | {
+  href?: string,
+  protocol?: string,
+  host?: string,
+  hostname?: string,
+  port?: string,
+  pathname?: string,
+  search?: string,
+  hash?: string,
+} => {
+  const match = href.match(/^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)([/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/) || null
   return match && {
     href,
     protocol: match[1],
@@ -120,25 +129,31 @@ export const getLocation = (href) => {
   }
 }
 
-export const thumborUrl = ({ url, rotate: r = 0 }, width, height, { crop = false, rotate = true } = {}) => {
+export const thumborUrl = (
+  { url, rotate: r = 0 }: { url: string, rotate?: number },
+  width: number, height: number,
+  { crop = false, rotate = true }: { crop: boolean, rotate: boolean } = {},
+) => {
   const clean = addProtocol(url)
   const parsed = getLocation(clean)
   const rotateFilter = rotate ? `/filters:rotate(${-r * 90})` : ''
-  return parsed && `${env.thumborUrl}/${crop ? '' : 'fit-in/'}${width}x${height}${rotateFilter}${parsed.pathname}`
+  return parsed && `${env.thumborUrl}/${crop ? '' : 'fit-in/'}${width}x${height}${rotateFilter}${parsed.pathname || ''}`
 }
 
-export const googleMapsUrl = (lat, lng) => {
+export const googleMapsUrl = (lat: number, lng: number) => {
   return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
 }
 
-export const imageStyleObject = ({ rotate = 0, hidden }) => {
+export const imageStyleObject = ({ rotate = 0, hidden = false }: { rotate: number, hidden?: boolean }) => {
   return {
     transform: `rotate(${rotate * 90}deg)`,
     opacity: hidden ? 0.3 : 1,
   }
 }
 
-export const getTextWidth = (text, font) => {
+
+export const getTextWidth = (text: string, font: string): number => {
+  // $FlowFixMe
   const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement('canvas'))
   const context = canvas.getContext('2d')
   context.font = font
@@ -146,7 +161,7 @@ export const getTextWidth = (text, font) => {
   return metrics.width
 }
 
-export const _renderLinks = (text, type) => {
+export const _renderLinks = (text: string, type: ?string) => {
   let remaining = text
   const parts = []
   while (true) { // eslint-disable-line no-constant-condition
@@ -168,7 +183,7 @@ export const _renderLinks = (text, type) => {
     else {
       const url = addProtocol(s)
       const parsed = getLocation(url)
-      const { host, pathname, search } = parsed
+      const { host, pathname, search = '' } = parsed || {}
       if (host === env.siteHost) parts.push(<Link to={`${pathname || '/'}${search}`}>{s}</Link>)
       else parts.push(<a href={url} target="_blank" rel="noopener noreferrer">{s}</a>)
     }
@@ -177,7 +192,7 @@ export const _renderLinks = (text, type) => {
   return parts
 }
 
-export const renderLinks = (text) => {
+export const renderLinks = (text: string): Array<*> => {
   const emailParts = _renderLinks(text, 'email')
   const parts = [].concat(...emailParts.map((p) => {
     if (typeof p === 'string') return _renderLinks(p)
@@ -186,7 +201,7 @@ export const renderLinks = (text) => {
   return parts.map((p, i) => <React.Fragment key={i}>{p}</React.Fragment>)
 }
 
-export const formatBytes = (b) => {
+export const formatBytes = (b: number): string => {
   const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
   let l = 0
   let n = b
@@ -199,7 +214,7 @@ export const formatBytes = (b) => {
   return `${n.toFixed(n >= 10 || l < 1 ? 0 : 1)}${units[l]}`
 }
 
-export const transparencyLabelByLevel = (level = 0) => { // in response from `accountGetActionStrength`
+export const transparencyLabelByLevel = (level: number = 0): string => { // in response from `accountGetActionStrength`
   const labelByLevel = ['poco transparente', 'semi-transparente', 'transparente']
   return labelByLevel[Math.min(level, labelByLevel.length)]
 }
