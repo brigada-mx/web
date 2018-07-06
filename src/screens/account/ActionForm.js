@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 import { reduxForm, propTypes as rxfPropTypes } from 'redux-form'
+import { connect } from 'react-redux'
 import MenuItem from 'material-ui/MenuItem'
 import AutoCompleteMui from 'material-ui/AutoComplete'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -10,6 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { TextField, SelectField, Toggle, DatePicker, AutoComplete, PhotoGalleryPicker } from 'components/Fields'
 import Modal from 'components/Modal'
 import ConfirmButton from 'components/ConfirmButton'
+import Preview from 'components/Preview'
 import { projectTypes } from 'src/choices'
 import FormStyles from 'src/Form.css'
 
@@ -25,8 +27,12 @@ class Fields extends React.Component {
     this.setState({ pickerOpen: false })
   }
 
+  handleClosePickerDelay = () => {
+    setTimeout(this.handleClosePicker, 500)
+  }
+
   render() {
-    const { update, onLocalityChange, initialValues, localitiesSearch = [] } = this.props
+    const { update, onLocalityChange, initialValues, localitiesSearch = [], preview = {} } = this.props
 
     const localities = localitiesSearch.map((l) => {
       const { id, name, municipality_name: muniName, state_name: stateName } = l
@@ -53,12 +59,7 @@ class Fields extends React.Component {
       if (images.length === 0 && testimonials.length === 0) return null
 
       if (!this.state.pickerOpen) {
-        return (
-          <div onClick={this.handleOpenPicker}>
-            Click me
-            <TextField className={FormStyles.hidden} name="preview" />
-          </div>
-        )
+        return <Preview {...preview} onClick={this.handleOpenPicker} width={240} height={180} />
       }
 
       return (
@@ -71,6 +72,7 @@ class Fields extends React.Component {
             testimonials={testimonials}
             submissions={submissions}
             columns={4}
+            onChange={this.handleClosePickerDelay}
           />
         </Modal>
       )
@@ -79,16 +81,18 @@ class Fields extends React.Component {
     return (
       <React.Fragment>
         {update &&
-          <div>
-            <TextField
-              floatingLabelText="Clave"
-              name="key"
-              readOnly
-              disabled
-            />
+          <div className={FormStyles.rowBetween}>
+            <div>
+              <TextField
+                floatingLabelText="Clave"
+                name="key"
+                readOnly
+                disabled
+              />
+            </div>
+            {picker()}
           </div>
         }
-        {update && picker()}
 
         <div className={FormStyles.row}>
           <SelectField
@@ -177,6 +181,7 @@ Fields.propTypes = {
   onLocalityChange: PropTypes.func.isRequired,
   localitiesSearch: PropTypes.arrayOf(PropTypes.object).isRequired,
   initialValues: PropTypes.object.isRequired,
+  preview: PropTypes.object,
 }
 
 const CreateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
@@ -301,6 +306,14 @@ export const prepareInitialActionValues = (values) => {
   }
 }
 
+const mapStateToPropsUpdate = (state, { initialValues }) => {
+  try {
+    return { preview: state.form[`accountUpdateAction_${initialValues.key}`].values.preview }
+  } catch (e) {
+    return {}
+  }
+}
+
 const ReduxCreateForm = reduxForm({ form: 'accountNewAction', validate: validator(false) })(CreateForm)
-const ReduxUpdateForm = reduxForm({ validate: validator(true) })(UpdateForm) // pass `form` arg when instantiating form
+const ReduxUpdateForm = connect(mapStateToPropsUpdate, null)(reduxForm({ validate: validator(true) })(UpdateForm)) // pass `form` arg when instantiating form
 export { ReduxCreateForm as CreateActionForm, ReduxUpdateForm as UpdateActionForm }
