@@ -17,7 +17,13 @@ const PhotoGalleryPicker = ({ input, meta, ...rest }) => {
 
   const gallery = <PhotoGallery {...rest} onClickItem={handleClickItem} selectedUrl={value && value.url} />
   if (submitFailed && error) {
-    return <div className={Styles.error}><div className={Styles.errorText}>{error}</div>{gallery}</div>
+    return (
+      <div className={Styles.error}>
+        <div className={Styles.errorText}>{error}</div>
+        {gallery}
+        <div className={Styles.errorText}>{error}</div>
+      </div>
+    )
   }
   return gallery
 }
