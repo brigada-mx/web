@@ -17,7 +17,7 @@ aws s3 cp dist/google2056132fa8ef12ca.html s3://${bucketname} --acl public-read
 aws cloudfront create-invalidation --distribution-id E26AO23800RE7C --paths '/*'
 
 # sleep until API is up
-until curl -s https://api.brigada.mx/api/ > /dev/null; do
+until curl -s https://api.brigada.mx/api/ | python3 -mjson.tool > /dev/null; do
   >&2 echo "API is unavailable - sleeping"
   sleep 1
 done

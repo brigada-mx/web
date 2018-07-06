@@ -7,7 +7,7 @@ Run `npm run dev`. Make sure the API is also up. See the API repo for details on
 
 
 ### Committing
-Run `cp pre-commit .git/hooks` from the root of this repo. The `pre-commit` hook fails if source code doesn't pass `flow` checks.
+Run `cd .git/hooks && ln -s ../../pre-commit && cd -` from the root of this repo. The `pre-commit` hook fails if source code doesn't pass `flow` checks.
 
 
 ## Build
