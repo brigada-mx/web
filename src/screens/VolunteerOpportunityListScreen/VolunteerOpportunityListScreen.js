@@ -10,6 +10,7 @@ import { fireGaEvent, setDocumentMeta } from 'tools/other'
 import { truncate } from 'tools/string'
 import service, { getBackoff } from 'api/service'
 import pluralize from 'tools/pluralize'
+import Preview from 'components/Preview'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import Styles from './VolunteerOpportunityListScreen.css'
 
@@ -39,23 +40,6 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
       preview: { type, src, youtube_video_id: videoId } = {},
     } = o
 
-    let image = <div className={Styles.emptyThumbnail} />
-    if (type === 'image' && src) {
-      const backgroundImage = `url("${src}")`
-      image = <div className={Styles.image} style={{ backgroundImage }} />
-    }
-    if (type === 'video' && src) {
-      const handleClickVideo = (e) => {
-        e.stopPropagation()
-        history.push(`/voluntariado/${id}`)
-        setTimeout(() => {
-          modal('youTubeVideo', { modalTransparent: true, videoId })
-        }, 500)
-      }
-      const backgroundImage = `url("${src}")`
-      image = <div onClick={handleClickVideo} className={Styles.video} style={{ backgroundImage }} />
-    }
-
     const messageText = `busca ${target} ${target !== 1 ? pluralize(position.toLowerCase()) : position.toLowerCase()} en ${locName}, ${stateName}.`
     const message = (
       <span><span className={Styles.bold}>{orgName}</span> {truncate(messageText, 100 - orgName.length)}</span>
@@ -65,16 +49,24 @@ const VolunteerOpportunityListScreen = ({ opportunities, history, modal }) => {
       fireGaEvent('volunteerOpportunityListScreenClicked', `oppId: ${id}, ${orgName}`)
       history.push(`/voluntariado/${id}`)
     }
+    const handleClickVideo = (e) => {
+      e.stopPropagation()
+      history.push(`/voluntariado/${id}`)
+      setTimeout(() => {
+        modal('youTubeVideo', { modalTransparent: true, videoId })
+      }, 500)
+    }
 
     return (
       <div key={id} className={Styles.card} onClick={handleClick}>
-        {image}
+        <Preview type={type} src={src} onClick={type === 'video' ? handleClickVideo : undefined} />
         <div className={Styles.message}>
           {message}
         </div>
       </div>
     )
   })
+
   const cardsPerRow = 3
   const remainder = opportunities.length % cardsPerRow
   if (remainder) {
