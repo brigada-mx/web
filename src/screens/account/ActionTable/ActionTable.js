@@ -11,6 +11,7 @@ import '!style-loader!css-loader!react-table/react-table.css'
 
 import { tokenMatch } from 'tools/string'
 import { projectTypeByValue } from 'src/choices'
+import Preview from 'components/Preview'
 import FormStyles from 'src/Form.css'
 
 
@@ -19,7 +20,7 @@ const defaultFilterMethod = (filter, row) => {
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
 }
 
-const ActionTable = ({ actions, onTogglePublished, onRestore, history }) => {
+const ActionTable = ({ actions, onTogglePublished, onRestore, history, onClickImage }) => {
   const columns = [
     {
       Header: 'Clave',
@@ -49,6 +50,17 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history }) => {
     })
   }
 
+  if (window.innerWidth >= 980) {
+    columns.unshift({
+      Header: 'Imagen',
+      accessor: 'preview',
+      maxWidth: 120,
+      Cell: (props) => {
+        const { preview, id } = props.original
+        return <Preview {...preview} onClick={() => onClickImage(id)} width={128} height={96} />
+      },
+    })
+  }
   if (onTogglePublished && window.innerWidth >= 980) {
     columns.push({
       Header: '¿Publicar?',
@@ -84,7 +96,7 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history }) => {
       getTdProps={(state, rowInfo, column) => {
         const { id } = column
         const handleRowClicked = onRestore ? undefined : (e, handleOriginal) => {
-          if (id !== 'published' && rowInfo) {
+          if (id !== 'published' && id !== 'preview' && rowInfo) {
             history.push(`/cuenta/proyectos/${rowInfo.original.key}`)
           }
           if (handleOriginal) handleOriginal()
@@ -103,6 +115,7 @@ ActionTable.propTypes = {
   onTogglePublished: PropTypes.func,
   onRestore: PropTypes.func,
   history: PropTypes.object.isRequired,
+  onClickImage: PropTypes.func,
 }
 
 export default withRouter(pure(ActionTable))

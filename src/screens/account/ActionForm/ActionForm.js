@@ -14,6 +14,7 @@ import ConfirmButton from 'components/ConfirmButton'
 import Preview from 'components/Preview'
 import { projectTypes } from 'src/choices'
 import FormStyles from 'src/Form.css'
+import Styles from './ActionForm.css'
 
 
 class Fields extends React.Component {
@@ -59,7 +60,17 @@ class Fields extends React.Component {
       if (images.length === 0 && testimonials.length === 0) return null
 
       if (!this.state.pickerOpen) {
-        return <Preview {...preview} onClick={this.handleOpenPicker} width={240} height={180} />
+        return (
+          <React.Fragment>
+            <div className={Styles.pickerContainer}>
+              <span className={Styles.pickerLabel}>Escoger imagen de proyecto</span>
+              <div>
+                <Preview {...preview} onClick={this.handleOpenPicker} width={240} height={180} />
+              </div>
+            </div>
+            <div />
+          </React.Fragment>
+        )
       }
 
       return (
@@ -81,7 +92,7 @@ class Fields extends React.Component {
     return (
       <React.Fragment>
         {update &&
-          <div className={FormStyles.rowBetween}>
+          <div className={Styles.pickerRow}>
             <div>
               <TextField
                 floatingLabelText="Clave"

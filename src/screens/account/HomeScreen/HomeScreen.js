@@ -19,6 +19,7 @@ import ActionTable from 'screens/account/ActionTable'
 import ActionTrash from 'screens/account/ActionTrash'
 import SubmissionTrash from 'screens/account/SubmissionTrash'
 import ContactForm from 'screens/account/ContactForm'
+import PhotoGalleryPickerForm from 'screens/account/PhotoGalleryPickerForm'
 import OrganizationForm from './OrganizationForm'
 
 
@@ -167,9 +168,26 @@ class HomeScreen extends React.Component {
     this.loadProfileStrength()
   }
 
+  handleToggleActionImageModal = (actionId: ?number) => {
+    this.setState({ actionId })
+  }
+
+  handleChooseImage = async (id, body) => {
+    const { data } = await service.accountUpdateAction(id, body)
+    if (!data) {
+      this.props.snackbar('Hubo un error', 'error')
+      return
+    }
+    this.loadActions()
+    this.loadProfileStrength()
+    this.handleToggleActionImageModal(undefined)
+    this.props.snackbar('Actualizaste la imagen de este proyecto', 'success')
+  }
+
   render() {
     const { actions, submissions } = this.props
-    const { createActionModal, trashModal, submissionTrashModal } = this.state
+    const { createActionModal, trashModal, submissionTrashModal, actionId } = this.state
+    const action = actions.find(a => a.id === actionId) || {}
 
     const content = (
       <div>
@@ -210,7 +228,11 @@ class HomeScreen extends React.Component {
             </div>
           </div>
           {actions.length > 0 &&
-            <ActionTable actions={actions} onTogglePublished={this.handleTogglePublished} />
+            <ActionTable
+              actions={actions}
+              onTogglePublished={this.handleTogglePublished}
+              onClickImage={this.handleToggleActionImageModal}
+            />
           }
         </div>
 
@@ -266,6 +288,22 @@ class HomeScreen extends React.Component {
             gaName="submissionTrashModal"
           >
             <SubmissionTrash onRestore={this.handleRestoreSubmission} />
+          </Modal>
+        }
+
+        {actionId !== undefined &&
+          <Modal
+            contentClassName={FormStyles.modal}
+            onClose={() => this.handleToggleActionImageModal(undefined)}
+            gaName="chooseActionImageModal"
+          >
+            <PhotoGalleryPickerForm
+              actionId={actionId}
+              onSubmit={(body) => { this.handleChooseImage(actionId, body) }}
+              form={`accountActionPickPhoto_${actionId}`}
+              enableReinitialize
+              initialValues={{ preview: action.preview }}
+            />
           </Modal>
         }
       </div>

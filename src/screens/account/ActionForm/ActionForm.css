@@ -1,0 +1,17 @@
+.pickerRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.pickerContainer {
+  position: relative;
+}
+
+.pickerLabel {
+  position: absolute;
+  top: -20px;
+  left: 0px;
+}

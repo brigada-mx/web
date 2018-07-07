@@ -259,6 +259,7 @@ class ActionScreen extends React.Component {
       return
     }
     this.loadAction()
+    this.handleUpdateOpportunityModalClose()
     this.props.snackbar(`Modificaste oportunidad de voluntariado ${id}`, 'success')
   }
 
