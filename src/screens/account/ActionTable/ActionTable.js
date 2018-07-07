@@ -50,7 +50,7 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history, onClickIm
     })
   }
 
-  if (window.innerWidth >= 980) {
+  if (onClickImage && window.innerWidth >= 980) {
     columns.unshift({
       Header: 'Imagen',
       accessor: 'preview',

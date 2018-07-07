@@ -8,6 +8,7 @@ import Toggle from 'material-ui/Toggle'
 import '!style-loader!css-loader!react-table/react-table.css'
 
 import { tokenMatch } from 'tools/string'
+import Preview from 'components/Preview'
 
 
 const defaultFilterMethod = (filter, row) => {
@@ -15,7 +16,7 @@ const defaultFilterMethod = (filter, row) => {
   return row[id] !== undefined ? tokenMatch(String(row[id]), filter.value) : true
 }
 
-const OpportunityTable = ({ opportunities, onTogglePublished, onRowClicked }) => {
+const OpportunityTable = ({ opportunities, onTogglePublished, onRowClicked, onClickImage }) => {
   const columns = [
     {
       Header: 'ID',
@@ -45,6 +46,18 @@ const OpportunityTable = ({ opportunities, onTogglePublished, onRowClicked }) =>
     })
   }
 
+  if (onClickImage && window.innerWidth >= 980) {
+    columns.unshift({
+      Header: 'Imagen',
+      accessor: 'preview',
+      maxWidth: 120,
+      Cell: (props) => {
+        const { preview, id } = props.original
+        return <Preview {...preview} onClick={() => onClickImage(id)} width={128} height={96} />
+      },
+    })
+  }
+
   return (
     <ReactTable
       className="-highlight"
@@ -56,7 +69,7 @@ const OpportunityTable = ({ opportunities, onTogglePublished, onRowClicked }) =>
       getTdProps={(state, rowInfo, column) => {
         const { id } = column
         const handleRowClicked = (e, handleOriginal) => {
-          if (id !== 'published' && rowInfo) {
+          if (id !== 'published' && id !== 'preview' && rowInfo) {
             onRowClicked(rowInfo.original.id)
           }
           if (handleOriginal) handleOriginal()
@@ -74,6 +87,7 @@ OpportunityTable.propTypes = {
   opportunities: PropTypes.arrayOf(PropTypes.object).isRequired,
   onRowClicked: PropTypes.func.isRequired,
   onTogglePublished: PropTypes.func,
+  onClickImage: PropTypes.func,
 }
 
 export default pure(OpportunityTable)

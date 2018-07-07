@@ -20,6 +20,7 @@ import { CreateDonationForm, UpdateDonationForm,
   prepareDonationBody, prepareInitialDonationValues } from 'screens/account/DonationForm'
 import { CreateOpportunityForm, UpdateOpportunityForm,
   prepareOpportunityBody, prepareInitialOpportunityValues } from 'screens/account/OpportunityForm'
+import PhotoGalleryPickerForm from 'screens/account/PhotoGalleryPickerForm'
 import DonationTable from 'screens/account/DonationTable'
 import OpportunityTable from 'screens/account/OpportunityTable'
 import ApplicationTable from 'screens/account/ApplicationTable'
@@ -274,6 +275,21 @@ class ActionScreen extends React.Component {
     this.props.snackbar(message, 'success')
   }
 
+  handleChooseOpportunityImage = async (id, body) => {
+    const { data } = await service.accountUpdateOpportunity(id, body)
+    if (!data) {
+      this.props.snackbar('Hubo un error', 'error')
+      return
+    }
+    this.loadAction()
+    this.handleToggleOpportunityImageModal(undefined)
+    this.props.snackbar('Actualizaste la imagen de esta oportunidad de voluntariado', 'success')
+  }
+
+  handleToggleOpportunityImageModal = (pickerOpportunityId: ?number) => {
+    this.setState({ pickerOpportunityId })
+  }
+
   render() {
     const { action, donations, opportunities, submissions, testimonials, status } = this.props
     if (status === 404) return <Redirect to="/cuenta" />
@@ -282,6 +298,7 @@ class ActionScreen extends React.Component {
       testimonialId,
       donationId,
       opportunityId,
+      pickerOpportunityId,
       localitiesSearch,
       trashModal,
       createDonationModal,
@@ -289,6 +306,7 @@ class ActionScreen extends React.Component {
     } = this.state
     const donation = donations.find(d => d.id === donationId)
     const opportunity = opportunities.find(o => o.id === opportunityId)
+    const pickerOpportunity = opportunities.find(o => o.id === pickerOpportunityId) || {}
 
     const content = (
       <div>
@@ -355,6 +373,7 @@ class ActionScreen extends React.Component {
               opportunities={opportunities}
               onTogglePublished={this.handleToggleOpportunityPublished}
               onRowClicked={this.handleOpportunityRowClicked}
+              onClickImage={this.handleToggleOpportunityImageModal}
             />
           }
         </div>
@@ -509,6 +528,22 @@ class ActionScreen extends React.Component {
               enableReinitialize
               id={opportunityId}
               action={action}
+            />
+          </Modal>
+        }
+
+        {pickerOpportunityId !== undefined && action.id !== undefined &&
+          <Modal
+            contentClassName={FormStyles.modal}
+            onClose={() => this.handleToggleOpportunityImageModal(undefined)}
+            gaName="chooseOpportunityImageModal"
+          >
+            <PhotoGalleryPickerForm
+              actionId={action.id}
+              onSubmit={(body) => { this.handleChooseOpportunityImage(pickerOpportunityId, body) }}
+              form={`accountOpportunityPickPhoto_${pickerOpportunityId}`}
+              enableReinitialize
+              initialValues={{ preview: pickerOpportunity.preview }}
             />
           </Modal>
         }

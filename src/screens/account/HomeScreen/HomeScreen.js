@@ -146,6 +146,18 @@ class HomeScreen extends React.Component {
     snackbar(message, 'success')
   }
 
+  handleChooseImage = async (id, body) => {
+    const { data } = await service.accountUpdateAction(id, body)
+    if (!data) {
+      this.props.snackbar('Hubo un error', 'error')
+      return
+    }
+    this.loadActions()
+    this.loadProfileStrength()
+    this.handleToggleActionImageModal(undefined)
+    this.props.snackbar('Actualizaste la imagen de este proyecto', 'success')
+  }
+
   handleToggleCreateActionModal = (open) => {
     this.setState({ createActionModal: open })
   }
@@ -168,26 +180,14 @@ class HomeScreen extends React.Component {
     this.loadProfileStrength()
   }
 
-  handleToggleActionImageModal = (actionId: ?number) => {
-    this.setState({ actionId })
-  }
-
-  handleChooseImage = async (id, body) => {
-    const { data } = await service.accountUpdateAction(id, body)
-    if (!data) {
-      this.props.snackbar('Hubo un error', 'error')
-      return
-    }
-    this.loadActions()
-    this.loadProfileStrength()
-    this.handleToggleActionImageModal(undefined)
-    this.props.snackbar('Actualizaste la imagen de este proyecto', 'success')
+  handleToggleActionImageModal = (pickerActionId: ?number) => {
+    this.setState({ pickerActionId })
   }
 
   render() {
     const { actions, submissions } = this.props
-    const { createActionModal, trashModal, submissionTrashModal, actionId } = this.state
-    const action = actions.find(a => a.id === actionId) || {}
+    const { createActionModal, trashModal, submissionTrashModal, pickerActionId } = this.state
+    const pickerAction = actions.find(a => a.id === pickerActionId) || {}
 
     const content = (
       <div>
@@ -291,18 +291,18 @@ class HomeScreen extends React.Component {
           </Modal>
         }
 
-        {actionId !== undefined &&
+        {pickerActionId !== undefined &&
           <Modal
             contentClassName={FormStyles.modal}
             onClose={() => this.handleToggleActionImageModal(undefined)}
             gaName="chooseActionImageModal"
           >
             <PhotoGalleryPickerForm
-              actionId={actionId}
-              onSubmit={(body) => { this.handleChooseImage(actionId, body) }}
-              form={`accountActionPickPhoto_${actionId}`}
+              actionId={pickerActionId}
+              onSubmit={(body) => { this.handleChooseImage(pickerActionId, body) }}
+              form={`accountActionPickPhoto_${pickerActionId}`}
               enableReinitialize
-              initialValues={{ preview: action.preview }}
+              initialValues={{ preview: pickerAction.preview }}
             />
           </Modal>
         }
