@@ -1,3 +1,5 @@
+set -e
+
 python3 ./tools/sitemap.py
 ./build.sh
 

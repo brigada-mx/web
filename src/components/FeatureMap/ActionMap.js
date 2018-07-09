@@ -80,7 +80,7 @@ const ActionMap = ({
       disableKeyboard
       fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
       fitBoundsOptions={fitBoundsOptions}
-      features={features.splice(0, maxFeatures)}
+      features={features.slice(0, maxFeatures)}
       layer={layer}
       sourceId={sourceId}
       legend={<TextLegend text="FOTOS DE PROYECTOS" />}

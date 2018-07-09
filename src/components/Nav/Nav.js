@@ -67,9 +67,9 @@ const NavLinks = ({
   return (
     <React.Fragment>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={locIsActive} activeStyle={{ ...selected, ...activeStyle }} exact to="/">Comunidades</NavLink>
+      <NavLink onClick={onHideDrawer} className={classNameLink} isActive={volunteerIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/voluntarios">Voluntarios</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/reconstructores">Reconstructores</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={donorIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/donadores">Donadores</NavLink>
-      <NavLink onClick={onHideDrawer} className={classNameLink} isActive={volunteerIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/voluntarios">Voluntarios</NavLink>
       {forumButton()}
       <Link onClick={handleClickSupport} className={classNameLink} to="#">Soporte</Link>
       {loginButton()}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
+import { Link } from 'react-router-dom'
 
 import * as Actions from 'src/actions'
 import FormStyles from 'src/Form.css'
@@ -35,10 +36,6 @@ class ChooseAccountTypeScreen extends React.Component {
   handleSubmit = () => {
     const modal = this.state.type === 'org' ? 'createAccount' : 'donorCreateAccount'
     this.props.modal(modal)
-  }
-
-  openChat = () => {
-    this.props.livechat(true)
   }
 
   handleChange = (event, value) => {
@@ -83,7 +80,7 @@ class ChooseAccountTypeScreen extends React.Component {
             label="AVANZAR"
             onClick={this.handleSubmit}
           />
-          <span onClick={this.openChat} className={Styles.link}>Chat de ayuda</span>
+          <Link className={Styles.link} to="/voluntarios">Nada más soy voluntari@</Link>
         </div>
       </form>
     )
@@ -96,7 +93,6 @@ class ChooseAccountTypeScreen extends React.Component {
 ChooseAccountTypeScreen.propTypes = {
   type: PropTypes.oneOf(['org', 'donor']),
   modal: PropTypes.func.isRequired,
-  livechat: PropTypes.func.isRequired,
   className: PropTypes.string,
 }
 
@@ -107,7 +103,6 @@ ChooseAccountTypeScreen.defaultProps = {
 const mapDispatchToProps = (dispatch) => {
   return {
     modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
-    livechat: open => Actions.livechat(dispatch, { open }),
   }
 }
 
