@@ -2,6 +2,9 @@
 <PROJECT_ROOT>/node_modules/.*
 
 [ignore]
+<PROJECT_ROOT>/node_modules/jsonlint-lines-primitives/.*
+<PROJECT_ROOT>/node_modules/npm/.*
+<PROJECT_ROOT>/node_modules/mapbox-gl/.*
 
 [include]
 
