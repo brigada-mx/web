@@ -80,34 +80,19 @@ class MapScreen extends React.Component {
     this._mounted = true
 
     getBackoffComponent(this, service.getLocalities, {
-      key: 'localitiesWithData',
+      key: 'localities',
       onResponse: ({ data }) => {
         if (!data) return
 
-        data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
+        const results = data.results.map((r) => {
           this._coords.push(r.location)
           this._localityById[r.id] = r
+          if (r.meta.total === undefined || r.meta.total === null) r.meta.total = -1 // eslint-disable-line no-param-reassign
           return { ...r, dmgGrade: dmgGrade(r) }
-        })
+        }).sort((a, b) => -compareLocalities(a, b))
         const fitBounds = fitBoundsFromCoords(this._coords)
         localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
-        return { data } // eslint-disable-line consistent-return
-      },
-    })
-
-    getBackoffComponent(this, service.getLocalitiesWithActions, {
-      key: 'localitiesWithActions',
-      onResponse: ({ data }) => {
-        if (!data) return
-
-        data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
-          this._coords.push(r.location)
-          this._localityById[r.id] = r
-          return { ...r, dmgGrade: dmgGrade(r) }
-        })
-        const fitBounds = fitBoundsFromCoords(this._coords)
-        localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
-        return { data } // eslint-disable-line consistent-return
+        return { data: { ...data, results } } // eslint-disable-line consistent-return
       },
     })
   }
@@ -264,11 +249,48 @@ MapScreen.defaultProps = {
   fitBounds: [],
 }
 
-// THIS IS AN ANTI-PATTERN, because it will rerender map screen on any change to redux store
+const filterLocalities = (localities, valState = [], valMuni = [], valMarg = [], valNumActions = [], locSearch = '') => {
+  const rangeByValNumActions = {
+    0: [null, 0],
+    1: [1, 9],
+    2: [10, 49],
+    3: [50, null],
+  }
+
+  return localities.filter((l) => {
+    const { name, state_name: stateName, cvegeo = '', action_count: actions, meta: { margGrade } } = l
+
+    const matchesSearch = tokenMatch(`${name} ${stateName}`, locSearch)
+
+    const cvegeos = valState.map(v => v.value).concat(valMuni.map(v => v.value))
+    const matchesCvegeo = cvegeos.length === 0 || cvegeos.some(v => cvegeo.startsWith(v))
+
+    const margs = valMarg.map(v => v.value)
+    const matchestMarg = margs.length === 0 || margs.some(v => v === (margGrade || '').replace(/ /g, '_').toLowerCase())
+
+    const numActions = valNumActions.map(v => rangeByValNumActions[v.value])
+    const matchesActions = numActions.length === 0 ||
+      numActions.some((range) => {
+        const [minActions, maxActions] = range
+        return (minActions === null || actions >= minActions) && (maxActions === null || actions <= maxActions)
+      })
+
+    return matchesSearch && matchesCvegeo && matchestMarg && matchesActions
+  })
+}
+
 const mapStateToProps = (state, { location }) => {
-  const { locSearch } = state.search
   const { valState, valMuni, valMarg, valNumActions } = parseFilterQueryParams(location)
-  return { valState, valMuni, valMarg, valNumActions }
+  const { locSearch } = state.search
+
+  if (!state.getter.localities || !state.getter.localities.data) {
+    return { valState, valMuni, valMarg, valNumActions }
+  }
+
+  const localities = state.getter.localities.data.results
+  const filtered = filterLocalities(localities, valState, valMuni, valMarg, valNumActions, locSearch)
+  const fitBounds = fitBoundsFromCoords(filtered.map(l => l.location))
+  return { valState, valMuni, valMarg, valNumActions, localities, filtered, fitBounds }
 }
 
 const mapDispatchToProps = (dispatch) => {

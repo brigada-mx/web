@@ -17,7 +17,7 @@ class LocalityDamageMap extends React.Component {
         'circle-radius': {
           property: 'total',
           stops: generateSizeStops([
-            [-1, 3],
+            [-1, 4],
             [1, 3],
             [3, 3.5],
             [10, 4],
