@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import debounce from 'lodash/debounce'
 
 import * as Actions from 'src/actions'
-import service, { getBackoff } from 'api/service'
+import service, { getBackoffComponent } from 'api/service'
 import FilterHeader, { parseFilterQueryParams } from 'components/FilterHeader'
 import SearchInput from 'components/SearchInput'
 import LocalityListItem from 'components/LocalityListItem'
@@ -71,10 +71,49 @@ class MapScreen extends React.Component {
     }
     this.handleLocalitySearchKeyUp = debounce(this.handleLocalitySearchKeyUp, 150)
     this.filterFields = ['state', 'muni', 'marg', 'numActions']
+    this._coords = []
     this._localityById = {}
   }
 
+  componentDidMount() {
+    document.title = 'Brigada'
+    this._mounted = true
+
+    getBackoffComponent(this, service.getLocalities, {
+      key: 'localitiesWithData',
+      onResponse: ({ data }) => {
+        if (!data) return
+
+        data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
+          this._coords.push(r.location)
+          this._localityById[r.id] = r
+          return { ...r, dmgGrade: dmgGrade(r) }
+        })
+        const fitBounds = fitBoundsFromCoords(this._coords)
+        localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
+        return { data } // eslint-disable-line consistent-return
+      },
+    })
+
+    getBackoffComponent(this, service.getLocalitiesWithActions, {
+      key: 'localitiesWithActions',
+      onResponse: ({ data }) => {
+        if (!data) return
+
+        data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
+          this._coords.push(r.location)
+          this._localityById[r.id] = r
+          return { ...r, dmgGrade: dmgGrade(r) }
+        })
+        const fitBounds = fitBoundsFromCoords(this._coords)
+        localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
+        return { data } // eslint-disable-line consistent-return
+      },
+    })
+  }
+
   componentWillUnmount() {
+    this._mounted = false
     this.props.onSearch('locSearch', '')
   }
 
