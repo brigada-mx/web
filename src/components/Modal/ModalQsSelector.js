@@ -11,7 +11,8 @@ import ModalQsTestimonial from './ModalQsTestimonial'
 
 /**
  * Component that parses query string and dispatches a modal action, or renders a
- * component whose only responsibility is to dispatch a modal action.
+ * component whose only responsibility is to dispatch a modal action. This
+ * component should only be updated when the browser's location changes.
  */
 class ModalQsSelector extends React.Component {
   componentDidMount() {

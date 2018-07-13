@@ -6,6 +6,7 @@ import snackbar from './snackbar'
 import livechat from './livechat'
 import modal from './modal'
 import youtube from './youtube'
+import search from './search'
 
 export default {
   drawer,
@@ -16,4 +17,5 @@ export default {
   livechat,
   modal,
   youtube,
+  search,
 }

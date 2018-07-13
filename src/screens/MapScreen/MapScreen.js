@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import debounce from 'lodash/debounce'
 
-import service, { getBackoffComponent } from 'api/service'
+import * as Actions from 'src/actions'
+import service, { getBackoff } from 'api/service'
 import FilterHeader, { parseFilterQueryParams } from 'components/FilterHeader'
 import SearchInput from 'components/SearchInput'
 import LocalityListItem from 'components/LocalityListItem'
@@ -65,78 +66,30 @@ class MapScreen extends React.Component {
     super(props)
 
     this.state = {
-      localities: {
-        loading: true,
-      },
-      localityByCvegeo: {},
-      filtered: [],
-      fitBounds: [],
       popup: null,
-      locSearch: '',
       filtersVisible: false,
     }
     this.handleLocalitySearchKeyUp = debounce(this.handleLocalitySearchKeyUp, 150)
     this.filterFields = ['state', 'muni', 'marg', 'numActions']
-  }
-
-  componentDidMount() {
-    document.title = 'Brigada'
-    this._mounted = true
-
-    getBackoffComponent(this, service.getLocalities, {
-      stateKey: 'localities',
-      onResponse: ({ data }) => {
-        if (!data) return
-        const localityByCvegeo = {}
-        const coords = []
-        data.results = data.results.map((r) => { // eslint-disable-line no-param-reassign
-          coords.push(r.location)
-          localityByCvegeo[r.cvegeo] = r
-          return { ...r, dmgGrade: dmgGrade(r) }
-        })
-        const fitBounds = fitBoundsFromCoords(coords)
-        localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
-        this.setState({ localityByCvegeo })
-      },
-    })
+    this._localityById = {}
   }
 
   componentWillUnmount() {
-    this._mounted = false
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const filterKeys = ['valState', 'valMuni', 'valMarg', 'valNumActions']
-    const keys = ['localities', 'locSearch']
-    const locKeys = ['valState', 'valMuni']
-
-    if (!keys.some(k => prevState[k] !== this.state[k]) && !filterKeys.some(k => prevProps[k] !== this.props[k])) return
-
-    const { localities: { data = {} } } = this.state
-    if (!data.results || data.results.length === 0) return
-
-    const filtered = this.filterLocalities(data.results).sort((a, b) => -compareLocalities(a, b))
-
-    if (locKeys.some(k => prevProps[k] !== this.props[k]) || this.state.fitBounds.length === 0) {
-      const fitBounds = fitBoundsFromCoords(filtered.map(l => l.location))
-      this.setState({ filtered, fitBounds })
-    } else {
-      this.setState({ filtered })
-    }
+    this.props.onSearch('locSearch', '')
   }
 
   handleLocalitySearchKeyUp = (locSearch) => {
-    this.setState({ locSearch })
+    this.props.onSearch('locSearch', locSearch)
   }
 
   handleClickFeature = (feature) => {
-    const locality = this.state.localityByCvegeo[feature.properties.cvegeo]
+    const locality = this._localityById[feature.properties.id]
     if (!locality) return
     this.props.history.push(`/comunidades/${locality.id}`)
   }
 
   handleEnterFeature = (feature) => {
-    this.setState({ popup: this.state.localityByCvegeo[feature.properties.cvegeo] })
+    this.setState({ popup: this._localityById[feature.properties.id] })
   }
 
   handleLeaveFeature = () => {
@@ -160,56 +113,16 @@ class MapScreen extends React.Component {
     this.setState({ filtersVisible: !this.state.filtersVisible })
   }
 
-  filterLocalities = (results) => {
-    const { locSearch } = this.state
-    const { valState, valMuni, valMarg, valNumActions } = this.props
-
-    const rangeByValNumActions = {
-      0: [null, 0],
-      1: [1, 9],
-      2: [10, 49],
-      3: [50, null],
-    }
-
-    return results.filter((l) => {
-      const { name, state_name: stateName, cvegeo = '', action_count: actions, meta: { margGrade } } = l
-
-      const matchesSearch = tokenMatch(`${name} ${stateName}`, locSearch)
-
-      const cvegeos = valState.map(v => v.value).concat(valMuni.map(v => v.value))
-      const matchesCvegeo = cvegeos.length === 0 || cvegeos.some(v => cvegeo.startsWith(v))
-
-      const margs = valMarg.map(v => v.value)
-      const matchestMarg = margs.length === 0 ||
-        margs.some(v => v === (margGrade || '').replace(/ /g, '_').toLowerCase())
-
-      const numActions = valNumActions.map(v => rangeByValNumActions[v.value])
-      const matchesActions = numActions.length === 0 ||
-        numActions.some((range) => {
-          const [minActions, maxActions] = range
-          return (minActions === null || actions >= minActions) && (maxActions === null || actions <= maxActions)
-        })
-
-      return matchesSearch && matchesCvegeo && matchestMarg && matchesActions
-    })
-  }
-
   render() {
-    const {
-      popup,
-      localities: { data = {}, loading },
-      filtered,
-      fitBounds,
-      filtersVisible,
-    } = this.state
-    const { valState, valMuni, valMarg, valNumActions } = this.props
+    const { popup, filtersVisible } = this.state
+    const { valState, valMuni, valMarg, valNumActions, localities, filtered, fitBounds } = this.props
 
     const filter = (style = {}) => {
       return (
         <FilterHeader
           fields={this.filterFields}
           style={style}
-          localities={data.results || []}
+          localities={localities}
           valState={valState}
           valMuni={valMuni}
           valMarg={valMarg}
@@ -219,11 +132,11 @@ class MapScreen extends React.Component {
     }
 
     const features = filtered.map((l) => {
-      const { location: { lat, lng }, meta: { total }, cvegeo } = l
+      const { location: { lat, lng }, meta: { total }, id } = l
 
       return {
         type: 'Feature',
-        properties: { cvegeo, total },
+        properties: { id, total },
         geometry: {
           type: 'Point',
           coordinates: [lng, lat],
@@ -258,8 +171,8 @@ class MapScreen extends React.Component {
 
         <div className={`${Styles.container} row`}>
           <div className={`${Styles.flexOverflow} col-lg-3 col-md-3 col-sm-8 col-xs-4 gutter last-sm last-xs`}>
-            {loading && <LoadingIndicatorCircle className={Styles.loader} />}
-            {!loading &&
+            {localities.length === 0 && <LoadingIndicatorCircle className={Styles.loader} />}
+            {localities.length > 0 &&
               <LocalityList
                 localities={filtered}
                 onScroll={this.handleScroll}
@@ -291,11 +204,15 @@ class MapScreen extends React.Component {
 }
 
 MapScreen.propTypes = {
+  onSearch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   valState: PropTypes.array.isRequired,
   valMuni: PropTypes.array.isRequired,
   valMarg: PropTypes.array.isRequired,
   valNumActions: PropTypes.array.isRequired,
+  localities: PropTypes.arrayOf(PropTypes.object).isRequired,
+  filtered: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fitBounds: PropTypes.array.isRequired,
 }
 
 MapScreen.defaultProps = {
@@ -303,12 +220,22 @@ MapScreen.defaultProps = {
   valMuni: [],
   valMarg: [],
   valNumActions: [],
+  localities: [],
+  filtered: [],
+  fitBounds: [],
 }
 
 // THIS IS AN ANTI-PATTERN, because it will rerender map screen on any change to redux store
 const mapStateToProps = (state, { location }) => {
+  const { locSearch } = state.search
   const { valState, valMuni, valMarg, valNumActions } = parseFilterQueryParams(location)
   return { valState, valMuni, valMarg, valNumActions }
 }
 
-export default withRouter(connect(mapStateToProps, null)(MapScreen))
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSearch: (key, value) => Actions.searchSet(dispatch, { key, value }),
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MapScreen))

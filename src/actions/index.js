@@ -8,6 +8,13 @@ export async function drawerToggle(dispatch, { visible }) {
   })
 }
 
+export async function searchSet(dispatch, { key = 'search', value }) {
+  dispatch({
+    type: 'SEARCH',
+    payload: { key, value },
+  })
+}
+
 export async function actionData(dispatch, { id, data }) {
   dispatch({
     type: 'ACTION_DATA',
