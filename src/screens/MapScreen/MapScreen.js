@@ -16,11 +16,8 @@ import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicator
 import { tokenMatch } from 'tools/string'
 import { dmgGrade, fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
 import { localStorage } from 'tools/storage'
-import env from 'src/env'
 import Styles from './MapScreen.css'
 
-
-const { mapbox: { sourceOptions, sourceLayer } } = env
 
 const compareLocalities = (a, b) => {
   const { total: ta } = a.meta
@@ -33,17 +30,15 @@ const compareLocalities = (a, b) => {
 }
 
 class LocalityList extends React.PureComponent {
-  maxItems = () => {
-    return window.innerWidth >= 980 ? 250 : 30
-  }
-
-  handleScroll = (e) => {
-    this.props.onScroll(e, this.props.localities.slice(0, this.maxItems()))
-  }
-
   render() {
-    const { localities, focusedId, ...rest } = this.props
-    const items = localities.slice(0, this.maxItems()).map((l) => {
+    const { localities, focusedId, onScroll, ...rest } = this.props
+
+    const maxItems = window.innerWidth >= 980 ? 250 : 30
+    const _localities = localities.slice(-maxItems).reverse()
+
+    const handleScroll = (e) => { onScroll(e, _localities) }
+
+    const items = _localities.map((l) => {
       const { cvegeo, id } = l
       return (
         <LocalityListItem
@@ -55,7 +50,7 @@ class LocalityList extends React.PureComponent {
         />
       )
     })
-    return <div onScroll={this.handleScroll} className={Styles.listContainer}>{items}</div>
+    return <div onScroll={handleScroll} className={Styles.listContainer}>{items}</div>
   }
 }
 
@@ -76,7 +71,6 @@ class MapScreen extends React.Component {
       localityByCvegeo: {},
       filtered: [],
       fitBounds: [],
-      layerFilter: null,
       popup: null,
       locSearch: '',
       filtersVisible: false,
@@ -116,24 +110,18 @@ class MapScreen extends React.Component {
     const keys = ['localities', 'locSearch']
     const locKeys = ['valState', 'valMuni']
 
-    if (!keys.some(k => prevState[k] !== this.state[k]) &&
-      !filterKeys.some(k => prevProps[k] !== this.props[k])) return
+    if (!keys.some(k => prevState[k] !== this.state[k]) && !filterKeys.some(k => prevProps[k] !== this.props[k])) return
 
     const { localities: { data = {} } } = this.state
     if (!data.results || data.results.length === 0) return
 
-    const filtered = this.filterLocalities(data.results).sort(compareLocalities)
-    const layerFilter = ['in', 'cvegeo'].concat(filtered.map((l) => {
-      const { cvegeo } = l
-      if (cvegeo.startsWith('0')) return cvegeo
-      return Number.parseInt(cvegeo, 10)
-    }))
+    const filtered = this.filterLocalities(data.results).sort((a, b) => -compareLocalities(a, b))
 
     if (locKeys.some(k => prevProps[k] !== this.props[k]) || this.state.fitBounds.length === 0) {
       const fitBounds = fitBoundsFromCoords(filtered.map(l => l.location))
-      this.setState({ filtered, layerFilter, fitBounds })
+      this.setState({ filtered, fitBounds })
     } else {
-      this.setState({ filtered, layerFilter })
+      this.setState({ filtered })
     }
   }
 
@@ -148,8 +136,7 @@ class MapScreen extends React.Component {
   }
 
   handleEnterFeature = (feature) => {
-    const { localityByCvegeo } = this.state
-    this.setState({ popup: localityByCvegeo[feature.properties.cvegeo] })
+    this.setState({ popup: this.state.localityByCvegeo[feature.properties.cvegeo] })
   }
 
   handleLeaveFeature = () => {
@@ -185,9 +172,7 @@ class MapScreen extends React.Component {
     }
 
     return results.filter((l) => {
-      const {
-        name, state_name: stateName, cvegeo = '', action_count: actions, meta: { margGrade },
-      } = l
+      const { name, state_name: stateName, cvegeo = '', action_count: actions, meta: { margGrade } } = l
 
       const matchesSearch = tokenMatch(`${name} ${stateName}`, locSearch)
 
@@ -202,8 +187,7 @@ class MapScreen extends React.Component {
       const matchesActions = numActions.length === 0 ||
         numActions.some((range) => {
           const [minActions, maxActions] = range
-          return (minActions === null || actions >= minActions) &&
-            (maxActions === null || actions <= maxActions)
+          return (minActions === null || actions >= minActions) && (maxActions === null || actions <= maxActions)
         })
 
       return matchesSearch && matchesCvegeo && matchestMarg && matchesActions
@@ -215,7 +199,6 @@ class MapScreen extends React.Component {
       popup,
       localities: { data = {}, loading },
       filtered,
-      layerFilter,
       fitBounds,
       filtersVisible,
     } = this.state
@@ -234,6 +217,19 @@ class MapScreen extends React.Component {
         />
       )
     }
+
+    const features = filtered.map((l) => {
+      const { location: { lat, lng }, meta: { total }, cvegeo } = l
+
+      return {
+        type: 'Feature',
+        properties: { cvegeo, total },
+        geometry: {
+          type: 'Point',
+          coordinates: [lng, lat],
+        },
+      }
+    })
 
     return (
       <React.Fragment>
@@ -276,10 +272,8 @@ class MapScreen extends React.Component {
           <div className={`${Styles.flexOverflowTwo} col-lg-9 col-md-9 col-sm-8 col-xs-4`}>
             <div className={Styles.mapContainer}>
               <LocalityDamageMap
-                filter={layerFilter}
                 popup={popup ? <LocalityPopup locality={popup} screen="loc" /> : null}
-                sourceOptions={sourceOptions}
-                sourceLayer={sourceLayer}
+                features={features}
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
