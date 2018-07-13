@@ -20,15 +20,31 @@ class ModalQsTestimonial extends React.Component {
       modal('youTubeVideo', { modalTransparent: true, modalTransparentBackground: false, videoId: '_' })
     }
 
+    const volunteerOpportunityModal = (oppId, testimonial) => {
+      if (Number.isNaN(oppId)) return
+      getBackoff(() => service.getOpportunity(oppId), {
+        onResponse: ({ data, error }) => {
+          if (!this._mounted) return
+          if (error) errorModal()
+          if (data && data.action.id === testimonial.action) {
+            modal('testimonialVideo', { modalTransparent: true, modalTransparentBackground: false, testimonial })
+          }
+        },
+      })
+    }
+
     getBackoff(() => service.getTestimonial(id), {
       onResponse: ({ data, error }) => {
         if (!this._mounted) return
         if (error) errorModal()
         if (data) {
           const parts = location.pathname.split('/')
-          if (parts[1] !== 'proyectos') errorModal()
-          else if (Number.parseInt(parts[2], 10) !== data.action) errorModal()
-          else modal('testimonialVideo', { modalTransparent: true, modalTransparentBackground: false, testimonial: data })
+          const first = parts[1]
+          if (first === 'proyectos' && Number.parseInt(parts[2], 10) === data.action) {
+            modal('testimonialVideo', { modalTransparent: true, modalTransparentBackground: false, testimonial: data })
+          } else if (first === 'voluntariado') {
+            volunteerOpportunityModal(Number.parseInt(parts[2], 10), data)
+          }
         }
       },
     })

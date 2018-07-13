@@ -28,6 +28,11 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history, onClickIm
       maxWidth: 80,
     },
     {
+      Header: 'ID',
+      accessor: 'id',
+      maxWidth: 80,
+    },
+    {
       Header: 'Tipo',
       accessor: 'action_type',
       Cell: props => projectTypeByValue[props.original.action_type] || props.original.action_type,

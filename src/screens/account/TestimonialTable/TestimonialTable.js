@@ -36,6 +36,11 @@ const TestimonialTable = ({ testimonials, onTogglePublished, onPreview, onRowCli
       },
     },
     {
+      Header: 'ID',
+      accessor: 'id',
+      maxWidth: 80,
+    },
+    {
       Header: 'Creada',
       accessor: 'submitted',
       Cell: props => <span>{moment(props.original.submitted).format('h:mma, DD MMMM YYYY')}</span>,
