@@ -16,7 +16,6 @@ import LocalityLegend from 'components/LocalityDamageMap/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
 import { dmgGrade, fitBoundsFromCoords, itemFromScrollEvent } from 'tools/other'
-import { localStorage } from 'tools/storage'
 import Styles from './MapScreen.css'
 
 
@@ -71,7 +70,6 @@ class MapScreen extends React.Component {
     }
     this.handleLocalitySearchKeyUp = debounce(this.handleLocalitySearchKeyUp, 150)
     this.filterFields = ['state', 'muni', 'marg', 'numActions']
-    this._coords = []
     this._localityById = {}
   }
 
@@ -85,13 +83,10 @@ class MapScreen extends React.Component {
         if (!data) return
 
         const results = data.results.map((r) => {
-          this._coords.push(r.location)
           this._localityById[r.id] = r
           if (r.meta.total === undefined || r.meta.total === null) r.meta.total = -1 // eslint-disable-line no-param-reassign
           return { ...r, dmgGrade: dmgGrade(r) }
         }).sort((a, b) => -compareLocalities(a, b))
-        const fitBounds = fitBoundsFromCoords(this._coords)
-        localStorage.setItem('719s:fitBounds', JSON.stringify(fitBounds))
         return { data: { ...data, results } } // eslint-disable-line consistent-return
       },
     })
@@ -139,7 +134,17 @@ class MapScreen extends React.Component {
 
   render() {
     const { popup, filtersVisible } = this.state
-    const { valState, valMuni, valMarg, valNumActions, localities, filtered, fitBounds } = this.props
+    const {
+      valState,
+      valMuni,
+      valMarg,
+      valNumActions,
+      localities,
+      filtered,
+      fitBounds,
+      layerFilter,
+      features,
+    } = this.props
 
     const filter = (style = {}) => {
       return (
@@ -154,19 +159,6 @@ class MapScreen extends React.Component {
         />
       )
     }
-
-    const features = filtered.map((l) => {
-      const { location: { lat, lng }, meta: { total }, id } = l
-
-      return {
-        type: 'Feature',
-        properties: { id, total },
-        geometry: {
-          type: 'Point',
-          coordinates: [lng, lat],
-        },
-      }
-    })
 
     return (
       <React.Fragment>
@@ -209,6 +201,7 @@ class MapScreen extends React.Component {
           <div className={`${Styles.flexOverflowTwo} col-lg-9 col-md-9 col-sm-8 col-xs-4`}>
             <div className={Styles.mapContainer}>
               <LocalityDamageMap
+                filter={layerFilter}
                 popup={popup ? <LocalityPopup locality={popup} screen="loc" /> : null}
                 features={features}
                 onClickFeature={this.handleClickFeature}
@@ -236,7 +229,9 @@ MapScreen.propTypes = {
   valNumActions: PropTypes.array.isRequired,
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
   filtered: PropTypes.arrayOf(PropTypes.object).isRequired,
+  features: PropTypes.arrayOf(PropTypes.object).isRequired,
   fitBounds: PropTypes.array.isRequired,
+  layerFilter: PropTypes.any,
 }
 
 MapScreen.defaultProps = {
@@ -246,7 +241,9 @@ MapScreen.defaultProps = {
   valNumActions: [],
   localities: [],
   filtered: [],
-  fitBounds: [],
+  features: [],
+  fitBounds: [[-99.5, 14.4], [-91.7, 19.9]],
+  layerFilter: null,
 }
 
 const filterLocalities = (localities, valState = [], valMuni = [], valMarg = [], valNumActions = [], locSearch = '') => {
@@ -289,8 +286,22 @@ const mapStateToProps = (state, { location }) => {
 
   const localities = state.getter.localities.data.results
   const filtered = filterLocalities(localities, valState, valMuni, valMarg, valNumActions, locSearch)
-  const fitBounds = fitBoundsFromCoords(filtered.map(l => l.location))
-  return { valState, valMuni, valMarg, valNumActions, localities, filtered, fitBounds }
+  const features = localities.map((l) => {
+    const { location: { lat, lng }, meta: { total }, id } = l
+
+    return {
+      type: 'Feature',
+      properties: { id, total },
+      geometry: {
+        type: 'Point',
+        coordinates: [lng, lat],
+      },
+    }
+  })
+  const layerFilter = ['in', 'id'].concat(filtered.map(l => l.id))
+  let fitBounds
+  if (localities.length !== filtered.length) fitBounds = fitBoundsFromCoords(filtered.map(l => l.location))
+  return { valState, valMuni, valMarg, valNumActions, localities, filtered, fitBounds, layerFilter, features }
 }
 
 const mapDispatchToProps = (dispatch) => {

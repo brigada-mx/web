@@ -47,6 +47,25 @@ class FeatureMap extends React.Component {
     })
   }
 
+  cacheFeatureSourceOptions = () => {
+    const { features } = this.props
+    if (this._features !== features) {
+      this._features = features
+      this._featureSourceOptions = {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features,
+        },
+      }
+    }
+  }
+
+  cacheFitBounds = () => {
+    const { fitBounds } = this.props
+    if (!isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
+  }
+
   render() {
     const { Mapbox } = this
     if (!Mapbox) return null
@@ -54,7 +73,6 @@ class FeatureMap extends React.Component {
     const {
       popup,
       legend,
-      fitBounds,
       zoomControl,
       features,
       layer,
@@ -64,14 +82,8 @@ class FeatureMap extends React.Component {
       sourceId,
     } = this.props
 
-    if (!isEqual(fitBounds, this._fitBounds)) this._fitBounds = fitBounds
-    const featureSourceOptions = {
-      type: 'geojson',
-      data: {
-        type: 'FeatureCollection',
-        features,
-      },
-    }
+    this.cacheFitBounds()
+    this.cacheFeatureSourceOptions()
 
     const { type, paint } = layer
 
@@ -95,7 +107,7 @@ class FeatureMap extends React.Component {
           {zoomControl && <ZoomControl style={zoomStyle} className={Styles.zoomControlContainer} />}
           <Source
             id={sourceId}
-            geoJsonSource={features ? featureSourceOptions : sourceOptions}
+            geoJsonSource={features ? this._featureSourceOptions : sourceOptions}
           />
           <Layer
             id={sourceId}

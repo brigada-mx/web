@@ -13,8 +13,7 @@ import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import LocalityLegend from 'components/LocalityDamageMap/LocalityLegend'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { tokenMatch } from 'tools/string'
-import { localStorage } from 'tools/storage'
-import { fitBoundsFromCoords, itemFromScrollEvent, dmgGrade } from 'tools/other'
+import { itemFromScrollEvent, dmgGrade } from 'tools/other'
 import Styles from './OrganizationListScreenView.css'
 
 
@@ -55,49 +54,14 @@ class OrganizationListScreenView extends React.Component {
     this.state = {
       popup: null,
       focused: null,
-      fitBounds: this.defaultFitBounds(),
       organizationSearch: '',
       filtersVisible: false,
     }
     this.handleOrganizationSearchKeyUp = debounce(this.handleOrganizationSearchKeyUp, 150)
-    this._fitBounds = this.defaultFitBounds()
-  }
-
-  defaultFitBounds = () => {
-    return JSON.parse(localStorage.getItem('719s:fitBounds')) || []
   }
 
   componentDidMount() {
     document.title = 'Reconstructores - Brigada'
-    this._fitBounds = this.defaultFitBounds()
-  }
-
-  componentDidUpdate(prevProps) {
-    const locKeys = ['valState', 'valMuni']
-    if (!locKeys.some(k => prevProps[k] !== this.props[k]) && this.state.focused) return
-
-    const { data } = this.props.organizations
-    if (!data || data.results.length === 0) return
-    const organizations = this.filterOrganizations(data.results)
-    const [focused] = organizations
-    if (!this.state.focused && !focused) return
-
-    const state = {}
-
-    if (locKeys.some(k => prevProps[k] !== this.props[k])) {
-      const { valState, valMuni } = this.props
-      if (valState.length === 0 && valMuni.length === 0) {
-        state.fitBounds = this._fitBounds
-      } else {
-        const coords = [].concat(...organizations.map((o) => {
-          return o.actions.map(a => a.locality.location)
-        }))
-        state.fitBounds = fitBoundsFromCoords(coords)
-      }
-    }
-
-    if (focused && !this.state.focused) state.focused = focused
-    this.setState(state)
   }
 
   handleOrganizationSearchKeyUp = (organizationSearch) => {
@@ -200,7 +164,7 @@ class OrganizationListScreenView extends React.Component {
 
   render() {
     const { organizations: { data: orgData, loading: orgLoading } } = this.props
-    const { valState, valMuni, valSector, valActionType } = this.props
+    const { valState, valMuni, valSector, valActionType, fitBounds } = this.props
     const { popup, focused, filtersVisible } = this.state
 
     const organizations = this.filterOrganizations(orgData ? orgData.results : [])
@@ -283,7 +247,7 @@ class OrganizationListScreenView extends React.Component {
                 onClickFeature={this.handleClickFeature}
                 onEnterFeature={this.handleEnterFeature}
                 onLeaveFeature={this.handleLeaveFeature}
-                fitBounds={this.state.fitBounds.length > 0 ? this.state.fitBounds : undefined}
+                fitBounds={fitBounds.length > 0 ? fitBounds : undefined}
               />
               <div className="sm-hidden xs-hidden">
                 <LocalityLegend localities={localities} legendTitle="¿Dónde opera?" /><LocalityLegend localities={localities} legendTitle="¿Dónde opera?" />
@@ -303,6 +267,7 @@ OrganizationListScreenView.propTypes = {
   valMuni: PropTypes.array.isRequired,
   valSector: PropTypes.array.isRequired,
   valActionType: PropTypes.array.isRequired,
+  fitBounds: PropTypes.array.isRequired,
 }
 
 OrganizationListScreenView.defaultProps = {
@@ -310,9 +275,10 @@ OrganizationListScreenView.defaultProps = {
   valMuni: [],
   valSector: [],
   valActionType: [],
+  fitBounds: [[-99.5, 14.4], [-91.7, 19.9]],
 }
 
-// THIS IS AN ANTI-PATTERN, because it will rerender map screen on any change to redux store
+// THIS IS AN ANTI-PATTERN, because it will rerender screen view on any change to redux store
 const mapStateToProps = (state, { location }) => {
   const { valState, valMuni, valSector, valActionType } = parseFilterQueryParams(location)
   return { valState, valMuni, valSector, valActionType }
