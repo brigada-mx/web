@@ -41,12 +41,6 @@ const NavLinks = ({
     return pathname.startsWith('/voluntarios')
   }
 
-  const handleClickSupport = (e) => {
-    e.preventDefault()
-    onHideDrawer()
-    modal('support')
-  }
-
   const handleClickLogin = () => {
     onHideDrawer()
     modal('login', { type: 'org' })
@@ -71,7 +65,6 @@ const NavLinks = ({
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={orgIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/reconstructores">Reconstructores</NavLink>
       <NavLink onClick={onHideDrawer} className={classNameLink} isActive={donorIsActive} activeStyle={{ ...selected, ...activeStyle }} to="/donadores">Donadores</NavLink>
       {forumButton()}
-      <Link onClick={handleClickSupport} className={classNameLink} to="#">Soporte</Link>
       {loginButton()}
     </React.Fragment>
   )
