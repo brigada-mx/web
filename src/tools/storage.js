@@ -3,7 +3,7 @@ class ShimStorage {
     this._data = {}
   }
 
-  get length(): number {
+  length(): number {
     return Object.keys(this._data).length
   }
 

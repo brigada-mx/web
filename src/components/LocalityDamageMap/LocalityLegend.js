@@ -6,7 +6,7 @@ import { metaByDmgGrade } from 'tools/other'
 import Styles from './LocalityLegend.css'
 
 
-const LocalityLegend = ({ className = '', localities, legendTitle }) => {
+const LocalityLegend = ({ localities, legendTitle }) => {
   const counts = {
     severe: 0,
     high: 0,
@@ -20,8 +20,10 @@ const LocalityLegend = ({ className = '', localities, legendTitle }) => {
   }
   const items = Object.keys(counts).map((key) => {
     const { label, color } = metaByDmgGrade(key)
+    let className = Styles.legendItem
+    if (key === 'unknown') className = `${className} xs-hidden`
     return (
-      <div key={key} className={Styles.legendItem}>
+      <div key={key} className={className}>
         <div>
           <span className={Styles.circle} style={{ backgroundColor: color }} />
           <span className={Styles.label}>{label}</span>
@@ -44,7 +46,6 @@ const LocalityLegend = ({ className = '', localities, legendTitle }) => {
 LocalityLegend.propTypes = {
   localities: PropTypes.arrayOf(PropTypes.object).isRequired,
   legendTitle: PropTypes.string.isRequired,
-  className: PropTypes.string,
 }
 
 export default LocalityLegend

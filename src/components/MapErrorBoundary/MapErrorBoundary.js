@@ -43,7 +43,7 @@ class MapErrorBoundary extends React.Component {
           <span>
             Tu navegador no puede cargar el mapa, pero normalmente es fácil de arreglar.
           </span>
-          <span className={Styles.link} onClick={() => this.openVideoModal('KMhwKKYTK_o')}>Estoy usando Chrome.</span>
+          <span className={Styles.link} onClick={() => this.openVideoModal('qMimEKh7n1M')}>Estoy usando Chrome.</span>
           <span className={Styles.link} onClick={() => this.openVideoModal('54Yo984UL7o')}>Estoy usando Safari.</span>
           <span>Si esto no funciona, por favor intenta abrir la página con otro navegador, como Firefox o Edge.</span>
         </div>
