@@ -1,3 +1,8 @@
+.checkmark {
+  margin-left: 15px;
+  margin-top: 20px;
+}
+
 .breadcrumbLinks a {
   font-family: 'nunito-sans', sans-serif;
   font-size: 12px;
@@ -133,27 +138,9 @@ a:hover {
   display: inline-flex;
 }
 
-.unverifiedLabel:before {
-  content: "";
-  background-image: url('assets/img/circle-checkmark.svg');
-  background-repeat: no-repeat;
-  width: 19px;
-  height: 19px;
-  margin: 6px 5px 0 0;
-}
-
 .verifiedLabel {
   color: #141418;
   display: inline-flex;
-}
-
-.verifiedLabel:before {
-  content: "";
-  background-image: url('assets/img/circle-checkmark-accent.svg');
-  background-repeat: no-repeat;
-  width: 19px;
-  height: 19px;
-  margin: 6px 5px 0 0;
 }
 
 .website {

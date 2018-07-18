@@ -1,6 +1,10 @@
 @value colors: "src/colors.css";
 @value weakShadow, strongShadow, brandGreen from colors;
 
+.checkmark {
+  margin-right: 12px;
+}
+
 .loader {
   position: absolute;
   z-index: 4;
@@ -10,7 +14,6 @@
 
 .tableWrapper {
   padding: 2px 11px 100px 11px;
-  /*height: 100%;*/
   background-color: #F6F8FA;
   box-shadow: inset 0px 10px 30px 0px rgba(37, 38, 50, 0.04);
 }

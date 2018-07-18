@@ -1,6 +1,16 @@
 @value colors: "src/colors.css";
 @value brandOffWhite, strongShadow from colors;
 
+.checkmark {
+  margin-left: 12px;
+  margin-top: 3px;
+}
+
+.nameContainer {
+  display: flex;
+  flex-direction: row;
+}
+
 .orgCard {
   background-color: white;
   margin-bottom: 18px;

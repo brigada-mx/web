@@ -10,6 +10,7 @@ import { toQs } from 'api/request'
 import LocalityDamageMap from 'components/LocalityDamageMap'
 import Carousel from 'components/Carousel'
 import ActionMap from 'components/FeatureMap/ActionMap'
+import Icon from 'components/Icon'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { fmtNum, fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
 import { setDocumentMetaThis } from 'tools/other'
@@ -125,6 +126,7 @@ class ActionScreenView extends React.Component {
       unit_of_measurement: unit,
       budget = 0,
       desc,
+      level,
     } = data
 
     const images = [].concat(...submissions.map(s => s.images))
@@ -206,7 +208,22 @@ class ActionScreenView extends React.Component {
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
 
               <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
-                <div className={Styles.name}>{projectType}</div>
+                <div className="row">
+                  <div className={Styles.name}>{projectType}</div>
+                  {level >= 2 &&
+                    <Icon
+                      src="/assets/img/circle-checkmark-accent.svg"
+                      alt="Proyecto transparente"
+                      height={25}
+                      ttText="Proyecto transparente, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                      ttTop={-45}
+                      ttWidth={400}
+                      ttLeft={-185}
+                      className={Styles.checkmark}
+                    />
+                  }
+                </div>
+
                 <span className={Styles.orgName}>
                   Realizado por&nbsp;<Link to={`/reconstructores/${organizationId}`}>{name}</Link>
                 </span>
@@ -264,7 +281,6 @@ class ActionScreenView extends React.Component {
                   </div>
                 </div>
               </div>
-
 
             </div>
 

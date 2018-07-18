@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { fmtBudget, truncate } from 'tools/string'
 import { getProjectType } from 'src/choices'
+import Icon from 'components/Icon'
 import Styles from './OrganizationListItem.css'
 
 
@@ -27,6 +28,8 @@ class OrganizationListItem extends React.PureComponent {
       return { tag: k, count: countByTags[k] }
     }).sort((a, b) => a.count - b.count)
 
+    const transparent = actions.length > 0 && actions.every(a => a.level >= 2)
+
     const handleClick = onClick && (() => { onClick(organization) })
     const handleMouseEnter = onMouseEnter && (() => { onMouseEnter(organization) })
     const handleMouseLeave = onMouseLeave && (() => { onMouseLeave(organization) })
@@ -44,7 +47,22 @@ class OrganizationListItem extends React.PureComponent {
         style={{ textDecoration: 'none' }}
       >
         <div className={Styles.descriptionContainer}>
-          <span className={Styles.name}>{name}</span>
+          <div className={Styles.nameContainer}>
+            <span className={Styles.name}>{name}</span>
+            {transparent &&
+              <Icon
+                src="/assets/img/circle-checkmark-accent.svg"
+                alt="Organización transparente"
+                height={25}
+                ttText="Todos los proyectos de este reconstructor son transparentes, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                ttTop={-63}
+                ttWidth={400}
+                ttLeft={-185}
+                className={Styles.checkmark}
+              />
+            }
+          </div>
+
           <div className={`${Styles.tagContainer} lg-hidden md-hidden`}>
             {count.slice(0, 3).map((t, i) => <span key={i} className={Styles.tag}>{getProjectType(t.tag)}</span>)}
           </div>

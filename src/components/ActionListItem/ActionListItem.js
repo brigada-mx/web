@@ -2,14 +2,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import sortBy from 'lodash/sortBy'
 
-import * as Actions from 'src/actions'
 import { fmtNum, thumborUrl } from 'tools/string'
-import MetricsBar from 'components/MetricsBar'
 import { getProjectType } from 'src/choices'
+import Icon from 'components/Icon'
 import Styles from './ActionListItem.css'
 
 
@@ -23,7 +21,6 @@ class ActionListItem extends React.PureComponent {
       onMouseEnter,
       onMouseLeave,
       history,
-      modal,
     } = this.props
 
     const {
@@ -33,10 +30,10 @@ class ActionListItem extends React.PureComponent {
       progress,
       budget,
       donations = [],
-      opportunities = [],
       organization: { id: orgId, name: orgName },
       locality: { id: locId, name: locName, municipality_name: muniName, state_name: stateName },
       unit_of_measurement: unit,
+      level,
     } = action
 
     const getDonors = () => {
@@ -157,7 +154,23 @@ class ActionListItem extends React.PureComponent {
                   </React.Fragment>
                 }
               </div>
-              <div className={Styles.header}>{getProjectType(actionType)}</div>
+
+              <div className={Styles.headerContainer}>
+                <div className={Styles.header}>{getProjectType(actionType)}</div>
+                {level >= 2 &&
+                  <Icon
+                    src="/assets/img/circle-checkmark-accent.svg"
+                    alt="Proyecto transparente"
+                    height={25}
+                    ttText="Proyecto transparente, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                    ttTop={-63}
+                    ttWidth={400}
+                    ttLeft={-185}
+                    className={Styles.checkmark}
+                  />
+                }
+              </div>
+
               <div className={Styles.fieldsContainer}>
                 <div className={Styles.budgetContainer}>
                   <span className={Styles.label}>PRESUPUESTO: </span>
@@ -184,17 +197,10 @@ ActionListItem.propTypes = {
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   history: PropTypes.object.isRequired,
-  modal: PropTypes.func.isRequired,
 }
 
 ActionListItem.defaultProps = {
   focused: false,
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    modal: (modalName, props) => Actions.modal(dispatch, modalName, props),
-  }
-}
-
-export default withRouter(connect(null, mapDispatchToProps)(ActionListItem))
+export default withRouter(ActionListItem)

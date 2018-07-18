@@ -1,3 +1,8 @@
+.checkmark {
+  margin-left: 15px;
+  margin-top: 20px;
+}
+
 a {
   transition: all .15s linear;
 }

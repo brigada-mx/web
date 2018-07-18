@@ -9,6 +9,7 @@ import LocalityPopup from 'components/LocalityDamageMap/LocalityPopup'
 import Carousel from 'components/Carousel'
 import ActionList from 'components/ActionList'
 import PhoneBox from 'components/PhoneBox'
+import Icon from 'components/Icon'
 import ActionMap from 'components/FeatureMap/ActionMap'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import ProfileStrengthPublic from 'components/Strength/ProfileStrengthPublic'
@@ -177,6 +178,7 @@ class OrganizationScreenView extends React.Component {
       />
     )
 
+    const transparent = actions.length > 0 && actions.every(a => a.level >= 2)
     const budget = actions.reduce((sum, action) => sum + (action.budget || 0), 0)
 
     return (
@@ -186,8 +188,20 @@ class OrganizationScreenView extends React.Component {
 
           <div className="row">
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
-              <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
+              <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter row">
                 <div className={Styles.name}>{name}</div>
+                {transparent &&
+                  <Icon
+                    src="/assets/img/circle-checkmark-accent.svg"
+                    alt="Organización transparente"
+                    height={25}
+                    ttText="Todos los proyectos de este reconstructor son transparentes, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                    ttTop={-45}
+                    ttWidth={400}
+                    ttLeft={-185}
+                    className={Styles.checkmark}
+                  />
+                }
               </div>
 
               <div className="col-lg-8 col-md-9 col-sm-6 col-xs-4 gutter">

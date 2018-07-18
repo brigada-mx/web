@@ -8,10 +8,10 @@ import { connect } from 'react-redux'
 import '!style-loader!css-loader!react-table/react-table.css'
 
 import * as Actions from 'src/actions'
-import { sectorByValue } from 'src/choices'
 import { fmtBudget, tokenMatch } from 'tools/string'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import SearchInput from 'components/SearchInput'
+import Icon from 'components/Icon'
 import Styles from './DonorListScreenView.css'
 
 
@@ -31,22 +31,17 @@ class DonorListScreenView extends React.Component {
     super(props)
     this.state = {
       search: '',
-      verifiedInfo: false,
     }
     this.handleSearchKeyUp = debounce(this.handleSearchKeyUp, 150)
   }
 
   componentDidMount() {
     document.title = 'Donadores - Brigada'
-    window.addEventListener('orientationchange', this.orientationChange)
+    window.addEventListener('orientationchange', this.forceUpdate)
   }
 
   componentWillUnmount() {
-    document.removeEventListener('orientationchange', this.orientationChange)
-  }
-
-  orientationChange = () => {
-    this.setState({ orientation: screen.orientation.angle })
+    document.removeEventListener('orientationchange', this.forceUpdate)
   }
 
   renderAddress = (address = {}) => {
@@ -61,14 +56,10 @@ class DonorListScreenView extends React.Component {
     this.setState({ search })
   }
 
-  setVerifiedInfo = (verifiedInfo) => {
-    this.setState({ verifiedInfo })
-  }
-
   render() {
-    const { donors: { data: donorData, loading: donorLoading, error: donorError } } = this.props
+    const { donors: { data: donorData, loading: donorLoading } } = this.props
     const { modal, history } = this.props
-    const { search, verifiedInfo } = this.state
+    const { search } = this.state
 
     const donors = donorData ? donorData.results : []
 
@@ -78,6 +69,26 @@ class DonorListScreenView extends React.Component {
       {
         Header: 'Donador',
         accessor: 'name',
+        Cell: (props) => {
+          const { name, donations } = props.original // eslint-disable-line react/prop-types
+          const transparent = donations.length > 0 && donations.every(d => d.action.level >= 2)
+          return (
+            <div className="row">
+              {transparent &&
+                <Icon
+                  src="/assets/img/circle-checkmark-accent.svg"
+                  alt="Organización transparente"
+                  height={25}
+                  ttText="Todos los proyectos de este donador son transparentes, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                  ttTop={-63}
+                  ttWidth={400}
+                  className={Styles.checkmark}
+                />
+              }
+              {name}
+            </div>
+          )
+        },
       },
       {
         Header: 'Monto donado',
@@ -100,28 +111,6 @@ class DonorListScreenView extends React.Component {
         Header: 'Convocatoria abierta',
         accessor: 'donating',
         Cell: (props) => { return props.original.donating ? 'Sí' : 'No' },
-      })
-      columns.push({
-        Header: () => (
-          <div>
-            {verifiedInfo &&
-              <div className={Styles.tooltip}>¿El donador ha verificado su información?</div>
-            }
-            <span>Estatus</span>
-            <span
-              className={Styles.verifiedInfo}
-              onMouseEnter={() => this.setVerifiedInfo(true)}
-              onMouseLeave={() => this.setVerifiedInfo(false)}
-            >
-            </span>
-          </div>
-        ),
-        accessor: 'has_user',
-        Cell: (props) => {
-          const src = props.original.has_user ? 'assets/img/circle-checkmark-accent.svg' : 'assets/img/circle-checkmark.svg'
-          const alt = props.original.has_user ? 'Sí' : 'No'
-          return <img src={src} alt={alt} height="19px" className={Styles.checkmark} />
-        },
       })
     }
 
@@ -150,7 +139,7 @@ class DonorListScreenView extends React.Component {
             data={filtered}
             columns={columns}
             noDataText=""
-            getTrProps={(state, rowInfo, column) => {
+            getTrProps={(state, rowInfo) => {
               const handleRowClicked = (e, handleOriginal) => {
                 history.push(`/donadores/${rowInfo.original.id}`)
                 if (handleOriginal) handleOriginal()
