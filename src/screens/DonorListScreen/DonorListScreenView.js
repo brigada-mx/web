@@ -69,8 +69,8 @@ class DonorListScreenView extends React.Component {
       {
         Header: 'Donador',
         accessor: 'name',
-        Cell: (props) => {
-          const { name, donations } = props.original // eslint-disable-line react/prop-types
+        Cell: (_props) => {
+          const { name, donations } = _props.original
           const transparent = donations.length > 0 && donations.every(d => d.action.level >= 2)
           return (
             <div className="row">

@@ -13,6 +13,7 @@ import { tokenMatch } from 'tools/string'
 import { projectTypeByValue } from 'src/choices'
 import Preview from 'components/Preview'
 import FormStyles from 'src/Form.css'
+import Styles from './ActionTable.css'
 
 
 const defaultFilterMethod = (filter, row) => {
@@ -25,12 +26,28 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history, onClickIm
     {
       Header: 'Clave',
       accessor: 'key',
-      maxWidth: 80,
+      maxWidth: 60,
     },
     {
       Header: 'ID',
       accessor: 'id',
-      maxWidth: 80,
+      maxWidth: 100,
+      Cell: (_props) => {
+        const { id, level } = _props.original
+        return (
+          <div className="row">
+            {id}
+            {level >= 2 &&
+              <img
+                className={Styles.checkmark}
+                src="/assets/img/circle-checkmark-accent.svg"
+                alt="Organización transparente"
+                height={25}
+              />
+            }
+          </div>
+        )
+      }
     },
     {
       Header: 'Tipo',

@@ -14,7 +14,7 @@ import Icon from 'components/Icon'
 import LoadingIndicatorCircle from 'components/LoadingIndicator/LoadingIndicatorCircle'
 import { fmtNum, fmtBudget, fmtBudgetPlain, renderLinks } from 'tools/string'
 import { setDocumentMetaThis } from 'tools/other'
-import { projectTypeByValue } from 'src/choices'
+import { projectTypeByValue, actionBeneficiariesCriteriaByValue } from 'src/choices'
 import ActionStrengthPublic from 'components/Strength/ActionStrengthPublic'
 import VolunteerButton from 'components/CTA/VolunteerButton'
 import FacebookButton from 'components/CTA/FacebookButton'
@@ -127,6 +127,9 @@ class ActionScreenView extends React.Component {
       budget = 0,
       desc,
       level,
+      beneficiaries_desc: bDesc,
+      beneficiaries_criteria: bCriteria,
+      beneficiaries_criteria_desc: bCriteriaDesc,
     } = data
 
     const images = [].concat(...submissions.map(s => s.images))
@@ -198,6 +201,20 @@ class ActionScreenView extends React.Component {
       />
     )
 
+    const getBeneficiariesDesc = () => {
+      if (!bDesc) return null
+      let _desc = bDesc.trim()
+      if (_desc.slice(-1) !== '.') _desc = `${_desc}.`
+
+      if (bCriteria === '') return <p className={Styles.mission}>{_desc}</p>
+      if (bCriteria === 'other') return <p className={Styles.mission}>{_desc} {bCriteriaDesc}</p>
+      return (
+        <p className={Styles.mission}>
+          {_desc} Escogemos nuestros beneficiarios via {actionBeneficiariesCriteriaByValue[bCriteria].toLowerCase()}.
+        </p>
+      )
+    }
+
     return (
       <React.Fragment>
         <div className="wrapper-lg wrapper-md wrapper-sm">
@@ -231,6 +248,7 @@ class ActionScreenView extends React.Component {
 
               <div className="col-lg-12 col-md-12 col-sm-8 col-xs-4 gutter">
                 <p className={Styles.mission}>{renderLinks(desc)}</p>
+                {getBeneficiariesDesc()}
               </div>
 
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-4 xs-gutter">
