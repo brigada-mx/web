@@ -33,6 +33,7 @@ class ActionStrength extends React.Component {
         dates,
         progress,
         budget,
+        beneficiaries,
         image_count: images,
         testimonials,
         donations,
@@ -56,6 +57,10 @@ class ActionStrength extends React.Component {
       {
         value: budget,
         label: 'Agregar presupuesto',
+      },
+      {
+        value: beneficiaries,
+        label: 'Agregar info de beneficiarios',
       },
       {
         value: images > 0,

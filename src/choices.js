@@ -1,3 +1,11 @@
+const actionBeneficiariesCriteria = [
+  { value: '', label: 'No sabemos' },
+  { value: 'convocatoria_abierta', label: 'Convocatoria abierta' },
+  { value: 'convocatoria_cerrada', label: 'Convocatoria cerrada (invitación directa a presentar proyectos)' },
+  { value: 'mapeo_directo_de_necesidades', label: 'Mapeo directo de necesidades' },
+  { value: 'other', label: 'Otro' },
+]
+
 const volunteerLocations = [
   { value: 'anywhere', label: 'Desde cualquier lugar' },
   { value: 'in_locality', label: 'En la comunidad afectada' },
@@ -73,4 +81,5 @@ export {
   states,
   volunteerLocationByValue,
   volunteerLocations,
+  actionBeneficiariesCriteria,
 }

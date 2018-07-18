@@ -7,12 +7,21 @@ import { connect } from 'react-redux'
 import MenuItem from 'material-ui/MenuItem'
 import AutoCompleteMui from 'material-ui/AutoComplete'
 import RaisedButton from 'material-ui/RaisedButton'
+import { RadioButton } from 'material-ui/RadioButton'
 
-import { TextField, SelectField, Toggle, DatePicker, AutoComplete, PhotoGalleryPicker } from 'components/Fields'
+import {
+  TextField,
+  SelectField,
+  Toggle,
+  DatePicker,
+  AutoComplete,
+  PhotoGalleryPicker,
+  RadioButtonGroup,
+} from 'components/Fields'
 import Modal from 'components/Modal'
 import ConfirmButton from 'components/ConfirmButton'
 import Preview from 'components/Preview'
-import { projectTypes } from 'src/choices'
+import { projectTypes, actionBeneficiariesCriteria } from 'src/choices'
 import FormStyles from 'src/Form.css'
 import Styles from './ActionForm.css'
 
@@ -33,7 +42,7 @@ class Fields extends React.Component {
   }
 
   render() {
-    const { update, onLocalityChange, initialValues, localitiesSearch = [], preview = {} } = this.props
+    const { update, onLocalityChange, initialValues, localitiesSearch = [], preview = {}, criteria = '' } = this.props
 
     const localities = localitiesSearch.map((l) => {
       const { id, name, municipality_name: muniName, state_name: stateName } = l
@@ -131,6 +140,38 @@ class Fields extends React.Component {
             rows={3}
           />
         </div>
+
+        <div className={Styles.sectionHeader}>Beneficiarios</div>
+        <div className={FormStyles.row}>
+          <TextField
+            floatingLabelText="¿Qué características deben cumplir los beneficiarios (edad, sexo, pertenencia a un grupo indígena o comunidad, área geográfica, estatus socioeconómico, etc)?"
+            className={FormStyles.wideInput}
+            name="beneficiaries_desc"
+            multiLine
+            rows={2}
+          />
+        </div>
+        <p className={Styles.label}>¿Qué mecanismos utilizan para recibir o seleccionar a los beneficiarios?</p>
+        <div className={FormStyles.row}>
+          <RadioButtonGroup
+            className={`${FormStyles.radioButtonGroup} ${Styles.row}`}
+            name="beneficiaries_criteria"
+          >
+            {actionBeneficiariesCriteria.map(({ value, label }) => {
+              return <RadioButton key={value} value={value} label={label} className={Styles.radioButton} />
+            })}
+          </RadioButtonGroup>
+        </div>
+        {criteria === 'other' &&
+          <div className={FormStyles.row}>
+            <TextField
+              floatingLabelText="Describe el mecanismo que usan (limita a 80 caracteres)"
+              className={FormStyles.wideInput}
+              name="beneficiaries_criteria_desc"
+            />
+          </div>
+        }
+
         <div className={FormStyles.row}>
           <AutoComplete
             className={FormStyles.wideInput}
@@ -193,6 +234,7 @@ Fields.propTypes = {
   localitiesSearch: PropTypes.arrayOf(PropTypes.object).isRequired,
   initialValues: PropTypes.object.isRequired,
   preview: PropTypes.object,
+  criteria: PropTypes.string,
 }
 
 const CreateForm = ({ handleSubmit, reset, submitting, ...rest }) => {
@@ -259,6 +301,8 @@ const validator = (update: boolean = false) => {
     start_date: startDate,
     end_date: endDate,
     preview,
+    beneficiaries_criteria: criteria,
+    beneficiaries_criteria_desc: criteriaDesc,
   }, { initialValues }) => {
     const errors = {}
     if (!locality || !locality.value) errors.locality = 'Escoge una localidad de la lista'
@@ -273,6 +317,9 @@ const validator = (update: boolean = false) => {
       errors.progress = 'El avance no puede ser mayor que la meta'
       errors.target = 'El avance no puede ser mayor que la meta'
     }
+
+    if (criteria && !criteriaDesc) errors.beneficiaries_criteria_desc = 'Agrega una descripción de las características'
+    if (criteriaDesc && criteriaDesc.length > 80) errors.beneficiaries_criteria_desc = 'Limita la descripción a 80 caracteres'
 
     if (startDate && endDate && startDate > endDate) {
       errors.start_date = 'Fecha inicio debe ser antes de fecha fin'
@@ -317,14 +364,26 @@ export const prepareInitialActionValues = (values) => {
   }
 }
 
-const mapStateToPropsUpdate = (state, { initialValues }) => {
+const mapStateToPropsCreate = (state) => {
   try {
-    return { preview: state.form[`accountUpdateAction_${initialValues.key}`].values.preview }
+    return { criteria: state.form.accountNewAction.values.beneficiaries_criteria }
   } catch (e) {
     return {}
   }
 }
 
-const ReduxCreateForm = reduxForm({ form: 'accountNewAction', validate: validator(false) })(CreateForm)
+const mapStateToPropsUpdate = (state, { initialValues }) => {
+  try {
+    return {
+      preview: state.form[`accountUpdateAction_${initialValues.key}`].values.preview,
+      criteria: state.form[`accountUpdateAction_${initialValues.key}`].values.beneficiaries_criteria,
+    }
+  } catch (e) {
+    return {}
+  }
+}
+
+const ReduxCreateForm = connect(mapStateToPropsCreate, null)(
+  reduxForm({ form: 'accountNewAction', validate: validator(false) })(CreateForm))
 const ReduxUpdateForm = connect(mapStateToPropsUpdate, null)(reduxForm({ validate: validator(true) })(UpdateForm)) // pass `form` arg when instantiating form
 export { ReduxCreateForm as CreateActionForm, ReduxUpdateForm as UpdateActionForm }

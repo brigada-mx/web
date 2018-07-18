@@ -102,7 +102,6 @@ class VolunteerOpportunityScreen extends React.Component {
     )
 
     const content = (
-
       <div>
         <div className="wrapper-lg wrapper-md wrapper-sm">
           {breadcrumb}
@@ -154,8 +153,6 @@ class VolunteerOpportunityScreen extends React.Component {
           <a className={`${Styles.button}`} onClick={this.handleOpportunityClick}>Postular</a>
         </div>
       </div>
-
-
     )
 
     if (className) return <div className={className}>{content}</div>
