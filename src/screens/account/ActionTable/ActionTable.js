@@ -74,7 +74,16 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history, onClickIm
       maxWidth: 120,
       Cell: (props) => {
         const { preview, id } = props.original
-        return <Preview {...preview} onClick={() => onClickImage(id)} width="100%" height={96} style={{ backgroundSize: 'auto' }} />
+        return (
+          <Preview
+            {...preview}
+            onClick={() => onClickImage(id)}
+            width="100%"
+            height={96}
+            emptyStyle={{ backgroundSize: 'auto' }}
+            emptySrc="/assets/img/empty-featured-img.svg"
+          />
+        )
       },
     })
   }

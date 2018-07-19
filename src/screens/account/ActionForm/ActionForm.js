@@ -73,7 +73,14 @@ class Fields extends React.Component {
           <React.Fragment>
             <div className={Styles.pickerContainer}>
               <div>
-                <Preview {...preview} onClick={this.handleOpenPicker} width={240} height={180} src="/assets/img/empty-featured-img.svg" style={{ backgroundSize: '86px 76px' }} />
+                <Preview
+                  {...preview}
+                  onClick={this.handleOpenPicker}
+                  width={240}
+                  height={180}
+                  emptySrc="/assets/img/empty-featured-img.svg"
+                  emptyStyle={{ backgroundSize: '86px 76px' }}
+                />
               </div>
             </div>
             <div />
