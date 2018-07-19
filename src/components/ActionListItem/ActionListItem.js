@@ -157,7 +157,7 @@ class ActionListItem extends React.PureComponent {
 
               <div className={Styles.headerContainer}>
                 <div className={Styles.header}>{getProjectType(actionType)}</div>
-                {level >= 2 &&
+                {level >= 3 &&
                   <Icon
                     src="/assets/img/circle-checkmark-accent.svg"
                     alt="Proyecto transparente"

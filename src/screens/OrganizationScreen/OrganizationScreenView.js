@@ -178,7 +178,7 @@ class OrganizationScreenView extends React.Component {
       />
     )
 
-    const transparent = actions.length > 0 && actions.every(a => a.level >= 2)
+    const transparent = actions.length > 0 && actions.every(a => a.level >= 3)
     const budget = actions.reduce((sum, action) => sum + (action.budget || 0), 0)
 
     return (

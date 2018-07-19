@@ -7,7 +7,9 @@ import Styles from './StrengthPublic.css'
 
 const ActionTransparencyLevel = ({ strength }) => {
   const { level } = strength
-  const transparencyStyles = [Styles.lowTransparency, Styles.midTransparency, Styles.highTransparency]
+  const transparencyStyles = [
+    Styles.lowTransparency, Styles.midTransparency, Styles.highTransparency, Styles.veryHighTransparency,
+  ]
   return (
     <React.Fragment>
       <span className={transparencyStyles[level]} />
