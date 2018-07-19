@@ -23,7 +23,7 @@ import PhotoGalleryPickerForm from 'screens/account/PhotoGalleryPickerForm'
 import OrganizationForm from './OrganizationForm'
 
 
-const initialActionValues = { published: true }
+const initialActionValues = { published: true, progress: 0 }
 
 class HomeScreen extends React.Component {
   constructor(props) {

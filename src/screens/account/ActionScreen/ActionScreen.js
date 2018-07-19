@@ -562,7 +562,9 @@ class ActionScreen extends React.Component {
             }
           </React.Fragment>
         }
-      >{content}
+        sticky={window.innerHeight >= 750}
+      >
+        {content}
       </WithSideNav>
     )
   }

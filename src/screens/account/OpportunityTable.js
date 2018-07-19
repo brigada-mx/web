@@ -30,10 +30,6 @@ const OpportunityTable = ({ opportunities, onTogglePublished, onRowClicked, onCl
       Header: '¿Cuántos voluntarios?',
       accessor: 'target',
     },
-    {
-      Header: '¿Cúantos encontrados?',
-      accessor: 'progress',
-    },
   ]
   if (onTogglePublished) {
     columns.push({

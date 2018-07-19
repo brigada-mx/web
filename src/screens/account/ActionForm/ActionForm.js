@@ -351,6 +351,7 @@ export const prepareActionBody = (body) => {
 
 export const prepareInitialActionValues = (values) => {
   const {
+    progress,
     start_date: startDate,
     end_date: endDate,
     locality: { id, name, municipality_name: muniName, state_name: stateName },
@@ -358,6 +359,7 @@ export const prepareInitialActionValues = (values) => {
 
   return {
     ...values,
+    progress: progress !== null && progress !== undefined ? progress : 0,
     start_date: startDate && moment(startDate).toDate(),
     end_date: endDate && moment(endDate).toDate(),
     locality: { text: `${name}, ${muniName}, ${stateName}`, value: id },

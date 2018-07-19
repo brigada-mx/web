@@ -203,7 +203,7 @@ class ActionScreenView extends React.Component {
 
     const getBeneficiariesDesc = () => {
       if (!bDesc) return null
-      let _desc = bDesc.trim()
+      let _desc = `Sobre nuestros beneficiarios: ${bDesc.trim()}`
       if (_desc.slice(-1) !== '.') _desc = `${_desc}.`
 
       if (bCriteria === '') return <p className={Styles.mission}>{_desc}</p>

@@ -29,30 +29,25 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history, onClickIm
       maxWidth: 60,
     },
     {
-      Header: 'ID',
-      accessor: 'id',
-      maxWidth: 100,
-      Cell: (_props) => {
-        const { id, level } = _props.original
-        return (
-          <div className="row">
-            {id}
-            {level >= 2 &&
-              <img
-                className={Styles.checkmark}
-                src="/assets/img/circle-checkmark-accent.svg"
-                alt="Organización transparente"
-                height={25}
-              />
-            }
-          </div>
-        )
-      }
-    },
-    {
       Header: 'Tipo',
       accessor: 'action_type',
       Cell: props => projectTypeByValue[props.original.action_type] || props.original.action_type,
+    },
+    {
+      Header: '¿Transparente?',
+      accessor: 'level',
+      maxWidth: 80,
+      Cell: (props) => {
+        const src = props.original.level >= 2 ? '/assets/img/circle-checkmark-accent.svg' : '/assets/img/circle-checkmark.svg'
+        return (
+          <img
+            className={Styles.checkmark}
+            src={src}
+            alt="Proyecto transparente"
+            height={25}
+          />
+        )
+      },
     },
   ]
   if (window.innerWidth >= 980) {

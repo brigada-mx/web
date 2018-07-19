@@ -44,39 +44,39 @@ class ActionStrength extends React.Component {
     const tasks = [
       {
         value: desc,
-        label: 'Agrega metas del proyecto',
+        label: 'Metas del proyecto',
       },
       {
         value: dates,
-        label: 'Agregar fechas',
+        label: 'Fechas de implementación',
       },
       {
         value: progress,
-        label: 'Agregar unidades de medida',
+        label: 'Unidades de medida',
       },
       {
         value: budget,
-        label: 'Agregar presupuesto',
+        label: 'Presupuesto',
       },
       {
         value: beneficiaries,
-        label: 'Agregar info de beneficiarios',
+        label: 'Información de beneficiarios',
       },
       {
         value: images > 0,
-        label: 'Agregar fotos',
+        label: 'Fotos',
       },
       {
         value: testimonials > 0,
-        label: 'Agregar testimonios',
+        label: 'Testimonios',
       },
       {
         value: donations > 0,
-        label: 'Agregar donativo',
+        label: 'Donativos',
       },
       {
         value: verifiedDonations > 0,
-        label: 'Agregar donativo verificado',
+        label: 'Donativos verificados',
       },
     ]
     for (const task of tasks) {
