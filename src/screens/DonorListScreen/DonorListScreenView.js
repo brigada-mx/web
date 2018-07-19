@@ -74,6 +74,7 @@ class DonorListScreenView extends React.Component {
           const transparent = donations.length > 0 && donations.every(d => d.action.level >= 2)
           return (
             <div className="row">
+              {name}
               {transparent &&
                 <Icon
                   src="/assets/img/circle-checkmark-accent.svg"
@@ -85,7 +86,6 @@ class DonorListScreenView extends React.Component {
                   className={Styles.checkmark}
                 />
               }
-              {name}
             </div>
           )
         },
