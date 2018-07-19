@@ -28,7 +28,7 @@ class OrganizationListItem extends React.PureComponent {
       return { tag: k, count: countByTags[k] }
     }).sort((a, b) => a.count - b.count)
 
-    const transparent = actions.length > 0 && actions.every(a => a.level >= 2)
+    const transparent = actions.length > 0 && actions.every(a => a.level >= 3)
 
     const handleClick = onClick && (() => { onClick(organization) })
     const handleMouseEnter = onMouseEnter && (() => { onMouseEnter(organization) })

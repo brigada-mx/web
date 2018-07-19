@@ -224,7 +224,7 @@ class ActionScreenView extends React.Component {
 
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
 
-              {level >= 2 &&
+              {level >= 3 &&
                 <div className={Styles.transparencyContainer}>
                   <img
                     src="/assets/img/circle-checkmark-accent.svg"

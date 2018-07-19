@@ -38,7 +38,7 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history, onClickIm
       accessor: 'level',
       maxWidth: 80,
       Cell: (props) => {
-        const src = props.original.level >= 2 ? '/assets/img/circle-checkmark-accent.svg' : '/assets/img/circle-checkmark.svg'
+        const src = props.original.level >= 3 ? '/assets/img/circle-checkmark-accent.svg' : '/assets/img/circle-checkmark.svg'
         return (
           <img
             className={Styles.checkmark}

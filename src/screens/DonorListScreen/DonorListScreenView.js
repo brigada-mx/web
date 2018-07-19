@@ -71,7 +71,7 @@ class DonorListScreenView extends React.Component {
         accessor: 'name',
         Cell: (_props) => {
           const { name, donations } = _props.original
-          const transparent = donations.length > 0 && donations.every(d => d.action.level >= 2)
+          const transparent = donations.length > 0 && donations.every(d => d.action.level >= 3)
           return (
             <div className="row">
               {transparent &&

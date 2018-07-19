@@ -215,6 +215,6 @@ export const formatBytes = (b: number): string => {
 }
 
 export const transparencyLabelByLevel = (level: number = 0): string => { // in response from `accountGetActionStrength`
-  const labelByLevel = ['poco transparente', 'semi-transparente', 'transparente']
+  const labelByLevel = ['poco transparente', 'semi-transparente', 'transparente', 'transparente']
   return labelByLevel[Math.min(level, labelByLevel.length)]
 }
