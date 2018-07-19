@@ -36,7 +36,7 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history, onClickIm
     {
       Header: '¿Transparente?',
       accessor: 'level',
-      maxWidth: 80,
+      maxWidth: 120,
       Cell: (props) => {
         const src = props.original.level >= 2 ? '/assets/img/circle-checkmark-accent.svg' : '/assets/img/circle-checkmark.svg'
         return (
@@ -74,7 +74,7 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history, onClickIm
       maxWidth: 120,
       Cell: (props) => {
         const { preview, id } = props.original
-        return <Preview {...preview} onClick={() => onClickImage(id)} width={128} height={96} />
+        return <Preview {...preview} onClick={() => onClickImage(id)} width="100%" height={96} style={{ backgroundSize: 'auto' }} />
       },
     })
   }

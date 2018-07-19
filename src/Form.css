@@ -154,6 +154,10 @@
   width: 100% !important;
 }
 
+.radioButtonGroup {
+  width: 100%;
+}
+
 .radioButtonGroup label {
   font-family: 'roboto', sans-serif !important;
   font-size: 16px !important;

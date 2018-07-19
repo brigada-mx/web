@@ -72,9 +72,8 @@ class Fields extends React.Component {
         return (
           <React.Fragment>
             <div className={Styles.pickerContainer}>
-              <span className={Styles.pickerLabel}>Escoger imagen de proyecto</span>
               <div>
-                <Preview {...preview} onClick={this.handleOpenPicker} width={240} height={180} />
+                <Preview {...preview} onClick={this.handleOpenPicker} width={240} height={180} src="/assets/img/empty-featured-img.svg" style={{ backgroundSize: '86px 76px' }} />
               </div>
             </div>
             <div />
@@ -101,19 +100,10 @@ class Fields extends React.Component {
     return (
       <React.Fragment>
         {update &&
-          <div className={Styles.pickerRow}>
-            <div>
-              <TextField
-                floatingLabelText="Clave"
-                name="key"
-                readOnly
-                disabled
-              />
-            </div>
-            {picker()}
-          </div>
+          <div className={Styles.pickerRow}>{picker()}</div>
         }
 
+        <p className={Styles.sectionHeader}>Descripción general</p>
         <div className={FormStyles.row}>
           <SelectField
             floatingLabelText="Tipo de proyecto"
@@ -141,16 +131,7 @@ class Fields extends React.Component {
           />
         </div>
 
-        <div className={Styles.sectionHeader}>Beneficiarios</div>
-        <div className={FormStyles.row}>
-          <TextField
-            floatingLabelText="¿Qué características deben cumplir los beneficiarios (edad, sexo, pertenencia a un grupo indígena o comunidad, área geográfica, estatus socioeconómico, etc)?"
-            className={FormStyles.wideInput}
-            name="beneficiaries_desc"
-            multiLine
-            rows={2}
-          />
-        </div>
+        <p className={Styles.sectionHeader}>Selección de beneficiarios</p>
         <p className={Styles.label}>¿Qué mecanismos utilizan para recibir o seleccionar a los beneficiarios?</p>
         <div className={FormStyles.row}>
           <RadioButtonGroup
@@ -162,6 +143,7 @@ class Fields extends React.Component {
             })}
           </RadioButtonGroup>
         </div>
+
         {criteria === 'other' &&
           <div className={FormStyles.row}>
             <TextField
@@ -172,6 +154,17 @@ class Fields extends React.Component {
           </div>
         }
 
+        <div className={FormStyles.row}>
+          <TextField
+            floatingLabelText="¿Qué características deben cumplir los beneficiarios (edad, sexo, grupo indígena, lugar, nivel económico, etc)?"
+            className={FormStyles.wideInput}
+            name="beneficiaries_desc"
+            multiLine
+            rows={2}
+          />
+        </div>
+
+        <p className={Styles.sectionHeader}>Datos específicos</p>
         <div className={FormStyles.row}>
           <AutoComplete
             className={FormStyles.wideInput}

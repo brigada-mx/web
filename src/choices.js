@@ -1,6 +1,6 @@
 const actionBeneficiariesCriteria = [
   { value: 'convocatoria_abierta', label: 'Convocatoria abierta' },
-  { value: 'convocatoria_cerrada', label: 'Convocatoria cerrada (invitación directa a presentar proyectos)' },
+  { value: 'convocatoria_cerrada', label: 'Convocatoria cerrada (invitación directa)' },
   { value: 'mapeo_directo_de_necesidades', label: 'Mapeo directo de necesidades' },
   { value: 'other', label: 'Otro' },
 ]

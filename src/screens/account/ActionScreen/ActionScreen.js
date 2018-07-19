@@ -312,7 +312,9 @@ class ActionScreen extends React.Component {
       <div>
         {action.id !== undefined &&
           <div className={FormStyles.card}>
-            <div className={FormStyles.sectionHeader}>{getProjectType(action.action_type)}</div>
+            <div className={FormStyles.sectionHeader}>
+              {getProjectType(action.action_type)} ({action.key})
+            </div>
             <Link className={Styles.link} to={`/proyectos/${action.id}`}>Ver proyecto</Link>
             <div className={FormStyles.formContainerLeft}>
               <UpdateActionForm

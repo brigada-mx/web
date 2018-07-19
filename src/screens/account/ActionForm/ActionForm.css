@@ -8,6 +8,7 @@
 
 .pickerContainer {
   position: relative;
+  margin-top: 20px;
 }
 
 .pickerLabel {
@@ -18,7 +19,8 @@
 
 .sectionHeader {
   margin-top: 15px;
-  font-family: 'roboto-700', sans-serif;
+  font-family: 'roboto-500', sans-serif;
+  margin: 40px 0 10px 0;
 }
 
 .label {
