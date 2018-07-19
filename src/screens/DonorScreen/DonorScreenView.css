@@ -1,19 +1,30 @@
 .transparencyContainer {
   display: flex;
   flex-direction: row;
-  margin-bottom: 10px;
+  align-items: center;
+  position: absolute;
+  margin-top: -43px;
 }
 
 .transparencyInfo {
-  color: #bbb;
+  font-family: 'nunito-sans', sans-serif;
+  font-size: 12px;
+  color: #141418;
+  letter-spacing: 0.4px;
+  line-height: 16px;
 }
 
 .checkmark {
   margin-right: 10px;
+  width: 19px;
+  height: 19px;
 }
 
 .moreinfo {
-  margin-left: 10px;
+  width: 13px;
+  height: 14px;
+  margin: 0 0 1px 7px;
+  cursor: pointer;
 }
 
 .breadcrumbLinks a {

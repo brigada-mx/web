@@ -2,7 +2,10 @@
 @value weakShadow, strongShadow, brandGreen from colors;
 
 .checkmark {
-  margin-right: 12px;
+  width: 19px;
+  height: 19px;
+  margin: -2px 0 0 9px;
+  position: absolute;
 }
 
 .loader {
@@ -34,11 +37,6 @@
 .cta:hover {
   cursor: pointer;
   color: #13A68C;
-}
-
-.checkmark {
-  display: flex;
-  margin-top: -3px;
 }
 
 .tableWrapper .ReactTable .rt-thead.-header {
