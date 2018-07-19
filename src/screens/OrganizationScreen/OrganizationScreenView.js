@@ -188,20 +188,31 @@ class OrganizationScreenView extends React.Component {
 
           <div className="row">
             <div className="col-lg-offset-1 col-lg-6 col-md-offset-1 col-md-7 col-sm-8 sm-gutter col-xs-4 xs-gutter">
-              <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter row">
-                <div className={Styles.name}>{name}</div>
-                {transparent &&
-                  <Icon
+
+              {transparent &&
+                <div className={Styles.transparencyContainer}>
+                  <img
                     src="/assets/img/circle-checkmark-accent.svg"
-                    alt="Organización transparente"
-                    height={25}
-                    ttText="Todos los proyectos de este reconstructor son transparentes, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
-                    ttTop={-45}
-                    ttWidth={400}
-                    ttLeft={-185}
+                    alt="Proyecto transparente"
+                    height={16}
                     className={Styles.checkmark}
                   />
-                }
+                  <span className={Styles.transparencyInfo}>ORGANIZACIÓN TRANSPARENTE</span>
+                  <Icon
+                    src="/assets/img/moreinfo.svg"
+                    alt="Proyecto transparente"
+                    height={16}
+                    ttText="Todos los proyectos de este reconstructor son transparentes, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                    ttTop={-64}
+                    ttWidth={400}
+                    ttLeft={-192}
+                    className={Styles.moreinfo}
+                  />
+                </div>
+              }
+
+              <div className="col-lg-12 col-md-12 col-sm-6 col-xs-4 gutter">
+                <div className={Styles.name}>{name}</div>
               </div>
 
               <div className="col-lg-8 col-md-9 col-sm-6 col-xs-4 gutter">

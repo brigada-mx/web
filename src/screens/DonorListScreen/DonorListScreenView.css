@@ -36,45 +36,6 @@
   color: #13A68C;
 }
 
-.verifiedInfo {
-  background-image: url('assets/img/moreinfo.svg');
-  background-repeat: no-repeat;
-  cursor: pointer;
-  margin: 0 0 -3px 6px;
-  width: 13px;
-  height: 14px;
-  display: inline-block;
-}
-
-.tooltip {
-  z-index: 2;
-  position: absolute;
-  top: 30px;
-  background-color: #EDF1F5;
-  text-align: center;
-  font-family: 'roboto-700', sans-serif;
-  font-size: 13px;
-  color: #141418;
-  letter-spacing: 0.52px;
-  line-height: 12px;
-  padding: 10px;
-  max-width: 140px;
-  white-space: pre-wrap;
-  line-height: 18px;
-}
-
-.tooltip:before {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: rotate(180deg);
-  margin-left: -17px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #EDF1F5 transparent transparent transparent;
-}
-
 .checkmark {
   display: flex;
   margin-top: -3px;

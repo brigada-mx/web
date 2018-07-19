@@ -1,6 +1,19 @@
+.transparencyContainer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.transparencyInfo {
+  color: #bbb;
+}
+
 .checkmark {
-  margin-left: 15px;
-  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.moreinfo {
+  margin-left: 10px;
 }
 
 a {
