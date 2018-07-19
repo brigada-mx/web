@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Styles from './Preview.css'
 
 
-const Preview = ({ type, src, onClick, width, height, style = {} }) => {
+const Preview = ({ type, src, onClick, width, height, emptySrc, emptyStyle = {} }) => {
   let className = {
     image: Styles.image,
     video: Styles.video,
@@ -16,16 +16,23 @@ const Preview = ({ type, src, onClick, width, height, style = {} }) => {
   if (height !== undefined) _style.height = height
   if (src) _style.backgroundImage = `url("${src}")`
 
-  return <div onClick={onClick} className={className} style={{ ..._style, ...style }} />
+  let merged = _style
+  if (!type) {
+    merged = { ..._style, ...emptyStyle }
+    if (emptySrc) merged.backgroundImage = `url("${emptySrc}")`
+  }
+
+  return <div onClick={onClick} className={className} style={merged} />
 }
 
 Preview.propTypes = {
   type: PropTypes.string,
   src: PropTypes.string,
   onClick: PropTypes.func,
-  width: PropTypes.number,
-  height: PropTypes.number,
-  style: PropTypes.object,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  emptySrc: PropTypes.string,
+  emptyStyle: PropTypes.object,
 }
 
 export default Preview

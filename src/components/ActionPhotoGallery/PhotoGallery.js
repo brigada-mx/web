@@ -46,19 +46,22 @@ class PhotoGallery extends React.PureComponent {
         id,
       }
     })
-    const photos = _images.concat(videos).sort((a, b) => {
+    const sort = (a, b) => {
       if (a.submitted < b.submitted) return 1
       if (a.submitted > b.submitted) return -1
       if (a.src < b.src) return 1
       if (a.src > b.src) return -1
       return 0
-    })
+    }
+    const sortedImages = _images.sort(sort)
+    const sortedVideos = videos.sort(sort)
+
     if (selectedUrl) {
-      const photo = photos.find(p => p.url === selectedUrl)
+      const photo = sortedImages.concat(sortedVideos).find(p => p.url === selectedUrl)
       if (photo) photo.selected = true
     }
 
-    const groupByMonth = photos.reduce((obj, photo) => {
+    const groupByMonth = sortedImages.reduce((obj, photo) => {
       const date = moment(photo.submitted)
       const yearMonth = date.format('YYYY-MM-01')
       if (yearMonth in obj) obj[yearMonth].push(photo)
@@ -68,6 +71,19 @@ class PhotoGallery extends React.PureComponent {
 
     return (
       <div>
+        {sortedVideos.length > 0 &&
+          <React.Fragment>
+            <div className={Styles.groupLabel}>Testimonios</div>
+            <Gallery
+              columns={window.innerWidth >= 768 ? columns : 2}
+              margin={4}
+              photos={sortedVideos}
+              onClick={onClickItem}
+              ImageComponent={Photo}
+            />
+          </React.Fragment>
+        }
+
         {Object.keys(groupByMonth).sort((a, b) => {
           if (a.submitted < b.submitted) return -1
           if (a.submitted > b.submitted) return 1
