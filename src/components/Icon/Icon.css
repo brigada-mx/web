@@ -18,11 +18,22 @@
   white-space: pre-line;
 }
 
-.tooltip:after {
+.tooltipCenter:after {
   content: "";
   position: absolute;
   top: 100%;
   left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #EDF1F5 transparent transparent transparent;
+}
+
+.tooltipLeft:after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 10%;
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;

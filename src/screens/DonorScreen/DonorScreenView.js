@@ -227,7 +227,7 @@ class DonorScreenView extends React.Component {
       )
     }
 
-    const transparent = actions.length > 0 && actions.every(a => a.level >= 3)
+    const transparent = actions.length > 0 && donorHasUser && actions.every(a => a.level >= 3)
 
     return (
       <React.Fragment>

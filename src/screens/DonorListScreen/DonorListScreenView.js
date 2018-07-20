@@ -71,8 +71,8 @@ class DonorListScreenView extends React.Component {
         accessor: 'name',
         className: Styles.noOverflow,
         Cell: (_props) => {
-          const { name, donations } = _props.original
-          const transparent = donations.length > 0 && donations.every(d => d.action.level >= 3)
+          const { name, donations, has_user: hasUser } = _props.original
+          const transparent = donations.length > 0 && hasUser && donations.every(d => d.action.level >= 3)
           return (
             <div className="row">
               <span className={Styles.donor}>{name}</span>
@@ -84,8 +84,9 @@ class DonorListScreenView extends React.Component {
                   ttText="Todos los proyectos de este donador cumplen con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
                   ttTop={-90}
                   ttWidth={360}
-                  ttLeft={-163}
+                  ttLeft={-18}
                   className={Styles.checkmark}
+                  position="left"
                 />
               }
             </div>
