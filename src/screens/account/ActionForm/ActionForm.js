@@ -330,8 +330,8 @@ const validator = (update: boolean = false) => {
       const { submissions, testimonials } = initialValues
       const images = [].concat(...submissions.map(s => s.images))
       if (images.length > 0 || testimonials.length > 0) {
-        errors.preview = 'Escoge una foto o un vídeo para acompañar a este proyecto'
-        errors._error = 'Escoge una foto o un vídeo para acompañar a este proyecto'
+        errors.preview = 'Escoge una foto destacada o un testimonio para este proyecto'
+        errors._error = 'Escoge una foto destacada o un testimonio para este proyecto'
       }
     }
     return errors

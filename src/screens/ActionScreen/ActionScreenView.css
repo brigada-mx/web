@@ -25,6 +25,11 @@
   height: 14px;
   margin: 0 0 1px 7px;
   cursor: pointer;
+  transition: all .15s linear;
+}
+
+.moreinfo:hover {
+  filter: brightness(93%) contrast(110%);
 }
 
 a {
@@ -449,6 +454,11 @@ a:hover {
   }
   .breadcrumbLinks .orgDetail {
     max-width: 50% !important;
+  }
+  .transparencyContainer {
+    padding: 0 16px;
+    position: relative;
+    margin: 0 0 26px 0;
   }
   .name {
     padding: 0 16px;

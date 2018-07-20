@@ -20,9 +20,20 @@ class Icon extends React.Component {
   }
 
   render() {
-    const { src, height, ttText, ttTop, ttWidth, ttLeft = 0, className = '', alt = '' } = this.props
+    const {
+      src,
+      height,
+      ttText,
+      ttTop,
+      ttWidth,
+      ttLeft = 0,
+      className = '',
+      alt = '',
+      position = 'center',
+    } = this.props
     const { focused } = this.state
 
+    const ttClassName = `${Styles.tooltip} ${{ center: Styles.tooltip, left: Styles.tooltipLeft }[position]}`
     return (
       <div
         className={Styles.container}
@@ -36,7 +47,7 @@ class Icon extends React.Component {
           height={height}
           className={className}
         />
-        {focused && <div style={{ top: ttTop, width: ttWidth, left: ttLeft }} className={Styles.tooltip}>{ttText}</div>}
+        {focused && <div style={{ top: ttTop, width: ttWidth, left: ttLeft }} className={ttClassName}>{ttText}</div>}
       </div>
     )
   }
@@ -51,6 +62,7 @@ Icon.propTypes = {
   alt: PropTypes.string,
   height: PropTypes.number,
   className: PropTypes.string,
+  position: PropTypes.oneOf(['center', 'left']),
 }
 
 export default Icon

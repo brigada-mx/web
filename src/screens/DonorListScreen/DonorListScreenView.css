@@ -1,11 +1,27 @@
 @value colors: "src/colors.css";
 @value weakShadow, strongShadow, brandGreen from colors;
 
+.donor {
+  max-width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.noOverflow {
+  overflow: unset !important;
+}
+
 .checkmark {
   width: 19px;
   height: 19px;
   margin: -2px 0 0 9px;
   position: absolute;
+  transition: all .15s linear;
+}
+
+.checkmark:hover {
+  filter: brightness(83%) contrast(90%);
 }
 
 .loader {

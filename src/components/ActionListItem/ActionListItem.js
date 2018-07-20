@@ -162,10 +162,10 @@ class ActionListItem extends React.PureComponent {
                     src="/assets/img/circle-checkmark-accent.svg"
                     alt="Proyecto transparente"
                     height={25}
-                    ttText="Proyecto transparente, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
-                    ttTop={-63}
-                    ttWidth={400}
-                    ttLeft={-185}
+                    ttText="Este proyecto cumple con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                    ttTop={-80}
+                    ttWidth={300}
+                    ttLeft={-140}
                     className={Styles.checkmark}
                   />
                 }
