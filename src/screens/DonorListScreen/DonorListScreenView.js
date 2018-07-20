@@ -69,20 +69,22 @@ class DonorListScreenView extends React.Component {
       {
         Header: 'Donador',
         accessor: 'name',
+        className: Styles.noOverflow,
         Cell: (_props) => {
           const { name, donations } = _props.original
           const transparent = donations.length > 0 && donations.every(d => d.action.level >= 3)
           return (
             <div className="row">
-              {name}
+              <span className={Styles.donor}>{name}</span>
               {transparent &&
                 <Icon
                   src="/assets/img/circle-checkmark-accent.svg"
                   alt="Organización transparente"
                   height={25}
-                  ttText="Todos los proyectos de este donador son transparentes, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
-                  ttTop={-63}
-                  ttWidth={400}
+                  ttText="Todos los proyectos de este donador cumplen con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                  ttTop={-90}
+                  ttWidth={360}
+                  ttLeft={-163}
                   className={Styles.checkmark}
                 />
               }
@@ -92,6 +94,7 @@ class DonorListScreenView extends React.Component {
       },
       {
         Header: 'Monto donado',
+        maxWidth: 260,
         accessor: 'metrics.total_donated',
         Cell: props => fmtBudget(props.original.metrics.total_donated),
       },
@@ -99,18 +102,13 @@ class DonorListScreenView extends React.Component {
     if (window.innerWidth >= 600) {
       columns.splice(1, 0, {
         Header: 'Proyectos',
+        maxWidth: 260,
         accessor: 'metrics.action_count',
       })
       columns.splice(1, 0, {
         Header: 'Reconstructores',
+        maxWidth: 260,
         accessor: 'metrics.org_count',
-      })
-    }
-    if (window.innerWidth >= 980) {
-      columns.splice(1, 0, {
-        Header: 'Convocatoria abierta',
-        accessor: 'donating',
-        Cell: (props) => { return props.original.donating ? 'Sí' : 'No' },
       })
     }
 

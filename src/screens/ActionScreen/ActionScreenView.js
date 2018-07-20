@@ -237,10 +237,10 @@ class ActionScreenView extends React.Component {
                     src="/assets/img/moreinfo.svg"
                     alt="Proyecto transparente"
                     height={16}
-                    ttText="Proyecto transparente, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
-                    ttTop={-64}
-                    ttWidth={400}
-                    ttLeft={-192}
+                    ttText="Este proyecto cumple con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                    ttTop={-88}
+                    ttWidth={300}
+                    ttLeft={-147}
                     className={Styles.moreinfo}
                   />
                 </div>

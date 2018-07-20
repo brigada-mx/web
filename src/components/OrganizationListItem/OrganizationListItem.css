@@ -5,6 +5,11 @@
   width: 19px;
   height: 19px;
   margin: 7px 0 0 11px;
+  transition: all .15s linear;
+}
+
+.checkmark:hover {
+  filter: brightness(83%) contrast(90%);
 }
 
 .nameContainer {

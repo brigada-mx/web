@@ -54,10 +54,10 @@ class OrganizationListItem extends React.PureComponent {
                 src="/assets/img/circle-checkmark-accent.svg"
                 alt="Organización transparente"
                 height={25}
-                ttText="Todos los proyectos de este reconstructor son transparentes, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
-                ttTop={-63}
-                ttWidth={400}
-                ttLeft={-185}
+                ttText="Todos los proyectos de esta organización cumplen con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                ttTop={-83}
+                ttWidth={360}
+                ttLeft={-170}
                 className={Styles.checkmark}
               />
             }

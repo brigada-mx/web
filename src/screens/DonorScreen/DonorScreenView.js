@@ -250,10 +250,10 @@ class DonorScreenView extends React.Component {
                     src="/assets/img/moreinfo.svg"
                     alt="Proyecto transparente"
                     height={16}
-                    ttText="Todos los proyectos de este donador son transparentes, de acuerdo con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
-                    ttTop={-64}
-                    ttWidth={400}
-                    ttLeft={-192}
+                    ttText="Todos los proyectos de este donador cumplen con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                    ttTop={-87}
+                    ttWidth={360}
+                    ttLeft={-177}
                     className={Styles.moreinfo}
                   />
                 </div>

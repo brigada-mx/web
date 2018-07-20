@@ -6,15 +6,16 @@
   z-index: 2;
   position: absolute;
   background-color: #EDF1F5;
-  text-align: center;
-  font-family: 'roboto-400', sans-serif;
+  text-align: left;
+  font-family: 'roboto-700', sans-serif;
   font-size: 13px;
   color: #141418;
   letter-spacing: 0.52px;
-  line-height: 12px;
+  line-height: 19px;
   padding: 10px;
   display: flex;
   flex-direction: column;
+  white-space: pre-line;
 }
 
 .tooltip:after {
