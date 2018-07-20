@@ -404,6 +404,11 @@ a:hover {
   .breadcrumbLinks .donorDetail {
     max-width: 50%;
   }
+  .transparencyContainer {
+    padding: 0 16px;
+    position: relative;
+    margin: 0 0 26px 0;
+  }
   .name {
     padding: 0 16px;
   }
