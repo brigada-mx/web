@@ -150,6 +150,18 @@ class Service {
   }
 
   // ORGANIZATION ACCOUNT PROTECTED ENDPOINTS
+  accountCreateUser = async (body) => {
+    return sendToApiAuth('org', '/account/users/', { method: 'POST', body })
+  }
+
+  accountUpdateUser = async (id, body) => {
+    return sendToApiAuth('org', `/account/users/${id}/`, { method: 'PUT', body })
+  }
+
+  accountGetUsers = async () => {
+    return sendToApiAuth('org', '/account/users/', { method: 'GET' })
+  }
+
   deleteToken = async () => {
     return sendToApiAuth('org', '/account/delete_token/', { method: 'POST' })
   }
@@ -308,6 +320,18 @@ class Service {
   }
 
   // DONOR ACCOUNT PROTECTED ENDPOINTS
+  donorCreateUser = async (body) => {
+    return sendToApiAuth('donor', '/donor_account/users/', { method: 'POST', body })
+  }
+
+  donorUpdateUser = async (id, body) => {
+    return sendToApiAuth('donor', `/donor_account/users/${id}/`, { method: 'PUT', body })
+  }
+
+  donorGetUsers = async () => {
+    return sendToApiAuth('donor', '/donor_account/users/', { method: 'GET' })
+  }
+
   donorDeleteToken = async () => {
     return sendToApiAuth('donor', '/donor_account/delete_token/', { method: 'POST' })
   }
