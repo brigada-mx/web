@@ -57,8 +57,9 @@ class OrganizationListItem extends React.PureComponent {
                 ttText="Todos los proyectos de esta organización cumplen con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
                 ttTop={-83}
                 ttWidth={360}
-                ttLeft={-170}
+                ttLeft={-18}
                 className={Styles.checkmark}
+                position="left"
               />
             }
           </div>
