@@ -6,10 +6,9 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { TextField } from 'components/Fields'
 import { validateEmail } from 'tools/string'
 import FormStyles from 'src/Form.css'
-import Styles from './ShareUserScreen.css'
 
 
-const ShareUserForm = ({ handleSubmit, submitting }) => {
+const CreateUserForm = ({ handleSubmit, submitting }) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && e.shiftKey === false) {
       e.preventDefault()
@@ -22,34 +21,30 @@ const ShareUserForm = ({ handleSubmit, submitting }) => {
       className={FormStyles.formContainer}
       onKeyDown={handleKeyDown}
     >
-      <span className={FormStyles.formLogo} />
-      <span className={FormStyles.formHeader}>¡Gracias por compartir!</span>
-      <span className={FormStyles.formText}>Deja tus datos para recibir actualizaciones de este proyecto.</span>
       <div>
         <TextField
           name="first_name"
-          hintText="Nombre"
+          floatingLabelText="Nombre del nuevo usuario"
         />
         <TextField
           name="surnames"
-          hintText="Apellidos"
+          floatingLabelText="Sus apellidos"
         />
-      </div>
-
-      <div className={Styles.inputGroup}>
         <TextField
+          className={FormStyles.wideInput}
           name="email"
-          hintText="Email"
+          floatingLabelText="Email que usará el nuevo usuario para ingresar a su cuenta"
           autoCapitalize="off"
         />
       </div>
+
       <div className={FormStyles.buttonContainer}>
         <RaisedButton
           className={FormStyles.primaryButton}
           backgroundColor="#3DC59F"
           labelColor="#ffffff"
           disabled={submitting}
-          label="ENVIAR"
+          label="CREAR USUARIO"
           onClick={handleSubmit}
         />
       </div>
@@ -57,16 +52,16 @@ const ShareUserForm = ({ handleSubmit, submitting }) => {
   )
 }
 
-ShareUserForm.propTypes = {
+CreateUserForm.propTypes = {
   ...rxfPropTypes,
 }
 
 const validate = ({ first_name: firstName, surnames, email }) => {
   const errors = {}
-  if (!firstName) errors.first_name = 'Ingresa tu nombre'
-  if (!surnames) errors.surnames = 'Ingresa apellidos'
+  if (!firstName) errors.first_name = 'Ingresa el nombre del nuevo usuario'
+  if (!surnames) errors.surnames = 'Ingresa sus apellidos'
   if (!validateEmail(email)) errors.email = 'Se requiere un email válido'
   return errors
 }
 
-export default reduxForm({ form: 'shareUser', validate })(ShareUserForm)
+export default reduxForm({ form: 'accountCreateUser', validate })(CreateUserForm)

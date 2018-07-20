@@ -33,7 +33,7 @@ class Icon extends React.Component {
     } = this.props
     const { focused } = this.state
 
-    const ttClassName = `${Styles.tooltip} ${{ center: Styles.tooltip, left: Styles.tooltipLeft }[position]}`
+    const ttClassName = `${Styles.tooltip} ${{ center: Styles.tooltipCenter, left: Styles.tooltipLeft }[position]}`
     return (
       <div
         className={Styles.container}

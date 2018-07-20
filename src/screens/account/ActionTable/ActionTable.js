@@ -110,11 +110,13 @@ const ActionTable = ({ actions, onTogglePublished, onRestore, history, onClickIm
     })
   }
 
+  const maxPageSize = 10
+
   return (
     <ReactTable
       className="-highlight"
-      pageSize={actions.length}
-      showPagination={false}
+      pageSize={Math.min(actions.length, maxPageSize)}
+      showPagination={actions.length > maxPageSize}
       data={actions}
       columns={columns}
       noDataText=""
