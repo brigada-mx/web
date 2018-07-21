@@ -35,15 +35,6 @@ class DonorListScreenView extends React.Component {
     this.handleSearchKeyUp = debounce(this.handleSearchKeyUp, 150)
   }
 
-  componentDidMount() {
-    document.title = 'Donadores - Brigada'
-    window.addEventListener('orientationchange', this.forceUpdate)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('orientationchange', this.forceUpdate)
-  }
-
   renderAddress = (address = {}) => {
     const { locality, city } = address
     const parts = []
@@ -58,7 +49,7 @@ class DonorListScreenView extends React.Component {
 
   render() {
     const { donors: { data: donorData, loading: donorLoading } } = this.props
-    const { modal, history } = this.props
+    const { modal, history, innerWidth = window.innerWidth } = this.props
     const { search } = this.state
 
     const donors = donorData ? donorData.results : []
@@ -100,7 +91,7 @@ class DonorListScreenView extends React.Component {
         Cell: props => fmtBudget(props.original.metrics.total_donated),
       },
     ]
-    if (window.innerWidth >= 600) {
+    if (innerWidth >= 600) {
       columns.splice(1, 0, {
         Header: 'Proyectos',
         maxWidth: 260,
@@ -160,6 +151,12 @@ DonorListScreenView.propTypes = {
   donors: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   modal: PropTypes.func.isRequired,
+  innerWidth: PropTypes.number,
+}
+
+const mapStateToProps = (state) => {
+  const { innerWidth } = state.window
+  return { innerWidth }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -168,4 +165,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(DonorListScreenView))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DonorListScreenView))

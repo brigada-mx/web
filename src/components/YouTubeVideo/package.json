@@ -1,0 +1,6 @@
+{
+  "name": "YouTubeVideo",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./YouTubeVideo.js"
+}

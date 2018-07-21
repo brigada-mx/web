@@ -7,6 +7,7 @@ import livechat from './livechat'
 import modal from './modal'
 import youtube from './youtube'
 import search from './search'
+import _window from './window'
 
 export default {
   drawer,
@@ -18,4 +19,5 @@ export default {
   modal,
   youtube,
   search,
+  window: _window,
 }

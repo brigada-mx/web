@@ -7,6 +7,8 @@ import { fmtNum, fmtBudget } from 'tools/string'
 import Styles from './LocalityPopup.css'
 
 
+const containerStyle = { zIndex: 5 }
+
 const LocalityPopup = ({ locality, organization, screen, onlyLocality = false }) => {
   if (!locality) return null
   const { state_name: stateName, name, location: { lat, lng } } = locality
@@ -14,7 +16,7 @@ const LocalityPopup = ({ locality, organization, screen, onlyLocality = false })
 
   if (onlyLocality) {
     return (
-      <Popup offset={12} coordinates={[lng, lat]}>
+      <Popup offset={12} coordinates={[lng, lat]} style={containerStyle}>
         <span className={Styles.header}>{name}</span>
       </Popup>
     )
@@ -22,7 +24,7 @@ const LocalityPopup = ({ locality, organization, screen, onlyLocality = false })
 
   if (screen === 'loc') {
     return (
-      <Popup offset={12} coordinates={[lng, lat]}>
+      <Popup offset={12} coordinates={[lng, lat]} style={containerStyle}>
         <span className={Styles.header}>
           <span className={Styles.loc}>{name},</span><span className={Styles.state}>{'\u00A0'}{stateName}</span>
         </span>
@@ -53,7 +55,7 @@ const LocalityPopup = ({ locality, organization, screen, onlyLocality = false })
   if (screen === 'org') {
     if (!organization) {
       return (
-        <Popup offset={12} coordinates={[lng, lat]}>
+        <Popup offset={12} coordinates={[lng, lat]} style={containerStyle}>
           <span className={Styles.header}>{name}, {stateName}</span>
           <div className={Styles.item}>
             <span className={Styles.label}>Viviendas dañadas</span>
@@ -69,7 +71,7 @@ const LocalityPopup = ({ locality, organization, screen, onlyLocality = false })
 
     const actions = organization.actions.filter(a => locality.cvegeo === a.locality.cvegeo)
     return (
-      <Popup offset={12} coordinates={[lng, lat]}>
+      <Popup offset={12} coordinates={[lng, lat]} style={containerStyle}>
         <span className={Styles.header}>{name}, {stateName}</span>
         <div className={Styles.item}>
           <span className={Styles.label}>Viviendas dañadas</span>

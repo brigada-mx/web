@@ -90,3 +90,10 @@ export async function youtubeTimestamp(dispatch, { videoId, timestamp }) {
     payload: { videoId, timestamp },
   })
 }
+
+export async function windowProperties(dispatch, { properties }) {
+  dispatch({
+    type: 'WINDOW_PROPERTIES',
+    payload: { properties },
+  })
+}

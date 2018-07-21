@@ -15,6 +15,7 @@ import SnackBar from 'components/SnackBar'
 import Nav from 'components/Nav'
 import ModalSelector from 'components/Modal/ModalSelector'
 import ModalQsSelector from 'components/Modal/ModalQsSelector'
+import WindowListener from 'components/WindowListener'
 import MapScreen from 'screens/MapScreen'
 import LocalityScreen from 'screens/LocalityScreen'
 import OrganizationListScreen from 'screens/OrganizationListScreen'
@@ -134,6 +135,7 @@ const App = () => {
             <SnackBar />
             <ModalSelector />
             <ModalQsSelector />
+            <WindowListener />
 
             <Route exact path="/" component={Nav} />
             <Route path="/(comunidades|reconstructores|donadores|proyectos|voluntariado|voluntarios)" component={Nav} />

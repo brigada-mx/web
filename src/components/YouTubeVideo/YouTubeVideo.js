@@ -5,6 +5,7 @@ import YouTube from 'react-youtube'
 import { connect } from 'react-redux'
 
 import * as Actions from 'src/actions'
+import Styles from './YouTubeVideo.css'
 
 
 class YouTubeVideo extends React.Component {
@@ -26,11 +27,21 @@ class YouTubeVideo extends React.Component {
   }
 
   render() {
-    const { videoId, timestamp = 0 } = this.props
+    const { videoId, timestamp = 0, innerWidth = window.innerWidth, innerHeight = window.innerHeight } = this.props
+
+    let width = Math.min(640, innerWidth - 40)
+    let height = Math.min(390, innerHeight - 40)
+    let containerClassName = ''
+    if (innerHeight > innerWidth) {
+      const temp = width
+      width = height
+      height = temp
+      containerClassName = Styles.rotated
+    }
 
     const opts = {
-      height: '390',
-      width: '640',
+      width,
+      height,
       playerVars: { // https://developers.google.com/youtube/player_parameters
         autoplay: 1,
         start: Math.floor(timestamp),
@@ -43,6 +54,7 @@ class YouTubeVideo extends React.Component {
         videoId={videoId}
         opts={opts}
         onReady={this.handleReady}
+        containerClassName={containerClassName}
       />
     )
   }
@@ -53,12 +65,15 @@ YouTubeVideo.propTypes = {
   onUnmount: PropTypes.func.isRequired,
   onReady: PropTypes.func,
   timestamp: PropTypes.number,
+  innerWidth: PropTypes.number,
+  innerHeight: PropTypes.number,
 }
 
 const mapStateToProps = (state, { videoId }) => {
   const video = state.youtube[videoId]
-  if (!video) return {}
-  return { timestamp: video.timestamp }
+  const { innerWidth, innerHeight } = state.window
+  if (!video) return { innerWidth, innerHeight }
+  return { timestamp: video.timestamp, innerWidth, innerHeight }
 }
 
 const mapDispatchToProps = (dispatch) => {
