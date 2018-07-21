@@ -1,3 +1,9 @@
-.rotated {
+.vertical {
   transform: rotate(90deg);
+  margin-top: 130px;
+  margin-bottom: 70px;
+}
+
+.horizontal {
+  margin-top: 240px;
 }

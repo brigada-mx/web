@@ -31,12 +31,14 @@ class YouTubeVideo extends React.Component {
 
     let width = Math.min(640, innerWidth - 40)
     let height = Math.min(390, innerHeight - 40)
-    let containerClassName = ''
+    let className = ''
     if (innerHeight > innerWidth) {
       const temp = width
       width = height
       height = temp
-      containerClassName = Styles.rotated
+      className = Styles.vertical
+    } else if (innerWidth < 980) {
+      className = Styles.horizontal
     }
 
     const opts = {
@@ -50,12 +52,13 @@ class YouTubeVideo extends React.Component {
     }
 
     return (
-      <YouTube
-        videoId={videoId}
-        opts={opts}
-        onReady={this.handleReady}
-        containerClassName={containerClassName}
-      />
+      <div className={className}>
+        <YouTube
+          videoId={videoId}
+          opts={opts}
+          onReady={this.handleReady}
+        />
+      </div>
     )
   }
 }

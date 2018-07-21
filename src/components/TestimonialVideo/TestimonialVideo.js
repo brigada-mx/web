@@ -13,7 +13,7 @@ const TestimonialVideo = ({ testimonial }) => {
   const latLng = lat !== undefined && <LatLngLink lat={lat} lng={lng} className={Styles.mapLink} />
 
   return (
-    <div>
+    <div className={Styles.container}>
       <YouTubeVideo videoId={videoId} />
       <div className={Styles.labelContainer}>
         <span className={Styles.label}>{moment(submitted).format('h:mma, DD MMMM YYYY')}</span>
