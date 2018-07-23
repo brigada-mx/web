@@ -340,9 +340,10 @@ const validator = (update: boolean = false) => {
 }
 
 export const prepareActionBody = (body) => {
-  const { locality, start_date: startDate, end_date: endDate } = body
+  const { locality, start_date: startDate, end_date: endDate, progress } = body
   return {
     ...body,
+    progress: progress || 0,
     locality: locality.value,
     start_date: startDate ? moment(startDate).format('YYYY-MM-DD') : null,
     end_date: endDate ? moment(endDate).format('YYYY-MM-DD') : null,

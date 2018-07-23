@@ -1,7 +1,8 @@
 /* eslint-disable */
 // https:// github.com/swestrich/pluralize-es
 
-const pluralize = (str) => {
+const pluralize = (str: string): string => {
+  if (!str) return ''
   let plural
 
   const last = str[str.length - 1] // Last letter of str
