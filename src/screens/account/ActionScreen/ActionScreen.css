@@ -16,3 +16,16 @@
   letter-spacing: 0.4px;
   margin: 12px 20px 5px 0;
 }
+
+.checkmark {
+  width: 19px;
+  height: 19px;
+  margin: 7px 0 5px 11px;
+  transition: all .15s linear;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

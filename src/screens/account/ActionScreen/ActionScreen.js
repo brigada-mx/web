@@ -14,6 +14,7 @@ import { cleanAccentedChars, transparencyLabelByLevel } from 'tools/string'
 import Modal from 'components/Modal'
 import WithSideNav from 'components/WithSideNav'
 import BackButton from 'components/BackButton'
+import Icon from 'components/Icon'
 import ActionStrength from 'components/Strength/ActionStrength'
 import { UpdateActionForm, prepareActionBody, prepareInitialActionValues } from 'screens/account/ActionForm'
 import { CreateDonationForm, UpdateDonationForm,
@@ -313,7 +314,21 @@ class ActionScreen extends React.Component {
         {action.id !== undefined &&
           <div className={FormStyles.card}>
             <div className={FormStyles.sectionHeader}>
-              {getProjectType(action.action_type)} ({action.key})
+              <div className={Styles.sectionHeader}>
+                {getProjectType(action.action_type)} ({action.key})
+                {action.level >= 3 &&
+                  <Icon
+                    src="/assets/img/circle-checkmark-accent.svg"
+                    alt="Proyecto transparente"
+                    height={25}
+                    ttText="Este proyecto cumple con criterios mínimos de transparencia establecidos en conjunto con Alternativas y Capacidades A.C."
+                    ttTop={-80}
+                    ttWidth={300}
+                    ttLeft={-140}
+                    className={Styles.checkmark}
+                  />
+                }
+              </div>
             </div>
             <Link className={Styles.link} to={`/proyectos/${action.id}`}>Ver proyecto</Link>
             <div className={FormStyles.formContainerLeft}>
@@ -356,8 +371,10 @@ class ActionScreen extends React.Component {
           <div className={FormStyles.sectionHeader}>
             <div>
               <span>Oportunidades de voluntariado</span>
-              {action.level < 2
-                && <div className={Styles.warning}>Tu proyecto es {transparencyLabelByLevel(action.level)}. Oportunidades de voluntariado sólo aparecen en el sitio si su nivel es transparente.</div>
+              {action.level < 2 &&
+                <div className={Styles.warning}>
+                  Tu proyecto es {transparencyLabelByLevel(action.level)}. Oportunidades de voluntariado sólo aparecen en el sitio si su nivel es casi transparente o transparente.
+                </div>
               }
             </div>
             <div>

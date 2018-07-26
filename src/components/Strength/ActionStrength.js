@@ -63,12 +63,13 @@ class ActionStrength extends React.Component {
         label: 'Información de beneficiarios',
       },
       {
-        value: images > 0,
-        label: 'Fotos',
+        value: images >= 10,
+        label: images < 10 ? `Fotos (falta${10 - images !== 1 ? 'n' : ''} ${10 - images})` : 'Fotos',
       },
       {
-        value: testimonials > 0,
-        label: 'Testimonios',
+        value: testimonials >= 2,
+        label: testimonials < 2 ? `Testimonios (falta${2 - testimonials !== 1 ? 'n' : ''} ${2 - testimonials})`
+          : 'Testimonios',
       },
       {
         value: donations > 0,
