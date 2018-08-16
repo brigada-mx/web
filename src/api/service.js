@@ -389,7 +389,7 @@ class Service {
 export const getBackoff = async (...args) => {
   let count = 0
   let delay = 1000
-  const inner = async (getter, { onResponse, key }) => {
+  const inner = async (getter, { onResponse, key } = {}) => {
     let response = await getter()
     if (onResponse) {
       const modified = onResponse(response)
@@ -414,7 +414,7 @@ export const getBackoff = async (...args) => {
 export const getBackoffComponent = async (...args) => {
   let count = 0
   let delay = 1000
-  const inner = async (self, getter, { stateKey, key, onResponse }) => {
+  const inner = async (self, getter, { stateKey, key, onResponse } = {}) => {
     let response = await getter()
     if (onResponse) {
       const modified = onResponse(response)

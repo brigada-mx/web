@@ -24,14 +24,14 @@ module.exports = {
     "function-paren-newline": 0,
     "object-curly-newline": [2, { "consistent": true }],
     "max-len": [
-        2,
-        {
-            "ignoreTrailingComments": true,
-            "ignoreComments": true,
-            "ignorePattern": '["`\']$',
-            "tabWidth": 2,
-            "code": 120
-        }
+      2,
+      {
+        "ignoreTrailingComments": true,
+        "ignoreComments": true,
+        "ignorePattern": '["`\']$',
+        "tabWidth": 2,
+        "code": 120
+      }
     ],
     "arrow-body-style": 0,
     "indent": [2, 2],
