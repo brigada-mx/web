@@ -56,11 +56,11 @@ class Profile extends React.Component {
 
   handleSubmitPassword = async ({ old_password, password }) => {
     const { data } = await service.setPassword(old_password, password)
+    this.props.reset()
     if (!data) {
       this.props.snackbar('Contraseña actual incorrecta', 'error')
       return
     }
-    this.props.reset()
     this.props.snackbar('Cambiaste tu contraseña', 'success')
   }
 

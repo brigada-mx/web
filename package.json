@@ -5,6 +5,7 @@
     "node": "8.8.0"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "lodash": "4.11.2",
     "mapbox-gl": "^0.42.2",
     "material-ui": "^0.20.0",
@@ -41,7 +42,6 @@
     "babel-eslint": "8.0.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-flow-react-proptypes": "^24.0.1",
-    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",

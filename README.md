@@ -3,7 +3,7 @@ Our web app is built with React. It uses Redux to manage global state.
 
 
 ## Dev
-Run `npm run dev`. Make sure the API is also up. See the API repo for details on how to run the API on your machine.
+`npm install`, then `npm run dev`. Make sure the API is also up. See the API repo for details on how to run the API on your machine.
 
 
 ### Committing
