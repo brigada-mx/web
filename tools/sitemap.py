@@ -53,15 +53,17 @@ def generate_sitemap(urls):
 if __name__ == '__main__':
     r = requests.get('https://api.brigada.mx/api/organizations/', params={'page_size': 1000}, timeout=15)
     r.raise_for_status()
-    org_urls = [org_url(org['id']) for org in r.json()['results']]
+    results = sorted(r.json()['results'], key=lambda org: -org['score'])
+    org_urls = [org_url(org['id']) for org in results][:100]
 
     r = requests.get('https://api.brigada.mx/api/donors/', params={'page_size': 1000}, timeout=15)
     r.raise_for_status()
-    donor_urls = [donor_url(donor['id']) for donor in r.json()['results']]
+    donor_urls = [donor_url(donor['id']) for donor in r.json()['results'][:75]]
 
-    r = requests.get('https://api.brigada.mx/api/volunteer_opportunities/', params={'page_size': 1000}, timeout=15)
+    r = requests.get('https://api.brigada.mx/api/volunteer_opportunities/?ordering=-created',
+                     params={'page_size': 1000}, timeout=15)
     r.raise_for_status()
-    opportunity_urls = [opportunity_url(o['id']) for o in r.json()['results']]
+    opportunity_urls = [opportunity_url(o['id']) for o in r.json()['results'][:50]]
 
     with open('dist/sitemap.xml', 'w') as file:
         file.write(generate_sitemap(org_urls + donor_urls + opportunity_urls))
